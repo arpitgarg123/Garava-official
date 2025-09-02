@@ -10,6 +10,10 @@
   import rateLimit from 'express-rate-limit';
   import { env } from './config/env.js';
   import { logger } from './shared/logger.js'; 
+import { errorHandler } from './shared/utils/errorHandler.js';
+
+// router imports
+import authRouter from './modules/auth/auth.router.js';
 
   // routers
 
@@ -47,6 +51,13 @@
       uptime: process.uptime(),
     })
   );
+
+  // routes
+  app.use('/api/auth', authRouter);
+
+  // global error handler
+
+  app.use(errorHandler);
 
   const start = async () => {
     try {
