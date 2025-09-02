@@ -44,11 +44,7 @@ const Navbar = () => {
   return (
    <>
    <Header />
-   <nav className={`navbar  duration-300 ${
-        hovered ? 'bg-white shadow-md' : 'bg-transparent'
-      }`}>
-
-
+   <nav className={`navbar `}>
     <div className='navTop relative'>
         <div className='flex'>
             <CiSearch size={25}/>

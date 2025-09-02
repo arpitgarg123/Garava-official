@@ -2,12 +2,11 @@
 
 @font-face {
     font-family:'playfair';
-    src: url(/fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf) format('truetype');
-
+    src: url(/fonts/PlayfairDisplay-VariableFont_wght.ttf) 
 }
 @font-face {
-  font-family: 'Montserrat';
-  src: url(/fonts/Playfair_Display/PlayfairDisplay-VariableFont_wght.ttf) format('truetype');
+  font-family:'montserrat';
+  src: url(/fonts/Montserrat-VariableFont_wght.ttf) 
 }
 :root{
     --primary: #F3F3F3;
@@ -40,7 +39,7 @@ body{
   justify-content: center;
   align-items: center;
   font-size: 1vw;
-  font-family: 'Montserrat', sans-serif; ;
+  font-family: 'montserrat', sans-serif ;
   z-index: 10000;
 }
 .navTop{
@@ -64,9 +63,17 @@ body{
 .hero-main{
   height: 100vh;
   width: 100%;
-  background-image: url(/src/assets/images/jewellry4.png);
+  /* background-image: url(/src/assets/images/jewellry4.png); */
   background-size: cover; /* image stretch na ho, cover kare */
   /* background-position: center; image center align ho */
   background-repeat: no-repeat;
   position: relative;
+}
+.text-main{
+  font-family:'montserrat', sans-serif ;
+  font-weight: 100;
+}
+.text-main-inner{
+    font-family:'playfair', serif ;
+    font-style: italic;
 }

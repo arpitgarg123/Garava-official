@@ -8,9 +8,10 @@ export default {
         secondary: '#f5e6d7', 
         textColor: '#191919', // black
       },
-      fontFamily: {
-        sans: ['Poppins', 'sans-serif'],
-      },
+    //  fontFamily: {
+    //     playfair: ["playfair", "serif"],
+    //     montserrat: ["montserrat", "sans-serif"],
+    //   },
       borderRadius: {
         '2xl': '1rem',
         '3xl': '1.5rem',
