@@ -5,11 +5,15 @@
     src: url(/fonts/PlayfairDisplay-VariableFont_wght.ttf) 
 }
 @font-face {
+    font-family:'playfair-italic';
+    src: url(/client/src/assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf) 
+}
+@font-face {
   font-family:'montserrat';
   src: url(/fonts/Montserrat-VariableFont_wght.ttf) 
 }
 :root{
-    --primary: #F3F3F3;
+    --primary: #ffffff;
   --secondary: #f5e6d7;
   --text-color: #191919;
 }
@@ -72,8 +76,15 @@ body{
 .text-main{
   font-family:'montserrat', sans-serif ;
   font-weight: 100;
+  /* font-size: 3vw; */
+  /* background-color: rebeccapurple; */
+  /* line-height: 1; */
 }
 .text-main-inner{
-    font-family:'playfair', serif ;
+    font-family:'playfair' ;
     font-style: italic;
+}
+.text-head-italic{
+  font-family: 'playfair-italic';
+ 
 }

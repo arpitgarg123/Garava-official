@@ -4,6 +4,7 @@ import LocomotiveScroll from 'locomotive-scroll';
 
 import Navbar from '../components/navbar/Navbar';
 import HeroSection from '../components/hero/Herosection';
+import About from './About';
 
 const  HomePage = () =>{
   useEffect(() => {
@@ -19,6 +20,8 @@ const  HomePage = () =>{
     <div id="scroll-container" className="bg-secondary text-textColor min-h-screen">
       <Navbar />
       <HeroSection />
+      <About />
+      <div className='h-screen w-full'></div>
     </div>
   );
 }
