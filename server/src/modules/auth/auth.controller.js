@@ -1,5 +1,5 @@
 import {asyncHandler} from '../../shared/utils/asyncHandler.js';
-import { loginUser, logoutUser, refreshSessionService, signupUser } from './auth.service.js';
+import { forgotPasswordService, loginUser, logoutUser, refreshSessionService, resendVerificationService, resetPasswordService, signupUser, verifyEmailService } from './auth.service.js';
 import { clearAuthCookies, setAuthCookies } from './token.service.js';
 
 export const login = asyncHandler(async (req, res) => {
@@ -44,4 +44,46 @@ export const refreshSession = asyncHandler(async (req, res) => {
     accessToken,
     refreshToken,
   });
+});
+
+// Verify email
+export const verifyEmail = asyncHandler(async (req, res) => {
+  const { token } = req.query;
+  const result = await verifyEmailService(token);
+
+  if (result.alreadyVerified) {
+    return res.json({ message: "Email already verified" });
+  }
+
+  res.json({ success: true, message: "Email verified successfully" });
+});
+
+
+// Resend verification
+export const resendVerificationEmail = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const result = await resendVerificationService(email);
+
+  if (result.alreadyVerified) {
+    return res.json({ message: "User already verified" });
+  }
+
+  res.json({ success: true, message: "Verification email resent" });
+});
+
+// Password reset request
+
+// POST /api/auth/forgot-password
+export const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  await forgotPasswordService(email);
+  // Generic response (avoid enumeration)
+  res.json({ success: true, message: "If an account exists, a reset link has been sent." });
+});
+
+// POST /api/auth/reset-password
+export const resetPassword = asyncHandler(async (req, res) => {
+  const { token, newPassword } = req.body;
+  await resetPasswordService({ token, newPassword });
+  res.json({ success: true, message: "Password has been reset. Please log in again." });
 });

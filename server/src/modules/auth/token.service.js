@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 
 const JWT_ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || 'supersecretaccess';
 const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'supersecretrefresh';
+const JWT_EMAIL_SECRET = process.env.JWT_EMAIL_SECRET || "supersecretemail";
+const JWT_RESET_SECRET   = process.env.JWT_RESET_SECRET;   // ✅ reset
 
 export const generateAccessToken = (user) => {
   return jwt.sign({ id: user._id, role: user.role }, JWT_ACCESS_SECRET, { expiresIn: '15m' });
@@ -29,6 +31,18 @@ export const verifyRefreshToken = (token) => {
     return null;
   }
 };
+
+// verification token
+export const generateEmailVerificationToken = (user) => {
+  return jwt.sign(
+    { id: user._id, email: user.email },
+    JWT_EMAIL_SECRET,
+    { expiresIn: "1d" } // 24 hours expiry
+  );
+};
+// password reset token
+export const generatePasswordResetToken = (user) =>
+  jwt.sign({ id: user._id, email: user.email }, JWT_RESET_SECRET, { expiresIn: "30m" });
 
 export const setAuthCookies = (res, accessToken, refreshToken) => {
   res.cookie('token', accessToken, {

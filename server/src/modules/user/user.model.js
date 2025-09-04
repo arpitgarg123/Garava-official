@@ -35,6 +35,7 @@ const userSchema = new mongoose.Schema(
 
     phone: { type: String, trim: true },
     isVerified: { type: Boolean, default: false },
+    passwordChangedAt: { type: Date },   
     refreshTokens: [{ token: String, createdAt: { type: Date, default: Date.now } }],
   },
   { timestamps: true }
@@ -98,6 +99,13 @@ userSchema.methods.verifyRefreshToken = async function (candidateToken) {
     }
   }
   return false;
+};
+
+// Invalidate all refresh sessions (after password reset/change)
+userSchema.methods.invalidateAllSessions = async function () {
+  this.refreshTokens = [];
+  this.passwordChangedAt = new Date();
+  await this.save();
 };
 
 /** 
