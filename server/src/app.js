@@ -14,6 +14,9 @@ import { errorHandler } from './shared/utils/errorHandler.js';
 
 // router imports
 import authRouter from './modules/auth/auth.router.js';
+import userRouter from './modules/user/user.router.js';
+import orderRouter from "./modules/order/order.router.js";
+import addressRouter from "./modules/address/address.router.js";
 
   // routers
 
@@ -54,6 +57,9 @@ import authRouter from './modules/auth/auth.router.js';
 
   // routes
   app.use('/api/auth', authRouter);
+  app.use('/api/user', userRouter);
+  app.use("/api/order", orderRouter);
+  app.use("/api/address", addressRouter);
 
   // global error handler
 

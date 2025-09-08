@@ -38,7 +38,7 @@
 
 
 ### verify email
-**Endpoint:** `POST /api/auth/verify-email`  
+**Endpoint:** `get /api/auth/verify-email`  
 **Description:** this route verify the email on the mail
 
 ### resend-verification email
@@ -71,3 +71,72 @@
     "newPassword" : "12345678"
 }
 ```
+
+# # user features api list
+
+### get-profile
+**Endpoint:** `get /api/user/profile`  
+**Description:** this route get the profile of the user who is logged in.
+
+### update-profile
+**Endpoint:** `put /api/user/profile/update`  
+**Description:** this route update the user profile.
+**Request Body:**
+```json
+{
+    "name" : "arpit",
+    "phone" :"9876543210"
+}
+```
+
+### change-password
+**Endpoint:** `post /api/user/change-password`  
+**Description:** this route change the password of the login user
+**Request Body:**
+```json
+{
+    "oldPassword" : "12345678",
+    "newPassword" : "87654321"
+}
+```
+
+# # addresses api list handle by user only 
+
+### create-address
+**Endpoint:** `post /api/address/create`  
+**Description:** this route create the address for the logged-in user
+**Request Body:**
+```json
+{
+  "label": "home",
+  "fullName": "Arpit Garg",
+  "phone": "9876543210",
+  "addressLine1": "123 Luxury St",
+  "addressLine2": "Floor 2",
+  "city": "Mumbai",
+  "state": "Maharashtra",
+  "postalCode": "400001",
+  "country": "India",
+  "isDefault": true
+}
+```
+
+### get-list-of-address
+**Endpoint:** `get /api/address/`  
+**Description:** this route get the all address of  the user
+
+### get-address-by-id
+**Endpoint:** `get /api/address/:id` example `get /api/address/68bea9fbb1e7a939a7b5128b`
+**Description:** this route get the address of the user by address id
+
+### update-address-by-id
+**Endpoint:** `put /api/address/update/:id` example `put /api/address/update/68bea9fbb1e7a939a7b5128b`
+**Description:** this route update the address of the user by address id
+
+### delete-address-by-id
+**Endpoint:** `delete /api/address/delete/:id` example `delete /api/address/delete/68bea9fbb1e7a939a7b5128b`
+**Description:** this route delete the address of the user by address id
+
+
+
+

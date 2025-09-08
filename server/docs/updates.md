@@ -5,47 +5,14 @@ role-based access support (admin vs user).
 
 📌 User Features (for Garava.in)
 
-### Get Profile
 
-Endpoint: GET /api/user/profile
-
-Returns the logged-in user’s details (name, email, phone, verified status, etc.).
-
-Requires authentication (token in cookies).
-
-### Update Profile
-
-Endpoint: PUT /api/user/profile
-
-Allows user to update profile info (name, phone, etc.).
-
-Email should generally remain immutable (or require re-verification if changed).
-
-### Change Password
-
-Endpoint: POST /api/user/change-password
-
-Requires old password and new password.
-
-Used by logged-in users who want to update credentials.
-
-### View Orders (basic order history)
+### View Orders (basic order history) ❌ testing of this route is panding
 
 Endpoint: GET /api/user/orders
 
 Shows list of orders placed by the user.
 
 Helps customers track purchases.
-
-### Manage Addresses (shipping/billing)
-
-List Addresses: GET /api/user/addresses
-
-Add Address: POST /api/user/addresses
-
-Update Address: PUT /api/user/addresses/:id
-
-Delete Address: DELETE /api/user/addresses/:id
 
 ### Wishlist / Favorites (optional, but common for e-commerce)
 
