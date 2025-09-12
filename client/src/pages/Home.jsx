@@ -5,6 +5,11 @@ import LocomotiveScroll from 'locomotive-scroll';
 import Navbar from '../components/navbar/Navbar';
 import HeroSection from '../components/hero/Herosection';
 import About from './About';
+import Jewellry from './Jewellry';
+import Essentials from './essentials';
+import Fragnance from './Fragnance';
+import NewsLater from './NewsLetter';
+import Footer from '../components/footer/Footer';
 
 const  HomePage = () =>{
   useEffect(() => {
@@ -21,7 +26,12 @@ const  HomePage = () =>{
       <Navbar />
       <HeroSection />
       <About />
-      <div className='h-screen w-full'></div>
+      <Essentials />
+      <Jewellry />
+      <Fragnance />
+    <NewsLater />
+      <Footer />
+      {/* <div className='h-screen w-full'></div> */}
     </div>
   );
 }

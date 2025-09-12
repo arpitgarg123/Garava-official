@@ -1,141 +1,175 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import TextSlider from "./TextSlider";
+import './hero.css'
 
+import jBack from "../../assets/images/j-back.jpg";
+import jFront from "../../assets/images/j-front.jpg";
+// import fFront from "../../assets/images/f-front.png";
+import fFront from "../../assets/images/f-front.png";
+import fBack from '../../assets/images/f-back.png'
+// import fBack from '../../assets/images/fragnance.png'
 
 const HeroSection = () => {
   const img1Ref = useRef(null);
   const img2Ref = useRef(null);
   const img3Ref = useRef(null);
   const img4Ref = useRef(null);
-
-  
+  const tlRef = useRef(null);
+  const intervalRef = useRef(null); 
+  const ctxRef = useRef(null);
 
   const [isFragrance, setIsFragrance] = useState(false);
 
-  useEffect(() => {
-    gsap.from([img1Ref.current, img2Ref.current], {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      ease: "power2.out",
-      stagger: 0.2,
+   useEffect(() => {
+    [jBack, jFront, fBack, fFront].forEach((src) => {
+      const img = new Image();
+      img.src = src;
     });
   }, []);
 
-  const handleNext = () => {
+ useEffect(() => {
+    ctxRef.current = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+      gsap.set([img1Ref.current, img2Ref.current, img3Ref.current, img4Ref.current], {
+        willChange: "transform, opacity",
+      });
+
+      gsap.set([img3Ref.current, img4Ref.current], { y: 100, opacity: 0 });
+
+      // Jewellery in
+      tl.from([img1Ref.current, img2Ref.current], {
+        y: 40,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 0.9,
+      });
+
+      tlRef.current = tl;
+    });
+
+    return () => {
+      if (ctxRef.current) ctxRef.current.revert();
+      if (tlRef.current) {
+        try {
+          tlRef.current.kill();
+        } catch (e) {}
+      }
+     
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+   
+  }, []);
+
+  const animateToFragrance = () => {
+    if (tlRef.current) tlRef.current.kill();
+
+    const tl = gsap.timeline({ defaults: { ease: "power2.inOut", duration: 1 } });
+
+    tl.to([img1Ref.current, img2Ref.current], { y: 100, opacity: 0, stagger: 0.08 }, 0);
+    tl.to([img3Ref.current, img4Ref.current], { y: 0, opacity: 1, stagger: 0.08 }, 0.15);
+
+    tlRef.current = tl;
+  };
+
+   const animateToJewellery = () => {
+    if (tlRef.current) tlRef.current.kill();
+
+    const tl = gsap.timeline({ defaults: { ease: "power2.inOut", duration: 1 } });
+
+    tl.to([img3Ref.current, img4Ref.current], { y: 100, opacity: 0, stagger: 0.08 }, 0);
+    tl.to([img1Ref.current, img2Ref.current], { y: 0, opacity: 1, stagger: 0.08 }, 0.15);
+
+    tlRef.current = tl;
+  };
+
+ const handleNext = () => {
     if (isFragrance) return;
     setIsFragrance(true);
-
-    gsap.to([img1Ref.current, img2Ref.current], {
-      y: 200,
-      opacity: 0,
-      duration: 1,
-      ease: "power2.inOut",
-    });
-
-  
-    gsap.to([img3Ref.current, img4Ref.current], {
-      y: 0,
-      opacity: 1,
-      duration: 1.3,
-      ease: "power2.inOut",
-      stagger: 0.2,
-    });
-
-  
-  
+    animateToFragrance();
   };
-useEffect(() => { const interval = setInterval(() => { if (isFragrance) { handlePrev(); } else { handleNext(); } }, 3000); return () => clearInterval(interval); }, [isFragrance]);
+
   const handlePrev = () => {
     if (!isFragrance) return;
     setIsFragrance(false);
-
-   
-    gsap.to([img3Ref.current, img4Ref.current], {
-      y: 200,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.inOut",
-    });
-
-    gsap.to([img1Ref.current, img2Ref.current], {
-      y: 0,
-      opacity: 1,
-      duration: 1,
-      ease: "power3.inOut",
-      stagger: 0.2,
-    });
-
+    animateToJewellery();
   };
 
+   useEffect(() => {
+    // clear existing
+    if (intervalRef.current) clearInterval(intervalRef.current);
+
+    intervalRef.current = setInterval(() => {
+      // toggle
+      setIsFragrance((v) => {
+        const next = !v;
+        if (next) {
+          animateToFragrance();
+        } else {
+          animateToJewellery();
+        }
+        return next;
+      });
+    }, 4000);
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, []);
+
+    useEffect(() => {
+    if (isFragrance) {
+      animateToFragrance();
+    } else {
+      animateToJewellery();
+    }
+  }, [isFragrance]);
+
   return (
-    <div className="flex bg-white flex-col items-end justify-end h-screen w-full">
+    <section className="hero-root text-[#f5e6d7] relative w-full min-h-screen flex items-end justify-end flex-col overflow-hidden">
+      <div className="hero-overlay" />
 
+      <div className="hero-inner flex items-center justify-center w-[95%] px-6  h-[70vh]">
+        <div className="hero-left w-[30vw] h-80  flex flex-col  items-start">
+          <TextSlider isFragrance={isFragrance} />
+          <button className="btn-luxury mt-8"
+          style={
+            {
+              padding:'0.5rem 2.1rem'
+            }
+          }>Discover More</button>
+        </div>
 
-      <div className="flex flex-col justify-center h-full w-full overflow-hidden">
-        <div className="flex items-end  h-[40vw] relative  w-[95%]">
-          {/* <div className="flex items-center justify-center cursor-pointer">
-            <div className="flex flex-col h-12 px-4 items-center justify-center  rounded-4xl bg-gray-100 ">
-              <div className="p-0.5  rounded-full  bg-gray-800"></div>
-              <div className="p-0.5 rounded-full  bg-gray-800"></div>
-            </div>
-            
-             <h4 className="font-medium ">Catalog</h4>
-          </div> */}
-          <div className="w-[30%] h-[45%] flex items-center justify-center gap-8 flex-col">
-                <TextSlider isFragrance={isFragrance} />
-                <button className="px-4 py-2 border ">Discover more.</button>
-</div>
+        {/* image stage */}
+        <div className="hero-stage relative mx-8 h-full w-[45vw]">
+          <img ref={img1Ref} src={jBack} alt="Jewellery Background" className="hero-bg" />
+          <img ref={img2Ref} src={jFront} alt="Jewellery Front" className="hero-front" />
+          <img ref={img3Ref} src={fBack} alt="Fragrance Background" className="hero-bg" />
+          <img ref={img4Ref} src={fFront} alt="Fragrance Front" className="hero-front" />
+        </div>
 
-          <div className="relative w-[50%] h-full overflow-hidden ">
-            {/* Jewellery */}
-            <img
-              ref={img1Ref}
-              className="w-full h-full object-cover absolute top-28 left-0"
-              src="/src/assets/images/j-back.jpg"
-              alt=""
-            />
-            <img
-              ref={img2Ref}
-              className="absolute bottom-0 left-44 h-[20vw] w-[24vw] object-cover   shadow-md"
-              src="/src/assets/images/j.jpg"
-              alt=""
-            />
-
-            {/* Fragrance */}
-            <img
-              ref={img3Ref}
-              className="w-full h-full object-cover absolute top-28 left-0 translate-y-full opacity-0"
-              src="/src/assets/images/f-back.jpg"
-              alt=""
-            />
-            <img
-              ref={img4Ref}
-              className="absolute bottom-0 left-44 h-[20vw] w-[24vw] object-cover   shadow-md translate-y-full opacity-0"
-              src="/src/assets/images/f-front.jpg"
-              alt=""
-            />
-          </div>
-
-          {/* Pagination */}
-          <div className="flex items-center gap-4 mb-4 absolute bottom-5 right-5">
-            <div
-              onClick={handlePrev}
-              className={`h-3 w-3 rounded-full cursor-pointer ${
-                !isFragrance ? "bg-black" : "bg-gray-300"
-              }`}
-            ></div>
-            <div
-              onClick={handleNext}
-              className={`h-3 w-3 rounded-full cursor-pointer ${
-                isFragrance ? "bg-black" : "bg-gray-300"
-              }`}
-            ></div>
-          </div>
+        {/* pagination */}
+        <div className="hero-pager flex flex-col gap-3 ml-28 mb-16 ">
+          <button
+            onClick={handlePrev}
+            aria-label="Jewellery"
+            className={`hero-dot ${!isFragrance ? "active" : ""}`}
+          ></button>
+          <button
+            onClick={handleNext}
+            aria-label="Fragrance"
+            className={`hero-dot ${isFragrance ? "active" : ""}`}
+          ></button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

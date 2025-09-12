@@ -8,37 +8,54 @@
     font-family:'playfair-italic';
     src: url(/client/src/assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf) 
 }
-@font-face {
+/* @font-face {
   font-family:'montserrat';
   src: url(/fonts/Montserrat-VariableFont_wght.ttf) 
+} */
+@font-face {
+  font-family:'headFont';
+  src: url(/client/src/assets/fonts/OldStandardTT-Regular.ttf) 
 }
 :root{
     --primary: #ffffff;
-  --secondary: #f5e6d7;
-  --text-color: #191919;
+  /* --secondary: #f5e6d7; */
+  /* --text-color: #fcfcfc; */
+  --text-color: #f5e6d7;
+  --dark-text: #0c0c0c;
 }
 body{
     background-color: var(--primary);
-    color: var(--text-color);
+    color: var(--dark-text);
     overflow-x: hidden;
 }
 
 .navbar{
   width: 100%;
-  height: 15vw;
+  height: 20vw;
   position:absolute;
   top: 0;
   left: 0;
-  /* background: r; */
+  color: var(--text-color);
   padding: 2.5rem 2rem;
   z-index: 10;
+  -webkit-font-smoothing: antialiased;
 }
+/* .navbar .dark-logo { display: none; }
+.navbar .light-logo { display: block; } */
+.navbar:has(.nav-items:hover) {
+  background-color: white;
+  color: var(--dark-text);
+  transition: all ease 0.6s;
+
+}
+/* .navbar:has(.nav-items:hover) .dark-logo { display: block; }
+.navbar:has(.nav-items:hover) .light-logo { display: none; } */
 .header{
   width: 100%;
   height: 2.5vw;
   position: relative;
-  background: var(--text-color);
-  color: var(--primary);
+  background: var(--dark-text);
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +67,6 @@ body{
   width: 100%;
   display: flex;
   justify-content: space-between;
-  /* align-items: start; */
 }
 .flex{
   display: flex;
@@ -58,7 +74,6 @@ body{
   gap: 1vw;
 }
 .flex-center{
-  /* background: #000; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,24 +82,81 @@ body{
 .hero-main{
   height: 100vh;
   width: 100%;
-  /* background-image: url(/src/assets/images/jewellry4.png); */
-  background-size: cover; /* image stretch na ho, cover kare */
-  /* background-position: center; image center align ho */
-  background-repeat: no-repeat;
   position: relative;
 }
 .text-main{
   font-family:'montserrat', sans-serif ;
   font-weight: 100;
+  color: var(--text-color);
   /* font-size: 3vw; */
   /* background-color: rebeccapurple; */
   /* line-height: 1; */
 }
 .text-main-inner{
     font-family:'playfair' ;
-    font-style: italic;
+   ;
 }
-.text-head-italic{
+.text-main-italic{
   font-family: 'playfair-italic';
- 
+   font-style: italic
+}
+.head {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5vh;
+  padding: 0 1rem; 
+}
+
+.head-inner {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 18rem; 
+}
+
+.head-text {
+  font-family: 'montserrat', sans-serif;
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-align: center;
+  font-size: clamp(1.5rem, 5vw, 2.5rem); 
+}
+
+.head-line {
+  background-color: #020202;
+  height: 1px;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+.btn-luxury {
+    border: 1px solid rgba(255, 255, 255, 0.6); 
+  color: rgba(255, 255, 255, 0.9);           
+  font-size: 1rem;                           
+  backdrop-filter: blur(4px);                 
+  padding: 0.5rem 1rem;                       
+  transition: all 0.3s ease;   
+  cursor: pointer; 
+}
+.btn-luxury:hover {
+  background: #ffffff; 
+  color: #000000;
+}
+
+.btn{
+   padding: 0.5rem 2.5rem;             /* py-2 px-10 */
+  border: 1px solid currentColor;     /* border */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btn:hover {
+  background-color: #0c0c0c;          /* hover:bg-[#0c0c0c] */
+  color: #f5e6d7;                     /* hover:text-[#f5e6d7] */
 }

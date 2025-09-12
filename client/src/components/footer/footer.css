@@ -1,0 +1,20 @@
+.footer-root {
+  background: #faf9f7; /* soft luxury background */
+  color: #0b1220;
+  border-top: 1px solid rgba(11,18,32,0.06);
+  font-feature-settings: "liga" 1;
+}
+
+.footer-sep {
+  height: 1px;
+  background: rgba(11,18,32,0.04);
+  margin: 1.25rem 0;
+}
+
+.footer-bottom a {
+  color: #6b7280;
+  text-decoration: none;
+}
+.footer-bottom a:hover {
+  color: #111827;
+}
