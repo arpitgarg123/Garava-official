@@ -43,13 +43,21 @@ const userSchema = new mongoose.Schema(
 
 // pre hook for admin check
 userSchema.pre('save', async function (next) {
-  if (this.role === 'admin') {
-    const adminExists = await this.constructor.findOne({ role: 'admin' });
-    if (adminExists) {
-      throw new Error('Admin user already exists. Cannot create another.');
+  try {
+    // if not creating new and role hasn't been changed to 'admin', skip check
+    if (!this.isNew && !this.isModified('role')) return next();
+
+    if (this.role === 'admin') {
+      // exclude current doc (for updates)
+      const existing = await this.constructor.findOne({ role: 'admin', _id: { $ne: this._id } }).lean();
+      if (existing) {
+        return next(new Error('Admin user already exists. Cannot create another.'));
+      }
     }
+    return next();
+  } catch (err) {
+    return next(err);
   }
-  next();
 });
 
 /**

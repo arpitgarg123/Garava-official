@@ -17,6 +17,8 @@ import authRouter from './modules/auth/auth.router.js';
 import userRouter from './modules/user/user.router.js';
 import orderRouter from "./modules/order/order.router.js";
 import addressRouter from "./modules/address/address.router.js";
+import adminProductRouter from "./modules/product/admin/product.admin.router.js";
+import productRouter from "./modules/product/product.router.js";
 
   // routers
 
@@ -59,10 +61,11 @@ import addressRouter from "./modules/address/address.router.js";
   app.use('/api/auth', authRouter);
   app.use('/api/user', userRouter);
   app.use("/api/order", orderRouter);
-  app.use("/api/address", addressRouter);
+  app.use("/api/address", addressRouter); 
+  app.use("/api/admin/product", adminProductRouter);
+  app.use("/api/product", productRouter);
 
   // global error handler
-
   app.use(errorHandler);
 
   const start = async () => {

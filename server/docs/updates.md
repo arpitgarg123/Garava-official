@@ -1,6 +1,42 @@
 # # next
 
-role-based access support (admin vs user).
+User:   
+
+POST /api/orders/checkout
+
+POST /api/orders/:orderNumber/pay-callback (or webhook)
+
+GET /api/user/orders
+
+GET /api/user/orders/:orderNumber
+
+POST /api/orders/:orderNumber/cancel
+
+POST /api/orders/:orderNumber/returns
+
+GET /api/products/sku/:sku (for cart validation)
+
+Admin:
+
+GET /api/admin/orders (filters)
+
+GET /api/admin/orders/:id
+
+PUT /api/admin/orders/:id (notes/status)
+
+POST /api/admin/orders/:id/ship
+
+POST /api/admin/orders/:id/refund
+
+POST /api/admin/orders/bulk-ship / bulk-refund
+
+GET /api/admin/reports/orders
+
+Webhooks:
+
+POST /webhooks/payments/razorpay
+
+POST /webhooks/couriers/delhivery
 
 
 📌 User Features (for Garava.in)
@@ -31,7 +67,7 @@ Allows user to request full deletion of their account.
 
 ✅ Recommended Order of Development
 
-User → to handle signup/login/auth.
+User → to handle signup/login/auth. 
 
 Product → to display catalog.
 
@@ -56,13 +92,13 @@ Payment/Transaction → once payment integration is added.
 
 Auth ✅ (done now)
 
-User (Profile + Change Password + Addresses)
+User (Profile + Change Password + Addresses) ✅
 
-Products (catalog browsing)
-
-Cart (shopping experience)
+Products (catalog browsing) ✅
 
 Orders (checkout flow)
+
+Cart (shopping experience)
 
 📌 After Orders (Phase 6+)
 
