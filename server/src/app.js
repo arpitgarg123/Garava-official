@@ -19,6 +19,8 @@ import orderRouter from "./modules/order/order.router.js";
 import addressRouter from "./modules/address/address.router.js";
 import adminProductRouter from "./modules/product/admin/product.admin.router.js";
 import productRouter from "./modules/product/product.router.js";
+import adminOrderRouter from "./modules/order/admin/order.admin.router.js";
+import cartRouter from "./modules/cart/cart.router.js"; 
 
   // routers
 
@@ -32,8 +34,13 @@ import productRouter from "./modules/product/product.router.js";
       credentials: true,
     })
   );
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json({
+   verify: (req, res, buf) => {
+    req.rawBody = buf.toString("utf8"); // save exact raw string
+  },
+  limit: "1mb"
+  }));
+ app.use(express.urlencoded({ extended: true, verify: (req, res, buf) => { req.rawBody = buf.toString("utf8"); } }));
   app.use(cookieParser());
 
   if (env.NODE_ENV === 'production') {
@@ -60,10 +67,12 @@ import productRouter from "./modules/product/product.router.js";
   // routes
   app.use('/api/auth', authRouter);
   app.use('/api/user', userRouter);
-  app.use("/api/order", orderRouter);
   app.use("/api/address", addressRouter); 
   app.use("/api/admin/product", adminProductRouter);
   app.use("/api/product", productRouter);
+  app.use("/api/order", orderRouter);
+  app.use("/api/admin/order", adminOrderRouter);
+  app.use("/api/cart", cartRouter);
 
   // global error handler
   app.use(errorHandler);

@@ -475,7 +475,6 @@
 
 # # product features for user
 
-
 ### get all product
 **Endpoint:** `get /api/product/` 
 **Description:** this route get all product
@@ -500,3 +499,110 @@
     "pincode" :"462038"
 }
 ```
+
+# # orders features for user
+
+### create order
+**Endpoint:** `POST /api/order/checkout`  
+**Description:** this route create a order 
+
+**Request-body:**
+```json
+{
+  "items": [
+    { "variantId": "68c5cafba86abb6262ddf0de", "quantity": 1 }
+  ],
+  "shippingAddress": {
+    "name": "Arpit Garg",
+    "phone": "9876543210",
+    "addressLine1": "123 Luxury St",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "postalCode": "400001",
+    "country": "India"
+  },
+  "paymentMethod": "razorpay"
+}
+```
+
+### get all order 
+**Endpoint:** `GET /api/order/`  
+**Description:** this route get all the order of the user
+
+### get order by id
+**Endpoint:** `GET /api/order/:orderId` example  `GET /api/order/68c6a7c10af47746b00367ab`
+**Description:** this route get all the order of the user
+
+### payment completing process ❌❌❌ testing is pending
+**Endpoint:** `GET /api/order/webhooks/payments/razorpay` 
+**Description:** this route compelete the payments
+
+
+# # orders features for admin
+
+### get all order 
+**Endpoint:** `GET /api/admin/order`  
+**Description:** this route get all the order of the user for admin
+
+### get order by id
+**Endpoint:** `GET /api/admin/order/:id` example  `GET /api/admin/order/68c6acdb036756fb9bc86882`
+**Description:** this route get the order of the user by id for admin
+
+### update order status 
+**Endpoint:** `GET /api/admin/order/:id/status` example  `GET /api/admin/order/68c6acdb036756fb9bc86882/status`
+**Description:** this route get update the status of the order by admin
+
+**Request Body:**
+```json
+{
+  "status": "shipped",
+  "tracking": {
+    "courier": "BlueDart",
+    "trackingNumber": "BD123456789",
+    "url": "https://bluedart.com/track/BD123456789"
+  }
+}
+```
+
+
+# # cart Features
+
+### add to cart
+**Endpoint:** `POST /api/cart/` 
+**Description:** this route add items into the carts
+
+**Request Body:**
+```json
+{
+  "productId": "68c5cafba86abb6262ddf0dd",
+  "variantId": "68c5cafba86abb6262ddf0de", 
+  "quantity": 2
+}
+```
+
+### view cart
+**Endpoint:** `GET /api/cart/` 
+**Description:** this route get all items of the carts
+
+### update cart
+**Endpoint:** `PUT /api/cart/` 
+**Description:** this route updates items of the carts
+
+**Request Body:**
+```json
+{
+  "productId": "68c5cafba86abb6262ddf0dd",
+  "variantId": "68c5cafba86abb6262ddf0de",   // or use variantSku instead of variantId
+  "quantity": 5
+}
+```
+
+### remove item from cart
+**Endpoint:** `DELETE /api/cart/item` example `DELETE /api/cart/item?productId=68c5cafba86abb6262ddf0dd&variantId=68c5cafba86abb6262ddf0de` 
+**Description:** this route remove item from the carts
+
+### clear cart
+**Endpoint:** `DELETE /api/cart/`
+**Description:** this route clear all the items from the cart
+
+

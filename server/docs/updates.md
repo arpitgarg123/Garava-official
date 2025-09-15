@@ -96,13 +96,13 @@ User (Profile + Change Password + Addresses) ✅
 
 Products (catalog browsing) ✅
 
-Orders (checkout flow)
+Orders (checkout flow) ✅
 
-Cart (shopping experience)
+Cart (shopping experience) ✅
 
 📌 After Orders (Phase 6+)
 
-Wishlist / Favorites (optional)
+Wishlist / Favorites (optional) 
 
 Reviews & Ratings (social proof)
 

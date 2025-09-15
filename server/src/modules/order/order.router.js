@@ -1,11 +1,17 @@
 // src/modules/order/order.routes.js
 import { Router } from "express";
-import { getUserOrders } from "./order.controller.js";
 import { authenticated } from "../../middlewares/authentication.js";
+import { checkout, getUserOrders, getOrder, paymentWebhook } from "./order.controller.js";
 
 const router = Router();
 
-// GET /api/user/orders
-router.get("/user/orders", authenticated, getUserOrders);
+// user endpoints
+router.post("/checkout", authenticated, checkout);
+router.get("/", authenticated, getUserOrders);
+router.get("/:orderId", authenticated, getOrder);
 
-export default router;
+// webhook (public)
+router.post("/webhooks/payments/razorpay", paymentWebhook);
+
+export default router; 
+  
