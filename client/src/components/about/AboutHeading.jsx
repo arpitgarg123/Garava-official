@@ -29,7 +29,7 @@ const AboutHeading = ({text}) => {
   return (
    <h1
       ref={rootRef}
-      className="text-5xl font-playfair text-main-inner leading-tight"
+      className="text-5xl font-playfair text-main-inner leading-tight max-sm: text-center"
       aria-label={text}
     >
       {text}

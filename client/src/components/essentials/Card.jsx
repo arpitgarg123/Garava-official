@@ -10,7 +10,7 @@ const Card =forwardRef(({ title, subtitle, img, hotspotSize = "40%" }, ref) => {
      <article 
      ref={ref}
      aria-label={`${title} card`}
-      className="group relative w-full md:w-[48%] h-[78vh] overflow-hidden ">
+      className="group relative w-full md:w-[48%] max-sm:h-[60vh] h-[78vh] overflow-hidden ">
       <img
         src={img}
         alt={`${title} - ${subtitle}`}

@@ -4,6 +4,7 @@ import f1 from "../assets/images/f-front.png";
 import f2 from "../assets/images/fragnance.png";
 import f3 from "../assets/images/fragnance1.png";
 import f4 from "../assets/images/essential-f.png";
+import { Link } from 'react-router-dom';
 
 const Fragnance = () => {
     const products = [
@@ -29,13 +30,16 @@ const Fragnance = () => {
             ))}
           </div>
 
-          <div className="flex-center mt-12 text-center">
-            <button
+          <div className="flex-center mt-12  text-center">
+             <Link  to='/fragrance'>
+            <button 
+            
               className="btn"
               aria-label="View more products"
             >
               View More..
             </button>
+           </Link>
           </div>
         </div>
       </section>

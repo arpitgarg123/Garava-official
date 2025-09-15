@@ -12,15 +12,37 @@ footer not done and not responisve
 
 
 
+    ***GARAVA changes ****
+hero section pagination fix ✅
+navbar icons change ✅
+navbar leftside add contact us, book appoinment ✅
+about section  lines remove only 2 lines is added and add explore button✅
+essential section cards width increase and bottom gap reduce✅
+add newsletter ui changes ✅
+add instagram or google reviews section✅
+footer add garava logo at the centerd ✅
 
 
 
 
+ {/* <ProductCard
+  category="fragrance"
+  img={jBack}
+  title="Eau de Luxe"
+  price="₹12,500"
+  description="Long-lasting fragrance with citrus top notes"
+  type="Eau de Parfum"
+/> */}
 
 
 
     ****backend related work****
 
-this essential page are dynamicly so backend work is.. to create CRUD operations for essential and create this fields [sub title, title]
+1) this essential page are dynamicly so backend work is.. to create CRUD operations for essential and create this fields [sub title, title]
 
+2) reviews page are dynamicaly so to create reviews CRUD operations. and fields are [username, description, and stars]
+
+2) instagram post dynamicaly 
+
+3) news & events are dynamicaly
 

@@ -4,8 +4,10 @@ import jFront from "../assets/images/j-front.jpg";
 import jBack from "../assets/images/j-back.jpg";
 import j from "../assets/images/jewellry4.png";
 import j2 from "../assets/images/j.jpg";
+import { Link, useNavigate } from 'react-router-dom';
 
 const Jewellry = () => {
+  const navigate = useNavigate()
     const products = [
     { id: 1, img: jBack, title: "Round Solitaire Ring", price: "₹79,153.0" },
     { id: 2, img: jFront, title: "Classic Necklace", price: "₹129,999.0" },
@@ -29,13 +31,16 @@ const Jewellry = () => {
             ))}
           </div>
 
-          <div className="flex-center mt-12 max-sm:mt-0 text-center">
-            <button
+          <div className="flex-center mt-12 text-center">
+           <Link  to='/jewelry'>
+            <button 
+            
               className="btn"
               aria-label="View more products"
             >
               View More..
             </button>
+           </Link>
           </div>
         </div>
       </section>

@@ -11,3 +11,101 @@
 .input-field:focus {
   border-color: #000000;             
 }
+/* src/components/newsletter/newsletter.module.css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1rem;
+  width: 100%;
+}
+
+/* small uppercase label */
+.heading {
+  font-family: var(--headFont, "Montserrat", sans-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #111827;
+  margin: 0;
+}
+
+/* form inline layout */
+.form {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+/* input: underline style */
+.input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.45);
+  padding: 0.45rem 0.6rem;
+  font-size: 0.95rem;
+  min-width: 220px;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* larger on wide screens */
+@media (min-width: 900px) {
+  .input { min-width: 360px; }
+}
+
+.input::placeholder { color: rgba(17,24,39,0.45); }
+
+.input:focus {
+  border-bottom-color: #000;
+
+}
+
+/* button: black rectangle */
+.button {
+  background: #0b0b0b;
+  color: #fff;
+  border: none;
+  padding: 0.48rem 0.9rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+}
+
+.button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* status area */
+.status { min-height: 1.2rem; margin-top: 0.3rem; font-size: 0.92rem; }
+.success { color: #16a34a; }
+.error { color: #ef4444; }
+
+/* sr-only for accessibility (if you don't have global SR class) */
+.sr-only {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  border: 0; padding: 0; margin: -1px;
+}
+
+/* responsive: stack on very small screens */
+@media (max-width: 420px) {
+  .form {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .input { width: 100%; min-width: 0; }
+  .button { width: 100%; }
+}
+
+/* prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .button, .input { transition: none; }
+}
