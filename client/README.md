@@ -7,6 +7,8 @@ essential page with responsive✅
 products page with resposive and optimize ✅
 signup login all done ✅
 side bar fix ✅
+product pages are done but not responsive
+product details page are done but not responsive
 newsletter not done and not responsive
 footer not done and not responisve
 navbar fix krna h 
