@@ -5,9 +5,13 @@ hero done with oprimize ✅ (nav fix , responsive not done)
 about page done with optimize, responsive✅
 essential page with responsive✅
 products page with resposive and optimize ✅
-
+signup login all done ✅
+side bar fix ✅
 newsletter not done and not responsive
 footer not done and not responisve
+navbar fix krna h 
+
+
 
 
 
@@ -25,14 +29,8 @@ footer add garava logo at the centerd ✅
 
 
 
- {/* <ProductCard
-  category="fragrance"
-  img={jBack}
-  title="Eau de Luxe"
-  price="₹12,500"
-  description="Long-lasting fragrance with citrus top notes"
-  type="Eau de Parfum"
-/> */}
+
+
 
 
 

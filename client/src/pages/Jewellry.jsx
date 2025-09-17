@@ -26,9 +26,13 @@ const Jewellry = () => {
         <div className="mx-auto  w-[95%] h-[80%]">
       
           <div className="products-grid">
-            {products.map((p) => (
-              <Card key={p.id} img={p.img} title={p.title} price={p.price} />
+           
+             {products.map((p) => (
+               <Link to='/product_details'>
+              <Card key={p.id} img={p.img} title={p.title} price={p.price}  />
+                </Link>
             ))}
+          
           </div>
 
           <div className="flex-center mt-12 text-center">

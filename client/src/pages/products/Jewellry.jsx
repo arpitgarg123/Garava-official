@@ -23,7 +23,7 @@ const Jewellry = () => {
         <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 items-start">
           {/* Sidebar col (hidden on small screens) */}
           <div className="hidden md:block">
-            <SideBar />
+            <SideBar mainCategory="jewellery" />
           </div>
 
           {/* Products column */}
@@ -48,7 +48,7 @@ const Jewellry = () => {
 /> */}
 
 <ProductCard
-  category="jewelry"
+  category="jewellery"
   img={jFront}
   title="Round Solitaire Ring"
   price="₹79,153"
@@ -56,7 +56,7 @@ const Jewellry = () => {
 
 />
 <ProductCard
-  category="jewelry"
+  category="jewellery"
   img={jFront}
   title="Round Solitaire Ring"
   price="₹79,153"
@@ -64,7 +64,7 @@ const Jewellry = () => {
 
 />
 <ProductCard
-  category="jewelry"
+  category="jewellery"
   img={jFront}
   title="Round Solitaire Ring"
   price="₹79,153"
@@ -72,7 +72,7 @@ const Jewellry = () => {
 
 />
 <ProductCard
-  category="jewelry"
+  category="jewellery"
   img={jFront}
   title="Round Solitaire Ring"
   price="₹79,153"
@@ -80,7 +80,7 @@ const Jewellry = () => {
 
 />
 <ProductCard
-  category="jewelry"
+  category="jewellery"
   img={jFront}
   title="Round Solitaire Ring"
   price="₹79,153"

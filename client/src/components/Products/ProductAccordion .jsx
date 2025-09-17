@@ -50,11 +50,11 @@ const ProductAccordion  = () => {
   };
 
   return (
-     <div className="divide-y  w-1/2 divide-gray-200 mt-10">
+     <div className="divide-y  w-1/2 divide-gray-200 ">
       {sections.map((section, idx) => (
         <div key={idx} className="py-4">
           <button
-            className="flex justify-between w-full text-left text-lg font-regular text-gray-900 focus:outline-none"
+            className="flex justify-between w-full text-left text-lg font-semibold text-gray-900 focus:outline-none"
             onClick={() => toggleSection(idx)}
             aria-expanded={activeIndex === idx}
           >
