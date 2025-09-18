@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family:'playfair';
+    src: url(/fonts/PlayfairDisplay-VariableFont_wght.ttf) 
+}
+@font-face {
+    font-family:'playfair-italic';
+    src: url(/client/src/assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf) 
+}
+@font-face {
+  font-family:'montserrat';
+  src: url(/fonts/Montserrat-VariableFont_wght.ttf) 
+}
+:root{
+    --primary: #ffffff;
+  --secondary: #f5e6d7;
+  --text-color: #191919;
+}
+body{
+    background-color: var(--primary);
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+.navbar{
+  width: 100%;
+  height: 15vw;
+  position:absolute;
+  top: 0;
+  left: 0;
+  /* background: r; */
+  padding: 2.5rem 2rem;
+  z-index: 10;
+}
+.header{
+  width: 100%;
+  height: 2.5vw;
+  position: relative;
+  background: var(--text-color);
+  color: var(--primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1vw;
+  font-family: 'montserrat', sans-serif ;
+  z-index: 10000;
+}
+.navTop{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: start; */
+}
+.flex{
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+}
+.flex-center{
+  /* background: #000; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4vw ;
+}
+.hero-main{
+  height: 100vh;
+  width: 100%;
+  /* background-image: url(/src/assets/images/jewellry4.png); */
+  background-size: cover; /* image stretch na ho, cover kare */
+  /* background-position: center; image center align ho */
+  background-repeat: no-repeat;
+  position: relative;
+}
+.text-main{
+  font-family:'montserrat', sans-serif ;
+  font-weight: 100;
+  /* font-size: 3vw; */
+  /* background-color: rebeccapurple; */
+  /* line-height: 1; */
+}
+.text-main-inner{
+    font-family:'playfair' ;
+    font-style: italic;
+}
+.text-head-italic{
+  font-family: 'playfair-italic';
+ 
+}
