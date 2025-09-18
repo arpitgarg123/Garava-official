@@ -32,17 +32,15 @@ body, html{
 
 .navbar{
   width: 100%;
-  height: 20vw;
-  position:absolute;
+  height: 22vw;
+  position:fixed;
   top: 0;
   left: 0;
-  color: var(--text-color);
+
   padding: 2.5rem 2rem;
   z-index: 10;
   -webkit-font-smoothing: antialiased;
 }
-/* .navbar .dark-logo { display: none; }
-.navbar .light-logo { display: block; } */
 .navbar:has(.nav-items:hover) {
   background-color: white;
   color: var(--dark-text);
@@ -51,6 +49,15 @@ body, html{
 @media (min-width: 300px) {
  
 }
+.navbar svg {
+  color: currentColor;
+}
+
+.navbar .navTop h4 {
+  color: currentColor;
+}
+
+
 /* .navbar:has(.nav-items:hover) .dark-logo { display: block; }
 .navbar:has(.nav-items:hover) .light-logo { display: none; } */
 .header{
@@ -173,4 +180,9 @@ body, html{
 .btn:hover {
   background-color: #0c0c0c;          /* hover:bg-[#0c0c0c] */
   color: #f5e6d7;                     /* hover:text-[#f5e6d7] */
+}
+
+.sticky {
+  position: sticky;
+  position: -webkit-sticky;
 }

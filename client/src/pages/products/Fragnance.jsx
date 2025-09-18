@@ -4,13 +4,17 @@ import ProductCard from '../../components/Products/Products'
 import f1 from "../../assets/images/f-front.png";
 import f2 from "../../assets/images/fragnance.png";
 import f3 from "../../assets/images/fragnance1.png";
+import banner from "../../assets/images/fragnance-banner.png";
 import ProductDetails from '../../components/Products/ProductDetails';
 
 
 const Fragnance = () => {
   return (
      <>
-  <div className='mt-36'>
+      <div className='w-[85%] mx-auto h-[30vw] mt-20'>
+           <img className='h-full w-full object-cover' src={banner} alt="" />
+          </div>
+  <div className='w-full py-6'>
        <header className="head ">
           <div className="head-inner max-w-6xl mx-auto ">
             <h2 className="head-text text-3xl md:text-4xl">Jewelry</h2>

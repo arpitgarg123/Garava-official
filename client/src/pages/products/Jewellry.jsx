@@ -4,6 +4,7 @@ import Products from '../../components/Products/Products'
 import jFront from "../../assets/images/j-front.jpg";
 import jBack from "../../assets/images/j-back.jpg";
 import j from "../../assets/images/jewellry4.png";
+import banner from "../../assets/images/jewellry-banner.png";
 import j2 from "../../assets/images/j.jpg";
 import ProductCard from '../../components/Products/Products';
 
@@ -11,7 +12,10 @@ const Jewellry = () => {
 
   return (
      <>
-  <div className='mt-36'>
+     <div className='w-[85%] mx-auto h-[30vw] mt-20'>
+      <img className='h-full w-full object-cover' src={banner} alt="" />
+     </div>
+  <div className='w-full py-6'>
        <header className="head ">
           <div className="head-inner max-w-6xl mx-auto ">
             <h2 className="head-text text-3xl md:text-4xl">Jewelry</h2>
@@ -20,14 +24,13 @@ const Jewellry = () => {
         </header>
 <div className="w-[95%] max-w-7xl mx-auto ">
         {/* grid: 280px sidebar + fluid product area */}
-        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 items-start">
-          {/* Sidebar col (hidden on small screens) */}
-          <div className="hidden md:block">
+        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 items-start relative">
+         
             <SideBar mainCategory="jewellery" />
-          </div>
+    
 
           {/* Products column */}
-         <main>
+         <main className="min-h-screen">
             <div className="flex items-center justify-between mb-6">
               <div className="text-sm text-gray-600">Showing 20 products</div>
               <div>

@@ -28,14 +28,15 @@ const Jewellry = () => {
           <div className="products-grid">
            
              {products.map((p) => (
-               <Link to='/product_details'>
+            
               <Card key={p.id} img={p.img} title={p.title} price={p.price}  />
-                </Link>
+            
             ))}
+            
           
           </div>
 
-          <div className="flex-center mt-12 text-center">
+          <div className="flex-center mt-10 text-center">
            <Link  to='/jewelry'>
             <button 
             

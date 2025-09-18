@@ -1,9 +1,8 @@
-import { useState } from 'react';
-// import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import NavItem from './Navitems.jsx';
 import Header from '../header/Header.jsx';
 import { CiSearch } from "react-icons/ci";
-import { FaRegHeart } from "react-icons/fa";
 import { CiUser } from "react-icons/ci";
 import { CiHeart } from "react-icons/ci";
 import { IoBagHandleOutline } from "react-icons/io5";
@@ -49,28 +48,68 @@ const navItems = [
   ] },
 ];
 const Navbar = () => {
+  const location = useLocation();
+  const isHeroPage = location.pathname === '/';
   const [hovered, setHovered] = useState(null);
   const isNavActive = Boolean(hovered);
+  const [lastScrollY, setLastScrollY] = useState(0); // Keeps track of last scroll position
+  const [isHidden, setIsHidden] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrolled(currentScrollY > 50);
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        // Scrolling down
+        setIsHidden(true);
+      } else {
+        // Scrolling up
+        setIsHidden(false);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
+  const navTextColor = isHeroPage && !scrolled ? 'text-white' : 'text-black';
+
+    const getLogoSrc = () => {
+    if (isHeroPage) {
+      return (scrolled || isNavActive) ? darkLogo : lightLogo;
+    } else {
+      return darkLogo;
+    }
+  };
+  const shouldShowNavItems = isHeroPage && !scrolled;
+
   return (
    <>
    <Header />
-   <nav  className={`navbar max-sm:hidden`}
+   <nav  className={`navbar max-sm:hidden ${
+    isHidden ? '-translate-y-48 duration-700' : 'translate-y-0 duration-700'
+   }  ${navTextColor} ${scrolled ? 'visible' : 'bg-transparent'}`}
         role="navigation"
         aria-label="Main navigation"
         >
     <div className='navTop relative '>
-        <div className='flex justify-between  w-72 font-light'>
+        <div className='flex justify-between  w-72 bg-amber-00 font-light'>
             <CiSearch size={25} aria-hidden="true"/>
-            <h4>Contact us</h4>
-            <h4>book an appointment</h4>
+            <h4 className='font-medium text-sm'>Contact us</h4>
+            <h4 className='font-medium text-sm'>book an appointment</h4>
             {/* <button className='bg-[#f5e6d7] px-6 py-1 text-black rounded-xl font-semibold '>Contact us</button> */}
         </div>
-        {/* <img className='light-logo h-18 w-60 ' src="./src/assets/images/light-logo.png" alt="" />
-        <img  className='dark-logo h-18 w-60 absolute left-[43.2%] top-1 ' src="./src/assets/images/logo-main.png" alt="" /> */}
+      
         
             <img
-              className="h-18 w-60 object-contain  transition duration-500"
-              src={isNavActive ? darkLogo : lightLogo}
+              className="h-18 w-60 object-contain  "
+              src={getLogoSrc()}
               alt="Dark logo"
             />
           
@@ -82,8 +121,9 @@ const Navbar = () => {
 
          </div>
     </div>
-    <div className='flex-center '>
-       {navItems.map((item, idx) => (
+    {shouldShowNavItems && (
+      <div className='flex-center'>
+        {navItems.map((item, idx) => (
           <NavItem
             key={idx}
             item={item}
@@ -91,7 +131,8 @@ const Navbar = () => {
             setHovered={setHovered}
           />
         ))}
-    </div>
+      </div>
+    )}
    </nav>
    </>
   );
