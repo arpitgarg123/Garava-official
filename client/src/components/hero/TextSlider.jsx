@@ -6,8 +6,8 @@ const TextSlider = ({ isFragrance }) => {
 
   useEffect(() => {
     const newHTML = isFragrance
-      ? '<h1 className="text-main text-3xl"> <span class="text-main-inner">Fragnance,</span> that  speak your story.</h1>'
-      : '<h1 className="text-main text-3xl">In every <span class="text-main-inner">Jewelry,</span> a <br />  memory lingers.</h1>';
+      ? '<h1 className="text-main text-3xl"> <span class="text-main-italic">Fragnance,</span> that  speak your story.</h1>'
+      : '<h1 className="text-main text-3xl">In every <span class="text-main-italic">Jewelry,</span> a <br />  memory lingers.</h1>';
 
     gsap.to(textRef.current, {
       y: -40,
@@ -30,7 +30,7 @@ const TextSlider = ({ isFragrance }) => {
       ref={textRef}
       className="text-main text-gray-900 text-center leading-14 text-5xl "
     >
-      In every <span className="text-main-inner">Jewelry,</span> a <br /> memory lingers
+      In every <span className="text-main-italic">Jewelry,</span> a <br /> memory lingers
     </div>
   );
 };
