@@ -102,10 +102,10 @@ Cart (shopping experience) ✅
 
 📌 After Orders (Phase 6+)
 
-Wishlist / Favorites (optional) 
+Wishlist / Favorites (optional) ✅
 
-Reviews & Ratings (social proof)
+Reviews & Ratings (social proof) ✅
 
-Categories / Tags (filtering products better)
+Categories / Tags (filtering products better) 
 
-Payment/Transactions (integrate Razorpay, Stripe, etc.)
+Payment/Transactions (integrate Razorpay) ✅ testing is not done on this

@@ -1,5 +1,3 @@
-// src/modules/order/order.admin.controller.js
-
 import { asyncHandler } from "../../../shared/utils/asyncHandler.js";
 import * as service from "./order.admin.service.js";
 
@@ -18,4 +16,12 @@ export const updateOrderStatusAdmin = asyncHandler(async (req, res) => {
   const { status, tracking } = req.body;
   const order = await service.updateOrderStatusService(req.params.id, status, tracking);
   res.json({ success: true, order });
+});
+
+export const refundOrder = asyncHandler(async (req, res) => {
+  const adminId = req.user.id;
+  const orderId = req.params.orderId;
+  const { amountPaise, reason } = req.body; // amountPaise optional => full refund
+  const result = await service.refundOrderService(orderId, amountPaise, reason, adminId);
+  res.json({ success: true, result });
 });

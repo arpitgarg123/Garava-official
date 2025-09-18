@@ -73,4 +73,9 @@
  # update-cart
  # remove items from cart
  # clear cart
- 
+
+# # wishlist Features
+ # add-to-wishlist
+ # remove-to-wishlist
+ # get-wishlist
+ # toggle-product-items

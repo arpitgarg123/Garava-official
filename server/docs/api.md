@@ -605,4 +605,88 @@
 **Endpoint:** `DELETE /api/cart/`
 **Description:** this route clear all the items from the cart
 
+# # wishlist Features
 
+### add to wishlist
+**Endpoint:** `POST /api/wishlist/:productId` example `POST /api/wishlist/68c5cafba86abb6262ddf0dd`
+**Description:** this route add the product to the wishlist
+
+
+### remove to wishlist
+**Endpoint:** `DELETE /api/wishlist/:productId` example `DELETE /api/wishlist/68c5cafba86abb6262ddf0dd`
+**Description:** this route remove the product to the wishlist
+
+### get wishlist
+**Endpoint:** `GET /api/wishlist/` example `GET /api/wishlist/`
+**Description:** this route get all the items of the wishlist
+
+
+### toogle product items
+**Endpoint:** `GET /api/wishlist/toggle/:productId` example `GET /api/wishlist/toggle/68c5cafba86abb6262ddf0dd`
+**Description:** this route toggle the products of the wishlist if added remove and if not added it add it
+
+
+# # Review Feature (Admin + User)
+
+### list-reviews (public)
+**Endpoint:** `get /api/reviews/`  
+**Description:** lists reviews for a product. Supports pagination and sorting.  
+
+### create-or-update-review (user)
+**Endpoint:** `post /api/reviews/:productId`  
+**Description:** creates or replaces the logged-in user’s review for the product.  
+**Request Body:**
+```json
+{
+  "rating": 5,
+  "title": "Amazing fragrance",
+  "body": "Long lasting and premium feel.",
+  "photos": []
+}
+```
+
+### update-review (user)
+**Endpoint:** `put /api/reviews/:reviewId`  
+**Description:** updates own review (partial update allowed).  
+**Request Body**
+```json
+{
+  "rating": 4,
+  "title": "Updated title",
+  "body": "Edited after a week of use.",
+  "photos": []
+}
+```
+
+### vote-helpful (user)
+**Endpoint:** `post /api/reviews/:reviewId/vote`  
+**Description:** marks a review as helpful (may accept a `type`).  
+**Auth:** required  
+**Request Body (optional):**
+```json
+{
+  "type": "helpful"
+}
+```
+
+### admin-list-reviews
+**Endpoint:** `get /api/reviews/admin`  
+**Description:** lists reviews with admin filters.  
+
+### admin-moderate-review
+**Endpoint:** `post /api/reviews/admin/:reviewId/moderate`  
+**Description:** approve/deny/flag a review with optional note.  
+**Auth:** admin required  
+**Request Body:**
+```json
+{
+  "approve": true,
+  "deny": false,
+  "flag": false,
+  "note": "Meets guidelines"
+}
+```
+
+### admin-delete-review
+**Endpoint:** `delete /api/reviews/:reviewId`  
+**Description:** deletes a review (typically soft-delete).

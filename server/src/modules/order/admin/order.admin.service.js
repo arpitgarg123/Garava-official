@@ -53,3 +53,38 @@ export const updateOrderStatusService = async (id, status, tracking) => {
   await order.save();
   return order;
 };
+
+
+export const refundOrderService = async (orderId, amountPaise, reason, adminId) => {
+  const order = await Order.findById(orderId);
+  if (!order) throw new ApiError(404, "Order not found");
+
+  if (!order.payment || !order.payment.gatewayPaymentId) throw new ApiError(400, "No gateway payment to refund");
+
+  // default full refund
+  const refundAmount = amountPaise || order.grandTotalPaise;
+
+  const refundRes = await refundRazorpayPayment({
+    paymentId: order.payment.gatewayPaymentId,
+    amountPaise: refundAmount,
+    notes: { orderId: String(orderId), reason: reason || "refund" }
+  });
+
+  order.payment.refunds = order.payment.refunds || [];
+  order.payment.refunds.push({
+    id: refundRes.id || refundRes.entity?.id,
+    amount: refundAmount,
+    status: refundRes.status || "initiated",
+    createdAt: new Date(),
+    providerResponse: refundRes
+  });
+
+  // if full refund, mark order refunded
+  if (!amountPaise || refundAmount >= order.grandTotalPaise) {
+    order.payment.status = "refunded";
+    order.status = "refunded";
+  }
+  order.history.push({ status: "refunded", by: adminId, note: reason || "", at: new Date() });
+  await order.save();
+  return order;
+};

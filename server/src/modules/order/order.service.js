@@ -33,12 +33,12 @@ export const createOrderService = async ({ userId, items, shippingAddress, payme
   if (!userId) throw new ApiError(401, "Unauthorized");
   if (!Array.isArray(items) || items.length === 0) throw new ApiError(400, "No items provided");
 
-  // simple idempotency pre-check (non-transactional quick path)
+  // idempotency quick return
   if (idempotencyKey) {
-    const mapped = await Idempotency.findOne({ key: idempotencyKey }).lean();
-    if (mapped && mapped.orderId) {
-      const existing = await Order.findById(mapped.orderId).lean();
-      if (existing) return { order: existing, gatewayOrder: null, reused: true };
+    const idem = await Idempotency.findOne({ key: idempotencyKey }).lean();
+    if (idem && idem.orderId) {
+      const existing = await Order.findById(idem.orderId);
+      if (existing) return { order: existing };
     }
   }
 
@@ -50,116 +50,101 @@ export const createOrderService = async ({ userId, items, shippingAddress, payme
 
   try {
     const lineItems = [];
-    let subtotalPaise = 0;
+    let subtotal = 0; // paise
 
-    // Reserve stock (atomic decrement) and build snapshots
     for (const it of items) {
-      // resolve product + variant
-      let product;
-      let variant;
+      let product, variant;
       if (it.variantId) {
         product = await Product.findOne({ "variants._id": it.variantId }).session(session);
-        if (!product) throw new ApiError(404, "Product not found");
-        variant = product.variants.id(it.variantId);
+        variant = product?.variants.id(it.variantId);
       } else if (it.sku) {
         product = await Product.findOne({ "variants.sku": it.sku }).session(session);
-        if (!product) throw new ApiError(404, "Product not found");
-        variant = product.variants.find(v => v.sku === it.sku);
+        variant = product?.variants.find(v => v.sku === it.sku);
       } else {
         throw new ApiError(400, "variantId or sku required");
       }
+      if (!product || !variant) throw new ApiError(404, "Variant not found");
 
-      if (!variant) throw new ApiError(404, "Variant not found");
-
-      // stock check + decrement atomically using session
-      const upd = await Product.findOneAndUpdate(
+      // Stock check & reserve (atomic)
+      const dec = await Product.findOneAndUpdate(
         { _id: product._id, "variants._id": variant._id, "variants.stock": { $gte: it.quantity } },
         { $inc: { "variants.$.stock": -it.quantity } },
-        { new: true, session }
+        { session, new: true }
       );
-      if (!upd) throw new ApiError(400, `Insufficient stock for ${variant.sku}`);
+      if (!dec) throw new ApiError(400, `Insufficient stock for ${variant.sku}`);
 
-      // determine unit price in paise; assume variant.price already stored in paise.
-      const unitPricePaise = ensurePaise(variant.price);
-      const mrpPaise = variant.mrp ? ensurePaise(variant.mrp) : 0;
-      const lineTotal = unitPricePaise * Number(it.quantity);
-
-      subtotalPaise += lineTotal;
+      // convert price to paise
+      const unitPricePaise = toPaise(variant.price);
+      const lineTotal = unitPricePaise * it.quantity;
+      subtotal += lineTotal;
 
       lineItems.push({
         product: product._id,
-        productSnapshot: {
-          name: product.name,
-          slug: product.slug,
-          heroImage: product.heroImage?.url || product.heroImage || null,
-          type: product.type || null
-        },
+        productSnapshot: { name: product.name, slug: product.slug, heroImage: product.heroImage, type: product.type },
         variantId: variant._id,
         variantSnapshot: { sku: variant.sku, sizeLabel: variant.sizeLabel, images: variant.images || [] },
-        quantity: Number(it.quantity),
-        unitPrice: unitPricePaise,
-        mrp: mrpPaise,
-        taxAmount: 0,
-        discountAmount: 0,
-        lineTotal
+        quantity: it.quantity,
+        unitPricePaise,
+        mrpPaise: toPaise(variant.mrp || 0),
+        taxAmountPaise: 0,
+        discountAmountPaise: 0,
+        lineTotalPaise: lineTotal,
       });
-    } // end items loop
+    }
 
-    // compute shipping, tax, discounts (paise)
-    const shippingTotal = 0; // implement later
-    const taxTotal = 0;
-    const discountTotal = 0;
-    const grandTotalPaise = subtotalPaise + shippingTotal + taxTotal - discountTotal;
+    // compute totals (all paise)
+    const shippingTotalPaise = 0;
+    const taxTotalPaise = 0;
+    const discountTotalPaise = 0;
+    const grandTotalPaise = subtotal + shippingTotalPaise + taxTotalPaise - discountTotalPaise;
 
-    // create order doc inside transaction
     const orderNumber = await generateOrderNumber();
-    const [created] = await Order.create([{
+    const createdArr = await Order.create([{
       orderNumber,
       user: userId,
       userSnapshot: { name: user.name, email: user.email, phone: user.phone },
       items: lineItems,
-      subtotal: subtotalPaise,
-      taxTotal,
-      shippingTotal,
-      discountTotal,
-      grandTotal: grandTotalPaise,
+      subtotalPaise: subtotal,
+      taxTotalPaise,
+      shippingTotalPaise,
+      discountTotalPaise,
+      grandTotalPaise,
       currency: "INR",
       shippingAddress,
       payment: { method: paymentMethod, status: paymentMethod === "cod" ? "unpaid" : "pending" },
       status: paymentMethod === "cod" ? "processing" : "pending_payment",
       idempotencyKey,
-      history: [{ status: paymentMethod === "cod" ? "processing" : "pending_payment", by: userId, at: new Date() }]
+      history: [{ status: paymentMethod === "cod" ? "processing" : "pending_payment", by: userId, at: new Date() }],
     }], { session });
 
-    // record idempotency mapping (unique index on key recommended)
+    const createdOrder = createdArr[0];
+
     if (idempotencyKey) {
-      await Idempotency.create([{ key: idempotencyKey, orderId: created._id }], { session });
+      await Idempotency.create([{ key: idempotencyKey, orderId: createdOrder._id }], { session });
     }
 
-    // commit transaction BEFORE creating external gateway order (best practice)
+    // commit transaction BEFORE calling Razorpay
     await session.commitTransaction();
     session.endSession();
 
-    // If online payment, create gateway order AFTER commit (so external system references persistent order)
+    // If online payment, create Razorpay order AFTER commit
     let gatewayOrder = null;
     if (paymentMethod === "razorpay") {
-      // grandTotalPaise is already paise
-      gatewayOrder = await createRazorpayOrder({
-        amountPaise: grandTotalPaise,
+      const rpOrder = await createRazorpayOrder({
+        amountPaise: createdOrder.grandTotalPaise,
         currency: "INR",
-        receipt: String(created._id),
-        notes: { orderId: String(created._id) }
+        receipt: createdOrder._id,
+        notes: { orderNumber }
       });
-
-      // attach gatewayOrderId to order (non-transactional update permitted)
-      await Order.findByIdAndUpdate(created._id, { $set: { "payment.gatewayOrderId": gatewayOrder.id } });
+      // Save gateway order id on order
+      createdOrder.payment.gatewayOrderId = rpOrder.id;
+      await createdOrder.save();
+      gatewayOrder = rpOrder;
     }
 
-    // return fresh order
-    const order = await Order.findById(created._id).lean();
-    return { order, gatewayOrder };
+    return { order: createdOrder, gatewayOrder };
   } catch (err) {
-    await session.abortTransaction().catch(() => {});
+    await session.abortTransaction();
     session.endSession();
     throw err;
   }

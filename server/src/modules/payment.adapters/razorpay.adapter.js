@@ -1,58 +1,38 @@
-// src/modules/payment.adapters/razorpay.adapter.js
 import Razorpay from "razorpay";
 import crypto from "crypto";
 
-/**
- * Verify razorpay signature for incoming webhook
- * @param {string} rawBody - exact raw string sent by gateway (req.rawBody)
- * @param {string} headerSignature - req.headers['x-razorpay-signature']
- * @param {string} secret - your webhook secret
- * @returns {boolean}
- */
-
-
-const razor = new Razorpay({
+const client = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 /**
- * Create razorpay order for the given amount (in paise)
+ * Create Razorpay order
+ * amountPaise: integer
  */
-export const createRazorpayOrder = async ({ amountPaise, currency = "INR", receipt }) => {
+export const createRazorpayOrder = async ({ amountPaise, currency = "INR", receipt, notes = {} }) => {
   const payload = {
     amount: amountPaise,
     currency,
-    receipt,
-    payment_capture: 1 // auto-capture
+    receipt: String(receipt),
+    payment_capture: 1, // auto capture
+    notes,
   };
-  const order = await razor.orders.create(payload);
-  return order; // order.id, amount, currency, etc
+  const order = await client.orders.create(payload);
+  return order;
+};
+
+export const refundRazorpayPayment = async ({ paymentId, amountPaise, notes = {} }) => {
+  const res = await client.payments.refund(paymentId, { amount: amountPaise, notes });
+  return res;
 };
 
 /**
- * Verify webhook signature
+ * Verify Razorpay webhook signature
+ * req.rawBody must be preserved (see express setup)
  */
-export const verifyRazorpaySignature = (rawBody, headerSignature, secret) => {
-  if (!rawBody || !headerSignature || !secret) return false;
-  const expected = crypto.createHmac("sha256", secret).update(rawBody, "utf8").digest("hex");
-  return expected === headerSignature;
+export const verifyRazorpaySignature = (rawBody, signature, webhookSecret) => {
+  if (!rawBody || !signature || !webhookSecret) return false;
+  const expected = crypto.createHmac("sha256", webhookSecret).update(rawBody, "utf8").digest("hex");
+  return expected === signature;
 };
-
-/**
- * Verify payment signature on client callback (if using client-side)
- */
-export const verifyPaymentSignature = ({ order_id, payment_id, signature }, keySecret) => {
-  const hmac = crypto.createHmac("sha256", keySecret).update(order_id + "|" + payment_id).digest("hex");
-  return hmac === signature;
-};
-
-/**
- * Refund stub (implement as needed)
- */
-export const refundPayment = async ({ paymentId, amountPaise }) => {
-  // e.g., razor.payments.refund(paymentId, { amount: amountPaise })
-  return await razor.payments.refund(paymentId, { amount: amountPaise });
-};
-
-export default razor;

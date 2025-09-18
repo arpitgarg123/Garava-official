@@ -47,44 +47,62 @@ export const getOrder = asyncHandler(async (req, res) => {
  * - Route: POST /webhooks/payments/razorpay
  */
 export const paymentWebhook = asyncHandler(async (req, res) => {
-  const secret = process.env.RAZORPAY_KEY_SECRET;
-  const header = req.headers["x-razorpay-signature"];
-  // verify signature (make sure your express setup preserved raw body)
-  const ok = verifyRazorpaySignature(req.rawBody, header, secret);
-  
+  const sig = req.headers["x-razorpay-signature"];
+  const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
+  const ok = verifyRazorpaySignature(req.rawBody, sig, secret);
   if (!ok) {
     return res.status(400).json({ success: false, message: "Invalid signature" });
   }
 
-  const payload = req.body;
-  // handle event types: payment.captured / payment.failed / order.paid etc.
-  // Keep it simple: on payment.captured find order by payload.payload.payment.entity.order_id or payload.payload.payment.entity.notes.receipt
+  const payload = req.body; // parsed JSON; raw in req.rawBody was used for verification
   const event = payload.event;
 
+  // handle payment.captured (common)
   if (event === "payment.captured") {
     const paymentEntity = payload.payload.payment.entity;
-    // gatewayOrderId is order_id
     const gatewayOrderId = paymentEntity.order_id;
     const gatewayPaymentId = paymentEntity.id;
-    // find order by gatewayOrderId
+
+    // Find order by gatewayOrderId - idempotent update
     const order = await Order.findOne({ "payment.gatewayOrderId": gatewayOrderId });
     if (!order) {
-      // optionally search by receipt mapping - depends on how you set receipt
+      // optionally: search by receipt notes if you stored createdOrder._id in notes
       return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    // Ignore if already paid
+    if (order.payment && order.payment.status === "paid") {
+      return res.json({ success: true, message: "Already processed" });
     }
 
     order.payment.gatewayPaymentId = gatewayPaymentId;
     order.payment.status = "paid";
     order.payment.paidAt = new Date();
+    order.payment.gatewayPaymentStatus = paymentEntity.status;
     order.payment.providerResponse = paymentEntity;
-    order.status = "paid";
+    order.status = "processing"; // move to processing for fulfillment
+    order.history = order.history || [];
     order.history.push({ status: "paid", by: null, note: `Payment captured ${gatewayPaymentId}`, at: new Date() });
+
     await order.save();
 
-    // enqueue email notification/job here (not implemented)
+    // enqueue fulfillment/email job here if needed
     return res.json({ success: true });
   }
 
-  // other events...
+  // event: payment.failed
+  if (event === "payment.failed") {
+    const paymentEntity = payload.payload.payment.entity;
+    const gatewayOrderId = paymentEntity.order_id;
+    const order = await Order.findOne({ "payment.gatewayOrderId": gatewayOrderId });
+    if (!order) return res.json({ success: true });
+    order.payment.status = "failed";
+    order.payment.providerResponse = paymentEntity;
+    order.history.push({ status: "payment_failed", by: null, note: "Payment failed", at: new Date() });
+    await order.save();
+    return res.json({ success: true });
+  }
+
+  // respond OK for other events
   return res.json({ success: true });
 });

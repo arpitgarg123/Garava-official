@@ -64,6 +64,8 @@ export const generateOrderNumber = async (prefix = "GAR") => {
  * Money helper (unchanged)
  */
 export const toPaise = (amount) => {
-  if (Number.isInteger(amount)) return amount;
+  if (amount == null) return 0;
+  // if integer already likely paise
+  if (Number.isInteger(amount) && amount > 1000) return amount;
   return Math.round(Number(amount) * 100);
 };
