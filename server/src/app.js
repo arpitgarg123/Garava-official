@@ -10,9 +10,21 @@
   import rateLimit from 'express-rate-limit';
   import { env } from './config/env.js';
   import { logger } from './shared/logger.js'; 
+import { errorHandler } from './shared/utils/errorHandler.js';
+
+// router imports
+import authRouter from './modules/auth/auth.router.js';
+import userRouter from './modules/user/user.router.js';
+import orderRouter from "./modules/order/order.router.js";
+import addressRouter from "./modules/address/address.router.js";
+import adminProductRouter from "./modules/product/admin/product.admin.router.js";
+import productRouter from "./modules/product/product.router.js";
+import adminOrderRouter from "./modules/order/admin/order.admin.router.js";
+import cartRouter from "./modules/cart/cart.router.js"; 
+import wishlistRouter from "./modules/wishlist/wishlist.router.js";
+import reviewRouter from "./modules/review/review.router.js";
 
   // routers
-
   const app = express();
   const port = env.PORT || 3000;
 
@@ -23,8 +35,17 @@
       credentials: true,
     })
   );
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+
+ app.use(express.json({
+  verify: (req, res, buf) => {
+    if (buf && buf.length) {
+      req.rawBody = buf.toString("utf8");
+    }
+  },
+  limit: "1mb"
+}));
+
+ app.use(express.urlencoded({ extended: true, verify: (req, res, buf) => { req.rawBody = buf.toString("utf8"); } }));
   app.use(cookieParser());
 
   if (env.NODE_ENV === 'production') {
@@ -39,6 +60,7 @@
     standardHeaders: true,
     legacyHeaders: false,
   });
+
   app.use('/api', limiter);
 
   app.get('/healthz', (_, res) =>
@@ -47,6 +69,22 @@
       uptime: process.uptime(),
     })
   );
+
+  // routes
+
+  app.use('/api/auth', authRouter);
+  app.use('/api/user', userRouter);
+  app.use("/api/address", addressRouter); 
+  app.use("/api/admin/product", adminProductRouter);
+  app.use("/api/product", productRouter);
+  app.use("/api/order", orderRouter);
+  app.use("/api/admin/order", adminOrderRouter);
+  app.use("/api/cart", cartRouter);
+  app.use("/api/wishlist", wishlistRouter);
+  app.use("/api/reviews", reviewRouter);
+
+  // global error handler
+  app.use(errorHandler);
 
   const start = async () => {
     try {
@@ -71,5 +109,5 @@
   }); 
 
   start();
-  export default app; 
+  
  
