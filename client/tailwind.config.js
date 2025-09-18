@@ -7,11 +7,12 @@ export default {
         primary: '#F3F3F3',   // light gray
         secondary: '#f5e6d7', 
         textColor: '#191919', // black
+        darkText: '#0c0c0c', // black
       },
-    //  fontFamily: {
-    //     playfair: ["playfair", "serif"],
-    //     montserrat: ["montserrat", "sans-serif"],
-    //   },
+     fontFamily: {
+        playfair: ["playfair"],
+        montserrat: ["montserrat"],
+      },
       borderRadius: {
         '2xl': '1rem',
         '3xl': '1.5rem',

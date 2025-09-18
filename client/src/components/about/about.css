@@ -1,0 +1,16 @@
+/* about.css - small helper visuals for About components */
+
+.font-playfair { font-family: "Playfair Display", serif; } 
+
+.text-main-inner { color: #0b1220; } 
+
+.about-line-inner {
+  display: inline-block;
+  transform: translateY(100%);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  .text-5xl { font-size: 2rem; } 
+  .about-line-inner { font-size: 1rem; }
+}
