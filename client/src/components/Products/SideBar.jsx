@@ -44,16 +44,19 @@ const SideBar = ({ mainCategory = "jewellery", onApply }) => {
   };
 
   return (
-     <aside className="w-full max-w-[280px]">
-      <div className=" sticky top-24">
-        <PriceFilter value={price} onChange={setPrice} onApply={handleApply} />
-        <hr className="my-6 border-gray-200" />
-        <CategoryFilter selected={category} onChange={setCategory} categories={subCategories} />
-        <hr className="my-6 border-gray-200" />
-       {detectedCategory === "jewellery" && <ColorFilter selected={colors} onChange={setColors} />}
-      </div>
+     <aside className="sticky top-0 w-full max-w-[280px]">
+      <div className="bg-white h-[calc(100vh-120px)] ">
+      <div className="space-y-6 pr-4">
+          <PriceFilter value={price} onChange={setPrice} onApply={handleApply} />
+          <hr className="border-gray-200" />
+          <CategoryFilter selected={category} onChange={setCategory} categories={subCategories} />
+          <hr className="border-gray-200" />
+          {detectedCategory === "jewellery" && <ColorFilter selected={colors} onChange={setColors} />}
+        </div>
+        </div>
     </aside>
   )
 }
+
 
 export default SideBar

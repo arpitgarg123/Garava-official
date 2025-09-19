@@ -9,9 +9,9 @@ signup login all done ✅
 side bar fix ✅
 product pages are done but not responsive
 product details page are done but not responsive
-newsletter not done and not responsive
-footer not done and not responisve
-navbar fix krna h 
+newsletter not responsive
+footer not responisve
+navbar fix ✅
 
 
 
@@ -29,6 +29,10 @@ add instagram or google reviews section✅
 footer add garava logo at the centerd ✅
 
 
+    *** integration**
+    i have create features folder and usme auth folder h so use dekh lo slice.js me pta hi h kya hoga or api.js me mene dammy api bna di tm original laga dena. and ab jo bhi chize hongi features wagera to is folder me ese hi manage krna ok
+
+    and tm shared folder k andar api folder me http.js dekh lena baseurl he isme
 
 
 

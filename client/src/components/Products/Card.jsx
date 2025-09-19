@@ -1,6 +1,7 @@
 import React from 'react'
 
 import './product.css'
+import { Link } from 'react-router-dom'
 
 const Card = ({img,title = "Product", price = ""}) => {
   return (
@@ -15,7 +16,12 @@ const Card = ({img,title = "Product", price = ""}) => {
           height="800"
         />
         <div className="overlay" aria-hidden="true">
-          <p className="overlay-text">Feel This Piece</p>
+         
+                         <Link to='/product_details' className="overlay-text">
+                         Feel This Piece
+                          </Link>
+                    
+          
         </div>
       </div>
 

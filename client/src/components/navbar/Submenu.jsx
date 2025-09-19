@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 const Submenu = ({ sub }) =>{
   return (
     <motion.div
-      className="flex flex-col items-center w-32 cursor-pointer group"
+      className="flex flex-col items-center w-32 cursor-pointer  group"
       whileHover={{ scale: 1.05 }}
       onMouseEnter={(e) => {
         gsap.to(e.currentTarget.querySelector('img'), {

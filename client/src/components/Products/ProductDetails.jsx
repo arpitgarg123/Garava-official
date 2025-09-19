@@ -6,7 +6,7 @@ import j2 from "../../assets/images/j.jpg";
 const ProductDetails = () => {
   
   return (
-    <div className='w-full flex px-20 py-34 flex-col '>
+    <div className='w-full flex px-20 py-34  flex-col '>
       <div className='flex justify-start  w-full items-center '>
          <div className='w-[30vw] h-[35vw] bg-gray-200 self-start'>
         <img className='h-full w-full object-cover' src={j2} alt="" />
