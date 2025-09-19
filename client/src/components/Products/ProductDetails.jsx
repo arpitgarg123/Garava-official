@@ -1,12 +1,16 @@
 import React from 'react'
 import ProductAccordion from './ProductAccordion '
 import j2 from "../../assets/images/j.jpg";
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const ProductDetails = () => {
-  
+  const navigate = useNavigate()
   return (
-    <div className='w-full flex px-20 py-34  flex-col '>
+    
+    <>
+    
+    <div  className='w-full flex px-20 py-34  flex-col '>
       <div className='flex justify-start  w-full items-center '>
          <div className='w-[30vw] h-[35vw] bg-gray-200 self-start'>
         <img className='h-full w-full object-cover' src={j2} alt="" />
@@ -23,14 +27,14 @@ const ProductDetails = () => {
            
             <h3>SKU: FRG/007</h3>
             <div className='flex justify-between'>
-            <button className='bg-black text-white w-1/2 py-2 tracking-widest mt-5 hover:bg-transparent hover:text-black transition duration-300 border'>ADD TO BAG </button>
-            <button className='border w-1/2 py-2 tracking-widest mt-5 hover:bg-black hover:text-white transition duration-300'>BUY NOW </button>
+            <button onClick={() => navigate('/cart')}  className='bg-black text-white w-1/2 py-2 tracking-widest mt-5 hover:bg-transparent hover:text-black transition duration-300 border'>ADD TO BAG </button>
+            <button onClick={() => navigate('/checkout')} className='border w-1/2 py-2 tracking-widest mt-5 hover:bg-black hover:text-white transition duration-300'>BUY NOW </button>
             <button className='border w-1/3 py-2 tracking-widest mt-5 hover:bg-black hover:text-white transition duration-300'>ADD WISHLIST </button>
       </div>
       <div className='flex items-center justify-between  mt-12'>
         <h2 className='text-2xl font-medium   self-end '>Customize your Jewelry Design</h2>
+        
                     <button className='bg-black text-white w-1/3 py-2 tracking-widest mt-5 hover:bg-transparent hover:text-black transition duration-300 border uppercase'>Book an appointment</button>
-
       </div>
       <div className='mt-5'>
         <h1 className='text-2xl font-semibold'>Product Description</h1>
@@ -50,6 +54,8 @@ const ProductDetails = () => {
       </div>
       </div>
     </div>
+    
+    </>
   )
 }
 

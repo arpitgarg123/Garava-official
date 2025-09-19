@@ -17,9 +17,9 @@ const navItems = [
       { label: 'Unisex gifts', img: './src/assets/images/jewellry4.png' },
   ] },
   { title: 'HIGH JEWELLERY ', submenu: [
-     { label: 'Gifts for her', img: '/images/for-her.jpg' },
-      { label: 'Gifts for him', img: '/images/for-him.jpg' },
-      { label: 'Unisex gifts', img: '/images/unisex.jpg' },
+     { label: 'fragnance', img: './src/assets/images/fragnance1.png' },
+      { label: 'jewelry', img: './src/assets/images/jewellry4.png' },
+      { label: 'jewelry', img: './src/assets/images/fragnance.png' },
   ] },
   { title: 'Fragrance', submenu: [
      { label: 'Gifts for her', img: './src/assets/images/fragnance1.png' },
@@ -27,24 +27,21 @@ const navItems = [
       { label: 'Unisex gifts', img: './src/assets/images/f.png' },
   ] },
   { title: 'Services', submenu: [
-     { label: 'Gifts for her', img: '/images/for-her.jpg' },
-      { label: 'Gifts for him', img: '/images/for-him.jpg' },
-      { label: 'Unisex gifts', img: '/images/unisex.jpg' },
+     { label: 'book an appointment', img: '/images/for-her.jpg' },
+      { label: 'FAQ', img: '/images/for-him.jpg' },
+
   ] },
   { title: 'About Us', submenu: [
-     { label: 'Gifts for her', img: '/images/for-her.jpg' },
-      { label: 'Gifts for him', img: '/images/for-him.jpg' },
-      { label: 'Unisex gifts', img: '/images/unisex.jpg' },
+     { label: 'Our Story', img: '/images/for-her.jpg' },
   ] },
   {title: 'Blogs', submenu: [
-     { label: 'Gifts for her', img: '/images/for-her.jpg' },
-      { label: 'Gifts for him', img: '/images/for-him.jpg' },
-      { label: 'Unisex gifts', img: '/images/unisex.jpg' },
+     { label: 'Jewelry', img: '/images/for-her.jpg' },
+      { label: 'Fragnance', img: '/images/for-him.jpg' },
+      { label: 'GARAVA', img: '/images/unisex.jpg' },
   ]},
   { title: 'News & Events', submenu: [
-     { label: 'Gifts for her', img: '/images/for-her.jpg' },
-      { label: 'Gifts for him', img: '/images/for-him.jpg' },
-      { label: 'Unisex gifts', img: '/images/unisex.jpg' },
+     { label: 'Media Covarage', img: '/images/for-her.jpg' },
+      { label: 'Events', img: '/images/for-him.jpg' },
   ] },
 ];
 const Navbar = () => {

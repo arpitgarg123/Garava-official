@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import AboutHeading from '../components/about/AboutHeading';
 import AboutText from '../components/about/AboutText';
 
@@ -17,12 +17,15 @@ const About = () => {
           className="text-xl text-center mx-auto max-w-3xl tracking-tight leading-8 text-head-italic"
           paragraph={`Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa quibusdam labore sed vero.`}
         />
+        <Link to='/about'>
          <button
               className="btn mt-4"
               aria-label="View more products"
             >
               Explore..
             </button>
+        </Link>
+        
       </div>
     </main>
   )
