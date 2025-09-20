@@ -43,10 +43,7 @@ const Footer = () => {
             </div>
           </div>
            <div className="space-y-4 self-start">
-            <h3 className="text-sm uppercase tracking-widest font-medium">
-              Contact
-            </h3>
-            <p className="text-sm">info@garava.in</p>
+          
             <p className="text-sm">Stay in the know</p>
             <div className="flex justify-center md:justify-start gap-4 text-lg mt-3">
               <a href="#" aria-label="Instagram" className="hover:text-gray-300">

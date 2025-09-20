@@ -33,7 +33,7 @@ const Instagram = ({ title = " on Instagram",
           <a
             className="btn "
            
-            href="#"
+            href="https://www.instagram.com/garavaofficial?igsh=MTE2MWZrMzU1aGMx"
             aria-label={ctaLabel}
           >
             {ctaLabel}

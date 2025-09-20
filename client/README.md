@@ -12,7 +12,9 @@ product details page are done but not responsive
 newsletter not responsive
 footer not responisve
 navbar fix ✅
-
+cart page done and not mobile responsive and optimize bhi krna h thoda✅
+order page done and resposinve bhi done thoda optimize krna h✅
+wishlist  resposnve done✅
 
 
 
@@ -20,7 +22,7 @@ navbar fix ✅
 
     ***GARAVA changes ****
 hero section pagination fix ✅
-navbar icons change ✅
+navbar icons change  ✅ 
 navbar leftside add contact us, book appoinment ✅
 about section  lines remove only 2 lines is added and add explore button✅
 essential section cards width increase and bottom gap reduce✅

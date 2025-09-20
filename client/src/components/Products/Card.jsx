@@ -17,9 +17,9 @@ const Card = ({img,title = "Product", price = ""}) => {
         />
         <div className="overlay" aria-hidden="true">
          
-                         <Link to='/product_details' className="overlay-text">
+                         <div  className="overlay-text">
                          Feel This Piece
-                          </Link>
+                          </div>
                     
           
         </div>

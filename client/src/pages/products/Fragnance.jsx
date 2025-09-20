@@ -26,8 +26,8 @@ const Fragnance = () => {
           <div className="hidden md:block">
             <SideBar mainCategory="fragnance" />
           </div>
-         <main>
-            <div className="flex items-center justify-between mb-6">
+         <main className='ml-10 mt-10'>
+            <div className="flex items-center justify-between mb-6 ">
               <div className="text-sm text-gray-600">Showing 20 products</div>
               <div>
                 <select className="border px-3 py-1 rounded text-sm">
@@ -36,7 +36,7 @@ const Fragnance = () => {
                 </select>
               </div>
             </div>
- <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+ <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 ">
  
  <ProductCard
   category="fragrance"

@@ -30,7 +30,7 @@ const Jewellry = () => {
     
 
           {/* Products column */}
-         <main className="min-h-screen">
+         <main className="min-h-screen ml-10 mt-10">
             <div className="flex items-center justify-between mb-6">
               <div className="text-sm text-gray-600">Showing 20 products</div>
               <div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./product.css"; 
 import { CiHeart, CiSearch } from "react-icons/ci";
 import { IoBagHandleOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 const ProductCard = ({
    category = "jewelry", // "jewelry" or "fragrance"
   img,
@@ -16,11 +17,15 @@ const ProductCard = ({
   onToggleWishlist = () => {},
 }) => {
   const [activeColor, setActiveColor] = useState(colors[0] || null);
-
+const navigate = useNavigate()
+  
+const handleProductClick = () => {
+    navigate('/product_details')
+  };
   return (
-     <article className="ph-card" tabIndex="0" aria-label={`${title} - ${price}`}>
+     <article  className="ph-card" tabIndex="0" aria-label={`${title} - ${price}`}>
       {/* IMAGE */}
-      <div className="ph-image-wrap">
+      <div  onClick={handleProductClick} className="ph-image-wrap cursor-pointer">
         <img src={img} alt={title} className="ph-image" loading="lazy" />
       </div>
 
@@ -30,7 +35,12 @@ const ProductCard = ({
           className="ph-action ph-action-ghost"
           title="Add to cart"
           aria-label="Add to cart"
-          onClick={() => onAddToCart({ img, title, price, category, color: activeColor })}
+          
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddToCart()
+          }
+          }
         >
           <IoBagHandleOutline />
         </button>
