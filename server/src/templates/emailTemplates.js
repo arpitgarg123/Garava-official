@@ -2,7 +2,7 @@
 
 export const emailTemplates = {
   verifyEmail: (user, token) => {
-    const url = `${process.env.CLIENT_URL}/auth/verify-email?token=${encodeURIComponent(token)}`;
+    const url = `${process.env.CLIENT_URL}/verify-email?token=${encodeURIComponent(token)}`;
     return {
       subject: "Verify your email - Garava",
       html: `
@@ -14,7 +14,7 @@ export const emailTemplates = {
   },
   resetPassword: (user, token) => {
     // 👉 Link to FRONTEND page so user can type a new password there:
-    const url = `${process.env.CLIENT_URL}/auth/reset-password?token=${encodeURIComponent(token)}`;
+    const url = `${process.env.CLIENT_URL}/reset-password?token=${encodeURIComponent(token)}`;
     return {
       subject: "Reset your password - Garava",
       html: `

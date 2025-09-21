@@ -11,7 +11,7 @@ import {
     setAuthCookies,
     verifyRefreshToken,
 } from "./token.service.js";
-import { sendPasswordResetEmail, sendVerificationEmail } from "../../shared/emails/email.service.js";
+import { sendPasswordResetEmail,sendVerificationEmail } from "../../shared/emails/email.service.js";
 import { checkEmailRateLimit } from "../../shared/emails/emailRateLimiter.js";
 
 export const loginUser = async (email, password) => {
@@ -44,8 +44,9 @@ export const signupUser = async ({ name, email, password}) => {
   const token = generateEmailVerificationToken(newUser);
   await checkEmailRateLimit(newUser._id);
   const result =  await sendVerificationEmail(newUser, token);
+  console.log("Sent verification email:", result);
   return newUser.toJSON();
-};
+}; 
 
 export const logoutUser = async (userId, refreshToken) => {
   if (!userId || !refreshToken) throw new Error("Missing required fields");
