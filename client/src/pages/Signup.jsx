@@ -1,27 +1,44 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { signup } from "../features/auth/slice";
 import AuthLayout from "../layouts/AuthLayout";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const status = useSelector((s) => s.auth.status);
+  const error = useSelector((s) => s.auth.error);
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
     if (form.password !== form.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
-    // TODO: integrate with backend
-    console.log("Signup:", form);
+    try {
+      const res = await dispatch(signup(form)).unwrap();
+      if (res?.accessToken) {
+        navigate("/", { replace: true });
+      } else {
+        setMessage("Account created. Please check your email to verify your account.");
+      }
+    } catch {
+      // error handled in state
+    }
   };
 
   return (
@@ -78,11 +95,15 @@ const Signup = () => {
           />
         </div>
 
+        {message && <p className="text-sm text-green-700">{message}</p>}
+        {error && <p className="text-sm text-red-600">{error}</p>}
+
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition"
+          className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition disabled:opacity-50"
+          disabled={status === "loading"}
         >
-          Sign Up
+          {status === "loading" ? "Creating..." : "Sign Up"}
         </button>
       </form>
 

@@ -1,18 +1,32 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { login } from "./slice";
 import AuthLayout from "../../layouts/AuthLayout";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const status = useSelector((s) => s.auth.status);
+  const error = useSelector((s) => s.auth.error);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const [form, setForm] = useState({ email: "", password: "" });
+  const [showPwd, setShowPwd] = useState(false);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    // integrate with backend
-    console.log("Login:", form);
+    try {
+      const res = await dispatch(login(form)).unwrap();
+      if (res?.accessToken) {
+        navigate(from, { replace: true });
+      }
+    } catch {
+      // handled via error state
+    }
   };
 
   return (
@@ -20,46 +34,56 @@ const Login = () => {
       title="Welcome Back"
       subtitle="Login to access your Garava account"
     >
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label className="block text-sm text-gray-700">Email</label>
+      <div className="max-w-md mx-auto p-6">
+        <h1 className="text-2xl font-semibold mb-4">Login</h1>
+        <form onSubmit={onSubmit} className="space-y-4">
           <input
-            type="email"
             name="email"
-            required
+            type="email"
             value={form.email}
-            onChange={handleChange}
-            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-black"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm text-gray-700">Password</label>
-          <input
-            type="password"
-            name="password"
+            onChange={onChange}
+            className="w-full border p-2 rounded"
+            placeholder="Email"
             required
-            value={form.password}
-            onChange={handleChange}
-            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-black"
           />
+          <div className="relative">
+            <input
+              name="password"
+              type={showPwd ? "text" : "password"}
+              value={form.password}
+              onChange={onChange}
+              className="w-full border p-2 rounded"
+              placeholder="Password"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setShowPwd((s) => !s)}
+              className="absolute right-2 top-2 text-sm text-gray-600"
+            >
+              {showPwd ? "Hide" : "Show"}
+            </button>
+          </div>
+
+          {error && <p className="text-sm text-red-600">{error}</p>}
+
+          <button
+            type="submit"
+            className="w-full bg-black text-white py-2 rounded disabled:opacity-50"
+            disabled={status === "loading"}
+          >
+            {status === "loading" ? "Signing in..." : "Login"}
+          </button>
+        </form>
+
+        <div className="mt-4 text-sm">
+          <span className="text-gray-600">No account?</span>{" "}
+          <Link to="/signup" className="underline">
+            Create one
+          </Link>
         </div>
-
-        <button
-          type="submit"
-          className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-900 transition"
-        >
-          Login
-        </button>
-      </form>
-
-      <p className="mt-6 text-center text-sm text-gray-600">
-        Don’t have an account?{" "}
-        <Link to="/signup" className="underline hover:text-black">
-          Sign Up
-        </Link>
-      </p>
-    </AuthLayout >
+      </div>
+    </AuthLayout>
   );
 };
 

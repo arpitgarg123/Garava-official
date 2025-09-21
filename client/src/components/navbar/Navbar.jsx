@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import NavItem from './Navitems.jsx';
 import Header from '../header/Header.jsx';
 import { CiSearch } from "react-icons/ci";
@@ -51,8 +51,8 @@ const Navbar = () => {
   const isNavActive = Boolean(hovered);
   const [lastScrollY, setLastScrollY] = useState(0); // Keeps track of last scroll position
   const [isHidden, setIsHidden] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
-
+  const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,16 +105,17 @@ const Navbar = () => {
       
         
             <img
-              className="h-18 w-60 object-contain  "
+              className="h-18 w-60 object-contain cursor-pointer"
               src={getLogoSrc()}
               alt="Dark logo"
+              onClick={() => navigate('/')}
             />
           
 
          <div className='flex items-center justify-end w-72 '>
-          <CiHeart size={24} aria-hidden="true" />
-          <CiUser size={22} aria-hidden="true" />
-          <IoBagHandleOutline size={22} aria-hidden="true" />
+          <CiHeart size={24} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/wishlist')} />
+          <CiUser size={22} aria-hidden="true" className='cursor-pointer' />
+          <IoBagHandleOutline size={22} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/cart')} />
 
          </div>
     </div>

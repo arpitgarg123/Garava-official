@@ -1,38 +1,39 @@
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
+import React, { useLayoutEffect, useRef } from "react";
+import { gsap } from "gsap";
 
-const TextSlider = ({ isFragrance }) => {
-  const textRef = useRef(null);
+export default function TextSlider({ texts = [], stepSeconds = 2 }) {
+  const boxRef = useRef(null);
+  const tlRef = useRef(null);
 
-  useEffect(() => {
-    const newHTML = isFragrance
-      ? '<h1 className="text-main text-3xl"> <span class="text-main-italic">Fragnance,</span> that  speak your story.</h1>'
-      : '<h1 className="text-main text-3xl">In every <span class="text-main-italic">Jewelry,</span> a <br />  memory lingers.</h1>';
+  useLayoutEffect(() => {
+    const el = boxRef.current;
+    if (!el || !texts.length) return;
 
-    gsap.to(textRef.current, {
-      y: -40,
-      opacity: 0,
-      duration: 0.5,
-      ease: "power2.inOut",
-      onComplete: () => {
-        textRef.current.innerHTML = newHTML;
-        gsap.fromTo(
-          textRef.current,
-          { y: 40, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" }
-        );
-      },
-    });
-  }, [isFragrance]);
+    const ctx = gsap.context(() => {
+      el.textContent = texts[0];
+      const tl = gsap.timeline({ repeat: -1 });
+      tlRef.current = tl;
 
-  return (
-    <div
-      ref={textRef}
-      className="text-main text-gray-900 text-center leading-14 text-5xl "
-    >
-      In every <span className="text-main-italic">Jewelry,</span> a <br /> memory lingers
-    </div>
-  );
-};
+      let i = 0;
+      tl.to(
+        {},
+        {
+          duration: stepSeconds,
+          onComplete: () => {
+            if (!boxRef.current || texts.length === 0) return;
+            i = (i + 1) % texts.length;
+            boxRef.current.textContent = texts[i];
+          },
+        }
+      );
+    }, boxRef);
 
-export default TextSlider;
+    return () => {
+      tlRef.current?.kill?.();
+      tlRef.current = null;
+      ctx.revert();
+    };
+  }, [texts, stepSeconds]);
+
+  return <span ref={boxRef} />;
+}

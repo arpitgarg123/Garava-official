@@ -1,33 +1,72 @@
 import axios from "axios";
-import { getAccessToken, setAccessToken } from '../auth';
 
-const http = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api",
-    headers: {
-        "Content-Type": "application/json",
-    },
-    withCredentials: true,
-    timeout: 10000, 
-})
-http.interceptors.request.use((config) =>{
-      const token = getAccessToken();
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    return config
-})
+const baseURL = (import.meta.env.VITE_API_URL || "http://localhost:8080").replace(/\/+$/, "");
+const http = axios.create({ baseURL, withCredentials: true });
 
-let refreshing = null
-http.interceptors.response.use((res) => res, async (err) =>{
-  const { response, config } = err;
-  if (response?.status === 401 && !config._retry){
-    config._retry = true;
-      refreshing = refreshing ?? refresh();
-      const newToken = await refreshing.finally(() => (refreshing = null));
-       if (newToken) {
-        setAccessToken(newToken);
-        config.headers.Authorization = `Bearer ${newToken}`;
-        return http(config);
+// Bindings provided at app bootstrap (avoid importing the store here)
+let getToken = () => null;
+let setTokenCb = () => {};
+let logoutCb = () => {};
+
+export function bindAuth({ getToken: g, setToken: s, logout: l }) {
+  if (g) getToken = g;
+  if (s) setTokenCb = s;
+  if (l) logoutCb = l;
+}
+
+let isRefreshing = false;
+let queue = [];
+const flushQueue = (error, token = null) => {
+  queue.forEach(({ resolve, reject }) => (error ? reject(error) : resolve(token)));
+  queue = [];
+};
+
+http.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+http.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const original = error.config;
+    if (!original || original._retry) return Promise.reject(error);
+
+    if (error.response?.status === 401) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          queue.push({
+            resolve: (token) => {
+              if (token) original.headers.Authorization = `Bearer ${token}`;
+              resolve(http(original));
+            },
+            reject,
+          });
+        });
       }
+
+      original._retry = true;
+      isRefreshing = true;
+
+      try {
+        const { data } = await axios.post(`${baseURL}/api/auth/refresh`, {}, { withCredentials: true });
+        const newToken = data?.accessToken;
+        setTokenCb(newToken);
+        flushQueue(null, newToken);
+        if (newToken) original.headers.Authorization = `Bearer ${newToken}`;
+        return http(original);
+      } catch (err) {
+        flushQueue(err, null);
+        logoutCb();
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
+      }
+    }
+
+    return Promise.reject(error);
   }
-   return Promise.reject(err);
-})
+);
+
 export default http;

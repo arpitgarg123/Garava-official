@@ -1,30 +1,14 @@
-import { http } from "../../shared/api/http.js";
+import http from "../../shared/api/http";
 
-export const createEmployee = async (payload) => {
-  const res = await http.post("/admin/create-employee", payload);
-  return res.data;
-};
-
-
-export const updateEmployee = async (id, payload) => {
-  const res = await http.patch(`/admin/update/${id}`, payload);
-  return res.data;
-};
-
-
-export const deleteEmployee = async (id) => {
-  const res = await http.delete(`/admin/${id}`);
-  return res.data;
-};
-
-
-export const getAllEmployees = async () => {
-  const res = await http.get("/admin");
-  return res.data;
-};
-
-
-export const toggleEmployeeActive = async (id) => {
-  const res = await http.patch(`/admin/${id}/active-status`);
-  return res.data;
-};
+export const signupApi = (payload) => http.post("/api/auth/signup", payload);
+export const loginApi = (payload) => http.post("/api/auth/login", payload);
+export const logoutApi = () => http.post("/api/auth/logout");
+export const refreshApi = () => http.post("/api/auth/refresh");
+export const resendVerificationApi = (payload) =>
+  http.post("/api/auth/resend-verification", payload);
+export const forgotPasswordApi = (payload) =>
+  http.post("/api/auth/forgot-password", payload);
+export const resetPasswordApi = (payload) =>
+  http.post("/api/auth/reset-password", payload);
+export const verifyEmailApi = (params) =>
+  http.get("/api/auth/verify-email", { params });

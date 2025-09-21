@@ -31,7 +31,7 @@ import reviewRouter from "./modules/review/review.router.js";
   app.use(helmet());
   app.use(
     cors({
-      origin: env.CLIENT_URL,
+      origin: env.CLIENT_URL || 'http://localhost:5173',
       credentials: true,
     })
   );

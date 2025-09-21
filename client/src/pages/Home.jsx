@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import LocomotiveScroll from 'locomotive-scroll';
+import React, { useEffect, useRef } from "react";
 // import 'locomotive-scroll/dist/locomotive-scroll.css';
 
 import HeroSection from '../components/hero/Herosection';
@@ -13,14 +12,21 @@ import NewsletterInline from '../components/newsLatter/NewsletterInline';
 import Review from './Review';
 import Instagram from '../components/instagram/Instagram';
 
-const  HomePage = () =>{
+export default function HomePage() {
+  // Hold any 3rd‑party instance (Lenis/Swiper/etc.)
+  const instanceRef = useRef(null);
+
   useEffect(() => {
-    const scroll = new LocomotiveScroll({
-      el: document.querySelector('#scroll-container'),
-      smooth: true,
-      lerp: 0.08,
-    });
-    return () => scroll.destroy();
+    // initialize your lib instance here and assign to instanceRef.current
+    // e.g.
+    // const inst = new Lenis({ ... });
+    // instanceRef.current = inst;
+
+    return () => {
+      // Guard in StrictMode (cleanup runs twice)
+      instanceRef.current?.destroy?.();
+      instanceRef.current = null;
+    };
   }, []);
 
   return (
@@ -39,5 +45,3 @@ const  HomePage = () =>{
     </div>
   );
 }
-
-export default HomePage;
