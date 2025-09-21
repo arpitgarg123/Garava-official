@@ -10,7 +10,7 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import darkLogo from '../../assets/images/logo-main.png'
 import lightLogo from '../../assets/images/light-logo.png'
 const navItems = [
-  { title: 'Jewelry', submenu: [
+  { title: 'jewellery', submenu: [
      { label: 'Gifts for her', img: './src/assets/images/jewellry1.jpg' },
       { label: 'Gifts for him', img: './src/assets/images/jewellry2.jpg' },
       { label: 'Gifts for him', img: './src/assets/images/jewellry3.jpg' },
@@ -57,8 +57,8 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 50);
-      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+      setScrolled(currentScrollY > 10);
+      if (currentScrollY > lastScrollY && currentScrollY > 10) {
         // Scrolling down
         setIsHidden(true);
       } else {
@@ -77,27 +77,30 @@ const Navbar = () => {
 
   const navTextColor = isHeroPage && !scrolled ? 'text-white' : 'text-black';
 
-    const getLogoSrc = () => {
-    if (isHeroPage) {
-      return (scrolled || isNavActive) ? darkLogo : lightLogo;
-    } else {
-      return darkLogo;
-    }
-  };
+  //   const getLogoSrc = () => {
+  //   if (isHeroPage) {
+  //     return (scrolled || isNavActive) ? darkLogo : darkLogo;
+  //   } else {
+  //     return darkLogo;
+  //   }
+  // };
   const shouldShowNavItems = isHeroPage && !scrolled;
+
+  const navbarClass = `navbar max-sm:hidden mt-6 ${
+    isHidden ? '-translate-y-48 duration-300' : 'translate-y-0 duration-300'
+  } ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white' : 'bg-transparent'} ${
+    isNavActive ? 'expanded' : ''
+  }`;
 
   return (
    <>
    <Header />
-   <nav  className={`navbar max-sm:hidden ${
-    isHidden ? '-translate-y-48 duration-700' : 'translate-y-0 duration-700'
-   }  ${navTextColor} ${scrolled ? 'visible' : 'bg-transparent'}`}
+   <nav  className={navbarClass}
         role="navigation"
         aria-label="Main navigation"
         >
-    <div className='navTop relative '>
-        <div className='flex justify-between  w-72 bg-amber-00 font-light'>
-            <CiSearch size={25} aria-hidden="true"/>
+    <div className='navTop relative px-10'>
+        <div className='flex justify-between  w-60 bg-amber-00 font-light'>
             <h4 className='font-medium text-sm'>Contact us</h4>
             <h4 className='font-medium text-sm'>book an appointment</h4>
             {/* <button className='bg-[#f5e6d7] px-6 py-1 text-black rounded-xl font-semibold '>Contact us</button> */}
@@ -105,14 +108,17 @@ const Navbar = () => {
       
         
             <img
-              className="h-18 w-60 object-contain cursor-pointer"
-              src={getLogoSrc()}
+              className="h-18 w-60 mt-2 object-contain cursor-pointer"
+              // src={getLogoSrc()}
+              src={darkLogo}
               alt="Dark logo"
               onClick={() => navigate('/')}
             />
           
 
          <div className='flex items-center justify-end w-72 '>
+                      <CiSearch size={25} aria-hidden="true"/>
+
           <CiHeart size={24} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/wishlist')} />
           <CiUser size={22} aria-hidden="true" className='cursor-pointer' />
           <IoBagHandleOutline size={22} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/cart')} />

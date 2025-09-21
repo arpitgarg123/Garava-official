@@ -15,6 +15,7 @@ navbar fix ✅
 cart page done and not mobile responsive and optimize bhi krna h thoda✅
 order page done and resposinve bhi done thoda optimize krna h✅
 wishlist  resposnve done✅
+login/signup add forgot password and google auth✅
 
 
 
@@ -29,6 +30,10 @@ essential section cards width increase and bottom gap reduce✅
 add newsletter ui changes ✅
 add instagram or google reviews section✅
 footer add garava logo at the centerd ✅
+navitems add bottom underline ✅
+essential product width full ✅
+jewellery speling✅
+add goole auth ✅
 
 
     *** integration**

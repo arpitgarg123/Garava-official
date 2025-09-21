@@ -8,10 +8,10 @@
     font-family:'playfair-italic';
     src: url(/client/src/assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf) 
 }
-/* @font-face {
+@font-face {
   font-family:'montserrat';
   src: url(/fonts/Montserrat-VariableFont_wght.ttf) 
-} */
+}
 @font-face {
   font-family:'headFont';
   src: url(/client/src/assets/fonts/OldStandardTT-Regular.ttf) 
@@ -28,24 +28,56 @@ body, html{
     color: var(--dark-text);
     overflow-x: hidden;
 }
-
-
-.navbar{
+.navbar {
+  height: auto;
+  background: white;
+  position: fixed;
   width: 100%;
-  height: 26vw;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  transition: all 0.3s ease;
+  color: black;
+}
+
+.submenu-container {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  border-top: 1px solid #eee;
+}
+
+.nav-items {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+}
+
+/* Hide scrollbar when submenu is open */
+body:has(.submenu-container) {
+  overflow: hidden;
+}
+
+/* .navbar{
+  width: 100%;
+  height: auto;
   position:fixed;
   top: 0;
   left: 0;
-
-  padding: 2.5rem 2rem;
+  padding: 1rem 2rem;
   z-index: 10;
-  -webkit-font-smoothing: antialiased;
+  transition: all 0.3s ease;
+  min-height: 120px;
+}
+.navbar.expanded {
+  height: auto;
+  background-color: white;
+  color: var(--dark-text) !important;
 }
 .navbar:has(.nav-items:hover) {
   background-color: white;
   color: var(--dark-text);
   transition: all ease 0.6s; 
-}
+} */
 @media (min-width: 300px) {
  
 }
@@ -70,7 +102,7 @@ body, html{
   justify-content: center;
   align-items: center;
   font-size: 1vw;
-  font-family: 'montserrat', sans-serif ;
+  font-family: 'montserrat';
   z-index: 10000;
 }
 .navTop{
@@ -78,6 +110,8 @@ body, html{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 6vw;
+  /* background-color: cadetblue; */
 }
 .flex{
   display: flex;
@@ -96,7 +130,7 @@ body, html{
   position: relative;
 }
 .text-main{
-  font-family:'montserrat', sans-serif ;
+  font-family:'montserrat' ;
   font-weight: 100;
   color: var(--text-color);
   /* font-size: 3vw; */
@@ -127,7 +161,7 @@ body, html{
 }
 
 .head-text {
-  font-family: 'montserrat', sans-serif;
+  font-family: 'montserrat';
   text-transform: uppercase;
   line-height: 1.2;
   text-align: center;

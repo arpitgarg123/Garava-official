@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { login } from "./slice";
 import AuthLayout from "../../layouts/AuthLayout";
+import { FcGoogle } from 'react-icons/fc';
+import { CiMail, CiLock } from 'react-icons/ci';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -34,8 +36,23 @@ const Login = () => {
       title="Welcome Back"
       subtitle="Login to access your Garava account"
     >
-      <div className="max-w-md mx-auto p-6">
-        <h1 className="text-2xl font-semibold mb-4">Login</h1>
+      <div className="max-w-md mx-auto">
+        <h1 className="text-2xl font-semibold mb-4 text-center">Login</h1>
+         <button
+          // onClick={handleGoogleLogin}
+          className="w-full mb-6 flex items-center justify-center gap-3 border border-gray-300 p-2.5 rounded-md hover:bg-gray-50 transition-colors"
+        >
+          <FcGoogle size={20} />
+          <span className="text-gray-600">Continue with Google</span>
+        </button>
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">or continue with email</span>
+          </div>
+        </div>
         <form onSubmit={onSubmit} className="space-y-4">
           <input
             name="email"
@@ -64,7 +81,11 @@ const Login = () => {
               {showPwd ? "Hide" : "Show"}
             </button>
           </div>
-
+  <div className="flex items-center justify-center underline">
+            <Link to="/forgot-password" className="text-sm text-gray-600 hover:text-black">
+              Forgot password?
+            </Link>
+          </div>
           {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button

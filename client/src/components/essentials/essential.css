@@ -1,0 +1,11 @@
+@layer components {
+  .aspect-4\/3 {
+    aspect-ratio: 4/3;
+  }
+  
+  @media (max-width: 640px) {
+    .aspect-4\/3 {
+      aspect-ratio: 1/1;
+    }
+  }
+}

@@ -18,7 +18,7 @@ const Jewellry = () => {
     <div className='w-full py-6'>
         <header className="head">
           <div className="head-inner max-w-6xl mx-auto ">
-            <h2 className="head-text text-3xl md:text-4xl">Jewelry</h2>
+            <h2 className="head-text text-3xl md:text-4xl">Jewellery</h2>
             <div className="head-line "></div>
           </div>
         </header>

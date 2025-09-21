@@ -11,7 +11,7 @@ const Submenu = ({ sub,parentTitle }) =>{
    const isTextOnly = textOnlyMenus.includes(parentTitle);
   return (
     <motion.div
-      className="flex flex-col items-center w-32 cursor-pointer  group"
+      className="flex flex-col items-center w-32 cursor-pointer   group"
       whileHover={{ scale: 1.05 }}
       onMouseEnter={isTextOnly ? undefined : (e) => {
         gsap.to(e.currentTarget.querySelector('img'), {
@@ -29,14 +29,14 @@ const Submenu = ({ sub,parentTitle }) =>{
       }}
     >
       {isTextOnly ? (
-        <div className="rounded-full bg-gray-200 text-black flex items-center justify-center h-32 w-32 mb-2 text-center font-semibold text-sm">
+        <div className=" bg-gray-200 text-black flex items-center justify-center h-32 w-32 mb-2 text-center font-semibold text-sm">
           {sub.label}
         </div>
       ) : (
         <img
           src={sub.img}
           alt={sub.label}
-          className="rounded-full h-28 w-28 object-cover mb-2 transition-transform duration-300"
+          className=" h-36 w-36 object-cover mb-2 transition-transform duration-300"
         />
       )}
       {!isTextOnly && (

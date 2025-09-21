@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../features/auth/slice";
 import AuthLayout from "../layouts/AuthLayout";
+import { FcGoogle } from 'react-icons/fc';
+import { CiUser, CiMail, CiLock } from 'react-icons/ci';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -46,6 +48,25 @@ const Signup = () => {
       title="Create Account"
       subtitle="Join the Garava family and discover luxury"
     >
+       <div className="max-w-md mx-auto p-6">
+        {/* Google Signup Button */}
+        <button
+          // onClick={handleGoogleSignup}
+          className="w-full mb-6 flex items-center justify-center gap-3 border border-gray-300 p-2.5 rounded-md hover:bg-gray-50 transition-colors"
+        >
+          <FcGoogle size={20} />
+          <span className="text-gray-600">Continue with Google</span>
+        </button>
+
+  
+        <div className="relative mb-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">or sign up with email</span>
+          </div>
+        </div>
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label className="block text-sm text-gray-700">Full Name</label>
@@ -113,6 +134,7 @@ const Signup = () => {
           Login
         </Link>
       </p>
+      </div>
     </AuthLayout>
   );
 };

@@ -1,39 +1,38 @@
-import React, { useLayoutEffect, useRef } from "react";
-import { gsap } from "gsap";
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
 
-export default function TextSlider({ texts = [], stepSeconds = 2 }) {
-  const boxRef = useRef(null);
-  const tlRef = useRef(null);
+const TextSlider = ({ isFragrance }) => {
+  const textRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const el = boxRef.current;
-    if (!el || !texts.length) return;
+  useEffect(() => {
+    const newHTML = isFragrance
+      ? '<h1 className="text-main text-3xl"> <span class="text-main-italic">Fragnance,</span> that  speak your story.</h1>'
+      : '<h1 className="text-main text-3xl">In every <span class="text-main-italic">jewellery,</span> a <br />  memory lingers.</h1>';
 
-    const ctx = gsap.context(() => {
-      el.textContent = texts[0];
-      const tl = gsap.timeline({ repeat: -1 });
-      tlRef.current = tl;
+    gsap.to(textRef.current, {
+      y: -40,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power2.inOut",
+      onComplete: () => {
+        textRef.current.innerHTML = newHTML;
+        gsap.fromTo(
+          textRef.current,
+          { y: 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" }
+        );
+      },
+    });
+  }, [isFragrance]);
 
-      let i = 0;
-      tl.to(
-        {},
-        {
-          duration: stepSeconds,
-          onComplete: () => {
-            if (!boxRef.current || texts.length === 0) return;
-            i = (i + 1) % texts.length;
-            boxRef.current.textContent = texts[i];
-          },
-        }
-      );
-    }, boxRef);
+  return (
+    <div
+      ref={textRef}
+      className="text-main text-gray-900 text-center leading-14 text-5xl "
+    >
+      In every <span className="text-main-italic">jewellery,</span> a <br /> memory lingers
+    </div>
+  );
+};
 
-    return () => {
-      tlRef.current?.kill?.();
-      tlRef.current = null;
-      ctx.revert();
-    };
-  }, [texts, stepSeconds]);
-
-  return <span ref={boxRef} />;
-}
+export default TextSlider;
