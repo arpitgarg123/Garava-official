@@ -13,6 +13,7 @@ const Signup = lazy(() => import("./pages/Signup.jsx"));
 const Cart = lazy(() => import("./pages/Cart.jsx"));
 const Wishlist = lazy(() => import("./pages/Wishlist.jsx"));
 const Orders = lazy(() => import("./pages/Orders.jsx"));
+const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 
 const App = () => {
   return (
@@ -33,6 +34,8 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Orders />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/dashboard" element={< Dashboard/>} />
+
         </Route>
       </Routes>
     </Suspense>
