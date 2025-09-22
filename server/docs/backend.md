@@ -79,3 +79,22 @@
  # remove-to-wishlist
  # get-wishlist
  # toggle-product-items
+
+# # Review Feature (User)
+ # create-review
+ # update-review
+ # list-all-review
+ # vote-helpful
+
+# # Review Feature (admin)
+ # admin-list-review
+ # admin-moderate-review
+ # admin-delete-review
+
+# # Appointment Feature (User)
+ # create-appointment
+ # get-appointment
+
+# # Appointment Feature (Admin)
+ # get-all appointment
+ # update-appointment

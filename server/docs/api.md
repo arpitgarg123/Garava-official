@@ -628,7 +628,7 @@
 
 # # Review Feature (Admin + User)
 
-### list-reviews (public)
+### list-reviews (user)
 **Endpoint:** `get /api/reviews/`  
 **Description:** lists reviews for a product. Supports pagination and sorting.  
 
@@ -688,5 +688,42 @@
 ```
 
 ### admin-delete-review
+
 **Endpoint:** `delete /api/reviews/:reviewId`  
 **Description:** deletes a review (typically soft-delete).
+
+
+# # Appointment Feature (Admin + User)
+
+### create-appointment (user)
+**Endpoint:** `post /api/appointment/`  
+**Description:** creates a appointment request even if the user is not logged in 
+**Request Body:**
+```json
+{
+    "name" : "arpit garg",
+    "email" : "arpitgarg424@gmail.com",
+    "phone"  : "6264450557",
+    "serviceType" : "jewellery",
+    "appointmentAt" : "2025-10-10T11:00:00.000Z",
+    "notes" : "pleasae reply as soon as possible"
+}
+```
+### get-appointment (user)
+**Endpoint:** `get /api/appointment/me`  
+**Description:** get an appointment if the user is logged in 
+
+### get-appointment (admin)
+**Endpoint:** `get /api/appointment/admin`  
+**Description:** get an appointment if the user is logged in and it is a admin 
+
+### update-appointment (admin)
+**Endpoint:** `patch /api/appointment/admin/:id` emample : `patch /api/appointment/admin/68d0f087c03647de6945be26`  
+**Description:** update the status of an appointment if the user is logged in and it is a admin 
+**Request Body:**
+```json
+{
+ "status" : "completed",
+ "adminNotes" : "good person"
+}
+```

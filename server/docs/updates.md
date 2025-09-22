@@ -1,3 +1,82 @@
+# # work left 
+
+📅 Book an Appointment
+User-side
+
+Book appointment (form submission: service type, date/time, contact info, notes).
+
+View my appointments (past & upcoming).
+
+Cancel my appointment (optional).
+
+Notifications (email/SMS confirmation, optional).
+
+Admin-side
+
+View all appointments (list with filters: pending, confirmed, completed, cancelled).
+
+Update appointment status (pending → confirmed/cancelled/completed).
+
+Add notes or reschedule (optional).
+
+Export/download appointment list (optional).
+
+📰 Newsletter
+User-side
+
+Subscribe with email (public route, no login required).
+
+Unsubscribe (click link in email or request endpoint).
+
+Prevent duplicate subscriptions (check existing).
+
+Confirmation email (optional double opt-in).
+
+Admin-side
+
+View subscriber list (with pagination).
+
+Export subscribers (CSV/Excel).
+
+Delete subscriber (GDPR-style compliance, optional).
+
+Integration hooks (SendGrid/Mailchimp/Resend, optional).
+
+✍️ Blogs
+User-side
+
+List all blog posts (with pagination + tags).
+
+View blog detail by slug.
+
+SEO-friendly meta (title, description, tags).
+
+Share blog (social sharing links, optional).
+
+Admin-side
+
+Create blog post (title, slug, content, tags, cover image).
+
+Update blog post.
+
+Delete blog post.
+
+Draft/Publish status toggle.
+
+Schedule publish (optional).
+
+Manage tags/categories.
+
+
+
+
+
+
+
+
+
+
+
 # # next
 
 User:   

@@ -25,4 +25,39 @@ export const emailTemplates = {
       `,
     };
   },
+    /* ---- Appointments ---- */
+  appointmentCreated: (appointment) => {
+    return {
+      subject: "Your appointment request has been received",
+      html: `
+        <p>Hi ${appointment.name},</p>
+        <p>We received your appointment request for <strong>${appointment.serviceType}</strong> 
+        at <strong>${new Date(appointment.appointmentAt).toLocaleString()}</strong>.</p>
+        <p>We’ll confirm shortly. Thank you for choosing Garava.</p>
+      `,
+    };
+  },
+
+  appointmentStatusChanged: (appointment) => {
+    return {
+      subject: `Your appointment is now ${appointment.status}`,
+      html: `
+        <p>Hi ${appointment.name},</p>
+        <p>Your appointment status has been updated to <strong>${appointment.status}</strong>.</p>
+        <p>Scheduled time: <strong>${new Date(appointment.appointmentAt).toLocaleString()}</strong></p>
+        <p>${appointment.adminNotes ? `<em>Note from admin: ${appointment.adminNotes}</em>` : ""}</p>
+      `,
+    };
+  },
+
+  appointmentCancelled: (appointment) => {
+    return {
+      subject: "Your appointment has been cancelled",
+      html: `
+        <p>Hi ${appointment.name},</p>
+        <p>Your appointment on <strong>${new Date(appointment.appointmentAt).toLocaleString()}</strong> has been cancelled.</p>
+        <p>If this was a mistake, please rebook via our website.</p>
+      `,
+    };
+  },
 };

@@ -23,6 +23,7 @@ import adminOrderRouter from "./modules/order/admin/order.admin.router.js";
 import cartRouter from "./modules/cart/cart.router.js"; 
 import wishlistRouter from "./modules/wishlist/wishlist.router.js";
 import reviewRouter from "./modules/review/review.router.js";
+import appointmentRouter from "./modules/appointment/appointment.router.js";
 
   // routers
   const app = express();
@@ -82,6 +83,7 @@ import reviewRouter from "./modules/review/review.router.js";
   app.use("/api/cart", cartRouter);
   app.use("/api/wishlist", wishlistRouter);
   app.use("/api/reviews", reviewRouter);
+  app.use("/api/appointment", appointmentRouter);
 
   // global error handler
   app.use(errorHandler);
