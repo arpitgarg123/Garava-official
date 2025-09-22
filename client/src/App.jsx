@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import MainLayout from "./layouts/MainLayout.jsx";
-import ProductDetails from "./components/Products/ProductDetails.jsx";
+import ProductDetails from "./pages/products/ProductDetails.jsx";
 import OurStory from "./pages/OurStory.jsx";
 import { GuestOnly } from "./shared/auth.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
@@ -13,6 +13,7 @@ import BookAnAppointment from "./pages/Appointment/BookAnAppointment.jsx";
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Fragrance = lazy(() => import("./pages/products/Fragnance.jsx"));
 const Jewelry = lazy(() => import("./pages/products/Jewellry.jsx"));
+const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
 const Login = lazy(() => import("./features/auth/Login.jsx"));
 const Signup = lazy(() => import("./pages/Signup.jsx"));
 const Cart = lazy(() => import("./pages/Cart.jsx"));
@@ -37,7 +38,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="about" element={<OurStory />} />
           <Route path="jewelry" element={<Jewelry />} />
-          <Route path="fragrance" element={<Fragrance />} />
+          <Route path="products" element={<ProductPage />} />
           {/* <Route path="product/:id" element={<ProductDetails />} /> */}
           <Route path="product_details" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />

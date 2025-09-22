@@ -1,5 +1,5 @@
 import React from 'react'
-import ProductAccordion from './ProductAccordion'
+import ProductAccordion from '../../components/Products/ProductAccordion'
 import j2 from "../../assets/images/j.jpg";
 import { Link, useNavigate } from 'react-router-dom';
 
