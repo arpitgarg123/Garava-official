@@ -8,6 +8,7 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import ResendVerification from "./pages/ResendVerification.jsx";
+import BookAnAppointment from "./pages/Appointment/BookAnAppointment.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Fragrance = lazy(() => import("./pages/products/Fragnance.jsx"));
@@ -43,6 +44,7 @@ const App = () => {
           <Route path="/checkout" element={<Orders />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/dashboard" element={< Dashboard/>} />
+          <Route path="/appointment" element={< BookAnAppointment/>} />
 
         </Route>
       </Routes>

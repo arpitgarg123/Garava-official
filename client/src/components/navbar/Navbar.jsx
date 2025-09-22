@@ -102,7 +102,7 @@ const Navbar = () => {
     <div className='navTop relative px-10'>
         <div className='flex justify-between  w-60 bg-amber-00 font-light'>
             <h4 className='font-medium text-sm'>Contact us</h4>
-            <h4 className='font-medium text-sm'>book an appointment</h4>
+            <h4 className='font-medium text-sm cursor-pointer' onClick={() => navigate('/appointment')}>book an appointment</h4>
             {/* <button className='bg-[#f5e6d7] px-6 py-1 text-black rounded-xl font-semibold '>Contact us</button> */}
         </div>
       
