@@ -4,11 +4,20 @@ import ProductCard from '../../components/Products/Products'
 import f1 from "../../assets/images/f-front.png";
 import f2 from "../../assets/images/fragnance.png";
 import f3 from "../../assets/images/fragnance1.png";
+import f4 from "../../assets/images/essential-f.png";
 import banner from "../../assets/images/fragnance-banner.png";
 import ProductDetails from '../../components/Products/ProductDetails';
+import Card from '../../components/recommendation/Recommendation';
+
+import { useState, useRef } from 'react';
+
+// import { HiOutlineCursorDrag } from 'react-icons/hi2';
 
 
 const Fragnance = () => {
+      
+
+     
   return (
      <>
       <div className='w-[85%] mx-auto h-[30vw] mt-20'>
@@ -17,7 +26,7 @@ const Fragnance = () => {
   <div className='w-full py-6'>
        <header className="head ">
           <div className="head-inner max-w-6xl mx-auto ">
-            <h2 className="head-text text-3xl md:text-4xl">Jewelry</h2>
+            <h2 className="head-text text-3xl md:text-4xl">Fragnance</h2>
             <div className="head-line "></div>
           </div>
         </header>
@@ -56,13 +65,16 @@ const Fragnance = () => {
   type="Eau de Parfum"
 />
 </div>
+
 </main>
   </div>
     </div>
   </div>
-{/* <ProductDetails /> */}
+ <Card />
    </>
   )
 }
 
 export default Fragnance
+
+

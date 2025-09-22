@@ -7,6 +7,7 @@ import j from "../../assets/images/jewellry4.png";
 import banner from "../../assets/images/jewellry-banner.png";
 import j2 from "../../assets/images/j.jpg";
 import ProductCard from '../../components/Products/Products';
+import Card from '../../components/recommendation/Recommendation';
 
 const Jewellry = () => {
 
@@ -95,6 +96,7 @@ const Jewellry = () => {
   </div>
     </div>
   </div>
+   <Card />
    </>
   )
 }
