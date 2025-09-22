@@ -4,6 +4,10 @@ import MainLayout from "./layouts/MainLayout.jsx";
 import ProductDetails from "./components/Products/ProductDetails.jsx";
 import OurStory from "./pages/OurStory.jsx";
 import { GuestOnly } from "./shared/auth.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
+import VerifyEmail from "./pages/VerifyEmail.jsx";
+import ResendVerification from "./pages/ResendVerification.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Fragrance = lazy(() => import("./pages/products/Fragnance.jsx"));
@@ -23,6 +27,10 @@ const App = () => {
         
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/resend-verification" element={<ResendVerification />} />
         
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />

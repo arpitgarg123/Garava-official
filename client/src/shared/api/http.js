@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseURL = (import.meta.env.VITE_API_URL || "http://localhost:8080").replace(/\/+$/, "");
-const http = axios.create({ baseURL, withCredentials: true });
+const http = axios.create({ baseURL, withCredentials: true, timeout: 10000 });
 
 // Bindings provided at app bootstrap (avoid importing the store here)
 let getToken = () => null;
