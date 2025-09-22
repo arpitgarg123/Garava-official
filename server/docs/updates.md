@@ -1,26 +1,5 @@
 # # work left 
 
-📅 Book an Appointment
-User-side
-
-Book appointment (form submission: service type, date/time, contact info, notes).
-
-View my appointments (past & upcoming).
-
-Cancel my appointment (optional).
-
-Notifications (email/SMS confirmation, optional).
-
-Admin-side
-
-View all appointments (list with filters: pending, confirmed, completed, cancelled).
-
-Update appointment status (pending → confirmed/cancelled/completed).
-
-Add notes or reschedule (optional).
-
-Export/download appointment list (optional).
-
 📰 Newsletter
 User-side
 
@@ -35,12 +14,6 @@ Confirmation email (optional double opt-in).
 Admin-side
 
 View subscriber list (with pagination).
-
-Export subscribers (CSV/Excel).
-
-Delete subscriber (GDPR-style compliance, optional).
-
-Integration hooks (SendGrid/Mailchimp/Resend, optional).
 
 ✍️ Blogs
 User-side
