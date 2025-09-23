@@ -37,7 +37,7 @@ const Jewellry = () => {
           </div>
 
           <div className="flex-center mt-10 text-center">
-           <Link  to='/jewelry'>
+           <Link  to='/products'>
             <button 
             
               className="btn"

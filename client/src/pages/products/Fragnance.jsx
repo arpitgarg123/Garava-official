@@ -6,7 +6,7 @@ import f2 from "../../assets/images/fragnance.png";
 import f3 from "../../assets/images/fragnance1.png";
 import f4 from "../../assets/images/essential-f.png";
 import banner from "../../assets/images/fragnance-banner.png";
-import ProductDetails from '../../components/Products/ProductDetails';
+import ProductDetails from './ProductDetails';
 import Card from '../../components/recommendation/Recommendation';
 
 import { useState, useRef } from 'react';
@@ -27,7 +27,7 @@ const Fragnance = () => {
        <header className="head ">
           <div className="head-inner max-w-6xl mx-auto ">
             <h2 className="head-text text-3xl md:text-4xl">Fragnance</h2>
-            <div className="head-line "></div>
+            <div className="head-line"></div>
           </div>
         </header>
 <div className="w-[95%] max-w-7xl mx-auto ">

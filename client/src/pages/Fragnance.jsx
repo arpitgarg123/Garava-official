@@ -31,7 +31,7 @@ const Fragnance = () => {
           </div>
 
           <div className="flex-center mt-12  text-center">
-             <Link  to='/fragrance'>
+             <Link  to='/products'>
             <button 
             
               className="btn"

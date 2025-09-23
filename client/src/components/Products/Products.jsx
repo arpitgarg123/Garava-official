@@ -3,6 +3,7 @@ import "./product.css";
 import { CiHeart, CiSearch } from "react-icons/ci";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+
 const ProductCard = ({
    category = "jewelry", // "jewelry" or "fragrance"
   img,
@@ -10,11 +11,12 @@ const ProductCard = ({
   price = "",
   description = "",
   type = "", // fragrance type
-  colors = [], // jewelry colors e.g. ['#e7b9a4','#c0c0c0','#ffd700']
+  colors = [],
   onAddToCart = () => {},
   onQuickView = () => {},
   onCompare = () => {},
   onToggleWishlist = () => {},
+  productSlug
 }) => {
   const [activeColor, setActiveColor] = useState(colors[0] || null);
 const navigate = useNavigate()
