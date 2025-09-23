@@ -5,18 +5,18 @@
 ### reset-password ✅
 ### verify-email ✅
 ### resend-verification-mail ✅
-### logout ❌ {buttton ui has to made}
+### logout ✅
 
 # # User Features
- # get-profile
- # update-profile
- # change-password
+ # get-profile ✅
+ # update-profile ✅
+ # change-password ✅
 
 # # Address Features
- # create-address
- # get-all-address
- # get-address-by-id
- # delete-address
+ # create-address ✅
+ # get-all-address ✅
+ # get-address-by-id ✅
+ # delete-address ✅
 
 # # Product Features (Admin)
  # create-product

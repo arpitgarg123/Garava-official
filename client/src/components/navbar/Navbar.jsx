@@ -117,10 +117,9 @@ const Navbar = () => {
           
 
          <div className='flex items-center justify-end w-72 '>
-                      <CiSearch size={25} aria-hidden="true"/>
-
+          <CiSearch size={25} aria-hidden="true"/>
           <CiHeart size={24} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/wishlist')} />
-          <CiUser size={22} aria-hidden="true" className='cursor-pointer' />
+          <CiUser size={22} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/profile')} />
           <IoBagHandleOutline size={22} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/cart')} />
 
          </div>

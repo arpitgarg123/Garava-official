@@ -14,7 +14,6 @@ const MainLayout = ({children}) => {
    <>
    <Navbar />
     <main id="main-content" className="min-h-screen">
-     
         <Outlet />
         {children}
       </main>

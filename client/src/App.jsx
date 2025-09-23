@@ -9,6 +9,7 @@ import ResetPassword from "./pages/ResetPassword.jsx";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import ResendVerification from "./pages/ResendVerification.jsx";
 import BookAnAppointment from "./pages/Appointment/BookAnAppointment.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
 const Fragrance = lazy(() => import("./pages/products/Fragnance.jsx"));
@@ -46,7 +47,7 @@ const App = () => {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/dashboard" element={< Dashboard/>} />
           <Route path="/appointment" element={< BookAnAppointment/>} />
-
+          <Route path="/profile" element={<ProfilePage/>} />
         </Route>
       </Routes>
     </Suspense>
