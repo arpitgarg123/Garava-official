@@ -98,3 +98,10 @@
 # # Appointment Feature (Admin)
  # get-all appointment
  # update-appointment
+
+# # Newsletter Feature (User)
+ # subscribe-newsletter
+ # unsubscribe-newsletter
+
+# # Newsletter Feature (User)
+ # get-subscriber-list

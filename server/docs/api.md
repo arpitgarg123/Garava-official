@@ -727,3 +727,26 @@
  "adminNotes" : "good person"
 }
 ```
+# # Newsletter Feature (Admin + User)
+
+### subscribe newsletter (user)
+**Endpoint:** `post /api/newsletter/subscribe`  
+**Description:** this route subscribe the user to the newsletter
+**Request Body:**
+```json
+{
+    "email" : "arpitgarg424@gmail.com",
+}
+```
+### unsubscribe newsletter (user)
+**Endpoint:** `post /api/newsletter/unsubscribe`  
+**Description:** this route unsubscribe the user to the newsletter
+**Request Body:**
+```json
+{
+    "email" : "arpitgarg424@gmail.com",
+}
+```
+### get subscriber list (Admin)
+**Endpoint:** `get /api/newsletter/admin`  
+**Description:** this route unsubscribe the user to the newsletter

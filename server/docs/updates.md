@@ -1,19 +1,5 @@
 # # work left 
 
-📰 Newsletter
-User-side
-
-Subscribe with email (public route, no login required).
-
-Unsubscribe (click link in email or request endpoint).
-
-Prevent duplicate subscriptions (check existing).
-
-Confirmation email (optional double opt-in).
-
-Admin-side
-
-View subscriber list (with pagination).
 
 ✍️ Blogs
 User-side
