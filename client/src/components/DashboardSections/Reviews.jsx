@@ -22,7 +22,7 @@ export default function Reviews({ reviews = [], onApprove = () => {}, onReject =
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {reviews.map((review) => (
+              {reviews?.map((review) => (
                 <tr key={review._id}>
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">{review.user?.name}</td>
                   <td className="px-6 py-4 text-sm text-gray-500">{review.product?.name}</td>

@@ -35,15 +35,15 @@ export default function Products({ products = [], onDelete = () => {} }) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between  h-12 items-start sm:items-center gap-4">
         <h2 className="text-2xl font-bold text-gray-900">Products</h2>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        <button className="bg-black hover:bg-white hover:text-black hover:border text-white px-4 py-2 rounded-lg flex items-center gap-2">
           <AiOutlinePlus className="h-4 w-4" />
           Add Product
         </button>
       </div>
 
-      <div className="bg-white p-4 rounded-lg shadow-sm border">
+      <div className=" p-4 rounded-lg shadow-sm border ">
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
@@ -84,11 +84,14 @@ export default function Products({ products = [], onDelete = () => {} }) {
                 <tr key={product._id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div>
-                      <div className="text-sm font-medium text-gray-900">{product.name}</div>
-                      <div className="text-sm text-gray-500">{product.slug}</div>
+                      <div className="text-sm font-medium text-gray-900">
+                        {/* {product.name } */}
+prods1
+                      </div>
+                      <div className="text-sm text-gray-500">{product.slug}  slug</div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">{product.category}</td>
+                  <td className="px-6 py-4 text-sm text-gray-500">{product.category} categ</td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(product.variants?.[0]?.stockStatus)}`}>
                       {product.variants?.[0]?.stock ?? 0}
