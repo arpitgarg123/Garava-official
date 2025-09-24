@@ -17,7 +17,7 @@ const dummyProducts = [
     productId: 'w2',
     product: {
       name: 'Golden Celestial Ring',
-      type: 'Jewelry',
+      type: 'jewellery',
       price: 15000,
       heroImage: { url: '/src/assets/images/j-front.jpg' }
     }
@@ -35,7 +35,7 @@ const dummyProducts = [
     productId: 'w4',
     product: {
       name: 'Diamond Aurora Necklace',
-      type: 'Jewelry',
+      type: 'jewellery',
       price: 25000,
       heroImage: { url: '/src/assets/images/j.jpg' }
     }
@@ -81,7 +81,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
         <p className="text-sm">Your wishlist is empty</p>
         {!compact && (
           <button 
-            onClick={() => navigate('/jewelry')}
+            onClick={() => navigate('/jewellery')}
             className="mt-3 bg-black text-white px-4 py-2 text-sm rounded hover:bg-gray-800"
           >
             Start Shopping

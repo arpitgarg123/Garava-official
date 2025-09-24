@@ -8,7 +8,7 @@ const dummyProducts = [
     product: {
       name: 'Diamond Eternity Ring',
       heroImage: {
-        url: '/images/jewelry1.jpg'
+        url: '/images/jewellery1.jpg'
       },
       price: 89999,
       type: 'Ring'
@@ -19,7 +19,7 @@ const dummyProducts = [
     product: {
       name: 'Sapphire Drop Earrings',
       heroImage: {
-        url: '/images/jewelry2.jpg'
+        url: '/images/jewellery2.jpg'
       },
       price: 45999,
       type: 'Earrings'
@@ -51,7 +51,7 @@ const Wishlist = () => {
             <CiHeart size={60} className="text-gray-300" />
             <p className="text-gray-500">Your wishlist is empty</p>
             <button 
-              onClick={() => navigate('/jewelry')}
+              onClick={() => navigate('/jewellery')}
               className="bg-black text-white px-8 py-2 hover:bg-gray-800 transition"
             >
               Continue Shopping

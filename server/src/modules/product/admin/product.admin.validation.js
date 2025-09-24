@@ -18,7 +18,7 @@ export const variantSchema = z.object({
 
 export const createProductSchema = z.object({
   name: z.string().min(1),
-  type: z.enum(["fragrance","jewelry","other"]).optional().default("fragrance"),
+  type: z.enum(["fragrance","jewellery","other"]).optional().default("fragrance"),
   slug: z.string().min(1),
   category: z.string().min(1),
   subcategory: z.string().optional(),

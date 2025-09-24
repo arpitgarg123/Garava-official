@@ -18,8 +18,8 @@ const navItems = [
   ] },
   { title: 'HIGH JEWELLERY ', submenu: [
      { label: 'fragnance', img: './src/assets/images/fragnance1.png' },
-      { label: 'jewelry', img: './src/assets/images/jewellry4.png' },
-      { label: 'jewelry', img: './src/assets/images/fragnance.png' },
+      { label: 'jewellery', img: './src/assets/images/jewellry4.png' },
+      { label: 'jewellery', img: './src/assets/images/fragnance.png' },
   ] },
   { title: 'Fragrance', submenu: [
      { label: 'Gifts for her', img: './src/assets/images/fragnance1.png' },
@@ -35,7 +35,7 @@ const navItems = [
      { label: 'Our Story', img: '/images/for-her.jpg' },
   ] },
   {title: 'Blogs', submenu: [
-     { label: 'Jewelry', img: '/images/for-her.jpg' },
+     { label: 'jewellery', img: '/images/for-her.jpg' },
       { label: 'Fragnance', img: '/images/for-him.jpg' },
       { label: 'GARAVA', img: '/images/unisex.jpg' },
   ]},

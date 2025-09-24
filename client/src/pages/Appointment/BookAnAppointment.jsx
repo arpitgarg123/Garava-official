@@ -5,7 +5,7 @@ import { createAppointment } from "../../features/appointment/api.js";
 
 const serviceOptions = [
   { value: "fragrance_consultation", label: "Fragrance consultation" },
-  { value: "jewelry_consultation", label: "Jewelry consultation" },
+  { value: "jewellery_consultation", label: "jewellery consultation" },
   { value: "custom_order", label: "Custom order" },
   { value: "general", label: "General inquiry" },
 ];

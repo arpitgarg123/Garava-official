@@ -6,7 +6,7 @@ const appointmentSchema = new mongoose.Schema({
   email: { type: String, required: true, trim: true, lowercase: true },
   phone: { type: String, required: true, trim: true },
 
-  serviceType: { type: String, required: true }, // e.g., "fragrance_consult", "jewelry_styling", "store_visit"
+  serviceType: { type: String, required: true }, // e.g., "fragrance_consult", "jewellery_styling", "store_visit"
   notes: { type: String },
 
   // For simplicity store a single Date for appointment slot

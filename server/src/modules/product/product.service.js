@@ -17,11 +17,11 @@ export const listProductsService = async ({
   sort,
 }) => {
   const skip = (page - 1) * limit;
-
+  
   // Filters
   const filter = { isActive: true, status: "published" };
   if (type) filter.type = type;
-  if (category) filter.category = category;
+  if (category) filter.category = new RegExp(`^${category}$`, "i");
   if (q) filter.$text = { $search: q };
 
   // Price filter: check variants

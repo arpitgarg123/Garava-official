@@ -1,4 +1,3 @@
-import React from 'react'
 import Card from '../components/Products/Card'
 import jFront from "../assets/images/j-front.jpg";
 import jBack from "../assets/images/j-back.jpg";
@@ -37,7 +36,7 @@ const Jewellry = () => {
           </div>
 
           <div className="flex-center mt-10 text-center">
-           <Link  to='/products'>
+           <Link  to='/products/jewellery'>
             <button 
             
               className="btn"

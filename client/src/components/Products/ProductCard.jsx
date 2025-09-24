@@ -5,7 +5,7 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({
-   category = "jewelry", // "jewelry" or "fragrance"
+   category = "jewellery",
   img,
   title = "Product",
   price = "",
@@ -14,15 +14,18 @@ const ProductCard = ({
   colors = [],
   onAddToCart = () => {},
   onQuickView = () => {},
-  onCompare = () => {},
   onToggleWishlist = () => {},
   productSlug
 }) => {
   const [activeColor, setActiveColor] = useState(colors[0] || null);
 const navigate = useNavigate()
   
-const handleProductClick = () => {
-    navigate('/product_details')
+ const handleProductClick = () => {
+    if (!productSlug){
+      navigate('/products')
+    } else {
+      navigate(`/product_details/${productSlug}`);
+    }
   };
   return (
      <article  className="ph-card" tabIndex="0" aria-label={`${title} - ${price}`}>
@@ -78,9 +81,9 @@ const handleProductClick = () => {
             <div className="ph-price">{price}</div>
           </>
         ) : (
-          /* default to jewelry structure */
+          /* default to jewellery structure */
           <>
-            <div className="ph-category">Jewelry</div>
+            <div className="ph-category">jewellery</div>
             <h3 className="ph-title">{title}</h3>
             <div className="ph-price">{price}</div>
 

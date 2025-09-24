@@ -16,7 +16,7 @@
 //             <IoBagHandleOutline size={60} className="text-gray-300" />
 //             <p className="text-gray-500">Your cart is empty</p>
 //             <button 
-//               onClick={() => navigate('/jewelry')}
+//               onClick={() => navigate('/jewellery')}
 //               className="bg-black text-white px-8 py-2 hover:bg-gray-800 transition"
 //             >
 //               Continue Shopping
@@ -161,7 +161,7 @@ const Cart = () => {
             <IoBagHandleOutline size={60} className="text-gray-300" />
             <p className="text-gray-500">Your cart is empty</p>
             <button 
-              onClick={() => navigate('/jewelry')}
+              onClick={() => navigate('/jewellery')}
               className="bg-black text-white px-8 py-2 hover:bg-gray-800 transition"
             >
               Continue Shopping

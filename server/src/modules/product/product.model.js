@@ -54,7 +54,7 @@ const productSchema = new mongoose.Schema(
   {
     // basic
     name: { type: String, required: true, trim: true },
-    type: { type: String, enum: ["fragrance", "jewelry", "other"], default: "fragrance" },
+    type: { type: String, enum: ["fragrance", "jewellery", "other"], default: "fragrance" },
     slug: { type: String, required: true, unique: true, lowercase: true },
     category: { type: String, required: true },
     subcategory: { type: String },
@@ -73,7 +73,7 @@ const productSchema = new mongoose.Schema(
     caution: { type: String },
     storage: { type: String },
 
-    // jewelry fields
+    // jewellery fields
     dimensions: { type: String }, // "18 x 12 mm"
     material: { type: String }, // "925 Sterling Silver"
     careInstructions: { type: String },

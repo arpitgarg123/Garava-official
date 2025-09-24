@@ -66,7 +66,7 @@ export const emailTemplates = {
       subject: "Welcome to Garava Newsletter",
       html: `
         <h2>Thanks for subscribing to Garava!</h2>
-        <p>You’ll now receive updates about new fragrances, jewelry, and offers.</p>
+        <p>You’ll now receive updates about new fragrances, jewellery, and offers.</p>
         <p>If this wasn’t you, you can <a href="${process.env.CLIENT_URL}/unsubscribe?email=${encodeURIComponent(email)}">unsubscribe here</a>.</p>
       `
     }; 

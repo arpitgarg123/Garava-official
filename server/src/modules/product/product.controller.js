@@ -12,7 +12,7 @@ export const listProducts = asyncHandler(async (req, res) => {
     priceMin,
     priceMax,
     sort,
-  });
+  });  
   res.json({ success: true, ...result });
 });
 

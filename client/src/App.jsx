@@ -12,8 +12,6 @@ import BookAnAppointment from "./pages/Appointment/BookAnAppointment.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 
 const Home = lazy(() => import("./pages/Home.jsx"));
-const Fragrance = lazy(() => import("./pages/products/Fragnance.jsx"));
-const Jewelry = lazy(() => import("./pages/products/Jewellry.jsx"));
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
 const Login = lazy(() => import("./features/auth/Login.jsx"));
 const Signup = lazy(() => import("./pages/Signup.jsx"));
@@ -38,10 +36,10 @@ const App = () => {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<OurStory />} />
-          <Route path="jewelry" element={<Jewelry />} />
-          <Route path="products" element={<ProductPage />} />
+          {/* <Route path="jewellery" element={<jewellery />} /> */}
+          <Route path="products/:category" element={<ProductPage />} />
           {/* <Route path="product/:id" element={<ProductDetails />} /> */}
-          <Route path="product_details" element={<ProductDetails />} />
+          <Route path="/product_details/:slug" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Orders />} />
           <Route path="/wishlist" element={<Wishlist />} />

@@ -7,24 +7,58 @@ import {
   checkPincodeApi,
 } from "./api.js";
 
-const CACHE_TTL_MS = 1000 * 60 * 2; // 2 minutes cache TTL for product detail/list
+// ---- Async thunks ----
 
+// List products
 export const fetchProducts = createAsyncThunk(
   "product/fetchList",
   async (params = {}) => {
     const { data } = await listProductsApi(params);
-    return data;
+
+    // normalize response
+    if (Array.isArray(data)) {
+      return {
+        products: data,
+        pagination: {
+          total: data.length,
+          page: params.page || 1,
+          limit: params.limit || 20,
+        },
+      };
+    }
+
+    if (data?.products) {
+      return {
+        products: data.products,
+        pagination: data.pagination || {
+          total: data.products.length,
+          page: params.page || 1,
+          limit: params.limit || 20,
+        },
+      };
+    }
+
+    return {
+      products: data?.items || [],
+      pagination: data?.pagination || {
+        total: data?.items?.length || 0,
+        page: params.page || 1,
+        limit: params.limit || 20,
+      },
+    };
   }
 );
 
+// Product by slug
 export const fetchProductBySlug = createAsyncThunk(
   "product/fetchBySlug",
   async (slug) => {
     const { data } = await getProductBySlugApi(slug);
-    return data;
+    return data?.product || data;
   }
 );
 
+// Product by SKU
 export const fetchProductBySku = createAsyncThunk(
   "product/fetchBySku",
   async (sku) => {
@@ -33,6 +67,7 @@ export const fetchProductBySku = createAsyncThunk(
   }
 );
 
+// Pincode check
 export const checkPincode = createAsyncThunk(
   "product/checkPincode",
   async (body) => {
@@ -41,6 +76,7 @@ export const checkPincode = createAsyncThunk(
   }
 );
 
+// ---- Initial state ----
 const initialState = {
   list: {
     items: [],
@@ -56,6 +92,7 @@ const initialState = {
   availability: {}, // key -> data
 };
 
+// ---- Slice ----
 const slice = createSlice({
   name: "product",
   initialState,
@@ -76,18 +113,12 @@ const slice = createSlice({
       s.list.error = null;
       s.list.params = a.meta.arg || {};
     });
-    b.addCase(fetchProducts.fulfilled, (s, { payload, meta }) => {
+    b.addCase(fetchProducts.fulfilled, (s, { payload }) => {
       s.list.status = "succeeded";
-      // backend returns normalized object or items; support both
-      if (Array.isArray(payload)) {
-        s.list.items = payload;
-        s.list.total = payload.length;
-      } else {
-        s.list.items = payload?.products || payload?.items || [];
-        s.list.total = payload?.pagination?.total || payload?.total || s.list.items.length;
-        s.list.page = payload?.pagination?.page || s.list.page;
-        s.list.limit = payload?.pagination?.limit || s.list.limit;
-      }
+      s.list.items = payload.products;
+      s.list.total = payload.pagination.total;
+      s.list.page = payload.pagination.page;
+      s.list.limit = payload.pagination.limit;
       s.list.fetchedAt = Date.now();
     });
     b.addCase(fetchProducts.rejected, (s, { error }) => {
@@ -121,9 +152,8 @@ const slice = createSlice({
       };
     });
 
-    // fetch by sku (used for validation)
+    // fetch by sku
     b.addCase(fetchProductBySku.fulfilled, (s, { payload }) => {
-      // payload is product/variant info, store under availability map by SKU
       const sku = payload?.variant?.sku || payload?.variant?.id;
       if (sku) {
         s.availability[sku] = {
