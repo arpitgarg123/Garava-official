@@ -1,64 +1,111 @@
-import { useEffect } from "react";
+// src/pages/ProductPage.jsx  (replace current ProductPage with this)
+import { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchProducts } from "../../features/product/slice";
-import ProductCard from "../../components/Products/ProductCard";
+import { setFilters, fetchProducts } from "../../features/product/slice";
 import SideBar from "../../components/Products/SideBar";
+import ProductCard from "../../components/Products/ProductCard";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
-  const { category } = useParams(); // 👈 dynamic category from URL
-  const { items: products, status, error } = useSelector((state) => state.product.list);
+  const { category: routeCategory } = useParams();
+  const { list, filters } = useSelector((s) => s.product);
+  const { items, status, error } = list;
+
+  // Map routeCategory into filters (type / category)
+  useEffect(() => {
+    if (!routeCategory) return;
+    const lower = routeCategory.toLowerCase();
+    if (lower.startsWith("all-")) {
+      dispatch(setFilters({ type: lower.replace("all-", ""), category: "", page: 1 }));
+    } else if (lower === "jewellery" || lower === "fragrance") {
+      dispatch(setFilters({ type: lower, category: "", page: 1 }));
+    } else {
+      // treat as subcategory; keep existing type or default jewellery
+      dispatch(setFilters((prev) => {
+        // NOTE: prev not available directly; reconstruct from filters
+        const currentType = filters.type || "jewellery";
+        return {
+          type: currentType,
+          category: lower,
+          page: 1
+        };
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [routeCategory]);
+
+  // Debounced fetch on filter changes
+  const [pendingFilters, setPendingFilters] = useState(filters);
+  useEffect(() => {
+    setPendingFilters(filters);
+  }, [filters]);
 
   useEffect(() => {
-    if (category) {
-      dispatch(fetchProducts({ category })); // fetch from backend
-    }
-  }, [dispatch, category]);
-  console.log(products)
+    const h = setTimeout(() => {
+      // Build clean params
+      const params = {
+        page: pendingFilters.page,
+        limit: pendingFilters.limit,
+        sort: pendingFilters.sort,
+      };
+      if (pendingFilters.type) params.type = pendingFilters.type;
+      if (pendingFilters.category) params.category = pendingFilters.category;
+      if (pendingFilters.priceMin != null) params.priceMin = pendingFilters.priceMin;
+      if (pendingFilters.priceMax != null) params.priceMax = pendingFilters.priceMax;
 
-  if (status === "loading") return <p className="p-4">Loading products...</p>;
-  if (status === "failed") return <p className="p-4 text-red-500">{error}</p>;
-  
+      dispatch(fetchProducts(params));
+    }, 200); // debounce to avoid 429
+    return () => clearTimeout(h);
+  }, [pendingFilters, dispatch]);
+
+  const heading = routeCategory
+    ? routeCategory.replace(/-/g, " ")
+    : (filters.type || "products");
+
+  const handleApplyFilters = useCallback((f) => {
+    // Sidebar already dispatched setFilters; no action needed here.
+  }, []);
+
   return (
     <div className="w-full py-6">
       <header className="head">
         <div className="head-inner max-w-6xl mx-auto">
-          <h2 className="head-text text-3xl md:text-4xl capitalize">{category}</h2>
+          <h2 className="head-text text-3xl md:text-4xl capitalize">{heading}</h2>
           <div className="head-line"></div>
         </div>
       </header>
 
       <div className="w-[95%] max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 items-start">
         <div className="hidden md:block">
-          <SideBar mainCategory={category} />
+          <SideBar mainCategory={filters.type || routeCategory || "jewellery"} onApply={handleApplyFilters} />
         </div>
 
         <main className="ml-10 mt-10">
           <div className="flex items-center justify-between mb-6">
-            <div className="text-sm text-gray-600">Showing {products.length} products</div>
-            <select className="border px-3 py-1 rounded text-sm">
-              <option>Sort: Popular</option>
-              <option>Sort: Price — Low to High</option>
+            <div className="text-sm text-gray-600">
+              {status === "loading" ? "Loading..." : `Showing ${items.length} products`}
+            </div>
+            <select
+              className="border px-3 py-1 rounded text-sm"
+              value={filters.sort}
+              onChange={(e) => dispatch(setFilters({ sort: e.target.value, page: 1 }))}
+            >
+              <option value="newest">Newest</option>
+              <option value="price_asc">Price Low → High</option>
+              <option value="price_desc">Price High → Low</option>
+              <option value="popularity">Popular</option>
+              <option value="rating">Rating</option>
             </select>
           </div>
 
+          {status === "failed" && (
+            <div className="text-red-500 text-sm mb-4">{error}</div>
+          )}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-            {products.map((product) => (
-              <ProductCard
-                key={product._id || product.id || `product-${index}`}
-                  category={product.category || category}
-                  img={product.heroImage?.url || product.images?.[0]?.url || '/placeholder.jpg'}
-                  title={product.name || 'Untitled Product'}
-                  price={product?.defaultVariant?.price || 'Price not available'}
-                  description={product.shortDescription || product.description}
-                  type={product.type}
-                  colors={product.colors || []}
-                  productSlug={product.slug || product._id}
-                  onAddToCart={() => console.log('Add to cart:', product)}
-                  onQuickView={() => console.log('Quick view:', product)}
-                  onToggleWishlist={() => console.log('Toggle wishlist:', product)}
-              />
+            {items.map((p, i) => (
+              <ProductCard key={p.id || p._id || `p-${i}`} product={p} />
             ))}
           </div>
         </main>

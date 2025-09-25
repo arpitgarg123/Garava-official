@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import PriceFilter from './PriceFilter';
 import CategoryFilter from './CategoryFilter';
 import ColorFilter from './ColorFilter';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilters, fetchCategoryCounts } from '../../features/product/slice';
 
 const JEWELLERY_SUBCATS = [
   { id: "all-jewellery", label: "All Jewellery" },
@@ -20,6 +22,7 @@ const FRAGRANCE_SUBCATS = [
 ];
 
 const SideBar = ({ mainCategory = "jewellery", onApply }) => {
+  const dispatch = useDispatch();
     const [price, setPrice] = useState({ min: "", max: "" });
   const [category, setCategory] = useState("Jewellery"); // default
   const [colors, setColors] = useState([]); // ['rose','silver','gold']
@@ -34,14 +37,36 @@ const SideBar = ({ mainCategory = "jewellery", onApply }) => {
   }, [detectedCategory]);
 
    const handleApply = () => {
-    const filters = {
-      price: { min: price.min ? Number(price.min) : null, max: price.max ? Number(price.max) : null },
-      mainCategory: detectedCategory,
-      category,
-      colors,
-    };
-    if (typeof onApply === "function") onApply(filters);
+  const nextFilters = {
+    type: detectedCategory,
+    category,
+    priceMin: price.min ? Number(price.min) : null,
+    priceMax: price.max ? Number(price.max) : null,
+    page: 1
   };
+  // Normalize "all-*" → drop category
+  if (nextFilters.category && nextFilters.category.startsWith("all-")) {
+    nextFilters.category = "";
+  }
+  dispatch(setFilters(nextFilters));
+  if (typeof onApply === "function") onApply(nextFilters);
+};
+// Auto-apply only category change
+useEffect(() => {
+  if (!category) return;
+  handleApply();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [category]);
+
+useEffect(() => {
+  // After we establish detectedCategory & subCategories, load counts
+  if (!detectedCategory) return;
+  const plainCats = subCategories.map(c => c.id);
+  dispatch(fetchCategoryCounts({ type: detectedCategory, categories: plainCats }));
+}, [detectedCategory, subCategories, dispatch]);
+
+// Get counts from store
+const counts = useSelector(s => s.product.categoryCounts[detectedCategory] || {});
 
   return (
      <aside className="sticky top-0 w-full max-w-[280px]">
@@ -49,7 +74,12 @@ const SideBar = ({ mainCategory = "jewellery", onApply }) => {
       <div className="space-y-6 pr-4">
           <PriceFilter value={price} onChange={setPrice} onApply={handleApply} />
           <hr className="border-gray-200" />
-          <CategoryFilter selected={category} onChange={setCategory} categories={subCategories} />
+          <CategoryFilter
+  selected={category}
+  onChange={setCategory}
+  categories={subCategories}
+  counts={counts}
+/>
           <hr className="border-gray-200" />
           {detectedCategory === "jewellery" && <ColorFilter selected={colors} onChange={setColors} />}
         </div>

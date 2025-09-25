@@ -6,6 +6,7 @@ import mongoose from "mongoose";
  * List products (public API)
  * Supports filters, search, pagination, and sorting
  */
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 export const listProductsService = async ({
   page = 1,
   limit = 20,
@@ -21,7 +22,7 @@ export const listProductsService = async ({
   // Filters
   const filter = { isActive: true, status: "published" };
   if (type) filter.type = type;
-  if (category) filter.category = new RegExp(`^${category}$`, "i");
+  if (category) filter.category = { $regex: `^${escapeRegex(category)}$`, $options: "i" };
   if (q) filter.$text = { $search: q };
 
   // Price filter: check variants
@@ -56,6 +57,9 @@ export const listProductsService = async ({
   const normalized = products.map((p) => {
     const defaultVariant =
       p.variants.find((v) => v.isDefault) || p.variants[0] || null;
+      const prices = (p.variants || []).map(v => Number(v.price)).filter(p => !isNaN(p));
+      const priceRange = prices.length ? { min: Math.min(...prices), max: Math.max(...prices) } : { min: null, max: null };
+
 
     return {
       id: p._id,

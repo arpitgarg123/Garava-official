@@ -58,6 +58,7 @@ const productSchema = new mongoose.Schema(
     slug: { type: String, required: true, unique: true, lowercase: true },
     category: { type: String, required: true },
     subcategory: { type: String },
+    tags: [{ type: String }],
 
     // descriptions
     shortDescription: { type: String },

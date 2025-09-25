@@ -1,106 +1,149 @@
-import React, { useState } from "react";
-import "./product.css"; 
+import React, { useState, useEffect } from "react";
+import "./product.css";
 import { CiHeart, CiSearch } from "react-icons/ci";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({
-   category = "jewellery",
-  img,
-  title = "Product",
-  price = "",
-  description = "",
-  type = "", // fragrance type
-  colors = [],
+  product,
   onAddToCart = () => {},
   onQuickView = () => {},
   onToggleWishlist = () => {},
-  productSlug
 }) => {
-  const [activeColor, setActiveColor] = useState(colors[0] || null);
-const navigate = useNavigate()
-  
- const handleProductClick = () => {
-    if (!productSlug){
-      navigate('/products')
+  if (!product) return null;
+
+  // Robust price resolution
+  const price =
+    product?.defaultVariant?.price ??
+    product?.variants?.[0]?.price ??
+    product?.priceRange?.min ??
+    "—";
+  const displayPrice = price;
+
+  // Normalize colors
+  const colors = Array.isArray(product.colors) ? product.colors : [];
+
+  // Active color state (defensive)
+  const [activeColor, setActiveColor] = useState(
+    colors.length ? colors[0] : null
+  );
+  useEffect(() => {
+    setActiveColor(colors.length ? colors[0] : null);
+  }, [colors.join("|")]); // re-init if colors change
+
+  const navigate = useNavigate();
+
+  const slug = product.slug || product.productSlug || product.id || product._id;
+  const heroSrc =
+    product?.heroImage?.url ||
+    product?.heroImage ||
+    product?.gallery?.[0]?.url ||
+    "/placeholder.jpg";
+
+  const handleProductClick = () => {
+    if (!slug) {
+      navigate("/products");
     } else {
-      navigate(`/product_details/${productSlug}`);
+      navigate(`/product_details/${slug}`);
     }
   };
+
   return (
-     <article  className="ph-card" tabIndex="0" aria-label={`${title} - ${price}`}>
+    <article
+      className="ph-card"
+      tabIndex="0"
+      aria-label={`${product.name || "Product"} - ${displayPrice}`}
+    >
       {/* IMAGE */}
-      <div  onClick={handleProductClick} className="ph-image-wrap cursor-pointer">
-        <img src={img} alt={title} className="ph-image" loading="lazy" />
+      <div onClick={handleProductClick} className="ph-image-wrap cursor-pointer">
+        <img
+          src={heroSrc}
+          alt={product.name || "Product image"}
+          className="ph-image"
+          loading="lazy"
+        />
       </div>
 
-      {/* ACTION RAIL (shows on hover/focus per CSS) */}
+      {/* ACTION RAIL */}
       <div className="ph-actions" aria-hidden="true">
         <button
           className="ph-action ph-action-ghost"
           title="Add to cart"
           aria-label="Add to cart"
-          
           onClick={(e) => {
             e.stopPropagation();
-            onAddToCart()
-          }
-          }
+            onAddToCart(product);
+          }}
         >
           <IoBagHandleOutline />
         </button>
 
         <button
           className="ph-action ph-action-ghost"
-          title="Quick view"
+            title="Quick view"
           aria-label="Quick view"
-          onClick={() => onQuickView({ img, title, price, description })}
+          onClick={() =>
+            onQuickView({
+              img: heroSrc,
+              title: product.name,
+              price: displayPrice,
+              description: product.shortDescription || product.description,
+            })
+          }
         >
           <CiSearch />
         </button>
-
-        
 
         <button
           className="ph-action ph-action-ghost"
           title="Wishlist"
           aria-label="Add to wishlist"
-          onClick={() => onToggleWishlist({ img, title, price })}
+          onClick={() =>
+            onToggleWishlist({
+              img: heroSrc,
+              title: product.name,
+              price: displayPrice,
+              id: slug,
+            })
+          }
         >
           <CiHeart />
         </button>
       </div>
 
-      {/* CONTENT (category-specific) */}
+      {/* CONTENT */}
       <div className="ph-content">
-        {category === "fragrance" ? (
+        {(product.type === "fragrance" || product.category === "fragrance") ? (
           <>
-            <div className="ph-category">{type || "Fragrance"}</div>
-            <h3 className="ph-title">{title}</h3>
-            {description && <p className="ph-desc">{description}</p>}
-            <div className="ph-price">{price}</div>
+            <div className="ph-category">{product.type || "Fragrance"}</div>
+            <h3 className="ph-title">{product.name}</h3>
+            {product.shortDescription && (
+              <p className="ph-desc">{product.shortDescription}</p>
+            )}
+            <div className="ph-price">{displayPrice}</div>
           </>
         ) : (
-          /* default to jewellery structure */
           <>
-            <div className="ph-category">jewellery</div>
-            <h3 className="ph-title">{title}</h3>
-            <div className="ph-price">{price}</div>
-
-            {colors && colors.length > 0 && (
-              <div className="mt-3 flex items-start justify-start gap-2">
-            {colors.map((c, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveColor(c)}
-                className={`w-5 h-5 rounded-full   ${
-                  activeColor === c ? "scale-125" : ""
-                }`}
-                style={{ backgroundColor: c }}
-                aria-label={`Select ${c} color`}
-              />
-            ))}
+            <div className="ph-category">
+              {product.type || product.category || "jewellery"}
             </div>
+            <h3 className="ph-title">{product.name}</h3>
+            <div className="ph-price">{displayPrice}</div>
+
+            {colors.length > 0 && (
+              <div className="mt-3 flex items-start justify-start gap-2">
+                {colors.map((c, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveColor(c)}
+                    className={`w-5 h-5 rounded-full ${
+                      activeColor === c ? "scale-125" : ""
+                    }`}
+                    style={{ backgroundColor: c }}
+                    aria-label={`Select ${c} color`}
+                  />
+                ))}
+              </div>
             )}
           </>
         )}
