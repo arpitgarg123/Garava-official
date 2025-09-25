@@ -54,6 +54,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
 
+  let isLogin = false
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -117,11 +118,22 @@ const Navbar = () => {
           
 
          <div className='flex items-center justify-end w-72 '>
-          <CiSearch size={25} aria-hidden="true"/>
+        {
+          isLogin ? <>
+            <CiSearch size={25} aria-hidden="true"/>
           <CiHeart size={24} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/wishlist')} />
           <CiUser size={22} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/profile')} />
           <IoBagHandleOutline size={22} aria-hidden="true" className='cursor-pointer' onClick={() => navigate('/cart')} />
 
+          </>:(
+              <button
+                onClick={() => navigate('/login')}
+                className="bg-black text-white px-6 py-2 cursor-pointer  font-medium hover:bg-gray-800 transition"
+              >
+                Login
+              </button>
+            )
+        }
          </div>
     </div>
     {shouldShowNavItems && (
