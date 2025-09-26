@@ -28,13 +28,13 @@
  # soft delete
 
 # # Product Features (User)
- # get-all-products
- # get-product-by-slug
+ # get-all-products ✅
+ # get-product-by-slug ✅
  # get-product-by-sku
  # check-availability
 
 # # Order Features (User)
- # create-order
+ # create-order 
  # get-all-order
  # get-order-by-id
  # payment-completing-process (razorpay but not tested yet)
