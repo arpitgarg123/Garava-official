@@ -16,6 +16,9 @@ cart page done and not mobile responsive and optimize bhi krna h thoda✅
 order page done and resposinve bhi done thoda optimize krna h✅
 wishlist  resposnve done✅
 login/signup add forgot password and google auth✅
+dashboard ui complete and responsive also ✅, for some mini fix delay
+navbar islogin fix (add login button) ✅
+blogs page ui done with responsive ✅ only blog details is pending...
 
 
 

@@ -26,9 +26,10 @@ export default function Reviews({ reviews = [], onApprove = () => {}, onReject =
                 <tr key={review._id}>
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">{review.user?.name}</td>
                   <td className="px-6 py-4 text-sm text-gray-500">{review.product?.name}</td>
-                  <td className="px-6 py-4">
+                  {/* <td className="px-6 py-4">
                     <div className="flex items-center">{Array.from({ length: 5 }).map((_, i) => <AiFillStar key={i} className={`h-4 w-4 ${i < review.rating ? "text-yellow-400" : "text-gray-300"}`} />)}</div>
-                  </td>
+                  </td> */}
+                    <td className="py-3 px-2">{review.rating || "—"}</td>
                   <td className="px-6 py-4">
                     <div className="max-w-xs"><div className="text-sm font-medium text-gray-900 truncate">{review.title}</div><div className="text-sm text-gray-500 truncate">{review.body}</div></div>
                   </td>

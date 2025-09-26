@@ -2,6 +2,8 @@ import React, { useMemo, useState } from "react";
 import { AiOutlinePlus, AiOutlineSearch, AiOutlineEye, AiFillStar } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useNavigate } from 'react-router-dom';
+import ProductDetails from "../../pages/products/ProductDetails";
 // import { formatCurrency as _formatCurrency } from "../utils/format"; // small util (optional)
 
 function formatCurrency(paise) {
@@ -21,6 +23,7 @@ function getStatusColor(status) {
 export default function Products({ products = [], onDelete = () => {} }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const navigate  = useNavigate()
 
   const filtered = useMemo(
     () =>
@@ -109,7 +112,9 @@ prods1
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center gap-2 justify-end">
-                      <button className="text-blue-600 hover:text-blue-900"><AiOutlineEye className="h-4 w-4" /></button>
+                      <button onClick={
+                      <ProductDetails />
+                      } className="text-blue-600 hover:text-blue-900"><AiOutlineEye className="h-4 w-4" /></button>
                       <button className="text-indigo-600 hover:text-indigo-900"><FiEdit className="h-4 w-4" /></button>
                       <button className="text-red-600 hover:text-red-900" onClick={() => onDelete(product._id)}><RiDeleteBin6Line className="h-4 w-4" /></button>
                     </div>
