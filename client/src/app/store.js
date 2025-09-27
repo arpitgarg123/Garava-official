@@ -6,12 +6,13 @@ import { combineReducers } from "redux";
 import authReducer from "../features/auth/slice.js";
 import productReducer from "../features/product/slice.js";
 import cartReducer from "../features/cart/slice.js";
+import wishlistReducer from "../features/wishlist/slice.js";
 
 // Persist configuration
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "cart"], // Only persist auth and cart data
+  whitelist: ["auth", "cart", "wishlist"], // Persist auth, cart, and wishlist data
 };
 
 // Combine reducers
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   product: productReducer,
   cart: cartReducer,
+  wishlist: wishlistReducer,
 });
 
 // Create persisted reducer

@@ -52,10 +52,10 @@
  # clear cart
 
 # # wishlist Features
- # add-to-wishlist
- # remove-to-wishlist
- # get-wishlist
- # toggle-product-items
+ # add-to-wishlist ✅
+ # remove-to-wishlist ✅
+ # get-wishlist ✅
+ # toggle-product-items ✅
 
 # # Review Feature (User)
  # create-review

@@ -5,7 +5,10 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductBySlug } from '../../features/product/slice';
 import { addToCart } from '../../features/cart/slice';
+import { toggleWishlistItem } from '../../features/wishlist/slice';
 import { selectIsAuthenticated } from '../../features/auth/selectors';
+import { logout } from '../../features/auth/slice';
+import { selectIsProductInWishlist } from '../../features/wishlist/selectors';
 import { toast } from 'react-hot-toast';
 
 
@@ -19,6 +22,10 @@ const ProductDetails = () => {
   const productData = useSelector(state => state.product.bySlug[productSlug]);
   const { data: product, status, error } = productData || {};
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  
+  // Check if product is in wishlist
+  const productId = product?._id || product?.id;
+  const isInWishlist = useSelector(state => selectIsProductInWishlist(state, productId));
 
    useEffect(() => {
     if (productSlug) {
@@ -61,6 +68,45 @@ const ProductDetails = () => {
       });
   };
 
+  const handleToggleWishlist = () => {
+    // Check authentication
+    if (!isAuthenticated) {
+      toast.error("Please login to manage wishlist");
+      navigate("/login");
+      return;
+    }
+
+    if (!productId) {
+      toast.error("Product information is missing");
+      return;
+    }
+
+    // Dispatch Redux action
+    dispatch(toggleWishlistItem(productId))
+      .unwrap()
+      .then((result) => {
+        if (result.action === "added") {
+          toast.success("Added to wishlist!");
+        } else if (result.action === "removed") {
+          toast.success("Removed from wishlist!");
+        }
+      })
+      .catch((error) => {
+        console.error("Wishlist error:", error);
+        if (error.message?.includes('Authentication failed') || error.message?.includes('login again')) {
+          toast.error("Session expired. Please login again.");
+          // Force logout to clear invalid session
+          dispatch(logout());
+          navigate("/login");
+        } else if (error.message?.includes('login') || error.message?.includes('401')) {
+          toast.error("Please login to manage wishlist");
+          navigate("/login");
+        } else {
+          toast.error("Failed to update wishlist");
+        }
+      });
+  };
+
   if (status === 'loading') return <p className="p-4">Loading product details...</p>;
   if (status === 'failed') return <p className="p-4 text-red-500">{error}</p>;
   if (!product) return <p className="p-4">Product not found.</p>;
@@ -90,18 +136,14 @@ const ProductDetails = () => {
             <button onClick={handleAddToCart}  className='bg-black text-white w-1/2 py-2 tracking-widest mt-5 hover:bg-transparent hover:text-black transition duration-300 border'>ADD TO BAG </button>
             <button onClick={() => navigate('/checkout')} className='border w-1/2 py-2 tracking-widest mt-5 hover:bg-black hover:text-white transition duration-300'>BUY NOW </button>
             <button 
-              onClick={() => {
-                if (!isAuthenticated) {
-                  toast.error("Please login to add items to wishlist");
-                  navigate("/login");
-                  return;
-                }
-                // TODO: Implement wishlist Redux integration
-                toast.info("Wishlist feature coming soon!");
-              }}
-              className='border w-1/3 py-2 tracking-widest mt-5 hover:bg-black hover:text-white transition duration-300'
+              onClick={handleToggleWishlist}
+              className={`border w-1/3 py-2 tracking-widest mt-5 transition duration-300 ${
+                isInWishlist 
+                  ? 'bg-red-500 text-white hover:bg-red-600' 
+                  : 'hover:bg-black hover:text-white'
+              }`}
             >
-              ADD WISHLIST 
+              {isInWishlist ? 'REMOVE FROM WISHLIST' : 'ADD TO WISHLIST'}
             </button>
       </div>
       <div className='flex items-center justify-between  mt-12'>

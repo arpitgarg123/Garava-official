@@ -7,6 +7,7 @@ import Footer from '../components/footer/Footer';
 import Navbar from '../components/navbar/Navbar';
 import { selectIsAuthenticated } from '../features/auth/selectors';
 import { fetchCart } from '../features/cart/slice';
+import { fetchWishlist } from '../features/wishlist/slice';
 
 const MainLayout = ({children}) => {
       const location = useLocation();
@@ -17,10 +18,27 @@ const MainLayout = ({children}) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
 
-  // Fetch cart when user is authenticated
+  // Fetch cart and wishlist when user is authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      dispatch(fetchCart());
+      dispatch(fetchCart())
+        .unwrap()
+        .catch((error) => {
+          console.error('MainLayout - Cart fetch failed:', error);
+          if (error.includes('401') || error.includes('Unauthorized')) {
+            console.log('MainLayout - Authentication invalid, clearing auth state');
+            // Don't dispatch logout here to avoid circular issues
+          }
+        });
+      
+      dispatch(fetchWishlist())
+        .unwrap()
+        .catch((error) => {
+          console.error('MainLayout - Wishlist fetch failed:', error);
+          if (error.includes('401') || error.includes('Unauthorized')) {
+            console.log('MainLayout - Authentication invalid, clearing auth state');
+          }
+        });
     }
   }, [dispatch, isAuthenticated]);
   return (

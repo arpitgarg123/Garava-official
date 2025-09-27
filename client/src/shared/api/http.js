@@ -34,6 +34,15 @@ http.interceptors.response.use(
     if (!original || original._retry) return Promise.reject(error);
 
     if (error.response?.status === 401) {
+      console.log('HTTP Interceptor - 401 Unauthorized detected:', original.url);
+      
+      // If this is already a logout request, don't try to refresh
+      if (original.url?.includes('/auth/logout')) {
+        console.log('HTTP Interceptor - Logout request failed, clearing auth state');
+        logoutCb();
+        return Promise.reject(error);
+      }
+      
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           queue.push({
