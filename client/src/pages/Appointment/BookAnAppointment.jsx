@@ -159,7 +159,7 @@ const BookAnAppointment = () => {
             name="description"
             value={form.description}
             onChange={onChange}
-            className="w-full border p-2 rounded min-h-[120px]"
+            className="w-full border p-2 resize-none rounded min-h-[120px]"
             placeholder="Describe what you’re looking for (optional)"
           />
           <p className="mt-1 text-xs text-gray-500">Note: This will be sent as “notes” to our team.</p>
@@ -167,7 +167,7 @@ const BookAnAppointment = () => {
 
         <button
           type="submit"
-          className="w-full bg-black text-white py-2 rounded disabled:opacity-50"
+          className="btn-black w-full"
           disabled={status === "loading"}
         >
           {status === "loading" ? "Booking..." : "Book appointment"}

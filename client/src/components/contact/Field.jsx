@@ -17,7 +17,7 @@ const Field = ({ id, label, name, value, onChange, onBlur, required, placeholder
         placeholder={placeholder}
         type={as === "textarea" ? undefined : type}
         rows={rows}
-        className={`mt-1 w-full border-b border-gray-400 bg-background px-3 py-2 outline-none ring-0 transition focus:border-gray-800  focus:ring-primary ${
+        className={`mt-1 w-full resize-none border-b border-gray-400 bg-background px-3 py-2 outline-none ring-0 transition focus:border-gray-800  focus:ring-primary ${
           error ? "border-red-300" : "border-muted"
         }`}
       />

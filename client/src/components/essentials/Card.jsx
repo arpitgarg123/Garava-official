@@ -30,7 +30,7 @@ const Card =forwardRef(({ title, subtitle, img, hotspotSize = "40%" }, ref) => {
             {subtitle}
           </p>
           <button
-            className="inline-block px-10 py-2 mt-6  border border-black text-[0.8rem] font-semibold uppercase tracking-wider hover:bg-black hover:text-white transition-colors duration-300"
+            className="btn mt-4"
             aria-label={`Shop ${title}`}
           >
             Shop Now

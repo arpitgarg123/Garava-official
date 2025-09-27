@@ -207,15 +207,38 @@ body:has(.submenu-container) {
 }
 
 .btn{
-   padding: 0.5rem 2.5rem;             /* py-2 px-10 */
-  border: 1px solid currentColor;     /* border */
-  transition: background-color 0.3s ease, color 0.3s ease;
+   padding: 0.5rem 2.5rem;           
+  border: 1px solid currentColor;     
+  transition: all ease 0.3;
+  cursor: pointer;
 }
 .btn:hover {
-  background-color: #0c0c0c;          /* hover:bg-[#0c0c0c] */
-  color: #f5e6d7;                     /* hover:text-[#f5e6d7] */
+  background-color: #0c0c0c;       
+  color: #f5e6d7;                     
 }
-
+.btn-black{
+   padding: 0.5rem 2.5rem;           
+  transition: all ease 0.3;
+  cursor: pointer;
+  background-color: #0c0c0c;
+  color: #f5e6d7;
+}
+.btn-black:hover {
+  background-color: transparent;
+          border: 1px solid currentColor; 
+  color: #0c0c0c;                     
+}
+.badge {
+  margin-bottom: 0.75rem;      /* mb-3 */
+  display: inline-block;       /* inline-block */
+  border-radius: 9999px;       /* rounded-full */
+  background-color: #1f2937;   /* bg-gray-800 */
+  padding: 0.25rem 1rem;       /* py-1 px-4 */
+  font-size: 0.75rem;          /* text-xs */
+  line-height: 1rem;
+  font-weight: 500;            /* font-medium */
+  color: #ffffff;              /* text-white */
+}
 .sticky {
   position: sticky;
   position: -webkit-sticky;

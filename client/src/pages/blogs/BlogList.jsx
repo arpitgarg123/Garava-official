@@ -1,6 +1,7 @@
-import BlogCard from "./BlogCard";
+import BlogCard from "../../components/blogs/BlogCard";
 import blogImage from '../../assets/images/insta2.jpg'
 import blogImage1 from '../../assets/images/insta3.jpg'
+import PageHeader from "../../components/header/PageHeader";
 
 const blogs = [
   {
@@ -30,12 +31,7 @@ const blogs = [
 const BlogList = () => {
   return (
     <section className=" max-w-7xl mx-auto mt-26">
-   <header className="head w-full">
-          <div className="head-inner ">
-            <h2 className="head-text text-3xl md:text-4xl">Blogs</h2>
-            <div className="head-line "></div>
-          </div>
-        </header>
+   <PageHeader title="Blogs" />
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog) => (
           <BlogCard key={blog.id} blog={blog} />

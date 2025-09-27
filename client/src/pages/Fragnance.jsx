@@ -5,6 +5,7 @@ import f2 from "../assets/images/fragnance.png";
 import f3 from "../assets/images/fragnance1.png";
 import f4 from "../assets/images/essential-f.png";
 import { Link } from 'react-router-dom';
+import PageHeader from '../components/header/PageHeader';
 
 const Fragnance = () => {
     const products = [
@@ -15,12 +16,7 @@ const Fragnance = () => {
     ];
   return (
      <div className='w-full py-6'>
-       <header className="head">
-          <div className="head-inner max-w-6xl mx-auto ">
-            <h2 className="head-text text-3xl md:text-4xl">Fragnance</h2>
-            <div className="head-line "></div>
-          </div>
-        </header>
+       <PageHeader title="Fragnance" />
          <section className="bg-gray-100 w-[98%] mx-auto py-10 ">
         <div className="mx-auto w-[95%] h-[80%] ">
       
@@ -30,7 +26,7 @@ const Fragnance = () => {
             ))}
           </div>
 
-          <div className="flex-center mt-12  text-center">
+          <div className="flex-center mt-12  text-center  cursor-pointer"  >
              <Link  to='/products/Fragrance'>
             <button 
             

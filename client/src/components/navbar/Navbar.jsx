@@ -8,7 +8,7 @@ import { CiHeart } from "react-icons/ci";
 import { IoBagHandleOutline } from "react-icons/io5";
 
 import darkLogo from '../../assets/images/logo-main.png'
-import lightLogo from '../../assets/images/light-logo.png'
+
 const navItems = [
   { title: 'jewellery', submenu: [
      { label: 'Gifts for her', img: './src/assets/images/jewellry1.jpg' },

@@ -69,7 +69,7 @@ useEffect(() => {
 const counts = useSelector(s => s.product.categoryCounts[detectedCategory] || {});
 
   return (
-     <aside className="sticky top-0 w-full max-w-[280px]">
+     <aside className="sticky top-0 w-full max-w-[280px] mb-6 ">
       <div className="bg-white h-[calc(100vh-120px)] ">
       <div className="space-y-6 pr-4">
           <PriceFilter value={price} onChange={setPrice} onApply={handleApply} />

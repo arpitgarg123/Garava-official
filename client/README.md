@@ -20,7 +20,13 @@ dashboard ui complete and responsive also ✅, for some mini fix delay
 navbar islogin fix (add login button) ✅
 blogs page ui done, detail also  with responsive ✅ 
 create contact us page   with responsive ✅ 
+event and event details are done with responsive ✅ 
+media-coverage and media-details are done with responsive ✅ 
 
+    ***upcomming changes***
+formatDate dynamic krna h 
+navbar responsive krna h
+fonts fix krna h
 
 
 
