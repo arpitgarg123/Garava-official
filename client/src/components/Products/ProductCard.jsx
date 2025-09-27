@@ -3,6 +3,10 @@ import "./product.css";
 import { CiHeart, CiSearch } from "react-icons/ci";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../features/cart/slice";
+import { selectIsAuthenticated } from "../../features/auth/selectors";
+import { toast } from "react-hot-toast";
 
 const ProductCard = ({
   product,
@@ -10,6 +14,10 @@ const ProductCard = ({
   onQuickView = () => {},
   onToggleWishlist = () => {},
 }) => {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const navigate = useNavigate();
+
   if (!product) return null;
 
   // Robust price resolution
@@ -30,8 +38,6 @@ const ProductCard = ({
   useEffect(() => {
     setActiveColor(colors.length ? colors[0] : null);
   }, [colors.join("|")]); // re-init if colors change
-
-  const navigate = useNavigate();
 
   const slug = product.slug || product.productSlug || product.id || product._id;
   const heroSrc =
@@ -72,6 +78,41 @@ const ProductCard = ({
           aria-label="Add to cart"
           onClick={(e) => {
             e.stopPropagation();
+            
+            // Check authentication
+            if (!isAuthenticated) {
+              toast.error("Please login to add items to cart");
+              navigate("/login");
+              return;
+            }
+
+            // Prepare cart item data
+            const variant = product.variants?.[0] || product.defaultVariant;
+            const cartItem = {
+              productId: product._id || product.id,
+              variantId: variant?._id,
+              variantSku: variant?.sku,
+              quantity: 1
+            };
+
+            // Ensure we have either variantId or variantSku
+            if (!cartItem.variantId && !cartItem.variantSku) {
+              toast.error("Product variant information is missing");
+              return;
+            }
+
+            // Dispatch Redux action
+            dispatch(addToCart(cartItem))
+              .unwrap()
+              .then(() => {
+                toast.success("Item added to cart!");
+              })
+              .catch((error) => {
+                toast.error("Failed to add item to cart");
+                console.error("Add to cart error:", error);
+              });
+
+            // Also call the existing callback
             onAddToCart(product);
           }}
         >

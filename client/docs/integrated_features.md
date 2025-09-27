@@ -45,10 +45,10 @@
  # update-order-status
  
 # # Cart Features
- # add-to-cart
- # view-cart
- # update-cart
- # remove items from cart
+ # add-to-cart ✅
+ # view-cart ✅
+ # update-cart ✅
+ # remove items from cart ✅
  # clear cart
 
 # # wishlist Features
