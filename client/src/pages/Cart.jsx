@@ -103,6 +103,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectCartItems, selectCartTotal, selectIsCartLoading } from '../features/cart/selectors';
 import { updateCartItem, removeFromCart } from '../features/cart/slice';
 import { toast } from 'react-hot-toast';
+import { CartSkeleton } from '../components/ui/LoadingSkeleton';
 
 
 const Cart = () => {
@@ -179,7 +180,7 @@ const Cart = () => {
       <div className="bg-white min-h-[60vh] p-20">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
-          <p className="text-center">Loading cart...</p>
+          <CartSkeleton />
         </div>
       </div>
     );

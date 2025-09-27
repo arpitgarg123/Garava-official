@@ -1,10 +1,12 @@
-import http from "../../shared/api/http.js";
+import http, { retryRequest } from "../../shared/api/http.js";
 
-// Wishlist API functions
-export const getWishlist = async (params = {}) => {
+// Wishlist API functions with retry mechanism
+export const getWishlist = async (params = {}, cancelToken) => {
   console.log('Wishlist API - Getting wishlist:', params);
   try {
-    const response = await http.get("/api/wishlist", { params });
+    const response = await retryRequest(() => 
+      http.get("/api/wishlist", { params, cancelToken })
+    );
     console.log('Wishlist API - Get wishlist success:', response.data);
     return response;
   } catch (error) {

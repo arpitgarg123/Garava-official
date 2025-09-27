@@ -5,15 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { 
   selectWishlistProducts, 
   selectIsWishlistLoading, 
-  selectWishlistError 
+  selectWishlistError,
+  selectWishlistStatus,
+  selectWishlistProductIds
 } from '../features/wishlist/selectors';
 import { 
   fetchWishlist, 
   removeFromWishlist 
 } from '../features/wishlist/slice';
-import { addToCart } from '../features/cart/slice';
+import { addToCart, fetchCart } from '../features/cart/slice';
 import { selectIsAuthenticated } from '../features/auth/selectors';
 import { toast } from 'react-hot-toast';
+import { WishlistSkeleton } from '../components/ui/LoadingSkeleton';
 
 const Wishlist = () => {
   const navigate = useNavigate();
@@ -21,22 +24,39 @@ const Wishlist = () => {
   
   // Redux selectors
   const products = useSelector(selectWishlistProducts);
+  const productIds = useSelector(selectWishlistProductIds);
   const isLoading = useSelector(selectIsWishlistLoading);
   const error = useSelector(selectWishlistError);
+  const status = useSelector(selectWishlistStatus);
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
-  // Fetch wishlist on component mount
+  // Fetch wishlist on component mount if needed
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchWishlist());
+    if (isAuthenticated && (status === 'idle' || status === 'failed')) {
+      dispatch(fetchWishlist({ force: false }));
     }
-  }, [dispatch, isAuthenticated]);
+  }, [dispatch, isAuthenticated, status]);
+
+  // Auto-refresh when wishlist items change from other components  
+  useEffect(() => {
+    if (isAuthenticated && status === 'succeeded') {
+      // If we have productIds but fewer products (items added from other pages without product details)
+      const productIdsCount = productIds.length;
+      const productsCount = products.length;
+      
+      if (productIdsCount > productsCount && productIdsCount > 0) {
+        console.log(`Wishlist page - Product count mismatch (${productsCount} products vs ${productIdsCount} IDs), fetching fresh data...`);
+        dispatch(fetchWishlist({ force: true }));
+      }
+    }
+  }, [dispatch, isAuthenticated, products.length, productIds.length, status]);
 
   const handleRemove = (productId) => {
     dispatch(removeFromWishlist(productId))
       .unwrap()
       .then(() => {
         toast.success("Removed from wishlist!");
+        // No need to manually refresh - Redux state is already updated
       })
       .catch((error) => {
         toast.error("Failed to remove from wishlist");
@@ -79,8 +99,15 @@ const Wishlist = () => {
       .then(() => {
         toast.success("Added to cart!");
         // Remove from wishlist after successful cart addition
-        handleRemove(wishlistItem.productId || product._id);
-        navigate('/cart');
+        dispatch(removeFromWishlist(wishlistItem.productId || product._id))
+          .unwrap()
+          .then(() => {
+            // No need to manually refresh - Redux states are updated automatically
+            navigate('/cart');
+          })
+          .catch((error) => {
+            console.error("Remove from wishlist error:", error);
+          });
       })
       .catch((error) => {
         toast.error("Failed to add to cart");
@@ -88,13 +115,13 @@ const Wishlist = () => {
       });
   };
 
-  // Loading state
+  // Loading state with skeleton
   if (isLoading) {
     return (
       <div className="bg-white min-h-[60vh] py-20">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <h1 className="text-3xl font-semibold mb-8">My Wishlist</h1>
-          <p className="text-center">Loading wishlist...</p>
+          <WishlistSkeleton />
         </div>
       </div>
     );
@@ -122,7 +149,7 @@ const Wishlist = () => {
             <CiHeart size={60} className="text-gray-300" />
             <p className="text-gray-500">Your wishlist is empty</p>
             <button 
-              onClick={() => navigate('/jewellery')}
+              onClick={() => navigate('/products/jewellery')}
               className="bg-black text-white px-8 py-2 hover:bg-gray-800 transition"
             >
               Continue Shopping
@@ -130,14 +157,14 @@ const Wishlist = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((item) => {
+            {products.map((item, index) => {
               const product = item.product;
               const productId = item.productId || product?._id;
               const productSlug = product?.slug || productId;
               const productPrice = product?.variants?.[0]?.price || product?.price || 0;
               
               return (
-                <div key={productId} className="p-4 space-y-3">
+                <div key={productId || `wishlist-item-${index}`} className="p-4 space-y-3">
                   <div 
                     className="relative group cursor-pointer" 
                     onClick={() => navigate(`/product_details/${productSlug}`)}

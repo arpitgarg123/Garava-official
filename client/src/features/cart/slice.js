@@ -1,14 +1,45 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as cartApi from "./api.js";
+import { logout, initAuth } from "../auth/slice.js";
+
+// Smart request deduplication with timestamp tracking and caching
+let lastFetchTime = 0;
+let lastCacheTime = 0;
+const FETCH_COOLDOWN = 1000; // 1 second cooldown between fetches
+const CACHE_TTL = 30000; // 30 seconds cache time-to-live
 
 // Async thunks for cart operations
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-  async (_, { rejectWithValue }) => {
+  async (options = {}, { rejectWithValue, getState }) => {
     try {
+      const { cart } = getState();
+      const now = Date.now();
+      const { force = false } = options;
+      
+      // Smart deduplication: prevent requests within cooldown unless forced
+      if (!force && cart.status === 'loading') {
+        console.log('Cart slice - Already loading, skipping duplicate request');
+        return rejectWithValue('Already loading');
+      }
+      
+      // Cache check: if data is fresh and force is not set, skip fetch
+      if (!force && cart.items.length > 0 && now - lastCacheTime < CACHE_TTL) {
+        console.log('Cart slice - Using cached data, skipping fetch');
+        return cart; // Return current cart data
+      }
+      
+      // Cooldown protection for rapid successive calls
+      if (!force && now - lastFetchTime < FETCH_COOLDOWN) {
+        console.log('Cart slice - Too soon since last fetch, skipping');
+        return rejectWithValue('Too soon');
+      }
+      
+      lastFetchTime = now;
       console.log('Cart slice - Fetching cart');
       const response = await cartApi.getCart();
       console.log('Cart slice - Fetch cart response:', response);
+      lastCacheTime = now; // Update cache time on successful fetch
       return response.data.cart;
     } catch (error) {
       console.error('Cart slice - Fetch cart error:', error);
@@ -112,6 +143,54 @@ const cartSlice = createSlice({
       state.totalAmount = 0;
       state.totalItems = 0;
     },
+    // Optimistic updates
+    optimisticAddToCart: (state, action) => {
+      const { productId, variantId, variantSku, quantity, unitPrice, product } = action.payload;
+      const existingItem = state.items.find(item => 
+        item.product === productId && (item.variantId === variantId || item.variantSku === variantSku)
+      );
+      
+      if (existingItem) {
+        existingItem.quantity += quantity;
+      } else {
+        state.items.push({
+          _id: `temp-${Date.now()}`, // Temporary ID for optimistic update
+          product: productId,
+          variantId,
+          variantSku,
+          quantity,
+          unitPrice,
+          productDetails: product
+        });
+      }
+      
+      // Recalculate totals
+      state.totalItems = state.items.reduce((total, item) => total + item.quantity, 0);
+      state.totalAmount = state.items.reduce((total, item) => total + (item.unitPrice * item.quantity), 0);
+    },
+    optimisticUpdateQuantity: (state, action) => {
+      const { itemId, quantity } = action.payload;
+      const item = state.items.find(i => i._id === itemId);
+      if (item) {
+        item.quantity = quantity;
+        // Recalculate totals
+        state.totalItems = state.items.reduce((total, item) => total + item.quantity, 0);
+        state.totalAmount = state.items.reduce((total, item) => total + (item.unitPrice * item.quantity), 0);
+      }
+    },
+    optimisticRemoveItem: (state, action) => {
+      const itemId = action.payload;
+      state.items = state.items.filter(item => item._id !== itemId);
+      // Recalculate totals
+      state.totalItems = state.items.reduce((total, item) => total + item.quantity, 0);
+      state.totalAmount = state.items.reduce((total, item) => total + (item.unitPrice * item.quantity), 0);
+    },
+    // Rollback optimistic updates on failure
+    rollbackOptimisticUpdate: (state, action) => {
+      // This will be handled by re-fetching the cart on failure
+      state.status = 'failed';
+      state.error = action.payload;
+    }
   },
   extraReducers: (builder) => {
     // Fetch cart
@@ -142,6 +221,8 @@ const cartSlice = createSlice({
         state.items = action.payload?.items || [];
         state.totalAmount = action.payload?.totalAmount || 0;
         state.totalItems = (action.payload?.items || []).reduce((total, item) => total + item.quantity, 0);
+        // Invalidate cache after successful modification
+        lastCacheTime = 0;
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.status = "failed";
@@ -159,6 +240,8 @@ const cartSlice = createSlice({
         state.items = action.payload?.items || [];
         state.totalAmount = action.payload?.totalAmount || 0;
         state.totalItems = (action.payload?.items || []).reduce((total, item) => total + item.quantity, 0);
+        // Invalidate cache after successful modification
+        lastCacheTime = 0;
       })
       .addCase(updateCartItem.rejected, (state, action) => {
         state.status = "failed";
@@ -176,6 +259,8 @@ const cartSlice = createSlice({
         state.items = action.payload?.items || [];
         state.totalAmount = action.payload?.totalAmount || 0;
         state.totalItems = (action.payload?.items || []).reduce((total, item) => total + item.quantity, 0);
+        // Invalidate cache after successful modification
+        lastCacheTime = 0;
       })
       .addCase(removeFromCart.rejected, (state, action) => {
         state.status = "failed";
@@ -198,8 +283,47 @@ const cartSlice = createSlice({
         state.status = "failed";
         state.error = action.payload || action.error.message;
       });
+
+    // Clear cart data when user logs out or auth fails
+    builder
+      .addCase(logout, (state) => {
+        state.items = [];
+        state.totalAmount = 0;
+        state.totalItems = 0;
+        state.status = "idle";
+        state.error = null;
+        // Reset cache times
+        lastFetchTime = 0;
+        lastCacheTime = 0;
+        console.log('Cart slice - Cleared cart data on logout');
+      })
+      .addCase(initAuth.rejected, (state, { payload }) => {
+        const errorData = payload || {};
+        
+        // Only clear cart data on actual auth failures, not network errors
+        if (errorData.type === 'AUTH_EXPIRED' || errorData.type === 'GENERAL_ERROR') {
+          state.items = [];
+          state.totalAmount = 0;
+          state.totalItems = 0;
+          state.status = "idle";
+          state.error = null;
+          // Reset cache times
+          lastFetchTime = 0;
+          lastCacheTime = 0;
+          console.log('Cart slice - Cleared cart data on auth failure');
+        } else if (errorData.type === 'NETWORK_ERROR') {
+          // Don't clear cart on network errors, just log
+          console.log('Cart slice - Network error during auth init, keeping cart data');
+        }
+      });
   },
 });
 
-export const { clearError } = cartSlice.actions;
+export const { 
+  clearError, 
+  optimisticAddToCart, 
+  optimisticUpdateQuantity, 
+  optimisticRemoveItem,
+  rollbackOptimisticUpdate 
+} = cartSlice.actions;
 export default cartSlice.reducer;

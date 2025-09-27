@@ -1,10 +1,12 @@
-import http from "../../shared/api/http.js";
+import http, { retryRequest } from "../../shared/api/http.js";
 
-// Cart API functions
-export const getCart = async () => {
+// Cart API functions with retry mechanism
+export const getCart = async (cancelToken) => {
   console.log('Cart API - Getting cart');
   try {
-    const response = await http.get("/api/cart");
+    const response = await retryRequest(() => 
+      http.get("/api/cart", { cancelToken })
+    );
     console.log('Cart API - Get cart success:', response.data);
     return response;
   } catch (error) {
@@ -13,7 +15,7 @@ export const getCart = async () => {
   }
 };
 
-export const addToCart = async (payload) => {
+export const addToCart = async (payload, cancelToken) => {
   console.log('Cart API - Making request to add to cart:', payload);
   
   // Validate payload structure
@@ -30,7 +32,9 @@ export const addToCart = async (payload) => {
   }
   
   try {
-    const response = await http.post('/api/cart', payload);
+    const response = await retryRequest(() => 
+      http.post('/api/cart', payload, { cancelToken })
+    );
     console.log('Cart API - Add to cart success:', response.data);
     return response;
   } catch (error) {

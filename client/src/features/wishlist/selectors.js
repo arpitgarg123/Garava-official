@@ -1,10 +1,35 @@
-// Wishlist selectors
-export const selectWishlistProducts = (state) => state.wishlist?.products || [];
-export const selectWishlistProductIds = (state) => state.wishlist?.productIds || [];
-export const selectWishlistPagination = (state) => state.wishlist?.pagination || { total: 0, page: 1, limit: 50, totalPages: 0 };
+import { createSelector } from '@reduxjs/toolkit';
+
+// Base selectors
+const selectWishlistState = (state) => state.wishlist;
+
+// Memoized selectors
+export const selectWishlistProducts = createSelector(
+  [selectWishlistState],
+  (wishlist) => wishlist?.products || []
+);
+
+export const selectWishlistProductIds = createSelector(
+  [selectWishlistState],
+  (wishlist) => wishlist?.productIds || []
+);
+
+// Default pagination object to prevent recreating on each selector call
+const defaultPagination = { total: 0, page: 1, limit: 50, totalPages: 0 };
+
+export const selectWishlistPagination = createSelector(
+  [selectWishlistState],
+  (wishlist) => wishlist?.pagination || defaultPagination
+);
+
 export const selectWishlistStatus = (state) => state.wishlist?.status || 'idle';
 export const selectWishlistError = (state) => state.wishlist?.error || null;
-export const selectIsWishlistEmpty = (state) => (state.wishlist?.products || []).length === 0;
+
+export const selectIsWishlistEmpty = createSelector(
+  [selectWishlistProducts],
+  (products) => products.length === 0
+);
+
 export const selectIsWishlistLoading = (state) => state.wishlist?.status === "loading";
 
 // Helper selector to check if a product is in wishlist

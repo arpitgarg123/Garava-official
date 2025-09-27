@@ -9,10 +9,13 @@ import {
 
 // ---- Async thunks ----
 
+// Request deduplication for fetchProducts
+let productRequestPromises = {};
+
 // List products
 export const fetchProducts = createAsyncThunk(
   "product/fetchList",
-  async (rawParams = {}, { getState }) => {
+  async (rawParams = {}, { getState, rejectWithValue }) => {
     const { product } = getState();
     const merged = { ...product.filters, ...rawParams };
 
@@ -28,11 +31,13 @@ export const fetchProducts = createAsyncThunk(
     if (merged.priceMax != null && merged.priceMax !== "") params.priceMax = merged.priceMax;
 
     const signature = JSON.stringify(params);
+    
+    // Check cache first
     if (
       product.list.paramsSignature === signature &&
       product.list.status === "succeeded"
     ) {
-      // Return cached (still goes through fulfilled, no network)
+      console.log('Product slice - Using cached products for:', params);
       return {
         products: product.list.items,
         pagination: {
@@ -44,42 +49,62 @@ export const fetchProducts = createAsyncThunk(
       };
     }
 
-    const { data } = await listProductsApi(params);
+    // Check for duplicate requests
+    if (productRequestPromises[signature]) {
+      console.log('Product slice - Deduplicating product request for:', params);
+      try {
+        const result = await productRequestPromises[signature];
+        return result;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
 
-    if (Array.isArray(data)) {
-      return {
-        products: data,
-        pagination: {
-          total: data.length,
-          page: params.page || 1,
-          limit: params.limit || 20,
-        },
-        _cached: false,
-        _signature: signature
-      };
-    }
-    if (data?.products) {
-      return {
-        products: data.products,
-        pagination: data.pagination || {
-          total: data.products.length,
-          page: params.page || 1,
-          limit: params.limit || 20,
-        },
-        _cached: false,
-        _signature: signature
-      };
-    }
-    return {
-      products: data?.items || [],
-      pagination: data?.pagination || {
-        total: data?.items?.length || 0,
-        page: params.page || 1,
-        limit: params.limit || 20,
-      },
-      _cached: false,
-      _signature: signature
-    };
+    // Create new request promise
+    const requestPromise = (async () => {
+      try {
+        console.log('Product slice - Fetching products with params:', params);
+        const { data } = await listProductsApi(params);
+        
+        const result = {
+          _cached: false,
+          _signature: signature
+        };
+
+        if (Array.isArray(data)) {
+          result.products = data;
+          result.pagination = {
+            total: data.length,
+            page: params.page || 1,
+            limit: params.limit || 20,
+          };
+        } else if (data?.products) {
+          result.products = data.products;
+          result.pagination = data.pagination || {
+            total: data.products.length,
+            page: params.page || 1,
+            limit: params.limit || 20,
+          };
+        } else {
+          result.products = data?.items || [];
+          result.pagination = data?.pagination || {
+            total: data?.items?.length || 0,
+            page: params.page || 1,
+            limit: params.limit || 20,
+          };
+        }
+        
+        return result;
+      } finally {
+        // Clean up the promise
+        delete productRequestPromises[signature];
+      }
+    })();
+
+    // Store the promise for deduplication
+    productRequestPromises[signature] = requestPromise;
+    
+    return requestPromise;
   }
 );
 
@@ -110,32 +135,85 @@ export const checkPincode = createAsyncThunk(
   }
 );
 
-// NEW: fetchCategoryCounts (sequential to prevent 429)
+// Smart category counts with caching and deduplication
+let categoryCountsCache = {};
+let categoryCountsPromises = {};
+const COUNTS_CACHE_TTL = 5 * 60 * 1000; // 5 minutes cache
+
 export const fetchCategoryCounts = createAsyncThunk(
   "product/fetchCategoryCounts",
-  async ({ type, categories = [] }) => {
-    const counts = {};
-
-    // Total for "All"
-    const { data: allData } = await listProductsApi({ type, page: 1, limit: 1 });
-    const allTotal =
-      allData?.pagination?.total ??
-      allData?.total ??
-      (allData?.products ? allData.products.length : Array.isArray(allData) ? allData.length : 0);
-    counts.__all = allTotal;
-
-    // Each category
-    for (const c of categories) {
-      if (c.startsWith("all-")) continue;
-      const { data } = await listProductsApi({ type, category: c, page: 1, limit: 1 });
-      const total =
-        data?.pagination?.total ??
-        data?.total ??
-        (data?.products ? data.products.length : Array.isArray(data) ? data.length : 0);
-      counts[c] = total;
+  async ({ type, categories = [] }, { getState, rejectWithValue }) => {
+    const cacheKey = `${type}-${categories.sort().join(',')}`;
+    const now = Date.now();
+    
+    // Check if we have fresh cached data
+    const cached = categoryCountsCache[cacheKey];
+    if (cached && now - cached.timestamp < COUNTS_CACHE_TTL) {
+      console.log('Product slice - Using cached category counts for:', type);
+      return { type, counts: cached.counts, _cached: true };
     }
+    
+    // Check if there's already a pending request for this cache key
+    if (categoryCountsPromises[cacheKey]) {
+      console.log('Product slice - Deduplicating category counts request for:', type);
+      try {
+        const result = await categoryCountsPromises[cacheKey];
+        return result;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+    
+    // Create new request promise
+    const requestPromise = (async () => {
+      try {
+        console.log('Product slice - Fetching category counts for:', type, categories);
+        const counts = {};
 
-    return { type, counts };
+        // Use Promise.all for parallel requests instead of sequential
+        const requests = [
+          // Total for "All"
+          listProductsApi({ type, page: 1, limit: 1 })
+            .then(({ data }) => {
+              const total = data?.pagination?.total ?? data?.total ?? 
+                (data?.products ? data.products.length : Array.isArray(data) ? data.length : 0);
+              counts.__all = total;
+            })
+        ];
+
+        // Add category requests
+        for (const c of categories) {
+          if (c.startsWith("all-")) continue;
+          requests.push(
+            listProductsApi({ type, category: c, page: 1, limit: 1 })
+              .then(({ data }) => {
+                const total = data?.pagination?.total ?? data?.total ?? 
+                  (data?.products ? data.products.length : Array.isArray(data) ? data.length : 0);
+                counts[c] = total;
+              })
+          );
+        }
+
+        // Wait for all requests to complete
+        await Promise.all(requests);
+        
+        // Cache the results
+        categoryCountsCache[cacheKey] = {
+          counts,
+          timestamp: Date.now()
+        };
+        
+        return { type, counts, _cached: false };
+      } finally {
+        // Clean up the promise
+        delete categoryCountsPromises[cacheKey];
+      }
+    })();
+    
+    // Store the promise for deduplication
+    categoryCountsPromises[cacheKey] = requestPromise;
+    
+    return requestPromise;
   }
 );
 
