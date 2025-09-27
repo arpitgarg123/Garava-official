@@ -3,7 +3,7 @@ import { Suspense, lazy } from "react";
 import MainLayout from "./layouts/MainLayout.jsx";
 import ProductDetails from "./pages/products/ProductDetails.jsx";
 import OurStory from "./pages/OurStory.jsx";
-import { GuestOnly } from "./shared/auth.jsx";
+import { ProtectedRoute, AdminRoute, GuestRoute } from "./shared/auth/ProtectedRoute.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
@@ -26,14 +26,13 @@ const App = () => {
   return (
     <Suspense fallback={<div className="p-4">Loading...</div>}>
       <Routes>
-        {/* auth routes */}
-        
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/resend-verification" element={<ResendVerification />} />
+        {/* Auth routes - only accessible to guests */}
+        <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+        <Route path="/signup" element={<GuestRoute><Signup /></GuestRoute>} />
+        <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
+        <Route path="/reset-password" element={<GuestRoute><ResetPassword /></GuestRoute>} />
+        <Route path="/verify-email" element={<GuestRoute><VerifyEmail /></GuestRoute>} />
+        <Route path="/resend-verification" element={<GuestRoute><ResendVerification /></GuestRoute>} />
         
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
@@ -43,12 +42,17 @@ const App = () => {
           <Route path="products/:category" element={<ProductPage />} />
           {/* <Route path="product/:id" element={<ProductDetails />} /> */}
           <Route path="/product_details/:slug" element={<ProductDetails />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Orders />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/dashboard" element={< Dashboard/>} />
-          <Route path="/appointment" element={< BookAnAppointment/>} />
-          <Route path="/profile" element={<ProfilePage/>} />
+          
+          {/* Protected routes - require authentication */}
+          <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+          <Route path="/checkout" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+          <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+          <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+          <Route path="/appointment" element={<ProtectedRoute><BookAnAppointment /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+          
+          {/* Admin routes - require admin role */}
+          <Route path="/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
         </Route>
       </Routes>
     </Suspense>
