@@ -13,20 +13,9 @@
   position: relative;
 }
 
-.blog-title::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 40%;
-  height: 1.2em;
-  background: linear-gradient(to right, transparent, white 70%);
-}
-
-/* Truncate description nicely */
 .blog-desc {
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* limit to 3 lines */
+  -webkit-line-clamp: 3;  /*limit to 3 lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

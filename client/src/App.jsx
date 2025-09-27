@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import MainLayout from "./layouts/MainLayout.jsx";
+import Home from './pages/Home.jsx'
 import ProductDetails from "./pages/products/ProductDetails.jsx";
 import OurStory from "./pages/OurStory.jsx";
 import { ProtectedRoute, AdminRoute, GuestRoute } from "./shared/auth/ProtectedRoute.jsx";
@@ -10,9 +11,7 @@ import VerifyEmail from "./pages/VerifyEmail.jsx";
 import ResendVerification from "./pages/ResendVerification.jsx";
 import BookAnAppointment from "./pages/Appointment/BookAnAppointment.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import BlogList from "./components/blogs/BlogList.jsx";
 
-const Home = lazy(() => import("./pages/Home.jsx"));
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
 const Login = lazy(() => import("./features/auth/Login.jsx"));
 const Signup = lazy(() => import("./pages/Signup.jsx"));
@@ -21,6 +20,8 @@ const Wishlist = lazy(() => import("./pages/Wishlist.jsx"));
 const Orders = lazy(() => import("./pages/Orders.jsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 const Blogs = lazy(()=> import("./components/blogs/BlogList.jsx"))
+const BlogDetails = lazy(()=> import("./components/blogs/BlogDetails.jsx"))
+const Contact = lazy(()=> import("./pages/Contact.jsx"))
 
 const App = () => {
   return (
@@ -38,6 +39,9 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="about" element={<OurStory />} />
           <Route path="blogs" element={<Blogs />} />
+          <Route path="/blogs/blog_details" element={<BlogDetails />} />
+          <Route path="/contact" element={<Contact />} />
+
           {/* <Route path="jewellery" element={<jewellery />} /> */}
           <Route path="products/:category" element={<ProductPage />} />
           {/* <Route path="product/:id" element={<ProductDetails />} /> */}
