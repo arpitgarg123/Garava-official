@@ -1,20 +1,22 @@
 import BlogCard from "./BlogCard";
+import blogImage from '../../assets/images/insta2.jpg'
+import blogImage1 from '../../assets/images/insta3.jpg'
 
 const blogs = [
   {
     id: 1,
-    image: "/images/insta1.jpg",
+    image: blogImage,
     category: "Jewelry",
     date: "29 Jun 2025",
     author: "Garava",
-    title: "How to Secretly Find Out Your Partner’s Ring Size for a Surprise Proposal",
+    title: "How to Secretly Find Out Your Partner’s Ring ",
     description:
       "Arranging a surprise proposal is a very romantic action which is quite lovely, but the successful execution requires subtle steps...",
     comments: 0,
   },
   {
     id: 2,
-    image: "/images/blog2.jpg",
+    image: blogImage1,
     category: "Fragrance",
     date: "15 Jul 2025",
     author: "Garava",

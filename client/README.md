@@ -18,8 +18,7 @@ wishlist  resposnve done✅
 login/signup add forgot password and google auth✅
 dashboard ui complete and responsive also ✅, for some mini fix delay
 navbar islogin fix (add login button) ✅
-blogs page ui done with responsive ✅ only blog details is pending...
-
+blogs page ui done, detail also  with responsive ✅ 
 
 
 
