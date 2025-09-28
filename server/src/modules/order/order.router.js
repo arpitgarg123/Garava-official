@@ -1,7 +1,7 @@
 // src/modules/order/order.routes.js
 import { Router } from "express";
 import { authenticated } from "../../middlewares/authentication.js";
-import { checkout, getUserOrders, getOrder, paymentWebhook } from "./order.controller.js";
+import { checkout, getUserOrders, getOrder, paymentWebhook, checkPaymentStatus } from "./order.controller.js";
 
 const router = Router();
 
@@ -9,9 +9,10 @@ const router = Router();
 router.post("/checkout", authenticated, checkout);
 router.get("/", authenticated, getUserOrders);
 router.get("/:orderId", authenticated, getOrder);
+router.post("/:orderId/payment-status", authenticated, checkPaymentStatus);
 
-// webhook (public)
-router.post("/webhooks/payments/razorpay", paymentWebhook);
+// webhook (public) - updated for PhonePe
+router.post("/webhooks/payments/phonepe", paymentWebhook);
 
 export default router; 
   

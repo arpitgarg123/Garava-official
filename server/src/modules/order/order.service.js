@@ -4,9 +4,11 @@ import ApiError from "../../shared/utils/ApiError.js";
 import Product from "../product/product.model.js";
 import Order from "./order.model.js";
 import User from "../user/user.model.js";
+import Address from "../address/address.model.js";
 import { generateOrderNumber, toPaise } from "./order.utils.js";
 import Idempotency from "./idempotency.model.js"; // optional
-import { createRazorpayOrder } from "../payment.adapters/razorpay.adapter.js";
+import { createPhonePeOrder } from "../payment.adapters/phonepe.adapter.js";
+import { calculateOrderPricing, toRupees } from "./order.pricing.js";
 
 
 /**
@@ -23,13 +25,13 @@ const ensurePaise = (value) => {
 /**
  * Create Order Service (transactional)
  * - items: [{ variantId OR sku, quantity }]
- * - shippingAddress: object
- * - paymentMethod: 'razorpay'|'cod'
+ * - addressId: ObjectId of user's address
+ * - paymentMethod: 'phonepe'|'cod'
  * - idempotencyKey: optional
  *
  * Important: requires Mongo replica set for transactions.
  */
-export const createOrderService = async ({ userId, items, shippingAddress, paymentMethod, idempotencyKey }) => {
+export const createOrderService = async ({ userId, items, addressId, paymentMethod, idempotencyKey }) => {
   if (!userId) throw new ApiError(401, "Unauthorized");
   if (!Array.isArray(items) || items.length === 0) throw new ApiError(400, "No items provided");
 
@@ -44,6 +46,10 @@ export const createOrderService = async ({ userId, items, shippingAddress, payme
 
   const user = await User.findById(userId).lean();
   if (!user) throw new ApiError(404, "User not found");
+
+  // Fetch and validate address
+  const address = await Address.findOne({ _id: addressId, user: userId }).lean();
+  if (!address) throw new ApiError(404, "Address not found or not owned by user");
 
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -84,19 +90,22 @@ export const createOrderService = async ({ userId, items, shippingAddress, payme
         variantId: variant._id,
         variantSnapshot: { sku: variant.sku, sizeLabel: variant.sizeLabel, images: variant.images || [] },
         quantity: it.quantity,
-        unitPricePaise,
-        mrpPaise: toPaise(variant.mrp || 0),
-        taxAmountPaise: 0,
-        discountAmountPaise: 0,
-        lineTotalPaise: lineTotal,
+        unitPrice: unitPricePaise,
+        mrp: toPaise(variant.mrp || 0),
+        taxAmount: 0,
+        discountAmount: 0,
+        lineTotal: lineTotal,
       });
     }
 
-    // compute totals (all paise)
-    const shippingTotalPaise = 0;
-    const taxTotalPaise = 0;
-    const discountTotalPaise = 0;
-    const grandTotalPaise = subtotal + shippingTotalPaise + taxTotalPaise - discountTotalPaise;
+    // compute totals using new pricing system
+    const pricing = calculateOrderPricing(subtotal, paymentMethod);
+    
+    const shippingTotalPaise = pricing.deliveryCharge;
+    const codChargePaise = pricing.codCharge;
+    const taxTotalPaise = pricing.taxTotal;
+    const discountTotalPaise = pricing.discountTotal;  
+    const grandTotalPaise = pricing.grandTotal;
 
     const orderNumber = await generateOrderNumber();
     const createdArr = await Order.create([{
@@ -104,13 +113,25 @@ export const createOrderService = async ({ userId, items, shippingAddress, payme
       user: userId,
       userSnapshot: { name: user.name, email: user.email, phone: user.phone },
       items: lineItems,
-      subtotalPaise: subtotal,
-      taxTotalPaise,
-      shippingTotalPaise,
-      discountTotalPaise,
-      grandTotalPaise,
+      subtotal: subtotal,
+      taxTotal: taxTotalPaise,
+      shippingTotal: shippingTotalPaise,
+      codCharge: codChargePaise,
+      discountTotal: discountTotalPaise,
+      grandTotal: grandTotalPaise,
       currency: "INR",
-      shippingAddress,
+      shippingAddress: address._id,
+      shippingAddressSnapshot: {
+        fullName: address.fullName,
+        phone: address.phone,
+        addressLine1: address.addressLine1,
+        addressLine2: address.addressLine2,
+        city: address.city,
+        state: address.state,
+        postalCode: address.postalCode,
+        country: address.country,
+        label: address.label,
+      },
       payment: { method: paymentMethod, status: paymentMethod === "cod" ? "unpaid" : "pending" },
       status: paymentMethod === "cod" ? "processing" : "pending_payment",
       idempotencyKey,
@@ -123,30 +144,67 @@ export const createOrderService = async ({ userId, items, shippingAddress, payme
       await Idempotency.create([{ key: idempotencyKey, orderId: createdOrder._id }], { session });
     }
 
-    // commit transaction BEFORE calling Razorpay
+    // commit transaction BEFORE calling PhonePe
     await session.commitTransaction();
     session.endSession();
 
-    // If online payment, create Razorpay order AFTER commit
-    let gatewayOrder = null;
-    if (paymentMethod === "razorpay") {
-      const rpOrder = await createRazorpayOrder({
-        amountPaise: createdOrder.grandTotalPaise,
-        currency: "INR",
-        receipt: createdOrder._id,
-        notes: { orderNumber }
-      });
-      // Save gateway order id on order
-      createdOrder.payment.gatewayOrderId = rpOrder.id;
-      await createdOrder.save();
-      gatewayOrder = rpOrder;
-    }
-
-    return { order: createdOrder, gatewayOrder };
+    return { order: createdOrder, gatewayOrder: null };
+    
   } catch (err) {
-    await session.abortTransaction();
-    session.endSession();
+    // Only abort transaction if it hasn't been committed yet
+    if (session && session.inTransaction()) {
+      await session.abortTransaction();
+    }
+    if (session) {
+      session.endSession();
+    }
     throw err;
+  }
+
+  // Handle PhonePe payment creation outside of transaction (to avoid transaction conflicts)
+  // This is now moved outside the try-catch block that handles the transaction
+  // We'll handle PhonePe integration separately after order creation
+}
+
+// Helper function to handle PhonePe order creation
+export const initializePhonePePayment = async (order, userPhone) => {
+  try {
+    const phonepeOrder = await createPhonePeOrder({
+      amountPaise: order.grandTotal,
+      orderId: order._id.toString(),
+      userId: order.user.toString(),
+      userPhone: userPhone || "9999999999"
+    });
+    
+    // Save gateway order id on order
+    order.payment.gatewayOrderId = phonepeOrder.gatewayOrderId;
+    order.payment.gatewayTransactionId = phonepeOrder.transactionId;
+    await order.save();
+    
+    return {
+      id: phonepeOrder.gatewayOrderId,
+      transactionId: phonepeOrder.transactionId,
+      paymentUrl: phonepeOrder.paymentUrl,
+      success: phonepeOrder.success
+    };
+  } catch (phonepeError) {
+    console.error("PhonePe order creation failed:", phonepeError);
+    
+    // Check if it's a configuration issue
+    const isConfigError = phonepeError.message.includes('Key not found') || 
+                         phonepeError.message.includes('not configured') ||
+                         phonepeError.message.includes('KEY_NOT_CONFIGURED');
+    
+    // Mark payment as failed
+    order.payment.status = "failed";
+    order.status = "failed";
+    await order.save();
+    
+    if (isConfigError) {
+      throw new ApiError(500, "PhonePe payment gateway is not properly configured. Please contact support or use Cash on Delivery.");
+    } else {
+      throw new ApiError(500, "Payment gateway initialization failed. Please try again or use Cash on Delivery.");
+    }
   }
 };
 /**

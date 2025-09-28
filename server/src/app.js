@@ -90,6 +90,19 @@ import newsletterRouter from "./modules/newsletter/newsletter.router.js";
     })
   );
 
+  // Debug route to test if changes are being picked up
+  app.get('/api/debug', (_, res) => {
+    res.json({ 
+      message: 'Server updated - routes should work now',
+      timestamp: new Date().toISOString(),
+      routes: {
+        orders: '/api/orders/checkout',
+        address: '/api/address',
+        cart: '/api/cart'
+      }
+    });
+  });
+
   // routes
 
   app.use('/api/auth', authRouter);
@@ -97,7 +110,7 @@ import newsletterRouter from "./modules/newsletter/newsletter.router.js";
   app.use("/api/address", addressRouter); 
   app.use("/api/admin/product", adminProductRouter);
   app.use("/api/product", productRouter);
-  app.use("/api/order", orderRouter);
+  app.use("/api/orders", orderRouter);
   app.use("/api/admin/order", adminOrderRouter);
   app.use("/api/cart", cartRouter);
   app.use("/api/wishlist", wishlistRouter);

@@ -7,6 +7,8 @@ import authReducer from "../features/auth/slice.js";
 import productReducer from "../features/product/slice.js";
 import cartReducer from "../features/cart/slice.js";
 import wishlistReducer from "../features/wishlist/slice.js";
+import orderReducer from "../features/order/slice.js";
+import addressReducer from "../features/address/slice.js";
 
 // Persist configuration
 const persistConfig = {
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   product: productReducer,
   cart: cartReducer,
   wishlist: wishlistReducer,
+  order: orderReducer,
+  address: addressReducer,
 });
 
 // Create persisted reducer

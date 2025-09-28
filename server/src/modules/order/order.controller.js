@@ -2,22 +2,44 @@
 import { asyncHandler } from "../../shared/utils/asyncHandler.js";
 import * as service from "./order.service.js";
 import ApiError from "../../shared/utils/ApiError.js";
-import { verifyRazorpaySignature } from "../payment.adapters/razorpay.adapter.js";
+import { verifyPhonePeCallback, checkPhonePePaymentStatus } from "../payment.adapters/phonepe.adapter.js";
+import Order from "./order.model.js";
 
 /**
  * POST /api/orders/checkout
- * Body: { items, shippingAddress, paymentMethod }
+ * Body: { items, addressId, paymentMethod }
  * Header: Idempotency-Key optional
+ * Updated for PhonePe integration
  */
 export const checkout = asyncHandler(async (req, res) => {
   const userId = req.user?.id;
-  const { items, shippingAddress, paymentMethod } = req.body;
+  const { items, addressId, paymentMethod } = req.body;
   const idempotencyKey = req.headers["idempotency-key"] || req.body.idempotencyKey;
   if (!items || !Array.isArray(items) || items.length === 0) throw new ApiError(400, "No items");
+  if (!addressId) throw new ApiError(400, "Address ID is required");
 
-  const result = await service.createOrderService({ userId, items, shippingAddress, paymentMethod, idempotencyKey });
-  // result: { order, gatewayOrder } where gatewayOrder is optional
-  res.status(201).json({ success: true, ...result });
+  // First create the order
+  const result = await service.createOrderService({ userId, items, addressId, paymentMethod, idempotencyKey });
+  
+  let gatewayOrder = null;
+  
+  // If PhonePe payment, initialize payment gateway
+  if (paymentMethod === "phonepe") {
+    try {
+      gatewayOrder = await service.initializePhonePePayment(result.order, req.user?.phone);
+    } catch (error) {
+      // PhonePe initialization failed, but order is created
+      // Return order with error details for better user experience
+      return res.status(201).json({ 
+        success: true, 
+        order: result.order, 
+        gatewayOrder: null,
+        paymentError: error.message 
+      });
+    }
+  }
+  
+  res.status(201).json({ success: true, order: result.order, gatewayOrder });
 });
 
 /**
@@ -42,67 +64,160 @@ export const getOrder = asyncHandler(async (req, res) => {
 });
 
 /**
- * Payment webhook (Razorpay)
- * - Ensure raw body is available in req.rawBody for signature verification
- * - Route: POST /webhooks/payments/razorpay
+ * Payment webhook (PhonePe)
+ * - Route: POST /webhooks/payments/phonepe
  */
 export const paymentWebhook = asyncHandler(async (req, res) => {
-  const sig = req.headers["x-razorpay-signature"];
-  const secret = process.env.RAZORPAY_WEBHOOK_SECRET;
-  const ok = verifyRazorpaySignature(req.rawBody, sig, secret);
-  if (!ok) {
+  const signature = req.headers["x-verify"];
+  const payload = req.body;
+
+  // Verify PhonePe callback signature
+  const isValid = verifyPhonePeCallback(JSON.stringify(payload), signature);
+  if (!isValid) {
     return res.status(400).json({ success: false, message: "Invalid signature" });
   }
 
-  const payload = req.body; // parsed JSON; raw in req.rawBody was used for verification
-  const event = payload.event;
+  const response = payload.response;
+  const decodedResponse = JSON.parse(Buffer.from(response, 'base64').toString());
+  
+  const transactionId = decodedResponse.data?.merchantTransactionId;
+  const paymentState = decodedResponse.data?.state;
+  const amount = decodedResponse.data?.amount;
 
-  // handle payment.captured (common)
-  if (event === "payment.captured") {
-    const paymentEntity = payload.payload.payment.entity;
-    const gatewayOrderId = paymentEntity.order_id;
-    const gatewayPaymentId = paymentEntity.id;
+  if (!transactionId) {
+    return res.status(400).json({ success: false, message: "Missing transaction ID" });
+  }
 
-    // Find order by gatewayOrderId - idempotent update
-    const order = await Order.findOne({ "payment.gatewayOrderId": gatewayOrderId });
-    if (!order) {
-      // optionally: search by receipt notes if you stored createdOrder._id in notes
-      return res.status(404).json({ success: false, message: "Order not found" });
-    }
+  // Find order by gatewayOrderId (which is the transactionId)
+  const order = await Order.findOne({ 
+    $or: [
+      { "payment.gatewayOrderId": transactionId },
+      { "payment.gatewayTransactionId": transactionId }
+    ]
+  });
 
-    // Ignore if already paid
-    if (order.payment && order.payment.status === "paid") {
-      return res.json({ success: true, message: "Already processed" });
-    }
+  if (!order) {
+    console.error("Order not found for transaction ID:", transactionId);
+    return res.status(404).json({ success: false, message: "Order not found" });
+  }
 
-    order.payment.gatewayPaymentId = gatewayPaymentId;
+  // Ignore if already processed
+  if (order.payment && order.payment.status === "paid" && paymentState === "COMPLETED") {
+    return res.json({ success: true, message: "Already processed" });
+  }
+
+  // Handle payment completion
+  if (paymentState === "COMPLETED") {
+    order.payment.gatewayPaymentId = decodedResponse.data?.transactionId || transactionId;
     order.payment.status = "paid";
     order.payment.paidAt = new Date();
-    order.payment.gatewayPaymentStatus = paymentEntity.status;
-    order.payment.providerResponse = paymentEntity;
+    order.payment.gatewayPaymentStatus = paymentState;
+    order.payment.providerResponse = decodedResponse;
     order.status = "processing"; // move to processing for fulfillment
     order.history = order.history || [];
-    order.history.push({ status: "paid", by: null, note: `Payment captured ${gatewayPaymentId}`, at: new Date() });
+    order.history.push({ 
+      status: "paid", 
+      by: null, 
+      note: `Payment completed via PhonePe - ${transactionId}`, 
+      at: new Date() 
+    });
 
     await order.save();
-
-    // enqueue fulfillment/email job here if needed
-    return res.json({ success: true });
+    console.log("Payment completed for order:", order.orderNumber);
+    return res.json({ success: true, message: "Payment completed" });
   }
 
-  // event: payment.failed
-  if (event === "payment.failed") {
-    const paymentEntity = payload.payload.payment.entity;
-    const gatewayOrderId = paymentEntity.order_id;
-    const order = await Order.findOne({ "payment.gatewayOrderId": gatewayOrderId });
-    if (!order) return res.json({ success: true });
+  // Handle payment failure
+  if (paymentState === "FAILED") {
     order.payment.status = "failed";
-    order.payment.providerResponse = paymentEntity;
-    order.history.push({ status: "payment_failed", by: null, note: "Payment failed", at: new Date() });
+    order.payment.providerResponse = decodedResponse;
+    order.status = "failed";
+    order.history = order.history || [];
+    order.history.push({ 
+      status: "failed", 
+      by: null, 
+      note: `Payment failed via PhonePe - ${transactionId}`, 
+      at: new Date() 
+    });
+
     await order.save();
-    return res.json({ success: true });
+    console.log("Payment failed for order:", order.orderNumber);
+    return res.json({ success: true, message: "Payment failed" });
   }
 
-  // respond OK for other events
-  return res.json({ success: true });
+  // Handle pending/other states
+  console.log("Received PhonePe callback with state:", paymentState);
+  return res.json({ success: true, message: "Callback received" });
+});
+
+/**
+ * Check payment status manually
+ * POST /api/orders/:orderId/payment-status
+ */
+export const checkPaymentStatus = asyncHandler(async (req, res) => {
+  const userId = req.user?.id;
+  const { orderId } = req.params;
+
+  const order = await Order.findById(orderId);
+  if (!order) {
+    throw new ApiError(404, "Order not found");
+  }
+
+  // Check if user owns this order
+  if (String(order.user) !== String(userId)) {
+    throw new ApiError(403, "Unauthorized to access this order");
+  }
+
+  // If payment is already completed, return current status
+  if (order.payment.status === "paid") {
+    return res.json({ 
+      success: true, 
+      paymentStatus: "completed",
+      order: order 
+    });
+  }
+
+  // Check with PhonePe if we have a transaction ID
+  if (order.payment.gatewayTransactionId) {
+    try {
+      const statusResponse = await checkPhonePePaymentStatus(order.payment.gatewayTransactionId);
+      
+      // Update order if payment status changed
+      if (statusResponse.paymentStatus === "COMPLETED" && order.payment.status !== "paid") {
+        order.payment.status = "paid";
+        order.payment.paidAt = new Date();
+        order.payment.gatewayPaymentStatus = statusResponse.paymentStatus;
+        order.payment.providerResponse = statusResponse.rawResponse;
+        order.status = "processing";
+        order.history.push({
+          status: "paid",
+          by: null,
+          note: `Payment status updated - ${order.payment.gatewayTransactionId}`,
+          at: new Date()
+        });
+        await order.save();
+      }
+
+      return res.json({
+        success: true,
+        paymentStatus: statusResponse.paymentStatus === "COMPLETED" ? "completed" : "pending",
+        order: order
+      });
+
+    } catch (error) {
+      console.error("Error checking PhonePe payment status:", error.message);
+      return res.json({
+        success: true,
+        paymentStatus: "unknown",
+        order: order,
+        error: "Unable to verify payment status"
+      });
+    }
+  }
+
+  return res.json({
+    success: true,
+    paymentStatus: order.payment.status,
+    order: order
+  });
 });

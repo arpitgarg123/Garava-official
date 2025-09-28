@@ -49,13 +49,16 @@ const orderSchema = new mongoose.Schema({
 
   subtotal: { type: Number, required: true },
   taxTotal: { type: Number, default: 0 },
-  shippingTotal: { type: Number, default: 0 },
+  shippingTotal: { type: Number, default: 0 }, // Delivery charges
+  codCharge: { type: Number, default: 0 }, // COD handling fee
   discountTotal: { type: Number, default: 0 },
   grandTotal: { type: Number, required: true },
   currency: { type: String, default: "INR" },
 
-  shippingAddress: {
-    name: String,
+  // Address reference and snapshot
+  shippingAddress: { type: mongoose.Schema.Types.ObjectId, ref: "Address", required: true, index: true },
+  shippingAddressSnapshot: {
+    fullName: String,
     phone: String,
     addressLine1: String,
     addressLine2: String,
@@ -63,13 +66,16 @@ const orderSchema = new mongoose.Schema({
     state: String,
     postalCode: String,
     country: String,
+    label: String,
   },
 
   payment: {
-    method: { type: String }, // 'razorpay' | 'cod' | 'stripe' ...
+    method: { type: String }, // 'phonepe' | 'cod' | 'razorpay' (legacy)
     gatewayOrderId: { type: String },
+    gatewayTransactionId: { type: String }, // PhonePe transaction ID
     gatewayPaymentId: { type: String },
-    status: { type: String, enum: ["unpaid","paid","failed","refunded"], default: "unpaid" },
+    gatewayPaymentStatus: { type: String }, // Gateway specific status
+    status: { type: String, enum: ["unpaid","paid","failed","refunded","pending"], default: "unpaid" },
     paidAt: Date,
     providerResponse: mongoose.Schema.Types.Mixed,
   },

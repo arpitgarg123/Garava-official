@@ -34,10 +34,10 @@
  # check-availability
 
 # # Order Features (User)
- # create-order 
- # get-all-order
- # get-order-by-id
- # payment-completing-process (razorpay but not tested yet)
+ # create-order ✅
+ # get-all-order ✅
+ # get-order-by-id ✅
+ # payment-completing-process ✅ (PhonePe PG - migrated from Razorpay)
 
 # # Order Features (Admin)
  # get-all-order

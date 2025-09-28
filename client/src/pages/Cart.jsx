@@ -104,6 +104,7 @@ import { selectCartItems, selectCartTotal, selectIsCartLoading } from '../featur
 import { updateCartItem, removeFromCart } from '../features/cart/slice';
 import { toast } from 'react-hot-toast';
 import { CartSkeleton } from '../components/ui/LoadingSkeleton';
+import { calculateOrderPricing, formatCurrency, getDeliveryMessage } from '../utils/pricing';
 
 
 const Cart = () => {
@@ -249,18 +250,49 @@ const Cart = () => {
               <div className="border p-6 space-y-4 sticky top-24">
                 <h3 className="text-lg font-semibold">Order Summary</h3>
                 <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Subtotal</span>
-                    <span>₹{calculateTotal().toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Shipping</span>
-                    <span>Free</span>
-                  </div>
-                  <div className="border-t pt-2 font-semibold flex justify-between">
-                    <span>Total</span>
-                    <span>₹{calculateTotal().toLocaleString()}</span>
-                  </div>
+                  {(() => {
+                    const subtotal = calculateTotal();
+                    const codPricing = calculateOrderPricing(subtotal, 'cod');
+                    const phonepePricing = calculateOrderPricing(subtotal, 'phonepe');
+                    
+                    return (
+                      <>
+                        <div className="flex justify-between">
+                          <span>Subtotal</span>
+                          <span>{formatCurrency(subtotal)}</span>
+                        </div>
+                        
+                        <div className="flex justify-between text-sm">
+                          <span>Delivery</span>
+                          <span className={phonepePricing.breakdown.isFreeDelivery ? "text-green-600" : ""}>
+                            {phonepePricing.breakdown.isFreeDelivery ? "Free" : formatCurrency(phonepePricing.deliveryCharge)}
+                          </span>
+                        </div>
+                        
+                        {!phonepePricing.breakdown.isFreeDelivery && (
+                          <div className="text-xs text-blue-600 bg-blue-50 p-2 rounded">
+                            {getDeliveryMessage(subtotal)}
+                          </div>
+                        )}
+                        
+                        <div className="text-xs text-gray-500">
+                          <div>• COD: Additional ₹40 handling fee</div>
+                          <div>• PhonePe/Online: No extra charges</div>
+                        </div>
+                        
+                        <div className="border-t pt-2 space-y-1">
+                          <div className="flex justify-between text-sm">
+                            <span>PhonePe Total</span>
+                            <span className="font-semibold text-green-600">{formatCurrency(phonepePricing.grandTotal)}</span>
+                          </div>
+                          <div className="flex justify-between text-sm">
+                            <span>COD Total</span>
+                            <span className="font-semibold">{formatCurrency(codPricing.grandTotal)}</span>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })()}
                 </div>
                 <button 
                   onClick={() => navigate('/checkout')}
