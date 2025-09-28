@@ -11,6 +11,6 @@ const newsletterSchema = new mongoose.Schema({
   unsubscribedAt: { type: Date },
 }, { timestamps: true });
 
-newsletterSchema.index({ email: 1 });
+// Index is already created by unique: true constraint above
 
 export default mongoose.model("Newsletter", newsletterSchema);

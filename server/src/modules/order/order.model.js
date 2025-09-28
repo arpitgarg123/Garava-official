@@ -42,7 +42,7 @@ const historySchema = new mongoose.Schema({
 
 const orderSchema = new mongoose.Schema({
   orderNumber: { type: String, unique: true, index: true }, // human readable
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   userSnapshot: { name: String, email: String, phone: String },
 
   items: [orderItemSchema],

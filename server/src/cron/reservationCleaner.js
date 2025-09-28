@@ -11,7 +11,7 @@ export const expirePendingOrders = async () => {
   const orders = await Order.find({ status: "pending_payment", createdAt: { $lt: cutoff } }).lean();
 
   for (const o of orders) {
-    try {
+    try {  
       // restore stock atomically per product/variant
       for (const it of o.items) {
         await Product.findOneAndUpdate(

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true, index: true },
   rating: { type: Number, required: true, min: 1, max: 5 }, // integer 1..5
   title: { type: String, trim: true, maxlength: 120 },

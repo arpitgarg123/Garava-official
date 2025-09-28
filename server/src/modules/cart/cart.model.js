@@ -25,7 +25,6 @@ const cartSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// index for quick lookup if needed
-cartSchema.index({ user: 1 });
+// Index is already created by unique: true constraint above
 
 export default mongoose.model("Cart", cartSchema);

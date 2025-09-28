@@ -26,7 +26,7 @@ export const calculateDeliveryCharge = (subtotalRupees) => {
  */
 export const calculateCODCharge = (paymentMethod) => {
   return paymentMethod === 'cod' ? CHARGES.COD_HANDLING_FEE : 0;
-};
+}; 
 
 /**
  * Calculate complete order pricing breakdown
