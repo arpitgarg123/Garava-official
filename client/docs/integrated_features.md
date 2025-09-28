@@ -34,10 +34,10 @@
  # check-availability
 
 # # Order Features (User)
- # create-order 
- # get-all-order
- # get-order-by-id
- # payment-completing-process (razorpay but not tested yet)
+ # create-order ✅
+ # get-all-order ✅
+ # get-order-by-id ✅
+ # payment-completing-process ✅ (PhonePe PG - migrated from Razorpay)
 
 # # Order Features (Admin)
  # get-all-order
@@ -45,17 +45,17 @@
  # update-order-status
  
 # # Cart Features
- # add-to-cart
- # view-cart
- # update-cart
- # remove items from cart
+ # add-to-cart ✅
+ # view-cart ✅
+ # update-cart ✅
+ # remove items from cart ✅
  # clear cart
 
 # # wishlist Features
- # add-to-wishlist
- # remove-to-wishlist
- # get-wishlist
- # toggle-product-items
+ # add-to-wishlist ✅
+ # remove-to-wishlist ✅
+ # get-wishlist ✅
+ # toggle-product-items ✅
 
 # # Review Feature (User)
  # create-review

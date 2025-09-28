@@ -56,14 +56,32 @@ import newsletterRouter from "./modules/newsletter/newsletter.router.js";
     app.use(morgan('dev'));
   }
 
-  const limiter = rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
+  // General API rate limiter - more generous for normal usage
+  const generalLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 500, // Increased from 100 to 500 requests per 15 minutes
     standardHeaders: true,
     legacyHeaders: false,
+    message: {
+      error: 'Too many requests from this IP, please try again later.',
+      retryAfter: '15 minutes'
+    }
   });
 
-  app.use('/api', limiter);
+  // Stricter limiter for auth endpoints to prevent abuse
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes  
+    max: 50, // 50 auth requests per 15 minutes
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: {
+      error: 'Too many authentication requests, please try again later.',
+      retryAfter: '15 minutes'
+    }
+  });
+
+  app.use('/api', generalLimiter);
+  app.use('/api/auth', authLimiter);
 
   app.get('/healthz', (_, res) =>
     res.json({
@@ -72,6 +90,19 @@ import newsletterRouter from "./modules/newsletter/newsletter.router.js";
     })
   );
 
+  // Debug route to test if changes are being picked up
+  app.get('/api/debug', (_, res) => {
+    res.json({ 
+      message: 'Server updated - routes should work now',
+      timestamp: new Date().toISOString(),
+      routes: {
+        orders: '/api/orders/checkout',
+        address: '/api/address',
+        cart: '/api/cart'
+      }
+    });
+  });
+
   // routes
 
   app.use('/api/auth', authRouter);
@@ -79,7 +110,7 @@ import newsletterRouter from "./modules/newsletter/newsletter.router.js";
   app.use("/api/address", addressRouter); 
   app.use("/api/admin/product", adminProductRouter);
   app.use("/api/product", productRouter);
-  app.use("/api/order", orderRouter);
+  app.use("/api/orders", orderRouter);
   app.use("/api/admin/order", adminOrderRouter);
   app.use("/api/cart", cartRouter);
   app.use("/api/wishlist", wishlistRouter);

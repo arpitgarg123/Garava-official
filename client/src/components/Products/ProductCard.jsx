@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "./product.css";
 import { CiHeart, CiSearch } from "react-icons/ci";
+import { AiFillHeart } from "react-icons/ai";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../features/cart/slice";
+import { toggleWishlistItem } from "../../features/wishlist/slice";
+import { selectIsAuthenticated } from "../../features/auth/selectors";
+import { selectIsProductInWishlist } from "../../features/wishlist/selectors";
+import { logout } from "../../features/auth/slice";
+import { toast } from "react-hot-toast";
 
 const ProductCard = ({
   product,
@@ -10,6 +18,14 @@ const ProductCard = ({
   onQuickView = () => {},
   onToggleWishlist = () => {},
 }) => {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const navigate = useNavigate();
+  
+  // Check if product is in wishlist
+  const productId = product._id || product.id;
+  const isInWishlist = useSelector(state => selectIsProductInWishlist(state, productId));
+
   if (!product) return null;
 
   // Robust price resolution
@@ -30,8 +46,6 @@ const ProductCard = ({
   useEffect(() => {
     setActiveColor(colors.length ? colors[0] : null);
   }, [colors.join("|")]); // re-init if colors change
-
-  const navigate = useNavigate();
 
   const slug = product.slug || product.productSlug || product.id || product._id;
   const heroSrc =
@@ -72,6 +86,41 @@ const ProductCard = ({
           aria-label="Add to cart"
           onClick={(e) => {
             e.stopPropagation();
+            
+            // Check authentication
+            if (!isAuthenticated) {
+              toast.error("Please login to add items to cart");
+              navigate("/login");
+              return;
+            }
+
+            // Prepare cart item data
+            const variant = product.variants?.[0] || product.defaultVariant;
+            const cartItem = {
+              productId: product._id || product.id,
+              variantId: variant?._id,
+              variantSku: variant?.sku,
+              quantity: 1
+            };
+
+            // Ensure we have either variantId or variantSku
+            if (!cartItem.variantId && !cartItem.variantSku) {
+              toast.error("Product variant information is missing");
+              return;
+            }
+
+            // Dispatch Redux action
+            dispatch(addToCart(cartItem))
+              .unwrap()
+              .then(() => {
+                toast.success("Item added to cart!");
+              })
+              .catch((error) => {
+                toast.error("Failed to add item to cart");
+                console.error("Add to cart error:", error);
+              });
+
+            // Also call the existing callback
             onAddToCart(product);
           }}
         >
@@ -96,18 +145,53 @@ const ProductCard = ({
 
         <button
           className="ph-action ph-action-ghost"
-          title="Wishlist"
-          aria-label="Add to wishlist"
-          onClick={() =>
+          title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+          aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+          onClick={(e) => {
+            e.stopPropagation();
+            
+            // Check authentication
+            if (!isAuthenticated) {
+              toast.error("Please login to manage wishlist");
+              navigate("/login");
+              return;
+            }
+
+            // Dispatch Redux action
+            dispatch(toggleWishlistItem(productId))
+              .unwrap()
+              .then((result) => {
+                if (result.action === "added") {
+                  toast.success("Added to wishlist!");
+                } else if (result.action === "removed") {
+                  toast.success("Removed from wishlist!");
+                }
+              })
+              .catch((error) => {
+                console.error("Wishlist error:", error);
+                if (error.message?.includes('Authentication failed') || error.message?.includes('login again')) {
+                  toast.error("Session expired. Please login again.");
+                  // Force logout to clear invalid session
+                  dispatch(logout());
+                  navigate("/login");
+                } else if (error.message?.includes('login') || error.message?.includes('401')) {
+                  toast.error("Please login to manage wishlist");
+                  navigate("/login");
+                } else {
+                  toast.error("Failed to update wishlist");
+                }
+              });
+
+            // Also call the existing callback
             onToggleWishlist({
               img: heroSrc,
               title: product.name,
               price: displayPrice,
               id: slug,
-            })
-          }
+            });
+          }}
         >
-          <CiHeart />
+          {isInWishlist ? <AiFillHeart className="text-red-500" /> : <CiHeart />}
         </button>
       </div>
 

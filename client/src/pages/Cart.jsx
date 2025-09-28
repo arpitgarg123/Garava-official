@@ -99,57 +99,93 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoBagHandleOutline } from 'react-icons/io5';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCartItems, selectCartTotal, selectIsCartLoading } from '../features/cart/selectors';
+import { updateCartItem, removeFromCart } from '../features/cart/slice';
+import { toast } from 'react-hot-toast';
+import { CartSkeleton } from '../components/ui/LoadingSkeleton';
+import { calculateOrderPricing, formatCurrency, getDeliveryMessage } from '../utils/pricing';
 
-// Dummy cart items
-const dummyItems = [
-  {
-    _id: '1',
-    name: 'Diamond Solitaire Ring',
-    heroImage: '/images/jewelry1.jpg',
-    variantSku: 'RING-001',
-    quantity: 1,
-    unitPrice: 75000,
-    color: 'Rose Gold'
-  },
-  {
-    _id: '2',
-    name: 'Sapphire Pendant',
-    heroImage: '/images/jewelry2.jpg',
-    variantSku: 'PEN-002',
-    quantity: 1,
-    unitPrice: 45000,
-    color: 'White Gold'
-  },
-  {
-    _id: '3',
-    name: 'Pearl Necklace',
-    heroImage: '/images/jewelry3.jpg',
-    variantSku: 'NECK-003',
-    quantity: 2,
-    unitPrice: 35000,
-    color: 'Silver'
-  }
-];
 
 const Cart = () => {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState(dummyItems);
+  const dispatch = useDispatch();
+  
+  // Redux selectors
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
+  const isLoading = useSelector(selectIsCartLoading);
+  
+  // Debug logging - testing if backend sends rupees not paise
+  console.log('Cart Debug:', {
+    cartTotal,
+    calculatedTotal: cartItems.reduce((acc, item) => acc + (item.unitPrice * item.quantity), 0),
+    itemCount: cartItems.length,
+    sampleItem: cartItems[0]
+  });
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
-    setCartItems(items => 
-      items.map(item => 
-        item._id === itemId ? {...item, quantity: newQuantity} : item
-      )
-    );
+    // Find the cart item to get productId and variantId
+    const cartItem = cartItems.find(item => item._id === itemId);
+    if (!cartItem) {
+      toast.error("Cart item not found");
+      return;
+    }
+    
+    dispatch(updateCartItem({ 
+      productId: cartItem.product,
+      variantId: cartItem.variantId,
+      variantSku: cartItem.variantSku,
+      quantity: newQuantity 
+    }))
+    .unwrap()
+    .then(() => {
+      toast.success("Cart updated");
+    })
+    .catch((error) => {
+      toast.error("Failed to update cart");
+      console.error("Update cart error:", error);
+    });
   };
 
   const handleRemoveItem = (itemId) => {
-    setCartItems(items => items.filter(item => item._id !== itemId));
+    // Find the cart item to get productId and variantId
+    const cartItem = cartItems.find(item => item._id === itemId);
+    if (!cartItem) {
+      toast.error("Cart item not found");
+      return;
+    }
+    
+    dispatch(removeFromCart({
+      productId: cartItem.product,
+      variantId: cartItem.variantId,
+      variantSku: cartItem.variantSku
+    }))
+    .unwrap()
+    .then(() => {
+      toast.success("Item removed from cart");
+    })
+    .catch((error) => {
+      toast.error("Failed to remove item");
+      console.error("Remove from cart error:", error);
+    });
   };
 
   const calculateTotal = () => {
-    return cartItems.reduce((acc, item) => acc + (item.unitPrice * item.quantity), 0);
+    // Use backend calculated total (in paise) or calculate manually as fallback
+    return cartTotal || cartItems.reduce((acc, item) => acc + (item.unitPrice * item.quantity), 0);
   };
+
+  if (isLoading) {
+    return (
+      <div className="bg-white min-h-[60vh] p-20">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
+          <CartSkeleton />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-white min-h-[60vh] p-20">
@@ -170,37 +206,41 @@ const Cart = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              {cartItems.map((item) => (
-                <div key={item._id} className="flex border-b py-4 space-x-4">
+              {cartItems.map((item, index) => (
+                <div key={item._id || `cart-item-${index}`} className="flex border-b py-4 space-x-4">
                   <img 
-                    src={item.heroImage} 
-                    alt={item.name}
+                    src={item.heroImage || '/placeholder.jpg'} 
+                    alt={item.name || 'Product'}
                     className="w-24 h-24 object-cover"
                   />
                   <div className="flex-1 space-y-2">
-                    <h3 className="font-medium">{item.name}</h3>
-                    <p className="text-sm text-gray-500">SKU: {item.variantSku}</p>
-                    <p className="text-sm text-gray-500">Color: {item.color}</p>
+                    <h3 className="font-medium">{item.name || 'Product Name'}</h3>
+                    <p className="text-sm text-gray-500">SKU: {item.variantSku || 'N/A'}</p>
+                    {item.color && (
+                      <p className="text-sm text-gray-500">Color: {item.color}</p>
+                    )}
                     <div className="flex items-center space-x-4">
                       <select 
                         value={item.quantity}
                         onChange={(e) => handleUpdateQuantity(item._id, Number(e.target.value))}
                         className="border p-1"
+                        disabled={isLoading}
                       >
                         {[1,2,3,4,5].map(num => (
-                          <option key={num} value={num}>{num}</option>
+                          <option key={`${item._id}-qty-${num}`} value={num}>{num}</option>
                         ))}
                       </select>
                       <button
                         onClick={() => handleRemoveItem(item._id)}
                         className="text-red-500 hover:text-red-700"
+                        disabled={isLoading}
                       >
                         <RiDeleteBin6Line size={20} />
                       </button>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold">₹{item.unitPrice.toLocaleString()}</p>
+                    <p className="font-semibold">₹{(item.unitPrice || 0).toLocaleString()}</p>
                   </div>
                 </div>
               ))}
@@ -210,18 +250,49 @@ const Cart = () => {
               <div className="border p-6 space-y-4 sticky top-24">
                 <h3 className="text-lg font-semibold">Order Summary</h3>
                 <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span>Subtotal</span>
-                    <span>₹{calculateTotal().toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Shipping</span>
-                    <span>Free</span>
-                  </div>
-                  <div className="border-t pt-2 font-semibold flex justify-between">
-                    <span>Total</span>
-                    <span>₹{calculateTotal().toLocaleString()}</span>
-                  </div>
+                  {(() => {
+                    const subtotal = calculateTotal();
+                    const codPricing = calculateOrderPricing(subtotal, 'cod');
+                    const phonepePricing = calculateOrderPricing(subtotal, 'phonepe');
+                    
+                    return (
+                      <>
+                        <div className="flex justify-between">
+                          <span>Subtotal</span>
+                          <span>{formatCurrency(subtotal)}</span>
+                        </div>
+                        
+                        <div className="flex justify-between text-sm">
+                          <span>Delivery</span>
+                          <span className={phonepePricing.breakdown.isFreeDelivery ? "text-green-600" : ""}>
+                            {phonepePricing.breakdown.isFreeDelivery ? "Free" : formatCurrency(phonepePricing.deliveryCharge)}
+                          </span>
+                        </div>
+                        
+                        {!phonepePricing.breakdown.isFreeDelivery && (
+                          <div className="text-xs text-blue-600 bg-blue-50 p-2 rounded">
+                            {getDeliveryMessage(subtotal)}
+                          </div>
+                        )}
+                        
+                        <div className="text-xs text-gray-500">
+                          <div>• COD: Additional ₹40 handling fee</div>
+                          <div>• PhonePe/Online: No extra charges</div>
+                        </div>
+                        
+                        <div className="border-t pt-2 space-y-1">
+                          <div className="flex justify-between text-sm">
+                            <span>PhonePe Total</span>
+                            <span className="font-semibold text-green-600">{formatCurrency(phonepePricing.grandTotal)}</span>
+                          </div>
+                          <div className="flex justify-between text-sm">
+                            <span>COD Total</span>
+                            <span className="font-semibold">{formatCurrency(codPricing.grandTotal)}</span>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })()}
                 </div>
                 <button 
                   onClick={() => navigate('/checkout')}

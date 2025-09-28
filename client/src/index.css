@@ -2,19 +2,19 @@
 
 @font-face {
     font-family:'playfair';
-    src: url(/client/src/assets/fonts/PlayfairDisplay-VariableFont_wght.ttf) 
+    src: url('./assets/fonts/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
 }
 @font-face {
     font-family:'playfair-italic';
-    src: url(/client/src/assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf) 
+    src: url('./assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf') format('truetype');
 }
 @font-face {
   font-family:'montserrat';
-  src: url(/fonts/Montserrat-VariableFont_wght.ttf) 
+  src: url('./assets/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
 }
 @font-face {
   font-family:'headFont';
-  src: url(/client/src/assets/fonts/OldStandardTT-Regular.ttf) 
+  src: url('./assets/fonts/OldStandardTT-Regular.ttf') format('truetype');
 }
 :root{
     --primary: #ffffff;

@@ -58,15 +58,28 @@ useEffect(() => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [category]);
 
-useEffect(() => {
-  // After we establish detectedCategory & subCategories, load counts
-  if (!detectedCategory) return;
-  const plainCats = subCategories.map(c => c.id);
-  dispatch(fetchCategoryCounts({ type: detectedCategory, categories: plainCats }));
-}, [detectedCategory, subCategories, dispatch]);
-
 // Get counts from store
 const counts = useSelector(s => s.product.categoryCounts[detectedCategory] || {});
+
+// Smart category counts fetching with debouncing
+useEffect(() => {
+  if (!detectedCategory) return;
+  
+  // Check if we already have fresh counts for this category
+  if (counts && Object.keys(counts).length > 0) {
+    console.log('SideBar - Using existing category counts for:', detectedCategory);
+    return;
+  }
+  
+  // Debounce to prevent rapid firing during category changes
+  const timer = setTimeout(() => {
+    const plainCats = subCategories.map(c => c.id);
+    console.log('SideBar - Fetching category counts for:', detectedCategory);
+    dispatch(fetchCategoryCounts({ type: detectedCategory, categories: plainCats }));
+  }, 300); // 300ms debounce
+  
+  return () => clearTimeout(timer);
+}, [detectedCategory, counts, dispatch]); // Added counts to deps to check for existing data
 
   return (
      <aside className="sticky top-0 w-full max-w-[280px] mb-6 ">

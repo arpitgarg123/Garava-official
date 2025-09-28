@@ -3,14 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMeApi, updateMeApi, changePasswordApi } from "../features/user/api.js";
 import { resendVerificationApi } from "../features/auth/api.js";
 import { setUser, doLogout } from "../features/auth/slice.js";
+import { fetchUserOrders } from "../features/order/slice.js";
+import { selectUserOrders, selectIsOrdersLoading } from "../features/order/selectors.js";
+import { fetchAddresses } from "../features/address/slice.js";
+import { selectAddresses, selectIsAddressLoading } from "../features/address/selectors.js";
 import { useNavigate } from "react-router-dom";
 import WishlistContent from "../components/WishlistContent.jsx";
-import AddressManager from "../components/AddressManager.jsx";
+import AddressSelector from "../components/AddressSelector.jsx";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authUser = useSelector((s) => s.auth?.user);
+  const userOrders = useSelector(selectUserOrders);
+  const isOrdersLoading = useSelector(selectIsOrdersLoading);
+  const addresses = useSelector(selectAddresses);
+  const isAddressLoading = useSelector(selectIsAddressLoading);
   const [activeTab, setActiveTab] = useState("profile");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -58,6 +66,14 @@ const ProfilePage = () => {
     })();
     return () => { mounted = false; };
   }, [dispatch]);
+
+  // Fetch orders and addresses when component mounts
+  useEffect(() => {
+    if (authUser) {
+      dispatch(fetchUserOrders());
+      dispatch(fetchAddresses());
+    }
+  }, [dispatch, authUser]);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -308,17 +324,82 @@ const ProfilePage = () => {
         return (
           <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
             <h2 className="text-xl font-semibold mb-6">Order History</h2>
-            <div className="text-center py-12 text-gray-500">
-              <div className="text-4xl mb-4">📦</div>
-              <p className="text-sm sm:text-base">No orders found. Start shopping to see your orders here.</p>
-            </div>
+            {isOrdersLoading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black mx-auto"></div>
+                <p className="mt-4 text-gray-500">Loading orders...</p>
+              </div>
+            ) : userOrders && userOrders.length > 0 ? (
+              <div className="space-y-4">
+                {userOrders.map((order) => (
+                  <div key={order._id} className="border rounded-lg p-4 hover:shadow-sm transition-shadow">
+                    <div className="flex justify-between items-start mb-3">
+                      <div>
+                        <h3 className="font-medium">Order #{order.orderNumber}</h3>
+                        <p className="text-sm text-gray-500">
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-medium">
+                          ₹{((order.grandTotal || 0) / 100).toLocaleString('en-IN')}
+                        </p>
+                        <span className={`inline-block px-2 py-1 rounded-full text-xs ${
+                          order.status === 'delivered' ? 'bg-green-100 text-green-800' :
+                          order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
+                          order.status === 'shipped' ? 'bg-purple-100 text-purple-800' :
+                          order.status === 'cancelled' ? 'bg-red-100 text-red-800' :
+                          'bg-yellow-100 text-yellow-800'
+                        }`}>
+                          {order.status}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="border-t pt-3">
+                      <p className="text-sm text-gray-600 mb-2">
+                        {order.items?.length || 0} item(s)
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <div className="text-sm text-gray-600">
+                          Payment: {order.payment?.method || 'N/A'} • 
+                          Status: {order.payment?.status || 'N/A'}
+                        </div>
+                        <button 
+                          onClick={() => navigate(`/orders/${order._id}`)}
+                          className="text-sm text-blue-600 hover:text-blue-700"
+                        >
+                          View Details →
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 text-gray-500">
+                <div className="text-4xl mb-4">📦</div>
+                <p className="text-sm sm:text-base">No orders found. Start shopping to see your orders here.</p>
+              </div>
+            )}
           </div>
         );
 
       case "addresses":
         return (
           <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            <AddressManager />
+            {isAddressLoading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black mx-auto"></div>
+                <p className="mt-4 text-gray-500">Loading addresses...</p>
+              </div>
+            ) : (
+              <AddressSelector 
+                selectedAddressId={null}
+                onAddressSelect={() => {}}
+                onAddressChange={() => {}}
+                showAsManagement={true}
+              />
+            )}
           </div>
         );
 
