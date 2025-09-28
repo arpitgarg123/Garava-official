@@ -22,11 +22,12 @@ blogs page ui done, detail also  with responsive ✅
 create contact us page   with responsive ✅ 
 event and event details are done with responsive ✅ 
 media-coverage and media-details are done with responsive ✅ 
+product details page / user reviews 
 
     ***upcomming changes***
 formatDate dynamic krna h 
 navbar responsive krna h
-fonts fix krna h
+fonts fix krna h✅
 
 
 
@@ -58,7 +59,6 @@ add goole auth ✅
 
     ****backend related work****
 
-1) this essential page are dynamicly so backend work is.. to create CRUD operations for essential and create this fields [sub title, title]
 
 2) reviews page are dynamicaly so to create reviews CRUD operations. and fields are [username, description, and stars]
 
