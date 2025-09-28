@@ -26,7 +26,7 @@ product details page / user reviews
 
     ***upcomming changes***
 formatDate dynamic krna h 
-navbar responsive krna h
+navbar responsive krna h✅
 fonts fix krna h✅
 
 
