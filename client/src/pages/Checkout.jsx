@@ -15,7 +15,7 @@ import { selectAddressById } from '../features/address/selectors';
 import { initiatePayment, clearPaymentError, clearCurrentOrder } from '../features/order/slice';
 import { clearCart } from '../features/cart/slice';
 import AddressSelector from '../components/AddressSelector';
-import { calculateOrderPricing, formatCurrency } from '../utils/pricing';
+import { calculateOrderPricing, formatCurrencyFromPaise } from '../utils/pricing';
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -281,32 +281,32 @@ const Checkout = () => {
                   <>
                     <div className="flex justify-between text-sm">
                       <span>Subtotal</span>
-                      <span>{formatCurrency(cartTotal)}</span>
+                      <span>{formatCurrencyFromPaise(cartTotal)}</span>
                     </div>
                     
                     <div className="flex justify-between text-sm">
                       <span>Delivery</span>
                       <span className={pricing.breakdown.isFreeDelivery ? "text-green-600" : ""}>
-                        {pricing.breakdown.isFreeDelivery ? "Free" : formatCurrency(pricing.deliveryCharge)}
+                        {pricing.breakdown.isFreeDelivery ? "Free" : formatCurrencyFromPaise(pricing.deliveryCharge)}
                       </span>
                     </div>
                     
                     {paymentMethod === 'cod' && (
                       <div className="flex justify-between text-sm">
                         <span>COD Handling</span>
-                        <span>{formatCurrency(pricing.codCharge)}</span>
+                        <span>{formatCurrencyFromPaise(pricing.codCharge)}</span>
                       </div>
                     )}
                     
                     {!pricing.breakdown.isFreeDelivery && (
                       <div className="text-xs text-blue-600 bg-blue-50 p-2 rounded">
-                        Add {formatCurrency(pricing.breakdown.amountNeededForFreeDelivery)} more for free delivery
+                        Add {formatCurrencyFromPaise(pricing.breakdown.amountNeededForFreeDelivery)} more for free delivery
                       </div>
                     )}
                     
                     <div className="flex justify-between text-lg font-semibold border-t pt-2">
                       <span>Total</span>
-                      <span>{formatCurrency(pricing.grandTotal)}</span>
+                      <span>{formatCurrencyFromPaise(pricing.grandTotal)}</span>
                     </div>
                   </>
                 );
@@ -335,7 +335,7 @@ const Checkout = () => {
                   {paymentMethod === 'phonepe' ? 'Processing Payment...' : 'Placing Order...'}
                 </span>
               ) : (
-                `${paymentMethod === 'phonepe' ? 'Pay' : 'Place Order'} ${formatCurrency(calculateOrderPricing(cartTotal, paymentMethod).grandTotal)}`
+                `${paymentMethod === 'phonepe' ? 'Pay' : 'Place Order'} ${formatCurrencyFromPaise(calculateOrderPricing(cartTotal, paymentMethod).grandTotal)}`
               )}
             </button>
           </div>

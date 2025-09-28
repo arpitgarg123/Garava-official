@@ -169,21 +169,24 @@ export const checkPaymentStatus = asyncHandler(async (req, res) => {
   }
 
   // If payment is already completed, return current status
-  if (order.payment.status === "paid") {
+  if (order.payment.status === "paid" || order.status === "processing") {
     return res.json({ 
       success: true, 
       paymentStatus: "completed",
       order: order 
     });
-  }
-
+  } 
+ 
   // Check with PhonePe if we have a transaction ID
   if (order.payment.gatewayTransactionId) {
     try {
+      console.log('🔍 Checking payment status for transaction:', order.payment.gatewayTransactionId);
       const statusResponse = await checkPhonePePaymentStatus(order.payment.gatewayTransactionId);
+      console.log('📄 PhonePe status response:', statusResponse);
       
-      // Update order if payment status changed
-      if (statusResponse.paymentStatus === "COMPLETED" && order.payment.status !== "paid") {
+      // Update order if payment status changed - Handle both real PhonePe and simulator responses
+      if ((statusResponse.paymentStatus === "COMPLETED" || statusResponse.paymentStatus === "PAYMENT_SUCCESS") && order.payment.status !== "paid") {
+        console.log('✅ Updating order to paid status');
         order.payment.status = "paid";
         order.payment.paidAt = new Date();
         order.payment.gatewayPaymentStatus = statusResponse.paymentStatus;
@@ -200,7 +203,7 @@ export const checkPaymentStatus = asyncHandler(async (req, res) => {
 
       return res.json({
         success: true,
-        paymentStatus: statusResponse.paymentStatus === "COMPLETED" ? "completed" : "pending",
+        paymentStatus: (statusResponse.paymentStatus === "COMPLETED" || statusResponse.paymentStatus === "PAYMENT_SUCCESS") ? "completed" : "pending",
         order: order
       });
 

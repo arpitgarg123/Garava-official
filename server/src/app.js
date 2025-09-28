@@ -90,6 +90,16 @@ import newsletterRouter from "./modules/newsletter/newsletter.router.js";
     })
   );
 
+  // Also add health endpoint at /api/health for consistency
+  app.get('/api/health', (_, res) =>
+    res.json({
+      status: 'ok',
+      server: 'Garava API',
+      uptime: process.uptime(),
+      timestamp: new Date().toISOString()
+    })
+  );
+
   // Debug route to test if changes are being picked up
   app.get('/api/debug', (_, res) => {
     res.json({ 

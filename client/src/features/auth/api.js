@@ -1,14 +1,14 @@
 import http, { authHttp } from "../../shared/api/http";
 
-export const signupApi = (payload) => authHttp.post("/api/auth/signup", payload);
-export const loginApi = (payload) => authHttp.post("/api/auth/login", payload);
-export const logoutApi = () => authHttp.post("/api/auth/logout");
-export const refreshApi = () => authHttp.post("/api/auth/refresh");
+export const signupApi = (payload) => authHttp.post("/auth/signup", payload);
+export const loginApi = (payload) => authHttp.post("/auth/login", payload);
+export const logoutApi = () => authHttp.post("/auth/logout");
+export const refreshApi = () => authHttp.post("/auth/refresh");
 export const resendVerificationApi = (payload) =>
-  http.post("/api/auth/resend-verification", payload);
+  http.post("/auth/resend-verification", payload);
 export const forgotPasswordApi = (payload) =>
-  http.post("/api/auth/forgot-password", payload);
+  http.post("/auth/forgot-password", payload);
 export const resetPasswordApi = (payload) =>
-  http.post("/api/auth/reset-password", payload);
+  http.post("/auth/reset-password", payload);
 export const verifyEmailApi = (params) =>
-  http.get("/api/auth/verify-email", { params });
+  http.get("/auth/verify-email", { params });

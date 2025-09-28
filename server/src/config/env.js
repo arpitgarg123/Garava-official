@@ -31,7 +31,7 @@ const EnvSchema = z.object({
   RAZORPAY_KEY_SECRET: z.string().min(1, 'RAZORPAY_KEY_SECRET is required'),
 });
 
-// Parse & validate
+// Parse & validate 
 const parsed = EnvSchema.safeParse(process.env);
 
 if (!parsed.success) {

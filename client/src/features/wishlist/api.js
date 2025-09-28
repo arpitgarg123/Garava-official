@@ -5,7 +5,7 @@ export const getWishlist = async (params = {}, cancelToken) => {
   console.log('Wishlist API - Getting wishlist:', params);
   try {
     const response = await retryRequest(() => 
-      http.get("/api/wishlist", { params, cancelToken })
+      http.get("/wishlist", { params, cancelToken })
     );
     console.log('Wishlist API - Get wishlist success:', response.data);
     return response;
@@ -23,7 +23,7 @@ export const addToWishlist = async (productId) => {
   }
   
   try {
-    const response = await http.post(`/api/wishlist/${productId}`);
+    const response = await http.post(`/wishlist/${productId}`);
     console.log('Wishlist API - Add to wishlist success:', response.data);
     return response;
   } catch (error) {
@@ -53,7 +53,7 @@ export const removeFromWishlist = async (productId) => {
   }
   
   try {
-    const response = await http.delete(`/api/wishlist/${productId}`);
+    const response = await http.delete(`/wishlist/${productId}`);
     console.log('Wishlist API - Remove from wishlist success:', response.data);
     return response;
   } catch (error) {
@@ -78,7 +78,7 @@ export const toggleWishlist = async (productId) => {
   }
   
   try {
-    const response = await http.post(`/api/wishlist/toggle/${productId}`);
+    const response = await http.post(`/wishlist/toggle/${productId}`);
     console.log('Wishlist API - Toggle wishlist success:', response.data);
     return response;
   } catch (error) {

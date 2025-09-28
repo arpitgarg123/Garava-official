@@ -5,7 +5,7 @@ export const getCart = async (cancelToken) => {
   console.log('Cart API - Getting cart');
   try {
     const response = await retryRequest(() => 
-      http.get("/api/cart", { cancelToken })
+      http.get("/cart", { cancelToken })
     );
     console.log('Cart API - Get cart success:', response.data);
     return response;
@@ -33,7 +33,7 @@ export const addToCart = async (payload, cancelToken) => {
   
   try {
     const response = await retryRequest(() => 
-      http.post('/api/cart', payload, { cancelToken })
+      http.post('/cart', payload, { cancelToken })
     );
     console.log('Cart API - Add to cart success:', response.data);
     return response;
@@ -67,7 +67,7 @@ export const addToCart = async (payload, cancelToken) => {
 export const updateCartItem = async (payload) => {
   console.log('Cart API - Update cart item:', payload);
   try {
-    const response = await http.put("/api/cart", payload);
+    const response = await http.put("/cart", payload);
     console.log('Cart API - Update cart item success:', response.data);
     return response;
   } catch (error) {
@@ -97,7 +97,7 @@ export const removeCartItem = async ({ productId, variantId, variantSku }) => {
   if (variantSku) params.append("variantSku", variantSku);
   
   try {
-    const response = await http.delete(`/api/cart/item?${params.toString()}`);
+    const response = await http.delete(`/cart/item?${params.toString()}`);
     console.log('Cart API - Remove cart item success:', response.data);
     return response;
   } catch (error) {
@@ -112,7 +112,7 @@ export const removeCartItem = async ({ productId, variantId, variantSku }) => {
 export const clearCart = async () => {
   console.log('Cart API - Clearing cart');
   try {
-    const response = await http.delete("/api/cart");
+    const response = await http.delete("/cart");
     console.log('Cart API - Clear cart success:', response.data);
     return response;
   } catch (error) {

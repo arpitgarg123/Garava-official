@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = (import.meta.env.VITE_API_URL || "http://localhost:8080").replace(/\/+$/, "");
+const baseURL = (import.meta.env.VITE_API_URL || "http://localhost:8080/api").replace(/\/+$/, "");
 
 // Create HTTP clients with reasonable timeouts
 const http = axios.create({ 
@@ -116,7 +116,7 @@ http.interceptors.response.use(
 
       try {
         console.log('HTTP Interceptor - Attempting token refresh...');
-        const { data } = await authHttp.post('/api/auth/refresh', {});
+        const { data } = await authHttp.post('/auth/refresh', {});
         const newToken = data?.accessToken;
         
         if (!newToken) {

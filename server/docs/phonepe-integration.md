@@ -1,53 +1,66 @@
-# PhonePe Payment Gateway Configuration
+# PhonePe Payment Gateway Configuration (v2 API)
 
 ## Required Environment Variables
 
 Add the following environment variables to your `.env` file in the server directory:
 
 ```env
-# PhonePe Payment Gateway Configuration
-PHONEPE_MERCHANT_ID=your_merchant_id_here
-PHONEPE_SALT_KEY=your_salt_key_here
-PHONEPE_SALT_INDEX=1
+# PhonePe v2 API Configuration (OAuth-based)
+PHONEPE_CLIENT_ID=your_client_id_here
+PHONEPE_CLIENT_SECRET=your_client_secret_here
+PHONEPE_CLIENT_VERSION=1.0
 
-# PhonePe API URLs
-PHONEPE_API_URL=https://api-preprod.phonepe.com/apis/hermes  # For testing
-# PHONEPE_API_URL=https://api.phonepe.com/apis/hermes  # For production
+# PhonePe v2 API URLs
+PHONEPE_API_URL=https://api-preprod.phonepe.com/apis/pg-sandbox  # For testing
+PHONEPE_AUTH_URL=https://api-preprod.phonepe.com/apis/pg-sandbox  # For testing
+# PHONEPE_API_URL=https://api.phonepe.com/apis/pg  # For production
+# PHONEPE_AUTH_URL=https://api.phonepe.com/apis/identity-manager  # For production
 
 # Callback URLs
 PHONEPE_REDIRECT_URL=http://localhost:3000/payment/callback
 PHONEPE_CALLBACK_URL=http://localhost:8080/webhooks/payments/phonepe
 ```
 
-## PhonePe Integration Setup
+## PhonePe v2 API Integration Setup
 
-### 1. Get PhonePe Merchant Account
-- Register at PhonePe Developer Portal
-- Get your Merchant ID and Salt Key
-- Configure webhook URLs
+### 1. Get PhonePe Business Account
+- Register at [PhonePe Business Portal](https://business.phonepe.com/)
+- Complete business verification
+- Access Developer Settings → API Keys
+- Get your Client ID and Client Secret
 
 ### 2. Test vs Production
-- Use preprod API URL for testing: `https://api-preprod.phonepe.com/apis/hermes`
-- Use production API URL for live: `https://api.phonepe.com/apis/hermes`
+- Use sandbox API URL for testing: `https://api-preprod.phonepe.com/apis/pg-sandbox`
+- Use production API URL for live: `https://api.phonepe.com/apis/pg`
+- Auth URLs differ between sandbox and production environments
 
-### 3. Webhook Configuration
+### 3. OAuth Authentication
+- System automatically generates OAuth tokens using Client ID/Secret
+- Tokens are cached and auto-refreshed before expiry
+- All API calls use Bearer token authentication
+
+### 4. Webhook Configuration
 - Set webhook URL in PhonePe dashboard to: `https://yourdomain.com/webhooks/payments/phonepe`
 - Ensure webhook endpoint is publicly accessible
+- v2 API uses improved webhook payload structure
 
-### 4. Frontend Integration
-- Payment flow automatically redirects to PhonePe payment page
+### 5. Frontend Integration
+- Payment flow redirects to new PhonePe checkout page
+- Enhanced UI with better mobile support
 - User completes payment on PhonePe interface
 - Redirects back to your callback URL with status
 
-## Order Flow
+## Order Flow (v2 API)
 
 1. **Create Order**: POST `/api/orders/checkout` with `paymentMethod: "phonepe"`
-2. **Payment Initiation**: Backend creates PhonePe payment order
-3. **Redirect**: Frontend redirects user to PhonePe payment URL
-4. **Payment**: User completes payment on PhonePe
-5. **Callback**: PhonePe sends webhook to `/webhooks/payments/phonepe`
-6. **Status Update**: Order status updated based on payment result
-7. **Redirect**: User redirected back with payment status
+2. **OAuth Token**: Backend automatically generates access token using Client ID/Secret
+3. **Payment Initiation**: Backend creates PhonePe payment order using v2 API
+4. **Redirect**: Frontend redirects user to PhonePe checkout page
+5. **Payment**: User completes payment on enhanced PhonePe interface
+6. **Callback**: PhonePe sends webhook to `/webhooks/payments/phonepe`
+7. **Status Verification**: Backend verifies payment using v2 status API
+8. **Status Update**: Order status updated based on verified payment result
+9. **Redirect**: User redirected back with payment status
 
 ## Testing
 
@@ -61,10 +74,12 @@ PHONEPE_CALLBACK_URL=http://localhost:8080/webhooks/payments/phonepe
 
 ## Security Notes
 
-1. **Salt Key**: Keep your salt key secure and never expose it in frontend code
-2. **Webhook Verification**: All webhooks are verified using HMAC-SHA256
-3. **HTTPS**: Always use HTTPS in production for secure communication
-4. **Environment Separation**: Use different merchant accounts for test and production
+1. **Client Secret**: Keep your client secret secure and never expose it in frontend code
+2. **OAuth Tokens**: Access tokens are automatically managed and refreshed
+3. **Webhook Verification**: v2 API uses improved webhook payload validation
+4. **HTTPS**: Always use HTTPS in production for secure communication
+5. **Environment Separation**: Use different client credentials for test and production
+6. **Token Management**: Tokens are cached in memory and auto-refreshed before expiry
 
 ## Migration from Razorpay
 

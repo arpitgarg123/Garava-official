@@ -2,12 +2,10 @@ import http, { retryRequest } from "../../shared/api/http.js";
 
 // Order API functions
 export const createOrder = async (orderData, cancelToken) => {
-  console.log('Order API - Creating order:', orderData);
   try {
     const response = await retryRequest(() => 
-      http.post("/api/orders/checkout", orderData, { cancelToken })
+      http.post("/orders/checkout", orderData, { cancelToken })
     );
-    console.log('Order API - Create order success:', response.data);
     return response;
   } catch (error) {
     console.error('Order API - Create order error:', error.response?.data || error.message);
@@ -16,12 +14,10 @@ export const createOrder = async (orderData, cancelToken) => {
 };
 
 export const getUserOrders = async (params = {}, cancelToken) => {
-  console.log('Order API - Getting user orders:', params);
   try {
     const response = await retryRequest(() => 
-      http.get("/api/orders", { params, cancelToken })
+      http.get("/orders", { params, cancelToken })
     );
-    console.log('Order API - Get orders success:', response.data);
     return response;
   } catch (error) {
     console.error('Order API - Get orders error:', error.response?.data || error.message);
@@ -30,12 +26,10 @@ export const getUserOrders = async (params = {}, cancelToken) => {
 };
 
 export const getOrderById = async (orderId, cancelToken) => {
-  console.log('Order API - Getting order by ID:', orderId);
   try {
     const response = await retryRequest(() => 
-      http.get(`/api/orders/${orderId}`, { cancelToken })
+      http.get(`/orders/${orderId}`, { cancelToken })
     );
-    console.log('Order API - Get order success:', response.data);
     return response;
   } catch (error) {
     console.error('Order API - Get order error:', error.response?.data || error.message);
@@ -44,22 +38,20 @@ export const getOrderById = async (orderId, cancelToken) => {
 };
 
 export const checkPaymentStatus = async (orderId, cancelToken) => {
-  console.log('Order API - Checking payment status for order:', orderId);
   try {
     const response = await retryRequest(() => 
-      http.post(`/api/orders/${orderId}/payment-status`, {}, { cancelToken })
+      http.post(`/orders/${orderId}/payment-status`, {}, { cancelToken })
     );
-    console.log('Order API - Payment status check success:', response.data);
-    return response;
+    // Return the data directly to match expected format
+    return response.data;
   } catch (error) {
-    console.error('Order API - Payment status check error:', error.response?.data || error.message);
+    console.error('Payment status check failed:', error.response?.data || error.message);
     throw error;
   }
 };
 
 // Process payment with PhonePe
 export const initiatePhonePePayment = async (orderData, cancelToken) => {
-  console.log('Order API - Initiating PhonePe payment:', orderData);
   try {
     // First create the order
     const orderResponse = await createOrder(orderData, cancelToken);
@@ -83,7 +75,7 @@ export const initiatePhonePePayment = async (orderData, cancelToken) => {
     };
     
   } catch (error) {
-    console.error('Order API - PhonePe payment initiation error:', error.response?.data || error.message);
+    console.error('PhonePe payment initiation failed:', error.response?.data || error.message);
     throw error;
   }
 };

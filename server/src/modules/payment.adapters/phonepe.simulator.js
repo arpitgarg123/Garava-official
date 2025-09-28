@@ -53,7 +53,7 @@ export const simulatePaymentStatus = async (transactionId) => {
   return {
     success: true,
     transactionId,
-    paymentStatus: 'PAYMENT_SUCCESS',
+    paymentStatus: 'COMPLETED', // Changed to match expected status
     amount: 100000, // This would be the actual amount
     rawResponse: {
       success: true,
