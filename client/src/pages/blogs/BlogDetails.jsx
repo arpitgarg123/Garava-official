@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import ShareButton from "./ShareButton";
+import ShareButton from "../../components/blogs/ShareButton";
 
 const DEFAULT_POST = {
   category: "Jewelry",

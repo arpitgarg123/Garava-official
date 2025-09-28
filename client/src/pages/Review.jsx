@@ -1,15 +1,11 @@
 import React from 'react'
 import { MdOutlineStar } from "react-icons/md";
+import PageHeader from '../components/header/PageHeader';
 
 const Review = () => {
   return (
     <div className='flex flex-col w-full py-12'>
-         <header className="head">
-          <div className="head-inner max-w-6xl mx-auto ">
-            <h2 className="head-text text-3xl md:text-4xl">Testimonials</h2>
-            <div className="head-line "></div>
-          </div>
-        </header>
+        <PageHeader title="Reviews"  />
         <div className='flex items-center justify-around mb-10'>
         <div className='h-[16vw]  w-[25vw] bg-gray-100 rounded-2xl py-8 flex flex-col items-center justify-between'>
  <div className='flex  items-center justify-center'>

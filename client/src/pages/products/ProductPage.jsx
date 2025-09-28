@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { setFilters, fetchProducts } from "../../features/product/slice";
 import SideBar from "../../components/Products/SideBar";
 import ProductCard from "../../components/Products/ProductCard";
+import PageHeader from "../../components/header/PageHeader";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -68,20 +69,15 @@ const ProductPage = () => {
   }, []);
 
   return (
-    <div className="w-full py-6">
-      <header className="head">
-        <div className="head-inner max-w-6xl mx-auto">
-          <h2 className="head-text text-3xl md:text-4xl capitalize">{heading}</h2>
-          <div className="head-line"></div>
-        </div>
-      </header>
+    <div className="w-full py-6 mt-20 ">
+     <PageHeader title={heading} />
 
-      <div className="w-[95%] max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 items-start">
+      <div className="w-[95%] max-w-7xl  mx-auto grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 items-start">
         <div className="hidden md:block">
           <SideBar mainCategory={filters.type || routeCategory || "jewellery"} onApply={handleApplyFilters} />
         </div>
 
-        <main className="ml-10 mt-10">
+        <main className="ml-10">
           <div className="flex items-center justify-between mb-6">
             <div className="text-sm text-gray-600">
               {status === "loading" ? "Loading..." : `Showing ${items.length} products`}

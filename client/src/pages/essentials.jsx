@@ -5,6 +5,7 @@ import fragranceImg from "../assets/images/essential-f.png";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
+import PageHeader from "../components/header/PageHeader";
 
 gsap.registerPlugin(ScrollTrigger);
 const Essentials = ()=> {
@@ -95,12 +96,7 @@ const Essentials = ()=> {
   return (
    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-screen-xl mx-auto">
-      <header className="head">
-          <div className="head-inner">
-            <h2 className="head-text">Essentials</h2>
-            <div className="head-line"></div>
-          </div>
-        </header>
+      <PageHeader title="Essentials" />
 
         <div className="flex  -mx-4 ">
           <Card

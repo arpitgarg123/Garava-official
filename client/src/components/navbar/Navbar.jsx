@@ -10,7 +10,7 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { FiLogOut } from "react-icons/fi";
 
 import darkLogo from '../../assets/images/logo-main.png'
-import lightLogo from '../../assets/images/light-logo.png'
+
 import { selectIsAuthenticated, selectUser, selectIsAdmin } from '../../features/auth/selectors.js';
 import { doLogout } from '../../features/auth/slice.js';
 import { selectCartItemCount } from '../../features/cart/selectors.js';

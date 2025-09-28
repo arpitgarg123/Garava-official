@@ -3,7 +3,7 @@ import React from 'react'
 const Summary = ({ title, children }) => {
   return (
      
-    <details className="rounded-xl border bg-background p-3 open:shadow-sm">
+    <details className=" p-3 ">
       <summary className="cursor-pointer select-none text-sm font-medium">{title}</summary>
       <div className="mt-2 text-sm text-muted-foreground">{children}</div>
     </details>

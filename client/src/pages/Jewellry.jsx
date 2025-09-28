@@ -4,6 +4,7 @@ import jBack from "../assets/images/j-back.jpg";
 import j from "../assets/images/jewellry4.png";
 import j2 from "../assets/images/j.jpg";
 import { Link, useNavigate } from 'react-router-dom';
+import PageHeader from '../components/header/PageHeader';
 
 const Jewellry = () => {
   const navigate = useNavigate()
@@ -14,13 +15,8 @@ const Jewellry = () => {
     { id: 4, img: j2, title: "Everyday Band", price: "₹24,500.0" },
   ];
   return (
-    <div className='w-full py-6'>
-        <header className="head">
-          <div className="head-inner max-w-6xl mx-auto ">
-            <h2 className="head-text text-3xl md:text-4xl">Jewellery</h2>
-            <div className="head-line "></div>
-          </div>
-        </header>
+    <div className='w-full py-6 '>
+        <PageHeader title="Jewellery" />
        <section className="bg-gray-100  w-[98%] mx-auto py-10  ">
         <div className="mx-auto  w-[95%] h-[80%]">
       
@@ -35,11 +31,11 @@ const Jewellry = () => {
           
           </div>
 
-          <div className="flex-center mt-10 text-center">
+          <div className="flex-center mt-10 text-center ">
            <Link  to='/products/jewellery'>
             <button 
             
-              className="btn"
+              className="btn "
               aria-label="View more products"
             >
               View More..

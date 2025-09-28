@@ -15,6 +15,8 @@ import PaymentSimulator from "./pages/PaymentSimulator.jsx";
 import PaymentCallback from "./pages/PaymentCallback.jsx";
 import PaymentFailure from "./pages/PaymentFailure.jsx";
 import PaymentTest from "./pages/PaymentTest.jsx";
+import EventsPage from "./pages/newsEvents/Events.jsx";
+import { MediaCoveragePage } from "./pages/newsEvents/MediaCoverage.jsx";
 
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
 const Login = lazy(() => import("./features/auth/Login.jsx"));
@@ -24,8 +26,9 @@ const Wishlist = lazy(() => import("./pages/Wishlist.jsx"));
 const Orders = lazy(() => import("./pages/Orders.jsx"));
 const Checkout = lazy(() => import("./pages/Checkout.jsx"));
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
-const Blogs = lazy(()=> import("./components/blogs/BlogList.jsx"))
-const BlogDetails = lazy(()=> import("./components/blogs/BlogDetails.jsx"))
+const Blogs = lazy(()=> import("./pages/blogs/BlogList.jsx"))
+const BlogDetails = lazy(()=> import("./pages/blogs/BlogDetails.jsx"))
+const EventDetails = lazy(()=> import("./pages/newsEvents/EventDetails.jsx"))
 const Contact = lazy(()=> import("./pages/Contact.jsx"))
 
 const App = () => {
@@ -47,10 +50,13 @@ const App = () => {
         
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
-          <Route path="about" element={<OurStory />} />
-          <Route path="blogs" element={<Blogs />} />
+          <Route path="/about" element={<OurStory />} />
+          <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/blog_details" element={<BlogDetails />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/event_details" element={<EventDetails />} />
+          <Route path="/media" element={<MediaCoveragePage  />} />
 
           {/* <Route path="jewellery" element={<jewellery />} /> */}
           <Route path="products/:category" element={<ProductPage />} />
