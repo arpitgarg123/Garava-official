@@ -55,7 +55,7 @@ const productSchema = new mongoose.Schema(
     // basic
     name: { type: String, required: true, trim: true },
     type: { type: String, enum: ["fragrance", "jewellery", "other"], default: "fragrance" },
-    slug: { type: String, required: true, unique: true, lowercase: true },
+    slug: { type: String, required: true, lowercase: true },
     category: { type: String, required: true },
     subcategory: { type: String },
     tags: [{ type: String }],

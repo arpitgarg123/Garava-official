@@ -1,6 +1,6 @@
-# PhonePe Payment Gateway Setup Guide
+# PhonePe Payment Gateway Setup Guide (v2 API)
 
-## 🏪 Getting PhonePe Test Credentials
+## 🏪 Getting PhonePe v2 API Credentials
 
 ### Step 1: Register with PhonePe Business
 1. Go to [PhonePe Business Portal](https://business.phonepe.com/)
@@ -8,37 +8,40 @@
 3. Complete business verification process
 4. Request API access for testing
 
-### Step 2: Get Test/Sandbox Credentials
-Once approved, you'll receive:
-- **Test Merchant ID** (format: `MERCHANTUAT` or similar)
-- **Test Salt Key** (32-character string)
-- **Salt Index** (usually `1`)
-- **Sandbox API URL**: `https://api-preprod.phonepe.com/apis/hermes`
+### Step 2: Get v2 API Credentials from Business Dashboard
+Once approved, access your PhonePe Business Dashboard:
+- **Client ID** (from Developer Settings → API Keys)
+- **Client Secret** (from Developer Settings → API Keys)
+- **Client Version** (usually `1.0`)
+- **Sandbox API URL**: `https://api-preprod.phonepe.com/apis/pg-sandbox`
 
 ### Step 3: Update Your .env File
-Replace the current test values with your real PhonePe test credentials:
+Replace the current values with your real PhonePe v2 credentials:
 
 ```bash
-# PhonePe Test Environment Credentials
-PHONEPE_MERCHANT_ID=your_actual_test_merchant_id_from_phonepe
-PHONEPE_SALT_KEY=your_actual_test_salt_key_from_phonepe
-PHONEPE_SALT_INDEX=1
-PHONEPE_API_URL=https://api-preprod.phonepe.com/apis/hermes
+# PhonePe v2 API Credentials (OAuth-based authentication)
+PHONEPE_CLIENT_ID=your_client_id_from_phonepe_business_dashboard
+PHONEPE_CLIENT_SECRET=your_client_secret_from_phonepe_business_dashboard
+PHONEPE_CLIENT_VERSION=1.0
+PHONEPE_API_URL=https://api-preprod.phonepe.com/apis/pg-sandbox
+PHONEPE_AUTH_URL=https://api-preprod.phonepe.com/apis/pg-sandbox
 PHONEPE_REDIRECT_URL=http://localhost:3000/payment/callback
 PHONEPE_CALLBACK_URL=http://localhost:8080/webhooks/payments/phonepe
 ```
 
 ## 🔧 Test vs Production Mode
 
-### Test Mode (Sandbox)
-- Use `https://api-preprod.phonepe.com/apis/hermes`
-- Test merchant ID from PhonePe dashboard
+### Test Mode (Sandbox) - v2 API
+- API URL: `https://api-preprod.phonepe.com/apis/pg-sandbox`
+- Auth URL: `https://api-preprod.phonepe.com/apis/pg-sandbox`
+- Test Client ID and Secret from PhonePe dashboard
 - No real money transactions
-- Full payment flow testing
+- Full payment flow testing with OAuth authentication
 
-### Production Mode
-- Use `https://api.phonepe.com/apis/hermes`
-- Production merchant ID from PhonePe dashboard
+### Production Mode - v2 API
+- API URL: `https://api.phonepe.com/apis/pg`
+- Auth URL: `https://api.phonepe.com/apis/identity-manager`
+- Production Client ID and Secret from PhonePe dashboard
 - Real money transactions
 - Live customer payments
 
@@ -50,12 +53,28 @@ If you need test credentials:
 3. **Provide**: Your business registration details
 4. **Timeline**: Usually 2-3 business days
 
-## 🚀 Once You Have Real Test Credentials
+## 🚀 Once You Have Real v2 API Credentials
 
-1. Replace the placeholder values in `.env`
+1. Replace the placeholder values in `.env` with your actual Client ID and Secret
 2. Restart your server
-3. PhonePe will work without the simulator
-4. Test full payment flows with test cards
-5. When ready for production, just change the API URL and use production credentials
+3. PhonePe v2 API will work with OAuth authentication
+4. Test full payment flows with the new checkout experience
+5. When ready for production, change API URLs and use production credentials
+
+## 🔄 Migration from v1 to v2 API
+
+### Key Changes:
+- **Authentication**: OAuth 2.0 with Client ID/Secret instead of Merchant ID/Salt Key
+- **API Endpoints**: New v2 endpoints (`/checkout/v2/pay`, `/checkout/v2/order/{id}/status`)
+- **Request Format**: JSON payloads instead of base64 encoded payloads
+- **Authorization**: Bearer tokens instead of custom checksum headers
+- **Webhook Verification**: Simplified payload validation
+
+### Benefits of v2 API:
+- Better security with OAuth 2.0
+- Improved checkout experience
+- More reliable webhook handling
+- Better error responses
+- Token-based authentication with automatic refresh
 
 Your current setup will automatically detect real credentials and disable the simulator!

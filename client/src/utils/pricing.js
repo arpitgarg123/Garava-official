@@ -26,26 +26,27 @@ export const calculateDeliveryCharge = (subtotalRupees) => {
  */
 export const calculateCODCharge = (paymentMethod) => {
   return paymentMethod === 'cod' ? CHARGES.COD_HANDLING_FEE : 0;
-};
+}; 
 
 /**
  * Calculate complete order pricing breakdown
- * @param {number} subtotalRupees - Items subtotal in rupees
+ * @param {number} subtotalPaise - Items subtotal in paise
  * @param {string} paymentMethod - Payment method ('cod', 'phonepe', etc.)
- * @returns {Object} - Complete pricing breakdown
+ * @returns {Object} - Complete pricing breakdown in paise
  */
-export const calculateOrderPricing = (subtotalRupees, paymentMethod = 'phonepe') => {
+export const calculateOrderPricing = (subtotalPaise, paymentMethod = 'phonepe') => {
+  const subtotalRupees = subtotalPaise / 100;
   const deliveryCharge = calculateDeliveryCharge(subtotalRupees);
   const codCharge = calculateCODCharge(paymentMethod);
   const taxTotal = 0; // Add tax calculation if needed
   const discountTotal = 0; // Add discount calculation if needed
   
-  const grandTotal = subtotalRupees + deliveryCharge + codCharge + taxTotal - discountTotal;
+  const grandTotal = subtotalPaise + (deliveryCharge * 100) + (codCharge * 100) + taxTotal - discountTotal;
   
   return {
-    subtotal: subtotalRupees,
-    deliveryCharge,
-    codCharge,
+    subtotal: subtotalPaise, // Return in paise for consistency
+    deliveryCharge: deliveryCharge * 100, // Convert to paise
+    codCharge: codCharge * 100, // Convert to paise
     taxTotal,
     discountTotal,
     grandTotal,
@@ -53,13 +54,28 @@ export const calculateOrderPricing = (subtotalRupees, paymentMethod = 'phonepe')
       isFreeDelivery: deliveryCharge === 0,
       freeDeliveryThreshold: CHARGES.FREE_DELIVERY_THRESHOLD,
       hasCODCharge: codCharge > 0,
-      amountNeededForFreeDelivery: Math.max(0, CHARGES.FREE_DELIVERY_THRESHOLD - subtotalRupees),
+      amountNeededForFreeDelivery: Math.max(0, (CHARGES.FREE_DELIVERY_THRESHOLD * 100) - subtotalPaise),
     }
   };
 };
 
 /**
- * Format currency for display
+ * Format currency for display from paise
+ * @param {number} amountPaise - Amount in paise
+ * @returns {string} - Formatted currency string
+ */
+export const formatCurrencyFromPaise = (amountPaise) => {
+  const rupees = amountPaise / 100;
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(rupees);
+};
+
+/**
+ * Format currency for display from rupees
  * @param {number} amount - Amount in rupees
  * @returns {string} - Formatted currency string
  */
@@ -74,10 +90,11 @@ export const formatCurrency = (amount) => {
 
 /**
  * Get delivery message for user
- * @param {number} subtotalRupees - Current cart subtotal
+ * @param {number} subtotalPaise - Current cart subtotal in paise
  * @returns {string} - Message about delivery charges
  */
-export const getDeliveryMessage = (subtotalRupees) => {
+export const getDeliveryMessage = (subtotalPaise) => {
+  const subtotalRupees = subtotalPaise / 100;
   const amountNeeded = CHARGES.FREE_DELIVERY_THRESHOLD - subtotalRupees;
   
   if (subtotalRupees >= CHARGES.FREE_DELIVERY_THRESHOLD) {
@@ -93,5 +110,6 @@ export default {
   calculateCODCharge,
   calculateOrderPricing,
   formatCurrency,
+  formatCurrencyFromPaise,
   getDeliveryMessage,
 };

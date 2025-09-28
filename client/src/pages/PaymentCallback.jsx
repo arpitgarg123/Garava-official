@@ -13,10 +13,14 @@ const PaymentCallback = () => {
   const [orderStatus, setOrderStatus] = useState(null);
   const [error, setError] = useState(null);
   const [orderDetails, setOrderDetails] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
 
   const orderId = searchParams.get('orderId');
   const txnId = searchParams.get('txn');
   const status = searchParams.get('status'); // for direct success/failure calls
+
+  const MAX_RETRIES = 6; // Reduced max retries to avoid rate limiting
+  const RETRY_INTERVALS = [2, 4, 6, 10, 15, 20]; // Progressive delay in seconds
 
   useEffect(() => {
     if (!orderId) {
@@ -28,32 +32,86 @@ const PaymentCallback = () => {
     const checkStatus = async () => {
       try {
         const response = await checkPaymentStatus(orderId);
-        setOrderDetails(response.order);
+
         
-        if (response.success && response.paymentStatus === 'completed') {
+        // Response is already the data object from the API
+        const orderData = response.order;
+        
+        setOrderDetails(orderData);
+        
+        // Check if payment is completed - Multiple success conditions
+        const isPaymentCompleted = 
+          // API indicates completed payment
+          response.paymentStatus === 'completed' ||
+          // Payment object shows paid status
+          orderData?.payment?.status === 'paid' || 
+          // Order status shows processing (means payment successful)
+          orderData?.status === 'processing' ||
+          // Order status is any post-payment status
+          ['paid', 'processing', 'partially_shipped', 'shipped', 'delivered'].includes(orderData?.status);
+        
+        if (isPaymentCompleted) {
           setOrderStatus('success');
           // Clear the cart after successful payment
           dispatch(clearCart());
-        } else if (response.order?.payment?.status === 'failed') {
+          setLoading(false);
+          return;
+        } 
+        
+        // Check for explicit failure
+        if (orderData?.payment?.status === 'failed' || 
+            orderData?.status === 'failed' ||
+            response.paymentStatus === 'failed') {
           setOrderStatus('failed');
-        } else {
-          // Payment might still be processing, check again in a moment
+          setLoading(false);
+          return;
+        }
+        
+        // Payment still pending - check if we should retry
+        if ((orderData?.status === 'pending_payment' || 
+             orderData?.payment?.status === 'pending' ||
+             response.paymentStatus === 'pending') && 
+            retryCount < MAX_RETRIES) {
+          setRetryCount(prev => prev + 1);
           setTimeout(() => {
             checkStatus();
-          }, 2000);
+          }, RETRY_INTERVALS[retryCount] * 1000); // Use progressive delays
+          return;
         }
+        
+        // Max retries reached or unknown state
+        if (retryCount >= MAX_RETRIES) {
+          setError('Payment verification timed out. Please check your order status in your account or contact support.');
+        } else {
+          setOrderStatus('unknown');
+        }
+        setLoading(false);
+        
       } catch (error) {
         console.error('Payment status check failed:', error);
         
-        // Handle network/server errors gracefully
-        if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
+        // Retry on network errors if retries available
+        if (retryCount < MAX_RETRIES && 
+            (error.code === 'NETWORK_ERROR' || 
+             error.message.includes('Network Error') ||
+             error.response?.status >= 500)) {
+          setRetryCount(prev => prev + 1);
+          setTimeout(() => {
+            checkStatus();
+          }, RETRY_INTERVALS[retryCount] * 1000);
+          return;
+        }
+        
+        // Handle permanent errors
+        if (error.response?.status === 429) {
+          setError('Too many requests. Please wait a moment and refresh the page.');
+        } else if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
           setError('Unable to connect to server. Please check your internet connection and try again.');
         } else if (error.response?.status === 500) {
           setError('Server error occurred. Please try again later.');
         } else {
           setError('Failed to verify payment status. Please contact support if this persists.');
         }
-      } finally {
         setLoading(false);
       }
     };
@@ -167,6 +225,63 @@ const PaymentCallback = () => {
               className="w-full bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 font-medium"
             >
               Continue Shopping
+            </button>
+          </div>
+
+          <div className="mt-6 text-sm text-gray-500">
+            <p>Need help? Contact our support team</p>
+            <p>We're here to assist you with your order</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Handle unknown payment status
+  if (orderStatus === 'unknown') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center max-w-md mx-auto p-6">
+          <ClockIcon className="mx-auto h-16 w-16 text-yellow-500" />
+          <h1 className="mt-4 text-2xl font-bold text-gray-900">
+            Payment Status Unknown
+          </h1>
+          <p className="mt-2 text-gray-600">
+            We're having trouble verifying your payment status. Please check your order details below.
+          </p>
+          
+          <div className="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+            <p className="text-sm text-yellow-800 font-medium">
+              Your payment may have been processed. Please check your order status or contact support.
+            </p>
+          </div>
+
+          {orderId && (
+            <div className="mt-3 p-3 bg-gray-100 rounded-lg">
+              <p className="text-sm text-gray-600">
+                Order ID: <span className="font-mono font-semibold">{orderId}</span>
+              </p>
+            </div>
+          )}
+
+          <div className="mt-8 space-y-3">
+            <button
+              onClick={() => navigate('/orders')}
+              className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 font-medium"
+            >
+              Check Order Status
+            </button>
+            <button
+              onClick={() => window.location.reload()}
+              className="w-full bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 font-medium"
+            >
+              Try Again
+            </button>
+            <button
+              onClick={() => navigate('/')}
+              className="w-full bg-gray-200 text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-300 font-medium"
+            >
+              Back to Home
             </button>
           </div>
 

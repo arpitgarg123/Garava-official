@@ -7,11 +7,15 @@ function formatCurrency(paise) {
 }
 function getStatusColor(status) {
   const colors = {
-    pending: "bg-yellow-100 text-yellow-800",
-    processing: "bg-blue-100 text-blue-800",
+    pending_payment: "bg-yellow-100 text-yellow-800",
+    paid: "bg-green-100 text-green-800",
+    processing: "bg-purple-100 text-purple-800",
+    partially_shipped: "bg-blue-100 text-blue-800",
     shipped: "bg-indigo-100 text-indigo-800",
     delivered: "bg-green-100 text-green-800",
     cancelled: "bg-red-100 text-red-800",
+    refunded: "bg-orange-100 text-orange-800",
+    failed: "bg-red-100 text-red-800",
   };
   return colors[status] || "bg-gray-100 text-gray-800";
 }
@@ -47,11 +51,15 @@ export default function Orders({ orders = [], onStatusChange = () => {} }) {
                   <td className="px-6 py-4 text-sm text-gray-500">{formatCurrency(order.grandTotalPaise)}</td>
                   <td className="px-6 py-4">
                     <select value={order.status} onChange={(e) => onStatusChange(order._id, e.target.value)} className={`text-xs font-semibold rounded-full px-2 py-1 border-none ${getStatusColor(order.status)}`}>
-                      <option value="pending">Pending</option>
+                      <option value="pending_payment">Pending Payment</option>
+                      <option value="paid">Payment Completed</option>
                       <option value="processing">Processing</option>
+                      <option value="partially_shipped">Partially Shipped</option>
                       <option value="shipped">Shipped</option>
                       <option value="delivered">Delivered</option>
                       <option value="cancelled">Cancelled</option>
+                      <option value="refunded">Refunded</option>
+                      <option value="failed">Failed</option>
                     </select>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">{new Date(order.createdAt).toLocaleDateString()}</td>
