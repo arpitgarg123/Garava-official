@@ -148,7 +148,28 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
     await session.commitTransaction();
     session.endSession();
 
-    return { order: createdOrder, gatewayOrder: null };
+    // Convert all pricing fields to rupees before returning
+    const mapOrderToRupees = (order) => {
+      if (!order) return order;
+      return {
+        ...order,
+        subtotal: toRupees(order.subtotal),
+        taxTotal: toRupees(order.taxTotal),
+        shippingTotal: toRupees(order.shippingTotal),
+        codCharge: toRupees(order.codCharge),
+        discountTotal: toRupees(order.discountTotal),
+        grandTotal: toRupees(order.grandTotal),
+        items: order.items?.map(item => ({
+          ...item,
+          unitPrice: toRupees(item.unitPrice),
+          mrp: toRupees(item.mrp),
+          taxAmount: toRupees(item.taxAmount),
+          discountAmount: toRupees(item.discountAmount),
+          lineTotal: toRupees(item.lineTotal),
+        })) || [],
+      };
+    };
+    return { order: mapOrderToRupees(createdOrder), gatewayOrder: null };
     
   } catch (err) {
     // Only abort transaction if it hasn't been committed yet
@@ -219,9 +240,29 @@ export const getUserOrdersService = async (userId, page = 1, limit = 10) => {
     Order.countDocuments({ user: userId })
   ]);
 
-  // mask sensitive fields if any
+  // Convert all pricing fields to rupees for each order
+  const mapOrderToRupees = (order) => {
+    if (!order) return order;
+    return {
+      ...order,
+      subtotal: toRupees(order.subtotal),
+      taxTotal: toRupees(order.taxTotal),
+      shippingTotal: toRupees(order.shippingTotal),
+      codCharge: toRupees(order.codCharge),
+      discountTotal: toRupees(order.discountTotal),
+      grandTotal: toRupees(order.grandTotal),
+      items: order.items?.map(item => ({
+        ...item,
+        unitPrice: toRupees(item.unitPrice),
+        mrp: toRupees(item.mrp),
+        taxAmount: toRupees(item.taxAmount),
+        discountAmount: toRupees(item.discountAmount),
+        lineTotal: toRupees(item.lineTotal),
+      })) || [],
+    };
+  };
   return {
-    orders,
+    orders: orders.map(mapOrderToRupees),
     pagination: { total, page, limit, totalPages: Math.ceil(total / limit) }
   };
 };
@@ -230,5 +271,26 @@ export const getOrderByIdService = async (userId, orderId) => {
   const order = await Order.findById(orderId).lean();
   if (!order) throw new ApiError(404, "Order not found");
   if (String(order.user) !== String(userId)) throw new ApiError(403, "Forbidden");
-  return order;
+  // Convert all pricing fields to rupees before returning
+  const mapOrderToRupees = (order) => {
+    if (!order) return order;
+    return {
+      ...order,
+      subtotal: toRupees(order.subtotal),
+      taxTotal: toRupees(order.taxTotal),
+      shippingTotal: toRupees(order.shippingTotal),
+      codCharge: toRupees(order.codCharge),
+      discountTotal: toRupees(order.discountTotal),
+      grandTotal: toRupees(order.grandTotal),
+      items: order.items?.map(item => ({
+        ...item,
+        unitPrice: toRupees(item.unitPrice),
+        mrp: toRupees(item.mrp),
+        taxAmount: toRupees(item.taxAmount),
+        discountAmount: toRupees(item.discountAmount),
+        lineTotal: toRupees(item.lineTotal),
+      })) || [],
+    };
+  };
+  return mapOrderToRupees(order);
 };
