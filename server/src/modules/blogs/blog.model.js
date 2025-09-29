@@ -1,52 +1,50 @@
-const BlogStatus = ["draft", "published"];
+import mongoose from "mongoose";
 
-const commentSchema = new mongoose.Schema(
-{
-userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-content: { type: String, required: true, trim: true, maxlength: 2000 },
-createdAt: { type: Date, default: Date.now },
-},
-{ _id: true }
+const imageSchema = new mongoose.Schema(
+  {
+    url: String,
+    fileId: String,
+    alt: String,
+  },
+  { _id: false }
 );
 
 const blogSchema = new mongoose.Schema(
   {
-title: { type: String, required: true, trim: true, maxlength: 160 },
-slug: { type: String, required: true, unique: true, lowercase: true, index: true },
+    // core
+    title: { type: String, required: true, trim: true },
+    slug: { type: String, required: true, unique: true, lowercase: true, index: true },
 
+    // content
+    excerpt: { type: String },            // short summary for list/SEO
+    content: { type: String, required: true }, // HTML or Markdown (your choice)
+    coverImage: imageSchema,
 
-category: { type: String, required: true, trim: true, maxlength: 80 },
-authorName: { type: String, required: true, trim: true, maxlength: 80 },
+    // taxonomy
+    tags: [{ type: String, index: true }],
+    category: { type: String, index: true },
 
+    // state
+    status: { type: String, enum: ["draft", "published", "archived"], default: "draft", index: true },
+    publishAt: { type: Date, default: null, index: true }, // schedule: visible to public only after this timestamp
+    isActive: { type: Boolean, default: true },
 
-excerpt: { type: String, trim: true, maxlength: 300 },
-contentHtml: { type: String, required: true },
-coverImage: { type: String, trim: true },
-tags: { type: [String], default: [], index: true },
+    // SEO
+    metaTitle: { type: String },
+    metaDescription: { type: String },
 
+    // misc
+    readingTime: { type: Number, default: 0 }, // minutes (auto compute)
+    views: { type: Number, default: 0 },
 
-status: { type: String, enum: BlogStatus, default: "draft", index: true },
-
-
-publishedAt: { type: Date, index: true },
-isDeleted: { type: Boolean, default: false, index: true },
-
-
-metaTitle: { type: String, trim: true, maxlength: 160 },
-metaDescription: { type: String, trim: true, maxlength: 200 },
-
-
-// Simplified comments: just userId, content, createdAt
-comments: { type: [commentSchema], default: [] },
-
-
-createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-},
-{ timestamps: true }
+    // audit
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
+    updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  },
+  { timestamps: true }
 );
 
-blogSchema.index({ title: "text", excerpt: "text", contentHtml: "text", tags: 1 });
+// text index for search
+blogSchema.index({ title: "text", content: "text", tags: "text" });
 
-export const Blog = mongoose.model("Blog", blogSchema);
-
+export default mongoose.model("Blog", blogSchema);

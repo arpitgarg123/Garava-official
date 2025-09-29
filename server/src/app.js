@@ -25,6 +25,8 @@ import wishlistRouter from "./modules/wishlist/wishlist.router.js";
 import reviewRouter from "./modules/review/review.router.js";
 import appointmentRouter from "./modules/appointment/appointment.router.js";
 import newsletterRouter from "./modules/newsletter/newsletter.router.js";
+import blogRouter from "./modules/blogs/blog.router.js";
+import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
 
   // routers
   const app = express();
@@ -126,7 +128,9 @@ import newsletterRouter from "./modules/newsletter/newsletter.router.js";
   app.use("/api/wishlist", wishlistRouter);
   app.use("/api/reviews", reviewRouter);
   app.use("/api/appointment", appointmentRouter);
+  app.use("/api/blog", blogRouter);
   app.use("/api/newsletter", newsletterRouter);
+  app.use("/api/admin/blog", blogAdminRouter);
 
   // global error handler
   app.use(errorHandler);

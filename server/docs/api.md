@@ -750,3 +750,108 @@
 ### get subscriber list (Admin)
 **Endpoint:** `get /api/newsletter/admin`  
 **Description:** this route unsubscribe the user to the newsletter
+
+# # blog Feature (Admin)
+
+### create-blog
+**Endpoint:** `post /api/admin/blog/`  
+**Description:** this route create the blog 
+**response Body:**
+```json
+{
+    "success": true,
+    "post": {
+        "title": "How to Layer Fragrances",
+        "slug": "how-to-layer-fragrances",
+        "content": "<p>Fragrance layering is an <strong>art</strong> of mixing perfumes.</p>",
+        "coverImage": {
+            "url": "https://ik.imagekit.io/arpit321/blogs/cover/blog_1759147235648_WhatsApp_Image_2025-09-27_at_00.59.39_412b2595__G3209gjfW.jpg",
+            "fileId": "68da74e55c7cd75eb8ace86e",
+            "alt": "How to Layer Fragrances"
+        },
+        "tags": [
+            "perfume",
+            "layering",
+            "guide"
+        ],
+        "status": "published",
+        "publishAt": null,
+        "isActive": true,
+        "metaTitle": "Fragrance Layering Guide",
+        "metaDescription": "Learn how to combine perfumes for unique scents.",
+        "readingTime": 1,
+        "views": 0,
+        "author": "68c14a5392547c81864aed39",
+        "updatedBy": "68c14a5392547c81864aed39",
+        "_id": "68da74e66adae6c05109188f",
+        "createdAt": "2025-09-29T12:00:38.524Z",
+        "updatedAt": "2025-09-29T12:00:38.524Z",
+        "__v": 0
+    }
+}
+```
+
+### update-blog
+**Endpoint:** `post /api/admin/blog/:id`   
+**Description:** this route update the blog 
+**response Body:**
+```json
+{
+    "success": true,
+    "post": {
+        "_id": "68da74e66adae6c05109188f",
+        "title": "How to Layer Fragrances new",
+        "slug": "how-to-layer-fragrances",
+        "content": "<p>Fragrance layering is an <strong>art</strong> of mixing perfumes.</p>",
+        "coverImage": {
+            "url": "https://ik.imagekit.io/arpit321/blogs/cover/blog_1759147235648_WhatsApp_Image_2025-09-27_at_00.59.39_412b2595__G3209gjfW.jpg",
+            "fileId": "68da74e55c7cd75eb8ace86e",
+            "alt": "How to Layer Fragrances"
+        },
+        "tags": [
+            "perfume",
+            "layering",
+            "guide"
+        ],
+        "status": "published",
+        "publishAt": null,
+        "isActive": true,
+        "metaTitle": "Fragrance Layering Guide",
+        "metaDescription": "Learn how to combine perfumes for unique scents.",
+        "readingTime": 1,
+        "views": 0,
+        "author": "68c14a5392547c81864aed39",
+        "updatedBy": "68c14a5392547c81864aed39",
+        "createdAt": "2025-09-29T12:00:38.524Z",
+        "updatedAt": "2025-09-29T12:04:27.608Z",
+        "__v": 0
+    }
+}
+```
+
+### get-blog
+**Endpoint:** `get /api/admin/blog/`   
+**Description:** this route gets all the blog 
+
+### delete-blog
+**Endpoint:** `delete /api/admin/blog/:id`   
+**Description:** this route delete all the blog 
+
+### update-status-blog
+**Endpoint:** `patch /api/admin/blog/:id/status`   
+**Description:** this route updates the status all the blog 
+**resquest Body:**
+```json
+{
+    "status" : "draft"
+}
+```
+
+# # blogs Features (User)
+
+### get-blog
+**Endpoint:** `get /api/blog/`   
+**Description:** this route gets all the blog on the user side
+### get-blog-by-slug
+**Endpoint:** `get /api/blog/:id`   
+**Description:** this route get the blog by slug on the user side
