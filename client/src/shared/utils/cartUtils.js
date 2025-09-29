@@ -91,19 +91,19 @@ export const createCartPayload = (product, quantity = 1) => {
 
 /**
  * Format price for display
- * @param {number} price - Price in paise (or smallest currency unit)
+ * @param {number} price - Price in rupees (already converted by backend)
  * @param {string} currency - Currency symbol (default: ₹)
  * @returns {string} - Formatted price string
  */
 export const formatPrice = (price, currency = '₹') => {
   if (!price || isNaN(price)) return `${currency}0.00`;
-  return `${currency}${(price / 100).toFixed(2)}`;
+  return `${currency}${Number(price).toFixed(2)}`;
 };
 
 /**
  * Calculate cart total from items
  * @param {Array} items - Cart items array
- * @returns {number} - Total amount in paise
+ * @returns {number} - Total amount in rupees
  */
 export const calculateCartTotal = (items) => {
   if (!Array.isArray(items)) return 0;

@@ -342,7 +342,7 @@ const ProfilePage = () => {
                       </div>
                       <div className="text-right">
                         <p className="font-medium">
-                          ₹{((order.grandTotal || 0) / 100).toLocaleString('en-IN')}
+                          ₹{(order.grandTotal || 0).toLocaleString('en-IN')}
                         </p>
                         <span className={`inline-block px-2 py-1 rounded-full text-xs ${
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :

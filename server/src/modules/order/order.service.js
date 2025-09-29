@@ -8,7 +8,7 @@ import Address from "../address/address.model.js";
 import { generateOrderNumber, toPaise } from "./order.utils.js";
 import Idempotency from "./idempotency.model.js"; // optional
 import { createPhonePeOrder } from "../payment.adapters/phonepe.adapter.js";
-import { calculateOrderPricing, toRupees } from "./order.pricing.js";
+import { calculateOrderPricingRupees } from "./order.pricing.js";
 
 
 /**
@@ -79,9 +79,9 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
       );
       if (!dec) throw new ApiError(400, `Insufficient stock for ${variant.sku}`);
 
-      // convert price to paise
-      const unitPricePaise = toPaise(variant.price);
-      const lineTotal = unitPricePaise * it.quantity;
+      // use price directly in rupees (no conversion)
+      const unitPriceRupees = Number(variant.price);
+      const lineTotal = unitPriceRupees * it.quantity;
       subtotal += lineTotal;
 
       lineItems.push({
@@ -90,22 +90,22 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
         variantId: variant._id,
         variantSnapshot: { sku: variant.sku, sizeLabel: variant.sizeLabel, images: variant.images || [] },
         quantity: it.quantity,
-        unitPrice: unitPricePaise,
-        mrp: toPaise(variant.mrp || 0),
+        unitPrice: unitPriceRupees,
+        mrp: Number(variant.mrp || 0),
         taxAmount: 0,
         discountAmount: 0,
         lineTotal: lineTotal,
       });
     }
 
-    // compute totals using new pricing system
-    const pricing = calculateOrderPricing(subtotal, paymentMethod);
+    // compute totals using new pricing system (rupees)
+    const pricing = calculateOrderPricingRupees(subtotal, paymentMethod);
     
-    const shippingTotalPaise = pricing.deliveryCharge;
-    const codChargePaise = pricing.codCharge;
-    const taxTotalPaise = pricing.taxTotal;
-    const discountTotalPaise = pricing.discountTotal;  
-    const grandTotalPaise = pricing.grandTotal;
+    const shippingTotalRupees = pricing.deliveryCharge;
+    const codChargeRupees = pricing.codCharge;
+    const taxTotalRupees = pricing.taxTotal;
+    const discountTotalRupees = pricing.discountTotal;  
+    const grandTotalRupees = pricing.grandTotal;
 
     const orderNumber = await generateOrderNumber();
     const createdArr = await Order.create([{
@@ -114,11 +114,11 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
       userSnapshot: { name: user.name, email: user.email, phone: user.phone },
       items: lineItems,
       subtotal: subtotal,
-      taxTotal: taxTotalPaise,
-      shippingTotal: shippingTotalPaise,
-      codCharge: codChargePaise,
-      discountTotal: discountTotalPaise,
-      grandTotal: grandTotalPaise,
+      taxTotal: taxTotalRupees,
+      shippingTotal: shippingTotalRupees,
+      codCharge: codChargeRupees,
+      discountTotal: discountTotalRupees,
+      grandTotal: grandTotalRupees,
       currency: "INR",
       shippingAddress: address._id,
       shippingAddressSnapshot: {
@@ -148,28 +148,16 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
     await session.commitTransaction();
     session.endSession();
 
-    // Convert all pricing fields to rupees before returning
-    const mapOrderToRupees = (order) => {
+    // Return order as-is since everything is already in rupees
+    const mapOrderForResponse = (order) => {
       if (!order) return order;
-      return {
-        ...order,
-        subtotal: toRupees(order.subtotal),
-        taxTotal: toRupees(order.taxTotal),
-        shippingTotal: toRupees(order.shippingTotal),
-        codCharge: toRupees(order.codCharge),
-        discountTotal: toRupees(order.discountTotal),
-        grandTotal: toRupees(order.grandTotal),
-        items: order.items?.map(item => ({
-          ...item,
-          unitPrice: toRupees(item.unitPrice),
-          mrp: toRupees(item.mrp),
-          taxAmount: toRupees(item.taxAmount),
-          discountAmount: toRupees(item.discountAmount),
-          lineTotal: toRupees(item.lineTotal),
-        })) || [],
-      };
+      
+      // Convert the Mongoose document to a plain object to avoid circular references
+      const plainOrder = order.toObject ? order.toObject() : order;
+      
+      return plainOrder;
     };
-    return { order: mapOrderToRupees(createdOrder), gatewayOrder: null };
+    return { order: mapOrderForResponse(createdOrder), gatewayOrder: null };
     
   } catch (err) {
     // Only abort transaction if it hasn't been committed yet
@@ -190,17 +178,21 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
 // Helper function to handle PhonePe order creation
 export const initializePhonePePayment = async (order, userPhone) => {
   try {
+    // Convert order amounts from rupees to paise for PhonePe (since order is now stored in rupees)
+    const amountPaise = toPaise(order.grandTotal);
+      
     const phonepeOrder = await createPhonePeOrder({
-      amountPaise: order.grandTotal,
+      amountPaise: amountPaise,
       orderId: order._id.toString(),
       userId: order.user.toString(),
       userPhone: userPhone || "9999999999"
     });
     
-    // Save gateway order id on order
-    order.payment.gatewayOrderId = phonepeOrder.gatewayOrderId;
-    order.payment.gatewayTransactionId = phonepeOrder.transactionId;
-    await order.save();
+    // Update the order in database with gateway details (convert order._id back to ObjectId if needed)
+    await Order.findByIdAndUpdate(order._id, {
+      'payment.gatewayOrderId': phonepeOrder.gatewayOrderId,
+      'payment.gatewayTransactionId': phonepeOrder.transactionId
+    });
     
     return {
       id: phonepeOrder.gatewayOrderId,
@@ -217,9 +209,10 @@ export const initializePhonePePayment = async (order, userPhone) => {
                          phonepeError.message.includes('KEY_NOT_CONFIGURED');
     
     // Mark payment as failed
-    order.payment.status = "failed";
-    order.status = "failed";
-    await order.save();
+    await Order.findByIdAndUpdate(order._id, {
+      'payment.status': "failed",
+      'status': "failed"
+    });
     
     if (isConfigError) {
       throw new ApiError(500, "PhonePe payment gateway is not properly configured. Please contact support or use Cash on Delivery.");
@@ -240,29 +233,9 @@ export const getUserOrdersService = async (userId, page = 1, limit = 10) => {
     Order.countDocuments({ user: userId })
   ]);
 
-  // Convert all pricing fields to rupees for each order
-  const mapOrderToRupees = (order) => {
-    if (!order) return order;
-    return {
-      ...order,
-      subtotal: toRupees(order.subtotal),
-      taxTotal: toRupees(order.taxTotal),
-      shippingTotal: toRupees(order.shippingTotal),
-      codCharge: toRupees(order.codCharge),
-      discountTotal: toRupees(order.discountTotal),
-      grandTotal: toRupees(order.grandTotal),
-      items: order.items?.map(item => ({
-        ...item,
-        unitPrice: toRupees(item.unitPrice),
-        mrp: toRupees(item.mrp),
-        taxAmount: toRupees(item.taxAmount),
-        discountAmount: toRupees(item.discountAmount),
-        lineTotal: toRupees(item.lineTotal),
-      })) || [],
-    };
-  };
+  // Return orders as-is since everything is already in rupees
   return {
-    orders: orders.map(mapOrderToRupees),
+    orders: orders,
     pagination: { total, page, limit, totalPages: Math.ceil(total / limit) }
   };
 };
@@ -271,26 +244,6 @@ export const getOrderByIdService = async (userId, orderId) => {
   const order = await Order.findById(orderId).lean();
   if (!order) throw new ApiError(404, "Order not found");
   if (String(order.user) !== String(userId)) throw new ApiError(403, "Forbidden");
-  // Convert all pricing fields to rupees before returning
-  const mapOrderToRupees = (order) => {
-    if (!order) return order;
-    return {
-      ...order,
-      subtotal: toRupees(order.subtotal),
-      taxTotal: toRupees(order.taxTotal),
-      shippingTotal: toRupees(order.shippingTotal),
-      codCharge: toRupees(order.codCharge),
-      discountTotal: toRupees(order.discountTotal),
-      grandTotal: toRupees(order.grandTotal),
-      items: order.items?.map(item => ({
-        ...item,
-        unitPrice: toRupees(item.unitPrice),
-        mrp: toRupees(item.mrp),
-        taxAmount: toRupees(item.taxAmount),
-        discountAmount: toRupees(item.discountAmount),
-        lineTotal: toRupees(item.lineTotal),
-      })) || [],
-    };
-  };
-  return mapOrderToRupees(order);
+  // Return order as-is since everything is already in rupees
+  return order;
 };

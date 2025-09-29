@@ -18,3 +18,4 @@ admin password change
 admin dashboardd
 continue google 
 chat bot 
+pricing issue

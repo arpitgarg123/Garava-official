@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import ProductDetails from "../../pages/products/ProductDetails";
 // import { formatCurrency as _formatCurrency } from "../utils/format"; // small util (optional)
 
-function formatCurrency(paise) {
-  return `₹${(paise / 100).toLocaleString("en-IN")}`;
+function formatCurrency(rupees) {
+  return `₹${Number(rupees).toLocaleString("en-IN")}`;
 }
 function getStatusColor(status) {
   const colors = {

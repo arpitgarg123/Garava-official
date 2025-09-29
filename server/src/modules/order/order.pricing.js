@@ -3,11 +3,65 @@
  * Handles calculation of delivery charges, COD charges, and other fees
  */
 
-// Constants for charges (in paise for precision)
+// Constants for charges (in rupees for consistency)
+export const CHARGES_RUPEES = {
+  COD_HANDLING_FEE: 40,       // Rs 40
+  DELIVERY_CHARGE: 70,        // Rs 70
+  FREE_DELIVERY_THRESHOLD: 500, // Rs 500
+};
+
+// Constants for charges (in paise for precision) - DEPRECATED but kept for compatibility
 export const CHARGES = {
   COD_HANDLING_FEE: 4000,      // Rs 40 in paise
   DELIVERY_CHARGE: 7000,       // Rs 70 in paise
   FREE_DELIVERY_THRESHOLD: 50000, // Rs 500 in paise
+};
+
+/**
+ * Calculate delivery charges based on subtotal (rupees)
+ * @param {number} subtotalRupees - Subtotal in rupees
+ * @returns {number} - Delivery charge in rupees
+ */
+export const calculateDeliveryChargeRupees = (subtotalRupees) => {
+  return subtotalRupees >= CHARGES_RUPEES.FREE_DELIVERY_THRESHOLD ? 0 : CHARGES_RUPEES.DELIVERY_CHARGE;
+};
+
+/**
+ * Calculate COD handling charge (rupees)
+ * @param {string} paymentMethod - Payment method ('cod' or other)
+ * @returns {number} - COD charge in rupees
+ */
+export const calculateCODChargeRupees = (paymentMethod) => {
+  return paymentMethod === 'cod' ? CHARGES_RUPEES.COD_HANDLING_FEE : 0;
+};
+
+/**
+ * Calculate complete order pricing breakdown (rupees)
+ * @param {number} subtotalRupees - Items subtotal in rupees
+ * @param {string} paymentMethod - Payment method ('cod', 'phonepe', etc.)
+ * @returns {Object} - Complete pricing breakdown in rupees
+ */
+export const calculateOrderPricingRupees = (subtotalRupees, paymentMethod) => {
+  const deliveryCharge = calculateDeliveryChargeRupees(subtotalRupees);
+  const codCharge = calculateCODChargeRupees(paymentMethod);
+  const taxTotal = 0; // Add tax calculation if needed
+  const discountTotal = 0; // Add discount calculation if needed
+  
+  const grandTotal = subtotalRupees + deliveryCharge + codCharge + taxTotal - discountTotal;
+  
+  return {
+    subtotal: subtotalRupees,
+    deliveryCharge,
+    codCharge,
+    taxTotal,
+    discountTotal,
+    grandTotal,
+    breakdown: {
+      isFreeDelivery: deliveryCharge === 0,
+      freeDeliveryThreshold: CHARGES_RUPEES.FREE_DELIVERY_THRESHOLD,
+      hasCODCharge: codCharge > 0,
+    }
+  };
 };
 
 /**

@@ -15,7 +15,7 @@ import { selectAddressById } from '../features/address/selectors';
 import { initiatePayment, clearPaymentError, clearCurrentOrder } from '../features/order/slice';
 import { clearCart } from '../features/cart/slice';
 import AddressSelector from '../components/AddressSelector';
-import formatCurrency from '../utils/pricing';
+import formatCurrency, { CHARGES } from '../utils/pricing';
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -93,6 +93,13 @@ const Checkout = () => {
       dispatch(clearCurrentOrder());
     }
   }, [location.search, dispatch, navigate]);
+
+  // Clear current order when payment method changes to update pricing display
+  useEffect(() => {
+    if (currentOrder) {
+      dispatch(clearCurrentOrder());
+    }
+  }, [paymentMethod]);
 
   // Clear errors when component unmounts
   useEffect(() => {
@@ -272,32 +279,63 @@ const Checkout = () => {
 
             {/* Totals */}
             <div className="border-t pt-4 space-y-2">
-              <>
-                <div className="flex justify-between text-sm">
-                  <span>Subtotal</span>
-                  <span>{formatCurrency(currentOrder?.subtotal ?? cartTotal)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Delivery</span>
-                  <span>{currentOrder?.shippingTotal === 0 ? "Free" : formatCurrency(currentOrder?.shippingTotal ?? 0)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>COD Charge</span>
-                  <span>{currentOrder?.codCharge > 0 ? formatCurrency(currentOrder.codCharge) : "—"}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Discount</span>
-                  <span>{currentOrder?.discountTotal > 0 ? `- ${formatCurrency(currentOrder.discountTotal)}` : "—"}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Tax</span>
-                  <span>{currentOrder?.taxTotal > 0 ? formatCurrency(currentOrder.taxTotal) : "—"}</span>
-                </div>
-                <div className="flex justify-between text-lg font-semibold border-t pt-2">
-                  <span>Total</span>
-                  <span>{formatCurrency(currentOrder?.grandTotal ?? cartTotal)}</span>
-                </div>
-              </>
+              {currentOrder ? (
+                <>
+                  <div className="flex justify-between text-sm">
+                    <span>Subtotal</span>
+                    <span>{formatCurrency(currentOrder.subtotal)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Delivery</span>
+                    <span>{currentOrder.shippingTotal === 0 ? "Free" : formatCurrency(currentOrder.shippingTotal)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>COD Charge</span>
+                    <span>{currentOrder.codCharge > 0 ? formatCurrency(currentOrder.codCharge) : "—"}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Discount</span>
+                    <span>{currentOrder.discountTotal > 0 ? `- ${formatCurrency(currentOrder.discountTotal)}` : "—"}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Tax</span>
+                    <span>{currentOrder.taxTotal > 0 ? formatCurrency(currentOrder.taxTotal) : "—"}</span>
+                  </div>
+                  <div className="flex justify-between text-lg font-semibold border-t pt-2">
+                    <span>Total</span>
+                    <span>{formatCurrency(currentOrder.grandTotal)}</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between text-sm">
+                    <span>Subtotal</span>
+                    <span>{formatCurrency(cartTotal)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Delivery</span>
+                    <span>{cartTotal >= CHARGES.FREE_DELIVERY_THRESHOLD ? "Free" : formatCurrency(CHARGES.DELIVERY_CHARGE)}</span>
+                  </div>
+                  {paymentMethod === 'cod' && (
+                    <div className="flex justify-between text-sm">
+                      <span>COD Charge</span>
+                      <span>{formatCurrency(CHARGES.COD_HANDLING_FEE)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-sm">
+                    <span>Discount</span>
+                    <span>—</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span>Tax</span>
+                    <span>—</span>
+                  </div>
+                  <div className="flex justify-between text-lg font-semibold border-t pt-2">
+                    <span>Total</span>
+                    <span>{formatCurrency(cartTotal + (cartTotal >= CHARGES.FREE_DELIVERY_THRESHOLD ? 0 : CHARGES.DELIVERY_CHARGE) + (paymentMethod === 'cod' ? CHARGES.COD_HANDLING_FEE : 0))}</span>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Error Message */}
@@ -322,7 +360,10 @@ const Checkout = () => {
                   {paymentMethod === 'phonepe' ? 'Processing Payment...' : 'Placing Order...'}
                 </span>
               ) : (
-                `${paymentMethod === 'phonepe' ? 'Pay' : 'Place Order'} ${formatCurrency(cartTotal)}`
+                `${paymentMethod === 'phonepe' ? 'Pay' : 'Place Order'} ${formatCurrency(
+                  currentOrder?.grandTotal ?? 
+                  (cartTotal + (cartTotal >= CHARGES.FREE_DELIVERY_THRESHOLD ? 0 : CHARGES.DELIVERY_CHARGE) + (paymentMethod === 'cod' ? CHARGES.COD_HANDLING_FEE : 0))
+                )}`
               )}
             </button>
           </div>
