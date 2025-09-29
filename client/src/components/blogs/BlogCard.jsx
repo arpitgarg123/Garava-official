@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const BlogCard = ({ blog }) => {
   return (
     <div className="blog-card bg-gray-50  overflow-hidden">
-      {/* Image */}a
+      {/* Image */}
       <div className="relative">
         <img
           src={blog.image}

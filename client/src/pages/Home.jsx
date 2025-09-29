@@ -11,6 +11,7 @@ import Fragnance from './Fragnance';
 import NewsletterInline from '../components/newsLatter/NewsletterInline';
 import Review from './Review';
 import Instagram from '../components/instagram/Instagram';
+import InstaPost from "./InstaPost";
 
 export default function HomePage() {
   // Hold any 3rd‑party instance (Lenis/Swiper/etc.)
@@ -37,7 +38,8 @@ export default function HomePage() {
       <Essentials />
       <Jewellry />
       <Fragnance />
-      <Instagram />
+      {/* <Instagram /> */}
+      <InstaPost />
       <Review/>
   <NewsletterInline />
       {/* <Footer /> */}

@@ -1,31 +1,64 @@
-import React from 'react'
+import React from "react";
 
 const OurStory = () => {
   return (
-    <div className='w-full p-30'>
-        {/* our story */}
-        <div className='w-[60%]'> 
-            <h1 className='text-3xl font-semibold '>
-                OUR STORY
-            </h1>
-            <h2 className='mt-6 text-xl font-medium'>GARAVA is not a brand. It is a signal.</h2>
-            <p className='mt-2'>Of those who rise not by privilege—but by purpose.
-Of those who uplift others before they adorn themselves.
-Of those whose worth is earned, never inherited.
+    <section
+      aria-labelledby="our-story-heading"
+      className="w-full bg-white "
+    >
+      <div className="mx-auto max-w-3xl lg:max-w-4xl px-4 sm:px-6  lg:px-8 py-12 sm:py-16">
+        {/* Headings */}
+        <header className="mb-6 sm:mb-8 mt-20">
+          <h1
+            id="our-story-heading"
+            className="text-2xl sm:text-3xl font-semibold tracking-tight"
+          >
+            OUR STORY
+          </h1>
+          <h2 className="mt-3 sm:mt-4 text-lg sm:text-xl font-medium">
+            History of GARAVA
+          </h2>
+        </header>
 
-</p>
-<br />
-<p>Born out of a desire to overcome with wasteful luxury and hollow prestige,
-GARAVA redefines what it means to be exceptional.
-We do not create for the few who flaunt wealth.
-We create for the few who build wealth—for others, for the world, for the future.
+        {/* Body */}
+        <article className="space-y-5 sm:space-y-6 leading-relaxed text-[15px] sm:text-base">
+          <p>
+            GARAVA&apos;s ideology is straightforward: true luxury isn&apos;t about following
+            trends, it&apos;s about value. With passion as our brand for fragrances and diamonds,
+            our mission is to uphold refinement, elegance, and integrity for those who appreciate
+            the rare.
+          </p>
 
-</p>
-<h3 className='font-medium text-xl py-4'>New Age Luxury, Worn by the Worthy.</h3>
-<h1 className='font-semibold text-2xl'>This is GARAVA.</h1>
-        </div>
-    </div>
-  )
-}
+          <p>
+            Our philosophy is simple: if you feel worthy, GARAVA is for you. We&apos;re for all who
+            want more than beauty — for all who live their lives with confidence, drive, and grace.
+          </p>
 
-export default OurStory
+          <p>
+            From luxury diamonds that shine with timeless brilliance to fragrances that define
+            character, every GARAVA creation is made to uplift and inspire. We blend heritage with
+            creativity to shape experiences that bring new meaning to fine jewelry and perfumes.
+          </p>
+
+          <p>
+            For us, luxury isn’t about excess; it’s about self-worth. That’s why every detail, from
+            design to delivery, reflects our professionalism, passion, and forward-thinking spirit.
+          </p>
+
+          <p>
+            GARAVA is more than a brand. It’s a declaration of identity, a celebration of those who
+            are worthy, and a doorway to the timeless and extraordinary.
+          </p>
+
+          <h3 className="pt-2 text-lg sm:text-xl font-medium">
+            New Age Luxury, Worn by the Worthy.
+          </h3>
+
+          <h4 className="text-xl sm:text-2xl font-semibold">This is GARAVA.</h4>
+        </article>
+      </div>
+    </section>
+  );
+};
+
+export default OurStory;

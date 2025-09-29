@@ -9,8 +9,8 @@ signup login all done ✅
 side bar fix ✅
 product pages are done but not responsive
 product details page are done but not responsive
-newsletter not responsive
-footer not responisve
+newsletter not responsive✅
+footer not responisve✅
 navbar fix ✅
 cart page done and not mobile responsive and optimize bhi krna h thoda✅
 order page done and resposinve bhi done thoda optimize krna h✅
@@ -23,6 +23,9 @@ create contact us page   with responsive ✅
 event and event details are done with responsive ✅ 
 media-coverage and media-details are done with responsive ✅ 
 product details page / user reviews 
+google reviews  responsive done✅
+our story  responsive done✅ 
+
 
     ***upcomming changes***
 formatDate dynamic krna h 
@@ -44,6 +47,7 @@ navitems add bottom underline ✅
 essential product width full ✅
 jewellery speling✅
 add goole auth ✅
+instagram page change with responsive  ✅
 
 
     *** integration**

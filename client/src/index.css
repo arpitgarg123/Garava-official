@@ -30,14 +30,14 @@ body, html{
 }
 .navbar {
   height: auto;
-  background: white;
+  /* background: white; */
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 50;
   transition: all 0.3s ease;
-  color: black;
+  color: white;
 }
 
 .submenu-container {
@@ -94,14 +94,15 @@ body:has(.submenu-container) {
 .navbar:has(.nav-items:hover) .light-logo { display: none; } */
 .header{
   width: 100%;
-  height: 2.5vw;
-  position: relative;
+  height: 2.3vw;
+   position: absolute;
+  top: 0;
   background: var(--dark-text);
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1vw;
+  font-size: 0.8vw;
   font-family: 'montserrat';
   z-index: 10000;
 }
@@ -150,6 +151,7 @@ body:has(.submenu-container) {
   justify-content: center;
   margin-bottom: 5vh;
   padding: 0 1rem; 
+ 
 }
 
 .head-inner {

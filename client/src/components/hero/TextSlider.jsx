@@ -9,9 +9,10 @@ const TextSlider = ({ isFragrance }) => {
     if (!element) return;
 
     const newHTML = isFragrance
-      ? '<h1 className="text-main text-3xl"> <span class="text-main-italic">Fragnance,</span> that  speak your story.</h1>'
-      : '<h1 className="text-main text-3xl">In every <span class="text-main-italic">jewellery,</span> a <br />  memory lingers.</h1>';
-
+      // ? '<h1 className="text-main text-3xl"> <span class="font-[playfair] font-light text-white">Fragnance,</span> that  speak your story.</h1>'
+      // : '<h1 className="text-main text-3xl">In every <span class="font-[playfair] font-light text-white">jewellery,</span> a <br />  memory lingers.</h1>';
+? '<h1 className="text-main text-3xl"> Fragnance, that  speak your story.</h1>'
+      : '<h1 className="text-main text-3xl">In every jewellery, a <br />  memory lingers.</h1>';
     const timeline = gsap.timeline();
     
     timeline.to(element, {
@@ -42,7 +43,9 @@ const TextSlider = ({ isFragrance }) => {
       ref={textRef}
       className="text-main text-gray-900 text-center leading-14 text-5xl "
     >
-      In every <span className="text-main-italic">jewellery,</span> a <br /> memory lingers
+      In every
+       {/* <span className="font-[playfair] font-light text-white">jewellery,</span> */}Jewellery
+        a <br /> memory lingers
     </div>
   );
 };

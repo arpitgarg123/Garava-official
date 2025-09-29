@@ -9,7 +9,8 @@ import jFront from "../../assets/images/j-front.jpg";
 import fFront from "../../assets/images/f-front.png";
 import fBack from '../../assets/images/f-back.png'
 // import fBack from '../../assets/images/fragnance.png'
-import model1 from '../../assets/images/model1.jpg'
+// import model1 from '../../assets/images/model1.jpg'
+import model2 from '../../assets/images/model2.png'
 
 const HeroSection = () => {
   const img1Ref = useRef(null);
@@ -22,12 +23,12 @@ const HeroSection = () => {
 
   const [isFragrance, setIsFragrance] = useState(false);
 
-  //  useEffect(() => {
-  //   [jBack, jFront, fBack, fFront].forEach((src) => {
-  //     const img = new Image();
-  //     img.src = src;
-  //   });
-  // }, []);
+   useEffect(() => {
+    [jBack, jFront, fBack, fFront].forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
 
 //  useEffect(() => {
 //     ctxRef.current = gsap.context(() => {
@@ -66,27 +67,27 @@ const HeroSection = () => {
    
 //   }, []);
 
-//   const animateToFragrance = () => {
-//     if (tlRef.current) tlRef.current.kill();
+  // const animateToFragrance = () => {
+  //   if (tlRef.current) tlRef.current.kill();
 
-//     const tl = gsap.timeline({ defaults: { ease: "power2.inOut", duration: 1 } });
+  //   const tl = gsap.timeline({ defaults: { ease: "power2.inOut", duration: 1 } });
 
-//     tl.to([img1Ref.current, img2Ref.current], { y: 100, opacity: 0, stagger: 0.08 }, 0);
-//     tl.to([img3Ref.current, img4Ref.current], { y: 0, opacity: 1, stagger: 0.08 }, 0.15);
+  //   tl.to([img1Ref.current, img2Ref.current], { y: 100, opacity: 0, stagger: 0.08 }, 0);
+  //   tl.to([img3Ref.current, img4Ref.current], { y: 0, opacity: 1, stagger: 0.08 }, 0.15);
 
-//     tlRef.current = tl;
-//   };
+  //   tlRef.current = tl;
+  // };
 
-//    const animateToJewellery = () => {
-//     if (tlRef.current) tlRef.current.kill();
+  //  const animateToJewellery = () => {
+  //   if (tlRef.current) tlRef.current.kill();
 
-//     const tl = gsap.timeline({ defaults: { ease: "power2.inOut", duration: 1 } });
+  //   const tl = gsap.timeline({ defaults: { ease: "power2.inOut", duration: 1 } });
 
-//     tl.to([img3Ref.current, img4Ref.current], { y: 100, opacity: 0, stagger: 0.08 }, 0);
-//     tl.to([img1Ref.current, img2Ref.current], { y: 0, opacity: 1, stagger: 0.08 }, 0.15);
+  //   tl.to([img3Ref.current, img4Ref.current], { y: 100, opacity: 0, stagger: 0.08 }, 0);
+  //   tl.to([img1Ref.current, img2Ref.current], { y: 0, opacity: 1, stagger: 0.08 }, 0.15);
 
-//     tlRef.current = tl;
-//   };
+  //   tlRef.current = tl;
+  // };
 
 //  const handleNext = () => {
 //     if (isFragrance) return;
@@ -100,56 +101,56 @@ const HeroSection = () => {
 //     animateToJewellery();
 //   };
 
-//    useEffect(() => {
-//     // clear existing
-//     if (intervalRef.current) clearInterval(intervalRef.current);
+  //  useEffect(() => {
+  //   // clear existing
+  //   if (intervalRef.current) clearInterval(intervalRef.current);
 
-//     intervalRef.current = setInterval(() => {
-//       // toggle
-//       setIsFragrance((v) => {
-//         const next = !v;
-//         if (next) {
-//           animateToFragrance();
-//         } else {
-//           animateToJewellery();
-//         }
-//         return next;
-//       });
-//     }, 4000);
+  //   intervalRef.current = setInterval(() => {
+  //     // toggle
+  //     setIsFragrance((v) => {
+  //       const next = !v;
+  //       if (next) {
+  //         animateToFragrance();
+  //       } else {
+  //         animateToJewellery();
+  //       }
+  //       return next;
+  //     });
+  //   }, 4000);
 
-//     return () => {
-//       if (intervalRef.current) {
-//         clearInterval(intervalRef.current);
-//         intervalRef.current = null;
-//       }
-//     };
-//   }, []);
+  //   return () => {
+  //     if (intervalRef.current) {
+  //       clearInterval(intervalRef.current);
+  //       intervalRef.current = null;
+  //     }
+  //   };
+  // }, []);
 
-//     useEffect(() => {
-//     if (isFragrance) {
-//       animateToFragrance();
-//     } else {
-//       animateToJewellery();
-//     }
-//   }, [isFragrance]);
+  //   useEffect(() => {
+  //   if (isFragrance) {
+  //     animateToFragrance();
+  //   } else {
+  //     animateToJewellery();
+  //   }
+  // }, [isFragrance]);
 
   return (
-    <section className="hero-root text-[#f5e6d7] relative w-full min-h-screen flex items-end justify-end flex-col overflow-hidden">
+    <section className="hero-root text-[#f5e6d7] relative w-full h-screen flex items-end justify-end flex-col overflow-hidden">
       <div className="hero-overlay" />
 
-      <div className="hero-inner flex items-center justify-center w-[95%] px-6  h-[70vh]">
-        {/* <div className="hero-left w-[30vw] h-80  flex flex-col  items-start">
-          <TextSlider isFragrance={isFragrance} />
-          <button className="btn-luxury mt-8"
+      <div className="hero-inner relative flex items-start justify-between w-[95%]    h-[70vh]">
+        <div className="hero-left w-[30vw] h-80  flex flex-col  items-start ">
+          {/* <TextSlider isFragrance={isFragrance} /> */}
+          <button className="btn-luxury rounded-4xl w-62 mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50"
           style={
             {
               padding:'0.5rem 2.1rem'
             }
           }>Discover More</button>
-        </div> */}
+        </div>
 
         {/* image stage */}
-        {/* <div className="hero-stage relative mx-8 h-full w-[45vw]">
+        {/* <div className="hero-stage   relative mx-8 h-full w-[45vw]">
           <img ref={img1Ref} src={jBack} alt="Jewellery Background" className="hero-bg" />
           <img ref={img2Ref} src={jFront} alt="Jewellery Front" className="hero-front" />
           <img ref={img3Ref} src={fBack} alt="Fragrance Background" className="hero-bg" />
@@ -159,18 +160,21 @@ const HeroSection = () => {
         {/* pagination */}
         {/* <div className="hero-pager flex flex-col gap-3 ml-28 mb-16 ">
           <button
-            onClick={handlePrev}
+            // onClick={handlePrev}
             aria-label="Jewellery"
-            className={`hero-dot ${!isFragrance ? "active" : ""}`}
+            // className={`hero-dot ${!isFragrance ? "active" : ""}`}
+            className={`hero-dot `}
           ></button>
           <button
-            onClick={handleNext}
+            // onClick={handleNext}
             aria-label="Fragrance"
-            className={`hero-dot ${isFragrance ? "active" : ""}`}
+            // className={`hero-dot ${isFragrance ? "active" : ""}`}
+            className={`hero-dot `}
           ></button>
         </div> */}
 
-        {/* <img src={model1} alt="" /> */}
+
+        <img className="h-[95vh]  absolute left-1/10 bottom-0 object-cover scale-x-[-1]" src={model2} alt="" />
       </div>
     </section>
   );
