@@ -44,7 +44,7 @@ const PaymentSimulator = () => {
             <p className="text-sm text-gray-600">Transaction ID: {txnId}</p>
             <p className="text-sm text-gray-600">Order ID: {orderId}</p>
             <p className="text-lg font-semibold text-gray-800">
-              Amount: ₹{amount ? (parseInt(amount) / 100).toFixed(2) : '0.00'}
+              Amount: ₹{amount ? parseInt(amount).toFixed(2) : '0.00'}
             </p>
           </div>
           

@@ -88,8 +88,8 @@ const Orders = () => {
     }
   }, [error, detailsError]);
 
-  const formatCurrency = (paise) => {
-    return `₹${(paise / 100).toLocaleString('en-IN')}`;
+  const formatCurrency = (rupees) => {
+    return `₹${Number(rupees).toLocaleString('en-IN')}`;
   };
 
   // If viewing single order
@@ -148,7 +148,7 @@ const Orders = () => {
                 <div className="text-right">
                   <OrderStatus status={orderDetails.status} />
                   <p className="text-lg font-semibold mt-2">
-                    {formatCurrency(orderDetails.grandTotalPaise || orderDetails.grandTotal)}
+                    {formatCurrency(orderDetails.grandTotal)}
                   </p>
                 </div>
               </div>
@@ -174,10 +174,10 @@ const Orders = () => {
                     </div>
                     <div className="text-right">
                       <p className="font-semibold">
-                        {formatCurrency(item.lineTotalPaise || item.lineTotal)}
+                        {formatCurrency(item.lineTotal)}
                       </p>
                       <p className="text-gray-500 text-sm">
-                        {formatCurrency(item.unitPricePaise || item.unitPrice)} each
+                        {formatCurrency(item.unitPrice)} each
                       </p>
                     </div>
                   </div>
@@ -220,7 +220,7 @@ const Orders = () => {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-gray-600">Total: {formatCurrency(orderDetails.grandTotalPaise || orderDetails.grandTotal)}</p>
+                  <p className="text-gray-600">Total: {formatCurrency(orderDetails.grandTotal)}</p>
                 </div>
               </div>
             </div>
@@ -275,10 +275,10 @@ const Orders = () => {
           }
         },
         quantity: 1,
-        unitPricePaise: 7500000 // 75,000 INR
+        unitPrice: 75000 // 75,000 INR in rupees
       }
     ],
-    grandTotalPaise: 7500000
+    grandTotal: 75000
   },
   {
     _id: '2',
@@ -294,7 +294,7 @@ const Orders = () => {
           }
         },
         quantity: 1,
-        unitPricePaise: 4500000 // 45,000 INR
+        unitPrice: 45000 // 45,000 INR in rupees
       },
       {
         productSnapshot: {
@@ -304,10 +304,10 @@ const Orders = () => {
           }
         },
         quantity: 2,
-        unitPricePaise: 3500000 // 35,000 INR
+        unitPrice: 35000 // 35,000 INR in rupees
       }
     ],
-    grandTotalPaise: 11500000
+    grandTotal: 115000
   },
 ]
   return (
@@ -355,7 +355,7 @@ const Orders = () => {
                       <div>
                         <h3 className="font-medium">{item.productSnapshot?.name}</h3>
                         <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
-                        <p className="text-sm">{formatCurrency(item.unitPricePaise || item.unitPrice)}</p>
+                        <p className="text-sm">{formatCurrency(item.unitPrice)}</p>
                       </div>
                     </div>
                   ))}
@@ -369,7 +369,7 @@ const Orders = () => {
                 <div className="border-t pt-4">
                   <div className="flex justify-between items-center">
                     <div className="text-lg font-semibold">
-                      <span>Total: {formatCurrency(order.grandTotalPaise || order.grandTotal)}</span>
+                      <span>Total: {formatCurrency(order.grandTotal)}</span>
                     </div>
                     <button 
                       onClick={(e) => {

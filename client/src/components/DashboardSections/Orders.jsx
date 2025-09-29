@@ -2,8 +2,8 @@ import React from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiRefresh } from "react-icons/bi";
 
-function formatCurrency(paise) {
-  return `₹${(paise / 100).toLocaleString("en-IN")}`;
+function formatCurrency(rupees) {
+  return `₹${Number(rupees).toLocaleString("en-IN")}`;
 }
 function getStatusColor(status) {
   const colors = {

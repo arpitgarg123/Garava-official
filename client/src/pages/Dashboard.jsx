@@ -169,10 +169,10 @@ const Dashboard = () => {
           }
         },
         quantity: 1,
-        unitPricePaise: 7500000 // 75,000 INR
+        unitPrice: 75000 // 75,000 INR in rupees
       }
     ],
-    grandTotalPaise: 7500000
+    grandTotal: 75000
   },
   {
     _id: '2',
@@ -188,7 +188,7 @@ const Dashboard = () => {
           }
         },
         quantity: 1,
-        unitPricePaise: 4500000 // 45,000 INR
+        unitPrice: 45000 // 45,000 INR in rupees
       },
       {
         productSnapshot: {
@@ -198,10 +198,10 @@ const Dashboard = () => {
           }
         },
         quantity: 2,
-        unitPricePaise: 3500000 // 35,000 INR
+        unitPrice: 35000 // 35,000 INR in rupees
       }
     ],
-    grandTotalPaise: 11500000
+    grandTotal: 115000
   },
 ]
 
@@ -291,7 +291,7 @@ const Dashboard = () => {
       { _id: 'p1', name: 'Fragrance 1', image: f1, salesINR: 79153, units: 42 },
       { _id: 'p2', name: 'Classic Fragrance', image: f2, salesINR: 129999, units: 23 },
     ]}
-    recentOrders={dummyOrders.map(o => ({ ...o, totalINR: o.grandTotalPaise / 100 }))}
+    recentOrders={dummyOrders.map(o => ({ ...o, totalINR: o.grandTotal }))}
     recentReviews={dummyReviews.map(r => ({ _id: r._id, userName: r.user.name, rating: r.rating, comment: r.comment, createdAt: r.createdAt }))}
     upcomingAppointments={sampleAppointments}
     />
