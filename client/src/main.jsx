@@ -10,14 +10,38 @@ import "./index.css";
 import { bindAuth } from "./shared/api/http.js";
 import { setToken, logout, initAuth } from "./features/auth/slice.js";
 import ErrorBoundary from "./app/ErrorBoundary.jsx";
+import { tokenRefreshManager } from "./shared/auth/tokenRefreshManager.js";
 
 bindAuth({
   getToken: () => store.getState().auth?.accessToken,
   setToken: (t) => store.dispatch(setToken(t)),
-  logout: () => store.dispatch(logout()),
+  logout: () => {
+    tokenRefreshManager.stop(); // Stop refresh timer on logout
+    store.dispatch(logout());
+  },
+});
+
+// Initialize token refresh manager
+tokenRefreshManager.init(store);
+
+// Subscribe to auth state changes to manage token refresh
+store.subscribe(() => {
+  const state = store.getState();
+  const { accessToken, user } = state.auth;
+  
+  if (accessToken && user) {
+    // Start refresh cycle when user is authenticated
+    console.log('Store subscriber - User authenticated, starting token refresh cycle');
+    tokenRefreshManager.startRefreshCycle(accessToken);
+  } else {
+    // Stop refresh cycle when user is logged out
+    console.log('Store subscriber - User not authenticated, stopping token refresh cycle');
+    tokenRefreshManager.stop();
+  }
 });
 
 // Bootstrap session (refresh cookie -> accessToken)
+console.log('Main.jsx - Dispatching initAuth on app bootstrap');
 store.dispatch(initAuth());
 
 ReactDOM.createRoot(document.getElementById("root")).render(

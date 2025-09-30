@@ -119,6 +119,12 @@ http.interceptors.response.use(
         const { data } = await authHttp.post('/auth/refresh', {});
         const newToken = data?.accessToken;
         
+        console.log('HTTP Interceptor - Refresh response:', { 
+          success: data?.success, 
+          hasToken: !!newToken, 
+          hasUser: !!data?.user 
+        });
+        
         if (!newToken) {
           console.error('HTTP Interceptor - No token received from refresh');
           throw new Error('No token received from refresh');

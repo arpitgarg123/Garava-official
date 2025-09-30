@@ -17,6 +17,8 @@ import PaymentFailure from "./pages/PaymentFailure.jsx";
 import PaymentTest from "./pages/PaymentTest.jsx";
 import EventsPage from "./pages/newsEvents/Events.jsx";
 import { MediaCoveragePage } from "./pages/newsEvents/MediaCoverage.jsx";
+import AuthCallback from "./components/auth/AuthCallback.jsx";
+// import AuthDebugger from "./components/auth/AuthDebugger.jsx";
 
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
 const Login = lazy(() => import("./features/auth/Login.jsx"));
@@ -34,6 +36,8 @@ const Contact = lazy(()=> import("./pages/Contact.jsx"))
 const App = () => {
   return (
     <Suspense fallback={<div className="p-4">Loading...</div>}>
+      <AuthCallback /> {/* Handle OAuth callbacks and welcome messages */}
+      {/* {process.env.NODE_ENV === 'development' && <AuthDebugger />} Debug component for development */}
       <Routes>
         {/* Auth routes - only accessible to guests */}
         <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />

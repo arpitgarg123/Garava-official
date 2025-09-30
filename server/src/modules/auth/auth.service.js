@@ -1,6 +1,6 @@
 import ApiError from "../../shared/utils/ApiError.js";
 import User from "../user/user.model.js";
-import  argon2 from "argon2";
+import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 
 import {
@@ -51,12 +51,18 @@ export const signupUser = async ({ name, email, password}) => {
 export const logoutUser = async (userId, refreshToken) => {
   if (!userId || !refreshToken) throw new Error("Missing required fields");
 
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).select("+refreshTokens");
   if (!user) throw new Error("User not found");
 
-  user.refreshTokens = user.refreshTokens.filter(
-    (t) => t.token !== refreshToken
-  );
+  // Remove the specific refresh token using argon2.verify
+  const filteredTokens = [];
+  for (const tokenObj of user.refreshTokens) {
+    const isMatch = await argon2.verify(tokenObj.token, refreshToken);
+    if (!isMatch) {
+      filteredTokens.push(tokenObj);
+    }
+  }
+  user.refreshTokens = filteredTokens;
   await user.save();
 
   return { message: "Logged out successfully" };
@@ -78,11 +84,15 @@ export const refreshSessionService = async (rawToken, res) => {
   if (!isValid) throw new ApiError(401, "Refresh token not recognized");
 
   // 4. Rotate tokens (remove old, add new)
-  user.refreshTokens = await Promise.all(
-    user.refreshTokens.filter(
-      async (t) => !(await argon2.verify(t.token, rawToken))
-    )
-  );
+  // Remove the used refresh token using argon2.verify
+  const filteredTokens = [];
+  for (const tokenObj of user.refreshTokens) {
+    const isMatch = await argon2.verify(tokenObj.token, rawToken);
+    if (!isMatch) {
+      filteredTokens.push(tokenObj);
+    }
+  }
+  user.refreshTokens = filteredTokens;
 
   const newAccessToken = generateAccessToken(user);
   const newRefreshToken = generateRefreshToken(user);
@@ -93,7 +103,11 @@ export const refreshSessionService = async (rawToken, res) => {
   // 5. Set cookies
   setAuthCookies(res, newAccessToken, newRefreshToken);
 
-  return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+  return { 
+    accessToken: newAccessToken, 
+    refreshToken: newRefreshToken,
+    user: user.toJSON() // Include user data for frontend state initialization
+  };
 };
 
 // Verify email service
@@ -184,4 +198,35 @@ export const resetPasswordService = async ({ token, newPassword }) => {
   await user.invalidateAllSessions();
 
   return { reset: true };
+};
+
+// Google OAuth login/signup service
+export const googleAuthService = async (user) => {
+  console.log('Google Auth Service - Processing user:', user._id);
+  
+  // Ensure we have a proper Mongoose document with refreshTokens field
+  let userDoc = user;
+  if (!user.refreshTokens) {
+    console.log('Google Auth Service - Refetching user with refreshTokens field');
+    userDoc = await User.findById(user._id).select("+refreshTokens");
+    if (!userDoc) {
+      throw new ApiError(404, "User not found");
+    }
+  }
+  
+  const accessToken = generateAccessToken(userDoc);
+  const refreshToken = generateRefreshToken(userDoc);
+
+  // Add refresh token to user
+  userDoc.refreshTokens.push({ token: refreshToken });
+  await userDoc.save();
+
+  console.log('Google Auth Service - Tokens generated for user:', userDoc._id);
+  
+  return { 
+    accessToken, 
+    refreshToken, 
+    user: userDoc.toJSON(),
+    isNewUser: userDoc.createdAt && (Date.now() - userDoc.createdAt.getTime()) < 5000 // Created within last 5 seconds
+  };
 };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { login } from "./slice";
+import { login, googleLogin } from "./slice";
 import AuthLayout from "../../layouts/AuthLayout";
 import { FcGoogle } from 'react-icons/fc';
 import { CiMail, CiLock } from 'react-icons/ci';
@@ -31,6 +31,10 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    dispatch(googleLogin());
+  };
+
   return (
     <AuthLayout
       title="Welcome Back"
@@ -38,8 +42,8 @@ const Login = () => {
     >
       <div className="max-w-md mx-auto">
         <h1 className="text-2xl font-semibold mb-4 text-center">Login</h1>
-         <button
-          // onClick={handleGoogleLogin}
+        <button
+          onClick={handleGoogleLogin}
           className="w-full mb-6 flex items-center justify-center gap-3 border border-gray-300 p-2.5 rounded-md hover:bg-gray-50 transition-colors"
         >
           <FcGoogle size={20} />
