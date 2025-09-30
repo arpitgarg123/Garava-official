@@ -105,3 +105,15 @@
 
 # # Newsletter Feature (User)
  # get-subscriber-list
+
+
+# # blogs Feature (Admin)
+ # create-blog
+ # update-blog
+ # get-blogs
+ # update-status-blog
+ # delete-blog
+
+# # blogs Feature (User)
+ # get-blog
+ # get-blog-by-slug

@@ -5,9 +5,12 @@ import { combineReducers } from "redux";
 
 import authReducer from "../features/auth/slice.js";
 import productReducer from "../features/product/slice.js";
+import productAdminReducer from "../features/product/adminSlice.js";
 import cartReducer from "../features/cart/slice.js";
 import wishlistReducer from "../features/wishlist/slice.js";
 import orderReducer from "../features/order/slice.js";
+import orderAdminReducer from "../features/order/adminSlice.js";
+import appointmentAdminReducer from "../features/appointment/adminSlice.js";
 import addressReducer from "../features/address/slice.js";
 
 // Persist configuration
@@ -21,9 +24,12 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   product: productReducer,
+  productAdmin: productAdminReducer,
   cart: cartReducer,
   wishlist: wishlistReducer,
   order: orderReducer,
+  orderAdmin: orderAdminReducer,
+  appointmentAdmin: appointmentAdminReducer,
   address: addressReducer,
 });
 
