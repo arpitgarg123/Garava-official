@@ -13,6 +13,7 @@ import { PiBagLight } from "react-icons/pi";
 import { FiLogOut } from "react-icons/fi";
 import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 
+import lightLogo from '../../assets/images/light-logo.png';
 import darkLogo from '../../assets/images/logo-main.png';
 
 import { selectIsAuthenticated, selectUser, selectIsAdmin } from '../../features/auth/selectors.js';
@@ -117,7 +118,7 @@ const Navbar = () => {
     isHidden ? '-translate-y-48' : 'translate-y-0'
   } ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white' : 'bg-transparent'} ${
     isNavActive ? 'expanded' : ''
-  }`;
+  } ${isHeroPage ? 'bg-transparent' : 'bg-white'}`;
 
   return (
     <>
@@ -265,7 +266,7 @@ const Navbar = () => {
         aria-label="Main navigation"
       >
         <div className="navTop relative px-10">
-          <div className="flex justify-between w-60 bg-amber-00 font-light">
+          <div className="flex justify-between w-60 font-light">
             <Link to="/contact" className="font-medium text-sm">Contact us</Link>
             <h4
               className="font-medium text-sm cursor-pointer"
@@ -275,9 +276,15 @@ const Navbar = () => {
             </h4>
           </div>
 
-          <img
+          {/* <img
             className="h-18 w-60 mt-2 object-contain cursor-pointer"
             src={darkLogo}
+            alt="Dark logo"
+            onClick={() => navigate('/')}
+          /> */}
+           <img
+            className="h-18 w-60 mt-2 object-contain cursor-pointer"
+            src={lightLogo}
             alt="Dark logo"
             onClick={() => navigate('/')}
           />

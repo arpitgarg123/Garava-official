@@ -15,7 +15,7 @@ const About = () => {
         <AboutHeading text={"''Worn by the Worthy''"} />
         <AboutText
           className="text-xl text-center mx-auto max-w-3xl tracking-tight leading-8 text-head-italic"
-          paragraph={`Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa quibusdam labore sed vero.`}
+          paragraph={`Explore GARAVA. Because when you know your worth, luxury becomes your story`}
         />
         <Link to='/about'>
          <button

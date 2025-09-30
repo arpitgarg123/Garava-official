@@ -40,7 +40,7 @@ export const MediaCoveragePage = () => {
 
 
   return (
-    <div className="mt-20">
+    <div className="mt-32">
       {/* Hero */}
       <section className="relative overflow-hidden ">
         <div className="mx-auto max-w-6xl  py-16 sm:px-6 lg:px-8">

@@ -30,7 +30,7 @@ const blogs = [
 
 const BlogList = () => {
   return (
-    <section className=" max-w-7xl mx-auto mt-26">
+    <section className=" max-w-7xl mx-auto mt-34">
    <PageHeader title="Blogs" />
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog) => (

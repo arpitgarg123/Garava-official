@@ -120,7 +120,7 @@ import Pagination from "../../components/Pagination";
   const resetToFirstPage = () => setPage(1);
 
   return (
-    <div className="mt-20">
+    <div className="mt-32">
       {/* Hero */}
       <section className="relative overflow-hidden ">
         <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
