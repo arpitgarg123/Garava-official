@@ -1,4 +1,5 @@
 import React from "react";
+import BackButton from "../components/BackButton";
 
 const OurStory = () => {
   return (
@@ -6,6 +7,9 @@ const OurStory = () => {
       aria-labelledby="our-story-heading"
       className="w-full bg-white "
     >
+       <div className="sticky top-34 z-10 mb-3">
+          <BackButton />
+        </div>
       <div className="mx-auto max-w-3xl lg:max-w-4xl px-4 sm:px-6  lg:px-8 py-12 sm:py-16">
         {/* Headings */}
         <header className="mb-6 sm:mb-8 mt-20">

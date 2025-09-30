@@ -13,6 +13,7 @@ import {
 } from '../features/order/selectors';
 import { fetchUserOrders, fetchOrderById } from '../features/order/slice';
 import { toast } from 'react-hot-toast';
+import BackButton from '../components/BackButton';
 
 const OrderStatus = ({ status }) => {
 
@@ -311,7 +312,11 @@ const Orders = () => {
   },
 ]
   return (
-   <div className="bg-white min-h-[60vh] py-20">
+   <div className=" min-h-[60vh] mt-30">
+     <div className="sticky top-20 z-10 mb-3">
+        <BackButton />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-semibold mb-8">My Orders</h1>
 

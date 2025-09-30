@@ -17,6 +17,7 @@ import { addToCart, fetchCart } from '../features/cart/slice';
 import { selectIsAuthenticated } from '../features/auth/selectors';
 import { toast } from 'react-hot-toast';
 import { WishlistSkeleton } from '../components/ui/LoadingSkeleton';
+import BackButton from '../components/BackButton';
 
 const Wishlist = () => {
   const navigate = useNavigate();
@@ -118,7 +119,7 @@ const Wishlist = () => {
   // Loading state with skeleton
   if (isLoading) {
     return (
-      <div className="bg-white min-h-[60vh] py-20">
+      <div className=" min-h-[60vh] py-20">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <h1 className="text-3xl font-semibold mb-8">My Wishlist</h1>
           <WishlistSkeleton />
@@ -130,7 +131,7 @@ const Wishlist = () => {
   // Error state
   if (error) {
     return (
-      <div className="bg-white min-h-[60vh] py-20">
+      <div className=" min-h-[60vh] py-20">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <h1 className="text-3xl font-semibold mb-8">My Wishlist</h1>
           <p className="text-center text-red-500">Error loading wishlist: {error}</p>
@@ -140,7 +141,10 @@ const Wishlist = () => {
   }
 
   return (
-  <div className="bg-white min-h-[60vh] py-20">
+  <div className=" min-h-[60vh] mt-28">
+ <div className="sticky top-35 z-10 mb-3">
+        <BackButton />
+      </div>
       <div className="max-w-7xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-semibold mb-8">My Wishlist</h1>
 

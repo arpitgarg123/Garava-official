@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createAppointment } from "../../features/appointment/api.js";
+import BackButton from "../../components/BackButton.jsx";
 
 const serviceOptions = [
   { value: "fragrance_consultation", label: "Fragrance consultation" },
@@ -86,7 +87,13 @@ const BookAnAppointment = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-20 p-6">
+    <>
+     <div className="sticky top-30 z-10 mb-3">
+        <BackButton />
+      </div>
+   
+    <div className="max-w-xl mx-auto mt-30 p-6">
+      
       <h1 className="text-2xl font-semibold mb-4">Book an appointment</h1>
 
       <form onSubmit={onSubmit} className="space-y-4">
@@ -180,6 +187,7 @@ const BookAnAppointment = () => {
         </p>
       )}
     </div>
+     </>
   );
 }
 

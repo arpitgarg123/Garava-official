@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import ShareButton from "../../components/blogs/ShareButton";
+import BackButton from "../../components/BackButton";
 
 const DEFAULT_POST = {
   category: "Jewelry",
@@ -89,7 +90,9 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
 
   return (
     <div className="relative min-h-[100dvh] mt-20 bg-background text-foreground">
-      {/* Reading progress */}
+      <div className="sticky top-35 z-10 mb-3">
+        <BackButton />
+      </div>
       <div
         className="sticky top-0 z-30 h-1 w-full bg-muted/50"
         role="progressbar"
