@@ -80,8 +80,8 @@ const App = () => {
           <Route path="/simulate-payment" element={<PaymentSimulator />} />
           
           {/* Admin routes - require admin role */}
-          <Route path="/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
         </Route>
+          <Route path="/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
       </Routes>
     </Suspense>
   );

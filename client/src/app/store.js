@@ -5,6 +5,7 @@ import { combineReducers } from "redux";
 
 import authReducer from "../features/auth/slice.js";
 import productReducer from "../features/product/slice.js";
+import productAdminReducer from "../features/product/adminSlice.js";
 import cartReducer from "../features/cart/slice.js";
 import wishlistReducer from "../features/wishlist/slice.js";
 import orderReducer from "../features/order/slice.js";
@@ -21,6 +22,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   product: productReducer,
+  productAdmin: productAdminReducer,
   cart: cartReducer,
   wishlist: wishlistReducer,
   order: orderReducer,
