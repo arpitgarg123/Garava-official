@@ -11,6 +11,7 @@
   import { env } from './config/env.js';
   import { logger } from './shared/logger.js'; 
 import { errorHandler } from './shared/utils/errorHandler.js';
+import passport from './config/passport.js'; // Import passport configuration
 
 // router imports
 import authRouter from './modules/auth/auth.router.js';
@@ -51,6 +52,9 @@ import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
 
  app.use(express.urlencoded({ extended: true, verify: (req, res, buf) => { req.rawBody = buf.toString("utf8"); } }));
   app.use(cookieParser());
+  
+  // Initialize Passport
+  app.use(passport.initialize());
 
   if (env.NODE_ENV === 'production') {
     app.use(morgan('combined'));
@@ -61,7 +65,7 @@ import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
   // General API rate limiter - more generous for normal usage
   const generalLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 500, // Increased from 100 to 500 requests per 15 minutes
+    max: 1000, // Increased for development and normal usage
     standardHeaders: true,
     legacyHeaders: false,
     message: {
@@ -70,15 +74,23 @@ import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
     }
   });
 
-  // Stricter limiter for auth endpoints to prevent abuse
+  // More generous limiter for auth endpoints during development
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes  
-    max: 50, // 50 auth requests per 15 minutes
+    max: env.NODE_ENV === 'production' ? 100 : 500, // More generous in development
     standardHeaders: true,
     legacyHeaders: false,
     message: {
       error: 'Too many authentication requests, please try again later.',
       retryAfter: '15 minutes'
+    },
+    // Skip rate limiting for specific OAuth endpoints in development
+    skip: (req) => {
+      if (env.NODE_ENV !== 'production') {
+        // Skip rate limiting for Google OAuth in development
+        return req.path.includes('/google');
+      }
+      return false;
     }
   });
 
@@ -92,28 +104,6 @@ import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
     })
   );
 
-  // Also add health endpoint at /api/health for consistency
-  app.get('/api/health', (_, res) =>
-    res.json({
-      status: 'ok',
-      server: 'Garava API',
-      uptime: process.uptime(),
-      timestamp: new Date().toISOString()
-    })
-  );
-
-  // Debug route to test if changes are being picked up
-  app.get('/api/debug', (_, res) => {
-    res.json({ 
-      message: 'Server updated - routes should work now',
-      timestamp: new Date().toISOString(),
-      routes: {
-        orders: '/api/orders/checkout',
-        address: '/api/address',
-        cart: '/api/cart'
-      }
-    });
-  });
 
   // routes
 

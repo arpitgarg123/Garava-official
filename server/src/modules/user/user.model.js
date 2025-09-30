@@ -22,7 +22,10 @@ const userSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: function() {
+        // Password is required only if no Google ID (i.e., not a Google OAuth user)
+        return !this.googleId;
+      },
       minlength: 8,
       select: false,
     },
@@ -30,6 +33,16 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
+    },
+
+    // Google OAuth fields
+    googleId: {
+      type: String,
+      unique: true,
+      sparse: true, // Allows multiple documents without this field
+    },
+    profilePicture: {
+      type: String,
     },
 
     phone: { type: String, trim: true },
@@ -64,7 +77,7 @@ userSchema.pre('save', async function (next) {
  */
 
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password') || !this.password) return next();
   try {
     this.password = await argon2.hash(this.password, { type: argon2.argon2id });
     next();
@@ -93,6 +106,10 @@ userSchema.pre("save", async function (next) {
  * Compare password method
  */
 userSchema.methods.comparePassword = async function (candidatePassword) {
+  if (!this.password) {
+    // User registered via Google OAuth, no password to compare
+    return false;
+  }
   return await argon2.verify(this.password, candidatePassword);
 };
 

@@ -16,6 +16,6 @@ review
 news&events backend
 admin password change
 admin dashboardd
-continue google 
+continue google  ✅
 chat bot 
 pricing issue

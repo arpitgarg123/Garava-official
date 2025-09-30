@@ -1,6 +1,7 @@
 import {asyncHandler} from '../../shared/utils/asyncHandler.js';
-import { forgotPasswordService, loginUser, logoutUser, refreshSessionService, resendVerificationService, resetPasswordService, signupUser, verifyEmailService } from './auth.service.js';
+import { forgotPasswordService, loginUser, logoutUser, refreshSessionService, resendVerificationService, resetPasswordService, signupUser, verifyEmailService, googleAuthService } from './auth.service.js';
 import { clearAuthCookies, setAuthCookies } from './token.service.js';
+import passport from '../../config/passport.js';
 
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -23,7 +24,7 @@ export const signup = asyncHandler(async (req, res) => {
 });
 
 export const logout = asyncHandler(async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = req.cookies?.refreshToken;
   const userId = req.user?.id;
 
   const result = await logoutUser(userId, refreshToken);
@@ -32,18 +33,49 @@ export const logout = asyncHandler(async (req, res) => {
 });
   
 export const refreshSession = asyncHandler(async (req, res) => {
-  const rawToken = req.cookies.refreshToken || req.body.refreshToken;
+  try {
+    let token = null;
+    if (req.cookies?.refreshToken) {
+      token = req.cookies.refreshToken;
+      console.log('Refresh session - Got token from cookies');
+    } else if (req.body?.refreshToken) {
+      token = req.body.refreshToken;
+      console.log('Refresh session - Got token from body');
+    }
+    
+    if (!token) {
+      return res.status(401).json({ success: false, message: 'No refresh token provided' });
+    }
+    
+    const result = await refreshSessionService(token, res);
+    
+    console.log('Refresh session - Success:', {
+      hasAccessToken: !!result.accessToken,
+      hasUser: !!result.user,
+      userName: result.user?.name
+    });
 
-  const { accessToken, refreshToken } = await refreshSessionService(
-    rawToken,
-    res
-  );
-
-  res.json({
-    success: true,
-    accessToken,
-    refreshToken,
-  });
+    res.json({
+      success: true,
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+      user: result.user
+    });
+  } catch (error) {
+    console.error('Refresh session - Error:', {
+      message: error.message,
+      stack: error.stack?.split('\n')[0]
+    });
+    
+    // Clear invalid cookies
+    res.clearCookie('refreshToken');
+    res.clearCookie('accessToken');
+    
+    res.status(401).json({
+      success: false,
+      message: 'Session expired. Please login again.'
+    });
+  }
 });
 
 // Verify email
@@ -86,4 +118,42 @@ export const resetPassword = asyncHandler(async (req, res) => {
   const { token, newPassword } = req.body;
   await resetPasswordService({ token, newPassword });
   res.json({ success: true, message: "Password has been reset. Please log in again." });
+});
+
+// Google OAuth Routes
+export const googleAuth = passport.authenticate('google', {
+  scope: ['profile', 'email']
+});
+
+export const googleCallback = asyncHandler(async (req, res, next) => {
+  passport.authenticate('google', { session: false }, async (err, user, info) => {
+    try {
+      if (err) {
+        console.error('Google OAuth Error:', err);
+        return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_error`);
+      }
+
+      if (!user) {
+        console.error('Google OAuth - No user returned');
+        return res.redirect(`${process.env.CLIENT_URL}/login?error=oauth_failed`);
+      }
+
+      // Generate tokens for the authenticated user
+      const { accessToken, refreshToken, user: userData, isNewUser } = await googleAuthService(user);
+      
+      // Set auth cookies
+      setAuthCookies(res, accessToken, refreshToken);
+
+      // Redirect to frontend with success
+      const redirectUrl = isNewUser 
+        ? `${process.env.CLIENT_URL}/?welcome=true`
+        : `${process.env.CLIENT_URL}/`;
+        
+      res.redirect(redirectUrl);
+
+    } catch (error) {
+      console.error('Google OAuth Callback Error:', error);
+      res.redirect(`${process.env.CLIENT_URL}/login?error=auth_error`);
+    }
+  })(req, res, next);
 });

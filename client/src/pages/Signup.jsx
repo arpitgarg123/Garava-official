@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../features/auth/slice";
+import { signup, googleLogin } from "../features/auth/slice";
 import AuthLayout from "../layouts/AuthLayout";
 import { FcGoogle } from 'react-icons/fc';
 import { CiUser, CiMail, CiLock } from 'react-icons/ci';
@@ -43,6 +43,10 @@ const Signup = () => {
     }
   };
 
+  const handleGoogleSignup = () => {
+    dispatch(googleLogin());
+  };
+
   return (
     <AuthLayout
       title="Create Account"
@@ -51,7 +55,7 @@ const Signup = () => {
        <div className="max-w-md mx-auto p-6">
         {/* Google Signup Button */}
         <button
-          // onClick={handleGoogleSignup}
+          onClick={handleGoogleSignup}
           className="w-full mb-6 flex items-center justify-center gap-3 border border-gray-300 p-2.5 rounded-md hover:bg-gray-50 transition-colors"
         >
           <FcGoogle size={20} />

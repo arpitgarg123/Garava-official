@@ -26,6 +26,9 @@ export const verifyAccessToken = (token) => {
 // Verify Refresh Token
 export const verifyRefreshToken = (token) => {
   try {
+    if (!token || typeof token !== 'string') {
+      return null;
+    }
     return jwt.verify(token, JWT_REFRESH_SECRET);
   } catch (err) {
     return null;
@@ -45,18 +48,26 @@ export const generatePasswordResetToken = (user) =>
   jwt.sign({ id: user._id, email: user.email }, JWT_RESET_SECRET, { expiresIn: "30m" });
 
 export const setAuthCookies = (res, accessToken, refreshToken) => {
+  const isProduction = process.env.NODE_ENV === 'production';
+  
   res.cookie('token', accessToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: isProduction,
+    sameSite: isProduction ? 'strict' : 'lax', // Use 'lax' in development for OAuth redirects
     maxAge: 15 * 60 * 1000, // 15m
   });
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: isProduction,
+    sameSite: isProduction ? 'strict' : 'lax', // Use 'lax' in development for OAuth redirects
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
+  });
+  
+  console.log('Auth cookies set:', {
+    secure: isProduction,
+    sameSite: isProduction ? 'strict' : 'lax',
+    environment: process.env.NODE_ENV
   });
 };
 

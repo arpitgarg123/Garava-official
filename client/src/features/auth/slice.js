@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { loginApi, logoutApi, signupApi, refreshApi } from "./api";
+import { loginApi, logoutApi, signupApi, refreshApi, initiateGoogleAuth } from "./api";
 
 export const login = createAsyncThunk("auth/login", async (payload) => {
   const { data } = await loginApi(payload);
@@ -15,57 +15,46 @@ export const doLogout = createAsyncThunk("auth/logout", async () => {
   await logoutApi();
 });
 
+export const googleLogin = createAsyncThunk("auth/googleLogin", async () => {
+  // This will redirect to Google OAuth, so we don't return anything here
+  // The actual auth completion happens via callback URL
+  initiateGoogleAuth();
+  return null;
+});
+
 export const initAuth = createAsyncThunk("auth/init", async (_, { rejectWithValue }) => {
-  const maxRetries = 2;
-  let lastError = null;
+  console.log('Auth slice - Initializing authentication...');
   
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`Auth slice - Initializing authentication (attempt ${attempt}/${maxRetries})...`);
-      
-      // Try to refresh on app load to restore session
-      const { data } = await refreshApi();
-      console.log('Auth slice - InitAuth successful:', { hasToken: !!data?.accessToken, hasUser: !!data?.user });
-      return data; // { accessToken, user? }
-      
-    } catch (error) {
-      lastError = error;
-      const isNetworkError = error.code === 'ECONNABORTED' || error.message?.includes('timeout') || error.message?.includes('Network Error');
-      const isServerError = error.response?.status >= 500;
-      
-      console.error(`Auth slice - InitAuth attempt ${attempt} failed:`, {
-        status: error.response?.status,
-        message: error.response?.data?.message || error.message,
-        isNetworkError,
-        isServerError
-      });
-      
-      // Only retry on network errors or server errors, not on auth failures (401, 403)
-      if ((isNetworkError || isServerError) && attempt < maxRetries) {
-        console.log(`Auth slice - Retrying in ${attempt * 1000}ms...`);
-        await new Promise(resolve => setTimeout(resolve, attempt * 1000)); // Progressive delay
-        continue;
-      }
-      
-      // If it's a client error (401, 403) or we've exhausted retries, handle appropriately
-      if (error.response?.status === 401 || error.response?.status === 403) {
-        // Auth failure - token is invalid/expired, but don't show error to user
-        console.log('Auth slice - Token expired/invalid, will proceed as unauthenticated');
-        return rejectWithValue({ type: 'AUTH_EXPIRED', silent: true });
-      }
-      
-      if (isNetworkError) {
-        // Network timeout - don't logout user, just show warning
-        console.warn('Auth slice - Network timeout during auth init, keeping user authenticated');
-        return rejectWithValue({ type: 'NETWORK_ERROR', message: 'Connection timeout', silent: false });
-      }
-      
-      break; // Exit retry loop for non-retryable errors
+  try {
+    // Try to refresh on app load to restore session
+    const { data } = await refreshApi();
+    console.log('Auth slice - InitAuth successful:', { hasToken: !!data?.accessToken, hasUser: !!data?.user });
+    return data; // { accessToken, user? }
+    
+  } catch (error) {
+    // If it's a 401 (no refresh token), this is normal for unauthenticated users
+    if (error.response?.status === 401) {
+      console.log('Auth slice - No valid refresh token found, proceeding as unauthenticated');
+      return rejectWithValue({ type: 'AUTH_EXPIRED', silent: true });
     }
+    
+    // For other errors, show more details
+    console.error('Auth slice - InitAuth failed:', {
+      status: error.response?.status,
+      message: error.response?.data?.message || error.message
+    });
+    
+    const isNetworkError = error.code === 'ECONNABORTED' || error.message?.includes('timeout') || error.message?.includes('Network Error');
+    
+    if (isNetworkError) {
+      // Network timeout - don't logout user, just show warning
+      console.warn('Auth slice - Network timeout during auth init');
+      return rejectWithValue({ type: 'NETWORK_ERROR', message: 'Connection timeout', silent: false });
+    }
+    
+    const errorMessage = error.response?.data?.message || error.message || 'Authentication initialization failed';
+    return rejectWithValue({ type: 'GENERAL_ERROR', message: errorMessage, silent: false });
   }
-  
-  const errorMessage = lastError?.response?.data?.message || lastError?.message || 'Authentication initialization failed';
-  return rejectWithValue({ type: 'GENERAL_ERROR', message: errorMessage, silent: false });
 });
 
 const slice = createSlice({
@@ -73,6 +62,10 @@ const slice = createSlice({
   initialState: { accessToken: null, user: null, status: "idle", error: null },
   reducers: {
     setToken: (s, { payload }) => { s.accessToken = payload || null; },
+    setTokens: (s, { payload }) => {
+      s.accessToken = payload?.accessToken || null;
+      // Note: refreshToken is handled by HTTP-only cookies, not stored in Redux
+    },
     setUser: (s, { payload }) => { s.user = payload || null; },
     logout: (s) => { s.accessToken = null; s.user = null; },
   },
@@ -107,6 +100,11 @@ const slice = createSlice({
       if (payload?.user) s.user = payload.user;
       s.status = "succeeded";
       s.error = null;
+      console.log('Auth slice - initAuth fulfilled:', { 
+        hasToken: !!s.accessToken, 
+        hasUser: !!s.user, 
+        userName: s.user?.name 
+      });
     });
     
     b.addCase(initAuth.rejected, (s, { payload }) => {
@@ -141,5 +139,5 @@ const slice = createSlice({
   },
 });
 
-export const { setToken, setUser, logout } = slice.actions;
+export const { setToken, setTokens, setUser, logout } = slice.actions;
 export default slice.reducer;
