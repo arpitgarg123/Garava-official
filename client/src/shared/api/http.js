@@ -6,14 +6,20 @@ const baseURL = (import.meta.env.VITE_API_URL || "http://localhost:8080/api").re
 const http = axios.create({ 
   baseURL, 
   withCredentials: true, 
-  timeout: 8000 // 8 seconds for regular requests
+  timeout: 8000, // 8 seconds for regular requests
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 // Auth requests can be slightly longer but not 30s
 const authHttp = axios.create({ 
   baseURL, 
   withCredentials: true, 
-  timeout: 12000 // 12 seconds for auth requests
+  timeout: 12000, // 12 seconds for auth requests
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 // Utility function for exponential backoff retry
@@ -82,6 +88,32 @@ http.interceptors.request.use((config) => {
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
+
+// Add similar interceptors for authHttp
+authHttp.interceptors.request.use((config) => {
+  const token = getToken();
+  console.log('AuthHttp Request:', {
+    url: config.url,
+    method: config.method?.toUpperCase(),
+    hasToken: !!token,
+    tokenPreview: token ? `${token.substring(0, 20)}...` : 'none',
+    body: config.data
+  });
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+authHttp.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    console.log('AuthHttp Response Error:', {
+      status: error.response?.status,
+      message: error.response?.data?.message || error.message,
+      url: error.config?.url
+    });
+    return Promise.reject(error);
+  }
+);
 
 http.interceptors.response.use(
   (res) => res,

@@ -19,13 +19,13 @@
  # delete-address ✅
 
 # # Product Features (Admin)
- # create-product
- # update-product
- # get-all-product
- # add-variant
- # update-variant
- # update-stock
- # soft delete
+ # create-product ✅
+ # update-product ✅
+ # get-all-product ✅
+ # add-variant ✅
+ # update-variant ✅
+ # update-stock ✅
+ # soft delete ✅
 
 # # Product Features (User)
  # get-all-products ✅

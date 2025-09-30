@@ -9,6 +9,7 @@ import productAdminReducer from "../features/product/adminSlice.js";
 import cartReducer from "../features/cart/slice.js";
 import wishlistReducer from "../features/wishlist/slice.js";
 import orderReducer from "../features/order/slice.js";
+import orderAdminReducer from "../features/order/adminSlice.js";
 import addressReducer from "../features/address/slice.js";
 
 // Persist configuration
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   wishlist: wishlistReducer,
   order: orderReducer,
+  orderAdmin: orderAdminReducer,
   address: addressReducer,
 });
 

@@ -306,9 +306,8 @@ const Dashboard = () => {
 
       case "orders":
         return (
-          <div className="bg-white w-full h-full rounded-lg shadow-sm border p-4 sm:p-6">
-            <h2 className="text-xl font-semibold mb-6">All orders</h2>
-           <Orders  orders={dummyOrders}/>
+          <div className="bg-white w-full h-full rounded-lg shadow-sm border">
+            <Orders />
           </div>
         );
 
