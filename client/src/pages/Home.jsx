@@ -12,6 +12,8 @@ import NewsletterInline from '../components/newsLatter/NewsletterInline';
 import Review from './Review';
 import Instagram from '../components/instagram/Instagram';
 import InstaPost from "./InstaPost";
+import { useLocation } from "react-router-dom";
+import ChatbotWidget from "../components/chatbot/ChatbotWidget";
 
 export default function HomePage() {
   // Hold any 3rd‑party instance (Lenis/Swiper/etc.)
@@ -29,6 +31,8 @@ export default function HomePage() {
       instanceRef.current = null;
     };
   }, []);
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
 
   return (
     <div id="scroll-container" className="bg-secondary text-textColor min-h-screen overflow-x-hidden">
@@ -38,6 +42,7 @@ export default function HomePage() {
       <Essentials />
       <Jewellry />
       <Fragnance />
+       {isHome && <ChatbotWidget />}
       {/* <Instagram /> */}
       <InstaPost />
       <Review/>

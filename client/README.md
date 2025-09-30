@@ -22,9 +22,9 @@ blogs page ui done, detail also  with responsive ✅
 create contact us page   with responsive ✅ 
 event and event details are done with responsive ✅ 
 media-coverage and media-details are done with responsive ✅ 
-product details page / user reviews 
+product details page / user reviews  
 google reviews  responsive done✅
-our story  responsive done✅ 
+our story  responsive done✅ nav
 back arrow implement for each page✅
 
     ***upcomming changes***
@@ -32,6 +32,8 @@ formatDate dynamic krna h
 navbar responsive krna h✅
 fonts fix krna h✅
 profile hover popup mini animations  ✅
+nav fix✅
+create chatbot ✅
 
 
 
