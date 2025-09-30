@@ -313,12 +313,8 @@ const Dashboard = () => {
 
       case "bookings":
         return (
-          <div className="bg-white w-full h-full rounded-lg shadow-sm border p-4 sm:p-6">
-            <h2 className="text-xl font-semibold mb-6">All bookings</h2>
-          <Appointment appointments={sampleAppointments}
-        pagination={{ page: 1, limit: 20, total: 2, totalPages: 1 }}
-        onOpen={(appt) => console.log("Open", appt)}
-        onAction={(action, appt) => console.log("Action", action, appt)} />
+          <div className="bg-white w-full h-full rounded-lg shadow-sm border">
+            <Appointment />
           </div>
         );
 

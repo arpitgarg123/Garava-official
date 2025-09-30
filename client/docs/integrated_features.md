@@ -40,9 +40,9 @@
  # payment-completing-process ✅ (PhonePe PG - migrated from Razorpay)
 
 # # Order Features (Admin)
- # get-all-order
- # get-order-by-id
- # update-order-status
+ # get-all-order ✅
+ # get-order-by-id ✅
+ # update-order-status ✅
  
 # # Cart Features
  # add-to-cart ✅
@@ -73,5 +73,23 @@
  # get-appointment
 
 # # Appointment Feature (Admin)
- # get-all appointment
- # update-appointment
+ # get-all appointment ✅
+ # update-appointment ✅
+
+# # Newsletter Feature (User)
+ # subscribe-newsletter
+ # unsubscribe-newsletter
+
+# # Newsletter Feature (User)
+ # get-subscriber-list
+
+# # blogs Feature (Admin)
+ # create-blog
+ # update-blog
+ # get-blogs
+ # update-status-blog
+ # delete-blog
+
+# # blogs Feature (User)
+ # get-blog
+ # get-blog-by-slug
