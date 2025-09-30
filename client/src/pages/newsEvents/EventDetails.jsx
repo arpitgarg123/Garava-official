@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ShareButton from "../../components/blogs/ShareButton";
 import { formatDate } from "../../utils/FormatDate";
 import { FaArrowLeft } from "react-icons/fa";
+import BackButton from "../../components/BackButton";
 
 // /**
 //  * MediaCoverage.jsx — Garava redesign
@@ -158,14 +159,9 @@ const EventDetailPage = () => {
   return (
     <div className="mt-20">
    
-     <div className="mb-6 w-1/5  text-center">
-    <Link
-      to="/"
-      className="inline-flex items-center text-gray-600 hover:text-gray-900 "
-    >
-      <span className="text-2xl "><FaArrowLeft /></span>
-    </Link>
-  </div>
+    <div className="sticky top-36 z-10 mb-3">
+        <BackButton />
+      </div>
       <section className="relative overflow-hidden ">
         <div className="mx-auto max-w-6xl px-4  pt-12 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">

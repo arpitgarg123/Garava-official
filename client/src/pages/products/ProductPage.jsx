@@ -6,6 +6,7 @@ import { setFilters, fetchProducts } from "../../features/product/slice";
 import SideBar from "../../components/Products/SideBar";
 import ProductCard from "../../components/Products/ProductCard";
 import PageHeader from "../../components/header/PageHeader";
+import BackButton from "../../components/BackButton";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -70,6 +71,9 @@ const ProductPage = () => {
 
   return (
     <div className="w-full py-6 mt-20 ">
+       <div className="sticky top-16 z-10 mt-4">
+          <BackButton />
+        </div>
      <PageHeader title={heading} />
 
       <div className="w-[95%] max-w-7xl  mx-auto grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8 items-start">

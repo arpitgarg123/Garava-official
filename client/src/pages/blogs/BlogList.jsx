@@ -2,6 +2,7 @@ import BlogCard from "../../components/blogs/BlogCard";
 import blogImage from '../../assets/images/insta2.jpg'
 import blogImage1 from '../../assets/images/insta3.jpg'
 import PageHeader from "../../components/header/PageHeader";
+import BackButton from "../../components/BackButton";
 
 const blogs = [
   {
@@ -30,7 +31,13 @@ const blogs = [
 
 const BlogList = () => {
   return (
-    <section className=" max-w-7xl mx-auto mt-34">
+    <>
+     <div className="sticky top-34 z-10 mb-3">
+        <BackButton />
+      </div>
+  
+    <section className=" max-w-7xl mx-auto mt-32">
+      
    <PageHeader title="Blogs" />
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog) => (
@@ -38,6 +45,7 @@ const BlogList = () => {
         ))}
       </div>
     </section>
+      </>
   );
 };
 

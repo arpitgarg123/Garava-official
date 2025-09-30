@@ -103,7 +103,7 @@ const NavItem = ({ item, hovered, setHovered, isMobile = false, onNavigate = () 
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="submenu-container w-screen fixed bg-white left-0 top-[130px] py-8 z-40"
+                className="submenu-container w-screen fixed bg-white text-black left-0 top-[130px] py-8 z-40"
               >
                 <div className="max-w-7xl mx-auto">
                   <div className="flex-center">

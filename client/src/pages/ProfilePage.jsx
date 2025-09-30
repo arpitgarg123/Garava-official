@@ -10,6 +10,7 @@ import { selectAddresses, selectIsAddressLoading } from "../features/address/sel
 import { useNavigate } from "react-router-dom";
 import WishlistContent from "../components/WishlistContent.jsx";
 import AddressSelector from "../components/AddressSelector.jsx";
+import BackButton from "../components/BackButton.jsx";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -425,7 +426,12 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-4 sm:p-6">
+    <>
+     <div className="sticky top-30 z-10 mb-3">
+        <BackButton />
+      </div>
+    <div className="max-w-7xl mx-auto p-4 sm:p-6 mt-30">
+
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Account</h1>
         <p className="text-gray-600 mt-2 text-sm sm:text-base">Manage your profile and preferences</p>
@@ -497,6 +503,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

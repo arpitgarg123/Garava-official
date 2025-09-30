@@ -1,4 +1,3 @@
-// Navbar.jsx (fixed - same UI, responsive + transitions)
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -214,7 +213,7 @@ const Navbar = () => {
                     <div className="text-sm">
                       <div className="font-medium">{user?.name}</div>
                       <div className="text-xs text-gray-500">{user?.email}</div>
-                      {isAdmin && <div className="text-xs text-blue-600 font-medium">Admin</div>}
+                      {isAdmin && <div className="text-xs text-black font-medium">Admin</div>}
                     </div>
                     <div className="flex items-center gap-3">
                       <button
@@ -283,7 +282,7 @@ const Navbar = () => {
             onClick={() => navigate('/')}
           /> */}
            <img
-            className="h-18 w-60 mt-2 object-contain cursor-pointer"
+            className="h-18 w-60 mt-2 mix-blend-difference object-contain cursor-pointer"
             src={lightLogo}
             alt="Dark logo"
             onClick={() => navigate('/')}
@@ -304,59 +303,88 @@ const Navbar = () => {
                 </div>
 
                 {/* User menu */}
-                <div className="relative user-menu-container">
-                  <button
-                    onClick={() => setShowUserMenu(!showUserMenu)}
-                    className="flex items-center space-x-1 cursor-pointer hover:opacity-70 transition-opacity"
-                    aria-label="User menu"
-                    aria-expanded={showUserMenu}
-                  >
-                    <CiUser size={22} aria-hidden="true" />
-                    <span className="text-sm font-medium">{user?.name || 'User'}</span>
-                  </button>
+               <div className="relative user-menu-container">
+  <button
+    onClick={() => setShowUserMenu(!showUserMenu)}
+    onKeyDown={(e) => e.key === "Escape" && setShowUserMenu(false)}
+    className="flex items-center space-x-1 cursor-pointer hover:opacity-70 transition-opacity"
+    aria-label="User menu"
+    aria-expanded={showUserMenu}
+    aria-haspopup="menu"
+  >
+    <CiUser size={22} aria-hidden="true" />
+    <span className="text-sm font-medium">{user?.role || 'User'}</span>
+  </button>
 
-                  {showUserMenu && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50">
-                      <div className="py-1">
-                        <div className="px-4 py-2 text-sm text-gray-700 border-b">
-                          <div className="font-medium">{user?.name}</div>
-                          <div className="text-xs text-gray-500">{user?.email}</div>
-                          {isAdmin && <div className="text-xs text-blue-600 font-medium">Admin</div>}
-                        </div>
+  {/* Caret + Menu (animated) */}
+  <AnimatePresence>
+    {showUserMenu && (
+      <motion.div
+        key="user-menu"
+        initial={{ opacity: 0, y: -6, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: -6, scale: 0.98 }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
+        className="absolute right-0 mt-2 z-50 w-56 sm:w-56 max-w-[80vw]"
+        role="menu"
+        aria-orientation="vertical"
+      >
+        {/* caret */}
+        <div className="relative">
+          <div className="absolute right-6 -top-2 h-3 w-3 rotate-45 rounded-sm bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_6px_16px_-2px_rgba(0,0,0,0.15)]" />
+        </div>
 
-                        <button
-                          onClick={() => { setShowUserMenu(false); navigate('/profile'); }}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        >
-                          Profile
-                        </button>
-                        <button
-                          onClick={() => { setShowUserMenu(false); navigate('/orders'); }}
-                          className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        >
-                          Orders
-                        </button>
-                        {isAdmin && (
-                          <button
-                            onClick={() => { setShowUserMenu(false); navigate('/dashboard'); }}
-                            className="block w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 font-medium"
-                          >
-                            Admin Dashboard
-                          </button>
-                        )}
-                        <div className="border-t">
-                          <button
-                            onClick={() => { setShowUserMenu(false); dispatch(doLogout()); navigate('/'); }}
-                            className="flex items-center w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-                          >
-                            <FiLogOut className="mr-2" size={16} />
-                            Logout
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+        {/* panel */}
+        <div className="overflow-hidden rounded-xl border border-gray-200/80 bg-white shadow-xl ring-1 ring-black/5 backdrop-blur-[2px]">
+          <div className="py-1">
+            <div className="px-4 py-2 text-sm text-gray-700 border-b bg-gradient-to-b from-white to-gray-50">
+              <div className="font-medium">{user?.name}</div>
+              <div className="text-xs text-gray-500">{user?.email}</div>
+              {isAdmin && <div className="text-xs text-black font-medium">Admin</div>}
+            </div>
+
+            <button
+              onClick={() => { setShowUserMenu(false); navigate('/profile'); }}
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+              role="menuitem"
+            >
+              Profile
+            </button>
+            <button
+              onClick={() => { setShowUserMenu(false); navigate('/orders'); }}
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+              role="menuitem"
+            >
+              Orders
+            </button>
+
+            {isAdmin && (
+              <button
+                onClick={() => { setShowUserMenu(false); navigate('/dashboard'); }}
+                className="block w-full text-left px-4 py-2 text-sm text-black hover:bg-blue-50 font-medium"
+                role="menuitem"
+              >
+                Admin Dashboard
+              </button>
+            )}
+
+            <div className="border-t">
+              <button
+                onClick={() => { setShowUserMenu(false); dispatch(doLogout()); navigate('/'); }}
+                className="flex items-center w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                role="menuitem"
+              >
+                <FiLogOut className="mr-2" size={16} />
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
+
               </>
             ) : (
               <button

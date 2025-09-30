@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import EventCard from "../../components/newsEvents/EventCard";
 import Pagination from "../../components/Pagination";
+import BackButton from "../../components/BackButton";
 
 /**
  * EventsPage.jsx — Garava redesign (News & Events)
@@ -121,7 +122,9 @@ import Pagination from "../../components/Pagination";
 
   return (
     <div className="mt-32">
-      {/* Hero */}
+    <div className="sticky top-16 z-10 mb-3">
+        <BackButton />
+      </div>
       <section className="relative overflow-hidden ">
         <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
           <p className="badge">

@@ -105,6 +105,7 @@ import { updateCartItem, removeFromCart } from '../features/cart/slice';
 import { toast } from 'react-hot-toast';
 import { CartSkeleton } from '../components/ui/LoadingSkeleton';
 import formatCurrency from '../utils/pricing';
+import BackButton from '../components/BackButton';
 
 
 const Cart = () => {
@@ -188,7 +189,10 @@ const Cart = () => {
   }
 
   return (
-    <div className="bg-white min-h-[60vh] p-20">
+    <div className="min-h-[60vh] mt-30">
+       <div className="sticky top-30 z-10 mb-3">
+        <BackButton />
+      </div>
       <div className="max-w-7xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
 
