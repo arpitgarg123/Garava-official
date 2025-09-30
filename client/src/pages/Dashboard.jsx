@@ -299,9 +299,8 @@ const Dashboard = () => {
         );
           case "products":
         return (
-          <div className="bg-white w-full h-full  rounded-lg shadow-sm border p-4 sm:p-6">
-            <h2 className="text-xl font-semibold mb-6">All Products</h2>
-          <Products products={products} />
+          <div className="bg-white w-full h-full rounded-lg shadow-sm border">
+            <Products />
           </div>
         );
 
