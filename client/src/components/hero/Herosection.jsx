@@ -9,11 +9,12 @@ import jFront from "../../assets/images/j-front.jpg";
 import fFront from "../../assets/images/f-front.png";
 import fBack from '../../assets/images/f-back.png'
 // import fBack from '../../assets/images/fragnance.png'
-// import model1 from '../../assets/images/model1.jpg'
+import model from '../../assets/images/model.png'
 import model2 from '../../assets/images/model2.png'
 import model3 from '../../assets/images/model3.png'
 import model4 from '../../assets/images/model4.png'
 import model5 from '../../assets/images/model5.png'
+import heroModel from '../../assets/images/heroModel.png'
 
 const HeroSection = () => {
   const img1Ref = useRef(null);
@@ -177,7 +178,7 @@ const HeroSection = () => {
         </div> */}
 
 
-        <img className="h-[95vh]  absolute left-1/10 bottom-0 object-cover " src={model5} alt="" />
+        <img className="h-[95vh] scale-120  absolute left-[29%] -bottom-12 object-cover " src={model} alt="" />
       </div>
     </section>
   );
