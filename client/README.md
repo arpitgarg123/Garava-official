@@ -1,13 +1,13 @@
 error boundary - error catching
 
     ***components & pages *****
-hero done with oprimize ✅ (nav fix , responsive not done)   
+hero done with oprimize ✅ (nav fix , responsive not done) ✅
 about page done with optimize, responsive✅
 essential page with responsive✅
 products page with resposive and optimize ✅
 signup login all done ✅
 side bar fix ✅
-product pages are done but not responsive
+product pages are done but not responsive ✅
 product details page are done but not responsive ✅
 newsletter not responsive✅
 footer not responisve✅
@@ -72,5 +72,5 @@ instagram page change with responsive  ✅
 
 2) instagram post dynamicaly 
 
-3) news & events are dynamicaly
+3) news & events are dynamicaly✅
 
