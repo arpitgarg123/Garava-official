@@ -34,6 +34,8 @@ fonts fix krna h✅
 profile hover popup mini animations  ✅
 nav fix✅
 create chatbot ✅
+product details product gallery ✅
+navbar responsive links are not active
 
 
 

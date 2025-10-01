@@ -189,6 +189,7 @@ import { selectIsProductInWishlist } from '../../features/wishlist/selectors';
 import { toast } from 'react-hot-toast';
 import Recommendation from '../../components/recommendation/Recommendation';
 import BackButton from '../../components/BackButton';
+import ProductGallery from '../../components/Products/ProductGallery';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -269,29 +270,30 @@ const ProductDetails = () => {
   if (status === 'failed') return <p className="p-4 text-red-500">{error}</p>;
   if (!product) return <p className="p-4">Product not found.</p>;
 
-  const heroSrc =
-    product?.heroImage?.url ||
-    product?.heroImage ||
-    product?.gallery?.[0]?.url ||
-    "/placeholder.jpg";
+  // const heroSrc =
+  //   product?.heroImage?.url ||
+  //   product?.heroImage ||
+  //   product?.gallery?.[0]?.url ||
+  //   "/placeholder.jpg";
 
   return (
-    <div className="w-full py-10 mt-26 sm:py-12">
+    <div className="w-full py-10 mt-26 sm:py-12 max-sm:mt-0">
        <div className="sticky top-16 z-10 mb-3">
     <BackButton />
   </div>
       <div className="mx-auto w-[95%] max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Top: Image + Info */}
+  
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* Image */}
+   
           <div className="lg:col-span-5">
-            <div className="w-full overflow-hidden bg-gray-100">
+            {/* <div className="w-full overflow-hidden bg-gray-100">
               <img
                 src={heroSrc}
                 alt={product?.name || "Product image"}
                 className="w-full h-auto object-cover"
               />
-            </div>
+            </div> */}
+            <ProductGallery product={product} />
           </div>
 
           {/* Info */}
@@ -310,15 +312,22 @@ const ProductDetails = () => {
               {product?.variants?.[0]?.sku || product?.defaultVariant?.sku || 'SKU not available'}
             </p>
 
-            <div className=" flex flex-col gap-3  h-16 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-xl sm:text-2xl font-medium">
+            <div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="text-lg sm:text-xl font-regular">
                 Customize your jewellery Design
               </h2>
-              <button className="btn-black uppercase w-full sm:w-auto">
+              <button className="btn-black uppercase text-sm max-sm: my-2 tracking-wider w-full sm:w-auto">
                 Book an appointment
               </button>
             </div>
 
+  {/* Description */}
+            <div className="mt-5 ">
+              <h3 className="text-xl sm:text-2xl font-semibold">Product Description</h3>
+              <p className="mt-2 text-gray-800 leading-relaxed">
+                {product?.description || 'Description not available'}
+              </p>
+            </div>
             {/* Action buttons */}
             <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
               <button onClick={handleAddToCart} className="btn-black w-full  sm:w-auto">
@@ -339,18 +348,12 @@ const ProductDetails = () => {
               </button>
             </div>
 
-            {/* Description */}
-            <div className="mt-6">
-              <h3 className="text-xl sm:text-2xl font-semibold">Product Description</h3>
-              <p className="mt-2 text-gray-800 leading-relaxed">
-                {product?.description || 'Description not available'}
-              </p>
-            </div>
+          
           </div>
         </div>
 
         {/* Bottom: Accordion + Shipping info */}
-        <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
+        <div className="mt-18 grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
           <div className="lg:col-span-8">
             <ProductAccordion />
           </div>
