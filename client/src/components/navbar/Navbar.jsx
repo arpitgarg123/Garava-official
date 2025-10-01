@@ -389,7 +389,7 @@ const Navbar = () => {
             ) : (
               <button
                 onClick={() => navigate('/login')}
-                className="bg-black text-white px-6 py-2 cursor-pointer font-medium hover:bg-gray-800 transition-colors"
+                className=" text-white px-6 py-2 cursor-pointer font-medium "
               >
                 Login
               </button>
