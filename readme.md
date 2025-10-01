@@ -8,7 +8,7 @@ It is designed to showcase and sell **premium jewellery and fragrances**, while 
 # # fending work
 
 color filter 
-home search
+home search ✅
 glitch solve 
 remove logs
 blogs ✅ (only the intigration is left)

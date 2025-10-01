@@ -151,7 +151,11 @@ const Navbar = () => {
 
           {/* Right icons */}
           <div className="flex items-center gap-3">
-            <CiSearch size={22} className="cursor-pointer" />
+            <CiSearch 
+              size={22} 
+              className="cursor-pointer hover:opacity-70 transition-opacity" 
+              onClick={() => navigate('/search')}
+            />
             <CiHeart size={22} className="cursor-pointer" onClick={() => navigate('/wishlist')} />
             <div className="relative cursor-pointer" onClick={() => navigate('/cart')}>
               <PiBagLight size={22} />
@@ -291,7 +295,12 @@ const Navbar = () => {
           <div className="flex items-center justify-end w-72 space-x-4">
             {isAuthenticated ? (
               <>
-                <CiSearch size={25} aria-hidden="true" className="cursor-pointer hover:opacity-70 transition-opacity" />
+                <CiSearch 
+                  size={25} 
+                  aria-hidden="true" 
+                  className="cursor-pointer hover:opacity-70 transition-opacity" 
+                  onClick={() => navigate('/search')}
+                />
                 <CiHeart size={24} aria-hidden="true" className="cursor-pointer hover:opacity-70 transition-opacity" onClick={() => navigate('/wishlist')} />
                 <div className="relative cursor-pointer hover:opacity-70 transition-opacity" onClick={() => navigate('/cart')}>
                   <IoBagHandleOutline size={22} aria-hidden="true" />
@@ -387,12 +396,20 @@ const Navbar = () => {
 
               </>
             ) : (
-              <button
-                onClick={() => navigate('/login')}
-                className="bg-black text-white px-6 py-2 cursor-pointer font-medium hover:bg-gray-800 transition-colors"
-              >
-                Login
-              </button>
+              <div className="flex items-center space-x-4">
+                <CiSearch 
+                  size={25} 
+                  aria-hidden="true" 
+                  className="cursor-pointer hover:opacity-70 transition-opacity" 
+                  onClick={() => navigate('/search')}
+                />
+                <button
+                  onClick={() => navigate('/login')}
+                  className="bg-black text-white px-6 py-2 cursor-pointer font-medium hover:bg-gray-800 transition-colors"
+                >
+                  Login
+                </button>
+              </div>
             )}
           </div>
         </div>
