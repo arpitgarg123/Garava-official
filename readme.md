@@ -17,7 +17,7 @@ news&events backend
 admin password change
 admin dashboardd
 continue google  ✅
-chat bot 
+chat bot ✅ chat bot done have some ui issue left
 pricing issue 
 refund payment gateway
 notification setup across all service
@@ -29,3 +29,5 @@ search home
 chatbot
 events
 testinominals
+pagination on every where
+strong password 

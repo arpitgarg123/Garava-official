@@ -28,6 +28,8 @@ import appointmentRouter from "./modules/appointment/appointment.router.js";
 import newsletterRouter from "./modules/newsletter/newsletter.router.js";
 import blogRouter from "./modules/blogs/blog.router.js";
 import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
+import faqRouter from "./modules/faq/faq.router.js";
+import faqAdminRouter from "./modules/faq/admin/faq.admin.router.js";
 
   // routers
   const app = express();
@@ -121,6 +123,8 @@ import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
   app.use("/api/blog", blogRouter);
   app.use("/api/newsletter", newsletterRouter);
   app.use("/api/admin/blog", blogAdminRouter);
+  app.use("/api/faq", faqRouter);
+  app.use("/api/admin/faq", faqAdminRouter);
 
   // global error handler
   app.use(errorHandler);

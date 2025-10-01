@@ -10,7 +10,8 @@ import {
   FaBars,
   FaSearch,
   FaBell,
-  FaSignOutAlt
+  FaSignOutAlt,
+  FaQuestionCircle
 } from "react-icons/fa";
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
@@ -22,6 +23,7 @@ import Appointment from '../components/DashboardSections/Appointment';
 import Reviews from './../components/DashboardSections/Reviews';
 import Newsletter from '../components/DashboardSections/Newsletter';
 import Blogs from '../components/DashboardSections/BlogsAdmin';
+import FAQAdmin from '../components/DashboardSections/FAQAdmin';
 import Overview from '../components/DashboardSections/Overview';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -37,6 +39,7 @@ const Dashboard = () => {
     { id: "bookings", label: "Bookings", icon: MdEventAvailable },
     { id: "reviews", label: "Reviews", icon: FaStar },
     { id: "blogs", label: "Blogs", icon: FaBlog },
+    { id: "faq", label: "FAQ", icon: FaQuestionCircle },
     { id: "newsletter", label: "Newsletter", icon: FaEnvelope },
   ];
 
@@ -203,6 +206,8 @@ const Dashboard = () => {
         );
       case "blogs":
         return <Blogs />;
+      case "faq":
+        return <FAQAdmin />;
       case "newsletter":
         return (
           <Newsletter  

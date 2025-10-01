@@ -1,8 +1,19 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { FiMessageCircle, FiX, FiSend, FiPaperclip, FiMinimize2 } from "react-icons/fi";
+import { BiThumbsUp, BiThumbsDown } from "react-icons/bi";
 import iconlogo from "../../assets/images/gav-dark.png";
 import MessageBubble from "./MessageBubble";
 import TypingBubble from "./TypingBubble";
+import { FAQChatbotService } from "../../features/faq/chatbotService.js";
+import { 
+  selectMessages, 
+  selectIsTyping, 
+  getFAQCategories,
+  voteFAQ,
+  clearConversation,
+  addMessage
+} from "../../features/faq/slice.js";
 
 
 const COLORS = {

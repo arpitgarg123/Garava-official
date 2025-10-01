@@ -17,6 +17,8 @@ import blogAdminReducer from "../features/blogs/blogAdminSlice.js";
 import reviewReducer from "../features/reviews/reviewSlice.js";
 import reviewAdminReducer from "../features/reviews/reviewAdminSlice.js";
 import searchReducer from "../features/search/slice.js";
+import faqReducer from "../features/faq/slice.js";
+import faqAdminReducer from "../features/faq/adminSlice.js";
 
 // Persist configuration
 const persistConfig = {
@@ -41,6 +43,8 @@ const rootReducer = combineReducers({
   review: reviewReducer,
   reviewAdmin: reviewAdminReducer,
   search: searchReducer,
+  faq: faqReducer,
+  faqAdmin: faqAdminReducer,
 });
 
 // Create persisted reducer
@@ -62,5 +66,10 @@ export const store = configureStore({
       },
     }),
 });
+
+// Make store globally accessible for chatbot service
+if (typeof window !== 'undefined') {
+  window.store = store;
+}
 
 export const persistor = persistStore(store);
