@@ -1,17 +1,72 @@
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
+// import { forwardRef, useEffect, useRef } from "react";
+
+// gsap.registerPlugin(ScrollTrigger)
+
+// const Card =forwardRef(({ title, subtitle, img, hotspotSize = "40%" }, ref) => {
+
+//   return (
+//     <div ref={ref} className="flex flex-col w-full lg:w-1/2">
+//      <article   
+//      aria-label={`${title} card`}
+//       className="w-full max-w-[800px] mx-auto overflow-hidden bg-gray-100 relative">
+//      <div className="aspect-[16/10] relative">
+//           <img
+//             src={img}
+//             alt={`${title} - ${subtitle}`}
+//             className="absolute h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+//             draggable="false"
+//           />
+//         </div>
+//  </article>
+        
+
+//       <div className="text-start w-full  ">
+//          <h2 className="text-xl uppercase m-0  sm:text-2xl  text-gray-900 leading-normal tracking-wide">
+//             {title}
+//           </h2>
+//           <p className="text-base ">
+//             {subtitle}
+//           </p>
+//           <button
+//             className="btn mt-4"
+//             aria-label={`Shop ${title}`}
+//           >
+//             Shop Now
+//           </button>
+//         </div>
+    
+ 
+//     </div>
+//   );
+// });
+
+// export default Card
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { forwardRef, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger)
 
-const Card =forwardRef(({ title, subtitle, img, hotspotSize = "40%" }, ref) => {
+const Card = forwardRef(({ title, subtitle, img, hotspotSize = "40%", link }, ref) => {
+  const navigate = useNavigate();
+
+  const handleShopNow = () => {
+    if (link) {
+      navigate(link);
+    }
+  };
 
   return (
     <div ref={ref} className="flex flex-col w-full lg:w-1/2">
-     <article   
-     aria-label={`${title} card`}
-      className="w-full max-w-[800px] mx-auto overflow-hidden bg-gray-100 relative">
-     <div className="aspect-[16/10] relative">
+      <article   
+        aria-label={`${title} card`}
+        className="w-full max-w-[800px] mx-auto overflow-hidden bg-gray-100 relative"
+      >
+        <div className="aspect-[16/10] relative">
           <img
             src={img}
             alt={`${title} - ${subtitle}`}
@@ -19,27 +74,27 @@ const Card =forwardRef(({ title, subtitle, img, hotspotSize = "40%" }, ref) => {
             draggable="false"
           />
         </div>
- </article>
-        
+      </article>
 
-      <div className="text-start w-full  ">
-         <h2 className="text-xl uppercase m-0  sm:text-2xl  text-gray-900 leading-normal tracking-wide">
-            {title}
-          </h2>
-          <p className="text-base ">
-            {subtitle}
-          </p>
-          <button
-            className="btn mt-4"
-            aria-label={`Shop ${title}`}
-          >
-            Shop Now
-          </button>
-        </div>
-    
- 
+      <div className="text-start w-full">
+        <h2 className="text-xl uppercase m-0 sm:text-2xl text-gray-900 leading-normal tracking-wide">
+          {title}
+        </h2>
+        <p className="text-base">
+          {subtitle}
+        </p>
+        <button
+          onClick={handleShopNow}
+          className="btn mt-4"
+          aria-label={`Shop ${title}`}
+        >
+          Shop Now
+        </button>
+      </div>
     </div>
   );
 });
 
-export default Card
+Card.displayName = 'Card';
+
+export default Card;

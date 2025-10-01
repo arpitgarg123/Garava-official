@@ -16,6 +16,7 @@ import {
   selectReviewAdminPagination,
   selectReviewAdminFilters
 } from "../../features/reviews/reviewAdminSlice";
+import { formatDate } from "../../utils/FormatDate";
 
 export default function Reviews() {
   const dispatch = useDispatch();
@@ -33,13 +34,6 @@ export default function Reviews() {
     dispatch(fetchReviewsAdmin({ page: 1, limit: 20 }));
   }, [dispatch]);
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
 
   const getStatusColor = (isApproved, flagged) => {
     if (flagged) return "bg-red-100 text-red-800";

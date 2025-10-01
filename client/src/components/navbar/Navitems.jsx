@@ -66,13 +66,13 @@ const NavItem = ({ item, hovered, setHovered, isMobile = false, onNavigate = () 
 
   return (
     <div
-      className={`relative nav-items ${isMobile ? 'py-0' : 'py-3'} group`}
+      className={`relative nav-items  ${isMobile ? 'py-0' : 'py-3'} group`}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       {/* Trigger */}
       <button
-        className="uppercase w-full text-left font-medium font-[montserrat] text-sm tracking-wide flex items-center justify-between"
+        className="uppercase w-full cursor-pointer text-left font-medium font-[montserrat] text-sm tracking-wide flex items-center justify-between"
         onClick={isMobile ? handleToggleMobile : undefined}
         aria-expanded={isMobile ? !!isOpenMobile : hovered === item.title}
         aria-controls={isMobile ? `${item.title}-submenu` : undefined}

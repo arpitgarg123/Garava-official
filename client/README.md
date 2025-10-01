@@ -27,15 +27,20 @@ google reviews  responsive done✅
 our story  responsive done✅ nav
 back arrow implement for each page✅
 
+
+
+     **optinal***
+ smoothNavigation
+
     ***upcomming changes***
-formatDate dynamic krna h 
+formatDate dynamic krna h ✅
 navbar responsive krna h✅
 fonts fix krna h✅
 profile hover popup mini animations  ✅
 nav fix✅
 create chatbot ✅
 product details product gallery ✅
-navbar responsive links are not active
+navbar responsive links are not active✅
 
 
 

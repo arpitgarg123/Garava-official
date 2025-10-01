@@ -10,7 +10,7 @@ const About = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
   return (
-  <main className="w-full text-black py-20 flex flex-col items-center">
+  <main  className="w-full text-black py-20 flex flex-col items-center">
       <div className="w-full max-w-6xl px-6 flex flex-col ">
         <AboutHeading text={"''Worn by the Worthy''"} />
         <AboutText

@@ -20,6 +20,7 @@ import { formatCurrency } from "../../utils/pricing";
 import OrderDetailsModal from "./OrderDetailsModal";
 import OrderStatusUpdateModal from "./OrderStatusUpdateModal";
 import OrderRefundModal from "./OrderRefundModal";
+import { formatDateTime } from "../../utils/FormatDate";
 
 function getStatusBgColor(status) {
   const colors = {
@@ -105,15 +106,7 @@ export default function Orders() {
     dispatch(setFilters({ ...filters, page: newPage }));
   };
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
+
 
   if (error) {
     return (
@@ -279,7 +272,7 @@ export default function Orders() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{formatDate(order.createdAt)}</div>
+                      <div className="text-sm text-gray-900">{formatDateTime(order.createdAt)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">

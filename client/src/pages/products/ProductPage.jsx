@@ -120,7 +120,7 @@
 
 import { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { setFilters, fetchProducts } from "../../features/product/slice";
 import SideBar from "../../components/Products/SideBar";
 import ProductCard from "../../components/Products/ProductCard";
@@ -130,33 +130,76 @@ import { BiFilterAlt, BiX } from "react-icons/bi";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const { category: routeCategory } = useParams();
   const { list, filters } = useSelector((s) => s.product);
   const { items, status, error } = list;
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [pendingMobileFilters, setPendingMobileFilters] = useState(null);
 
-  // Map routeCategory into filters (type / category)
-  useEffect(() => {
+const searchParams = new URLSearchParams(location.search);
+  const subcategoryFromUrl = searchParams.get('subcategory');
+
+useEffect(() => {
     if (!routeCategory) return;
+    
     const lower = routeCategory.toLowerCase();
+    
+    // Handle "all" route - show all products without category filter
+    if (lower === "all") {
+      dispatch(setFilters({ 
+        type: "", 
+        category: "", 
+        page: 1 
+      }));
+      return;
+    }
+    
+    // Handle subcategory from navbar navigation
+    if (subcategoryFromUrl && subcategoryFromUrl !== 'all') {
+      dispatch(setFilters({ 
+        type: lower, 
+        category: subcategoryFromUrl, 
+        page: 1 
+      }));
+      return;
+    }
+    // Handle main categories
     if (lower.startsWith("all-")) {
       dispatch(setFilters({ type: lower.replace("all-", ""), category: "", page: 1 }));
-    } else if (lower === "jewellery" || lower === "fragrance") {
+    } else if (lower === "jewellery" || lower === "fragrance" || lower === "high-jewellery") {
       dispatch(setFilters({ type: lower, category: "", page: 1 }));
     } else {
       // treat as subcategory; keep existing type or default jewellery
-      dispatch(setFilters((prev) => {
-        const currentType = filters.type || "jewellery";
-        return {
-          type: currentType,
-          category: lower,
-          page: 1
-        };
+      const currentType = filters.type || "jewellery";
+      dispatch(setFilters({
+        type: currentType,
+        category: lower,
+        page: 1
       }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [routeCategory]);
+  }, [routeCategory, subcategoryFromUrl, dispatch]);
+
+  // useEffect(() => {
+  //   if (!routeCategory) return;
+  //   const lower = routeCategory.toLowerCase();
+  //   if (lower.startsWith("all-")) {
+  //     dispatch(setFilters({ type: lower.replace("all-", ""), category: "", page: 1 }));
+  //   } else if (lower === "jewellery" || lower === "fragrance") {
+  //     dispatch(setFilters({ type: lower, category: "", page: 1 }));
+  //   } else {
+  //     // treat as subcategory; keep existing type or default jewellery
+  //     dispatch(setFilters((prev) => {
+  //       const currentType = filters.type || "jewellery";
+  //       return {
+  //         type: currentType,
+  //         category: lower,
+  //         page: 1
+  //       };
+  //     }));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [routeCategory]);
 
   // Debounced fetch on filter changes
   const [pendingFilters, setPendingFilters] = useState(filters);
@@ -181,9 +224,23 @@ const ProductPage = () => {
     return () => clearTimeout(h);
   }, [pendingFilters, dispatch]);
 
-  const heading = routeCategory
-    ? routeCategory.replace(/-/g, " ")
-    : (filters.type || "products");
+  const getPageHeading = () => {
+    const lower = routeCategory?.toLowerCase();
+    
+    if (lower === "all") {
+      return "All Products";
+    }
+    
+    if (subcategoryFromUrl && subcategoryFromUrl !== 'all') {
+      return `${routeCategory} - ${subcategoryFromUrl.replace(/-/g, ' ')}`;
+    }
+    
+    return routeCategory 
+      ? routeCategory.replace(/-/g, " ")
+      : (filters.type || "products");
+  };
+
+  const heading = getPageHeading();
 
   const handleApplyFilters = (f) => {
     if (pendingMobileFilters) {
@@ -205,6 +262,12 @@ const ProductPage = () => {
     setShowMobileFilters(false);
   };
 
+   // Determine main category for sidebar
+  const getMainCategory = () => {
+    const lower = routeCategory?.toLowerCase();
+    if (lower === "all") return "all";
+    return filters.type || routeCategory || "jewellery";
+  };
   return (
     <div className="w-full py-6 mt-20 max-md:mt-0 relative">
       <div className="sticky top-16 z-10 mt-4">
@@ -247,7 +310,7 @@ const ProductPage = () => {
             
             <div className="max-h-[70vh] overflow-y-auto p-4">
               <SideBar 
-                mainCategory={filters.type || routeCategory || "jewellery"} 
+                mainCategory={getMainCategory()} 
                 onFilterChange={handleMobileFilterChange}
                 isMobile={true}
                 initialValues={filters}
@@ -276,7 +339,7 @@ const ProductPage = () => {
           {/* Desktop Sidebar */}
           <div className="hidden md:block">
             <SideBar 
-              mainCategory={filters.type || routeCategory || "jewellery"}
+              mainCategory={getMainCategory()}
               initialValues={filters}
             />
           </div>
@@ -300,8 +363,21 @@ const ProductPage = () => {
               </select>
             </div>
 
-            {status === "failed" && (
-              <div className="text-red-500 text-sm mb-4">{error}</div>
+         {/* No products message for all products view */}
+            {items.length === 0 && status !== "loading" && (
+              <div className="text-center py-12">
+                <p className="text-gray-500 text-lg mb-4">
+                  {routeCategory?.toLowerCase() === "all" 
+                    ? "Discover our complete collection of luxury products"
+                    : "No products found matching your criteria"
+                  }
+                </p>
+                {routeCategory?.toLowerCase() === "all" && (
+                  <p className="text-gray-400">
+                    Browse through our carefully curated selection of jewellery and fragrances
+                  </p>
+                )}
+              </div>
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">

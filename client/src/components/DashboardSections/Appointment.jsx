@@ -8,6 +8,7 @@ import {
   updateAppointmentAdmin 
 } from "../../features/appointment/adminSlice";
 import AppointmentDetailsModal from "./AppointmentDetailsModal";
+import { formatDateTime } from "../../utils/FormatDate";
 
 export default function Appointment() {
   const dispatch = useDispatch();
@@ -27,15 +28,6 @@ export default function Appointment() {
     dispatch(fetchAppointmentsAdmin({}));
   }, [dispatch]);
 
-  const formatDateTime = (dateString) => {
-    return new Date(dateString).toLocaleString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  };
 
   const getStatusColor = (status) => {
     const colors = {

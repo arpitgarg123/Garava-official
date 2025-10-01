@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import ShareButton from "../../components/blogs/ShareButton";
 import BackButton from "../../components/BackButton";
+import { formatDate } from "../../utils/FormatDate";
 
 const DEFAULT_POST = {
   category: "Jewelry",
@@ -49,18 +50,7 @@ const DEFAULT_POST = {
 
 };
 
-function formatDate(iso) {
-  try {
-    const d = new Date(iso);
-    return d.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch (e) {
-    return iso;
-  }
-}
+
 
 function useReadingProgress(targetRef) {
   const [progress, setProgress] = useState(0);

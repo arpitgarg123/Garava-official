@@ -2,15 +2,9 @@ import "./blog.css";
 import { FiShare2 } from "react-icons/fi";
 import { FaRegComment } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { formatDate } from "../../utils/FormatDate";
 
 const BlogCard = ({ blog }) => {
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
 
   const getImageUrl = () => {
     if (blog.coverImage?.url) {
@@ -50,7 +44,7 @@ const BlogCard = ({ blog }) => {
           {blog.excerpt || blog.description || 'No description available'}
         </p>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between ">
           <Link to={`/blogs/${blog.slug}`}>
             <button className="blog-btn">Continue reading</button>
           </Link>

@@ -18,6 +18,7 @@ import {
 import BlogCreateEditModal from "./BlogCreateEditModal";
 import BlogDetailsModal from "./BlogDetailsModal";
 import BlogDeleteModal from "./BlogDeleteModal";
+import { formatDate } from "../../utils/FormatDate";
 
 export default function BlogsAdmin() {
   const dispatch = useDispatch();
@@ -34,13 +35,7 @@ export default function BlogsAdmin() {
     dispatch(fetchBlogsAdmin({ page: 1, limit: 50 }));
   }, [dispatch]);
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
+
 
   const getStatusColor = (status) => {
     const colors = {

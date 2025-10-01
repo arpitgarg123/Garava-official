@@ -6,6 +6,7 @@ import {
   selectBlogAdminModals,
   selectBlogAdminCurrentBlog,
 } from '../../features/blogs/blogAdminSlice';
+import { formatDate } from '../../utils/FormatDate';
 
 export default function BlogDetailsModal() {
   const dispatch = useDispatch();
@@ -16,13 +17,7 @@ export default function BlogDetailsModal() {
 
   if (!isOpen || !blog) return null;
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
+ 
 
   const getStatusColor = (status) => {
     switch (status) {
