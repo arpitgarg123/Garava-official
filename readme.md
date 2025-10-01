@@ -9,7 +9,7 @@ It is designed to showcase and sell **premium jewellery and fragrances**, while 
 
 color filter 
 home search
-glitch solve
+glitch solve 
 remove logs
 blogs ✅ (only the intigration is left)
 review
@@ -21,5 +21,11 @@ chat bot
 pricing issue 
 refund payment gateway
 notification setup across all service
-login issues 
+login issues  ✅
 check left for the blogs
+google auth condition 
+color filter 
+search home
+chatbot
+events
+testinominals
