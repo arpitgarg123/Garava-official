@@ -1,13 +1,13 @@
 error boundary - error catching
 
     ***components & pages *****
-hero done with oprimize ✅ (nav fix , responsive not done)   
+hero done with oprimize ✅ (nav fix , responsive not done) ✅
 about page done with optimize, responsive✅
 essential page with responsive✅
 products page with resposive and optimize ✅
 signup login all done ✅
 side bar fix ✅
-product pages are done but not responsive
+product pages are done but not responsive ✅
 product details page are done but not responsive ✅
 newsletter not responsive✅
 footer not responisve✅
@@ -22,9 +22,9 @@ blogs page ui done, detail also  with responsive ✅
 create contact us page   with responsive ✅ 
 event and event details are done with responsive ✅ 
 media-coverage and media-details are done with responsive ✅ 
-product details page / user reviews 
+product details page / user reviews   ✅
 google reviews  responsive done✅
-our story  responsive done✅ 
+our story  responsive done✅ nav
 back arrow implement for each page✅
 
     ***upcomming changes***
@@ -32,6 +32,10 @@ formatDate dynamic krna h
 navbar responsive krna h✅
 fonts fix krna h✅
 profile hover popup mini animations  ✅
+nav fix✅
+create chatbot ✅
+product details product gallery ✅
+navbar responsive links are not active
 
 
 
@@ -70,5 +74,5 @@ instagram page change with responsive  ✅
 
 2) instagram post dynamicaly 
 
-3) news & events are dynamicaly
+3) news & events are dynamicaly✅
 

@@ -67,7 +67,7 @@ body, html{
   left: 0;
   z-index: 50;
   transition: all 0.3s ease;
-  color: white;
+  /* color:white; */
 }
 
 .submenu-container {

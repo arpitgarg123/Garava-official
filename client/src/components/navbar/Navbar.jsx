@@ -110,20 +110,20 @@ const Navbar = () => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
   }, [mobileOpen]);
 
-  const navTextColor = isHeroPage && !scrolled ? 'text-white' : 'text-black';
+  const navTextColor = isHeroPage && !scrolled && !isNavActive ? 'text-white' : 'text-black';
   const shouldShowNavItemsDesktop = isHeroPage && !scrolled;
+  
 
   const navbarClass = `navbar hidden md:block mt-6 transition-transform duration-300 ease-out ${
     isHidden ? '-translate-y-48' : 'translate-y-0'
   } ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white' : 'bg-transparent'} ${
     isNavActive ? 'expanded' : ''
-  } ${isHeroPage ? 'bg-transparent' : 'bg-white'}`;
+  } `;
 
   return (
     <>
       <Header />
 
-      {/* MOBILE TOP BAR (smaller screens) */}
       <nav
         className={`md:hidden sticky top-0 z-50 ${
           scrolled ? 'bg-white shadow-sm' : 'bg-white/80 backdrop-blur'

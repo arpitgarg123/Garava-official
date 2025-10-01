@@ -49,11 +49,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Submenu from "./Submenu";
 
-/**
- * Props:
- * - isMobile (bool): mobile mode में hover नहीं, click से expand होगा
- * - onNavigate(): mobile में किसी link पर जाने के बाद menu बंद करने के लिए callback
- */
+
 const NavItem = ({ item, hovered, setHovered, isMobile = false, onNavigate = () => {} }) => {
   const hasSubmenu = item.submenu && item.submenu.length > 0;
 
