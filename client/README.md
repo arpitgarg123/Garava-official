@@ -22,7 +22,7 @@ blogs page ui done, detail also  with responsive ✅
 create contact us page   with responsive ✅ 
 event and event details are done with responsive ✅ 
 media-coverage and media-details are done with responsive ✅ 
-product details page / user reviews  
+product details page / user reviews   ✅
 google reviews  responsive done✅
 our story  responsive done✅ nav
 back arrow implement for each page✅

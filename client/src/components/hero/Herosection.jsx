@@ -12,6 +12,8 @@ import fBack from '../../assets/images/f-back.png'
 // import model1 from '../../assets/images/model1.jpg'
 import model2 from '../../assets/images/model2.png'
 import model3 from '../../assets/images/model3.png'
+import model4 from '../../assets/images/model4.png'
+import model5 from '../../assets/images/model5.png'
 
 const HeroSection = () => {
   const img1Ref = useRef(null);
@@ -175,7 +177,7 @@ const HeroSection = () => {
         </div> */}
 
 
-        <img className="h-[95vh]  absolute left-1/10 bottom-0 object-cover " src={model3} alt="" />
+        <img className="h-[95vh]  absolute left-1/10 bottom-0 object-cover " src={model5} alt="" />
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 .hero-root {
-  /* background: linear-gradient(to bottom, #021330, #022348, #005f9e); */
-  background-image: url(../../assets/images/hero.png);
+  background: linear-gradient(to bottom, #021330, #022348, #005f9e);
+  /* background-image: url(../../assets/images/hero.png); */
 }
 
 .hero-overlay {
