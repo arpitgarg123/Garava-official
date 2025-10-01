@@ -58,15 +58,15 @@
  # toggle-product-items ✅
 
 # # Review Feature (User)
- # create-review
- # update-review
- # list-all-review
- # vote-helpful
+ # create-review ✅
+ # update-review ✅
+ # list-all-review ✅
+ # vote-helpful ✅
 
 # # Review Feature (admin)
- # admin-list-review
- # admin-moderate-review
- # admin-delete-review
+ # admin-list-review ✅
+ # admin-moderate-review ✅
+ # admin-delete-review ✅
 
 # # Appointment Feature (User)
  # create-appointment ✅

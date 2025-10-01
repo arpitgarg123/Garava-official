@@ -1,19 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AiFillStar, AiOutlineSearch, AiOutlineEye } from "react-icons/ai";
 import { MdCheckCircle, MdCancel, MdFilterList } from "react-icons/md";
 import { FiMessageSquare } from "react-icons/fi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import {
+  fetchReviewsAdmin,
+  moderateReviewAdmin,
+  deleteReviewAdmin,
+  setFilters,
+  setCurrentPage,
+  selectReviewAdminReviews,
+  selectReviewAdminLoading,
+  selectReviewAdminError,
+  selectReviewAdminPagination,
+  selectReviewAdminFilters
+} from "../../features/reviews/reviewAdminSlice";
 
-export default function Reviews({
-  reviews = [],
-  pagination = { page: 1, limit: 20, total: 0, totalPages: 1 },
-  onAction = () => {},
-  onPageChange = () => {},
-  onFilterChange = () => {},
-  onClearFilters = () => {}
-}) {
+export default function Reviews() {
+  const dispatch = useDispatch();
+  const reviews = useSelector(selectReviewAdminReviews);
+  const loading = useSelector(selectReviewAdminLoading);
+  const error = useSelector(selectReviewAdminError);
+  const pagination = useSelector(selectReviewAdminPagination);
+  const filters = useSelector(selectReviewAdminFilters);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [ratingFilter, setRatingFilter] = useState('');
+
+  useEffect(() => {
+    dispatch(fetchReviewsAdmin({ page: 1, limit: 20 }));
+  }, [dispatch]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-IN', {
@@ -35,20 +53,81 @@ export default function Reviews({
     return "Pending";
   };
 
+  const handleApprove = async (reviewId) => {
+    try {
+      await dispatch(moderateReviewAdmin({ 
+        reviewId, 
+        moderationData: { approve: true } 
+      })).unwrap();
+    } catch (error) {
+      console.error('Failed to approve review:', error);
+    }
+  };
+
+  const handleReject = async (reviewId) => {
+    try {
+      await dispatch(moderateReviewAdmin({ 
+        reviewId, 
+        moderationData: { approve: false } 
+      })).unwrap();
+    } catch (error) {
+      console.error('Failed to reject review:', error);
+    }
+  };
+
+  const handleFlag = async (reviewId) => {
+    try {
+      await dispatch(moderateReviewAdmin({ 
+        reviewId, 
+        moderationData: { flag: true } 
+      })).unwrap();
+    } catch (error) {
+      console.error('Failed to flag review:', error);
+    }
+  };
+
+  const handleDelete = async (reviewId) => {
+    if (window.confirm('Are you sure you want to delete this review?')) {
+      try {
+        await dispatch(deleteReviewAdmin(reviewId)).unwrap();
+      } catch (error) {
+        console.error('Failed to delete review:', error);
+      }
+    }
+  };
+
   const handleSearch = () => {
-    onFilterChange({
+    const filterParams = {
+      page: 1,
       search: searchTerm,
-      status: statusFilter,
-      rating: ratingFilter
-    });
+      isApproved: statusFilter === 'approved' ? 'true' : statusFilter === 'pending' ? 'false' : '',
+      flagged: statusFilter === 'flagged' ? 'true' : ''
+    };
+    dispatch(fetchReviewsAdmin(filterParams));
   };
 
   const handleClearFilters = () => {
     setSearchTerm('');
     setStatusFilter('');
     setRatingFilter('');
-    onClearFilters();
+    dispatch(fetchReviewsAdmin({ page: 1, limit: 20 }));
   };
+
+  const filteredReviews = reviews.filter(review => {
+    const matchesSearch = searchTerm === '' || 
+      review.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      review.body?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      review.user?.name?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    const matchesStatus = statusFilter === '' || 
+      (statusFilter === 'approved' && review.isApproved) ||
+      (statusFilter === 'pending' && !review.isApproved && !review.flagged) ||
+      (statusFilter === 'flagged' && review.flagged);
+    
+    const matchesRating = ratingFilter === '' || review.rating === parseInt(ratingFilter);
+    
+    return matchesSearch && matchesStatus && matchesRating;
+  });
 
   return (
     <div className="h-full flex flex-col">
@@ -122,7 +201,14 @@ export default function Reviews({
 
       {/* Reviews Table */}
       <div className="flex-1 overflow-hidden">
-        {reviews.length === 0 ? (
+        {loading ? (
+          <div className="h-full flex items-center justify-center">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-500 font-medium">Loading reviews...</p>
+            </div>
+          </div>
+        ) : filteredReviews.length === 0 ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">
               <FiMessageSquare className="w-16 h-16 text-gray-300 mx-auto mb-4" />
@@ -159,7 +245,7 @@ export default function Reviews({
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {reviews.map((review) => (
+                {filteredReviews.map((review) => (
                   <tr key={review._id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
@@ -206,31 +292,40 @@ export default function Reviews({
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end gap-2">
-                        <button
-                          onClick={() => onAction('view', review)}
-                          className="text-blue-600 hover:text-blue-900 p-1"
-                          title="View Details"
-                        >
-                          <AiOutlineEye className="w-4 h-4" />
-                        </button>
                         {!review.isApproved && !review.flagged && (
                           <button
-                            onClick={() => onAction('approve', review)}
+                            onClick={() => handleApprove(review._id)}
                             className="text-green-600 hover:text-green-900 p-1"
                             title="Approve Review"
                           >
                             <MdCheckCircle className="w-4 h-4" />
                           </button>
                         )}
+                        {review.isApproved && (
+                          <button
+                            onClick={() => handleReject(review._id)}
+                            className="text-orange-600 hover:text-orange-900 p-1"
+                            title="Reject Review"
+                          >
+                            <MdCancel className="w-4 h-4" />
+                          </button>
+                        )}
                         {!review.flagged && (
                           <button
-                            onClick={() => onAction('flag', review)}
+                            onClick={() => handleFlag(review._id)}
                             className="text-red-600 hover:text-red-900 p-1"
                             title="Flag Review"
                           >
                             <MdCancel className="w-4 h-4" />
                           </button>
                         )}
+                        <button
+                          onClick={() => handleDelete(review._id)}
+                          className="text-red-600 hover:text-red-900 p-1"
+                          title="Delete Review"
+                        >
+                          <RiDeleteBin6Line className="w-4 h-4" />
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -250,7 +345,7 @@ export default function Reviews({
             </div>
             <div className="flex items-center gap-2">
               <button
-                onClick={() => onPageChange(pagination.page - 1)}
+                onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: pagination.page - 1 }))}
                 disabled={pagination.page <= 1}
                 className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
@@ -259,7 +354,7 @@ export default function Reviews({
               {[...Array(pagination.totalPages)].map((_, i) => (
                 <button
                   key={i + 1}
-                  onClick={() => onPageChange(i + 1)}
+                  onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: i + 1 }))}
                   className={`px-3 py-1 border rounded text-sm ${
                     pagination.page === i + 1
                       ? 'bg-blue-600 text-white border-blue-600'
@@ -270,7 +365,7 @@ export default function Reviews({
                 </button>
               ))}
               <button
-                onClick={() => onPageChange(pagination.page + 1)}
+                onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: pagination.page + 1 }))}
                 disabled={pagination.page >= pagination.totalPages}
                 className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >

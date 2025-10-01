@@ -1,14 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import http from '../../shared/api/http';
+import { reviewAPI } from './api';
 
 // Fetch product reviews with pagination & sorting
 export const fetchProductReviews = createAsyncThunk(
   'reviews/fetchProductReviews',
   async ({ productId, page = 1, limit = 5, sort = 'recent' }, { rejectWithValue }) => {
     try {
-      const response = await http.get(`/api/reviews`, {
-        params: { productId, page, limit, sort }
-      });
+      const response = await reviewAPI.getReviews({ productId, page, limit, sort });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: error.message });
@@ -21,7 +19,7 @@ export const addProductReview = createAsyncThunk(
   'reviews/addProductReview',
   async ({ productId, rating, title, body, photos = [] }, { rejectWithValue }) => {
     try {
-      const response = await http.post(`/api/reviews/${productId}`, { 
+      const response = await reviewAPI.createReview(productId, { 
         rating, title, body, photos 
       });
       return response.data;
@@ -36,7 +34,7 @@ export const updateReview = createAsyncThunk(
   'reviews/updateReview',
   async ({ reviewId, rating, title, body, photos = [] }, { rejectWithValue }) => {
     try {
-      const response = await http.put(`/api/reviews/${reviewId}`, {
+      const response = await reviewAPI.updateReview(reviewId, {
         rating, title, body, photos
       });
       return response.data;
@@ -51,7 +49,7 @@ export const voteOnReview = createAsyncThunk(
   'reviews/voteOnReview',
   async ({ reviewId, type }, { rejectWithValue }) => {
     try {
-      const response = await http.post(`/api/reviews/${reviewId}/vote`, { type });
+      const response = await reviewAPI.voteOnReview(reviewId, type);
       return { ...response.data, reviewId };
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: error.message });
