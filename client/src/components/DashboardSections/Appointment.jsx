@@ -1,401 +1,293 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { 
-  AiOutlineSearch, 
-  AiOutlineEye,
-  AiOutlineReload,
-  AiOutlineCalendar,
-  AiOutlineUser
-} from "react-icons/ai";
-import { BiPhone, BiCalendar, BiTime, BiNote } from "react-icons/bi";
-import { MdEventAvailable, MdEventNote } from "react-icons/md";
+import { AiOutlineSearch, AiOutlineEye, AiOutlinePlus } from "react-icons/ai";
+import { BiCalendar, BiUser, BiPhone } from "react-icons/bi";
+import { MdEventAvailable, MdCheckCircle, MdCancel } from "react-icons/md";
 import { 
   fetchAppointmentsAdmin, 
-  updateAppointmentAdmin,
-  setFilters, 
-  clearFilters,
-  setSelectedAppointment 
+  updateAppointmentAdmin 
 } from "../../features/appointment/adminSlice";
-import { 
-  getAppointmentStatusColor, 
-  getServiceTypeInfo,
-  getAppointmentUrgency,
-  formatAppointmentForDisplay 
-} from "../../features/appointment/admin.api";
 import AppointmentDetailsModal from "./AppointmentDetailsModal";
-import AppointmentStatusUpdateModal from "./AppointmentStatusUpdateModal";
 
 export default function Appointment() {
   const dispatch = useDispatch();
   const { 
     appointments, 
-    pagination, 
-    filters, 
     loading, 
-    error, 
-    operationLoading 
+    error 
   } = useSelector(state => state.appointmentAdmin);
-  
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [serviceFilter, setServiceFilter] = useState('');
   const [showDetailsModal, setShowDetailsModal] = useState(false);
-  const [showStatusModal, setShowStatusModal] = useState(false);
-  const [selectedAppointment, setSelectedAppointmentLocal] = useState(null);
-  
-  // Local filter states for immediate UI updates
-  const [localFilters, setLocalFilters] = useState(filters);
-  
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+
   useEffect(() => {
-    dispatch(fetchAppointmentsAdmin({ ...filters, page: pagination.page }));
-  }, [dispatch, filters, pagination.page]);
-  
-  useEffect(() => {
-    setLocalFilters(filters);
-  }, [filters]);
-  
-  const handleFilterChange = (newFilters) => {
-    setLocalFilters({ ...localFilters, ...newFilters });
-    dispatch(setFilters({ ...newFilters, page: 1 })); // Reset to page 1 when filtering
+    dispatch(fetchAppointmentsAdmin({}));
+  }, [dispatch]);
+
+  const formatDateTime = (dateString) => {
+    return new Date(dateString).toLocaleString('en-IN', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
-  
-  const handleSearch = (searchTerm) => {
-    // Search can be by customer name or email (backend should handle this)
-    handleFilterChange({ customerSearch: searchTerm });
+
+  const getStatusColor = (status) => {
+    const colors = {
+      pending: "bg-yellow-100 text-yellow-800",
+      confirmed: "bg-blue-100 text-blue-800",
+      completed: "bg-green-100 text-green-800",
+      cancelled: "bg-red-100 text-red-800",
+    };
+    return colors[status] || "bg-gray-100 text-gray-800";
   };
-  
-  const handleClearFilters = () => {
-    dispatch(clearFilters());
-    setLocalFilters({ status: '', serviceType: '', fromDate: '', toDate: '', customerSearch: '' });
-  };
-  
+
   const handleViewDetails = (appointment) => {
-    setSelectedAppointmentLocal(appointment);
-    dispatch(setSelectedAppointment(appointment));
+    setSelectedAppointment(appointment);
     setShowDetailsModal(true);
   };
-  
-  const handleUpdateStatus = (appointment) => {
-    setSelectedAppointmentLocal(appointment);
-    dispatch(setSelectedAppointment(appointment));
-    setShowStatusModal(true);
-  };
-  
-  const handleRefresh = () => {
-    dispatch(fetchAppointmentsAdmin({ ...filters, page: pagination.page }));
-  };
-  
-  const filteredAppointments = useMemo(() => {
-    if (!localFilters.customerSearch && !localFilters.status && !localFilters.serviceType) {
-      return appointments;
+
+  const handleStatusUpdate = async (appointmentId, newStatus) => {
+    try {
+      await dispatch(updateAppointmentAdmin({ 
+        appointmentId, 
+        updateData: { status: newStatus } 
+      })).unwrap();
+      // Refresh the appointments list
+      dispatch(fetchAppointmentsAdmin({}));
+    } catch (error) {
+      console.error('Failed to update appointment status:', error);
     }
+  };
+
+  const filteredAppointments = (appointments || []).filter(appointment => {
+    const matchesSearch = appointment.customerName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         appointment.customerEmail?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = !statusFilter || appointment.status === statusFilter;
+    const matchesService = !serviceFilter || appointment.serviceType === serviceFilter;
     
-    return appointments.filter(appointment => {
-      const matchesSearch = !localFilters.customerSearch || 
-        appointment.name?.toLowerCase().includes(localFilters.customerSearch.toLowerCase()) ||
-        appointment.email?.toLowerCase().includes(localFilters.customerSearch.toLowerCase()) ||
-        appointment.phone?.includes(localFilters.customerSearch);
-      
-      const matchesStatus = !localFilters.status || appointment.status === localFilters.status;
-      const matchesService = !localFilters.serviceType || appointment.serviceType === localFilters.serviceType;
-      
-      return matchesSearch && matchesStatus && matchesService;
-    });
-  }, [appointments, localFilters]);
+    return matchesSearch && matchesStatus && matchesService;
+  });
 
-  const serviceTypeOptions = [
-    { value: '', label: 'All Services' },
-    { value: 'fragrance_consult', label: 'Fragrance Consultation' },
-    { value: 'jewellery_styling', label: 'Jewellery Styling' },
-    { value: 'store_visit', label: 'Store Visit' },
-    { value: 'custom', label: 'Custom Service' }
-  ];
-
-  const statusOptions = [
-    { value: '', label: 'All Status' },
-    { value: 'pending', label: 'Pending' },
-    { value: 'confirmed', label: 'Confirmed' },
-    { value: 'completed', label: 'Completed' },
-    { value: 'cancelled', label: 'Cancelled' }
-  ];
+  if (error) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 font-medium">Error loading appointments</p>
+          <p className="text-gray-500 text-sm mt-1">{error}</p>
+          <button 
+            onClick={() => dispatch(fetchAppointmentsAdmin({}))}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="h-full flex flex-col bg-white">
-      {/* Header Section - Fixed */}
-      <div className="flex-shrink-0 border-b border-gray-200 bg-white p-6">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="h-full flex flex-col">
+      {/* Header with Actions */}
+      <div className="flex-shrink-0 p-6 border-b border-gray-200">
+        <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Appointments Management</h2>
-            <p className="text-sm text-gray-500 mt-1">
-              {pagination.total} total appointments • {filteredAppointments.length} shown
-            </p>
+            <h2 className="text-lg font-semibold text-gray-900">Appointments Management</h2>
+            <p className="text-sm text-gray-600">Manage customer appointments and bookings</p>
           </div>
-          <div className="flex gap-3">
-            <button 
-              onClick={handleRefresh}
-              disabled={loading}
-              className="flex items-center gap-2 px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
-            >
-              <AiOutlineReload className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-              Refresh
-            </button>
-          </div>
+          <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+            <AiOutlinePlus className="w-4 h-4" />
+            New Appointment
+          </button>
         </div>
 
-        {/* Advanced Filters */}
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg border">
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search Input */}
-            <div className="flex-1">
-              <div className="relative">
-                <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <input
-                  value={localFilters.customerSearch || ''}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  placeholder="Search by customer name, email, or phone..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
-                />
-              </div>
-            </div>
-            
-            {/* Status Filter */}
-            <div className="sm:w-48">
-              <select 
-                value={localFilters.status} 
-                onChange={(e) => handleFilterChange({ status: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
-              >
-                {statusOptions.map(option => (
-                  <option key={option.value} value={option.value}>{option.label}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Service Type Filter */}
-            <div className="sm:w-48">
-              <select 
-                value={localFilters.serviceType} 
-                onChange={(e) => handleFilterChange({ serviceType: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
-              >
-                {serviceTypeOptions.map(option => (
-                  <option key={option.value} value={option.value}>{option.label}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Date Filters */}
-            <div className="flex gap-2">
+        {/* Filters */}
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="flex-1 min-w-64">
+            <div className="relative">
+              <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <input
-                type="date"
-                value={localFilters.fromDate}
-                onChange={(e) => handleFilterChange({ fromDate: e.target.value })}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-sm"
-                placeholder="From date"
-              />
-              <input
-                type="date"
-                value={localFilters.toDate}
-                onChange={(e) => handleFilterChange({ toDate: e.target.value })}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-sm"
-                placeholder="To date"
+                type="text"
+                placeholder="Search appointments..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
-            
-            {/* Clear Filters */}
-            {(localFilters.status || localFilters.serviceType || localFilters.customerSearch || localFilters.fromDate || localFilters.toDate) && (
-              <button
-                onClick={handleClearFilters}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Clear Filters
-              </button>
-            )}
           </div>
+          
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          
+          <select
+            value={serviceFilter}
+            onChange={(e) => setServiceFilter(e.target.value)}
+            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="">All Services</option>
+            <option value="consultation">Consultation</option>
+            <option value="repair">Repair</option>
+            <option value="maintenance">Maintenance</option>
+            <option value="custom">Custom Order</option>
+          </select>
         </div>
       </div>
 
-      {/* Content Section - Scrollable */}
+      {/* Appointments Table */}
       <div className="flex-1 overflow-hidden">
-        {error && (
-          <div className="m-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-700">{error}</p>
-          </div>
-        )}
-        
-        {loading && appointments.length === 0 ? (
-          <div className="flex items-center justify-center h-64">
+        {loading ? (
+          <div className="h-full flex items-center justify-center">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
-              <p className="text-gray-500">Loading appointments...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <p className="text-gray-500 font-medium">Loading appointments...</p>
             </div>
           </div>
         ) : filteredAppointments.length === 0 ? (
-          <div className="flex items-center justify-center h-64">
+          <div className="h-full flex items-center justify-center">
             <div className="text-center">
-              <MdEventAvailable className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No appointments found</h3>
-              <p className="text-gray-500">
-                {localFilters.status || localFilters.serviceType || localFilters.customerSearch 
-                  ? "Try adjusting your filters" 
-                  : "No appointments have been scheduled yet"
-                }
-              </p>
+              <BiCalendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 font-medium">No appointments found</p>
+              <p className="text-gray-400 text-sm mt-1">Customer appointments will appear here</p>
             </div>
           </div>
         ) : (
-          <div className="overflow-auto h-full">
-            <div className="bg-white border border-gray-200 rounded-lg mx-6 mb-6 overflow-hidden">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50 sticky top-0 z-10">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Appointment</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Notes</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          <div className="h-full overflow-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 sticky top-0 z-10">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Customer
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Service
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Appointment Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Notes
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredAppointments.map((appointment) => (
+                  <tr key={appointment._id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="h-8 w-8 flex-shrink-0">
+                          <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                            <BiUser className="w-4 h-4 text-gray-500" />
+                          </div>
+                        </div>
+                        <div className="ml-3">
+                          <div className="text-sm font-medium text-gray-900">
+                            {appointment.customerName}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {appointment.customerEmail}
+                          </div>
+                          <div className="text-xs text-gray-400 flex items-center gap-1">
+                            <BiPhone className="w-3 h-3" />
+                            {appointment.customerPhone}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        {appointment.serviceType}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900">
+                        {formatDateTime(appointment.appointmentAt)}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(appointment.status)}`}>
+                        {appointment.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="text-sm text-gray-900 max-w-xs truncate">
+                        {appointment.adminNotes || 'No notes'}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex items-center justify-end gap-2">
+                        <button 
+                          onClick={() => handleViewDetails(appointment)}
+                          className="text-blue-600 hover:text-blue-900 p-1" 
+                          title="View Details"
+                        >
+                          <AiOutlineEye className="w-4 h-4" />
+                        </button>
+                        {appointment.status === 'pending' && (
+                          <>
+                            <button
+                              onClick={() => handleStatusUpdate(appointment._id, 'confirmed')}
+                              className="text-green-600 hover:text-green-900 p-1"
+                              title="Confirm Appointment"
+                            >
+                              <MdCheckCircle className="w-4 h-4" />
+                            </button>
+                            <button
+                              onClick={() => handleStatusUpdate(appointment._id, 'cancelled')}
+                              className="text-red-600 hover:text-red-900 p-1"
+                              title="Cancel Appointment"
+                            >
+                              <MdCancel className="w-4 h-4" />
+                            </button>
+                          </>
+                        )}
+                        {appointment.status === 'confirmed' && (
+                          <button
+                            onClick={() => handleStatusUpdate(appointment._id, 'completed')}
+                            className="text-green-600 hover:text-green-900 p-1"
+                            title="Mark as Completed"
+                          >
+                            <MdEventAvailable className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredAppointments.map((appointment) => {
-                    const formattedAppointment = formatAppointmentForDisplay(appointment);
-                    const serviceInfo = getServiceTypeInfo(appointment.serviceType);
-                    const urgency = getAppointmentUrgency(appointment.appointmentAt);
-                    
-                    return (
-                      <tr key={appointment._id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <AiOutlineUser className="h-4 w-4 text-gray-400 mr-2" />
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">
-                                {formattedAppointment.customerName}
-                              </div>
-                              <div className="text-sm text-gray-500">
-                                {formattedAppointment.customerEmail}
-                              </div>
-                              {formattedAppointment.customerPhone && (
-                                <div className="text-xs text-gray-500 flex items-center mt-1">
-                                  <BiPhone className="h-3 w-3 mr-1" />
-                                  {formattedAppointment.customerPhone}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </td>
-                        
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <span className="text-lg mr-2">{serviceInfo.icon}</span>
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">
-                                {serviceInfo.label}
-                              </div>
-                              <div className="text-xs text-gray-500">
-                                {serviceInfo.duration}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="flex items-center">
-                            <BiCalendar className="h-4 w-4 text-gray-400 mr-2" />
-                            <div>
-                              <div className="text-sm font-medium text-gray-900">
-                                {formattedAppointment.formattedDate}
-                              </div>
-                              <div className="text-sm text-gray-500 flex items-center">
-                                <BiTime className="h-3 w-3 mr-1" />
-                                {formattedAppointment.formattedTime}
-                              </div>
-                              <div className={`text-xs font-medium ${urgency.color}`}>
-                                {urgency.label}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getAppointmentStatusColor(appointment.status)}`}>
-                            <MdEventNote className="h-3 w-3 mr-1" />
-                            {appointment.status}
-                          </span>
-                        </td>
-                        
-                        <td className="px-6 py-4">
-                          <div className="max-w-xs">
-                            {appointment.notes && (
-                              <div className="text-sm text-gray-900 mb-1">
-                                <BiNote className="h-3 w-3 inline mr-1" />
-                                {appointment.notes.length > 50 
-                                  ? `${appointment.notes.substring(0, 50)}...` 
-                                  : appointment.notes
-                                }
-                              </div>
-                            )}
-                            {appointment.adminNotes && (
-                              <div className="text-xs text-blue-600">
-                                Admin: {appointment.adminNotes.length > 30 
-                                  ? `${appointment.adminNotes.substring(0, 30)}...` 
-                                  : appointment.adminNotes
-                                }
-                              </div>
-                            )}
-                            {!appointment.notes && !appointment.adminNotes && (
-                              <span className="text-sm text-gray-400">No notes</span>
-                            )}
-                          </div>
-                        </td>
-                        
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <div className="flex items-center justify-end gap-2">
-                            <button 
-                              onClick={() => handleViewDetails(appointment)}
-                              className="text-blue-600 hover:text-blue-900 p-1 hover:bg-blue-50 rounded transition-colors"
-                              title="View Details"
-                            >
-                              <AiOutlineEye className="h-4 w-4" />
-                            </button>
-                            <button 
-                              onClick={() => handleUpdateStatus(appointment)}
-                              className="text-green-600 hover:text-green-900 p-1 hover:bg-green-50 rounded transition-colors"
-                              title="Update Status"
-                            >
-                              <AiOutlineCalendar className="h-4 w-4" />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
 
-      {/* Modals */}
-      {showDetailsModal && selectedAppointment && (
-        <AppointmentDetailsModal
-          isOpen={showDetailsModal}
-          onClose={() => {
-            setShowDetailsModal(false);
-            setSelectedAppointmentLocal(null);
-          }}
-          appointment={selectedAppointment}
-        />
-      )}
-      
-      {showStatusModal && selectedAppointment && (
-        <AppointmentStatusUpdateModal
-          isOpen={showStatusModal}
-          onClose={() => {
-            setShowStatusModal(false);
-            setSelectedAppointmentLocal(null);
-          }}
-          appointment={selectedAppointment}
-        />
-      )}
+      {/* Modal */}
+      <AppointmentDetailsModal
+        isOpen={showDetailsModal}
+        appointment={selectedAppointment}
+        onClose={() => {
+          setShowDetailsModal(false);
+          setSelectedAppointment(null);
+        }}
+      />
     </div>
   );
 }

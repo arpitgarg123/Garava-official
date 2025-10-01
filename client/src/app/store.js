@@ -12,6 +12,8 @@ import orderReducer from "../features/order/slice.js";
 import orderAdminReducer from "../features/order/adminSlice.js";
 import appointmentAdminReducer from "../features/appointment/adminSlice.js";
 import addressReducer from "../features/address/slice.js";
+import blogReducer from "../features/blogs/slice.js";
+import blogAdminReducer from "../features/blogs/blogAdminSlice.js";
 
 // Persist configuration
 const persistConfig = {
@@ -31,6 +33,8 @@ const rootReducer = combineReducers({
   orderAdmin: orderAdminReducer,
   appointmentAdmin: appointmentAdminReducer,
   address: addressReducer,
+  blog: blogReducer,
+  blogAdmin: blogAdminReducer,
 });
 
 // Create persisted reducer

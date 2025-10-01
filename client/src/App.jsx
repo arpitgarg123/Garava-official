@@ -56,7 +56,7 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/about" element={<OurStory />} />
           <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/blog_details" element={<BlogDetails />} />
+          <Route path="/blogs/:slug" element={<BlogDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/event_details" element={<EventDetails />} />
