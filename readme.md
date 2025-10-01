@@ -8,8 +8,8 @@ It is designed to showcase and sell **premium jewellery and fragrances**, while 
 # # fending work
 
 color filter 
-home search
-glitch solve
+home search ✅
+glitch solve 
 remove logs
 blogs ✅ (only the intigration is left)
 review
@@ -18,8 +18,14 @@ admin password change
 admin dashboardd
 continue google  ✅
 chat bot 
-pricing issue
+pricing issue 
 refund payment gateway
-
 notification setup across all service
-
+login issues  ✅
+check left for the blogs
+google auth condition 
+color filter 
+search home
+chatbot
+events
+testinominals

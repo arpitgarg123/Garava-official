@@ -29,8 +29,8 @@ class TokenRefreshManager {
       const now = Date.now();
       const timeUntilExpiry = expiresAt - now;
       
-      // Refresh token 2 minutes before it expires (or immediately if already expired)
-      const refreshBuffer = 2 * 60 * 1000; // 2 minutes
+      // Refresh token 1 hour before it expires (or immediately if already expired)
+      const refreshBuffer = 60 * 60 * 1000; // 1 hour
       const refreshTime = Math.max(0, timeUntilExpiry - refreshBuffer);
       
       console.log('Token Refresh Manager - Setting refresh timer:', {
@@ -45,10 +45,10 @@ class TokenRefreshManager {
       
     } catch (error) {
       console.error('Token Refresh Manager - Error parsing token:', error);
-      // Fallback: try to refresh in 5 minutes
+      // Fallback: try to refresh in 2 hours
       this.refreshTimer = setTimeout(() => {
         this.performRefresh();
-      }, 5 * 60 * 1000);
+      }, 2 * 60 * 60 * 1000);
     }
   }
 

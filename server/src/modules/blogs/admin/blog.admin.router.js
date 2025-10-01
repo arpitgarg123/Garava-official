@@ -8,6 +8,7 @@ import {
   updateBlog,
   deleteBlog,
   listBlogsAdmin,
+  getBlogByIdAdmin,
   setStatus,
 } from "./blog.admin.controller.js";
 
@@ -29,6 +30,7 @@ router.put(
 );
 
 router.get("/", listBlogsAdmin);
+router.get("/:id", getBlogByIdAdmin);
 router.delete("/:id", deleteBlog);
 
 // status / schedule

@@ -49,6 +49,15 @@ export const updateBlogService = async (id, updates, adminId) => {
 };
 
 /**
+ * Get blog by ID (admin)
+ */
+export const getBlogByIdService = async (id) => {
+  const post = await Blog.findById(id).populate('author', 'name email').lean();
+  if (!post) throw new ApiError(404, "Blog post not found");
+  return post;
+};
+
+/**
  * Soft delete (archive)
  */
 export const deleteBlogService = async (id) => {

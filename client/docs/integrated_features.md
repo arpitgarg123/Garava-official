@@ -58,15 +58,15 @@
  # toggle-product-items ✅
 
 # # Review Feature (User)
- # create-review
- # update-review
- # list-all-review
- # vote-helpful
+ # create-review ✅
+ # update-review ✅
+ # list-all-review ✅
+ # vote-helpful ✅
 
 # # Review Feature (admin)
- # admin-list-review
- # admin-moderate-review
- # admin-delete-review
+ # admin-list-review ✅
+ # admin-moderate-review ✅
+ # admin-delete-review ✅
 
 # # Appointment Feature (User)
  # create-appointment ✅
@@ -84,12 +84,12 @@
  # get-subscriber-list
 
 # # blogs Feature (Admin)
- # create-blog
- # update-blog
- # get-blogs
- # update-status-blog
- # delete-blog
+ # create-blog ✅
+ # update-blog ✅
+ # get-blogs ✅
+ # update-status-blog ✅
+ # delete-blog ✅
 
 # # blogs Feature (User)
- # get-blog
- # get-blog-by-slug
+ # get-blog ✅
+ # get-blog-by-slug ✅

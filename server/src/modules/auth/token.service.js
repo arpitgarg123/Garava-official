@@ -6,7 +6,7 @@ const JWT_EMAIL_SECRET = process.env.JWT_EMAIL_SECRET || "supersecretemail";
 const JWT_RESET_SECRET   = process.env.JWT_RESET_SECRET;   // ✅ reset
 
 export const generateAccessToken = (user) => {
-  return jwt.sign({ id: user._id, role: user.role }, JWT_ACCESS_SECRET, { expiresIn: '15m' });
+  return jwt.sign({ id: user._id, role: user.role }, JWT_ACCESS_SECRET, { expiresIn: '24h' });
 };
 
 // Generate Refresh Token (long-lived)
@@ -14,7 +14,7 @@ export const generateRefreshToken = (user) => {
   return jwt.sign(
     { id: user._id },
     JWT_REFRESH_SECRET,
-    { expiresIn: '7d' } // long expiry (7 days)
+    { expiresIn: '30d' } // long expiry (30 days)
   );
 };
 
@@ -54,14 +54,14 @@ export const setAuthCookies = (res, accessToken, refreshToken) => {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? 'strict' : 'lax', // Use 'lax' in development for OAuth redirects
-    maxAge: 15 * 60 * 1000, // 15m
+    maxAge: 24 * 60 * 60 * 1000, // 24h
   });
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction ? 'strict' : 'lax', // Use 'lax' in development for OAuth redirects
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7d
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
   });
   
   console.log('Auth cookies set:', {

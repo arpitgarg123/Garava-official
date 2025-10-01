@@ -75,8 +75,14 @@ export const listBlogsAdmin = asyncHandler(async (req, res) => {
   res.json({ success: true, ...data });
 });
 
+export const getBlogByIdAdmin = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const post = await service.getBlogByIdService(id);
+  res.json({ success: true, post });
+});
+
 export const setStatus = asyncHandler(async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id; 
   const { status, publishAt } = req.body; // publishAt can be null to clear schedule
   if (status && !["draft","published","archived"].includes(status)) {
     throw new ApiError(400, "Invalid status");

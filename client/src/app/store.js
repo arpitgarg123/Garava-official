@@ -12,12 +12,17 @@ import orderReducer from "../features/order/slice.js";
 import orderAdminReducer from "../features/order/adminSlice.js";
 import appointmentAdminReducer from "../features/appointment/adminSlice.js";
 import addressReducer from "../features/address/slice.js";
+import blogReducer from "../features/blogs/slice.js";
+import blogAdminReducer from "../features/blogs/blogAdminSlice.js";
+import reviewReducer from "../features/reviews/reviewSlice.js";
+import reviewAdminReducer from "../features/reviews/reviewAdminSlice.js";
+import searchReducer from "../features/search/slice.js";
 
 // Persist configuration
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "cart", "wishlist"], // Persist auth, cart, and wishlist data
+  whitelist: ["auth", "cart", "wishlist", "search"], // Persist auth, cart, wishlist, and search data
 };
 
 // Combine reducers
@@ -31,6 +36,11 @@ const rootReducer = combineReducers({
   orderAdmin: orderAdminReducer,
   appointmentAdmin: appointmentAdminReducer,
   address: addressReducer,
+  blog: blogReducer,
+  blogAdmin: blogAdminReducer,
+  review: reviewReducer,
+  reviewAdmin: reviewAdminReducer,
+  search: searchReducer,
 });
 
 // Create persisted reducer
@@ -41,7 +51,14 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+        ignoredActions: [
+          "persist/PERSIST", 
+          "persist/REHYDRATE",
+          "search/searchProducts/fulfilled",
+          "search/searchProducts/pending",
+          "search/searchProducts/rejected"
+        ],
+        ignoredPaths: ['payload.headers', 'payload.config', 'payload.request']
       },
     }),
 });

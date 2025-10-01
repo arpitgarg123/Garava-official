@@ -32,6 +32,7 @@ const Blogs = lazy(()=> import("./pages/blogs/BlogList.jsx"))
 const BlogDetails = lazy(()=> import("./pages/blogs/BlogDetails.jsx"))
 const EventDetails = lazy(()=> import("./pages/newsEvents/EventDetails.jsx"))
 const Contact = lazy(()=> import("./pages/Contact.jsx"))
+const SearchResults = lazy(() => import("./pages/SearchResults.jsx"))
 
 const App = () => {
   return (
@@ -55,8 +56,9 @@ const App = () => {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="/about" element={<OurStory />} />
+          <Route path="/search" element={<SearchResults />} />
           <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/blog_details" element={<BlogDetails />} />
+          <Route path="/blogs/:slug" element={<BlogDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/event_details" element={<EventDetails />} />

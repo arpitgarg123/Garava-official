@@ -4,21 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { BsCheckCircleFill } from 'react-icons/bs';
 import { BiLike, BiDislike } from 'react-icons/bi';
-import  http  from '../../shared/api/http';
 import { toast } from 'react-hot-toast';
+import { 
+  fetchProductReviews, 
+  addProductReview, 
+  voteOnReview, 
+  clearReviews 
+} from '../../features/reviews/reviewSlice';
 
 const ProductReviews = ({ productId }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useSelector(state => state.auth);
-  const [loading, setLoading] = useState(false);
-  const [reviews, setReviews] = useState([]);
-  const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 5,
-    total: 0,
-    totalPages: 0
-  });
+  const { user, accessToken } = useSelector(state => state.auth);
+  const { reviews, pagination, status, error } = useSelector(state => state.review);
+  const loading = status === 'loading';
+  
+  // Check if user is authenticated
+  const isAuthenticated = user && accessToken;
+  
+  // Find user's existing review
+  const userReview = isAuthenticated && user?._id 
+    ? reviews.find(review => review.user._id === user._id)
+    : null;
+  
   const [sortOption, setSortOption] = useState('recent');
   const [newReview, setNewReview] = useState({ 
     rating: 5, 
@@ -27,55 +35,41 @@ const ProductReviews = ({ productId }) => {
     photos: [] 
   });
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [userReview, setUserReview] = useState(null);
 
   // Fetch reviews when component mounts or productId/sort changes
   useEffect(() => {
     if (productId) {
-      fetchReviews();
+      dispatch(fetchProductReviews({ 
+        productId, 
+        page: pagination.page, 
+        limit: pagination.limit, 
+        sort: sortOption 
+      }));
     }
-  }, [productId, sortOption, pagination.page]);
+    
+    return () => {
+      dispatch(clearReviews());
+    };
+  }, [productId, sortOption, pagination.page, dispatch]);
 
-  // Check if user already has a review for this product
+  // Update form when userReview changes
   useEffect(() => {
-    if (isAuthenticated && productId && reviews.length > 0) {
-      const existing = reviews.find(review => 
-        review.user?._id === user?.id || review.user?.id === user?.id);
-      
-      if (existing) {
-        setUserReview(existing);
-        setNewReview({
-          rating: existing.rating || 5,
-          title: existing.title || '',
-          body: existing.body || '',
-          photos: existing.photos || []
-        });
-      }
-    }
-  }, [isAuthenticated, productId, reviews, user]);
-
-  const fetchReviews = async () => {
-    setLoading(true);
-    try {
-      const res = await http.get(`/api/reviews`, {
-        params: {
-          productId,
-          page: pagination.page,
-          limit: pagination.limit,
-          sort: sortOption
-        }
+    if (userReview) {
+      setNewReview({
+        rating: userReview.rating || 5,
+        title: userReview.title || '',
+        body: userReview.body || '',
+        photos: userReview.photos || []
       });
-      
-      if (res.data?.success) {
-        setReviews(res.data.reviews || []);
-        setPagination(res.data.pagination || pagination);
-      }
-    } catch (error) {
-      console.error("Failed to fetch reviews:", error);
-    } finally {
-      setLoading(false);
+    } else {
+      setNewReview({
+        rating: 5,
+        title: '',
+        body: '',
+        photos: []
+      });
     }
-  };
+  }, [userReview]);
 
   const handleAddReview = async () => {
     if (!isAuthenticated) {
@@ -95,24 +89,28 @@ const ProductReviews = ({ productId }) => {
     }
 
     try {
-      setLoading(true);
-      const res = await http.post(`/api/reviews/${productId}`, {
+      const result = await dispatch(addProductReview({
+        productId,
         rating: newReview.rating,
         title: newReview.title.trim(),
         body: newReview.body.trim(),
         photos: newReview.photos
-      });
+      })).unwrap();
 
-      if (res.data?.success) {
+      if (result.success) {
         toast.success(userReview ? "Your review has been updated!" : "Thank you for your review!");
         setShowReviewForm(false);
-        fetchReviews(); // Refresh reviews
+        // Refresh reviews
+        dispatch(fetchProductReviews({ 
+          productId, 
+          page: pagination.page, 
+          limit: pagination.limit, 
+          sort: sortOption 
+        }));
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to submit review");
+      toast.error(error.message || "Failed to submit review");
       console.error("Review submission error:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -124,23 +122,8 @@ const ProductReviews = ({ productId }) => {
     }
 
     try {
-      const res = await http.post(`/api/reviews/${reviewId}/vote`, { type });
-      
-      if (res.data?.success) {
-        // Update the review in the local state
-        setReviews(reviews.map(review => {
-          if (review._id === reviewId) {
-            return {
-              ...review,
-              helpfulCount: res.data.helpfulCount,
-              unhelpfulCount: res.data.unhelpfulCount
-            };
-          }
-          return review;
-        }));
-        
-        toast.success(`You marked this review as ${type}`);
-      }
+      await dispatch(voteOnReview({ reviewId, type })).unwrap();
+      toast.success(`You marked this review as ${type}`);
     } catch (error) {
       toast.error("Failed to submit your vote");
       console.error("Vote submission error:", error);
@@ -212,6 +195,7 @@ const ProductReviews = ({ productId }) => {
                 
                 <div className="mt-8 w-full">
                   <button 
+                    type="button"
                     onClick={() => setShowReviewForm(!showReviewForm)} 
                     className="w-full py-3 border border-black hover:bg-black hover:text-white transition-colors font-medium text-sm uppercase tracking-wider"
                   >
@@ -226,7 +210,15 @@ const ProductReviews = ({ productId }) => {
               <h3 className="text-base font-medium mb-4">Sort Reviews</h3>
               <div className="space-y-2">
                 <button 
-                  onClick={() => setSortOption('recent')}
+                  onClick={() => {
+                    setSortOption('recent');
+                    dispatch(fetchProductReviews({ 
+                      productId, 
+                      page: 1, 
+                      limit: pagination.limit, 
+                      sort: 'recent' 
+                    }));
+                  }}
                   className={`w-full text-left px-3 py-2 rounded text-sm ${
                     sortOption === 'recent' 
                       ? 'bg-black text-white' 
@@ -236,7 +228,15 @@ const ProductReviews = ({ productId }) => {
                   Most Recent
                 </button>
                 <button 
-                  onClick={() => setSortOption('top')}
+                  onClick={() => {
+                    setSortOption('top');
+                    dispatch(fetchProductReviews({ 
+                      productId, 
+                      page: 1, 
+                      limit: pagination.limit, 
+                      sort: 'top' 
+                    }));
+                  }}
                   className={`w-full text-left px-3 py-2 rounded text-sm ${
                     sortOption === 'top' 
                       ? 'bg-black text-white' 
@@ -246,7 +246,15 @@ const ProductReviews = ({ productId }) => {
                   Highest Rating
                 </button>
                 <button 
-                  onClick={() => setSortOption('helpful')}
+                  onClick={() => {
+                    setSortOption('helpful');
+                    dispatch(fetchProductReviews({ 
+                      productId, 
+                      page: 1, 
+                      limit: pagination.limit, 
+                      sort: 'helpful' 
+                    }));
+                  }}
                   className={`w-full text-left px-3 py-2 rounded text-sm ${
                     sortOption === 'helpful' 
                       ? 'bg-black text-white' 
@@ -272,6 +280,7 @@ const ProductReviews = ({ productId }) => {
                     {[1, 2, 3, 4, 5].map(star => (
                       <button 
                         key={star} 
+                        type="button"
                         onClick={() => setNewReview({...newReview, rating: star})}
                         className="p-1"
                       >
@@ -307,6 +316,7 @@ const ProductReviews = ({ productId }) => {
                 </div>
                 <div className="flex flex-wrap gap-2 mt-4">
                   <button 
+                    type="button"
                     onClick={handleAddReview}
                     disabled={loading}
                     className="px-6 py-2.5 bg-black text-white hover:bg-gray-800 transition-colors text-sm uppercase tracking-wider disabled:opacity-50"
@@ -314,6 +324,7 @@ const ProductReviews = ({ productId }) => {
                     {loading ? 'Submitting...' : (userReview ? 'Update Review' : 'Submit Review')}
                   </button>
                   <button 
+                    type="button"
                     onClick={() => setShowReviewForm(false)}
                     className="px-6 py-2.5 border border-gray-300 hover:bg-gray-50 text-sm uppercase tracking-wider"
                   >
@@ -416,7 +427,12 @@ const ProductReviews = ({ productId }) => {
                 {pagination.totalPages > 1 && (
                   <div className="flex justify-center mt-6 gap-2">
                     <button 
-                      onClick={() => setPagination({...pagination, page: Math.max(1, pagination.page - 1)})}
+                      onClick={() => dispatch(fetchProductReviews({ 
+                        productId, 
+                        page: Math.max(1, pagination.page - 1), 
+                        limit: pagination.limit, 
+                        sort: sortOption 
+                      }))}
                       disabled={pagination.page === 1}
                       className="px-4 py-2 border rounded-md disabled:opacity-50"
                     >
@@ -426,7 +442,12 @@ const ProductReviews = ({ productId }) => {
                       Page {pagination.page} of {pagination.totalPages}
                     </span>
                     <button 
-                      onClick={() => setPagination({...pagination, page: Math.min(pagination.totalPages, pagination.page + 1)})}
+                      onClick={() => dispatch(fetchProductReviews({ 
+                        productId, 
+                        page: Math.min(pagination.totalPages, pagination.page + 1), 
+                        limit: pagination.limit, 
+                        sort: sortOption 
+                      }))}
                       disabled={pagination.page === pagination.totalPages}
                       className="px-4 py-2 border rounded-md disabled:opacity-50"
                     >
