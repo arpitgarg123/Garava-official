@@ -79,10 +79,9 @@ const BlogList = ({ showHeader = true, limit = 12 }) => {
     <div className="w-full">
       {showHeader && (
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">Our Blogs</h1>
           
           {/* Search and Filters */}
-          <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+          <div className="mb-3">
             <form onSubmit={handleSearchSubmit} className="flex gap-4 mb-4">
               <div className="flex-1 relative">
                 <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -91,7 +90,7 @@ const BlogList = ({ showHeader = true, limit = 12 }) => {
                   placeholder="Search blogs..."
                   value={localSearch}
                   onChange={(e) => setLocalSearch(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg outline-none  "
                 />
               </div>
               <button

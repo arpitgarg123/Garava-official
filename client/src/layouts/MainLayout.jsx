@@ -10,8 +10,10 @@ import { selectIsAuthenticated, selectAuthStatus, selectAuthError } from '../fea
 import { fetchCart } from '../features/cart/slice';
 import { fetchWishlist } from '../features/wishlist/slice';
 import { useOnlineStatus } from '../hooks/useOnlineStatus';
+import { useLocomotiveScroll } from '../hooks/useLocomotiveScroll';
 
 const MainLayout = ({children}) => {
+  const { updateScroll } = useLocomotiveScroll();
       const location = useLocation();
       const dispatch = useDispatch();
       const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -28,6 +30,11 @@ const MainLayout = ({children}) => {
         useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
+
+  useEffect(() => {
+    // Update scroll when route changes
+    updateScroll();
+  }, [location.pathname, updateScroll]);
 
   // Fetch cart and wishlist when user is authenticated - with smart timing
   useEffect(() => {

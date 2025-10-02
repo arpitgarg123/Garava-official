@@ -10,19 +10,9 @@ import {
   selectBlogLoading,
   selectBlogError,
 } from "../../features/blogs/slice";
+import { formatDate } from "../../utils/FormatDate";
 
-function formatDate(iso) {
-  try {
-    const d = new Date(iso);
-    return d.toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch (e) {
-    return iso;
-  }
-}
+
 
 function useReadingProgress(targetRef) {
   const [progress, setProgress] = useState(0);

@@ -100,11 +100,12 @@ export default function ChatbotWidget({
         <button
           onClick={() => { setOpen(true); setMinimized(false); }}
           aria-label="Open chat"
-          className={`group fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full px-4 py-3 bg-gray-200 hover:brightness-110 transition`}
+          className={`group fixed bottom-5  right-5 z-50 inline-flex cursor-pointer  items-center gap-2 rounded-full px-4 py-3 bg-red-500 hover:brightness-110 transition`}
         >
           {/* <FiMessageCircle className="text-lg" /> */}
-          <div className="hidden sm:inline text-sm font-medium ">
-            <img className="h-10" src={iconlogo} alt="" />
+          <div className="hidden sm:inline text-sm font-medium  ">
+            <img className="h-10 cursor-pointer" src={iconlogo} alt="" />
+            
           </div>
         </button>
       )}

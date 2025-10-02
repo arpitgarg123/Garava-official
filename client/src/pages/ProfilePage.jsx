@@ -472,7 +472,7 @@ const ProfilePage = () => {
                     setActiveTab(tab.id);
                     setSidebarOpen(false); // Close mobile menu after selection
                   }}
-                  className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition text-sm sm:text-base ${
+                  className={`w-full cursor-pointer flex items-center gap-3 p-3 rounded-lg text-left transition text-sm sm:text-base ${
                     activeTab === tab.id
                       ? "bg-black text-white"
                       : "text-gray-700 hover:bg-gray-50"
@@ -488,7 +488,7 @@ const ProfilePage = () => {
             <div className="mt-6 pt-6 border-t">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition text-sm sm:text-base text-red-600 hover:bg-red-50"
+                className="w-full flex items-center gap-3 p-3 rounded-lg cursor-pointer text-left transition text-sm sm:text-base text-red-600 hover:bg-red-50"
               >
                 <span className="text-base sm:text-lg">🚪</span>
                 <span className="font-medium">Logout</span>

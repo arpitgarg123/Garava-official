@@ -199,12 +199,14 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20 md:pt-32">
+    <div className="min-h-screen bg-gray-50  md:pt-32">
       {/* Header */}
-      <div className="bg-white border-b fixed top-16 md:top-24 left-0 right-0 z-40">
+      <div className=" border-b border-gray-300 fixed top-26 md:top-32 left-0 right-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 py-4">
-            <BackButton />
+           <div className="sticky top-56 z-10 mb-3">
+                 <BackButton />
+               </div>
             
             {/* Search Input */}
             <div className="flex-1 relative">
@@ -225,7 +227,7 @@ const SearchPage = () => {
                     }
                   }}
                   placeholder="Search for jewelry, fragrance..."
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent bg-white text-gray-900 placeholder-gray-500 transition-all duration-200"
+                  className="block w-full pl-10 pr-12 py-3 outline-none border border-gray-300 rounded-xl  focus:border-transparent bg-white text-gray-900 placeholder-gray-500 transition-all duration-200"
                 />
                 {inputQuery && (
                   <button

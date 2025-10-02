@@ -7,6 +7,7 @@ import {
   AiOutlineDelete,
 } from "react-icons/ai";
 import BackButton from "../BackButton";
+import { formatDate } from "../../utils/FormatDate";
 
 // AdminBlogsDashboard.jsx
 // UI-only React component for managing blog posts
@@ -42,15 +43,6 @@ export default function Blogs(props) {
   function goToPage(newPage) {
     if (newPage < 1 || newPage > (pagination.totalPages || 1)) return;
     onPageChange(newPage);
-  }
-  function formatDate(iso) {
-    if (!iso) return "-";
-    try {
-      let d = new Date(iso);
-      return d.toLocaleString();
-    } catch (e) {
-      return iso;
-    }
   }
 
   return (

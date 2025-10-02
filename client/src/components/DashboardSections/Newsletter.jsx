@@ -3,6 +3,7 @@ import { AiOutlineSearch, AiOutlineDownload } from "react-icons/ai";
 import { FiMail, FiUsers } from "react-icons/fi";
 import { MdCheckCircle, MdCancel } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { formatDate } from "../../utils/FormatDate";
 
 export default function Newsletter({
   subscribers = [],
@@ -14,13 +15,6 @@ export default function Newsletter({
   const [statusFilter, setStatusFilter] = useState('');
   const [localSubscribers, setLocalSubscribers] = useState(subscribers);
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-IN', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
 
   const getStatusColor = (status) => {
     const colors = {

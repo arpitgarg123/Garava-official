@@ -26,6 +26,7 @@
   color: #1d4ed8;
   font-weight: 500;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .blog-btn::after {

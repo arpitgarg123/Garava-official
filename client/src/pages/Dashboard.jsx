@@ -248,21 +248,15 @@ const Dashboard = () => {
 
           {/* Center: Current Page */}
           <div className="hidden md:block">
-            <h2 className="text-sm font-medium text-gray-600">
+            <h2 className="text-sm font-medium uppercase tracking-wider font-montserrat
+             text-gray-600">
               {tabs.find(t => t.id === activeTab)?.label}
             </h2>
           </div>
 
           {/* Right: Actions */}
           <div className="flex items-center gap-3">
-            <button className="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100">
-              <FaSearch className="w-4 h-4" />
-            </button>
-            
-            <button className="relative p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100">
-              <FaBell className="w-4 h-4" />
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full"></span>
-            </button>
+          
 
             <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-md">
               <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
@@ -346,7 +340,7 @@ const Dashboard = () => {
                 </p>
               </div>
               
-              <div className="flex items-center gap-3">
+              {/* <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-md">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   <span className="text-xs font-medium text-green-700">Live</span>
@@ -354,7 +348,7 @@ const Dashboard = () => {
                 <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
                   Export
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
 

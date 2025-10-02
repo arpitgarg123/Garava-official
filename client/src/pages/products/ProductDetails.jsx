@@ -140,9 +140,11 @@ const ProductDetails = () => {
               <h2 className="text-lg sm:text-xl font-regular">
                 Customize your jewellery Design
               </h2>
+             <Link to='/appointment'>
               <button className="btn-black uppercase text-sm max-sm: my-2 tracking-wider w-full sm:w-auto">
                 Book an appointment
               </button>
+              </Link>
             </div>
 
   {/* Description */}

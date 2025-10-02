@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @font-face {
     font-family:'playfair';
     src: url('./assets/fonts/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
@@ -188,8 +189,7 @@ body:has(.submenu-container) {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 100%;
-  max-width: 18rem; 
+  width: fit-content;
 }
 
 .head-text {
@@ -274,4 +274,57 @@ body:has(.submenu-container) {
 .sticky {
   position: sticky;
   position: -webkit-sticky;
+}
+
+
+ /* locomotive-scroll */
+
+ /* Import Locomotive Scroll CSS first */
+@import 'locomotive-scroll/dist/locomotive-scroll.css';
+
+/* Rest of your existing imports and styles */
+
+
+/* Locomotive Scroll Custom Styles */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+html.has-scroll-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.has-scroll-smooth body {
+  overflow: hidden;
+}
+
+.has-scroll-smooth [data-scroll-container] {
+  min-height: 100vh;
+}
+
+/* Scroll animations */
+[data-scroll] {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+[data-scroll].is-inview {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-fade-up {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.scroll-fade-up.is-inview {
+  opacity: 1;
+  transform: translateY(0);
 }

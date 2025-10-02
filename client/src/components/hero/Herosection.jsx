@@ -15,8 +15,11 @@ import model3 from '../../assets/images/model3.png'
 import model4 from '../../assets/images/model4.png'
 import model5 from '../../assets/images/model5.png'
 import heroModel from '../../assets/images/heroModel.png'
+import o from '../../assets/images/o.png'
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const img1Ref = useRef(null);
   const img2Ref = useRef(null);
   const img3Ref = useRef(null);
@@ -137,6 +140,9 @@ const HeroSection = () => {
   //     animateToJewellery();
   //   }
   // }, [isFragrance]);
+ const handleDiscoverMore = () => {
+    navigate('/products/all');
+  }
 
   return (
     <section className="hero-root text-[#f5e6d7] relative w-full h-screen flex items-end justify-end flex-col overflow-hidden">
@@ -145,7 +151,7 @@ const HeroSection = () => {
       <div className="hero-inner relative flex items-start justify-between w-[95%]    h-[70vh]">
         <div className="hero-left w-[30vw] h-80  flex flex-col  items-start ">
           {/* <TextSlider isFragrance={isFragrance} /> */}
-          <button className="btn-luxury rounded-4xl w-62 mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50"
+          <button onClick={handleDiscoverMore} className="btn-luxury rounded-4xl w-62 mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50"
           style={
             {
               padding:'0.5rem 2.1rem'
@@ -178,7 +184,8 @@ const HeroSection = () => {
         </div> */}
 
 
-        <img className="h-[95vh] scale-120  absolute left-[29%] -bottom-12 object-cover " src={model} alt="" />
+        {/* <img className="h-[95vh] scale-120  absolute left-[29%] -bottom-12 object-cover " src={model} alt="" /> */}
+        <img className="h-[95vh]   absolute left-[29%] bottom-0 object-cover " src={o} alt="" />
       </div>
     </section>
   );

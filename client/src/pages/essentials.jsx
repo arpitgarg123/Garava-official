@@ -8,115 +8,65 @@ import { useEffect, useRef } from "react";
 import PageHeader from "../components/header/PageHeader";
 
 gsap.registerPlugin(ScrollTrigger);
-const Essentials = ()=> {
-    const cardRefs = useRef([]);
 
-  //   const setCardRef = (el, idx) => {
-  //   cardRefs.current[idx] = el;
-  // };
+const Essentials = () => {
+  const sectionRef = useRef(null);
+  const cardRefs = useRef([]);
 
-  //   useEffect(() => {
-  //        const ctx = gsap.context(() => {
-  //     ScrollTrigger.matchMedia({
-  //       // desktop / large screens
-  //       "(min-width: 1024px)": () => {
-  //         cardRefs.current.forEach((card) => {
-  //           if (!card) return;
-  //           gsap.fromTo(
-  //             card,
-  //             { y: 0 },
-  //             {
-  //               y: -120, 
-  //               ease: "none",
-  //               scrollTrigger: {
-  //                 trigger: card,
-  //                 start: "50% 80%",    
-  //                 end: "bottom top",      
-  //                 scrub: 0.8,             
-  //               },
-  //             }
-  //           );
-  //         });
-  //       },
+  // Essential items configuration with navigation links
+  const essentialItems = [
+    {
+      id: 1,
+      title: "Jewellery",
+      subtitle: "Signature Collection", 
+      img: jewelleryImg,
+      hotspotSize: "42%",
+      link: "/products/jewellery"
+    },
+    {
+      id: 2,
+      title: "Fragrance",
+      subtitle: "Eau de Luxe",
+      img: fragranceImg, 
+      hotspotSize: "42%",
+      link: "/products/fragrance"
+    }
+  ];
 
-  //       // tablet / medium
-  //       "(min-width: 640px) and (max-width: 1023px)": () => {
-  //         cardRefs.current.forEach((card) => {
-  //           if (!card) return;
-  //           gsap.fromTo(
-  //             card,
-  //             { y: 0 },
-  //             {
-  //               y: -70,
-  //               ease: "none",
-  //               scrollTrigger: {
-  //                 trigger: card,
-  //                 start: "top bottom",
-  //                 end: "bottom top",
-  //                 scrub: 0.8,
-  //               },
-  //             }
-  //           );
-  //         });
-  //       },
+  const setCardRef = (el, idx) => {
+    cardRefs.current[idx] = el;
+  };
 
-  //       // mobile - very subtle or no movement
-  //       "(max-width: 639px)": () => {
-  //         cardRefs.current.forEach((card) => {
-  //           if (!card) return;
-  //           gsap.fromTo(
-  //             card,
-  //             { y: 0 },
-  //             {
-  //               y: -30,
-  //               ease: "none",
-  //               scrollTrigger: {
-  //                 trigger: card,
-  //                 start: "top bottom",
-  //                 end: "bottom top",
-  //                 scrub: 0.8,
-  //               },
-  //             }
-  //           );
-  //         });
-  //       },
-  //     }); 
-  //   }, cardRefs); 
 
-  //   ScrollTrigger.refresh();
 
-  //   return () => {
-  //     ctx.revert();
-  //     ScrollTrigger.refresh();
-  //   };
-  // }, []);
-
- 
+    
     
   return (
-   <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <section 
+    
+      className="py-16 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden"
+    >
       <div className="max-w-screen-xl mx-auto">
-      <PageHeader title="Essentials" />
+        <div className="page-header">
+          <PageHeader title="Essentials" />
+        </div>
 
-        <div className="flex  -mx-4 ">
-          <Card
-          //  ref={(el) => setCardRef(el, 0)}
-            title="Jewellery"
-            subtitle="Signature Collection"
-            img={jewelleryImg}
-            hotspotSize="42%"
-          />
-          <Card
-            // ref={(el) => setCardRef(el, 1)}
-            title="Fragrance"
-            subtitle="Eau de Luxe"
-            img={fragranceImg}
-            hotspotSize="42%"
-          />
+        <div className="flex -mx-4 gap-8 mt-12">
+          {essentialItems.map((item, index) => (
+            <Card
+              key={item.id}
+              ref={(el) => setCardRef(el, index)}
+              title={item.title}
+              subtitle={item.subtitle}
+              img={item.img}
+              hotspotSize={item.hotspotSize}
+              link={item.link}
+            />
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-export default Essentials
+export default Essentials;

@@ -133,7 +133,7 @@ export default function EnhancedChatbotWidget({
         <button
           onClick={() => { setOpen(true); setMinimized(false); }}
           aria-label="Open chat"
-          className={`group fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full px-4 py-3 bg-gray-200 hover:brightness-110 transition shadow-lg hover:shadow-xl`}
+          className={`group fixed bottom-5 right-5 z-40 cursor-pointer inline-flex items-center gap-2 rounded-full px-4 py-3 bg-gray-200 hover:brightness-110 transition shadow-lg hover:shadow-xl`}
         >
           <div className="hidden sm:inline text-sm font-medium">
             <img className="h-10" src={iconlogo} alt="Garava Assistant" />
