@@ -25,8 +25,6 @@ login issues  ✅
 check left for the blogs
 google auth condition 
 color filter 
-search home
-chatbot
 events
 testinominals
 pagination on every where

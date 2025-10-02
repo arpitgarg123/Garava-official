@@ -151,6 +151,4 @@ import faqAdminRouter from "./modules/faq/admin/faq.admin.router.js";
     process.exit(0);
   }); 
 
-  start();
-  
- 
+  start();   
