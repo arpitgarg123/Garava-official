@@ -7,7 +7,7 @@ It is designed to showcase and sell **premium jewellery and fragrances**, while 
 
 # # pending work
 
-contact page ✅
+contact page ✅✅
 color filter 
 home search ✅
 glitch solve 
@@ -16,20 +16,21 @@ blogs ✅
 review ✅ helpfull issue
 news&events ✅
 admin password change ✅
-admin dashboard
+admin dashboardd✅
 continue google  ✅
 chat bot ✅ chat bot done have some ui issue left
 pricing issue 
-refund payment gateway
+refund payment gateway ✅
 notification setup across all service 
 login issues  ✅
-check left for the blogs
-google auth condition ✅
+check left for the blogs✅
+google auth password condition 
 chatbot✅
 events ✅
 testinominals 
 pagination on every where 
 strong password 
+privacy policy, shipping, refund return, term conditions are done✅
 
 
 
@@ -46,11 +47,27 @@ author not show for in dashboard blogs ✅
 order filter not working for in dasboard ✅
 customer NA fix krna h dashbard order me ✅
 SKU not show for in product dashboard ✅
-order details price, total, sub total are NAN and variant not show in dashboard 
+order details price, total, sub total are NAN and variant not show in dashboard ✅
 blog page ui fix and arrow back not working✅
 navbar responsive fix✅
 search page ui fix and arrow buton fix✅
 locomotive ✅
 navitems are clickable  ✅
-discover btton click done ✅ & navigate all products are also done✅ but all products not show and fix sidebar ✅
+discover btton click done ✅ & navigate all products are also done✅ but all products not show and fix sidebar 
+
+
+
+# # new fixs
+automatic logout for some time
+dashboard blogs ui fix 
+dashboard all button are not cursor-pointer
+dashbaord review ui fix
+dashshord review comments not show
+dashbaord appointment add butn remove and ui fix
+navbar faq link are not active
+chatbot ui fix and button center img
+products card remove color text
+product color filter 
+product page add banner
+
 

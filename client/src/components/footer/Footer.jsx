@@ -113,22 +113,22 @@ const Footer = () => {
               </h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <a href="/privacy_policy" className="hover:underline">
+                  <a href="/privacy-policy" className="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="/shipping_policy" className="hover:underline">
+                  <a href="/shipping-policy" className="hover:underline">
                     Shipping Policy
                   </a>
                 </li>
                 <li>
-                  <a href="/tearm_condition" className="hover:underline">
-                    Tearm & Condition
+                  <a href="/terms-and-conditions" className="hover:underline">
+                    Terms & Conditions
                   </a>
                 </li>
                 <li>
-                  <a href="/refund_return" className="hover:underline">
+                  <a href="/refund-return" className="hover:underline">
                     Refund & Return Policy
                   </a>
                 </li>
