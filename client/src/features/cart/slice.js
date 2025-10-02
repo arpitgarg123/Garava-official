@@ -71,7 +71,29 @@ export const addToCart = createAsyncThunk(
       return response.data.cart;
     } catch (error) {
       console.error('Cart slice - Add to cart error:', error);
-      const errorMessage = error.response?.data?.message || error.message || 'Failed to add item to cart';
+      
+      let errorMessage = 'Failed to add item to cart';
+      
+      // Handle specific error types
+      if (error.response?.data?.message) {
+        const apiMessage = error.response.data.message;
+        
+        // Handle stock-related errors
+        if (apiMessage.includes('Insufficient stock')) {
+          errorMessage = apiMessage; // Use the specific stock error message
+        } else if (apiMessage.includes('out of stock') || apiMessage.includes('not available')) {
+          errorMessage = 'This product is currently out of stock';
+        } else if (apiMessage.includes('Product not found')) {
+          errorMessage = 'Product not found';
+        } else if (apiMessage.includes('Variant not found')) {
+          errorMessage = 'Product variant not found';
+        } else {
+          errorMessage = apiMessage;
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       return rejectWithValue(errorMessage);
     }
   }

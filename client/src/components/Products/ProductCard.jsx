@@ -881,11 +881,12 @@ const ProductCard = ({
   const productId = product._id || product.id;
   const isInWishlist = useSelector(state => selectIsProductInWishlist(state, productId));
 
-  // Check if it's high jewellery category (from backend data)
-  const isHighJewellery = product.type?.toLowerCase() === "high-jewellery" || 
-                         product.category?.toLowerCase() === "high-jewellery" ||
-                         product.type?.toLowerCase() === "high jewellery" || 
-                         product.category?.toLowerCase() === "high jewellery";
+  // Check out-of-stock status
+  // Use the backend-calculated isOutOfStock first, then fallback to manual calculation
+  const isOutOfStock = product.isOutOfStock || 
+    (product.totalStock !== undefined && product.totalStock === 0) ||
+    (product.defaultVariant && product.defaultVariant.stock === 0) ||
+    (product.variants && product.variants.length > 0 && product.variants.every(v => v.stock === 0));
 
   // Active color state handling
   let colors = [];
@@ -977,27 +978,41 @@ const ProductCard = ({
           loading="lazy"
         />
         
-        {/* Gradient overlay for high jewellery */}
-        {isHighJewellery && (
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Out of Stock Overlay */}
+        {isOutOfStock && (
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <span className="bg-red-600 text-white px-3 py-1 rounded-md font-medium text-sm">
+              Out of Stock
+            </span>
+          </div>
         )}
       </div>
 
-      {/* ACTION RAIL - Different for High Jewellery */}
-      <div className="ph-actions absolute right-3 top-16 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity md:transform md:translate-x-12 md:group-hover:translate-x-0 duration-300" aria-hidden="true">
-        {!isHighJewellery && (
-          <button
-            className="ph-action ph-action-ghost bg-white shadow-lg rounded-full w-11 h-11 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
-            title="Add to cart"
-            aria-label="Add to cart"
-            onClick={(e) => {
-              e.stopPropagation();
-              
-              if (!isAuthenticated) {
-                toast.error("Please login to add items to cart");
-                navigate("/login");
-                return;
-              }
+      {/* ACTION RAIL - Positioned absolute for desktop, fixed position for mobile */}
+      <div className="ph-actions absolute right-0 top-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity md:transform md:translate-x-12 md:group-hover:translate-x-0 duration-300" aria-hidden="true">
+        <button
+          className={`ph-action ph-action-ghost bg-white shadow-md rounded-full w-10 h-10 flex items-center justify-center transition-colors ${
+            isOutOfStock 
+              ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-400' 
+              : 'hover:bg-black hover:text-white'
+          }`}
+          title={isOutOfStock ? "Out of stock" : "Add to cart"}
+          aria-label={isOutOfStock ? "Out of stock" : "Add to cart"}
+          disabled={isOutOfStock}
+          onClick={(e) => {
+            e.stopPropagation();
+            
+            if (isOutOfStock) {
+              toast.error("This product is currently out of stock");
+              return;
+            }
+            
+            // Check authentication
+            if (!isAuthenticated) {
+              toast.error("Please login to add items to cart");
+              navigate("/login");
+              return;
+            }
 
               // Prepare cart item data following project conventions
               const variant = product.variants?.[0] || product.defaultVariant;
@@ -1013,16 +1028,20 @@ const ProductCard = ({
                 return;
               }
 
-              // Dispatch Redux action (prices handled in backend as per project architecture)
-              dispatch(addToCart(cartItem))
-                .unwrap()
-                .then(() => {
-                  toast.success("Item added to cart!");
-                })
-                .catch((error) => {
+            // Dispatch Redux action
+            dispatch(addToCart(cartItem))
+              .unwrap()
+              .then(() => {
+                toast.success("Item added to cart!");
+              })
+              .catch((error) => {
+                if (error.message?.includes('Insufficient stock')) {
+                  toast.error(error.message);
+                } else {
                   toast.error("Failed to add item to cart");
-                  console.error("Add to cart error:", error);
-                });
+                }
+                console.error("Add to cart error:", error);
+              });
 
               onAddToCart(product);
             }}
