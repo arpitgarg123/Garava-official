@@ -147,23 +147,31 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {item.variantSnapshot ? (
                           <div>
-                            <div>{item.variantSnapshot.size}</div>
+                            {item.variantSnapshot.size && (
+                              <div className="font-medium">{item.variantSnapshot.size}</div>
+                            )}
                             {item.variantSnapshot.color && (
                               <div className="text-xs text-gray-500">{item.variantSnapshot.color}</div>
                             )}
+                            {item.variantSnapshot.sku && (
+                              <div className="text-xs text-gray-400">SKU: {item.variantSnapshot.sku}</div>
+                            )}
+                            {!item.variantSnapshot.size && !item.variantSnapshot.color && !item.variantSnapshot.sku && (
+                              <span className="text-gray-500">Standard</span>
+                            )}
                           </div>
                         ) : (
-                          'Default'
+                          <span className="text-gray-500">No variant info</span>
                         )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {formatCurrency(item.priceAtTime)}
+                        {formatCurrency(item.priceAtTime || 0)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {item.quantity}
+                        {item.quantity || 0}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {formatCurrency(item.priceAtTime * item.quantity)}
+                        {formatCurrency((item.priceAtTime || 0) * (item.quantity || 0))}
                       </td>
                     </tr>
                   ))}
@@ -182,30 +190,30 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
-                  <span>{formatCurrency(order.subtotalAmount)}</span>
+                  <span>{formatCurrency(order.subtotalAmount || 0)}</span>
                 </div>
-                {order.shippingAmount > 0 && (
+                {(order.shippingAmount || 0) > 0 && (
                   <div className="flex justify-between">
                     <span>Shipping:</span>
-                    <span>{formatCurrency(order.shippingAmount)}</span>
+                    <span>{formatCurrency(order.shippingAmount || 0)}</span>
                   </div>
                 )}
-                {order.taxAmount > 0 && (
+                {(order.taxAmount || 0) > 0 && (
                   <div className="flex justify-between">
                     <span>Tax:</span>
-                    <span>{formatCurrency(order.taxAmount)}</span>
+                    <span>{formatCurrency(order.taxAmount || 0)}</span>
                   </div>
                 )}
-                {order.discountAmount > 0 && (
+                {(order.discountAmount || 0) > 0 && (
                   <div className="flex justify-between text-green-600">
                     <span>Discount:</span>
-                    <span>-{formatCurrency(order.discountAmount)}</span>
+                    <span>-{formatCurrency(order.discountAmount || 0)}</span>
                   </div>
                 )}
                 <div className="border-t border-gray-300 pt-2 mt-2">
                   <div className="flex justify-between font-semibold text-base">
                     <span>Grand Total:</span>
-                    <span>{formatCurrency(formattedOrder.totalAmount)}</span>
+                    <span>{formatCurrency(order.grandTotal || formattedOrder.totalAmount || 0)}</span>
                   </div>
                 </div>
               </div>

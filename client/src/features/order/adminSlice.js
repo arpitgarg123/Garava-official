@@ -59,8 +59,11 @@ const initialState = {
     totalPages: 0,
   },
   filters: {
-    status: '',
-    user: '',
+    q: '',           // Search query
+    status: '',      // Order status
+    paymentStatus: '', // Payment status
+    user: '',        // User filter
+    page: 1          // Current page
   },
   selectedOrder: null,
   loading: false,
@@ -78,7 +81,13 @@ const orderAdminSlice = createSlice({
       state.filters = { ...state.filters, ...action.payload };
     },
     clearFilters: (state) => {
-      state.filters = { status: '', user: '' };
+      state.filters = { 
+        q: '', 
+        status: '', 
+        paymentStatus: '', 
+        user: '', 
+        page: 1 
+      };
     },
     setSelectedOrder: (state, action) => {
       state.selectedOrder = action.payload;

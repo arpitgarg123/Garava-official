@@ -78,7 +78,22 @@ export const getVariantStock = async ({ variantId, variantSku, productId }) => {
     }
 
     const stock = variant.stock || 0;
-    const stockStatus = variant.stockStatus || 'out_of_stock';
+    let stockStatus = variant.stockStatus || 'out_of_stock';
+    
+    // Fix stock status inconsistency: if stock > 0 but status is out_of_stock, correct it
+    if (stock > 0 && stockStatus === 'out_of_stock') {
+      stockStatus = 'in_stock';
+      // Update the database to fix the inconsistency
+      try {
+        await Product.findOneAndUpdate(
+          { _id: product._id, "variants._id": variant._id },
+          { $set: { "variants.$.stockStatus": 'in_stock' } }
+        );
+        console.log(`Fixed stock status for variant ${variant.sku}: ${stock} in stock`);
+      } catch (updateError) {
+        console.error('Failed to update stock status:', updateError);
+      }
+    }
     
     // Determine actual availability
     const isAvailable = stock > 0 && stockStatus !== 'out_of_stock' && variant.isActive !== false;

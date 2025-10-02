@@ -72,17 +72,19 @@ export default function Orders() {
   }, [filters]);
   
   const handleFilterChange = (newFilters) => {
-    setLocalFilters({ ...localFilters, ...newFilters });
-    dispatch(setFilters({ ...newFilters, page: 1 }));
+    const updatedFilters = { ...localFilters, ...newFilters };
+    setLocalFilters(updatedFilters);
+    dispatch(setFilters(updatedFilters));
   };
   
   const handleSearch = () => {
-    handleFilterChange({ q: searchTerm });
+    handleFilterChange({ q: searchTerm, page: 1 });
   };
   
   const handleClearFilters = () => {
+    const clearedFilters = { q: '', status: '', paymentStatus: '', user: '', page: 1 };
     dispatch(clearFilters());
-    setLocalFilters({ q: '', status: '', paymentStatus: '' });
+    setLocalFilters(clearedFilters);
     setSearchTerm('');
   };
 
@@ -103,7 +105,7 @@ export default function Orders() {
   };
 
   const handlePageChange = (newPage) => {
-    dispatch(setFilters({ ...filters, page: newPage }));
+    handleFilterChange({ page: newPage });
   };
 
 
@@ -263,10 +265,10 @@ export default function Orders() {
                         </div>
                         <div className="ml-3">
                           <div className="text-sm font-medium text-gray-900">
-                            {order.customer?.name || order.shippingAddress?.name || 'N/A'}
+                            {order.user?.name || order.customer?.name || order.shippingAddress?.name || 'Guest Customer'}
                           </div>
                           <div className="text-sm text-gray-500">
-                            {order.customer?.email || order.shippingAddress?.email || 'N/A'}
+                            {order.user?.email || order.customer?.email || order.shippingAddress?.email || 'No email provided'}
                           </div>
                         </div>
                       </div>
