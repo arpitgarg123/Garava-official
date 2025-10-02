@@ -133,7 +133,7 @@ const Checkout = () => {
       const orderData = {
         items: cartItems.map(item => ({
           variantId: item.variantId,
-          sku: item.variantSku,
+          variantSku: item.variantSku, // Use variantSku to match cart model
           quantity: item.quantity
         })),
         addressId: selectedAddressId, // Use address ID instead of full address
