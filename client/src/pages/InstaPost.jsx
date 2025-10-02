@@ -24,7 +24,7 @@ const InstaPost = () => {
       
           <div className="products-grid">
             {products.map((p) => (
-                 <article className="card " tabIndex="0" >
+                 <article key={p.id} className="card " tabIndex="0" >
       <div className="card-img-wrapper">
         <img
           className="card-img"

@@ -13,7 +13,7 @@ home search ✅
 glitch solve 
 remove logs
 blogs ✅ (only the intigration is left)
-review
+review helpfull issue
 news&events backend
 admin password change
 admin dashboardd

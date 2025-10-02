@@ -34,8 +34,7 @@ const EventCard = ({item}) => {
             </a>
           )}
           <a
-            // href={`/news-and-events/${item.slug}`}
-             href='/event_details'
+            href={`/event_details/${item.slug}`}
             className="text-xs font-medium underline underline-offset-4 hover:opacity-80"
           >
             View details

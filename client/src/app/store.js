@@ -19,6 +19,7 @@ import reviewAdminReducer from "../features/reviews/reviewAdminSlice.js";
 import searchReducer from "../features/search/slice.js";
 import faqReducer from "../features/faq/slice.js";
 import faqAdminReducer from "../features/faq/adminSlice.js";
+import newsEventsReducer from "../features/newsevents/slice.js";
 
 // Persist configuration
 const persistConfig = {
@@ -45,6 +46,7 @@ const rootReducer = combineReducers({
   search: searchReducer,
   faq: faqReducer,
   faqAdmin: faqAdminReducer,
+  newsevents: newsEventsReducer,
 });
 
 // Create persisted reducer

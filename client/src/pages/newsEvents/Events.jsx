@@ -1,7 +1,14 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import EventCard from "../../components/newsEvents/EventCard";
 import Pagination from "../../components/Pagination";
 import BackButton from "../../components/BackButton";
+import { fetchEventsGrouped } from "../../features/newsevents/slice";
+import {
+  selectEventsGrouped,
+  selectNewsEventsLoading,
+  selectNewsEventsError
+} from "../../features/newsevents/selectors";
 
 /**
  * EventsPage.jsx — Garava redesign (News & Events)
@@ -10,56 +17,14 @@ import BackButton from "../../components/BackButton";
  * - Filters: type (News/Event), city, month; search; sort
  * - Responsive card grid; modal for quick view; pagination
  * - Production-grade patterns: memoization, controlled state, a11y
- * - Replace MOCK_EVENTS with API data when wiring
+ * - Integrated with backend API
  */
 
- const MOCK_EVENTS = [
-  {
-    id: "e1",
-    kind: "Event", // or "News"
-    title: "Lab-Grown Diamond Showcase 2025",
-    date: "2025-10-15",
-    city: "Jaipur",
-    location: "Garava Studio, MG Road",
-    cover:
-      "https://plus.unsplash.com/premium_photo-1681276168422-ebd2d7e95340?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGRhaW1vbmQlMjBqZXdlbGxlcnl8ZW58MHx8MHx8fDA%3D",
-    excerpt:
-      "Experience our latest lab-grown diamond collection with live styling sessions and expert guidance.",
-    rsvpUrl: "#",
-    slug: "lab-grown-diamond-showcase-2025",
-  },
-  {
-    id: "e2",
-    kind: "News",
-    title: "Garava Wins Ethical Jewelry Award",
-    date: "2025-07-08",
-    city: "Mumbai",
-    location: "Press Release",
-    cover:
-      "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1600&auto=format&fit=crop",
-    excerpt:
-      "We are honored to receive recognition for our commitment to sustainability and design commitment.",
-    slug: "garava-wins-ethical-jewelry-award",
-  },
-  {
-    id: "e3",
-    kind: "Event",
-    title: "Valentine Trunk Show",
-    date: "2025-02-10",
-    city: "Delhi",
-    location: "The Jewel Courtyard",
-    cover:
-      "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=1600&auto=format&fit=crop",
-    excerpt:
-      "An intimate preview of romantic pieces curated for the season.An intimate preview of romantic pieces curated for the season.",
-    rsvpUrl: "#",
-    slug: "valentine-trunk-show",
-  },
-];
-
-
- 
  const  EventsPage =() =>{
+  const dispatch = useDispatch();
+  const eventsGrouped = useSelector(selectEventsGrouped);
+  const loading = useSelector(selectNewsEventsLoading);
+  const error = useSelector(selectNewsEventsError);
   const [tab, setTab] = useState("Upcoming"); // Upcoming | Past | All
   const [q, setQ] = useState("");
   const [type, setType] = useState("All"); // All | Event | News
@@ -69,7 +34,55 @@ import BackButton from "../../components/BackButton";
   const [page, setPage] = useState(1);
   const pageSize = 6;
 
-  const cities = useMemo(() => ["All", ...Array.from(new Set(MOCK_EVENTS.map((e) => e.city)))], []);
+  // Fetch data on component mount
+  useEffect(() => {
+    dispatch(fetchEventsGrouped({
+      page: 1,
+      limit: 100, // Get more items for client-side filtering
+      q: q || undefined,
+      kind: type !== "All" ? type : undefined,
+      city: city !== "All" ? city : undefined
+    }));
+  }, [dispatch, q, type, city]);
+
+  // Transform Redux data to match existing component structure
+  const EVENTS_DATA = useMemo(() => {
+    const allEvents = [];
+    
+    if (eventsGrouped?.upcoming?.items) {
+      allEvents.push(...eventsGrouped.upcoming.items.map(item => ({
+        id: item._id,
+        kind: item.kind,
+        title: item.title,
+        date: item.date,
+        city: item.city,
+        location: item.location,
+        cover: item.cover?.url || "",
+        excerpt: item.excerpt,
+        rsvpUrl: item.rsvpUrl,
+        slug: item.slug
+      })));
+    }
+    
+    if (eventsGrouped?.past?.items) {
+      allEvents.push(...eventsGrouped.past.items.map(item => ({
+        id: item._id,
+        kind: item.kind,
+        title: item.title,
+        date: item.date,
+        city: item.city,
+        location: item.location,
+        cover: item.cover?.url || "",
+        excerpt: item.excerpt,
+        rsvpUrl: item.rsvpUrl,
+        slug: item.slug
+      })));
+    }
+    
+    return allEvents;
+  }, [eventsGrouped]);
+
+  const cities = useMemo(() => ["All", ...Array.from(new Set(EVENTS_DATA.map((e) => e.city).filter(Boolean)))], [EVENTS_DATA]);
 
   const months = [
     "All",
@@ -90,7 +103,7 @@ import BackButton from "../../components/BackButton";
   const now = new Date();
 
   const filtered = useMemo(() => {
-    return MOCK_EVENTS.filter((e) => {
+    return EVENTS_DATA.filter((e) => {
       // tab filter
       const isFuture = new Date(e.date) >= new Date(now.toDateString());
       if (tab === "Upcoming" && !isFuture) return false;
@@ -113,12 +126,26 @@ import BackButton from "../../components/BackButton";
         const db = new Date(b.date).getTime();
         return sort === "date_desc" ? db - da : da - db;
       });
-  }, [tab, type, city, month, q, sort]);
+  }, [EVENTS_DATA, tab, type, city, month, q, sort, now, months]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
   const pageItems = filtered.slice((page - 1) * pageSize, page * pageSize);
 
   const resetToFirstPage = () => setPage(1);
+
+  // Show loading state
+  if (loading && EVENTS_DATA.length === 0) {
+    return (
+      <div className="mt-32">
+        <div className="sticky top-16 z-10 mb-3">
+          <BackButton />
+        </div>
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray-500">Loading events...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-32">
