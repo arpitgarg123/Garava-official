@@ -37,7 +37,7 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
         />
       )}
       {!isTextOnly && (
-        <span className="text-sm font-medium group-hover:text-primary text-center">{sub.label}</span>
+        <span className="text-lg   font-playfair text-center">{sub.label}</span>
       )}
     </>
   );
