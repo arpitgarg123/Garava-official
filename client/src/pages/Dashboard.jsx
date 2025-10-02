@@ -25,6 +25,8 @@ import Newsletter from '../components/DashboardSections/Newsletter';
 import Blogs from '../components/DashboardSections/BlogsAdmin';
 import FAQAdmin from '../components/DashboardSections/FAQAdmin';
 import Overview from '../components/DashboardSections/Overview';
+import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
+import NotificationDebug from '../components/DashboardSections/NotificationDebug';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -40,6 +42,8 @@ const Dashboard = () => {
     { id: "reviews", label: "Reviews", icon: FaStar },
     { id: "blogs", label: "Blogs", icon: FaBlog },
     { id: "faq", label: "FAQ", icon: FaQuestionCircle },
+    { id: "notifications", label: "Notifications", icon: FaBell },
+    { id: "debug", label: "Debug", icon: FaBell },
     { id: "newsletter", label: "Newsletter", icon: FaEnvelope },
   ];
 
@@ -208,6 +212,10 @@ const Dashboard = () => {
         return <Blogs />;
       case "faq":
         return <FAQAdmin />;
+      case "notifications":
+        return <NotificationsDashboard />;
+      case "debug":
+        return <NotificationDebug />;
       case "newsletter":
         return (
           <Newsletter  

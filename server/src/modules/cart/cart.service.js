@@ -3,15 +3,55 @@ import mongoose from "mongoose";
 import Cart from "./cart.model.js";
 import Product from "../product/product.model.js";
 import { toPaise, calcCartTotal } from "./cart.utils.js";
+import { createOutOfStockNotificationService, createLowStockNotificationService } from "../notification/notification.service.js";
+
+/**
+ * Validate and fix cart items with incorrect variant IDs
+ */
+const validateAndFixCartItems = async (cart) => {
+  let hasChanges = false; 
+  
+  for (const item of cart.items) {
+    try {
+      const product = await Product.findById(item.product);
+      if (!product) continue;
+      
+      // Check if the current variantId is valid
+      const validVariant = product.variants.find(v => String(v._id) === String(item.variantId));
+      
+      if (!validVariant && item.variantSku) {
+        // Try to find by SKU and update the variantId
+        const variantBySku = product.variants.find(v => String(v.sku) === String(item.variantSku));
+        if (variantBySku) {
+          console.log(`Cart: Fixed variant ID for SKU ${item.variantSku}`);
+          item.variantId = variantBySku._id;
+          hasChanges = true;
+        }
+      }
+    } catch (error) {
+      console.error('Error validating cart item:', error);
+    }
+  }
+  
+  if (hasChanges) {
+    await cart.save();
+  }
+  
+  return cart;
+};
 
 /**
  * Fetch (or create) cart for user (returns plain object)
  */
 export const getCartService = async (userId) => {
   if (!userId) throw new ApiError(401, "Unauthorized");
-  let cart = await Cart.findOne({ user: userId }).lean();
+  let cart = await Cart.findOne({ user: userId });
   if (!cart) return { user: userId, items: [], totalAmount: 0 };
-  return cart;
+  
+  // Validate and fix cart items if needed
+  await validateAndFixCartItems(cart);
+  
+  return cart.toObject();
 };
 
 /**
@@ -27,20 +67,53 @@ export const addToCartService = async (userId, payload) => {
   if (!Number.isInteger(qty) || qty <= 0) throw new ApiError(400, "quantity must be a positive integer");
 
   // validate product + variant
-  const product = await Product.findById(productId).lean();
+  const product = await Product.findById(productId); // Remove .lean() to preserve _id fields
   if (!product) throw new ApiError(404, "Product not found");
 
   let variant = null;
+  let variantObjectId = null;
+  
   if (variantId) {
     if (!mongoose.isValidObjectId(variantId)) throw new ApiError(400, "Invalid variantId");
     variant = product.variants.find((v) => String(v._id) === String(variantId));
+    variantObjectId = variantId;
   } else {
     variant = product.variants.find((v) => String(v.sku) === String(variantSku));
+    // Get the ObjectId from the found variant
+    variantObjectId = variant?._id;
   }
+  
   if (!variant) throw new ApiError(404, "Variant not found");
+  
+  // Ensure we have a valid ObjectId for the variant
+  if (!variantObjectId) {
+    throw new ApiError(500, "Variant ID could not be determined");
+  }
 
   // check stock (note: cart doesn't reserve stock; do reservation at checkout)
-  if (variant.stock < qty) throw new ApiError(400, `Insufficient stock. Available ${variant.stock}`);
+  if (variant.stock < qty) {
+    // Check if this creates an out-of-stock situation and create notification
+    if (variant.stock === 0) {
+      try {
+        await createOutOfStockNotificationService(product, variant);
+      } catch (notifError) {
+        console.error('Failed to create out-of-stock notification:', notifError);
+        // Don't fail the cart operation if notification fails
+      }
+    }
+    throw new ApiError(400, `Insufficient stock. Available ${variant.stock}`);
+  }
+
+  // Check for low stock and create notification
+  const LOW_STOCK_THRESHOLD = 5;
+  if (variant.stock <= LOW_STOCK_THRESHOLD && variant.stock > 0) {
+    try {
+      await createLowStockNotificationService(product, variant, LOW_STOCK_THRESHOLD);
+    } catch (notifError) {
+      console.error('Failed to create low stock notification:', notifError);
+      // Don't fail the cart operation if notification fails
+    }
+  }
 
   // atomic-ish update approach: load cart doc, modify and save
   let cart = await Cart.findOne({ user: userId });
@@ -49,7 +122,7 @@ export const addToCartService = async (userId, payload) => {
   }
 
   const existingIndex = cart.items.findIndex(
-    (i) => String(i.product) === String(productId) && String(i.variantId) === String(variant._id)
+    (i) => String(i.product) === String(productId) && String(i.variantId) === String(variantObjectId)
   );
 
   if (existingIndex > -1) {
@@ -64,7 +137,7 @@ export const addToCartService = async (userId, payload) => {
   } else {
     cart.items.push({
       product: productId,
-      variantId: variant._id,
+      variantId: variantObjectId,
       variantSku: variant.sku,
       quantity: qty,
       unitPrice: toPaise(variant.price),
@@ -77,6 +150,35 @@ export const addToCartService = async (userId, payload) => {
 
   cart.totalAmount = calcCartTotal(cart.items);
   await cart.save();
+
+  // After successful cart update, check if we need to create stock notifications
+  try {
+    // Get updated variant stock level from database to ensure accuracy
+    const updatedProduct = await Product.findById(productId); // Remove .lean() here too
+    if (updatedProduct) {
+      const updatedVariant = updatedProduct.variants.find(v => 
+        String(v._id) === String(variantObjectId)
+      );
+      
+      if (updatedVariant) {
+        // Calculate remaining stock after this cart operation (simulated)
+        const remainingStock = updatedVariant.stock - qty;
+        
+        // Create out-of-stock notification if stock will be depleted
+        if (remainingStock <= 0) {
+          await createOutOfStockNotificationService(updatedProduct, updatedVariant);
+        }
+        // Create low stock notification if stock is getting low
+        else if (remainingStock <= 5) {
+          await createLowStockNotificationService(updatedProduct, updatedVariant, 5);
+        }
+      }
+    }
+  } catch (notifError) {
+    console.error('Failed to create post-cart stock notifications:', notifError);
+    // Don't fail the cart operation
+  }
+
   return cart.toObject();
 };
 
@@ -108,10 +210,29 @@ export const updateCartItemService = async (userId, payload) => {
     cart.items.splice(idx, 1);
   } else {
     // validate stock against product variant latest data
-    const product = await Product.findById(productId).lean();
+    const product = await Product.findById(productId);
     if (!product) throw new ApiError(404, "Product not found during update");
-    const variant = product.variants.find((v) => (variantId ? String(v._id) === String(variantId) : String(v.sku) === String(variantSku)));
-    if (!variant) throw new ApiError(404, "Variant not found during update");
+    
+    // Try to find variant by ID first, then fallback to SKU
+    let variant = null;
+    if (variantId) {
+      variant = product.variants.find((v) => String(v._id) === String(variantId));
+    }
+    
+    // If not found by ID, try to find by SKU
+    if (!variant && variantSku) {
+      variant = product.variants.find((v) => String(v.sku) === String(variantSku));
+      
+      // If found by SKU, update the cart item with correct variantId
+      if (variant) {
+        console.log('Cart: Fixing variant ID mismatch, updating to correct ID');
+        item.variantId = variant._id;
+      }
+    }
+    
+    if (!variant) {
+      throw new ApiError(404, `Variant not found. Product ${productId}, Variant ID: ${variantId}, SKU: ${variantSku}`);
+    }
 
     if (variant.stock < q) throw new ApiError(400, `Insufficient stock. Available ${variant.stock}`);
     item.quantity = q;

@@ -29,33 +29,113 @@ const ProductDetails = () => {
   const productId = product?._id || product?.id;
   const isInWishlist = useSelector(state => selectIsProductInWishlist(state, productId));
 
+  // Check out-of-stock status
+  // Find the default variant or use the first variant
+  // Handle both product list structure (with defaultVariant) and product details structure (with variants array)
+  const selectedVariant = product?.defaultVariant || 
+                          product?.variants?.find(v => v.isDefault) || 
+                          product?.variants?.[0];
+  
+  // Check if the specific variant being used is out of stock
+  const isVariantOutOfStock = selectedVariant && (
+    selectedVariant.stock === 0 || 
+    selectedVariant.stockStatus === 'out_of_stock'
+  );
+  
+  // Overall product out-of-stock check
+  const isOutOfStock = !selectedVariant || // No variant available
+    product?.isOutOfStock || 
+    (product?.totalStock !== undefined && product?.totalStock === 0) ||
+    (product?.variants && product?.variants.length > 0 && product?.variants.every(v => v.stock === 0)) ||
+    isVariantOutOfStock;
+
+  // Debug logging (temporary)
+  useEffect(() => {
+    if (product && selectedVariant) {
+      console.log('Product:', product.name);
+      console.log('Selected variant:', { 
+        sku: selectedVariant.sku, 
+        hasId: !!(selectedVariant._id || selectedVariant.id),
+        stock: selectedVariant.stock
+      });
+    }
+  }, [product, selectedVariant]);
+
   useEffect(() => {
     if (productSlug) dispatch(fetchProductBySlug(productSlug));
   }, [dispatch, productSlug]);
 
   const handleAddToCart = () => {
+    // Check if product is loaded
+    if (!product) {
+      toast.error("Product information not available");
+      return;
+    }
+    
+    if (isOutOfStock) {
+      toast.error("This product is currently out of stock");
+      return;
+    }
+    
     if (!isAuthenticated) {
       toast.error("Please login to add items to cart");
       navigate("/login");
       return;
     }
-    const variant = product?.variants?.[0] || product?.defaultVariant;
-    const cartItem = {
-      productId: product?._id || product?.id,
-      variantId: variant?._id,
-      variantSku: variant?.sku,
-      quantity: 1,
-    };
-    if (!cartItem.variantId && !cartItem.variantSku) {
-      toast.error("Product variant information is missing");
+    
+    // Validate selected variant
+    if (!selectedVariant) {
+      console.error('No product variant available. Product variants:', product?.variants);
+      toast.error("No product variant available");
       return;
     }
+    
+    // Handle both _id and id fields (MongoDB subdocuments use _id, frontend might use id)
+    const variantId = selectedVariant._id || selectedVariant.id;
+    const variantSku = selectedVariant.sku;
+    
+    // We MUST have variantSku (it's always available), variantId is optional
+    if (!variantSku) {
+      console.error('Product variant SKU is missing. Variant object:', selectedVariant);
+      toast.error("Product variant information is incomplete");
+      return;
+    }
+    
+    console.log('Variant details:', { 
+      variantId, 
+      variantSku, 
+      hasId: !!variantId, 
+      hasSku: !!variantSku 
+    });
+    
+    console.log('Adding to cart:', {
+      productId: product?._id,
+      variantSku: variantSku,
+      quantity: 1
+    });
+    
+    // Send only variantSku, let backend find the variant and use its _id
+    const cartItem = {
+      productId: product?._id || product?.id,
+      variantSku: variantSku,
+      quantity: 1,
+    };
+    
+    // Only include variantId if we actually have it
+    if (variantId) {
+      cartItem.variantId = variantId;
+    }
+    
     dispatch(addToCart(cartItem))
       .unwrap()
       .then(() => toast.success("Item added to cart!"))
       .catch((e) => {
         console.error(e);
-        toast.error("Failed to add item to cart");
+        if (e.message?.includes('Insufficient stock')) {
+          toast.error(e.message);
+        } else {
+          toast.error("Failed to add item to cart");
+        }
       });
   };
 
@@ -127,13 +207,40 @@ const ProductDetails = () => {
             </h1>
 
             <div className="mt-2 text-2xl font-semibold">
-              ₹{product?.variants?.[0]?.price ?? product?.defaultVariant?.price ?? 'Price not available'}
+              ₹{selectedVariant?.price ?? 'Price not available'}
             </div>
             <p className="text-sm text-gray-600 mt-1">(inclusive of GST)</p>
 
+            {/* Stock status indicator */}
+            <div className="mt-2 flex items-center gap-3">
+              {isOutOfStock ? (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                  Out of Stock
+                </span>
+              ) : (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                  In Stock
+                </span>
+              )}
+              
+              {/* Available stock count for selected variant and total */}
+              <div className="text-sm text-gray-600 space-y-1">
+                {selectedVariant && (
+                  <div>
+                    <span className="font-medium">Selected variant:</span> {selectedVariant.stock || 0} available
+                  </div>
+                )}
+                {product.totalStock !== undefined && (
+                  <div>
+                    <span className="font-medium">Total stock:</span> {product.totalStock} items
+                  </div>
+                )}
+              </div>
+            </div>
+
             <p className="mt-2 text-sm text-gray-700">
               <span className="font-medium">SKU:</span>{" "}
-              {product?.variants?.[0]?.sku || product?.defaultVariant?.sku || 'SKU not available'}
+              {selectedVariant?.sku || 'SKU not available'}
             </p>
 
             <div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
@@ -156,10 +263,26 @@ const ProductDetails = () => {
             </div>
             {/* Action buttons */}
             <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
-              <button onClick={handleAddToCart} className="btn-black w-full  sm:w-auto">
-                ADD TO BAG
+              <button 
+                onClick={handleAddToCart} 
+                disabled={isOutOfStock}
+                className={`w-full sm:w-auto px-6 py-3 rounded-lg font-medium transition-colors ${
+                  isOutOfStock 
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                    : 'btn-black'
+                }`}
+              >
+                {isOutOfStock ? 'OUT OF STOCK' : 'ADD TO BAG'}
               </button>
-              <button onClick={() => navigate('/checkout')} className="btn w-full sm:w-auto">
+              <button 
+                onClick={() => navigate('/checkout')} 
+                disabled={isOutOfStock}
+                className={`w-full sm:w-auto px-6 py-3 rounded-lg font-medium transition-colors ${
+                  isOutOfStock 
+                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                    : 'btn'
+                }`}
+              >
                 BUY NOW
               </button>
               <button

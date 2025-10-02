@@ -60,6 +60,9 @@ export const listProductsService = async ({
       const prices = (p.variants || []).map(v => Number(v.price)).filter(p => !isNaN(p));
       const priceRange = prices.length ? { min: Math.min(...prices), max: Math.max(...prices) } : { min: null, max: null };
 
+    // Calculate total stock across all variants
+    const totalStock = p.variants.reduce((sum, variant) => sum + (variant.stock || 0), 0);
+    const isOutOfStock = totalStock === 0 || p.variants.every(v => v.stockStatus === 'out_of_stock');
 
     return {
       id: p._id,
@@ -79,9 +82,12 @@ export const listProductsService = async ({
             sku: defaultVariant.sku,
             sizeLabel: defaultVariant.sizeLabel,
             price: defaultVariant.price,
+            stock: defaultVariant.stock,
             stockStatus: defaultVariant.stockStatus,
           }
         : null,
+      totalStock,
+      isOutOfStock,
       avgRating: p.avgRating,
       reviewCount: p.reviewCount,
       isFeatured: p.isFeatured,
@@ -111,7 +117,23 @@ export const getProductBySlugService = async (slug) => {
 
   if (!product) throw new ApiError(404, "Product not found");
 
-  return product;
+  // Calculate total stock and out-of-stock status
+  const totalStock = product.variants.reduce((sum, variant) => sum + (variant.stock || 0), 0);
+  const isOutOfStock = totalStock === 0 || product.variants.every(v => v.stockStatus === 'out_of_stock');
+
+  // Ensure variant _id fields are preserved (convert to string if needed)
+  const processedVariants = product.variants.map(variant => ({
+    ...variant,
+    _id: variant._id?.toString() || variant._id,
+    id: variant._id?.toString() || variant._id // Add id as alias
+  }));
+
+  return {
+    ...product,
+    variants: processedVariants,
+    totalStock,
+    isOutOfStock,
+  };
 };
 
 /**

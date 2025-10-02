@@ -30,6 +30,7 @@ import blogRouter from "./modules/blogs/blog.router.js";
 import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
 import faqRouter from "./modules/faq/faq.router.js";
 import faqAdminRouter from "./modules/faq/admin/faq.admin.router.js";
+import notificationRouter from "./modules/notification/notification.router.js";
 
   // routers
   const app = express();
@@ -125,6 +126,7 @@ import faqAdminRouter from "./modules/faq/admin/faq.admin.router.js";
   app.use("/api/admin/blog", blogAdminRouter);
   app.use("/api/faq", faqRouter);
   app.use("/api/admin/faq", faqAdminRouter);
+  app.use("/api/admin/notifications", notificationRouter);
 
   // global error handler
   app.use(errorHandler);
