@@ -957,7 +957,7 @@ const navItems = [
       },
      ]},
   { title: 'HIGH JEWELLERY', submenu: [
-   { 
+    { 
         label: 'Daily Earrings', 
         img: './src/assets/images/fragnance1.png', 
         to: '/products/high-jewellery?subcategory=daily-earrings',
@@ -980,21 +980,33 @@ const navItems = [
   { title: 'Fragrance', submenu: [
      { 
         label: 'Sila', 
-        img: './src/assets/images/fragnance1.png', 
+        img: './src/assets/images/sila.jpg', 
         to: '/products/fragrance?subcategory=sila',
         subcategory: 'sila'
       },
       { 
         label: 'Sayonee', 
-        img: './src/assets/images/fragnance.png', 
+        img: './src/assets/images/sayonee.jpge', 
         to: '/products/fragrance?subcategory=sayonee',
         subcategory: 'sayonee'
       },
       { 
         label: 'Mangata', 
-        img: './src/assets/images/f.png', 
+        img: './src/assets/images/mangata.jpg', 
         to: '/products/fragrance?subcategory=mangata',
         subcategory: 'mangata'
+      },
+       { 
+        label: 'Evara', 
+        img: './src/assets/images/evara.jpg', 
+        to: '/products/fragrance?subcategory=evara',
+        subcategory: 'evara'
+      },
+       { 
+        label: 'Wayfarer', 
+        img: './src/assets/images/wayfarer.jpg', 
+        to: '/products/fragrance?subcategory=wayfarer',
+        subcategory: 'wayfarer'
       },
   ]},
   { title: 'Services', submenu: [
@@ -1285,10 +1297,10 @@ const Navbar = () => {
       {/* Desktop Navigation */}
       <nav className={navbarClass} role="navigation" aria-label="Main navigation">
         <div className="navTop relative px-10">
-          <div className="flex justify-between w-60 font-light">
-            <Link to="/contact" className="font-medium text-sm">Contact us</Link>
+          <div className="flex justify-between w-66 font-light">
+            <Link to="/contact" className="tracking-wide   text-sm">Contact us</Link>
             <h4
-              className="font-medium text-sm cursor-pointer"
+              className=" text-sm tracking-wide  cursor-pointer"
               onClick={() => navigate('/appointment')}
             >
               book an appointment
@@ -1331,7 +1343,7 @@ const Navbar = () => {
                     aria-haspopup="menu"
                   >
                     <CiUser size={22} aria-hidden="true" />
-                    <span className="text-sm font-medium">{user?.role || 'User'}</span>
+                    <span className="text-sm tracking-wide ">{user?.role || 'User'}</span>
                   </button>
 
                   <AnimatePresence>
@@ -1410,7 +1422,7 @@ const Navbar = () => {
                 />
                 <button
                   onClick={() => navigate('/login')}
-                  className=" text-white px-6 py-2 cursor-pointer font-medium  "
+                  className="tracking-wide  cursor-pointer  "
                 >
                   Login
                 </button>

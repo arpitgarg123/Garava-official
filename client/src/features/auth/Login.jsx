@@ -44,7 +44,7 @@ const Login = () => {
         <h1 className="text-2xl font-semibold mb-4 text-center">Login</h1>
         <button
           onClick={handleGoogleLogin}
-          className="w-full mb-6 flex items-center justify-center gap-3 border border-gray-300 p-2.5 rounded-md hover:bg-gray-50 transition-colors"
+          className="w-full mb-6 cursor-pointer flex items-center justify-center gap-3 border border-gray-300 p-2.5 rounded-md hover:bg-gray-50 transition-colors"
         >
           <FcGoogle size={20} />
           <span className="text-gray-600">Continue with Google</span>
