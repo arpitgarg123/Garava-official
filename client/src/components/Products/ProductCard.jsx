@@ -1048,7 +1048,7 @@ const ProductCard = ({
           >
             <IoBagHandleOutline className="text-lg" />
           </button>
-        )}
+      
 
         <button
           className="ph-action ph-action-ghost bg-white shadow-lg rounded-full w-11 h-11 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
