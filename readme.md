@@ -53,4 +53,5 @@ search page ui fix and arrow buton fix✅
 locomotive ✅
 navitems are clickable  ✅
 discover btton click done ✅ & navigate all products are also done✅ but all products not show and fix sidebar 
-
+checkout ui fix
+whatsup number add and share links are not active
