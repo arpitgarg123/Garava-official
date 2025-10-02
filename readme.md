@@ -7,7 +7,7 @@ It is designed to showcase and sell **premium jewellery and fragrances**, while 
 
 # # pending work
 
-contact page 
+contact page ✅
 color filter 
 home search ✅
 glitch solve 

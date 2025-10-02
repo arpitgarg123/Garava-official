@@ -34,6 +34,7 @@ import notificationRouter from "./modules/notification/notification.router.js";
 import newseventsRouter from "./modules/newsevents/newsevents.router.js";
 import newseventsAdminRouter from "./modules/newsevents/admin/newsevents.admin.router.js";
 import contactRouter from "./modules/contact/contact.router.js";
+import testimonialRouter from "./modules/testimonial/testimonial.router.js";
 
   // routers
   const app = express();
@@ -133,6 +134,7 @@ import contactRouter from "./modules/contact/contact.router.js";
   app.use("/api/newsevents", newseventsRouter);
   app.use("/api/admin/newsevents", newseventsAdminRouter);
   app.use("/api/contact", contactRouter);
+  app.use("/api/testimonials", testimonialRouter);
 
   // global error handler
   app.use(errorHandler);
@@ -147,7 +149,7 @@ import contactRouter from "./modules/contact/contact.router.js";
       logger.error('server failed to start', err);
       process.exit(1);
     }
-  };
+  }; 
 
   // graceful shutdown
   process.on('SIGINT', () => {

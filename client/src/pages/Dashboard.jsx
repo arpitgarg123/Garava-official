@@ -12,7 +12,8 @@ import {
   FaBell,
   FaSignOutAlt,
   FaQuestionCircle,
-  FaNewspaper
+  FaNewspaper,
+  FaComments
 } from "react-icons/fa";
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
@@ -25,6 +26,7 @@ import Reviews from './../components/DashboardSections/Reviews';
 import Newsletter from '../components/DashboardSections/Newsletter';
 import Blogs from '../components/DashboardSections/BlogsAdmin';
 import FAQAdmin from '../components/DashboardSections/FAQAdmin';
+import TestimonialAdmin from '../components/DashboardSections/TestimonialAdmin';
 import Overview from '../components/DashboardSections/Overview';
 import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
 import NotificationDebug from '../components/DashboardSections/NotificationDebug';
@@ -42,6 +44,7 @@ const Dashboard = () => {
     { id: "orders", label: "Orders", icon: FaBoxOpen },
     { id: "bookings", label: "Bookings", icon: MdEventAvailable },
     { id: "reviews", label: "Reviews", icon: FaStar },
+    { id: "testimonials", label: "Testimonials", icon: FaComments },
     { id: "blogs", label: "Blogs", icon: FaBlog },
     { id: "newsevents", label: "News & Events", icon: FaNewspaper },
     { id: "faq", label: "FAQ", icon: FaQuestionCircle },
@@ -211,6 +214,8 @@ const Dashboard = () => {
             onClearFilters={() => console.log("Filters cleared")} 
           />
         );
+      case "testimonials":
+        return <TestimonialAdmin />;
       case "blogs":
         return <Blogs />;
       case "newsevents":

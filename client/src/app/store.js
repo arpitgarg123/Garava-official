@@ -19,6 +19,7 @@ import reviewAdminReducer from "../features/reviews/reviewAdminSlice.js";
 import searchReducer from "../features/search/slice.js";
 import faqReducer from "../features/faq/slice.js";
 import faqAdminReducer from "../features/faq/adminSlice.js";
+import testimonialReducer from "../features/testimonial/slice.js";
 import newsEventsReducer from "../features/newsevents/slice.js";
 
 // Persist configuration
@@ -46,6 +47,7 @@ const rootReducer = combineReducers({
   search: searchReducer,
   faq: faqReducer,
   faqAdmin: faqAdminReducer,
+  testimonials: testimonialReducer,
   newsevents: newsEventsReducer,
 });
 
