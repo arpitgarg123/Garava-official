@@ -10,14 +10,14 @@ const TermsAndConditions = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Back Button */}
-      <div className="sticky top-34 z-10 mt-4 max-md:mt-20">
+      <div className="sticky top-34 max-md:top-10 z-10 mt-4 max-md:mt-2">
         <BackButton />
       </div>
 
     
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 mt-26">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 mt-26 max-md:mt-0">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header Section */}
           <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-amber-100 p-6 sm:p-8">
