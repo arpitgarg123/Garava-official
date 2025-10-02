@@ -33,6 +33,7 @@ import faqAdminRouter from "./modules/faq/admin/faq.admin.router.js";
 import notificationRouter from "./modules/notification/notification.router.js";
 import newseventsRouter from "./modules/newsevents/newsevents.router.js";
 import newseventsAdminRouter from "./modules/newsevents/admin/newsevents.admin.router.js";
+import contactRouter from "./modules/contact/contact.router.js";
 
   // routers
   const app = express();
@@ -131,6 +132,7 @@ import newseventsAdminRouter from "./modules/newsevents/admin/newsevents.admin.r
   app.use("/api/admin/notifications", notificationRouter);
   app.use("/api/newsevents", newseventsRouter);
   app.use("/api/admin/newsevents", newseventsAdminRouter);
+  app.use("/api/contact", contactRouter);
 
   // global error handler
   app.use(errorHandler);
@@ -157,4 +159,4 @@ import newseventsAdminRouter from "./modules/newsevents/admin/newsevents.admin.r
     process.exit(0);
   }); 
 
-  start();   
+  start();    

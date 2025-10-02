@@ -37,3 +37,19 @@ export const sendNewsletterWelcomeEmail = async (email) => {
   const { subject, html } = emailTemplates.subscribedToNewsletter(email);
   return sendEmail({ to: email, subject, html });
 }
+
+// ---- contact form emails ----
+
+export const sendContactConfirmationEmail = async (contactData) => {
+  const { subject, html } = emailTemplates.contactConfirmation(contactData);
+  return sendEmail({ to: contactData.email, subject, html });
+};
+
+export const sendContactAdminNotificationEmail = async (contactData) => {
+  const adminEmail = process.env.ADMIN_EMAIL || "admin@garava.in";
+  const { subject, html } = emailTemplates.contactAdminNotification({
+    ...contactData,
+    timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+  });
+  return sendEmail({ to: adminEmail, subject, html });
+};

@@ -3,6 +3,7 @@ import Field from "../components/contact/Field";
 import Infotile from "../components/contact/Infotile";
 import Summary from "../components/contact/Summary";
 import BackButton from "../components/BackButton";
+import { submitContactForm } from "../shared/api/contact.api.js";
 
 
 
@@ -37,22 +38,34 @@ const Contact = () => {
   const msgOk = values.message.trim().length >= 10;
   const canSubmit = emailOk && phoneOk && nameOk && subjectOk && msgOk && status.type !== "submitting";
 
- const handleSubmit = async (e)=> {
+ const handleSubmit = async (e) => {
     e.preventDefault();
     if (values.website) return; // honeypot triggered
     if (!canSubmit) {
       setStatus({ type: "error", message: "Please fill all required fields correctly." });
       return;
     }
+    
     try {
       setStatus({ type: "submitting", message: "" });
-      // TODO: integrate API endpoint
-      await new Promise((r) => setTimeout(r, 900));
-      setStatus({ type: "success", message: "Thanks! We received your message and will get back to you soon." });
+      
+      // Submit contact form via API
+      const result = await submitContactForm({
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        subject: values.subject,
+        message: values.message,
+        website: values.website // honeypot field
+      });
+      
+      setStatus({ type: "success", message: result.message || "Thanks! We received your message and will get back to you soon." });
       setValues({ name: "", email: "", phone: "", subject: "", message: "", website: "" });
       setTouched({});
     } catch (err) {
-      setStatus({ type: "error", message: "Something went wrong. Please try again." });
+      console.error("Contact form submission error:", err);
+      const errorMessage = err.response?.data?.message || "Something went wrong. Please try again.";
+      setStatus({ type: "error", message: errorMessage });
     }
   }
 

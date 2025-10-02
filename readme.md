@@ -13,22 +13,22 @@ home search ✅
 glitch solve 
 remove logs
 blogs ✅ 
-review helpfull issue
+review ✅ helpfull issue
 news&events ✅
-admin password change
-admin dashboardd
+admin password change ✅
+admin dashboard
 continue google  ✅
 chat bot ✅ chat bot done have some ui issue left
 pricing issue 
 refund payment gateway
-notification setup across all service
+notification setup across all service 
 login issues  ✅
 check left for the blogs
-google auth condition 
+google auth condition ✅
 chatbot✅
 events ✅
 testinominals 
-pagination on every where
+pagination on every where 
 strong password 
 
 
