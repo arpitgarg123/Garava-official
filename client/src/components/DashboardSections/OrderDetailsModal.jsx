@@ -147,8 +147,8 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {item.variantSnapshot ? (
                           <div>
-                            {item.variantSnapshot.size && (
-                              <div className="font-medium">{item.variantSnapshot.size}</div>
+                            {item.variantSnapshot.sizeLabel && (
+                              <div className="font-medium">{item.variantSnapshot.sizeLabel}</div>
                             )}
                             {item.variantSnapshot.color && (
                               <div className="text-xs text-gray-500">{item.variantSnapshot.color}</div>
@@ -156,22 +156,24 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                             {item.variantSnapshot.sku && (
                               <div className="text-xs text-gray-400">SKU: {item.variantSnapshot.sku}</div>
                             )}
-                            {!item.variantSnapshot.size && !item.variantSnapshot.color && !item.variantSnapshot.sku && (
+                            {!item.variantSnapshot.sizeLabel && !item.variantSnapshot.color && !item.variantSnapshot.sku && (
                               <span className="text-gray-500">Standard</span>
                             )}
                           </div>
+                        ) : item.variantId ? (
+                          <span className="text-gray-500">Variant ID: {item.variantId}</span>
                         ) : (
                           <span className="text-gray-500">No variant info</span>
                         )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {formatCurrency(item.priceAtTime || 0)}
+                        {formatCurrency(item.unitPrice || item.priceAtTime || 0)}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {item.quantity || 0}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {formatCurrency((item.priceAtTime || 0) * (item.quantity || 0))}
+                        {formatCurrency((item.unitPrice || item.priceAtTime || 0) * (item.quantity || 0))}
                       </td>
                     </tr>
                   ))}
@@ -190,30 +192,36 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
-                  <span>{formatCurrency(order.subtotalAmount || 0)}</span>
+                  <span>{formatCurrency(order.subtotal || 0)}</span>
                 </div>
-                {(order.shippingAmount || 0) > 0 && (
+                {(order.shippingTotal || 0) > 0 && (
                   <div className="flex justify-between">
                     <span>Shipping:</span>
-                    <span>{formatCurrency(order.shippingAmount || 0)}</span>
+                    <span>{formatCurrency(order.shippingTotal || 0)}</span>
                   </div>
                 )}
-                {(order.taxAmount || 0) > 0 && (
+                {(order.taxTotal || 0) > 0 && (
                   <div className="flex justify-between">
                     <span>Tax:</span>
-                    <span>{formatCurrency(order.taxAmount || 0)}</span>
+                    <span>{formatCurrency(order.taxTotal || 0)}</span>
                   </div>
                 )}
-                {(order.discountAmount || 0) > 0 && (
+                {(order.codCharge || 0) > 0 && (
+                  <div className="flex justify-between">
+                    <span>COD Charges:</span>
+                    <span>{formatCurrency(order.codCharge || 0)}</span>
+                  </div>
+                )}
+                {(order.discountTotal || 0) > 0 && (
                   <div className="flex justify-between text-green-600">
                     <span>Discount:</span>
-                    <span>-{formatCurrency(order.discountAmount || 0)}</span>
+                    <span>-{formatCurrency(order.discountTotal || 0)}</span>
                   </div>
                 )}
                 <div className="border-t border-gray-300 pt-2 mt-2">
                   <div className="flex justify-between font-semibold text-base">
                     <span>Grand Total:</span>
-                    <span>{formatCurrency(order.grandTotal || formattedOrder.totalAmount || 0)}</span>
+                    <span>{formatCurrency(order.grandTotal || 0)}</span>
                   </div>
                 </div>
               </div>

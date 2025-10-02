@@ -7,13 +7,15 @@ import { authHttp } from "../../shared/api/http";
 
 // List all orders with pagination and filters
 export const listOrdersAdmin = (params = {}) => {
-  const { page = 1, limit = 20, status, user } = params;
+  const { page = 1, limit = 20, status, user, paymentStatus, q } = params;
   const queryParams = new URLSearchParams();
   
   queryParams.append('page', page.toString());
   queryParams.append('limit', limit.toString());
   if (status) queryParams.append('status', status);
   if (user) queryParams.append('user', user);
+  if (paymentStatus) queryParams.append('paymentStatus', paymentStatus);
+  if (q) queryParams.append('q', q);
   
   return authHttp.get(`/admin/order?${queryParams.toString()}`);
 };

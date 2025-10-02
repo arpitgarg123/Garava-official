@@ -13,7 +13,7 @@ const imageSchema = new mongoose.Schema(
   },
   { _id: false }
 );
-
+ 
 const newseventsSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, trim: true },

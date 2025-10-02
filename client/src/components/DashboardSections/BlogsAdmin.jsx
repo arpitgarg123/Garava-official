@@ -6,6 +6,7 @@ import { MdPublish, MdDrafts } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {
   fetchBlogsAdmin,
+  fetchBlogAdminById,
   deleteBlogAdmin,
   updateBlogStatusAdmin,
   openModal,
@@ -74,6 +75,7 @@ export default function BlogsAdmin() {
 
   const handleView = (blogId) => {
     dispatch(openModal({ modalType: 'details', blogId }));
+    dispatch(fetchBlogAdminById(blogId));
   };
 
   const filteredBlogs = blogs.filter(blog => {

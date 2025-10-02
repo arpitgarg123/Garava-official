@@ -11,7 +11,7 @@ const sampleEvents = [
     city: "Mumbai",
     location: "Grand Ballroom, The Taj Mahal Palace",
     rsvpUrl: "https://garava.com/rsvp/jewelry-exhibition",
-    status: "published",
+    status: "published", 
     cover: {
       url: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
       alt: "Luxury jewelry exhibition"
