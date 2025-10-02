@@ -18,6 +18,10 @@ import PaymentTest from "./pages/PaymentTest.jsx";
 import EventsPage from "./pages/newsEvents/Events.jsx";
 import { MediaCoveragePage } from "./pages/newsEvents/MediaCoverage.jsx";
 import AuthCallback from "./components/auth/AuthCallback.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import ShippingPolicy from "./pages/ShippingPolicy.jsx";
+import RefundReturn from "./pages/RefundReturn.jsx";
+import TermCondition from "./pages/TermCondition.jsx";
 // import AuthDebugger from "./components/auth/AuthDebugger.jsx";
 
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
@@ -63,6 +67,11 @@ const App = () => {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/event_details/:slug" element={<EventDetails />} />
           <Route path="/media" element={<MediaCoveragePage  />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermCondition />} />
+          <Route path="/refund-return" element={<RefundReturn />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
+
 
           {/* <Route path="jewellery" element={<jewellery />} /> */}
           <Route path="products/:category" element={<ProductPage />} />
