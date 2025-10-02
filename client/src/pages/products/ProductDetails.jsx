@@ -32,7 +32,9 @@ const ProductDetails = () => {
   // Check out-of-stock status
   // Find the default variant or use the first variant
   // Handle both product list structure (with defaultVariant) and product details structure (with variants array)
-  const selectedVariant = product?.defaultVariant || 
+  // Select variant - prefer one with stock if available
+  const selectedVariant = product?.variants?.find(v => v.stock > 0 && v.stockStatus !== 'out_of_stock') ||
+                          product?.defaultVariant || 
                           product?.variants?.find(v => v.isDefault) || 
                           product?.variants?.[0];
   
@@ -42,24 +44,28 @@ const ProductDetails = () => {
     selectedVariant.stockStatus === 'out_of_stock'
   );
   
-  // Overall product out-of-stock check
-  const isOutOfStock = !selectedVariant || // No variant available
-    product?.isOutOfStock || 
-    (product?.totalStock !== undefined && product?.totalStock === 0) ||
-    (product?.variants && product?.variants.length > 0 && product?.variants.every(v => v.stock === 0)) ||
-    isVariantOutOfStock;
+  // Simple stock check - only check if variant exists and has stock
+  const isOutOfStock = !selectedVariant || 
+    (selectedVariant.stock === 0) ||
+    (selectedVariant.stockStatus === 'out_of_stock');
 
   // Debug logging (temporary)
   useEffect(() => {
     if (product && selectedVariant) {
+      console.log('=== STOCK DEBUG ===');
       console.log('Product:', product.name);
+      console.log('Product isOutOfStock:', product.isOutOfStock);
       console.log('Selected variant:', { 
         sku: selectedVariant.sku, 
         hasId: !!(selectedVariant._id || selectedVariant.id),
-        stock: selectedVariant.stock
+        stock: selectedVariant.stock,
+        stockStatus: selectedVariant.stockStatus
       });
+      console.log('isVariantOutOfStock:', isVariantOutOfStock);
+      console.log('Final isOutOfStock:', isOutOfStock);
+      console.log('=================');
     }
-  }, [product, selectedVariant]);
+  }, [product, selectedVariant, isVariantOutOfStock, isOutOfStock]);
 
   useEffect(() => {
     if (productSlug) dispatch(fetchProductBySlug(productSlug));
@@ -222,20 +228,7 @@ const ProductDetails = () => {
                   In Stock
                 </span>
               )}
-              
-              {/* Available stock count for selected variant and total */}
-              <div className="text-sm text-gray-600 space-y-1">
-                {selectedVariant && (
-                  <div>
-                    <span className="font-medium">Selected variant:</span> {selectedVariant.stock || 0} available
-                  </div>
-                )}
-                {product.totalStock !== undefined && (
-                  <div>
-                    <span className="font-medium">Total stock:</span> {product.totalStock} items
-                  </div>
-                )}
-              </div>
+
             </div>
 
             <p className="mt-2 text-sm text-gray-700">

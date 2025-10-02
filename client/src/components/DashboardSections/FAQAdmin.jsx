@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX } from 'react-icons/fi';
@@ -29,6 +29,23 @@ import {
 } from '../../features/faq/adminSlice.js';
 import { bulkCreateFAQsApi } from '../../features/faq/api.js';
 
+// Custom hook for debounced search
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+};
+
 const FAQAdmin = () => {
   const dispatch = useDispatch();
   
@@ -40,34 +57,57 @@ const FAQAdmin = () => {
     editModal 
   } = useSelector(state => state.faqAdmin);
   
-  // Local state
-  const [filters, setFilters] = useState({
-    search: '',
-    category: '',
-    isActive: ''
-  });
+  // Local state for immediate UI updates
+  const [searchTerm, setSearchTerm] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [showCSVUpload, setShowCSVUpload] = useState(false);
 
-  // Load FAQs on component mount
-  useEffect(() => {
-    dispatch(getAllFAQs({ 
-      page: currentPage, 
-      ...filters 
-    }));
-  }, [dispatch, currentPage, filters]);
+  // Debounced search term
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  // Handle search
-  const handleSearch = (searchTerm) => {
-    setFilters(prev => ({ ...prev, search: searchTerm }));
-    setCurrentPage(1);
+  // Combined filters object
+  const filters = {
+    search: debouncedSearchTerm,
+    category: categoryFilter,
+    isActive: statusFilter
   };
+
+  // Load FAQs when filters or page changes
+  useEffect(() => {
+    const params = {
+      page: currentPage,
+      limit: 10,
+      ...Object.fromEntries(
+        Object.entries(filters).filter(([key, value]) => value !== '')
+      )
+    };
+    
+    console.log('FAQ Admin - Loading FAQs with params:', params);
+    dispatch(getAllFAQs(params));
+  }, [dispatch, currentPage, debouncedSearchTerm, categoryFilter, statusFilter]);
+
+  // Handle search input change
+  const handleSearchChange = useCallback((value) => {
+    setSearchTerm(value);
+    setCurrentPage(1); // Reset to first page when searching
+  }, []);
 
   // Handle filter changes
-  const handleFilterChange = (key, value) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-    setCurrentPage(1);
-  };
+  const handleFilterChange = useCallback((type, value) => {
+    switch (type) {
+      case 'category':
+        setCategoryFilter(value);
+        break;
+      case 'status':
+        setStatusFilter(value);
+        break;
+      default:
+        break;
+    }
+    setCurrentPage(1); // Reset to first page when filtering
+  }, []);
 
   // Handle edit
   const handleEdit = (faqId) => {
@@ -78,15 +118,39 @@ const FAQAdmin = () => {
   // Handle delete
   const handleDelete = async (faqId) => {
     if (window.confirm('Are you sure you want to delete this FAQ?')) {
-      await dispatch(deleteFAQ(faqId));
-      dispatch(getAllFAQs({ page: currentPage, ...filters }));
+      try {
+        await dispatch(deleteFAQ(faqId)).unwrap();
+        // Reload list with current filters
+        const params = {
+          page: currentPage,
+          limit: 10,
+          ...Object.fromEntries(
+            Object.entries(filters).filter(([key, value]) => value !== '')
+          )
+        };
+        dispatch(getAllFAQs(params));
+      } catch (error) {
+        console.error('Failed to delete FAQ:', error);
+      }
     }
   };
 
   // Handle toggle status
   const handleToggleStatus = async (faqId) => {
-    await dispatch(toggleFAQStatus(faqId));
-    dispatch(getAllFAQs({ page: currentPage, ...filters }));
+    try {
+      await dispatch(toggleFAQStatus(faqId)).unwrap();
+      // Reload list with current filters
+      const params = {
+        page: currentPage,
+        limit: 10,
+        ...Object.fromEntries(
+          Object.entries(filters).filter(([key, value]) => value !== '')
+        )
+      };
+      dispatch(getAllFAQs(params));
+    } catch (error) {
+      console.error('Failed to toggle FAQ status:', error);
+    }
   };
 
   // Category options
@@ -152,8 +216,8 @@ const FAQAdmin = () => {
               <input
                 type="text"
                 placeholder="Search FAQs..."
-                value={filters.search}
-                onChange={(e) => handleSearch(e.target.value)}
+                value={searchTerm}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
@@ -161,7 +225,7 @@ const FAQAdmin = () => {
 
           {/* Category Filter */}
           <select
-            value={filters.category}
+            value={categoryFilter}
             onChange={(e) => handleFilterChange('category', e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
@@ -174,8 +238,8 @@ const FAQAdmin = () => {
 
           {/* Status Filter */}
           <select
-            value={filters.isActive}
-            onChange={(e) => handleFilterChange('isActive', e.target.value)}
+            value={statusFilter}
+            onChange={(e) => handleFilterChange('status', e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">All Status</option>

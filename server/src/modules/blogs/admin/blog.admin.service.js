@@ -81,7 +81,7 @@ export const listBlogsAdminService = async ({ page=1, limit=20, q, status, tag, 
   if (category) filter.category = new RegExp(`^${category}$`, "i");
 
   const [items, total] = await Promise.all([
-    Blog.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    Blog.find(filter).populate('author', 'name email').sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
     Blog.countDocuments(filter),
   ]);
 

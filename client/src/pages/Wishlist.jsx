@@ -83,16 +83,24 @@ const Wishlist = () => {
     const variant = product.variants?.[0];
     const cartItem = {
       productId: product._id || product.id,
-      variantId: variant?._id,
-      variantSku: variant?.sku,
       quantity: 1
     };
 
+    // Set variant information - prioritize variantId over variantSku
+    if (variant?._id) {
+      cartItem.variantId = variant._id;
+    } else if (variant?.sku) {
+      cartItem.variantSku = variant.sku;
+    }
+
     // Ensure we have either variantId or variantSku
     if (!cartItem.variantId && !cartItem.variantSku) {
-      toast.error("Product variant information is missing");
+      console.error("Missing variant information:", { product, variant });
+      toast.error("Product variant information is missing. Please try again or contact support.");
       return;
     }
+
+    console.log('Moving to cart:', { cartItem, product: product.name });
 
     // Add to cart
     dispatch(addToCart(cartItem))
@@ -111,7 +119,9 @@ const Wishlist = () => {
           });
       })
       .catch((error) => {
-        toast.error("Failed to add to cart");
+        // Show specific error message from the server
+        const errorMessage = error.message || "Failed to add to cart";
+        toast.error(errorMessage);
         console.error("Add to cart error:", error);
       });
   };
@@ -167,6 +177,30 @@ const Wishlist = () => {
               const productSlug = product?.slug || productId;
               const productPrice = product?.variants?.[0]?.price || product?.price || 0;
               
+              // Check if product is out of stock
+              const isOutOfStock = !product?.variants?.some(variant => 
+                variant.isActive !== false && 
+                (variant.stock || 0) > 0 && 
+                variant.stockStatus !== 'out_of_stock'
+              );
+              
+              // Better image URL handling
+              const imageUrl = product?.heroImage?.url || 
+                              product?.heroImage || 
+                              product?.gallery?.[0]?.url || 
+                              product?.gallery?.[0] || 
+                              'https://via.placeholder.com/300x300?text=No+Image';
+              
+              // Debug image handling
+              if (!product?.heroImage?.url && !product?.heroImage) {
+                console.log('Product missing images:', {
+                  productName: product?.name,
+                  heroImage: product?.heroImage,
+                  gallery: product?.gallery,
+                  usingFallback: imageUrl
+                });
+              }
+              
               return (
                 <div key={productId || `wishlist-item-${index}`} className="p-4 space-y-3">
                   <div 
@@ -174,24 +208,45 @@ const Wishlist = () => {
                     onClick={() => navigate(`/product_details/${productSlug}`)}
                   >
                     <img 
-                      src={product?.heroImage?.url || product?.heroImage || '/placeholder.jpg'} 
+                      src={imageUrl}
                       alt={product?.name || 'Product'}
-                      className="w-full aspect-square object-cover"
+                      className="w-full aspect-square object-cover bg-gray-200"
+                      onError={(e) => {
+                        console.log('Image failed to load:', imageUrl);
+                        e.target.src = 'https://via.placeholder.com/300x300?text=No+Image';
+                      }}
                     />
+                    {/* Out of Stock Overlay */}
+                    {isOutOfStock && (
+                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                        <span className="bg-red-600 text-white px-3 py-1 rounded-md font-medium text-sm">
+                          Out of Stock
+                        </span>
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
                   </div>
                   <div className="space-y-2">
-                    <h3 className="font-medium">{product?.name || 'Unnamed Product'}</h3>
+                    <h3 className="font-medium">{product?.name || `Product ${productId}` || 'Unnamed Product'}</h3>
                     <p className="text-gray-600">{product?.type || 'Product'}</p>
-                    <p className="font-semibold">₹{productPrice.toLocaleString()}</p>
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold">₹{productPrice.toLocaleString()}</p>
+                      {isOutOfStock && (
+                        <span className="text-red-600 text-sm font-medium">Out of Stock</span>
+                      )}
+                    </div>
                   </div>
                   <div className="flex justify-between items-center pt-2">
                     <button
                       onClick={() => handleMoveToCart(item)}
-                      className="bg-black text-white px-4 py-2 text-sm hover:bg-gray-800 transition"
-                      disabled={isLoading}
+                      disabled={isLoading || isOutOfStock}
+                      className={`px-4 py-2 text-sm transition ${
+                        isOutOfStock 
+                          ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                          : 'bg-black text-white hover:bg-gray-800'
+                      }`}
                     >
-                      Move to Cart
+                      {isOutOfStock ? 'Out of Stock' : 'Move to Cart'}
                     </button>
                     <button
                       onClick={() => handleRemove(productId)}

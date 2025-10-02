@@ -9,6 +9,7 @@ import { generateOrderNumber, toPaise } from "./order.utils.js";
 import Idempotency from "./idempotency.model.js"; // optional
 import { createPhonePeOrder } from "../payment.adapters/phonepe.adapter.js";
 import { calculateOrderPricingRupees } from "./order.pricing.js";
+import { validateStockAvailability, reserveStock } from "../../shared/stockManager.js";
 
 
 /**
@@ -24,7 +25,7 @@ const ensurePaise = (value) => {
 
 /**
  * Create Order Service (transactional)
- * - items: [{ variantId OR sku, quantity }]
+ * - items: [{ variantId OR variantSku, quantity }]
  * - addressId: ObjectId of user's address
  * - paymentMethod: 'phonepe'|'cod'
  * - idempotencyKey: optional
@@ -34,6 +35,22 @@ const ensurePaise = (value) => {
 export const createOrderService = async ({ userId, items, addressId, paymentMethod, idempotencyKey }) => {
   if (!userId) throw new ApiError(401, "Unauthorized");
   if (!Array.isArray(items) || items.length === 0) throw new ApiError(400, "No items provided");
+
+  // Pre-checkout stock validation using centralized system
+  const stockValidation = await validateStockAvailability(items);
+  if (!stockValidation.isValid) {
+    const issueDetails = stockValidation.issues.map(issue => {
+      if (issue.issue === 'Out of stock') {
+        return `${issue.productName || 'Product'} (${issue.variantSku}) is out of stock`;
+      } else if (issue.issue === 'Insufficient stock') {
+        return `${issue.productName || 'Product'} (${issue.variantSku}): requested ${issue.requestedQuantity}, available ${issue.availableStock}`;
+      } else {
+        return `${issue.variantSku || issue.variantId}: ${issue.issue}`;
+      }
+    }).join('; ');
+    
+    throw new ApiError(400, `Stock validation failed: ${issueDetails}`);
+  }
 
   // idempotency quick return
   if (idempotencyKey) {
@@ -58,30 +75,24 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
     const lineItems = [];
     let subtotal = 0; // paise
 
-    for (const it of items) {
-      let product, variant;
-      if (it.variantId) {
-        product = await Product.findOne({ "variants._id": it.variantId }).session(session);
-        variant = product?.variants.id(it.variantId);
-      } else if (it.sku) {
-        product = await Product.findOne({ "variants.sku": it.sku }).session(session);
-        variant = product?.variants.find(v => v.sku === it.sku);
-      } else {
-        throw new ApiError(400, "variantId or sku required");
-      }
-      if (!product || !variant) throw new ApiError(404, "Variant not found");
+    // Use centralized stock reservation system
+    const reservationResult = await reserveStock(items, session);
+    if (!reservationResult.success) {
+      throw new ApiError(400, "Failed to reserve stock for order");
+    }
 
-      // Stock check & reserve (atomic)
-      const dec = await Product.findOneAndUpdate(
-        { _id: product._id, "variants._id": variant._id, "variants.stock": { $gte: it.quantity } },
-        { $inc: { "variants.$.stock": -it.quantity } },
-        { session, new: true }
-      );
-      if (!dec) throw new ApiError(400, `Insufficient stock for ${variant.sku}`);
+    // Build line items using stock info from reservations
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const reservation = reservationResult.reservations[i];
+      
+      // Get product and variant details
+      const product = await Product.findById(reservation.productId).session(session);
+      const variant = product.variants.find(v => String(v._id) === String(reservation.variantId));
 
       // use price directly in rupees (no conversion)
       const unitPriceRupees = Number(variant.price);
-      const lineTotal = unitPriceRupees * it.quantity;
+      const lineTotal = unitPriceRupees * item.quantity;
       subtotal += lineTotal;
 
       lineItems.push({
@@ -89,7 +100,7 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
         productSnapshot: { name: product.name, slug: product.slug, heroImage: product.heroImage, type: product.type },
         variantId: variant._id,
         variantSnapshot: { sku: variant.sku, sizeLabel: variant.sizeLabel, images: variant.images || [] },
-        quantity: it.quantity,
+        quantity: item.quantity,
         unitPrice: unitPriceRupees,
         mrp: Number(variant.mrp || 0),
         taxAmount: 0,

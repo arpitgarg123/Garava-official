@@ -31,6 +31,7 @@ export const selectIsWishlistEmpty = createSelector(
 );
 
 export const selectIsWishlistLoading = (state) => state.wishlist?.status === "loading";
+export const selectWishlistLoading = (state) => state.wishlist?.status === "loading";
 
 // Helper selector to check if a product is in wishlist
 export const selectIsProductInWishlist = (state, productId) => {

@@ -60,9 +60,8 @@ export const listProductsService = async ({
       const prices = (p.variants || []).map(v => Number(v.price)).filter(p => !isNaN(p));
       const priceRange = prices.length ? { min: Math.min(...prices), max: Math.max(...prices) } : { min: null, max: null };
 
-    // Calculate total stock across all variants
-    const totalStock = p.variants.reduce((sum, variant) => sum + (variant.stock || 0), 0);
-    const isOutOfStock = totalStock === 0 || p.variants.every(v => v.stockStatus === 'out_of_stock');
+    // Check if product is out of stock based on variants
+    const isOutOfStock = p.variants.every(v => v.stockStatus === 'out_of_stock' || v.stock === 0);
 
     return {
       id: p._id,
@@ -86,7 +85,6 @@ export const listProductsService = async ({
             stockStatus: defaultVariant.stockStatus,
           }
         : null,
-      totalStock,
       isOutOfStock,
       avgRating: p.avgRating,
       reviewCount: p.reviewCount,

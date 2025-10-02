@@ -4,6 +4,7 @@ import Cart from "./cart.model.js";
 import Product from "../product/product.model.js";
 import { toPaise, calcCartTotal } from "./cart.utils.js";
 import { createOutOfStockNotificationService, createLowStockNotificationService } from "../notification/notification.service.js";
+import { getVariantStock, STOCK_STATUS } from "../../shared/stockManager.js";
 
 /**
  * Validate and fix cart items with incorrect variant IDs
@@ -25,8 +26,8 @@ const validateAndFixCartItems = async (cart) => {
         if (variantBySku) {
           console.log(`Cart: Fixed variant ID for SKU ${item.variantSku}`);
           item.variantId = variantBySku._id;
-          hasChanges = true;
-        }
+          hasChanges = true; 
+        }   
       }
     } catch (error) {
       console.error('Error validating cart item:', error);
@@ -90,10 +91,20 @@ export const addToCartService = async (userId, payload) => {
     throw new ApiError(500, "Variant ID could not be determined");
   }
 
-  // check stock (note: cart doesn't reserve stock; do reservation at checkout)
-  if (variant.stock < qty) {
-    // Check if this creates an out-of-stock situation and create notification
-    if (variant.stock === 0) {
+  // Validate stock using centralized system
+  const stockInfo = await getVariantStock({
+    variantId: variantObjectId,
+    variantSku,
+    productId
+  });
+
+  if (stockInfo.status === STOCK_STATUS.NOT_FOUND) {
+    throw new ApiError(404, "Product variant not found");
+  }
+
+  if (!stockInfo.available || stockInfo.stock < qty) {
+    // Create out-of-stock notification if needed
+    if (stockInfo.stock === 0) {
       try {
         await createOutOfStockNotificationService(product, variant);
       } catch (notifError) {
@@ -101,12 +112,13 @@ export const addToCartService = async (userId, payload) => {
         // Don't fail the cart operation if notification fails
       }
     }
-    throw new ApiError(400, `Insufficient stock. Available ${variant.stock}`);
+    
+    throw new ApiError(400, `Insufficient stock. Available ${stockInfo.stock}`);
   }
 
   // Check for low stock and create notification
   const LOW_STOCK_THRESHOLD = 5;
-  if (variant.stock <= LOW_STOCK_THRESHOLD && variant.stock > 0) {
+  if (stockInfo.stock <= LOW_STOCK_THRESHOLD && stockInfo.stock > 0) {
     try {
       await createLowStockNotificationService(product, variant, LOW_STOCK_THRESHOLD);
     } catch (notifError) {
@@ -129,11 +141,11 @@ export const addToCartService = async (userId, payload) => {
     // increase quantity after stock check (ensure total does not exceed stock)
     const existing = cart.items[existingIndex];
     const newQty = existing.quantity + qty;
-    if (variant.stock < newQty) throw new ApiError(400, `Insufficient stock for desired quantity. Available ${variant.stock}`);
+    if (stockInfo.stock < newQty) throw new ApiError(400, `Insufficient stock for desired quantity. Available ${stockInfo.stock}`);
     existing.quantity = newQty;
     existing.unitPrice = toPaise(variant.price); // ensure paise
     existing.mrp = variant.mrp ? toPaise(variant.mrp) : 0;
-    existing.outOfStock = variant.stock <= 0;
+    existing.outOfStock = stockInfo.stock <= 0;
   } else {
     cart.items.push({
       product: productId,
@@ -144,7 +156,7 @@ export const addToCartService = async (userId, payload) => {
       mrp: variant.mrp ? toPaise(variant.mrp) : 0,
       name: product.name,
       heroImage: product.heroImage?.url || null,
-      outOfStock: variant.stock <= 0,
+      outOfStock: stockInfo.stock <= 0,
     });
   }
 

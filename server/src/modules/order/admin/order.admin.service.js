@@ -1,11 +1,61 @@
 
 import ApiError from "../../../shared/utils/ApiError.js";
 import Order from "../order.model.js";
+import { toRupees } from "../order.pricing.js";
 
-export const listOrdersAdminService = async ({ page = 1, limit = 20, status, user }) => {
+/**
+ * Convert order pricing from paise to rupees for frontend display
+ */
+const convertOrderPricing = (order) => {
+  if (!order) return order;
+  
+  const converted = { ...order };
+  
+  // Convert order-level pricing
+  if (converted.subtotal !== undefined) converted.subtotal = toRupees(converted.subtotal);
+  if (converted.taxTotal !== undefined) converted.taxTotal = toRupees(converted.taxTotal);
+  if (converted.shippingTotal !== undefined) converted.shippingTotal = toRupees(converted.shippingTotal);
+  if (converted.codCharge !== undefined) converted.codCharge = toRupees(converted.codCharge);
+  if (converted.discountTotal !== undefined) converted.discountTotal = toRupees(converted.discountTotal);
+  if (converted.grandTotal !== undefined) converted.grandTotal = toRupees(converted.grandTotal);
+  
+  // Convert item-level pricing
+  if (converted.items && Array.isArray(converted.items)) {
+    converted.items = converted.items.map(item => ({
+      ...item,
+      unitPrice: item.unitPrice !== undefined ? toRupees(item.unitPrice) : item.unitPrice,
+      mrp: item.mrp !== undefined ? toRupees(item.mrp) : item.mrp,
+      taxAmount: item.taxAmount !== undefined ? toRupees(item.taxAmount) : item.taxAmount,
+      discountAmount: item.discountAmount !== undefined ? toRupees(item.discountAmount) : item.discountAmount,
+      lineTotal: item.lineTotal !== undefined ? toRupees(item.lineTotal) : item.lineTotal,
+      priceAtTime: item.unitPrice !== undefined ? toRupees(item.unitPrice) : (item.priceAtTime !== undefined ? toRupees(item.priceAtTime) : item.priceAtTime)
+    }));
+  }
+  
+  return converted;
+};
+
+export const listOrdersAdminService = async ({ page = 1, limit = 20, status, user, paymentStatus, q }) => {
   const filter = {};
+  
+  // Status filter
   if (status) filter.status = status;
+  
+  // User filter
   if (user) filter.user = user;
+  
+  // Payment status filter
+  if (paymentStatus) filter['payment.status'] = paymentStatus;
+  
+  // Search filter - search in order ID, customer name, email
+  if (q) {
+    const searchRegex = new RegExp(q, 'i');
+    filter.$or = [
+      { orderId: searchRegex },
+      { 'customer.name': searchRegex },
+      { 'customer.email': searchRegex }
+    ];
+  }
 
   const skip = (page - 1) * limit;
 
@@ -20,8 +70,11 @@ export const listOrdersAdminService = async ({ page = 1, limit = 20, status, use
     Order.countDocuments(filter),
   ]);
 
+  // Convert pricing from paise to rupees for frontend
+  const convertedOrders = orders.map(convertOrderPricing);
+
   return {
-    orders,
+    orders: convertedOrders,
     pagination: {
       total,
       page,
@@ -38,7 +91,9 @@ export const getOrderByIdAdminService = async (id) => {
     .lean();
 
   if (!order) throw new ApiError(404, "Order not found");
-  return order;
+  
+  // Convert pricing from paise to rupees for frontend
+  return convertOrderPricing(order);
 };
 
 export const updateOrderStatusService = async (id, status, tracking) => {

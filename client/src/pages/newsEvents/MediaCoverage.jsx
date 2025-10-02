@@ -1,44 +1,59 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import MediaCard from "../../components/newsEvents/MediaCard";
 import BackButton from "../../components/BackButton";
+import { fetchMediaCoverage } from "../../features/newsevents/slice";
+import {
+  selectMediaCoverage,
+  selectNewsEventsLoading,
+  selectNewsEventsError
+} from "../../features/newsevents/selectors";
 
 
 
-const MOCK_COVERAGE = [
-  {
-    id: "m1",
-    outlet: "Vogue India",
-    title: "The Quiet Luxury of Lab-Grown Diamonds",
-    date: "2025-03-12",
-    url: "https://example.com/vogue",
-    excerpt: "Garava leads a new wave of refined, ethical jewelry.",
-    cover: "https://images.unsplash.com/photo-1520975940461-2208d157c9e2?q=80&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: "m2",
-    outlet: "GQ",
-    title: "Modern Engagement: Minimalist Rings for 2025",
-    date: "2025-06-20",
-    url: "https://example.com/gq",
-    excerpt: "How couples are redefining timelessness. couples sdfckn",
-    cover: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: "m3",
-    outlet: "Elle",
-    title: "Sustainable Sparkle: Indian Labels to Know",
-    date: "2024-11-02",
-    url: "https://example.com/elle",
-    excerpt: "A shortlist of brands championing conscious craft.",
-    cover: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=1600&auto=format&fit=crop",
-  },
-];
-
-const items = MOCK_COVERAGE
 export const MediaCoveragePage = () => {
+  const dispatch = useDispatch();
+  const mediaCoverage = useSelector(selectMediaCoverage);
+  const loading = useSelector(selectNewsEventsLoading);
+  const error = useSelector(selectNewsEventsError);
+
+  // Fetch data on component mount
+  useEffect(() => {
+    dispatch(fetchMediaCoverage({ page: 1, limit: 100 }));
+  }, [dispatch]);
+
+  // Transform Redux data to match existing component structure
+  const COVERAGE_DATA = useMemo(() => {
+    if (!mediaCoverage?.items) return [];
+    
+    return mediaCoverage.items.map(item => ({
+      id: item._id,
+      outlet: item.outlet,
+      title: item.title,
+      date: item.date,
+      url: item.url,
+      excerpt: item.excerpt,
+      cover: item.cover?.url || ""
+    }));
+  }, [mediaCoverage]);
+
+  const items = COVERAGE_DATA;
   const years = useMemo(() => ["All", ...Array.from(new Set(items.map(i => new Date(i.date).getFullYear())))], [items]);
   const outlets = useMemo(() => ["All", ...Array.from(new Set(items.map(i => i.outlet)))], [items]);
 
+  // Show loading state
+  if (loading && items.length === 0) {
+    return (
+      <div className="mt-32">
+        <div className="sticky top-16 z-10 mb-3">
+          <BackButton />
+        </div>
+        <div className="flex justify-center items-center h-64">
+          <div className="text-gray-500">Loading media coverage...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-32">

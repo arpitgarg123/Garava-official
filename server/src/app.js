@@ -31,6 +31,8 @@ import blogAdminRouter from "./modules/blogs/admin/blog.admin.router.js";
 import faqRouter from "./modules/faq/faq.router.js";
 import faqAdminRouter from "./modules/faq/admin/faq.admin.router.js";
 import notificationRouter from "./modules/notification/notification.router.js";
+import newseventsRouter from "./modules/newsevents/newsevents.router.js";
+import newseventsAdminRouter from "./modules/newsevents/admin/newsevents.admin.router.js";
 
   // routers
   const app = express();
@@ -127,6 +129,8 @@ import notificationRouter from "./modules/notification/notification.router.js";
   app.use("/api/faq", faqRouter);
   app.use("/api/admin/faq", faqAdminRouter);
   app.use("/api/admin/notifications", notificationRouter);
+  app.use("/api/newsevents", newseventsRouter);
+  app.use("/api/admin/newsevents", newseventsAdminRouter);
 
   // global error handler
   app.use(errorHandler);

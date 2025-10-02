@@ -2,8 +2,8 @@ import { asyncHandler } from "../../../shared/utils/asyncHandler.js";
 import * as service from "./order.admin.service.js";
 
 export const listOrdersAdmin = asyncHandler(async (req, res) => {
-  const { page, limit, status, user } = req.query;
-  const result = await service.listOrdersAdminService({ page, limit, status, user });
+  const { page, limit, status, user, paymentStatus, q } = req.query;
+  const result = await service.listOrdersAdminService({ page, limit, status, user, paymentStatus, q });
   res.json({ success: true, ...result });
 });
 

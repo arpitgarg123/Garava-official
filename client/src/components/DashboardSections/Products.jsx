@@ -262,7 +262,9 @@ export default function Products() {
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">{product.name}</div>
-                            <div className="text-sm text-gray-500">SKU: {product.sku || 'N/A'}</div>
+                            <div className="text-sm text-gray-500">
+                              SKU: {firstVariant.sku || product.sku || 'No SKU'}
+                            </div>
                           </div>
                         </div>
                       </td>

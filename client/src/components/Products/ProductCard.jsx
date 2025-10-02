@@ -881,6 +881,12 @@ const ProductCard = ({
   const productId = product._id || product.id;
   const isInWishlist = useSelector(state => selectIsProductInWishlist(state, productId));
 
+  // Check if it's high jewellery category
+  const isHighJewellery = product.type?.toLowerCase() === "high-jewellery" || 
+                         product.category?.toLowerCase() === "high-jewellery" ||
+                         product.type?.toLowerCase() === "high jewellery" || 
+                         product.category?.toLowerCase() === "high jewellery";
+
   // Check out-of-stock status
   // Use the backend-calculated isOutOfStock first, then fallback to manual calculation
   const isOutOfStock = product.isOutOfStock || 

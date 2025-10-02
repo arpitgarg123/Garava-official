@@ -6,6 +6,7 @@ import { MdPublish, MdDrafts } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {
   fetchBlogsAdmin,
+  fetchBlogAdminById,
   deleteBlogAdmin,
   updateBlogStatusAdmin,
   openModal,
@@ -70,6 +71,11 @@ export default function BlogsAdmin() {
 
   const handleEdit = (blogId) => {
     dispatch(openModal({ modalType: 'edit', blogId }));
+  };
+
+  const handleView = (blogId) => {
+    dispatch(openModal({ modalType: 'details', blogId }));
+    dispatch(fetchBlogAdminById(blogId));
   };
 
   const filteredBlogs = blogs.filter(blog => {
@@ -219,7 +225,11 @@ export default function BlogsAdmin() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end gap-2">
-                        <button className="text-blue-600 hover:text-blue-900 p-1" title="View Post">
+                        <button 
+                          onClick={() => handleView(blog._id)}
+                          className="text-blue-600 hover:text-blue-900 p-1" 
+                          title="View Post"
+                        >
                           <AiOutlineEye className="w-4 h-4" />
                         </button>
                         <button 

@@ -11,7 +11,8 @@ import {
   FaSearch,
   FaBell,
   FaSignOutAlt,
-  FaQuestionCircle
+  FaQuestionCircle,
+  FaNewspaper
 } from "react-icons/fa";
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
@@ -27,6 +28,7 @@ import FAQAdmin from '../components/DashboardSections/FAQAdmin';
 import Overview from '../components/DashboardSections/Overview';
 import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
 import NotificationDebug from '../components/DashboardSections/NotificationDebug';
+import NewsEventsAdmin from '../components/DashboardSections/NewsEventsAdmin';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -41,6 +43,7 @@ const Dashboard = () => {
     { id: "bookings", label: "Bookings", icon: MdEventAvailable },
     { id: "reviews", label: "Reviews", icon: FaStar },
     { id: "blogs", label: "Blogs", icon: FaBlog },
+    { id: "newsevents", label: "News & Events", icon: FaNewspaper },
     { id: "faq", label: "FAQ", icon: FaQuestionCircle },
     { id: "notifications", label: "Notifications", icon: FaBell },
     { id: "debug", label: "Debug", icon: FaBell },
@@ -210,6 +213,8 @@ const Dashboard = () => {
         );
       case "blogs":
         return <Blogs />;
+      case "newsevents":
+        return <NewsEventsAdmin />;
       case "faq":
         return <FAQAdmin />;
       case "notifications":
