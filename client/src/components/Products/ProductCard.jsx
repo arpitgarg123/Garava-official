@@ -866,6 +866,7 @@ import { selectIsAuthenticated } from "../../features/auth/selectors";
 import { selectIsProductInWishlist } from "../../features/wishlist/selectors";
 import { logout } from "../../features/auth/slice";
 import { toast } from "react-hot-toast";
+import { handleEmailContact, handleWhatsAppContact } from "../../hooks/contact";
 
 const ProductCard = ({
   product,
@@ -939,23 +940,7 @@ const ProductCard = ({
   };
 
   // Contact handlers for high jewellery
-  const handleWhatsAppContact = () => {
-    const message = encodeURIComponent(
-      `Hi, I'm interested in the high jewellery piece: ${product.name}. Could you please provide the pricing details?`
-    );
-    const phoneNumber = "919876543210"; // Replace with your actual WhatsApp number
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
-    setShowContactOptions(false);
-  };
 
-  const handleEmailContact = () => {
-    const subject = encodeURIComponent(`Inquiry about High Jewellery: ${product.name}`);
-    const body = encodeURIComponent(
-      `Hello,\n\nI'm interested in the high jewellery piece: ${product.name}.\n\nCould you please provide the pricing details and availability?\n\nThank you.`
-    );
-    window.open(`mailto:info@garava.com?subject=${subject}&body=${body}`, '_blank'); // Replace with your email
-    setShowContactOptions(false);
-  };
 
   return (
     <article
@@ -1105,26 +1090,26 @@ const ProductCard = ({
       </div>
 
       {/* CONTENT */}
-      <div className="p-4 flex flex-col flex-grow">
+      <div className="p-2 flex flex-col  flex-grow">
         {(product.type === "fragrance" || product.category === "fragrance") ? (
           <>
-            <div className="text-xs uppercase tracking-wider text-gray-500 font-medium mb-1">{product.type || "Fragrance"}</div>
-            <h3 className="text-base sm:text-lg font-playfair tracking-wide line-clamp-1 text-gray-900 mb-2">{product.name}</h3>
-            {product.shortDescription && (
-              <p className="text-xs text-gray-600 line-clamp-2 font-light mb-3">{product.shortDescription}</p>
+            <div className="text-xs uppercase tracking-wider text-gray-500 leading-0 font-medium ">{product.type || "Fragrance"}</div>
+            <h3 className="text-base leading-none sm:text-lg font-playfair tracking-wide line-clamp-1 text-gray-900 ">{product.name}</h3>
+            {product.shortDescription  && (
+              <p className="text-xs text-gray-600 line-clamp-2 font-light  ">{product.shortDescription}</p>
             )}
-            <div className="text-base sm:text-lg font-medium mt-auto tracking-wide">{displayPrice}</div>
+            <div className="text-base sm:text-lg font-medium  tracking-wide">{displayPrice}</div>
           </>
         ) : (
           <>
-            <div className="text-xs uppercase tracking-wider text-gray-500 font-medium mb-1">
+            <div className="text-xs uppercase leading-0 tracking-wider text-gray-500 font-medium ">
               {isHighJewellery ? "HIGH JEWELLERY" : (product.type || product.category || "jewellery")}
             </div>
-            <h3 className="text-base sm:text-lg font-playfair tracking-wide line-clamp-2 text-gray-900 mb-2">{product.name}</h3>
+            <h3 className="text-base sm:text-lg font-playfair tracking-wide line-clamp-2 text-gray-900 leading-none">{product.name}</h3>
             
             {/* High Jewellery Description */}
             {isHighJewellery && product.shortDescription && (
-              <p className="text-xs text-gray-600 line-clamp-2 font-light mb-3 italic">{product.shortDescription}</p>
+              <p className="text-xs text-gray-600 line-clamp-2 font-light  italic">{product.shortDescription }</p>
             )}
             
             {/* Price or Price on Demand for High Jewellery */}
@@ -1192,8 +1177,7 @@ const ProductCard = ({
 
             {/* Color options */}
             {colors.length > 0 && (
-              <div className="flex flex-wrap items-start gap-2 mt-3">
-                <span className="text-xs text-gray-500 font-medium mr-1">Colors:</span>
+              <div className="flex flex-wrap items-start gap-2 ">
                 {colors.map((c, i) => (
                   <button
                     key={i}
@@ -1201,8 +1185,8 @@ const ProductCard = ({
                       e.stopPropagation();
                       setActiveColor(c);
                     }}
-                    className={`w-6 h-6 cursor-pointer rounded-full border-2 transition-all ${
-                      activeColor === c ? "border-gray-400 scale-110 shadow-md" : "border-gray-200 scale-100"
+                    className={`w-6 h-6 cursor-pointer rounded-full  transition-all ${
+                      activeColor === c ? "scale-110 shadow-md" : " scale-100"
                     }`}
                     style={{ backgroundColor: c || '#FFFFFF' }}
                     aria-label={`Select ${c} color`}

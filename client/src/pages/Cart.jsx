@@ -106,6 +106,7 @@ import { toast } from 'react-hot-toast';
 import { CartSkeleton } from '../components/ui/LoadingSkeleton';
 import formatCurrency from '../utils/pricing';
 import BackButton from '../components/BackButton';
+import PageHeader from '../components/header/PageHeader';
 
 
 const Cart = () => {
@@ -179,9 +180,9 @@ const Cart = () => {
 
   if (isLoading) {
     return (
-      <div className="bg-white min-h-[60vh] p-20">
+      <div className=" min-h-[60vh] p-20">
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
+          <PageHeader title="Shopping Cart" />
           <CartSkeleton />
         </div>
       </div>
@@ -190,19 +191,19 @@ const Cart = () => {
 
   return (
     <div className="min-h-[60vh] mt-30">
-       <div className="sticky top-30 z-10 mb-3">
+       <div className="sticky top-30 z-10 ">
         <BackButton />
       </div>
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold mb-8">Shopping Cart</h1>
+      <div className="max-w-7xl mx-auto px-4">
+          <PageHeader title="Shopping Cart" />
 
         {cartItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="flex flex-col items-center justify-center space-y-4 mt-20">
             <IoBagHandleOutline size={60} className="text-gray-300" />
             <p className="text-gray-500">Your cart is empty</p>
             <button 
               onClick={() => navigate('/jewellery')}
-              className="bg-black text-white px-8 py-2 hover:bg-gray-800 transition"
+              className="btn-black"
             >
               Continue Shopping
             </button>

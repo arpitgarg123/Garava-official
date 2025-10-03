@@ -204,13 +204,13 @@ const Wishlist = () => {
               return (
                 <div key={productId || `wishlist-item-${index}`} className="p-4 space-y-3">
                   <div 
-                    className="relative group cursor-pointer" 
+                    className="relative group cursor-pointer overflow-hidden " 
                     onClick={() => navigate(`/product_details/${productSlug}`)}
                   >
                     <img 
                       src={imageUrl}
                       alt={product?.name || 'Product'}
-                      className="w-full aspect-square object-cover bg-gray-200"
+                      className="w-full aspect-square object-cover hover:scale-105  transition duration-300 bg-gray-200"
                       onError={(e) => {
                         console.log('Image failed to load:', imageUrl);
                         e.target.src = 'https://via.placeholder.com/300x300?text=No+Image';
@@ -224,7 +224,7 @@ const Wishlist = () => {
                         </span>
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
+                    {/* <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" /> */}
                   </div>
                   <div className="space-y-2">
                     <h3 className="font-medium">{product?.name || `Product ${productId}` || 'Unnamed Product'}</h3>
@@ -240,7 +240,7 @@ const Wishlist = () => {
                     <button
                       onClick={() => handleMoveToCart(item)}
                       disabled={isLoading || isOutOfStock}
-                      className={`px-4 py-2 text-sm transition ${
+                      className={`px-4 py-2 text-sm transition cursor-pointer ${
                         isOutOfStock 
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                           : 'bg-black text-white hover:bg-gray-800'
@@ -250,7 +250,7 @@ const Wishlist = () => {
                     </button>
                     <button
                       onClick={() => handleRemove(productId)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-500 cursor-pointer hover:text-red-700"
                       disabled={isLoading}
                     >
                       Remove

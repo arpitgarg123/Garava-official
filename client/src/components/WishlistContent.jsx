@@ -141,7 +141,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                        0;
 
           return (
-            <div key={productId} className="group border rounded-lg overflow-hidden hover:shadow-sm transition">
+            <div key={productId} className="group  overflow-hidden px-8 hover:shadow-sm transition">
               <div 
                 className="relative cursor-pointer" 
                 onClick={() => navigate(`/product_details/${product?.slug || productId}`)}
@@ -182,7 +182,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                 <h3 className={`font-medium text-gray-900 ${compact ? 'text-sm' : 'text-base'} line-clamp-1`}>
                   {product?.name || 'Product Name'}
                 </h3>
-                <p className={`text-gray-500 uppercase tracking-wide ${compact ? 'text-xs' : 'text-sm'}`}>
+                <p className={`text-gray-500 my-2 uppercase tracking-wide ${compact ? 'text-xs' : 'text-sm'}`}>
                   {product?.type || product?.category || 'Product'}
                 </p>
                 <div className="flex items-center gap-2">

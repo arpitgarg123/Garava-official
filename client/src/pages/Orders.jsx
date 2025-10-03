@@ -14,6 +14,7 @@ import {
 import { fetchUserOrders, fetchOrderById } from '../features/order/slice';
 import { toast } from 'react-hot-toast';
 import BackButton from '../components/BackButton';
+import PageHeader from '../components/header/PageHeader';
 
 const OrderStatus = ({ status }) => {
 
@@ -97,7 +98,7 @@ const Orders = () => {
   if (orderId) {
     if (isDetailsLoading) {
       return (
-        <div className="min-h-screen bg-gray-50 py-8">
+        <div className="min-h-screen bg-gray-50 py-8 mt-30">
           <div className="max-w-4xl mx-auto px-4">
             <div className="bg-white rounded-lg shadow-sm p-8">
               <div className="animate-pulse">
@@ -122,7 +123,7 @@ const Orders = () => {
               <p className="text-gray-500">Order not found</p>
               <button 
                 onClick={() => navigate('/orders')}
-                className="mt-4 bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors"
+                className="mt-4 btn-black"
               >
                 Back to Orders
               </button>
@@ -134,9 +135,15 @@ const Orders = () => {
 
     // Single order view
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <>
+
+      <div className="min-h-screen py-8 mt-30">
+         <div className="sticky top-16 z-10 ">
+                <BackButton />
+              </div>
+              {/* <PageHeader title={heading} /> */}
+        <div className="max-w-5xl mx-auto px-4">
+          <div className=" rounded-lg shadow-sm overflow-hidden">
             {/* Order Header */}
             <div className="border-b px-6 py-4">
               <div className="flex justify-between items-start">
@@ -168,7 +175,7 @@ const Orders = () => {
                     />
                     <div className="flex-1">
                       <h4 className="font-medium">{item.productSnapshot?.name}</h4>
-                      <p className="text-gray-500 text-sm">
+                      <p className="text-gray-500 text-sm my-1">
                         SKU: {item.variantSnapshot?.sku}
                       </p>
                       <p className="text-gray-500 text-sm">Quantity: {item.quantity}</p>
@@ -207,10 +214,10 @@ const Orders = () => {
               <h3 className="font-semibold mb-2">Payment Information</h3>
               <div className="flex justify-between">
                 <div>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-sm">
                     Method: {orderDetails.payment?.method === 'phonepe' ? 'PhonePe Payment Gateway' : 'Cash on Delivery'}
                   </p>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-sm">
                     Status: <span className={`font-medium ${
                       orderDetails.payment?.status === 'paid' ? 'text-green-600' : 
                       orderDetails.payment?.status === 'failed' ? 'text-red-600' : 
@@ -226,11 +233,10 @@ const Orders = () => {
               </div>
             </div>
 
-            {/* Back Button */}
             <div className="px-6 py-4 border-t">
               <button
                 onClick={() => navigate('/orders')}
-                className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors"
+                className="btn-black"
               >
                 Back to Orders
               </button>
@@ -238,16 +244,16 @@ const Orders = () => {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
   // Loading state for orders list
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 py-8 mt-30">
         <div className="max-w-6xl mx-auto px-4">
-          <h1 className="text-3xl font-bold mb-8">My Orders</h1>
-          <div className="space-y-4">
+       <div className="space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="bg-white rounded-lg shadow-sm p-6 animate-pulse">
                 <div className="h-6 bg-gray-200 rounded w-1/4 mb-4"></div>
@@ -313,20 +319,19 @@ const Orders = () => {
 ]
   return (
    <div className=" min-h-[60vh] mt-30">
-     <div className="sticky top-20 z-10 mb-3">
+     <div className="sticky top-20 z-10 ">
         <BackButton />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold mb-8">My Orders</h1>
-
+      <div className="max-w-7xl mx-auto px-4 ">
+<PageHeader title="My Orders" />
         {orders.length === 0 ? (
-          <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="flex flex-col items-center justify-center space-y-4 mt-20">
             <IoBagHandleOutline size={60} className="text-gray-300" />
             <p className="text-gray-500">No orders yet</p>
             <button 
               onClick={() => navigate('/products/jewellery')}
-              className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors"
+              className="btn"
             >
               Start Shopping
             </button>
@@ -336,7 +341,7 @@ const Orders = () => {
             {orders.map((order) => (
               <div 
                 key={order._id} 
-                className="bg-white border rounded-lg p-6 space-y-4 hover:shadow-md transition-shadow duration-300 cursor-pointer"
+                className="bg-gray-50 p-8   space-y-4  transition-shadow duration-300 cursor-pointer"
                 onClick={() => navigate(`/orders/${order._id}`)}
               >
                 <div className="flex justify-between items-start">
@@ -359,7 +364,7 @@ const Orders = () => {
                       />
                       <div>
                         <h3 className="font-medium">{item.productSnapshot?.name}</h3>
-                        <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                        <p className="text-sm text-gray-500 my-2">Qty: {item.quantity}</p>
                         <p className="text-sm">{formatCurrency(item.unitPrice)}</p>
                       </div>
                     </div>
@@ -372,7 +377,7 @@ const Orders = () => {
                 </div>
 
                 <div className="border-t pt-4">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center h-16 ">
                     <div className="text-lg font-semibold">
                       <span>Total: {formatCurrency(order.grandTotal)}</span>
                     </div>
@@ -381,7 +386,7 @@ const Orders = () => {
                         e.stopPropagation();
                         navigate(`/orders/${order._id}`);
                       }}
-                      className="text-black border border-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors"
+                      className="btn-black"
                     >
                       View Details
                     </button>

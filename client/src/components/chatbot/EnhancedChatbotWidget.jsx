@@ -135,12 +135,10 @@ export default function EnhancedChatbotWidget({
           aria-label="Open chat"
           className={`group fixed bottom-5 right-5 z-40 cursor-pointer inline-flex items-center gap-2 rounded-full px-4 py-3 bg-gray-200 hover:brightness-110 transition shadow-lg hover:shadow-xl`}
         >
-          <div className="hidden sm:inline text-sm font-medium">
+          <div className="hidden sm:inline  text-sm font-medium">
             <img className="h-10" src={iconlogo} alt="Garava Assistant" />
           </div>
-          <div className="sm:hidden">
-            <FiMessageCircle className="text-2xl text-gray-800" />
-          </div>
+          
         </button>
       )}
 

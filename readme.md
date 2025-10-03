@@ -69,5 +69,14 @@ chatbot ui fix and button center img
 products card remove color text
 product color filter 
 product page add banner
-
-
+event details ui fix
+testtinotial dashboard ui fix 
+news/events details img fix
+shopping cart button fix route mismacth
+profile ui fix
+wishlist img not show and ui fix ✅
+product card ui ✅
+profile page loading fix ✅
+product details ui
+order details ui fix✅
+logout krne k bad logout nhi ho rha nav bar wala

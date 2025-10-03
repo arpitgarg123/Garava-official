@@ -208,17 +208,17 @@ const ProductDetails = () => {
 
           {/* Info */}
           <div className="lg:col-span-7">
-            <h1 className="text-2xl sm:text-3xl font-semibold">
+            <h1 className="text-xl sm:text-2xl font-semibold">
               {product?.name || 'Untitled Product'}
             </h1>
 
-            <div className="mt-2 text-2xl font-semibold">
+            <div className="mt-2 text-2xl font-playfair font-semibold">
               ₹{selectedVariant?.price ?? 'Price not available'}
             </div>
             <p className="text-sm text-gray-600 mt-1">(inclusive of GST)</p>
 
             {/* Stock status indicator */}
-            <div className="mt-2 flex items-center gap-3">
+            <div className="mt-2 flex items-center gap-3 bg-amber-800">
               {isOutOfStock ? (
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                   Out of Stock
@@ -237,7 +237,7 @@ const ProductDetails = () => {
             </p>
 
             <div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-lg sm:text-xl font-regular">
+              <h2 className="text-md sm:text-lg font-regular">
                 Customize your jewellery Design
               </h2>
              <Link to='/appointment'>
@@ -249,8 +249,8 @@ const ProductDetails = () => {
 
   {/* Description */}
             <div className="mt-5 ">
-              <h3 className="text-xl sm:text-2xl font-semibold">Product Description</h3>
-              <p className="mt-2 text-gray-800 leading-relaxed">
+              <h3 className="text-lg sm:text-xl font-semibold">Product Description</h3>
+              <p className="mt-2 text-gray-800 text-xs leading-relaxed">
                 {product?.description || 'Description not available'}
               </p>
             </div>
@@ -259,7 +259,7 @@ const ProductDetails = () => {
               <button 
                 onClick={handleAddToCart} 
                 disabled={isOutOfStock}
-                className={`w-full sm:w-auto px-6 py-3 rounded-lg font-medium transition-colors ${
+                className={`w-full sm:w-auto px-6 py-3  text-sm font-medium transition-colors ${
                   isOutOfStock 
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                     : 'btn-black'
@@ -270,7 +270,7 @@ const ProductDetails = () => {
               <button 
                 onClick={() => navigate('/checkout')} 
                 disabled={isOutOfStock}
-                className={`w-full sm:w-auto px-6 py-3 rounded-lg font-medium transition-colors ${
+                className={`w-full sm:w-auto px-6 py-3 text-sm  font-medium transition-colors ${
                   isOutOfStock 
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                     : 'btn'
