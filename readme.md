@@ -27,7 +27,7 @@ check left for the blogs✅
 google auth password condition 
 chatbot✅
 events ✅
-testinominals 
+testinominals  ✅
 pagination on every where 
 strong password 
 privacy policy, shipping, refund return, term conditions are done✅
