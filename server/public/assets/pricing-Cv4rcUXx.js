@@ -1,0 +1,1 @@
+const t={COD_HANDLING_FEE:40,DELIVERY_CHARGE:70,FREE_DELIVERY_THRESHOLD:500},n=r=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",minimumFractionDigits:0,maximumFractionDigits:2}).format(r);export{t as C,n as f};

@@ -1,0 +1,22 @@
+{
+  "name": "garava-official",
+  "version": "1.0.0",
+  "description": "Garava Official - Full Stack E-commerce Application",
+  "private": true,
+  "scripts": {
+    "install-all": "cd server && npm install && cd ../client && npm install",
+    "build": "cd server && npm run build",
+    "start": "cd server && npm start",
+    "deploy": "cd server && npm run deploy",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "render-build": "cd server && npm run render-build"
+  },
+  "keywords": ["ecommerce", "jewelry", "react", "node.js", "express", "mongodb"],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "client",
+    "server"
+  ]
+}

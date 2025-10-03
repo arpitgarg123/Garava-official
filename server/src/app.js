@@ -1,17 +1,22 @@
-  import express from 'express';
-  import dotenv from 'dotenv';
-  dotenv.config();
+import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 
-  import connectDb from './shared/db.js';
-  import cors from 'cors';
-  import cookieParser from 'cookie-parser';
-  import morgan from 'morgan';
-  import helmet from 'helmet';
-  import rateLimit from 'express-rate-limit';
-  import { env } from './config/env.js';
-  import { logger } from './shared/logger.js'; 
+import connectDb from './shared/db.js';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import { env } from './config/env.js';
+import { logger } from './shared/logger.js'; 
 import { errorHandler } from './shared/utils/errorHandler.js';
 import passport from './config/passport.js'; // Import passport configuration
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // router imports
 import authRouter from './modules/auth/auth.router.js';
@@ -38,12 +43,52 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
 
   // routers
   const app = express();
-  const port = env.PORT || 3000;
+  const port = env.PORT || 10000;
 
-  app.use(helmet());
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https:", "data:"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+        imgSrc: [
+          "'self'", 
+          "data:", 
+          "https://ik.imagekit.io",
+          "https://*.imagekit.io",
+          "https:",
+          "http:"
+        ],
+        fontSrc: ["'self'", "data:", "https:", "http:"],
+        connectSrc: ["'self'", "https:", "http:", "ws:", "wss:"],
+        mediaSrc: ["'self'", "https:", "http:", "data:"],
+        objectSrc: ["'none'"],
+        frameSrc: ["'self'", "https:"],
+        upgradeInsecureRequests: [],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+  }));
   app.use(
     cors({
-      origin: env.CLIENT_URL || 'http://localhost:5173',
+      origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        // In production, allow your domain and localhost for development
+        const allowedOrigins = [
+          'http://localhost:5173', // Development
+          'http://localhost:3000', // Development
+          env.CLIENT_URL, // Production URL from environment
+          'https://garava-official.onrender.com', // Your Render URL
+        ].filter(Boolean); // Remove undefined values
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
       credentials: true,
     })
   );
@@ -62,6 +107,9 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
   
   // Initialize Passport
   app.use(passport.initialize());
+
+  // Serve static files from the React app build
+  app.use(express.static(path.join(__dirname, '../public')));
 
   if (env.NODE_ENV === 'production') {
     app.use(morgan('combined'));
@@ -135,6 +183,12 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
   app.use("/api/admin/newsevents", newseventsAdminRouter);
   app.use("/api/contact", contactRouter);
   app.use("/api/testimonials", testimonialRouter);
+
+  // Catch all handler: send back React's index.html file for client-side routing
+  // Only for non-API routes
+  app.get(/^(?!\/api).*/, (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+  });
 
   // global error handler
   app.use(errorHandler);
