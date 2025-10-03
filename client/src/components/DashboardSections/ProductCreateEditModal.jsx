@@ -38,6 +38,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
       mrp: '',
       stock: 0,
       weight: '',
+      isPriceOnDemand: false,
       isDefault: true,
       isActive: true
     }],
@@ -163,6 +164,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         mrp: '',
         stock: 0,
         weight: '',
+        isPriceOnDemand: false,
         isDefault: false,
         isActive: true
       }]
@@ -315,6 +317,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 >
                   <option value="fragrance">Fragrance</option>
                   <option value="jewellery">Jewellery</option>
+                  <option value="high_jewellery">High Jewellery</option>
                   <option value="other">Other</option>
                 </select>
               </div>
@@ -514,15 +517,17 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Price (₹) *
+                      Price (₹) {!variant.isPriceOnDemand && '*'}
                     </label>
                     <input
                       type="number"
                       step="0.01"
                       value={variant.price}
                       onChange={(e) => handleVariantChange(index, 'price', e.target.value)}
-                      required
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      required={!variant.isPriceOnDemand}
+                      disabled={variant.isPriceOnDemand}
+                      placeholder={variant.isPriceOnDemand ? "Price will be on demand" : ""}
+                      className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${variant.isPriceOnDemand ? 'bg-gray-100 text-gray-500' : ''}`}
                     />
                   </div>
                   
@@ -595,6 +600,16 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                       className="mr-2"
                     />
                     Active
+                  </label>
+                  
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={variant.isPriceOnDemand}
+                      onChange={(e) => handleVariantChange(index, 'isPriceOnDemand', e.target.checked)}
+                      className="mr-2"
+                    />
+                    Price on Demand
                   </label>
                 </div>
               </div>

@@ -4,12 +4,14 @@ const variantSchema = new mongoose.Schema(
   {
     sku: { type: String, required: true, trim: true }, // removed unique: true at schema level to allow different products with same SKU if needed; enforce uniqueness at app/admin level if required
     sizeLabel: { type: String, required: true }, // e.g., "10ml", "50ml" or "18in"
-    price: { type: Number, required: true },
+    price: { type: Number, required: function() { return !this.isPriceOnDemand; } }, // Not required for price on demand items
     mrp: { type: Number },
+    isPriceOnDemand: { type: Boolean, default: false }, // For high jewellery variants
+    priceOnDemandText: { type: String, default: "Price on Demand" }, // Custom text for price display
     stock: { type: Number, default: 0 },
     stockStatus: {
       type: String,
-      enum: ["in_stock", "out_of_stock", "preorder", "backorder"],
+      enum: ["in_stock", "out_of_stock", "preorder", "backorder", "made_to_order"],
       default: "in_stock",
     },
     weight: { type: Number }, // grams
@@ -45,16 +47,16 @@ const giftWrapSchema = new mongoose.Schema(
         description: String,
         price: Number,
       },
-    ],
+    ],  
   },
-  { _id: false }
+  { _id: false } 
 );
 
 const productSchema = new mongoose.Schema(
   {
     // basic
     name: { type: String, required: true, trim: true },
-    type: { type: String, enum: ["fragrance", "jewellery", "other"], default: "fragrance" },
+    type: { type: String, enum: ["fragrance", "jewellery", "high_jewellery", "other"], default: "fragrance" },
     slug: { type: String, required: true, lowercase: true },
     category: { type: String, required: true },
     subcategory: { type: String },
@@ -119,6 +121,15 @@ const productSchema = new mongoose.Schema(
     },
     askAdvisor: { type: Boolean, default: false },
     bookAppointment: { type: Boolean, default: false },
+    
+    // High Jewellery specific fields
+    isPriceOnDemand: { type: Boolean, default: false }, // For high jewellery items
+    customizationOptions: {
+      enabled: { type: Boolean, default: false },
+      description: { type: String },
+      estimatedDays: { type: Number }, // customization time
+    },
+    consultationRequired: { type: Boolean, default: false }, // Require consultation before purchase
 
     // related / merchandising
     relatedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
