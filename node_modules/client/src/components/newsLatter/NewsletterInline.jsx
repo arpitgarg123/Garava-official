@@ -1,5 +1,5 @@
 import React from 'react' 
-import  './NewsLetter.css'
+import  './newsLetter.css'
 
 const NewsletterInline = () => {
   return (
