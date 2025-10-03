@@ -1,5 +1,11 @@
 // src/shared/utils/image.utils.js
-import sharp from "sharp";
+let sharp;
+try {
+  sharp = (await import("sharp")).default;
+} catch (err) {
+  console.warn("Sharp not available, image optimization disabled:", err.message);
+  sharp = null;
+}
 
 /**
  * Optimize/resize image buffer.
@@ -7,6 +13,12 @@ import sharp from "sharp";
  * - safe: if sharp fails, returns original buffer.
  */
 export const optimizeImage = async (buffer, { width = 1600, quality = 80 } = {}) => {
+  // If Sharp is not available, return original buffer
+  if (!sharp) {
+    console.warn("Sharp not available, returning original buffer");
+    return buffer;
+  }
+
   try {
     const out = await sharp(buffer)
       .rotate() // respect orientation
