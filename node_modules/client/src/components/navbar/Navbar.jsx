@@ -986,7 +986,7 @@ const navItems = [
       },
       { 
         label: 'Sayonee', 
-        img: './src/assets/images/sayonee.jpge', 
+        img: './src/assets/images/sayonee.jpeg', 
         to: '/products/fragrance?subcategory=sayonee',
         subcategory: 'sayonee'
       },
