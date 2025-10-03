@@ -141,7 +141,7 @@ testimonialSchema.statics.getByRating = function(rating, limit = 10) {
   })
   .sort({ rating: -1, createdAt: -1 })
   .limit(limit);
-};
+};  
 
 // Pre-save middleware
 testimonialSchema.pre('save', function(next) {
