@@ -13,6 +13,15 @@ export default defineConfig({
       output: {
         manualChunks: undefined
       }
-    }
+    },
+    // Force using the JS version of Rollup instead of native
+    target: 'esnext',
+    minify: 'esbuild'
   },
+  optimizeDeps: {
+    include: ['rollup']
+  },
+  esbuild: {
+    target: 'esnext'
+  }
 })
