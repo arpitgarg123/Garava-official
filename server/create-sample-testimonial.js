@@ -21,7 +21,7 @@ async function createSampleTestimonial() {
       isActive: true,
       isFeatured: true,
       order: 1
-    };
+    };  
 
     const testimonial = await Testimonial.create(sampleTestimonial);
     console.log('✅ Created sample testimonial:', testimonial.name);

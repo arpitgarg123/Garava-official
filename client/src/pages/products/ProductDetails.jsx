@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductAccordion from '../../components/Products/ProductAccordion';
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductBySlug } from '../../features/product/slice';
 import { addToCart } from '../../features/cart/slice';
 import { toggleWishlistItem } from '../../features/wishlist/slice';
 import { selectIsAuthenticated } from '../../features/auth/selectors';
 import { logout } from '../../features/auth/slice';
+import { FiPhone, FiMail, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { handleEmailContact, handleWhatsAppContact } from '../../hooks/contact';
 
 import { selectIsProductInWishlist } from '../../features/wishlist/selectors';
 import { toast } from 'react-hot-toast';
@@ -20,6 +22,7 @@ const ProductDetails = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const productSlug = slug || searchParams.get('slug');
   const productData = useSelector(state => state.product.bySlug[productSlug]);
@@ -28,6 +31,19 @@ const ProductDetails = () => {
 
   const productId = product?._id || product?.id;
   const isInWishlist = useSelector(state => selectIsProductInWishlist(state, productId));
+  
+  // Check if we're in a high jewellery context
+  const isHighJewelleryContext = location.pathname.includes('/high-jewellery') || 
+                                product?.type === "high_jewellery" ||
+                                (product?.variants && product?.variants.some(variant => variant.isPriceOnDemand));
+  
+  // Check if it's high jewellery - only show special UI if we're in high jewellery context
+  const isHighJewellery = (product?.type === "high_jewellery" || 
+                          (product?.variants && product?.variants.some(variant => variant.isPriceOnDemand))) &&
+                          isHighJewelleryContext;
+  
+  // State for contact options dropdown
+  const [showContactOptions, setShowContactOptions] = useState(false);
 
   // Check out-of-stock status
   // Find the default variant or use the first variant
@@ -212,10 +228,22 @@ const ProductDetails = () => {
               {product?.name || 'Untitled Product'}
             </h1>
 
-            <div className="mt-2 text-2xl font-playfair font-semibold">
-              ₹{selectedVariant?.price ?? 'Price not available'}
-            </div>
-            <p className="text-sm text-gray-600 mt-1">(inclusive of GST)</p>
+            {/* Price Display - Different for High Jewellery */}
+            {isHighJewellery ? (
+              <div className="mt-2">
+                <div className="text-2xl font-playfair font-semibold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
+                  Price on Demand
+                </div>
+                <p className="text-sm text-gray-600 mt-1">Contact us for pricing details</p>
+              </div>
+            ) : (
+              <div className="mt-2">
+                <div className="text-2xl font-playfair font-semibold">
+                  ₹{selectedVariant?.price ?? 'Price not available'}
+                </div>
+                <p className="text-sm text-gray-600 mt-1">(inclusive of GST)</p>
+              </div>
+            )}
 
             {/* Stock status indicator */}
             <div className="mt-2 flex items-center gap-3 bg-amber-800">
@@ -254,30 +282,82 @@ const ProductDetails = () => {
                 {product?.description || 'Description not available'}
               </p>
             </div>
-            {/* Action buttons */}
+            {/* Action buttons - Different for High Jewellery */}
             <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
-              <button 
-                onClick={handleAddToCart} 
-                disabled={isOutOfStock}
-                className={`w-full sm:w-auto px-6 py-3  text-sm font-medium transition-colors ${
-                  isOutOfStock 
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                    : 'btn-black'
-                }`}
-              >
-                {isOutOfStock ? 'OUT OF STOCK' : 'ADD TO BAG'}
-              </button>
-              <button 
-                onClick={() => navigate('/checkout')} 
-                disabled={isOutOfStock}
-                className={`w-full sm:w-auto px-6 py-3 text-sm  font-medium transition-colors ${
-                  isOutOfStock 
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                    : 'btn'
-                }`}
-              >
-                BUY NOW
-              </button>
+              {isHighJewellery ? (
+                // High Jewellery Contact Options
+                <div className="relative w-full sm:w-auto">
+                  <button 
+                    onClick={() => setShowContactOptions(!showContactOptions)}
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium rounded-lg hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                  >
+                    Contact for Pricing
+                  </button>
+                  
+                  {/* Contact Options Dropdown */}
+                  {showContactOptions && (
+                    <>
+                      {/* Overlay to close dropdown when clicking outside */}
+                      <div 
+                        className="fixed inset-0 z-10"
+                        onClick={() => setShowContactOptions(false)}
+                      />
+                      <div className="absolute top-full left-0 right-0 sm:right-auto sm:w-80 mt-2 bg-white border border-gray-200 rounded-lg shadow-xl z-20 overflow-hidden">
+                        <button
+                          onClick={() => handleWhatsAppContact(product, setShowContactOptions)}
+                          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-green-50 transition-colors border-b border-gray-100"
+                        >
+                          <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                            <FiPhone className="text-white text-sm" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-gray-900">WhatsApp</div>
+                            <div className="text-xs text-gray-500">Instant messaging for quick response</div>
+                          </div>
+                        </button>
+                        <button
+                          onClick={() => handleEmailContact(product, setShowContactOptions)}
+                          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-blue-50 transition-colors"
+                        >
+                          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                            <FiMail className="text-white text-sm" />
+                          </div>
+                          <div>
+                            <div className="font-medium text-gray-900">Email</div>
+                            <div className="text-xs text-gray-500">Detailed inquiry with specifications</div>
+                          </div>
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ) : (
+                // Regular Product Buttons
+                <>
+                  <button 
+                    onClick={handleAddToCart} 
+                    disabled={isOutOfStock}
+                    className={`w-full sm:w-auto px-6 py-3  text-sm font-medium transition-colors ${
+                      isOutOfStock 
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                        : 'btn-black'
+                    }`}
+                  >
+                    {isOutOfStock ? 'OUT OF STOCK' : 'ADD TO BAG'}
+                  </button>
+                  <button 
+                    onClick={() => navigate('/checkout')} 
+                    disabled={isOutOfStock}
+                    className={`w-full sm:w-auto px-6 py-3 text-sm  font-medium transition-colors ${
+                      isOutOfStock 
+                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+                        : 'btn'
+                    }`}
+                  >
+                    BUY NOW
+                  </button>
+                </>
+              )}
               <button
                 onClick={handleToggleWishlist}
                 className={`btn w-full sm:flex-1 ${
