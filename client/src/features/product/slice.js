@@ -170,7 +170,7 @@ export const fetchCategoryCounts = createAsyncThunk(
         console.log('Product slice - Fetching category counts for:', type, categories);
         const counts = {};
 
-        // Use Promise.all for parallel requests instead of sequential
+        // Use Promise.allSettled for parallel requests to handle failures gracefully
         const requests = [
           // Total for "All"
           listProductsApi({ type, page: 1, limit: 1 })
@@ -178,6 +178,10 @@ export const fetchCategoryCounts = createAsyncThunk(
               const total = data?.pagination?.total ?? data?.total ?? 
                 (data?.products ? data.products.length : Array.isArray(data) ? data.length : 0);
               counts.__all = total;
+            })
+            .catch((error) => {
+              console.warn(`Failed to fetch total count for ${type}:`, error.message);
+              counts.__all = 0; // Default to 0 if blocked
             })
         ];
 
@@ -191,11 +195,15 @@ export const fetchCategoryCounts = createAsyncThunk(
                   (data?.products ? data.products.length : Array.isArray(data) ? data.length : 0);
                 counts[c] = total;
               })
+              .catch((error) => {
+                console.warn(`Failed to fetch count for ${type}/${c}:`, error.message);
+                counts[c] = 0; // Default to 0 if blocked
+              })
           );
         }
 
-        // Wait for all requests to complete
-        await Promise.all(requests);
+        // Wait for all requests to complete (including failed ones)
+        await Promise.allSettled(requests);
         
         // Cache the results
         categoryCountsCache[cacheKey] = {

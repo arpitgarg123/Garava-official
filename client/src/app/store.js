@@ -62,11 +62,29 @@ export const store = configureStore({
         ignoredActions: [
           "persist/PERSIST", 
           "persist/REHYDRATE",
+          "persist/REGISTER",
+          "persist/PAUSE",
+          "persist/FLUSH",
+          "persist/PURGE",
           "search/searchProducts/fulfilled",
           "search/searchProducts/pending",
-          "search/searchProducts/rejected"
+          "search/searchProducts/rejected",
+          "product/fetchProducts/fulfilled",
+          "product/fetchProducts/pending",
+          "product/fetchProducts/rejected",
+          "product/fetchCategoryCounts/fulfilled",
+          "product/fetchCategoryCounts/pending",
+          "product/fetchCategoryCounts/rejected"
         ],
-        ignoredPaths: ['payload.headers', 'payload.config', 'payload.request']
+        ignoredPaths: [
+          'payload.headers', 
+          'payload.config', 
+          'payload.request',
+          'payload.meta',
+          'meta.arg',
+          'register',
+          'rehydrate'
+        ]
       },
     }),
 });

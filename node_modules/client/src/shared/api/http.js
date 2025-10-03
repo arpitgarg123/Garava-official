@@ -119,6 +119,14 @@ http.interceptors.response.use(
   (res) => res,
   async (error) => {
     const original = error.config;
+    
+    // Handle blocked requests (ad blockers, etc.)
+    if (error.message === 'Network Error' || error.code === 'ERR_BLOCKED_BY_CLIENT') {
+      console.warn('Request blocked by client (possibly ad blocker):', original?.url);
+      // You could implement retry logic or show a user-friendly message
+      error.isBlocked = true;
+    }
+    
     if (!original || original._retry) return Promise.reject(error);
 
     if (error.response?.status === 401) {
