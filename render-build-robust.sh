@@ -2,9 +2,13 @@
 
 echo "Starting robust Render build..."
 
-# Install server dependencies
+# Install server dependencies with optional packages
 echo "Installing server dependencies..."
-npm install
+npm install --include=optional
+
+# Install Sharp specifically for Linux x64
+echo "Installing Sharp for Linux x64..."
+npm install --os=linux --cpu=x64 sharp
 
 # Navigate to client
 echo "Moving to client directory..."
@@ -14,17 +18,17 @@ cd ../client
 echo "Cleaning client environment..."
 rm -rf node_modules package-lock.json .vite
 
-# Install with specific settings to avoid Rollup native issues
+# Install with specific settings to avoid native dependency issues
 echo "Installing client dependencies..."
-npm install --no-optional --legacy-peer-deps --force
+npm install --legacy-peer-deps
 
-# Try to install only the Linux Rollup binary we need
-echo "Installing required Rollup binary..."
-npm install @rollup/rollup-linux-x64-gnu@latest --save-dev --no-optional || echo "Rollup binary install failed, continuing..."
+# Install LightningCSS for Linux
+echo "Installing LightningCSS..."
+npm install lightningcss@1.21.0 --legacy-peer-deps
 
 # Build with specific environment settings
 echo "Building application..."
-VITE_ROLLUP_NATIVE=false npm run build
+npm run build
 
 echo "Build completed!"
 cd ../server
