@@ -246,7 +246,7 @@ const ProductDetails = () => {
             )}
 
             {/* Stock status indicator */}
-            <div className="mt-2 flex items-center gap-3 bg-amber-800">
+            <div className="mt-2 flex items-center gap-3 ">
               {isOutOfStock ? (
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                   Out of Stock

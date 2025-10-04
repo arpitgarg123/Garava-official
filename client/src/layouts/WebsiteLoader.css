@@ -1,0 +1,283 @@
+.luxury-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.luxury-loader-overlay.fade-in {
+  opacity: 1;
+}
+
+.luxury-loader-overlay.animate {
+  opacity: 1;
+}
+
+.luxury-loader-overlay.fade-out {
+  opacity: 0;
+}
+
+.luxury-loader-content {
+  text-align: center;
+  position: relative;
+  max-width: 900px;
+}
+
+/* Brand Logo Styling - Luxury Typography */
+.brand-logo-container {
+  /* margin-bottom: 2rem; */
+  overflow: hidden;
+
+}
+
+.brand-logo {
+  margin: 0;
+  position: relative;
+  opacity: 0;
+
+  /* transform: translateY(30px); */
+  scale: 0.75;
+  animation: logoReveal 1.5s ease-in-out 0.5s forwards;
+}
+
+.brand-logo::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  animation: underlineExpand 1s ease-in-out 1s forwards;
+}
+
+/* Brand Tagline - Elegant and Refined */
+.brand-tagline-container {
+  /* margin-bottom: 3rem; */
+  overflow: hidden;
+}
+
+.brand-tagline {
+  font-family: 'Playfair Display';
+  font-size: 2rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: #666666;
+  margin: 0;
+  opacity: 0;
+  animation: taglineReveal 1.2s ease-in 1s forwards;
+}
+
+/* Subtle Loading Indicator */
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: indicatorFadeIn 0.8s ease-out 2.5s forwards;
+}
+
+.loading-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4af37;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
+/* Animations */
+@keyframes logoReveal {
+  0% {
+    opacity: 0;
+    transform:  scale(0.85);
+    filter: blur(2px);
+  }
+  70% {
+    opacity: 0.8;
+    transform:  scale();
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform:  scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes underlineExpand {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 120px;
+  }
+}
+
+@keyframes taglineReveal {
+  0% {
+    opacity: 0;
+    /* transform: translateY(10px); */
+    letter-spacing: 0.15em;
+  }
+  60% {
+    opacity: 0.7;
+    /* transform: translateY(-2px); */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0.08em;
+  }
+}
+
+@keyframes indicatorFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .brand-logo {
+    font-size: 3.5rem;
+    letter-spacing: 0.12em;
+  }
+  
+  .brand-tagline {
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+  }
+
+  .brand-logo::after {
+    width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-logo {
+    font-size: 2.8rem;
+    letter-spacing: 0.1em;
+  }
+  
+  .brand-tagline {
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+  }
+
+  .brand-logo::after {
+    width: 80px;
+  }
+
+  .luxury-loader-content {
+    padding: 0 1rem;
+  }
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo,
+  .brand-tagline,
+  .loading-indicator {
+    animation: simpleFadeIn 0.5s ease forwards;
+  }
+
+  .loading-dot {
+    animation: none;
+    opacity: 0.6;
+  }
+
+  .brand-logo::after {
+    animation: none;
+    width: 120px;
+  }
+}
+
+@keyframes simpleFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* High-end brand aesthetic */
+.luxury-loader-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.02) 100%
+  );
+  pointer-events: none;
+}
+
+/* Subtle texture for premium feel */
+.luxury-loader-content::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(212, 175, 55, 0.02) 1px, transparent 0);
+  background-size: 20px 20px;
+  pointer-events: none;
+  opacity: 0;
+  animation: textureReveal 2s ease-out 1s forwards;
+}
+
+@keyframes textureReveal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

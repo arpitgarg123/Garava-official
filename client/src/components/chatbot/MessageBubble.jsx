@@ -1,8 +1,9 @@
+import iconlogo from "../../assets/images/gav-dark.png";
+
 const MessageBubble = ({ role = "bot", time, children }) =>{
   const isUser = role === "user";
 
   // role ke hisaab se avatar ka letter
-  const initial = isUser ? "U" : "R"; // user → "U", bot → "R" (ya apne hisaab se set karo)
 
   return (
     <div className={`flex items-end   ${isUser ? "justify-start" : "justify-start"}`}>
@@ -27,8 +28,9 @@ const MessageBubble = ({ role = "bot", time, children }) =>{
       {/* User avatar (right side) */}
       {isUser && (
         <div className="flex-shrink-0">
-          <div className="h-8 w-8 rounded-full bg-amber-500 flex items-center justify-center text-xs font-semibold text-white">
-            {initial}
+          <div className="rounded-full bg-gray-200 px-1.5  flex items-center justify-center">
+                       <img className="h-10 object-cover w-full" src={iconlogo} alt="Garava Assistant" />
+           
           </div>
         </div>
       )}

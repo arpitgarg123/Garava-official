@@ -61,22 +61,23 @@ discover btton click done ✅ & navigate all products are also done✅ but all p
 automatic logout for some time
 dashboard blogs ui fix 
 dashboard all button are not cursor-pointer
-dashbaord review ui fix
-dashshord review comments not show
-dashbaord appointment add butn remove and ui fix
-navbar faq link are not active
-chatbot ui fix and button center img
-products card remove color text
+dashbaord review ui fix✅
+dashshord review comments not show✅
+dashbaord appointment add butn remove and ui fix✅
+navbar faq link are not active 
+chatbot ui fix and button center img✅
+products card remove color text ✅
 product color filter 
-product page add banner
-event details ui fix
+product page add banner ✅
+event details ui fix✅
 testtinotial dashboard ui fix 
 news/events details img fix
-shopping cart button fix route mismacth
-profile ui fix
+shopping cart button fix route mismacth✅
+profile ui fix✅
 wishlist img not show and ui fix ✅
 product card ui ✅
 profile page loading fix ✅
-product details ui
+product details ui✅
+testinomial  ui fix ✅
 order details ui fix✅
 logout krne k bad logout nhi ho rha nav bar wala
