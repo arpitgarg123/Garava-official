@@ -104,6 +104,159 @@
 
 // export default SideBar
 
+// import React, { useEffect, useState } from 'react'
+// import PriceFilter from './PriceFilter';
+// import CategoryFilter from './CategoryFilter';
+// import ColorFilter from './ColorFilter';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { setFilters, fetchCategoryCounts } from '../../features/product/slice';
+
+// const JEWELLERY_SUBCATS = [
+//   { id: "all-jewellery", label: "All Jewellery" },
+//   { id: "rings", label: "Rings" },
+//   { id: "necklaces", label: "Necklaces" },
+//   { id: "earrings", label: "Earrings" },
+//   { id: "pendants", label: "Pendants" },
+// ];
+
+// const FRAGRANCE_SUBCATS = [
+//   { id: "all-fragrance", label: "All Fragrance" },
+//   { id: "women", label: "For Women" },
+//   { id: "men", label: "For Men" },
+//   { id: "unisex", label: "Unisex" },
+//   { id: "gift-sets", label: "Gift Sets" },
+// ];
+
+// const SideBar = ({ 
+//   mainCategory = "jewellery", 
+//   onFilterChange = () => {},
+//   isMobile = false,
+//   initialValues = {}
+// }) => {
+//   const dispatch = useDispatch();
+//   const [price, setPrice] = useState({ 
+//     min: initialValues.priceMin || "", 
+//     max: initialValues.priceMax || "" 
+//   });
+//   const [category, setCategory] = useState(initialValues.category || "");
+//   const [colors, setColors] = useState([]);
+
+//   const detectedCategory = (mainCategory || "jewellery").toLowerCase();
+//   const subCategories = detectedCategory === "jewellery" ? JEWELLERY_SUBCATS : FRAGRANCE_SUBCATS;
+
+//   useEffect(() => {
+//     // Set initial category if empty
+//     if (!category && subCategories.length > 0) {
+//       setCategory(subCategories[0]?.id || null);
+//     }
+//     if (detectedCategory !== "jewellery") setColors([]);
+//   }, [detectedCategory]);
+
+//   // Handle filter changes
+//   useEffect(() => {
+//     if (isMobile) {
+//       onFilterChange({
+//         type: detectedCategory,
+//         category,
+//         priceMin: price.min ? Number(price.min) : null,
+//         priceMax: price.max ? Number(price.max) : null,
+//       });
+//     } else {
+//       // In desktop mode, apply filters immediately
+//       if (category) {
+//         const nextFilters = {
+//           type: detectedCategory,
+//           category,
+//           priceMin: price.min ? Number(price.min) : null,
+//           priceMax: price.max ? Number(price.max) : null,
+//           page: 1
+//         };
+        
+//         if (nextFilters.category && nextFilters.category.startsWith("all-")) {
+//           nextFilters.category = "";
+//         }
+        
+//         dispatch(setFilters(nextFilters));
+//       }
+//     }
+//   }, [category, price, colors, isMobile]);
+
+//   const counts = useSelector(s => s.product.categoryCounts[detectedCategory] || {});
+
+//   useEffect(() => {
+//     if (!detectedCategory) return;
+    
+//     if (counts && Object.keys(counts).length > 0) {
+//       return;
+//     }
+    
+//     const timer = setTimeout(() => {
+//       const plainCats = subCategories.map(c => c.id);
+//       dispatch(fetchCategoryCounts({ type: detectedCategory, categories: plainCats }));
+//     }, 300);
+    
+//     return () => clearTimeout(timer);
+//   }, [detectedCategory, counts, dispatch]);
+
+//   const filterSections = (
+//     <>
+//       <div className={isMobile ? "mb-6" : ""}>
+//         <CategoryFilter
+//           selected={category}
+//           onChange={setCategory}
+//           categories={subCategories}
+//           counts={counts}
+//           isMobile={isMobile}
+//         />
+//       </div>
+      
+//       {isMobile && <hr className="my-6" />}
+      
+//       <div className={isMobile ? "mb-6" : ""}>
+//         <PriceFilter 
+//           value={price} 
+//           onChange={setPrice}
+//           isMobile={isMobile}
+//           heading={isMobile ? "Price Range" : undefined}
+//         />
+//       </div>
+      
+//       {detectedCategory === "jewellery" && (
+//         <>
+//           {isMobile && <hr className="my-6" />}
+//           <div className={isMobile ? "mb-6" : ""}>
+//             <ColorFilter 
+//               selected={colors} 
+//               onChange={setColors}
+//               isMobile={isMobile}
+//               heading={isMobile ? "Metal Color" : undefined}
+//             />
+//           </div>
+//         </>
+//       )}
+//     </>
+//   );
+
+//   // Mobile layout for bottom sheet
+//   if (isMobile) {
+//     return filterSections;
+//   }
+
+//   // Desktop layout
+//   return (
+//     <aside className="sticky top-20 w-full max-w-[280px] mb-6">
+//       <div className="bg-white">
+//         <div className="space-y-6 pr-4">
+//           {filterSections}
+//         </div>
+//       </div>
+//     </aside>
+//   );
+// };
+
+// export default SideBar;
+
+
 import React, { useEffect, useState } from 'react'
 import PriceFilter from './PriceFilter';
 import CategoryFilter from './CategoryFilter';
@@ -127,6 +280,14 @@ const FRAGRANCE_SUBCATS = [
   { id: "gift-sets", label: "Gift Sets" },
 ];
 
+// For "all products" view - main categories
+const ALL_PRODUCTS_CATS = [
+  { id: "", label: "All Products" },
+  { id: "jewellery", label: "Jewellery" },
+  { id: "fragrance", label: "Fragrance" },
+  { id: "high-jewellery", label: "High Jewellery" },
+];
+
 const SideBar = ({ 
   mainCategory = "jewellery", 
   onFilterChange = () => {},
@@ -140,51 +301,65 @@ const SideBar = ({
   });
   const [category, setCategory] = useState(initialValues.category || "");
   const [colors, setColors] = useState([]);
+  const [selectedType, setSelectedType] = useState(initialValues.type || "");
 
   const detectedCategory = (mainCategory || "jewellery").toLowerCase();
-  const subCategories = detectedCategory === "jewellery" ? JEWELLERY_SUBCATS : FRAGRANCE_SUBCATS;
+  
+  // Determine which categories to show
+  const getCategories = () => {
+    if (detectedCategory === "all") {
+      return ALL_PRODUCTS_CATS;
+    }
+    return detectedCategory === "jewellery" ? JEWELLERY_SUBCATS : FRAGRANCE_SUBCATS;
+  };
+
+  const subCategories = getCategories();
 
   useEffect(() => {
-    // Set initial category if empty
-    if (!category && subCategories.length > 0) {
-      setCategory(subCategories[0]?.id || null);
+    // Set default category when mainCategory changes
+    if (detectedCategory === "all") {
+      // For "all products" view, don't set a default category
+      setCategory("");
+      setSelectedType("");
+    } else {
+      setCategory(subCategories[0]?.id || "");
     }
+    
     if (detectedCategory !== "jewellery") setColors([]);
   }, [detectedCategory]);
 
   // Handle filter changes
   useEffect(() => {
+    const nextFilters = {
+      page: 1
+    };
+
+    if (detectedCategory === "all") {
+      // For "all products" view, use selectedType as the main type
+      if (selectedType) nextFilters.type = selectedType;
+      if (category && !category.startsWith("all-")) nextFilters.category = category;
+    } else {
+      // For specific category views
+      nextFilters.type = detectedCategory;
+      if (category && !category.startsWith("all-")) nextFilters.category = category;
+    }
+
+    // Add price filters
+    if (price.min) nextFilters.priceMin = Number(price.min);
+    if (price.max) nextFilters.priceMax = Number(price.max);
+
     if (isMobile) {
-      onFilterChange({
-        type: detectedCategory,
-        category,
-        priceMin: price.min ? Number(price.min) : null,
-        priceMax: price.max ? Number(price.max) : null,
-      });
+      onFilterChange(nextFilters);
     } else {
       // In desktop mode, apply filters immediately
-      if (category) {
-        const nextFilters = {
-          type: detectedCategory,
-          category,
-          priceMin: price.min ? Number(price.min) : null,
-          priceMax: price.max ? Number(price.max) : null,
-          page: 1
-        };
-        
-        if (nextFilters.category && nextFilters.category.startsWith("all-")) {
-          nextFilters.category = "";
-        }
-        
-        dispatch(setFilters(nextFilters));
-      }
+      dispatch(setFilters(nextFilters));
     }
-  }, [category, price, colors, isMobile]);
+  }, [category, price, selectedType, detectedCategory, isMobile]);
 
   const counts = useSelector(s => s.product.categoryCounts[detectedCategory] || {});
 
   useEffect(() => {
-    if (!detectedCategory) return;
+    if (!detectedCategory || detectedCategory === "all") return;
     
     if (counts && Object.keys(counts).length > 0) {
       return;
@@ -198,19 +373,81 @@ const SideBar = ({
     return () => clearTimeout(timer);
   }, [detectedCategory, counts, dispatch]);
 
+  // Custom category filter for "all products" view
+  const AllProductsCategoryFilter = () => (
+    <div className="mb-6">
+      <h3 className="text-sm font-medium text-gray-900 mb-3">Product Categories</h3>
+      <div className="space-y-2">
+        {ALL_PRODUCTS_CATS.map((cat) => (
+          <button
+            key={cat.id}
+            onClick={() => {
+              setSelectedType(cat.id);
+              setCategory(""); // Reset subcategory when changing main type
+            }}
+            className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+              selectedType === cat.id
+                ? "bg-black text-white"
+                : "text-gray-700 hover:bg-gray-100"
+            }`}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Show subcategories if a specific type is selected in "all products" view
+  const showSubcategories = detectedCategory === "all" && selectedType && selectedType !== "";
+  const subcategoriesForSelectedType = selectedType === "jewellery" ? JEWELLERY_SUBCATS : 
+                                     selectedType === "fragrance" ? FRAGRANCE_SUBCATS : [];
+
   const filterSections = (
     <>
-      <div className={isMobile ? "mb-6" : ""}>
-        <CategoryFilter
-          selected={category}
-          onChange={setCategory}
-          categories={subCategories}
-          counts={counts}
-          isMobile={isMobile}
-        />
-      </div>
+      {detectedCategory === "all" ? (
+        <>
+          <AllProductsCategoryFilter />
+          
+          {showSubcategories && (
+            <>
+              <hr className="my-4" />
+              <div className="mb-6">
+                <h3 className="text-sm font-medium text-gray-900 mb-3">
+                  {selectedType === "jewellery" ? "Jewellery Types" : "Fragrance Types"}
+                </h3>
+                <div className="space-y-2">
+                  {subcategoriesForSelectedType.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setCategory(cat.id)}
+                      className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+                        category === cat.id
+                          ? "bg-black text-white"
+                          : "text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      {cat.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </>
+      ) : (
+        <div className={isMobile ? "mb-6" : ""}>
+          <CategoryFilter
+            selected={category}
+            onChange={setCategory}
+            categories={subCategories}
+            counts={counts}
+            isMobile={isMobile}
+          />
+        </div>
+      )}
       
-      {isMobile && <hr className="my-6" />}
+      <hr className="my-4" />
       
       <div className={isMobile ? "mb-6" : ""}>
         <PriceFilter 
@@ -221,9 +458,9 @@ const SideBar = ({
         />
       </div>
       
-      {detectedCategory === "jewellery" && (
+      {(detectedCategory === "jewellery" || (detectedCategory === "all" && selectedType === "jewellery")) && (
         <>
-          {isMobile && <hr className="my-6" />}
+          <hr className="my-4" />
           <div className={isMobile ? "mb-6" : ""}>
             <ColorFilter 
               selected={colors} 
@@ -246,7 +483,7 @@ const SideBar = ({
   return (
     <aside className="sticky top-20 w-full max-w-[280px] mb-6">
       <div className="bg-white">
-        <div className="space-y-6 pr-4">
+        <div className="space-y-4 pr-4">
           {filterSections}
         </div>
       </div>

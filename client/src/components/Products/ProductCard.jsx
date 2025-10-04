@@ -955,6 +955,7 @@ const ProductCard = ({
 
   // Contact handlers for high jewellery
 
+console.log(product);
 
   return (
     <article
