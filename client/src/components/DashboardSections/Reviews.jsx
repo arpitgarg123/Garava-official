@@ -122,11 +122,12 @@ export default function Reviews() {
     
     return matchesSearch && matchesStatus && matchesRating;
   });
+console.log(reviews);
 
   return (
     <div className="h-full flex flex-col">
       {/* Header with Actions */}
-      <div className="flex-shrink-0 p-6 border-b border-gray-200">
+      <div className="flex-shrink-0 p-6 border-b w-full border-gray-200">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Reviews Management</h2>
@@ -211,48 +212,48 @@ export default function Reviews() {
             </div>
           </div>
         ) : (
-          <div className="h-full overflow-auto">
-            <table className="w-full">
-              <thead className="bg-gray-50 sticky top-0 z-10">
+          <div className="h-full  overflow-auto">
+            <table className="w-full ">
+              <thead className="bg-gray-50 sticky top-0 z-10 ">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="pl-14 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Customer
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Product
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Rating
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Review
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="pr-20 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white divide-y divide-gray-200 ">
                 {filteredReviews.map((review) => (
-                  <tr key={review._id} className="hover:bg-gray-50">
+                  <tr key={review._id} className="hover:bg-gray-50 ">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div>
-                        <div className="text-sm font-medium text-gray-900">
+                      <div className="">
+                        <div className="text-sm font-medium text-gray-900 pl-8">
                           {review.user?.name || 'Anonymous'}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-xs text-gray-500 pl-8">
                           {review.user?.email || 'N/A'}
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-xs text-gray-900">
                         {review.product || 'Unknown Product'}
                       </div>
                     </td>
@@ -264,18 +265,18 @@ export default function Reviews() {
                             className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} 
                           />
                         ))}
-                        <span className="ml-2 text-sm text-gray-600">({review.rating})</span>
+                        <span className=" text-xs text-gray-600">({review.rating})</span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
                       <div className="max-w-xs">
-                        <div className="text-sm text-gray-900 line-clamp-2">
-                          {review.comment || 'No comment provided'}
+                        <div className="text-xs text-gray-900 line-clamp-2">
+                          {review.body || 'No comment provided'}
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-xs text-gray-900">
                         {formatDate(review.createdAt)}
                       </div>
                     </td>
@@ -315,7 +316,7 @@ export default function Reviews() {
                         )}
                         <button
                           onClick={() => handleDelete(review._id)}
-                          className="text-red-600 hover:text-red-900 p-1"
+                          className="text-red-600 pr-10 hover:text-red-900 p-1"
                           title="Delete Review"
                         >
                           <RiDeleteBin6Line className="w-4 h-4" />

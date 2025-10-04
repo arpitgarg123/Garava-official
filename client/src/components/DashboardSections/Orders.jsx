@@ -130,7 +130,7 @@ export default function Orders() {
   return (
     <div className="h-full flex flex-col">
       {/* Header with Actions */}
-      <div className="flex-shrink-0 p-6 border-b border-gray-200">
+      <div className="flex-shrink-0 w-full p-6 border-b border-gray-200">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Orders Management</h2>

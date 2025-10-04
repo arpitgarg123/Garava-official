@@ -133,9 +133,9 @@ export default function EnhancedChatbotWidget({
         <button
           onClick={() => { setOpen(true); setMinimized(false); }}
           aria-label="Open chat"
-          className={`group fixed bottom-5 right-5 z-40 cursor-pointer inline-flex items-center gap-2 rounded-full px-4 py-3 bg-gray-200 hover:brightness-110 transition shadow-lg hover:shadow-xl`}
+          className={`group fixed bottom-5 right-5 z-40 cursor-pointer inline-flex items-center gap-2 rounded-full px-3 py-2 bg-gray-200`}
         >
-          <div className="hidden sm:inline  text-sm font-medium">
+          <div className="hidden sm:flex items-center justify-center ">
             <img className="h-10" src={iconlogo} alt="Garava Assistant" />
           </div>
           
@@ -222,7 +222,7 @@ export default function EnhancedChatbotWidget({
                       </MessageBubble>
                       
                       {/* FAQ feedback buttons */}
-                      {msg.role === 'bot' && msg.faqId && (
+                      {/* {msg.role === 'bot' && msg.faqId && (
                         <div className="flex items-center gap-2 mt-2 ml-2">
                           <span className="text-xs text-gray-500">Was this helpful?</span>
                           <button
@@ -240,7 +240,7 @@ export default function EnhancedChatbotWidget({
                             <FiThumbsDown size={14} />
                           </button>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   </li>
                 ))}
@@ -268,11 +268,9 @@ export default function EnhancedChatbotWidget({
                     rows={1}
                     placeholder={placeholder}
                     disabled={isTyping}
-                    className="w-full resize-none rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-300 leading-6 max-h-28 disabled:opacity-50"
+                    className="w-full resize-none text-xs rounded-xl border border-neutral-200 bg-white px-2 py-2 outline-none   leading-6 max-h-28 disabled:opacity-50"
                   />
-                  <div className="pointer-events-none absolute right-3 bottom-2 text-[10px] text-neutral-400">
-                    Enter ↵
-                  </div>
+                  
                 </div>
 
                 <button

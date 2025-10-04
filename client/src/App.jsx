@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import MainLayout from "./layouts/MainLayout.jsx";
 import Home from './pages/Home.jsx'
 import ProductDetails from "./pages/products/ProductDetails.jsx";
@@ -22,6 +22,7 @@ import AuthCallback from "./components/auth/AuthCallback.jsx";
 import ShippingPolicy from "./pages/ShippingPolicy.jsx";
 import RefundReturn from "./pages/RefundReturn.jsx";
 import TermCondition from "./pages/TermCondition.jsx";
+import WebsiteLoader from "./layouts/WebsiteLoader.jsx";
 // import AuthDebugger from "./components/auth/AuthDebugger.jsx";
 
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
@@ -39,6 +40,23 @@ const Contact = lazy(()=> import("./pages/Contact.jsx"))
 const SearchResults = lazy(() => import("./pages/SearchResults.jsx"))
 
 const App = () => {
+   const [isWebsiteLoading, setIsWebsiteLoading] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Handle initial website loading
+  const handleLoadingComplete = () => {
+    setIsWebsiteLoading(false);
+    setIsInitialized(true);
+  };
+  if (isWebsiteLoading) {
+    return (
+      <WebsiteLoader
+        onLoadingComplete={handleLoadingComplete}
+        minLoadTime={3000}
+        showProgress={true}
+      />
+    );
+  }
   return (
     <Suspense fallback={<div className="p-4">Loading...</div>}>
       <AuthCallback /> {/* Handle OAuth callbacks and welcome messages */}

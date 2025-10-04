@@ -934,46 +934,46 @@ const navItems = [
     { 
         label: 'Solitaire Studs', 
         img: './src/assets/images/jewellry1.jpg', 
-        to: '/products/jewellery?subcategory=solitaire-studs',
-        subcategory: 'solitaire-studs'
+        to: '/products/jewellery?category=earrings',
+        category: 'earrings'
       },
       { 
         label: 'Daily Earrings', 
         img: './src/assets/images/jewellry2.jpg', 
-        to: '/products/jewellery?subcategory=daily-earrings',
-        subcategory: 'daily-earrings'
+        to: '/products/jewellery?category=rings',
+        category: 'rings'
       },
     { 
         label: 'Pendants', 
         img: './src/assets/images/jewellry3.jpg', 
-        to: '/products/jewellery?subcategory=pendants',
-        subcategory: 'pendants'
+        to: '/products/jewellery?category=pendants',
+        category: 'pendants'
       },
       { 
         label: 'Solitaire Rings', 
         img: './src/assets/images/jewellry4.png', 
-        to: '/products/jewellery?subcategory=solitaire-rings',
-        subcategory: 'solitaire-rings'
+        to: '/products/jewellery?category=necklace',
+        category: 'necklace'
       },
      ]},
   { title: 'HIGH JEWELLERY', submenu: [
     { 
         label: 'Daily Earrings', 
         img: './src/assets/images/fragnance1.png', 
-        to: '/products/high-jewellery?subcategory=daily-earrings',
-        subcategory: 'daily-earrings'
+        to: '/products/high-jewellery?category=daily-earrings',
+        category: 'daily-earrings'
       },
       { 
         label: 'Solitaire Rings', 
         img: './src/assets/images/jewellry4.png', 
-        to: '/products/high-jewellery?subcategory=solitaire-rings',
-        subcategory: 'solitaire-rings'
+        to: '/products/high-jewellery?category=solitaire-rings',
+        category: 'solitaire-rings'
       },
       { 
         label: 'Solitaire Studs', 
         img: './src/assets/images/fragnance.png', 
-        to: '/products/high-jewellery?subcategory=solitaire-studs',
-        subcategory: 'solitaire-studs'
+        to: '/products/high-jewellery?category=solitaire-studs',
+        category: 'solitaire-studs'
       },
      
     ]},
@@ -981,32 +981,32 @@ const navItems = [
      { 
         label: 'Sila', 
         img: './src/assets/images/sila.jpg', 
-        to: '/products/fragrance?subcategory=sila',
-        subcategory: 'sila'
+        to: '/products/fragrance?category=sila',
+        category: 'sila'
       },
       { 
         label: 'Sayonee', 
         img: './src/assets/images/sayonee.jpge', 
-        to: '/products/fragrance?subcategory=sayonee',
-        subcategory: 'sayonee'
+        to: '/products/fragrance?category=sayonee',
+        category: 'sayonee'
       },
       { 
         label: 'Mangata', 
         img: './src/assets/images/mangata.jpg', 
-        to: '/products/fragrance?subcategory=mangata',
-        subcategory: 'mangata'
+        to: '/products/fragrance?category=mangata',
+        category: 'mangata'
       },
        { 
         label: 'Evara', 
         img: './src/assets/images/evara.jpg', 
-        to: '/products/fragrance?subcategory=evara',
-        subcategory: 'evara'
+        to: '/products/fragrance?category=evara',
+        category: 'evara'
       },
        { 
         label: 'Wayfarer', 
         img: './src/assets/images/wayfarer.jpg', 
-        to: '/products/fragrance?subcategory=wayfarer',
-        subcategory: 'wayfarer'
+        to: '/products/fragrance?category=wayfarer',
+        category: 'wayfarer'
       },
   ]},
   { title: 'Services', submenu: [
