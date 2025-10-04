@@ -80,7 +80,7 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
           'http://localhost:5173', // Development
           'http://localhost:3000', // Development
           env.CLIENT_URL, // Production URL from environment
-          'https://garava-official.onrender.com/api/', // Your Render URL
+          'https://garava-official.onrender.com/', // Your Render URL
         ].filter(Boolean); // Remove undefined values
         
         if (allowedOrigins.indexOf(origin) !== -1) {
