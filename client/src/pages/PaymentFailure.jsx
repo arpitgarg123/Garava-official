@@ -79,7 +79,7 @@ const PaymentFailure = () => {
         </div>
 
         {txnId && (
-          <div className="mt-3 p-3 bg-gray-100 rounded-lg">
+          <div className="mt-3 p-3 bg-gray-50 rounded-lg">
             <p className="text-sm text-gray-600">
               Transaction ID: <span className="font-mono font-semibold">{txnId}</span>
             </p>
@@ -87,7 +87,7 @@ const PaymentFailure = () => {
         )}
 
         {orderId && (
-          <div className="mt-2 p-3 bg-gray-100 rounded-lg">
+          <div className="mt-2 p-3 bg-gray-50 rounded-lg">
             <p className="text-sm text-gray-600">
               Order ID: <span className="font-mono font-semibold">{orderId}</span>
             </p>

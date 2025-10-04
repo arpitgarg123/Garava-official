@@ -61,10 +61,10 @@ export const getOrderStatusColor = (status) => {
     shipped: "bg-indigo-100 text-indigo-800 border-indigo-200",
     delivered: "bg-green-100 text-green-800 border-green-200",
     cancelled: "bg-red-100 text-red-800 border-red-200",
-    refunded: "bg-gray-100 text-gray-800 border-gray-200",
+    refunded: "bg-gray-50 text-gray-800 border-gray-200",
     failed: "bg-red-100 text-red-800 border-red-200",
   };
-  return colors[status] || "bg-gray-100 text-gray-800 border-gray-200";
+  return colors[status] || "bg-gray-50 text-gray-800 border-gray-200";
 };
 
 // Helper function to get payment status color
@@ -73,8 +73,8 @@ export const getPaymentStatusColor = (status) => {
     unpaid: "bg-red-100 text-red-800 border-red-200",
     paid: "bg-green-100 text-green-800 border-green-200",
     failed: "bg-red-100 text-red-800 border-red-200",
-    refunded: "bg-gray-100 text-gray-800 border-gray-200",
+    refunded: "bg-gray-50 text-gray-800 border-gray-200",
     pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
   };
-  return colors[status] || "bg-gray-100 text-gray-800 border-gray-200";
+  return colors[status] || "bg-gray-50 text-gray-800 border-gray-200";
 };

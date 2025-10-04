@@ -48,9 +48,9 @@ export default function Blogs(props) {
   return (
     <div className="h-full flex flex-col space-y-6 overflow-y-auto">
       {/* Header Section */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-        <header className="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className=" rounded-xl border w-full border-gray-200 shadow-sm overflow-hidden">
+        <header className="px-6 py-4 border-b w-full border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50">
+          <div className="flex flex-col sm:flex-row justify-between w-full  items-start sm:items-center gap-4">
             <div>
               <h3 className="text-lg font-semibold text-gray-900">Blog Management</h3>
               <p className="text-sm text-gray-500 mt-1">{pagination.total || 0} total posts</p>
@@ -136,7 +136,7 @@ export default function Blogs(props) {
                     key={p._id}
                     className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
                   >
-                    <div className="aspect-[16/9] bg-gray-100 overflow-hidden">
+                    <div className="aspect-[16/9] bg-gray-50 overflow-hidden">
                       {p.coverImageUrl ? (
                         <img
                           src={p.coverImageUrl}

@@ -44,7 +44,7 @@ export default function BlogsAdmin() {
       draft: "bg-yellow-100 text-yellow-800",
       archived: "bg-red-100 text-red-800",
     };
-    return colors[status] || "bg-gray-100 text-gray-800";
+    return colors[status] || "bg-gray-50 text-gray-800";
   };
 
   const handleStatusUpdate = async (blogId, newStatus) => {
@@ -89,7 +89,7 @@ export default function BlogsAdmin() {
   return (
     <div className="h-full flex flex-col">
       {/* Header with Actions */}
-      <div className="flex-shrink-0 p-6 border-b border-gray-200">
+      <div className="flex-shrink-0 p-6 w-full border-b border-gray-200">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Blog Management</h2>
@@ -97,7 +97,7 @@ export default function BlogsAdmin() {
           </div>
           <button 
             onClick={handleCreateNew}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="btn-black flex"
           >
             <AiOutlinePlus className="w-4 h-4" />
             New Blog Post
@@ -114,7 +114,7 @@ export default function BlogsAdmin() {
                 placeholder="Search blog posts..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border outline-none border-gray-300 rounded-md "
               />
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function BlogsAdmin() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md "
           >
             <option value="">All Status</option>
             <option value="published">Published</option>

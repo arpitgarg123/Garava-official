@@ -204,7 +204,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
                 max={maxRefundAmount}
                 required
                 disabled={operationLoading || refundType === 'full'}
-                className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-100"
+                className="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-50"
                 placeholder="0.00"
               />
             </div>
@@ -224,7 +224,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
               onChange={(e) => setRefundReason(e.target.value)}
               required
               disabled={operationLoading}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-50"
             >
               <option value="">Select a reason</option>
               {REFUND_REASONS.map(reason => (
@@ -246,7 +246,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
                 onChange={(e) => setCustomReason(e.target.value)}
                 required
                 disabled={operationLoading}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-100"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-50"
                 placeholder="Please specify the reason for refund"
               />
             </div>
@@ -264,7 +264,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
               placeholder="Any additional information about this refund..."
               rows="3"
               disabled={operationLoading}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-100 resize-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-50 resize-none"
             />
           </div>
 
@@ -282,7 +282,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
               type="button"
               onClick={onClose}
               disabled={operationLoading}
-              className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
+              className="px-4 py-2 text-gray-700 bg-gray-50 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
             >
               Cancel
             </button>

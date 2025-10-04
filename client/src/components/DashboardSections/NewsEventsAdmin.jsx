@@ -125,7 +125,7 @@ export default function NewsEventsAdmin() {
       draft: "bg-yellow-100 text-yellow-800",
       archived: "bg-red-100 text-red-800",
     };
-    return colors[status] || "bg-gray-100 text-gray-800";
+    return colors[status] || "bg-gray-50 text-gray-800";
   };
 
   const getTypeIcon = (type) => {
@@ -146,7 +146,7 @@ export default function NewsEventsAdmin() {
         </div>
         <button
           onClick={() => openModal('createEdit')}
-          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+          className="btn-black flex"
         >
           <AiOutlinePlus className="w-4 h-4" />
           Add New
@@ -156,27 +156,27 @@ export default function NewsEventsAdmin() {
       {/* Stats */}
       {stats && (
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-          <div className="bg-white p-4 rounded-lg border">
+          <div className="bg-white p-4 rounded-lg border border-gray-300">
             <div className="text-2xl font-bold text-gray-900">{stats.total}</div>
             <div className="text-sm text-gray-600">Total Items</div>
           </div>
-          <div className="bg-white p-4 rounded-lg border">
+          <div className="bg-white p-4 rounded-lg border border-gray-300">
             <div className="text-2xl font-bold text-green-600">{stats.published}</div>
             <div className="text-sm text-gray-600">Published</div>
           </div>
-          <div className="bg-white p-4 rounded-lg border">
+          <div className="bg-white p-4 rounded-lg border border-gray-300">
             <div className="text-2xl font-bold text-yellow-600">{stats.draft}</div>
             <div className="text-sm text-gray-600">Drafts</div>
           </div>
-          <div className="bg-white p-4 rounded-lg border">
+          <div className="bg-white p-4 rounded-lg border border-gray-300">
             <div className="text-2xl font-bold text-red-600">{stats.archived}</div>
             <div className="text-sm text-gray-600">Archived</div>
           </div>
-          <div className="bg-white p-4 rounded-lg border">
+          <div className="bg-white p-4 rounded-lg border border-gray-300">
             <div className="text-2xl font-bold text-blue-600">{stats.events}</div>
             <div className="text-sm text-gray-600">Events</div>
           </div>
-          <div className="bg-white p-4 rounded-lg border">
+          <div className="bg-white p-4 rounded-lg border border-gray-300">
             <div className="text-2xl font-bold text-purple-600">{stats.mediaCoverage}</div>
             <div className="text-sm text-gray-600">Media Coverage</div>
           </div>
@@ -184,33 +184,33 @@ export default function NewsEventsAdmin() {
       )}
 
       {/* Filters */}
-      <div className="bg-white p-4 rounded-lg border">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
+      <div className="py-4">
+        <div className="flex flex-col  sm:flex-row gap-4">
+          <div className="flex-1 ">
             <input
               type="text"
               placeholder="Search by title, content..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 outline-none rounded-lg "
             />
           </div>
-          <div>
+          <div >
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg "
             >
               <option value="">All Types</option>
               <option value="event">Events</option>
               <option value="media-coverage">Media Coverage</option>
             </select>
           </div>
-          <div>
+          <div >
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg "
             >
               <option value="">All Status</option>
               <option value="published">Published</option>
@@ -220,7 +220,7 @@ export default function NewsEventsAdmin() {
           </div>
           <button
             onClick={handleSearch}
-            className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
+            className="btn-black flex "
           >
             <AiOutlineSearch className="w-4 h-4" />
             Search
@@ -229,7 +229,7 @@ export default function NewsEventsAdmin() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg border overflow-hidden">
+      <div className=" rounded-lg border border-gray-300 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-50">

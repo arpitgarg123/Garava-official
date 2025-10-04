@@ -255,11 +255,14 @@ body:has(.submenu-container) {
   cursor: pointer;
   background-color: #0c0c0c;
   color: #f5e6d7;
+
+            border:1px solid currentColor; 
+
 }
 .btn-black:hover {
   background-color: transparent;
-          border: 1px solid currentColor; 
-  color: #0c0c0c;                     
+  color: #0c0c0c;         
+
 }
 .badge {
   margin-bottom: 0.75rem;      /* mb-3 */
@@ -329,3 +332,4 @@ html.has-scroll-dragging {
   opacity: 1;
   transform: translateY(0);
 }
+

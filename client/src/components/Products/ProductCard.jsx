@@ -455,7 +455,7 @@
 //       {/* Mobile action bar
 //       <div className="md:hidden absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 flex justify-around py-2 px-1">
 //         <button 
-//           className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100"
+//           className="flex items-center justify-center p-2 rounded-full hover:bg-gray-50"
 //           aria-label="Add to cart"
 //           onClick={(e) => {
 //             e.stopPropagation();
@@ -466,7 +466,7 @@
 //         </button>
         
 //         <button 
-//           className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100"
+//           className="flex items-center justify-center p-2 rounded-full hover:bg-gray-50"
 //           aria-label="Quick view"
 //           onClick={(e) => {
 //             e.stopPropagation();
@@ -477,7 +477,7 @@
 //         </button>
         
 //         <button 
-//           className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100"
+//           className="flex items-center justify-center p-2 rounded-full hover:bg-gray-50"
 //           aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
 //           onClick={(e) => {
 //             e.stopPropagation();
@@ -1607,7 +1607,6 @@ const ProductCard = ({
             {/* Color options - Only for non-high jewellery products */}
             {!isHighJewelleryProduct && colors.length > 0 && (
               <div className="flex flex-wrap items-start gap-2 mt-2">
-                <div className="text-xs text-gray-500 mb-1 w-full">Colors:</div>
                 {colors.map((c, i) => (
                   <button
                     key={i}

@@ -558,7 +558,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                       required={!variant.isPriceOnDemand}
                       disabled={variant.isPriceOnDemand}
                       placeholder={variant.isPriceOnDemand ? "Price will be on demand" : ""}
-                      className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${variant.isPriceOnDemand ? 'bg-gray-100 text-gray-500' : ''}`}
+                      className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${variant.isPriceOnDemand ? 'bg-gray-50 text-gray-500' : ''}`}
                     />
                   </div>
                   

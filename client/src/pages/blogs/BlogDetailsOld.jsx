@@ -11,12 +11,7 @@ const DEFAULT_POST = {
   readTimeMinutes: 7,
   coverImage:
     "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1600&auto=format&fit=crop",
-//   tags: [
-//     "Engagement ideas",
-//     "Ring size tips",
-//     "Jewelry tips",
-//     "Lab grown diamonds",
-//   ],
+
   html: `
     <p>Arranging a surprise proposal is <strong>romantic</strong>—but getting the <em>ring size</em> right without asking is tricky. Here's a discreet guide.</p>
 

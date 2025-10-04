@@ -16,7 +16,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
       out_of_stock: "bg-red-100 text-red-800 border-red-200",
       low_stock: "bg-yellow-100 text-yellow-800 border-yellow-200",
     };
-    return colors[status] || "bg-gray-100 text-gray-800 border-gray-200";
+    return colors[status] || "bg-gray-50 text-gray-800 border-gray-200";
   };
 
   const getStockStatus = (stock) => {
@@ -56,10 +56,10 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                   <img 
                     src={product.heroImage.url} 
                     alt={product.name}
-                    className="w-full h-64 object-cover rounded-lg border"
+                    className="w-full h-64 object-cover rounded-lg border border-gray-300 "
                   />
                 ) : (
-                  <div className="w-full h-64 bg-gray-100 rounded-lg border flex items-center justify-center">
+                  <div className="w-full h-64 bg-gray-50 rounded-lg border border-gray-300 flex items-center justify-center">
                     <BiBox className="h-16 w-16 text-gray-400" />
                   </div>
                 )}
@@ -75,7 +75,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                         key={index}
                         src={image.url} 
                         alt={`Gallery ${index + 1}`}
-                        className="w-full h-20 object-cover rounded border"
+                        className="w-full h-20 object-cover rounded border border-gray-300"
                       />
                     ))}
                   </div>
@@ -151,7 +151,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                     <p className="text-sm text-gray-600 mb-2">Tags</p>
                     <div className="flex flex-wrap gap-2">
                       {product.tags.map((tag, index) => (
-                        <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                        <span key={index} className="px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded">
                           {tag}
                         </span>
                       ))}

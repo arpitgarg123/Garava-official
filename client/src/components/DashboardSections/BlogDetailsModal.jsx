@@ -28,7 +28,7 @@ export default function BlogDetailsModal() {
       case 'archived':
         return 'bg-red-100 text-red-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-gray-50 text-gray-800';
     }
   };
 
@@ -135,7 +135,7 @@ export default function BlogDetailsModal() {
                   {blog.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-sm"
+                      className="px-2 py-1 bg-gray-50 text-gray-700 rounded text-sm"
                     >
                       {tag}
                     </span>

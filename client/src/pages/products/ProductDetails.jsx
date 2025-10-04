@@ -212,7 +212,7 @@ const ProductDetails = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
    
           <div className="lg:col-span-5">
-            {/* <div className="w-full overflow-hidden bg-gray-100">
+            {/* <div className="w-full overflow-hidden bg-gray-50">
               <img
                 src={heroSrc}
                 alt={product?.name || "Product image"}
