@@ -14,9 +14,5 @@
   },
   "keywords": ["ecommerce", "jewelry", "react", "node.js", "express", "mongodb"],
   "author": "",
-  "license": "ISC",
-  "workspaces": [
-    "client",
-    "server"
-  ]
+  "license": "ISC"
 }
