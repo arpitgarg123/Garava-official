@@ -80,7 +80,7 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
           'http://localhost:5173', // Development
           'http://localhost:3000', // Development
           env.CLIENT_URL, // Production URL from environment
-          'https://garava-official.onrender.com', // Your Render URL
+          'https://garava-official.onrender.com/api/', // Your Render URL
         ].filter(Boolean); // Remove undefined values
         
         if (allowedOrigins.indexOf(origin) !== -1) {
@@ -108,8 +108,13 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
   // Initialize Passport
   app.use(passport.initialize());
 
-  // Serve static files from the React app build
-  app.use(express.static(path.join(__dirname, '../public')));
+  // Serve static files from the React app build (excluding API routes)
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    express.static(path.join(__dirname, '../public'))(req, res, next);
+  });
 
   if (env.NODE_ENV === 'production') {
     app.use(morgan('combined'));
