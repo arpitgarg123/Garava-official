@@ -984,18 +984,18 @@ const navItems = [
         to: '/products/fragrance?category=sila',
         category: 'sila'
       },
-      { 
-        label: 'Sayonee', 
-        img: './src/assets/images/sayonee.jpge', 
-        to: '/products/fragrance?category=sayonee',
-        category: 'sayonee'
-      },
-      { 
-        label: 'Mangata', 
-        img: './src/assets/images/mangata.jpg', 
-        to: '/products/fragrance?category=mangata',
-        category: 'mangata'
-      },
+      // { 
+      //   label: 'Sayonee', 
+      //   img: './src/assets/images/sayonee.jpge', 
+      //   to: '/products/fragrance?category=sayonee',
+      //   category: 'sayonee'
+      // },
+      // { 
+      //   label: 'Mangata', 
+      //   img: './src/assets/images/mangata.jpg', 
+      //   to: '/products/fragrance?category=mangata',
+      //   category: 'mangata'
+      // },
        { 
         label: 'Evara', 
         img: './src/assets/images/evara.jpg', 
