@@ -285,13 +285,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { setFilters, fetchProducts } from "../../features/product/slice";
+import { setFilters, fetchProducts, clearFilters } from "../../features/product/slice";
 import SideBar from "../../components/Products/SideBar";
 import ProductCard from "../../components/Products/ProductCard";
 import PageHeader from "../../components/header/PageHeader";
 import BackButton from "../../components/BackButton";
 import { BiFilterAlt, BiX } from "react-icons/bi";
 import Pagination from "../../components/Pagination";
+import { buildFilterParams } from "../../shared/utils/filterUtils";
 import fBanner  from '../../assets/images/f-banner.png'
 import jBanner  from '../../assets/images/j-banner.png'
 
@@ -306,6 +307,7 @@ const ProductPage = () => {
 
   const searchParams = new URLSearchParams(location.search);
   const subcategoryFromUrl = searchParams.get('subcategory');
+  const categoryFromUrl = searchParams.get('category'); // Add support for navbar query params
 
   const PRODUCTS_PER_PAGE = 5;
 
@@ -352,6 +354,11 @@ const ProductPage = () => {
     
     const lower = routeCategory.toLowerCase();
     
+    // Clear previous filters when navigating to different categories
+    if (lower !== filters.type && lower !== "all") {
+      dispatch(clearFilters());
+    }
+    
     // Handle "all" route - show all products without category filter
     if (lower === "all") {
       dispatch(setFilters({ 
@@ -363,10 +370,21 @@ const ProductPage = () => {
       return;
     }
     
-    // Handle subcategory from navbar navigation
+    // Handle category from navbar navigation (query parameter)
+    if (categoryFromUrl && categoryFromUrl !== 'all') {
+      dispatch(setFilters({ 
+        type: lower === "high-jewellery" ? "high_jewellery" : lower, 
+        category: categoryFromUrl, 
+        page: 1,
+        limit: PRODUCTS_PER_PAGE
+      }));
+      return;
+    }
+    
+    // Handle subcategory from navbar navigation (legacy support)
     if (subcategoryFromUrl && subcategoryFromUrl !== 'all') {
       dispatch(setFilters({ 
-        type: lower, 
+        type: lower === "high-jewellery" ? "high_jewellery" : lower, 
         category: subcategoryFromUrl, 
         page: 1,
         limit: PRODUCTS_PER_PAGE
@@ -378,7 +396,7 @@ const ProductPage = () => {
     if (lower.startsWith("all-")) {
       dispatch(setFilters({ type: lower.replace("all-", ""), category: "", page: 1 }));
     } else if (lower === "jewellery" || lower === "fragrance" || lower === "high-jewellery") {
-      dispatch(setFilters({ type: lower, category: "", page: 1, limit: PRODUCTS_PER_PAGE }));
+      dispatch(setFilters({ type: lower === "high-jewellery" ? "high_jewellery" : lower, category: "", page: 1, limit: PRODUCTS_PER_PAGE }));
     } else {
       // treat as subcategory; keep existing type or default jewellery
       const currentType = filters.type || "jewellery";
@@ -388,7 +406,7 @@ const ProductPage = () => {
         page: 1
       }));
     }
-  }, [routeCategory, subcategoryFromUrl, dispatch]);
+  }, [routeCategory, subcategoryFromUrl, categoryFromUrl, dispatch]);
 
   // Debounced fetch on filter changes
   const [pendingFilters, setPendingFilters] = useState(filters);
@@ -398,31 +416,12 @@ const ProductPage = () => {
 
   useEffect(() => {
     const h = setTimeout(() => {
-      const params = {
+      const params = buildFilterParams({
+        ...pendingFilters,
         page: pendingFilters.page || 1,
         limit: PRODUCTS_PER_PAGE,
-        sort: pendingFilters.sort || "newest",
-      };
-      
-      const isAllProducts = routeCategory?.toLowerCase() === "all";
-      
-      // For "all products" - only add filters if they exist, don't force empty values
-      if (!isAllProducts) {
-        if (pendingFilters.type) params.type = pendingFilters.type;
-        if (pendingFilters.category) params.category = pendingFilters.category;
-      } else {
-        // For all products view, only add type filter if selected from sidebar
-        if (pendingFilters.type && pendingFilters.type !== "") params.type = pendingFilters.type;
-        if (pendingFilters.category && pendingFilters.category !== "") params.category = pendingFilters.category;
-      }
-      
-      // Always add price filters if they exist
-      if (pendingFilters.priceMin != null && pendingFilters.priceMin !== '') {
-        params.priceMin = pendingFilters.priceMin;
-      }
-      if (pendingFilters.priceMax != null && pendingFilters.priceMax !== '') {
-        params.priceMax = pendingFilters.priceMax;
-      }
+        sort: pendingFilters.sort || "newest"
+      });
       
       console.log('Fetching products with params:', params);
       dispatch(fetchProducts(params));
@@ -435,6 +434,13 @@ const ProductPage = () => {
     
     if (lower === "all") {
       return "All Products";
+    }
+    
+    // Check for category from navbar query parameter first
+    if (categoryFromUrl && categoryFromUrl !== 'all') {
+      const categoryName = routeCategory === "high-jewellery" ? "High Jewellery" : 
+                          routeCategory?.charAt(0).toUpperCase() + routeCategory?.slice(1);
+      return `${categoryName} - ${categoryFromUrl.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`;
     }
     
     if (subcategoryFromUrl && subcategoryFromUrl !== 'all') {

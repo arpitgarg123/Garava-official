@@ -16,6 +16,7 @@ export const listProductsService = async ({
   priceMin,
   priceMax,
   sort,
+  colors, // Add colors parameter
 }) => {
   const skip = (page - 1) * limit;
   
@@ -30,6 +31,11 @@ export const listProductsService = async ({
     filter["variants.price"] = {};
     if (priceMin) filter["variants.price"].$gte = Number(priceMin);
     if (priceMax) filter["variants.price"].$lte = Number(priceMax);
+  }
+
+  // Color filter: check colorVariants
+  if (colors && Array.isArray(colors) && colors.length > 0) {
+    filter["colorVariants.code"] = { $in: colors };
   }
 
   // Sort mapping
@@ -71,6 +77,7 @@ export const listProductsService = async ({
       category: p.category,
       shortDescription: p.shortDescription,
       heroImage: p.heroImage,
+      colorVariants: p.colorVariants || [], // Add colorVariants to response
       priceRange: {
         min: Math.min(...p.variants.map((v) => v.price)),
         max: Math.max(...p.variants.map((v) => v.price)),
