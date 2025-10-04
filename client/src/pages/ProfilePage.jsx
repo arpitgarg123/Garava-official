@@ -515,7 +515,7 @@
 
 // export default ProfilePage;
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMeApi, updateMeApi, changePasswordApi } from "../features/user/api.js";
 import { resendVerificationApi } from "../features/auth/api.js";
@@ -585,13 +585,34 @@ const ProfilePage = () => {
     return () => { mounted = false; };
   }, [dispatch]);
 
-  // Fetch orders and addresses when component mounts
+  // Fetch orders and addresses when component mounts - with debouncing
+  const fetchTimeoutRef = useRef(null);
+  
   useEffect(() => {
     if (authUser) {
-      dispatch(fetchUserOrders());
-      dispatch(fetchAddresses());
+      // Clear any existing timeout
+      if (fetchTimeoutRef.current) {
+        clearTimeout(fetchTimeoutRef.current);
+      }
+      
+      // Debounce the fetch calls
+      fetchTimeoutRef.current = setTimeout(() => {
+        console.log('ProfilePage - Fetching user data...');
+        dispatch(fetchUserOrders());
+        dispatch(fetchAddresses());
+      }, 100); // Small delay to prevent rapid calls
     }
-  }, [dispatch, authUser]);
+    
+    return () => {
+      if (fetchTimeoutRef.current) {
+        clearTimeout(fetchTimeoutRef.current);
+      }
+    };
+  }, [dispatch, authUser?.id]); // Only depend on user ID, not entire user object
+
+  // Stable callback functions to prevent unnecessary re-renders
+  const handleAddressSelect = useCallback(() => {}, []);
+  const handleAddressChange = useCallback(() => {}, []);
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -909,6 +930,7 @@ const ProfilePage = () => {
         );
 
       case "addresses":
+        console.log('ProfilePage - Rendering addresses tab, isAddressLoading:', isAddressLoading);
         return (
           <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
             {isAddressLoading ? (
@@ -919,8 +941,8 @@ const ProfilePage = () => {
             ) : (
               <AddressSelector 
                 selectedAddressId={null}
-                onAddressSelect={() => {}}
-                onAddressChange={() => {}}
+                onAddressSelect={handleAddressSelect}
+                onAddressChange={handleAddressChange}
                 showAsManagement={true}
               />
             )}
