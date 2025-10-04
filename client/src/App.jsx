@@ -142,6 +142,7 @@ import ShippingPolicy from "./pages/ShippingPolicy.jsx";
 import RefundReturn from "./pages/RefundReturn.jsx";
 import TermCondition from "./pages/TermCondition.jsx";
 import WebsiteLoader from "./layouts/WebsiteLoader.jsx";
+import { ToastProvider } from "./layouts/Toast.jsx";
 
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
 const Login = lazy(() => import("./features/auth/Login.jsx"));
@@ -353,10 +354,11 @@ const App = () => {
   }
 
   return (
-    <Suspense fallback={
+   <ToastProvider >
+     <Suspense fallback={
       <div className="flex items-center justify-center min-h-screen bg-white">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#022348] mx-auto mb-4"></div>
           <p className="text-gray-600 font-medium">Loading...</p>
         </div>
       </div>
@@ -410,6 +412,7 @@ const App = () => {
         <Route path="/dashboard" element={<AdminRoute><Dashboard /></AdminRoute>} />
       </Routes>
     </Suspense>
+   </ToastProvider>
   );
 };
 
