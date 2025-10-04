@@ -29,13 +29,17 @@ export const fetchProducts = createAsyncThunk(
     if (merged.category && !merged.category.startsWith("all-")) params.category = merged.category;
     if (merged.priceMin != null && merged.priceMin !== "") params.priceMin = merged.priceMin;
     if (merged.priceMax != null && merged.priceMax !== "") params.priceMax = merged.priceMax;
+    if (merged.colors && Array.isArray(merged.colors) && merged.colors.length > 0) {
+      params.colors = merged.colors.join(',');
+    }
 
     const signature = JSON.stringify(params);
     
     // Check cache first
     if (
       product.list.paramsSignature === signature &&
-      product.list.status === "succeeded"
+      product.list.status === "succeeded" &&
+      product.list.items.length > 0 // Only use cache if we have actual items
     ) {
       console.log('Product slice - Using cached products for:', params);
       return {
@@ -237,6 +241,7 @@ const initialState = {
     category: "",
     priceMin: null,
     priceMax: null,
+    colors: [], // Add colors array
     sort: "newest",
     page: 1,
     limit: 20,
@@ -267,10 +272,14 @@ const slice = createSlice({
         category: "",
         priceMin: null,
         priceMax: null,
+        colors: [],
         sort: "newest",
         page: 1,
         limit: 20
       };
+      // Also clear cache to force fresh data
+      state.list.paramsSignature = null;
+      state.list.fetchedAt = null;
     }
   },
   extraReducers: (b) => {

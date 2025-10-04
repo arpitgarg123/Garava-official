@@ -80,6 +80,14 @@ const productSchema = new mongoose.Schema(
     dimensions: { type: String }, // "18 x 12 mm"
     material: { type: String }, // "925 Sterling Silver"
     careInstructions: { type: String },
+    
+    // color options for jewellery
+    colorVariants: [{
+      name: { type: String }, // "Rose Gold", "Silver", "Yellow Gold"
+      code: { type: String }, // "rose", "silver", "gold"
+      hexColor: { type: String }, // "#e7b9a4", "#d9d9d9", "#c79b3a"
+      isAvailable: { type: Boolean, default: true }
+    }],
 
     // product structure
     variants: [variantSchema],

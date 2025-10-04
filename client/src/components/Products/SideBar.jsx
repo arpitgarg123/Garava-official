@@ -263,29 +263,36 @@ import CategoryFilter from './CategoryFilter';
 import ColorFilter from './ColorFilter';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilters, fetchCategoryCounts } from '../../features/product/slice';
+import { CATEGORY_MAPPINGS } from '../../shared/utils/categoryMappings';
 
 const JEWELLERY_SUBCATS = [
   { id: "all-jewellery", label: "All Jewellery" },
-  { id: "rings", label: "Rings" },
-  { id: "necklaces", label: "Necklaces" },
-  { id: "earrings", label: "Earrings" },
-  { id: "pendants", label: "Pendants" },
+  { id: CATEGORY_MAPPINGS.JEWELLERY_CATEGORIES.RINGS, label: "Rings" },
+  { id: CATEGORY_MAPPINGS.JEWELLERY_CATEGORIES.NECKLACES, label: "Necklaces" },
+  { id: CATEGORY_MAPPINGS.JEWELLERY_CATEGORIES.EARRINGS, label: "Earrings" },
+  { id: CATEGORY_MAPPINGS.JEWELLERY_CATEGORIES.PENDANTS, label: "Pendants" },
+];
+
+const HIGH_JEWELLERY_SUBCATS = [
+  { id: "all-high-jewellery", label: "All High Jewellery" },
+  { id: CATEGORY_MAPPINGS.HIGH_JEWELLERY_CATEGORIES.DAILY_EARRINGS, label: "Daily Earrings" },
+  { id: CATEGORY_MAPPINGS.HIGH_JEWELLERY_CATEGORIES.SOLITAIRE_RINGS, label: "Solitaire Rings" },
+  { id: CATEGORY_MAPPINGS.HIGH_JEWELLERY_CATEGORIES.SOLITAIRE_STUDS, label: "Solitaire Studs" },
 ];
 
 const FRAGRANCE_SUBCATS = [
   { id: "all-fragrance", label: "All Fragrance" },
-  { id: "women", label: "For Women" },
-  { id: "men", label: "For Men" },
-  { id: "unisex", label: "Unisex" },
-  { id: "gift-sets", label: "Gift Sets" },
+  { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.SILA, label: "Sila" },
+  { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.EVARA, label: "Evara" },
+  { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.WAYFARER, label: "Wayfarer" },
 ];
 
 // For "all products" view - main categories
 const ALL_PRODUCTS_CATS = [
   { id: "", label: "All Products" },
-  { id: "jewellery", label: "Jewellery" },
-  { id: "fragrance", label: "Fragrance" },
-  { id: "high-jewellery", label: "High Jewellery" },
+  { id: CATEGORY_MAPPINGS.PRODUCT_TYPES.JEWELLERY, label: "Jewellery" },
+  { id: CATEGORY_MAPPINGS.PRODUCT_TYPES.FRAGRANCE, label: "Fragrance" },
+  { id: CATEGORY_MAPPINGS.PRODUCT_TYPES.HIGH_JEWELLERY, label: "High Jewellery" },
 ];
 
 const SideBar = ({ 
@@ -300,7 +307,7 @@ const SideBar = ({
     max: initialValues.priceMax || "" 
   });
   const [category, setCategory] = useState(initialValues.category || "");
-  const [colors, setColors] = useState([]);
+  const [colors, setColors] = useState(initialValues.colors || []);
   const [selectedType, setSelectedType] = useState(initialValues.type || "");
 
   const detectedCategory = (mainCategory || "jewellery").toLowerCase();
@@ -309,8 +316,13 @@ const SideBar = ({
   const getCategories = () => {
     if (detectedCategory === "all") {
       return ALL_PRODUCTS_CATS;
+    } else if (detectedCategory === "high-jewellery" || detectedCategory === "high_jewellery") {
+      return HIGH_JEWELLERY_SUBCATS;
+    } else if (detectedCategory === "jewellery") {
+      return JEWELLERY_SUBCATS;
+    } else {
+      return FRAGRANCE_SUBCATS;
     }
-    return detectedCategory === "jewellery" ? JEWELLERY_SUBCATS : FRAGRANCE_SUBCATS;
   };
 
   const subCategories = getCategories();
@@ -340,13 +352,18 @@ const SideBar = ({
       if (category && !category.startsWith("all-")) nextFilters.category = category;
     } else {
       // For specific category views
-      nextFilters.type = detectedCategory;
+      nextFilters.type = detectedCategory === "high-jewellery" ? "high_jewellery" : detectedCategory;
       if (category && !category.startsWith("all-")) nextFilters.category = category;
     }
 
     // Add price filters
     if (price.min) nextFilters.priceMin = Number(price.min);
     if (price.max) nextFilters.priceMax = Number(price.max);
+    
+    // Add color filters for jewellery and high jewellery products
+    if (colors && colors.length > 0 && (detectedCategory === "jewellery" || detectedCategory === "high-jewellery" || detectedCategory === "high_jewellery")) {
+      nextFilters.colors = colors;
+    }
 
     if (isMobile) {
       onFilterChange(nextFilters);
@@ -354,7 +371,7 @@ const SideBar = ({
       // In desktop mode, apply filters immediately
       dispatch(setFilters(nextFilters));
     }
-  }, [category, price, selectedType, detectedCategory, isMobile]);
+  }, [category, price, selectedType, detectedCategory, colors, isMobile]);
 
   const counts = useSelector(s => s.product.categoryCounts[detectedCategory] || {});
 
@@ -458,7 +475,7 @@ const SideBar = ({
         />
       </div>
       
-      {(detectedCategory === "jewellery" || (detectedCategory === "all" && selectedType === "jewellery")) && (
+      {(detectedCategory === "jewellery" || detectedCategory === "high-jewellery" || detectedCategory === "high_jewellery" || (detectedCategory === "all" && (selectedType === "jewellery" || selectedType === "high-jewellery"))) && (
         <>
           <hr className="my-4" />
           <div className={isMobile ? "mb-6" : ""}>

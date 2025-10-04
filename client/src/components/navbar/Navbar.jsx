@@ -952,8 +952,8 @@ const navItems = [
       { 
         label: 'Solitaire Rings', 
         img: './src/assets/images/jewellry4.png', 
-        to: '/products/jewellery?category=necklace',
-        category: 'necklace'
+        to: '/products/jewellery?category=necklaces',
+        category: 'necklaces'
       },
      ]},
   { title: 'HIGH JEWELLERY', submenu: [
