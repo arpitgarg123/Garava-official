@@ -10,6 +10,7 @@ class TokenRefreshManager {
     this.refreshTimer = null;
     this.store = null;
     this.isRefreshing = false;
+    this.currentToken = null; // Track current token to avoid redundant timers
   }
 
   init(store) {
@@ -20,6 +21,13 @@ class TokenRefreshManager {
   startRefreshCycle(accessToken) {
     if (!accessToken) return;
     
+    // If same token, don't reset timer
+    if (this.currentToken === accessToken && this.refreshTimer) {
+      console.log('Token Refresh Manager - Same token, keeping existing timer');
+      return;
+    }
+    
+    this.currentToken = accessToken;
     this.clearRefreshTimer();
     
     try {
@@ -107,6 +115,7 @@ class TokenRefreshManager {
   stop() {
     this.clearRefreshTimer();
     this.isRefreshing = false;
+    this.currentToken = null; // Clear current token when stopping
   }
 }
 

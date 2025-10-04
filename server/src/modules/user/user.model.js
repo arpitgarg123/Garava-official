@@ -117,9 +117,18 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
  * Verify refresh token method
  */
 userSchema.methods.verifyRefreshToken = async function (candidateToken) {
+  if (!candidateToken || typeof candidateToken !== 'string') {
+    return false;
+  }
+  
   for (let tokenObj of this.refreshTokens) {
-    if (await argon2.verify(tokenObj.token, candidateToken)) {
-      return true;
+    try {
+      if (tokenObj.token && await argon2.verify(tokenObj.token, candidateToken)) {
+        return true;
+      }
+    } catch (error) {
+      console.log('User.verifyRefreshToken - Argon2 verification error:', error.message);
+      continue; // Skip this token and try the next one
     }
   }
   return false;
@@ -132,6 +141,30 @@ userSchema.methods.invalidateAllSessions = async function () {
   await this.save();
 };
 
+// Clean up old refresh tokens (keep only the most recent 5)
+userSchema.methods.cleanupOldTokens = async function () {
+  if (this.refreshTokens.length > 5) {
+    // Sort by createdAt and keep only the 5 most recent
+    this.refreshTokens.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    this.refreshTokens = this.refreshTokens.slice(0, 5);
+    await this.save();
+  }
+};
+
+// Static method to clean up old tokens across all users
+userSchema.statics.cleanupAllOldTokens = async function () {
+  const cutoffDate = new Date();
+  cutoffDate.setDate(cutoffDate.getDate() - 30); // Remove tokens older than 30 days
+  
+  const result = await this.updateMany(
+    { "refreshTokens.createdAt": { $lt: cutoffDate } },
+    { $pull: { refreshTokens: { createdAt: { $lt: cutoffDate } } } }
+  );
+  
+  console.log('Cleaned up old refresh tokens:', result.modifiedCount, 'users affected');
+  return result;
+};
+
 /** 
  * Remove sensitive fields when converting to JSON
  */
@@ -141,6 +174,13 @@ userSchema.methods.toJSON = function () {
   delete obj.refreshTokens;
   return obj;
 };
+
+// Create indexes for better query performance
+userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ googleId: 1 }, { sparse: true });
+userSchema.index({ role: 1 });
+userSchema.index({ isVerified: 1 });
+userSchema.index({ "refreshTokens.createdAt": 1 }); // For token cleanup
 
 const User = mongoose.model('User', userSchema);
 export default User;

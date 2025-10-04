@@ -26,7 +26,7 @@ export const initAuth = createAsyncThunk("auth/init", async (_, { rejectWithValu
   console.log('Auth slice - Initializing authentication...');
   
   try {
-    // Try to refresh on app load to restore session
+    // Try to refresh on app load to restore session - use reduced retry
     const { data } = await refreshApi();
     console.log('Auth slice - InitAuth successful:', { hasToken: !!data?.accessToken, hasUser: !!data?.user });
     return data; // { accessToken, user? }
@@ -38,22 +38,23 @@ export const initAuth = createAsyncThunk("auth/init", async (_, { rejectWithValu
       return rejectWithValue({ type: 'AUTH_EXPIRED', silent: true });
     }
     
+    // For timeout errors, don't spam retries
+    if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+      console.warn('Auth slice - Network timeout during auth init, proceeding as unauthenticated');
+      return rejectWithValue({ type: 'NETWORK_ERROR', message: 'Connection timeout', silent: true });
+    }
+    
     // For other errors, show more details
     console.error('Auth slice - InitAuth failed:', {
       status: error.response?.status,
       message: error.response?.data?.message || error.message
     });
     
-    const isNetworkError = error.code === 'ECONNABORTED' || error.message?.includes('timeout') || error.message?.includes('Network Error');
-    
-    if (isNetworkError) {
-      // Network timeout - don't logout user, just show warning
-      console.warn('Auth slice - Network timeout during auth init');
-      return rejectWithValue({ type: 'NETWORK_ERROR', message: 'Connection timeout', silent: false });
-    }
-    
-    const errorMessage = error.response?.data?.message || error.message || 'Authentication initialization failed';
-    return rejectWithValue({ type: 'GENERAL_ERROR', message: errorMessage, silent: false });
+    return rejectWithValue({ 
+      type: 'GENERAL_ERROR', 
+      message: error.response?.data?.message || error.message || 'Authentication initialization failed',
+      silent: false 
+    });
   }
 });
 

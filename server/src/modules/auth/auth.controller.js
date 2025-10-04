@@ -35,16 +35,31 @@ export const logout = asyncHandler(async (req, res) => {
 export const refreshSession = asyncHandler(async (req, res) => {
   try {
     let token = null;
-    if (req.cookies?.refreshToken) {
-      token = req.cookies.refreshToken;
-      console.log('Refresh session - Got token from cookies');
-    } else if (req.body?.refreshToken) {
-      token = req.body.refreshToken;
-      console.log('Refresh session - Got token from body');
+    let tokenSource = 'none';
+    
+    // Extract token with better validation
+    if (req.cookies?.refreshToken && req.cookies.refreshToken.trim()) {
+      token = req.cookies.refreshToken.trim();
+      tokenSource = 'cookies';
+    } else if (req.body?.refreshToken && req.body.refreshToken.trim()) {
+      token = req.body.refreshToken.trim();
+      tokenSource = 'body';
     }
     
+    console.log('Refresh session attempt:', {
+      tokenSource,
+      tokenLength: token?.length || 0,
+      tokenPrefix: token?.substring(0, 20) + '...',
+      userAgent: req.get('user-agent')?.substring(0, 50)
+    });
+    
     if (!token) {
-      return res.status(401).json({ success: false, message: 'No refresh token provided' });
+      console.log('Refresh session - No token provided');
+      return res.status(401).json({ 
+        success: false, 
+        message: 'No refresh token provided',
+        code: 'NO_REFRESH_TOKEN'
+      });
     }
     
     const result = await refreshSessionService(token, res);
@@ -52,7 +67,8 @@ export const refreshSession = asyncHandler(async (req, res) => {
     console.log('Refresh session - Success:', {
       hasAccessToken: !!result.accessToken,
       hasUser: !!result.user,
-      userName: result.user?.name
+      userName: result.user?.name,
+      tokenSource
     });
 
     res.json({
@@ -64,16 +80,29 @@ export const refreshSession = asyncHandler(async (req, res) => {
   } catch (error) {
     console.error('Refresh session - Error:', {
       message: error.message,
-      stack: error.stack?.split('\n')[0]
+      statusCode: error.statusCode || 500,
+      stack: error.stack?.split('\n')[0],
+      tokenProvided: !!req.cookies?.refreshToken || !!req.body?.refreshToken
     });
     
     // Clear invalid cookies
-    res.clearCookie('refreshToken');
-    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax'
+    });
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax'
+    });
     
-    res.status(401).json({
+    // Send appropriate status code
+    const statusCode = error.statusCode || 401;
+    res.status(statusCode).json({
       success: false,
-      message: 'Session expired. Please login again.'
+      message: error.message || 'Session expired. Please login again.',
+      code: error.message === 'Refresh token not recognized' ? 'INVALID_REFRESH_TOKEN' : 'SESSION_EXPIRED'
     });
   }
 });

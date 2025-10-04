@@ -89,8 +89,19 @@ const MainLayout = ({children}) => {
   }, [dispatch, isAuthenticated, isOnline]);
 
   // Retry fetching data when user comes back online
+  const lastRetryTime = useRef(0);
+  
   useEffect(() => {
     if (isOnline && isAuthenticated && hasInitiatedFetch.current) {
+      const now = Date.now();
+      // Prevent retries more than once per minute
+      if (now - lastRetryTime.current < 60000) {
+        console.log('MainLayout - Skipping retry, too soon since last attempt');
+        return;
+      }
+      
+      lastRetryTime.current = now;
+      
       // Small delay to ensure connection is stable
       const retryTimer = setTimeout(() => {
         console.log('MainLayout - Connection restored, retrying data fetch...');

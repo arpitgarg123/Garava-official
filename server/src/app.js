@@ -41,12 +41,42 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
   const port = env.PORT || 3000;
 
   app.use(helmet());
-  app.use(
-    cors({
-      origin: env.CLIENT_URL || 'http://localhost:5173',
-      credentials: true,
-    })
-  );
+  
+  // CORS configuration with better production support
+  const corsOptions = {
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      const allowedOrigins = [
+        env.CLIENT_URL || 'http://localhost:5173',
+        'http://localhost:5173',
+        'http://localhost:3000',
+        'https://localhost:5173', // For local HTTPS testing
+      ];
+      
+      // Add production URLs if available
+      if (env.NODE_ENV === 'production' && env.FRONTEND_URL) {
+        allowedOrigins.push(env.FRONTEND_URL);
+      }
+      
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        console.log('CORS blocked origin:', origin);
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    exposedHeaders: ['Set-Cookie'],
+  };
+  
+  app.use(cors(corsOptions));
+  
+  // Trust proxy for proper cookie handling behind proxies (Render, Heroku, etc.)
+  app.set('trust proxy', 1);
 
  app.use(express.json({
   verify: (req, res, buf) => {
@@ -59,6 +89,34 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
 
  app.use(express.urlencoded({ extended: true, verify: (req, res, buf) => { req.rawBody = buf.toString("utf8"); } }));
   app.use(cookieParser());
+  
+  // Add session configuration for better cookie handling
+  app.use((req, res, next) => {
+    // Set security headers for cookies
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+      res.sendStatus(200);
+    } else {
+      next();
+    }
+  });
+  app.use((req, res, next) => {
+    // Set security headers for cookies
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+      res.sendStatus(200);
+    } else {
+      next();
+    }
+  });
   
   // Initialize Passport
   app.use(passport.initialize());
