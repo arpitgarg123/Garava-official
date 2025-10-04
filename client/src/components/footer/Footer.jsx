@@ -10,7 +10,7 @@ import dark from "../../assets/images/gav-dark.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 text-[#0c0c0c] pt-12 pb-3 w-full mt-10 px-6 ">
+    <footer className="bg-gray-50 text-[#0c0c0c] pt-12 pb-3 w-full mt-10 px-6 ">
       <div className="w-full flex items-center justify-between px-6 max-sm:px-0">
         <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-10 text-center md:text-left">
           {/* Left: Contact */}

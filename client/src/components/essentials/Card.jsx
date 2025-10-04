@@ -1,53 +1,8 @@
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/ScrollTrigger";
-// import { forwardRef, useEffect, useRef } from "react";
-
-// gsap.registerPlugin(ScrollTrigger)
-
-// const Card =forwardRef(({ title, subtitle, img, hotspotSize = "40%" }, ref) => {
-
-//   return (
-//     <div ref={ref} className="flex flex-col w-full lg:w-1/2">
-//      <article   
-//      aria-label={`${title} card`}
-//       className="w-full max-w-[800px] mx-auto overflow-hidden bg-gray-100 relative">
-//      <div className="aspect-[16/10] relative">
-//           <img
-//             src={img}
-//             alt={`${title} - ${subtitle}`}
-//             className="absolute h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-//             draggable="false"
-//           />
-//         </div>
-//  </article>
-        
-
-//       <div className="text-start w-full  ">
-//          <h2 className="text-xl uppercase m-0  sm:text-2xl  text-gray-900 leading-normal tracking-wide">
-//             {title}
-//           </h2>
-//           <p className="text-base ">
-//             {subtitle}
-//           </p>
-//           <button
-//             className="btn mt-4"
-//             aria-label={`Shop ${title}`}
-//           >
-//             Shop Now
-//           </button>
-//         </div>
-    
- 
-//     </div>
-//   );
-// });
-
-// export default Card
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { forwardRef, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -61,31 +16,42 @@ const Card = forwardRef(({ title, subtitle, img, hotspotSize = "40%", link }, re
   };
 
   return (
-    <div ref={ref} className="flex flex-col w-full lg:w-1/2">
+    <div ref={ref} className="flex flex-col w-full">
       <article   
         aria-label={`${title} card`}
-        className="w-full max-w-[800px] mx-auto overflow-hidden bg-gray-100 relative"
+        className="w-full mx-auto overflow-hidden bg-gray-50 relative group cursor-pointer"
+        onClick={handleShopNow}
       >
-        <div className="aspect-[16/10] relative">
+        <div className="aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] xl:aspect-[16/10] relative">
+         <motion.div
+          initial={{ scale: 1.1, opacity: 0 }}
+          whileInView={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="relative w-full h-full"
+        >
           <img
             src={img}
             alt={`${title} - ${subtitle}`}
             className="absolute h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             draggable="false"
+            loading="lazy"
           />
+          </motion.div>
+          
         </div>
       </article>
 
-      <div className="text-start w-full">
-        <h2 className="text-xl font-playfair  uppercase m-0 sm:text-2xl text-gray-900 leading-normal tracking-wide">
+      <div className="text-start w-full mt-4 sm:mt-6">
+        <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-playfair uppercase m-0 text-gray-900 leading-tight tracking-wide">
           {title}
         </h2>
-        <p className="text-base">
+        <p className="text-sm sm:text-base lg:text-lg text-gray-600 mt-1 sm:mt-2 leading-relaxed">
           {subtitle}
         </p>
         <button
           onClick={handleShopNow}
-          className="btn mt-4"
+          className="btn mt-3 sm:mt-4 w-full sm:w-auto text-sm sm:text-base"
           aria-label={`Shop ${title}`}
         >
           Shop Now

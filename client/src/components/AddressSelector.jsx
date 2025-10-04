@@ -267,7 +267,7 @@ const AddressSelector = ({ selectedAddressId, onAddressSelect, onAddressChange, 
                   <p className="text-sm text-gray-600 mb-1">
                     {formatAddress(address)}
                   </p>
-                  <span className="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded capitalize">
+                  <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded capitalize">
                     {address.label}
                   </span>
                 </div>

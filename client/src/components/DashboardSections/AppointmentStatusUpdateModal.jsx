@@ -152,7 +152,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
               onChange={(e) => handleStatusChange(e.target.value)}
               required
               disabled={operationLoading}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-100"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-50"
             >
               <option value="">Select new status</option>
               {APPOINTMENT_STATUSES.map(status => (
@@ -253,7 +253,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
               placeholder="Add internal notes about this status update..."
               rows="3"
               disabled={operationLoading}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-100 resize-none"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-50 resize-none"
             />
             <p className="text-xs text-gray-500 mt-1">
               These notes are internal and will not be visible to the customer.
@@ -315,7 +315,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
               type="button"
               onClick={onClose}
               disabled={operationLoading}
-              className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
+              className="px-4 py-2 text-gray-700 bg-gray-50 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50"
             >
               Cancel
             </button>

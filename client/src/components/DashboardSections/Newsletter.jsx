@@ -22,7 +22,7 @@ export default function Newsletter({
       unsubscribed: "bg-red-100 text-red-800",
       pending: "bg-yellow-100 text-yellow-800",
     };
-    return colors[status] || "bg-gray-100 text-gray-800";
+    return colors[status] || "bg-gray-50 text-gray-800";
   };
 
   const handleStatusUpdate = (subscriberId, newStatus) => {
@@ -127,7 +127,7 @@ export default function Newsletter({
           
           <button
             onClick={handleSearch}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 bg-gray-50 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
           >
             Search
           </button>

@@ -388,7 +388,7 @@ const SideBar = ({
             className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
               selectedType === cat.id
                 ? "bg-black text-white"
-                : "text-gray-700 hover:bg-gray-100"
+                : "text-gray-700 hover:bg-gray-50"
             }`}
           >
             {cat.label}
@@ -424,7 +424,7 @@ const SideBar = ({
                       className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
                         category === cat.id
                           ? "bg-black text-white"
-                          : "text-gray-700 hover:bg-gray-100"
+                          : "text-gray-700 hover:bg-gray-50"
                       }`}
                     >
                       {cat.label}

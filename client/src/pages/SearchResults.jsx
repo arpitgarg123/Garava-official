@@ -201,7 +201,7 @@ const SearchPage = () => {
   return (
     <div className="min-h-screen bg-gray-50  md:pt-32">
       {/* Header */}
-      <div className=" border-b border-gray-300 fixed top-26 md:top-32 left-0 right-0 z-40">
+      <div className=" border-b border-gray-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 py-4">
            <div className="sticky top-56 z-10 mb-3">
@@ -355,7 +355,7 @@ const SearchPage = () => {
         />
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mt-24 md:mt-28">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 ">
         {/* Category Tabs */}
         <div className="flex items-center justify-center mb-8">
           <div className="bg-white rounded-xl p-1 border border-gray-200 shadow-sm">
@@ -569,7 +569,7 @@ const SearchPage = () => {
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(term)}
-                      className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-gray-200 transition-colors"
+                      className="px-3 py-1 bg-gray-50 text-gray-700 text-sm rounded-full hover:bg-gray-200 transition-colors"
                     >
                       {term}
                     </button>

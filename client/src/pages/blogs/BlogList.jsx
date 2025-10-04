@@ -17,7 +17,7 @@
 //               className={`px-6 py-2 rounded-full transition-all duration-300 uppercase tracking-wider text-sm font-medium ${
 //                 activeCategory === category.id
 //                   ? 'bg-black text-white'
-//                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+//                   : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
 //               }`}
 //             >
 //               {category.label}
@@ -117,7 +117,7 @@ const BlogList = () => {
               className={`px-6 py-2 rounded-full cursor-pointer max-sm:m-2 transition-all duration-300 uppercase tracking-wider text-sm font-medium ${
                 activeCategory === category.id
                   ? 'bg-black text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
               }`}
             >
               {category.label}

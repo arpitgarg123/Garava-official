@@ -30,7 +30,7 @@ function getStatusColor(status) {
     out_of_stock: "bg-red-100 text-red-800",
     low_stock: "bg-yellow-100 text-yellow-800",
   };
-  return colors[status] || "bg-gray-100 text-gray-800";
+  return colors[status] || "bg-gray-50 text-gray-800";
 }
 
 function getStockStatus(variant) {
@@ -133,7 +133,7 @@ export default function Products() {
   return (
     <div className="h-full flex flex-col">
       {/* Header with Actions */}
-      <div className="flex-shrink-0 p-6 border-b border-gray-200">
+      <div className="flex-shrink-0 w-full p-6 border-b border-gray-200">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Products Management</h2>
@@ -162,7 +162,7 @@ export default function Products() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border outline-none border-gray-300 rounded-md"
               />
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function Products() {
           <select
             value={localFilters.status || ''}
             onChange={(e) => handleFilterChange({ status: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md"
           >
             <option value="">All Status</option>
             <option value="published">Published</option>
@@ -181,7 +181,7 @@ export default function Products() {
           <select
             value={localFilters.category || ''}
             onChange={(e) => handleFilterChange({ category: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md"
           >
             <option value="">All Categories</option>
             <option value="fragrance">Fragrance</option>
@@ -191,7 +191,7 @@ export default function Products() {
           
           <button
             onClick={handleSearch}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 bg-gray-50 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
           >
             Search
           </button>
@@ -269,7 +269,7 @@ export default function Products() {
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-50 text-gray-800">
                           {product.category || 'Uncategorized'}
                         </span>
                       </td>

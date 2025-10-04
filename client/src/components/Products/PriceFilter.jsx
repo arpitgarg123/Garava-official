@@ -35,7 +35,7 @@
 //       <div className="mt-3">
 //         <button
 //           onClick={onApply}
-//           className="inline-block px-4 py-2 bg-gray-100 text-gray-900 rounded-full text-sm font-medium hover:bg-gray-200 transition"
+//           className="inline-block px-4 py-2 bg-gray-50 text-gray-900 rounded-full text-sm font-medium hover:bg-gray-200 transition"
 //           aria-label="Apply price filter"
 //         >
 //           Filter

@@ -7,7 +7,7 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[94vh] overflow-hidden">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
           <h2 className="text-xl font-semibold">News/Event Details</h2>
@@ -29,7 +29,7 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                 <img
                   src={item.cover.url}
                   alt={item.title}
-                  className="w-full h-64 object-cover rounded-lg"
+                  className=" h-64 object-contain "
                 />
               </div>
             )}
