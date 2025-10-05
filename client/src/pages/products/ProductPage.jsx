@@ -296,6 +296,7 @@ import { buildFilterParams } from "../../shared/utils/filterUtils";
 import fBanner  from '../../assets/images/f-banner.png'
 import jBanner  from '../../assets/images/j-banner.png'
 import all  from '../../assets/images/allproduct.jpg'
+import { useToastContext } from "../../layouts/Toast";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -305,6 +306,9 @@ const ProductPage = () => {
   const { items, status, error, total } = list;
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [pendingMobileFilters, setPendingMobileFilters] = useState(null);
+const [hasInitialLoad, setHasInitialLoad] = useState(false);
+const [previousStatus, setPreviousStatus] = useState(null);
+const toast = useToastContext();
 
   const searchParams = new URLSearchParams(location.search);
   const subcategoryFromUrl = searchParams.get('subcategory');
@@ -336,6 +340,50 @@ const ProductPage = () => {
 
     return banners[lower] || banners['all'];
   };
+ useEffect(() => {
+    // Skip notifications on initial load
+    if (!hasInitialLoad) {
+      if (status !== 'loading') {
+        setHasInitialLoad(true);
+      }
+      return;
+    }
+
+    // Handle status transitions with toast notifications
+    if (previousStatus !== status) {
+      switch (status) {
+        case 'succeeded':
+          if (previousStatus === 'loading') {
+            if (items.length === 0) {
+              toast.info(
+                'No products match your current filters. Try adjusting your criteria.',
+                'No Results Found'
+                 );
+            } else {
+              const productText = items.length === 1 ? 'product' : 'products';
+              toast.success(
+                `Found ${items.length} ${productText} in ${getPageHeading().toLowerCase()}`,
+                'Products Loaded'
+              );
+            }
+          }
+          break;
+          
+        case 'failed':
+          if (error) {
+            toast.error(
+              'Unable to load products. Please check your connection and try again.',
+              'Loading Failed'
+            );
+          }
+          break;
+          
+        default:
+          break;
+      }
+    }
+    setPreviousStatus(status);
+  }, [status, items.length, error, previousStatus, hasInitialLoad, toast]);
 
   useEffect(() => {
     if (!routeCategory) return;
@@ -411,7 +459,6 @@ const ProductPage = () => {
         sort: pendingFilters.sort || "newest"
       });
       
-      console.log('Fetching products with params:', params);
       dispatch(fetchProducts(params));
     }, 200);
     return () => clearTimeout(h);

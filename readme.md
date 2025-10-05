@@ -58,7 +58,7 @@ discover btton click done ✅ & navigate all products are also done✅ but all p
 
 
 # # new fixs
-automatic logout for some time
+
 dashboard blogs ui fix ✅
 dashbaord review ui fix✅
 dashshord review comments not show✅
@@ -80,9 +80,19 @@ profile page loading fix ✅
 product details ui✅
 testinomial  ui fix ✅
 order details ui fix✅
-logout krne k bad logout nhi ho rha nav bar wala
 loader fix✅
+automatic logout for some time
+logout krne k bad logout nhi ho rha nav bar wala
 email message fix
 dashboard testinominal fetch gogle buttin not work
 products not respnsive
-overview original data ✅
+overview original data 
+toast message dynamic
+dashboards section css custom 
+
+
+
+
+
+# # FEATURES COMPLETED
+google auth✅
