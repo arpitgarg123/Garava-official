@@ -314,7 +314,7 @@ const toast = useToastContext();
   const subcategoryFromUrl = searchParams.get('subcategory');
   const categoryFromUrl = searchParams.get('category'); // Add support for navbar query params
 
-  const PRODUCTS_PER_PAGE = 5;
+  const PRODUCTS_PER_PAGE = 6;
 
   // Category Banner Configuration
   const getCategoryBanner = () => {

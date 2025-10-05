@@ -496,7 +496,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               <button
                 type="button"
                 onClick={addVariant}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                className="btn-black btn-small"
               >
                 <AiOutlinePlus className="h-4 w-4" />
                 Add Variant
@@ -998,7 +998,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             <button
               type="submit"
               disabled={operationLoading}
-              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+              className="btn-black btn-small"
             >
               {operationLoading ? 'Saving...' : (isEditing ? 'Update Product' : 'Create Product')}
             </button>

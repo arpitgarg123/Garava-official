@@ -81,18 +81,27 @@ product details ui✅
 testinomial  ui fix ✅
 order details ui fix✅
 loader fix✅
-automatic logout for some time
-logout krne k bad logout nhi ho rha nav bar wala
-email message fix
-dashboard testinominal fetch gogle buttin not work
+automatic logout for some time ✅
+logout krne k bad logout nhi ho rha nav bar wala✅
+email message fix 
+dashboard testinominal fetch gogle buttin not work 
 products not respnsive
 overview original data 
 toast message dynamic
 dashboards section css custom 
+pagination 6 pages 🎂✅
+sidebar high jeler not work
+navbar high jewwlery route 
+FAQ  create
+share links are not active
+dashboard ui
 
-
+loader har route change pe chal rha h
 
 
 
 # # FEATURES COMPLETED
 google auth✅
+
+
+
