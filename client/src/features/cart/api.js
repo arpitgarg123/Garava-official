@@ -2,21 +2,17 @@ import http, { retryRequest } from "../../shared/api/http.js";
 
 // Cart API functions with retry mechanism
 export const getCart = async (cancelToken) => {
-  console.log('Cart API - Getting cart');
   try {
     const response = await retryRequest(() => 
       http.get("/cart", { cancelToken })
     );
-    console.log('Cart API - Get cart success:', response.data);
     return response;
   } catch (error) {
-    console.error('Cart API - Get cart error:', error.response?.data || error.message);
     throw error;
   }
 };
 
 export const addToCart = async (payload, cancelToken) => {
-  console.log('Cart API - Making request to add to cart:', payload);
   
   // Validate payload structure
   if (!payload || typeof payload !== 'object') {
@@ -35,17 +31,8 @@ export const addToCart = async (payload, cancelToken) => {
     const response = await retryRequest(() => 
       http.post('/cart', payload, { cancelToken })
     );
-    console.log('Cart API - Add to cart success:', response.data);
     return response;
   } catch (error) {
-    console.error('Cart API - Add to cart error:', {
-      status: error.response?.status,
-      statusText: error.response?.statusText,
-      data: error.response?.data,
-      message: error.message,
-      payload: payload
-    });
-    
     // Enhanced error messages based on status codes
     if (error.response?.status === 400) {
       const message = error.response.data?.message || 'Invalid request. Please check product information.';
@@ -65,13 +52,10 @@ export const addToCart = async (payload, cancelToken) => {
 };
 
 export const updateCartItem = async (payload) => {
-  console.log('Cart API - Update cart item:', payload);
   try {
     const response = await http.put("/cart", payload);
-    console.log('Cart API - Update cart item success:', response.data);
     return response;
   } catch (error) {
-    console.error('Cart API - Update cart item error:', error.response?.data || error.message);
     if (error.response?.status === 400) {
       throw new Error(error.response.data?.message || 'Invalid update request');
     } else if (error.response?.status === 404) {
@@ -82,8 +66,6 @@ export const updateCartItem = async (payload) => {
 };
 
 export const removeCartItem = async ({ productId, variantId, variantSku }) => {
-  console.log('Cart API - Remove cart item:', { productId, variantId, variantSku });
-  
   if (!productId) {
     throw new Error('Product ID is required to remove item');
   }
@@ -98,10 +80,8 @@ export const removeCartItem = async ({ productId, variantId, variantSku }) => {
   
   try {
     const response = await http.delete(`/cart/item?${params.toString()}`);
-    console.log('Cart API - Remove cart item success:', response.data);
     return response;
   } catch (error) {
-    console.error('Cart API - Remove cart item error:', error.response?.data || error.message);
     if (error.response?.status === 404) {
       throw new Error('Cart item not found');
     }
@@ -110,13 +90,10 @@ export const removeCartItem = async ({ productId, variantId, variantSku }) => {
 };
 
 export const clearCart = async () => {
-  console.log('Cart API - Clearing cart');
   try {
     const response = await http.delete("/cart");
-    console.log('Cart API - Clear cart success:', response.data);
     return response;
   } catch (error) {
-    console.error('Cart API - Clear cart error:', error.response?.data || error.message);
     throw error;
   }
 };

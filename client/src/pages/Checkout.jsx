@@ -65,7 +65,6 @@ const Checkout = () => {
   useEffect(() => {
     if (paymentUrl && !isProcessingPayment) {
       setIsProcessingPayment(true);
-      console.log('Redirecting to PhonePe payment URL:', paymentUrl);
       
       // Open payment URL in current window
       window.location.href = paymentUrl;
@@ -139,8 +138,6 @@ const Checkout = () => {
         addressId: selectedAddressId, // Use address ID instead of full address
         paymentMethod
       };
-
-      console.log('Placing order with data:', orderData);
 
       if (paymentMethod === 'phonepe') {
         // Initiate PhonePe payment

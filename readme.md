@@ -93,7 +93,7 @@ sidebar high jeler not work✅
 navbar high jewwlery route✅ 
 products banners are added for a mobile view ✅
 dashboard ui ✅
-FAQ page  create
+FAQ page  create ✅
 dashboard testinominal fetch gogle buttin not work 
 testinomonial dashboard not showing 
 overview original data 

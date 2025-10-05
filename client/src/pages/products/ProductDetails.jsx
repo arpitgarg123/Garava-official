@@ -67,20 +67,7 @@ const ProductDetails = () => {
 
   // Debug logging (temporary)
   useEffect(() => {
-    if (product && selectedVariant) {
-      console.log('=== STOCK DEBUG ===');
-      console.log('Product:', product.name);
-      console.log('Product isOutOfStock:', product.isOutOfStock);
-      console.log('Selected variant:', { 
-        sku: selectedVariant.sku, 
-        hasId: !!(selectedVariant._id || selectedVariant.id),
-        stock: selectedVariant.stock,
-        stockStatus: selectedVariant.stockStatus
-      });
-      console.log('isVariantOutOfStock:', isVariantOutOfStock);
-      console.log('Final isOutOfStock:', isOutOfStock);
-      console.log('=================');
-    }
+    // Debug logging can be added here if needed for development
   }, [product, selectedVariant, isVariantOutOfStock, isOutOfStock]);
 
   useEffect(() => {
@@ -123,19 +110,6 @@ const ProductDetails = () => {
       return;
     }
     
-    console.log('Variant details:', { 
-      variantId, 
-      variantSku, 
-      hasId: !!variantId, 
-      hasSku: !!variantSku 
-    });
-    
-    console.log('Adding to cart:', {
-      productId: product?._id,
-      variantSku: variantSku,
-      quantity: 1
-    });
-    
     // Send only variantSku, let backend find the variant and use its _id
     const cartItem = {
       productId: product?._id || product?.id,
@@ -152,7 +126,6 @@ const ProductDetails = () => {
       .unwrap()
       .then(() => toast.success("Item added to cart!"))
       .catch((e) => {
-        console.error(e);
         if (e.message?.includes('Insufficient stock')) {
           toast.error(e.message);
         } else {
@@ -178,7 +151,6 @@ const ProductDetails = () => {
         else if (result.action === "removed") toast.success("Removed from wishlist!");
       })
       .catch((err) => {
-        console.error("Wishlist error:", err);
         if (err.message?.includes('Authentication failed') || err.message?.includes('login again')) {
           toast.error("Session expired. Please login again.");
           dispatch(logout());

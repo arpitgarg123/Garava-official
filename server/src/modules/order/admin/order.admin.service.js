@@ -1,38 +1,20 @@
 
 import ApiError from "../../../shared/utils/ApiError.js";
 import Order from "../order.model.js";
-import { toRupees } from "../order.pricing.js";
 
 /**
- * Convert order pricing from paise to rupees for frontend display
+ * Prepare order data for frontend display
+ * Database already stores values in rupees, so no conversion needed
  */
 const convertOrderPricing = (order) => {
   if (!order) return order;
   
-  const converted = { ...order };
-  
-  // Convert order-level pricing
-  if (converted.subtotal !== undefined) converted.subtotal = toRupees(converted.subtotal);
-  if (converted.taxTotal !== undefined) converted.taxTotal = toRupees(converted.taxTotal);
-  if (converted.shippingTotal !== undefined) converted.shippingTotal = toRupees(converted.shippingTotal);
-  if (converted.codCharge !== undefined) converted.codCharge = toRupees(converted.codCharge);
-  if (converted.discountTotal !== undefined) converted.discountTotal = toRupees(converted.discountTotal);
-  if (converted.grandTotal !== undefined) converted.grandTotal = toRupees(converted.grandTotal);
-  
-  // Convert item-level pricing
-  if (converted.items && Array.isArray(converted.items)) {
-    converted.items = converted.items.map(item => ({
-      ...item,
-      unitPrice: item.unitPrice !== undefined ? toRupees(item.unitPrice) : item.unitPrice,
-      mrp: item.mrp !== undefined ? toRupees(item.mrp) : item.mrp,
-      taxAmount: item.taxAmount !== undefined ? toRupees(item.taxAmount) : item.taxAmount,
-      discountAmount: item.discountAmount !== undefined ? toRupees(item.discountAmount) : item.discountAmount,
-      lineTotal: item.lineTotal !== undefined ? toRupees(item.lineTotal) : item.lineTotal,
-      priceAtTime: item.unitPrice !== undefined ? toRupees(item.unitPrice) : (item.priceAtTime !== undefined ? toRupees(item.priceAtTime) : item.priceAtTime)
-    }));
-  }
-  
-  return converted;
+  // Database stores values in rupees format, so we just return as-is
+  // No conversion needed since:
+  // - Order creation uses calculateOrderPricingRupees() 
+  // - Database stores: grandTotal: 13018 (meaning ₹13,018)
+  // - Frontend expects: 13018 to display as ₹13,018
+  return { ...order };
 };
 
 export const listOrdersAdminService = async ({ page = 1, limit = 20, status, user, paymentStatus, q }) => {
@@ -75,7 +57,7 @@ export const listOrdersAdminService = async ({ page = 1, limit = 20, status, use
 
   return {
     orders: convertedOrders,
-    pagination: {
+    pagination: {   
       total,
       page,
       limit,

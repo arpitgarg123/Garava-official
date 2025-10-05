@@ -27,7 +27,6 @@ export const getOrderByIdAdmin = (orderId) => {
 
 // Update order status
 export const updateOrderStatus = (orderId, statusData) => {
-  console.log('Sending order status update:', { orderId, statusData }); // Debug log
   return authHttp.patch(`/admin/order/${orderId}/status`, statusData);
 };
 

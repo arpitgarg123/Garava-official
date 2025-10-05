@@ -19,7 +19,7 @@ const NewsletterForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: integrate with backend / API
-    console.log("Form submitted:", formData);
+    // Newsletter subscription submission
   };
 
   return (

@@ -89,7 +89,6 @@ const TestimonialAdmin = () => {
 
   // Effects
   useEffect(() => {
-    console.log('🔍 TestimonialAdmin: Fetching testimonials with filters:', filters);
     dispatch(fetchTestimonials(filters));
   }, [dispatch, filters]);
 
@@ -98,16 +97,6 @@ const TestimonialAdmin = () => {
       dispatch(fetchTestimonialStats());
     }
   }, [dispatch, activeTab]);
-
-  // Debug testimonials data
-  useEffect(() => {
-    console.log('🔍 TestimonialAdmin: Testimonials data updated:', {
-      count: testimonials?.length || 0,
-      loading,
-      error,
-      testimonials: testimonials?.slice(0, 2) // Log first 2 for debugging
-    });
-  }, [testimonials, loading, error]);
 
   useEffect(() => {
     if (error) {
@@ -371,16 +360,6 @@ const TestimonialAdmin = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6">
-      {/* Debug Info */}
-      <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
-        <h4 className="font-semibold text-yellow-800">Debug Info:</h4>
-        <p className="text-sm text-yellow-700">
-          Testimonials Count: {testimonials?.length || 0} | 
-          Loading: {loading ? 'Yes' : 'No'} | 
-          Error: {error || 'None'}
-        </p>
-      </div>
-
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-900 mb-2">Testimonial Management</h1>

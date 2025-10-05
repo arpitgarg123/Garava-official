@@ -22,7 +22,6 @@ export const listAppointmentsAdmin = (params = {}) => {
 
 // Update appointment (status, notes, reschedule)
 export const updateAppointment = (appointmentId, updateData) => {
-  console.log('Sending appointment update:', { appointmentId, updateData }); // Debug log
   return authHttp.patch(`/appointment/admin/${appointmentId}`, updateData);
 };
 

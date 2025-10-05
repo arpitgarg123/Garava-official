@@ -6,11 +6,9 @@ export const createOrder = createAsyncThunk(
   'order/createOrder',
   async (orderData, { rejectWithValue }) => {
     try {
-      console.log('Order slice - Creating order:', orderData);
       const response = await orderAPI.createOrder(orderData);
       return response.data;
     } catch (error) {
-      console.error('Order slice - Create order error:', error);
       return rejectWithValue(error.response?.data || { message: error.message });
     }
   }
@@ -20,11 +18,9 @@ export const initiatePayment = createAsyncThunk(
   'order/initiatePayment',
   async (orderData, { rejectWithValue }) => {
     try {
-      console.log('Order slice - Initiating payment:', orderData);
       const response = await orderAPI.initiatePhonePePayment(orderData);
       return response;
     } catch (error) {
-      console.error('Order slice - Payment initiation error:', error);
       return rejectWithValue(error.response?.data || { message: error.message });
     }
   }
@@ -34,11 +30,9 @@ export const fetchUserOrders = createAsyncThunk(
   'order/fetchUserOrders',
   async (params = {}, { rejectWithValue }) => {
     try {
-      console.log('Order slice - Fetching user orders:', params);
       const response = await orderAPI.getUserOrders(params);
       return response.data;
     } catch (error) {
-      console.error('Order slice - Fetch orders error:', error);
       return rejectWithValue(error.response?.data || { message: error.message });
     }
   }
@@ -48,11 +42,9 @@ export const fetchOrderById = createAsyncThunk(
   'order/fetchOrderById',
   async (orderId, { rejectWithValue }) => {
     try {
-      console.log('Order slice - Fetching order by ID:', orderId);
       const response = await orderAPI.getOrderById(orderId);
       return response.data;
     } catch (error) {
-      console.error('Order slice - Fetch order error:', error);
       return rejectWithValue(error.response?.data || { message: error.message });
     }
   }
@@ -62,11 +54,9 @@ export const checkPaymentStatus = createAsyncThunk(
   'order/checkPaymentStatus',
   async (orderId, { rejectWithValue }) => {
     try {
-      console.log('Order slice - Checking payment status:', orderId);
       const response = await orderAPI.checkPaymentStatus(orderId);
       return response.data;
     } catch (error) {
-      console.error('Order slice - Payment status check error:', error);
       return rejectWithValue(error.response?.data || { message: error.message });
     }
   }
