@@ -55,11 +55,6 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
         'https://localhost:5173', // For local HTTPS testing
       ];
       
-      // Add production URLs if available
-      if (env.NODE_ENV === 'production' && env.FRONTEND_URL) {
-        allowedOrigins.push(env.FRONTEND_URL);
-      }
-      
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
@@ -68,7 +63,7 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
       }
     },
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
     exposedHeaders: ['Set-Cookie'],
   };
