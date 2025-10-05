@@ -302,6 +302,10 @@ const SideBar = ({
   initialValues = {}
 }) => {
   const dispatch = useDispatch();
+  
+  // Get current filters from Redux store
+  const currentFilters = useSelector(s => s.product.filters || {});
+  
   const [price, setPrice] = useState({ 
     min: initialValues.priceMin || "", 
     max: initialValues.priceMax || "" 
@@ -311,6 +315,36 @@ const SideBar = ({
   const [selectedType, setSelectedType] = useState(initialValues.type || "");
 
   const detectedCategory = (mainCategory || "jewellery").toLowerCase();
+  
+  // Sync local state with Redux filters when they change (e.g., from navbar navigation)
+  useEffect(() => {
+    if (currentFilters.category !== undefined) {
+      // If Redux has empty category, it means "show all" for the current type
+      if (currentFilters.category === "" && category !== "") {
+        // Set to the appropriate "all-*" category for the current type
+        const allCategory = detectedCategory === "all" ? "" : 
+                           detectedCategory === "jewellery" ? "all-jewellery" :
+                           detectedCategory === "high-jewellery" || detectedCategory === "high_jewellery" ? "all-high-jewellery" :
+                           "all-fragrance";
+        setCategory(allCategory);
+      } else if (currentFilters.category !== "" && currentFilters.category !== category) {
+        // Set to specific category
+        setCategory(currentFilters.category);
+      }
+    }
+    if (currentFilters.type !== undefined && currentFilters.type !== selectedType) {
+      setSelectedType(currentFilters.type || "");
+    }
+    if (currentFilters.priceMin !== undefined || currentFilters.priceMax !== undefined) {
+      setPrice(prev => ({
+        min: currentFilters.priceMin !== undefined ? currentFilters.priceMin : prev.min,
+        max: currentFilters.priceMax !== undefined ? currentFilters.priceMax : prev.max
+      }));
+    }
+    if (currentFilters.colors !== undefined && JSON.stringify(currentFilters.colors) !== JSON.stringify(colors)) {
+      setColors(currentFilters.colors || []);
+    }
+  }, [currentFilters.category, currentFilters.type, currentFilters.priceMin, currentFilters.priceMax, currentFilters.colors, detectedCategory]);
   
   // Determine which categories to show
   const getCategories = () => {
@@ -328,17 +362,22 @@ const SideBar = ({
   const subCategories = getCategories();
 
   useEffect(() => {
-    // Set default category when mainCategory changes
+    // Set default category when mainCategory changes, but only if we don't have current filters
     if (detectedCategory === "all") {
-      // For "all products" view, don't set a default category
-      setCategory("");
-      setSelectedType("");
+      // For "all products" view, don't override existing selections
+      if (!currentFilters.type && !selectedType) setSelectedType("");
+      if (!currentFilters.category && !category) setCategory("");
     } else {
-      setCategory(subCategories[0]?.id || "");
+      // Only set default if we don't have a current category from filters
+      if (!currentFilters.category && !category) {
+        setCategory(subCategories[0]?.id || "");
+      }
     }
     
-    if (detectedCategory !== "jewellery") setColors([]);
-  }, [detectedCategory]);
+    if (detectedCategory !== "jewellery" && detectedCategory !== "high-jewellery" && detectedCategory !== "high_jewellery") {
+      setColors([]);
+    }
+  }, [detectedCategory, subCategories]);
 
   // Handle filter changes
   useEffect(() => {
@@ -353,7 +392,17 @@ const SideBar = ({
     } else {
       // For specific category views
       nextFilters.type = detectedCategory === "high-jewellery" ? "high_jewellery" : detectedCategory;
-      if (category && !category.startsWith("all-")) nextFilters.category = category;
+      
+      // Handle category filter - if "all-*" is selected, clear category filter
+      if (category) {
+        if (category.startsWith("all-")) {
+          // "All Jewellery", "All Fragrance", etc. - show all items of this type
+          nextFilters.category = "";
+        } else {
+          // Specific category selected - filter by that category
+          nextFilters.category = category;
+        }
+      }
     }
 
     // Add price filters

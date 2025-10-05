@@ -18,7 +18,7 @@ export const expirePendingOrders = async () => {
           { _id: it.product, "variants._id": it.variantId },
           { $inc: { "variants.$.stock": it.quantity } }
         );
-      }
+      }  
       await Order.findByIdAndUpdate(o._id, { status: "expired", history: [...(o.history||[]), { status: "expired", by: null, note: "Reservation TTL expired", at: new Date() }] });
       logger.info("Expired order", { orderId: o._id });
       // optionally notify user by email

@@ -81,9 +81,9 @@ product details ui✅
 testinomial  ui fix ✅
 order details ui fix✅
 loader fix✅
-automatic logout for some time
-logout krne k bad logout nhi ho rha nav bar wala
-email message fix
+automatic logout for some time ✅
+logout krne k bad logout nhi ho rha nav bar wala ✅
+email message fix 
 dashboard testinominal fetch gogle buttin not work
 products not respnsive
 overview original data 
