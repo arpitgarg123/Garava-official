@@ -9,10 +9,6 @@ import {
 import BackButton from "../BackButton";
 import { formatDate } from "../../utils/FormatDate";
 
-// AdminBlogsDashboard.jsx
-// UI-only React component for managing blog posts
-// - Plain JavaScript, TailwindCSS styling
-// - Accepts data/handlers via props; NO fetching here
 
 export default function Blogs(props) {
   const {
