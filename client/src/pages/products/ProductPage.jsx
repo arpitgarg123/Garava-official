@@ -597,16 +597,16 @@ const toast = useToastContext();
                 />
               </div>
               
-              <div className="border-t p-4 flex gap-4">
+              <div className="border-t p-4 flex gap- justify-between">
                 <button 
                   onClick={handleCancelFilters}
-                  className="flex-1 py-3 border border-gray-300 rounded-md text-center"
+                  className="btn-small  px-4 py-1 border"
                 >
                   Cancel
                 </button>
                 <button 
                   onClick={handleApplyFilters}
-                  className="flex-1 py-3 bg-black text-white rounded-md text-center"
+                  className="btn-black btn-small"
                 >
                   Apply Filters
                 </button>

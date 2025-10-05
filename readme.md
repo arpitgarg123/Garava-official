@@ -83,20 +83,23 @@ order details ui fix✅
 loader fix✅
 automatic logout for some time ✅
 logout krne k bad logout nhi ho rha nav bar wala✅
-email message fix 
-dashboard testinominal fetch gogle buttin not work 
-products not respnsive
-overview original data 
+email message fix ✅
+
+products not respnsive✅
 toast message dynamic
 dashboards section css custom 
 pagination 6 pages 🎂✅
-sidebar high jeler not work
-navbar high jewwlery route 
-FAQ  create
-share links are not active
-dashboard ui
+sidebar high jeler not work✅
+navbar high jewwlery route✅ 
 
-loader har route change pe chal rha h
+
+dashboard ui 
+FAQ page  create
+dashboard testinominal fetch gogle buttin not work 
+testinomonial dashboard not showing 
+overview original data 
+share links are not active over website (event details page) (footer) (contact us page )
+loader har route change pe chal rha h✅
 
 
 
