@@ -178,9 +178,7 @@ userSchema.methods.toJSON = function () {
 // Create indexes for better query performance
 userSchema.index({ email: 1 }, { unique: true });
 userSchema.index({ googleId: 1 }, { sparse: true });
-userSchema.index({ role: 1 });
-userSchema.index({ isVerified: 1 });
-userSchema.index({ "refreshTokens.createdAt": 1 }); // For token cleanup
+// Removed role, isVerified, and refreshTokens.createdAt indexes - rarely queried
 
 const User = mongoose.model('User', userSchema);
 export default User;
