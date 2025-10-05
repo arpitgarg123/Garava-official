@@ -30,9 +30,9 @@ function getStatusBgColor(status) {
     shipped: "bg-indigo-100 text-indigo-800",
     delivered: "bg-green-100 text-green-800",
     cancelled: "bg-red-100 text-red-800",
-    refunded: "bg-gray-100 text-gray-800",
+    refunded: "bg-gray-50 text-gray-800",
   };
-  return colors[status] || "bg-gray-100 text-gray-800";
+  return colors[status] || "bg-gray-50 text-gray-800";
 }
 
 function getPaymentBgColor(status) {
@@ -40,9 +40,9 @@ function getPaymentBgColor(status) {
     pending: "bg-yellow-100 text-yellow-800",
     success: "bg-green-100 text-green-800",
     failed: "bg-red-100 text-red-800",
-    refunded: "bg-gray-100 text-gray-800",
+    refunded: "bg-gray-50 text-gray-800",
   };
-  return colors[status] || "bg-gray-100 text-gray-800";
+  return colors[status] || "bg-gray-50 text-gray-800";
 }
 
 export default function Orders() {
@@ -191,7 +191,7 @@ export default function Orders() {
           
           <button
             onClick={handleSearch}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 bg-gray-50 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
           >
             Search
           </button>

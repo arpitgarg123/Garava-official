@@ -29,7 +29,7 @@ const OrderStatus = ({ status }) => {
       case 'cancelled': return 'bg-red-100 text-red-800';
       case 'refunded': return 'bg-orange-100 text-orange-800';
       case 'failed': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      default: return 'bg-gray-50 text-gray-800';
     }
   };
 

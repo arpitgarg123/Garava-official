@@ -17,88 +17,165 @@ import { checkEmailRateLimit } from "../../shared/emails/emailRateLimiter.js";
 export const loginUser = async (email, password) => {
   if (!email || !password) throw new ApiError(400, "Missing required fields");
 
-  const user = await User.findOne({ email }).select("+password");
+  // Optimize query - only select password field for verification
+  const user = await User.findOne({ email: email.toLowerCase().trim() })
+    .select("+password")
+    .lean({ virtuals: false }); // Use lean for better performance
+    
   if (!user) throw new ApiError(404, "User not found");
 
-  const isValid = await user.comparePassword(password);
+  // Convert back to mongoose document for method access
+  const userDoc = await User.findById(user._id).select("+password +refreshTokens");
+  
+  const isValid = await userDoc.comparePassword(password);
   if (!isValid) throw new ApiError(401, "Invalid credentials");
 
-  const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
+  const accessToken = generateAccessToken(userDoc);
+  const refreshToken = generateRefreshToken(userDoc);
 
-  user.refreshTokens.push({ token: refreshToken });
-  await user.save();
+  // Clean up old refresh tokens (keep only last 4 + new one = 5 total)
+  if (userDoc.refreshTokens.length >= 5) {
+    userDoc.refreshTokens = userDoc.refreshTokens.slice(-4);
+  }
+  
+  userDoc.refreshTokens.push({ 
+    token: refreshToken,
+    createdAt: new Date()
+  });
+  await userDoc.save();
 
-  return { accessToken, refreshToken, user: user.toJSON() };
+  return { accessToken, refreshToken, user: userDoc.toJSON() };
 };
 
 export const signupUser = async ({ name, email, password}) => {
   if (!name || !email || !password) throw new ApiError(400, "Missing required fields");
 
-  const existingUser = await User.findOne({ email });
+  // Normalize email for consistency
+  const normalizedEmail = email.toLowerCase().trim();
+  
+  // Optimize query - use lean for faster existence check
+  const existingUser = await User.findOne({ email: normalizedEmail })
+    .select('_id')
+    .lean();
+    
   if (existingUser) throw new ApiError(409, "User already exists");
 
-  const newUser = await User.create({ name, email, password });
+  const newUser = await User.create({ 
+    name: name.trim(), 
+    email: normalizedEmail, 
+    password,
+    refreshTokens: [] // Initialize empty array
+  });
 
-    // 3. Generate verification token
+  // 3. Generate verification token
   const token = generateEmailVerificationToken(newUser);
   await checkEmailRateLimit(newUser._id);
-  const result =  await sendVerificationEmail(newUser, token);
+  const result = await sendVerificationEmail(newUser, token);
   console.log("Sent verification email:", result);
+  
   return newUser.toJSON();
 }; 
 
 export const logoutUser = async (userId, refreshToken) => {
   if (!userId || !refreshToken) throw new Error("Missing required fields");
 
+  // Optimize query - only select refreshTokens field
   const user = await User.findById(userId).select("+refreshTokens");
   if (!user) throw new Error("User not found");
 
   // Remove the specific refresh token using argon2.verify
   const filteredTokens = [];
   for (const tokenObj of user.refreshTokens) {
-    const isMatch = await argon2.verify(tokenObj.token, refreshToken);
-    if (!isMatch) {
+    try {
+      const isMatch = await argon2.verify(tokenObj.token, refreshToken);
+      if (!isMatch) {
+        filteredTokens.push(tokenObj);
+      }
+    } catch (error) {
+      // If verification fails, keep the token (might be valid for other sessions)
       filteredTokens.push(tokenObj);
     }
   }
+  
   user.refreshTokens = filteredTokens;
   await user.save();
 
+  console.log('LogoutUser - Removed refresh token. User now has', filteredTokens.length, 'tokens');
   return { message: "Logged out successfully" };
 };
 
 export const refreshSessionService = async (rawToken, res) => {
-  if (!rawToken) throw new ApiError(401, "No refresh token provided");
+  if (!rawToken || typeof rawToken !== 'string') {
+    throw new ApiError(401, "No refresh token provided");
+  }
+
+  console.log('RefreshSessionService - Starting with token length:', rawToken.length);
 
   // 1. Verify JWT validity
   const decoded = verifyRefreshToken(rawToken);
-  if (!decoded) throw new ApiError(401, "Invalid or expired refresh token");
+  if (!decoded || !decoded.id) {
+    console.log('RefreshSessionService - JWT verification failed');
+    throw new ApiError(401, "Invalid or expired refresh token");
+  }
 
-  // 2. Find user
+  console.log('RefreshSessionService - JWT valid for user:', decoded.id);
+
+  // 2. Find user with better error handling
   const user = await User.findById(decoded.id).select("+refreshTokens");
-  if (!user) throw new ApiError(404, "User not found");
+  if (!user) {
+    console.log('RefreshSessionService - User not found:', decoded.id);
+    throw new ApiError(404, "User not found");
+  }
 
-  // 3. Check against hashed tokens in DB
-  const isValid = await user.verifyRefreshToken(rawToken);
-  if (!isValid) throw new ApiError(401, "Refresh token not recognized");
+  console.log('RefreshSessionService - User found, checking tokens. User has', user.refreshTokens?.length || 0, 'refresh tokens');
 
-  // 4. Rotate tokens (remove old, add new)
-  // Remove the used refresh token using argon2.verify
-  const filteredTokens = [];
-  for (const tokenObj of user.refreshTokens) {
-    const isMatch = await argon2.verify(tokenObj.token, rawToken);
-    if (!isMatch) {
-      filteredTokens.push(tokenObj);
+  // 3. Check against hashed tokens in DB with better debugging
+  let tokenFoundInDB = false;
+  let matchingTokenIndex = -1;
+  
+  for (let i = 0; i < user.refreshTokens.length; i++) {
+    const tokenObj = user.refreshTokens[i];
+    try {
+      const isMatch = await argon2.verify(tokenObj.token, rawToken);
+      if (isMatch) {
+        tokenFoundInDB = true;
+        matchingTokenIndex = i;
+        break;
+      }
+    } catch (verifyError) {
+      console.log('RefreshSessionService - Error verifying token at index', i, ':', verifyError.message);
     }
   }
-  user.refreshTokens = filteredTokens;
+  
+  if (!tokenFoundInDB) {
+    console.log('RefreshSessionService - Token not found in database. User has', user.refreshTokens.length, 'stored tokens');
+    throw new ApiError(401, "Refresh token not recognized");
+  }
 
+  console.log('RefreshSessionService - Token verified, rotating tokens');
+
+  // 4. Rotate tokens (remove old, add new) - More efficient approach
+  // Remove the used refresh token
+  user.refreshTokens.splice(matchingTokenIndex, 1);
+
+  // Generate new tokens
   const newAccessToken = generateAccessToken(user);
   const newRefreshToken = generateRefreshToken(user);
 
-  user.refreshTokens.push({ token: newRefreshToken });
+  // Add new refresh token
+  user.refreshTokens.push({ 
+    token: newRefreshToken,
+    createdAt: new Date()
+  });
+  
+  // Clean up old tokens (keep only last 5)
+  if (user.refreshTokens.length > 5) {
+    user.refreshTokens = user.refreshTokens.slice(-5);
+  }
+  
   await user.save();
+
+  console.log('RefreshSessionService - Tokens rotated successfully. User now has', user.refreshTokens.length, 'tokens');
 
   // 5. Set cookies
   setAuthCookies(res, newAccessToken, newRefreshToken);
@@ -106,7 +183,7 @@ export const refreshSessionService = async (rawToken, res) => {
   return { 
     accessToken: newAccessToken, 
     refreshToken: newRefreshToken,
-    user: user.toJSON() // Include user data for frontend state initialization
+    user: user.toJSON()
   };
 };
 

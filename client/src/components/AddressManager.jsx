@@ -33,8 +33,15 @@ const AddressManager = () => {
   }, []);
 
   const fetchAddresses = async () => {
+    // Prevent redundant fetches if already loading or have data
+    if (loading || addresses.length > 0) {
+      console.log('AddressManager - Skipping fetch: already loading or have data');
+      return;
+    }
+    
     try {
       setLoading(true);
+      console.log('AddressManager - Fetching addresses...');
       const { data } = await getAddressesApi();
       setAddresses(Array.isArray(data) ? data : data?.addresses || []);
     } catch (error) {
@@ -126,7 +133,7 @@ const AddressManager = () => {
     return (
       <div className="space-y-4">
         {Array.from({ length: 2 }).map((_, i) => (
-          <div key={i} className="animate-pulse h-24 bg-gray-100 rounded-lg" />
+          <div key={i} className="animate-pulse h-24 bg-gray-50 rounded-lg" />
         ))}
       </div>
     );
@@ -335,7 +342,7 @@ const AddressManager = () => {
                     <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
                       address.label === 'home' || address.type === 'home' ? 'bg-blue-100 text-blue-800' :
                       address.label === 'work' || address.type === 'work' ? 'bg-green-100 text-green-800' :
-                      'bg-gray-100 text-gray-800'
+                      'bg-gray-50 text-gray-800'
                     }`}>
                       {(address.label || address.type)?.toUpperCase() || 'OTHER'}
                     </span>

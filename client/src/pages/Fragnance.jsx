@@ -17,7 +17,7 @@ const Fragnance = () => {
   return (
      <div className='w-full py-6'>
        <PageHeader title="Fragnance" />
-         <section className="bg-gray-100 w-[98%] mx-auto py-10 ">
+         <section className="bg-gray-50 w-[98%] mx-auto py-10 ">
         <div className="mx-auto w-[95%] h-[80%] ">
       
           <div className="products-grid">

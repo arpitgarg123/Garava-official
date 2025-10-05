@@ -76,7 +76,7 @@ instagram page change with responsive  ✅
     ****backend related work****
 
 
-2) reviews page are dynamicaly so to create reviews CRUD operations. and fields are [username, description, and stars]
+2) reviews page are dynamicaly so to create reviews CRUD operations. and fields are [username, description, and stars]✅
 
 2) instagram post dynamicaly 
 

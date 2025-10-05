@@ -952,8 +952,8 @@ const navItems = [
       { 
         label: 'Solitaire Rings', 
         img: './src/assets/images/jewellry4.png', 
-        to: '/products/jewellery?category=necklace',
-        category: 'necklace'
+        to: '/products/jewellery?category=necklaces',
+        category: 'necklaces'
       },
      ]},
   { title: 'HIGH JEWELLERY', submenu: [
@@ -1323,7 +1323,6 @@ const Navbar = () => {
                   className="cursor-pointer hover:opacity-70 transition-opacity" 
                   onClick={() => navigate('/search')}
                 />
-                <CiHeart size={24} aria-hidden="true" className="cursor-pointer hover:opacity-70 transition-opacity" onClick={() => navigate('/wishlist')} />
                 <div className="relative cursor-pointer hover:opacity-70 transition-opacity" onClick={() => navigate('/cart')}>
                   <PiBagLight size={22} aria-hidden="true" />
                   {cartItemCount > 0 && (
@@ -1332,6 +1331,7 @@ const Navbar = () => {
                     </span>
                   )}
                 </div>
+                <CiHeart size={24} aria-hidden="true" className="cursor-pointer hover:opacity-70 transition-opacity" onClick={() => navigate('/wishlist')} />
 
                 <div className="relative user-menu-container">
                   <button
@@ -1343,7 +1343,6 @@ const Navbar = () => {
                     aria-haspopup="menu"
                   >
                     <CiUser size={22} aria-hidden="true" />
-                    <span className="text-sm tracking-wide ">{user?.role || 'User'}</span>
                   </button>
 
                   <AnimatePresence>
@@ -1420,6 +1419,8 @@ const Navbar = () => {
                   className="cursor-pointer hover:opacity-70 transition-opacity" 
                   onClick={() => navigate('/search')}
                 />
+                                <CiHeart size={24} aria-hidden="true" className="cursor-pointer hover:opacity-70 transition-opacity" onClick={() => navigate('/wishlist')} />
+
                 <button
                   onClick={() => navigate('/login')}
                   className="tracking-wide  cursor-pointer  "

@@ -112,7 +112,7 @@ const OutOfStockNotifications = () => {
       case 'high': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low': return 'bg-blue-100 text-blue-800 border-blue-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-gray-50 text-gray-800 border-gray-200';
     }
   };
 
@@ -213,7 +213,7 @@ const OutOfStockNotifications = () => {
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 filter === filterType
                   ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
               }`}
             >
               {filterType === 'all' ? 'All' : filterType.replace('_', ' ').toUpperCase()}
@@ -283,7 +283,7 @@ const OutOfStockNotifications = () => {
                   {!notification.isRead && (
                     <button
                       onClick={() => markAsRead(notification._id)}
-                      className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200 transition-colors"
+                      className="px-3 py-1 text-sm bg-gray-50 text-gray-700 rounded hover:bg-gray-200 transition-colors"
                     >
                       Mark Read
                     </button>

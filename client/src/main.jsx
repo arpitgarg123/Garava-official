@@ -25,18 +25,27 @@ bindAuth({
 tokenRefreshManager.init(store);
 
 // Subscribe to auth state changes to manage token refresh
+let previousAuthState = null;
 store.subscribe(() => {
   const state = store.getState();
   const { accessToken, user } = state.auth;
   
-  if (accessToken && user) {
-    // Start refresh cycle when user is authenticated
-    console.log('Store subscriber - User authenticated, starting token refresh cycle');
-    tokenRefreshManager.startRefreshCycle(accessToken);
-  } else {
-    // Stop refresh cycle when user is logged out
-    console.log('Store subscriber - User not authenticated, stopping token refresh cycle');
-    tokenRefreshManager.stop();
+  // Only react to actual auth state changes, not every state change
+  const currentAuthState = { accessToken, userId: user?.id };
+  const authStateChanged = JSON.stringify(currentAuthState) !== JSON.stringify(previousAuthState);
+  
+  if (authStateChanged) {
+    previousAuthState = currentAuthState;
+    
+    if (accessToken && user) {
+      // Start refresh cycle when user is authenticated
+      console.log('Store subscriber - User authenticated, starting token refresh cycle');
+      tokenRefreshManager.startRefreshCycle(accessToken);
+    } else {
+      // Stop refresh cycle when user is logged out
+      console.log('Store subscriber - User not authenticated, stopping token refresh cycle');
+      tokenRefreshManager.stop();
+    }
   }
 });
 

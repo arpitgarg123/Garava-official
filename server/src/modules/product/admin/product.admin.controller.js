@@ -64,7 +64,8 @@ function normalizeMultipartBody(raw) {
     "heroImage",
     "relatedProducts",
     "upsellProducts",
-    "collections"
+    "collections",
+    "colorVariants" // Add colorVariants support
   ];
 
   for (const k of jsonFields) {

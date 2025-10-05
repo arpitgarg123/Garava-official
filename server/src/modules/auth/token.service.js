@@ -26,11 +26,22 @@ export const verifyAccessToken = (token) => {
 // Verify Refresh Token
 export const verifyRefreshToken = (token) => {
   try {
-    if (!token || typeof token !== 'string') {
+    if (!token || typeof token !== 'string' || token.trim() === '') {
+      console.log('VerifyRefreshToken - Invalid token format');
       return null;
     }
-    return jwt.verify(token, JWT_REFRESH_SECRET);
+    
+    const decoded = jwt.verify(token.trim(), JWT_REFRESH_SECRET);
+    
+    // Validate token structure
+    if (!decoded || !decoded.id) {
+      console.log('VerifyRefreshToken - Token missing required fields');
+      return null;
+    }
+    
+    return decoded;
   } catch (err) {
+    console.log('VerifyRefreshToken - JWT verification failed:', err.message);
     return null;
   }
 };
@@ -50,29 +61,45 @@ export const generatePasswordResetToken = (user) =>
 export const setAuthCookies = (res, accessToken, refreshToken) => {
   const isProduction = process.env.NODE_ENV === 'production';
   
+  // Access token cookie (shorter lived)
   res.cookie('token', accessToken, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax', // Use 'lax' in development for OAuth redirects
+    sameSite: isProduction ? 'none' : 'lax', // 'none' for production cross-origin, 'lax' for dev
     maxAge: 24 * 60 * 60 * 1000, // 24h
+    path: '/',
   });
 
+  // Refresh token cookie (longer lived)
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax', // Use 'lax' in development for OAuth redirects
+    sameSite: isProduction ? 'none' : 'lax', // 'none' for production cross-origin, 'lax' for dev
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
+    path: '/',
   });
   
   console.log('Auth cookies set:', {
     secure: isProduction,
-    sameSite: isProduction ? 'strict' : 'lax',
-    environment: process.env.NODE_ENV
+    sameSite: isProduction ? 'none' : 'lax',
+    environment: process.env.NODE_ENV,
+    path: '/'
   });
 };
 
 export const clearAuthCookies = (res) => {
-  res.clearCookie('token');
-  res.clearCookie('refreshToken');
+  const isProduction = process.env.NODE_ENV === 'production';
+  
+  const cookieOptions = {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/'
+  };
+  
+  res.clearCookie('token', cookieOptions);
+  res.clearCookie('refreshToken', cookieOptions);
+  
+  console.log('Auth cookies cleared with options:', cookieOptions);
 };
  

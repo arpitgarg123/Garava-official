@@ -5,8 +5,7 @@ const notificationSchema = new mongoose.Schema(
     type: {
       type: String,
       enum: ["out_of_stock", "low_stock", "order_placed", "payment_failed", "system"],
-      required: true,
-      index: true
+      required: true
     },
     title: {
       type: String,
@@ -21,33 +20,27 @@ const notificationSchema = new mongoose.Schema(
     severity: {
       type: String,
       enum: ["low", "medium", "high", "critical"],
-      default: "medium",
-      index: true
+      default: "medium"
     },
     isRead: {
       type: Boolean,
-      default: false,
-      index: true
+      default: false
     },
     // Related entities
     productId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Product",
-      index: true
+      ref: "Product"
     },   
     variantId: {
-      type: mongoose.Schema.Types.ObjectId,
-      index: true
+      type: mongoose.Schema.Types.ObjectId
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      index: true
+      ref: "User"
     },
     orderId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Order",
-      index: true
+      ref: "Order"
     },
     // Additional data for context
     metadata: {
@@ -57,8 +50,7 @@ const notificationSchema = new mongoose.Schema(
     // Actions taken
     actionRequired: {
       type: Boolean,
-      default: false,
-      index: true
+      default: false
     },
     actionTaken: {
       type: Boolean,

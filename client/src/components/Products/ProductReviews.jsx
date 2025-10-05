@@ -222,7 +222,7 @@ const ProductReviews = ({ productId }) => {
                   className={`w-full text-left px-3 py-2 rounded text-sm ${
                     sortOption === 'recent' 
                       ? 'bg-black text-white' 
-                      : 'hover:bg-gray-100'
+                      : 'hover:bg-gray-50'
                   }`}
                 >
                   Most Recent
@@ -240,7 +240,7 @@ const ProductReviews = ({ productId }) => {
                   className={`w-full text-left px-3 py-2 rounded text-sm ${
                     sortOption === 'top' 
                       ? 'bg-black text-white' 
-                      : 'hover:bg-gray-100'
+                      : 'hover:bg-gray-50'
                   }`}
                 >
                   Highest Rating
@@ -258,7 +258,7 @@ const ProductReviews = ({ productId }) => {
                   className={`w-full text-left px-3 py-2 rounded text-sm ${
                     sortOption === 'helpful' 
                       ? 'bg-black text-white' 
-                      : 'hover:bg-gray-100'
+                      : 'hover:bg-gray-50'
                   }`}
                 >
                   Most Helpful

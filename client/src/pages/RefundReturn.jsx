@@ -217,7 +217,7 @@ const RefundReturn = () => {
           </div>
 
           {/* Footer */}
-          <div className="bg-gray-100 border-t border-gray-200 p-6 text-center">
+          <div className="bg-gray-50 border-t border-gray-200 p-6 text-center">
             <p className="text-sm text-gray-600">
               © 2025 Garava. All rights reserved.
             </p>

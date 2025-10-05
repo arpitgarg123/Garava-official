@@ -48,7 +48,8 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
     isActive: true,
     metaTitle: '',
     metaDescription: '',
-    collections: []
+    collections: [],
+    colorVariants: [] // Add colorVariants field
   });
   
   const [heroImageFile, setHeroImageFile] = useState(null);
@@ -91,7 +92,8 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         isActive: product.isActive !== undefined ? product.isActive : true,
         metaTitle: product.metaTitle || '',
         metaDescription: product.metaDescription || '',
-        collections: product.collections || []
+        collections: product.collections || [],
+        colorVariants: product.colorVariants || [] // Initialize colorVariants from product data
       });
       
       // Set existing image previews
@@ -205,6 +207,35 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
       };
       reader.readAsDataURL(file);
     });
+  };
+  
+  // Color variant management functions
+  const addColorVariant = () => {
+    setFormData(prev => ({
+      ...prev,
+      colorVariants: [...prev.colorVariants, {
+        name: '',
+        code: '',
+        hexColor: '#000000',
+        isAvailable: true
+      }]
+    }));
+  };
+
+  const removeColorVariant = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      colorVariants: prev.colorVariants.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleColorVariantChange = (index, field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      colorVariants: prev.colorVariants.map((color, i) => 
+        i === index ? { ...color, [field]: value } : color
+      )
+    }));
   };
   
   const handleSubmit = async (e) => {
@@ -527,7 +558,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                       required={!variant.isPriceOnDemand}
                       disabled={variant.isPriceOnDemand}
                       placeholder={variant.isPriceOnDemand ? "Price will be on demand" : ""}
-                      className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${variant.isPriceOnDemand ? 'bg-gray-100 text-gray-500' : ''}`}
+                      className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${variant.isPriceOnDemand ? 'bg-gray-50 text-gray-500' : ''}`}
                     />
                   </div>
                   
@@ -615,6 +646,105 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
             ))}
           </div>
+          
+          {/* Color Variants (for jewellery types) */}
+          {(formData.type === 'jewellery' || formData.type === 'high_jewellery') && (
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-medium text-gray-900">Color Variants</h3>
+                <button
+                  type="button"
+                  onClick={addColorVariant}
+                  className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+                >
+                  Add Color
+                </button>
+              </div>
+              
+              {formData.colorVariants.map((color, index) => (
+                <div key={index} className="border border-gray-200 rounded-lg p-4">
+                  <div className="flex justify-between items-start mb-4">
+                    <h4 className="font-medium">Color {index + 1}</h4>
+                    {formData.colorVariants.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => removeColorVariant(index)}
+                        className="text-red-600 hover:text-red-800"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Color Name
+                      </label>
+                      <input
+                        type="text"
+                        value={color.name}
+                        onChange={(e) => handleColorVariantChange(index, 'name', e.target.value)}
+                        placeholder="Rose Gold"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Color Code
+                      </label>
+                      <input
+                        type="text"
+                        value={color.code}
+                        onChange={(e) => handleColorVariantChange(index, 'code', e.target.value)}
+                        placeholder="rose"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Hex Color
+                      </label>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="color"
+                          value={color.hexColor}
+                          onChange={(e) => handleColorVariantChange(index, 'hexColor', e.target.value)}
+                          className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
+                        />
+                        <input
+                          type="text"
+                          value={color.hexColor}
+                          onChange={(e) => handleColorVariantChange(index, 'hexColor', e.target.value)}
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-end">
+                      <label className="flex items-center">
+                        <input
+                          type="checkbox"
+                          checked={color.isAvailable}
+                          onChange={(e) => handleColorVariantChange(index, 'isAvailable', e.target.checked)}
+                          className="mr-2"
+                        />
+                        Available
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              {formData.colorVariants.length === 0 && (
+                <div className="text-center py-8 text-gray-500">
+                  <p>No color variants added. Click "Add Color" to add color options for this jewellery item.</p>
+                </div>
+              )}
+            </div>
+          )}
           
           {/* Descriptions */}
           <div className="space-y-4">

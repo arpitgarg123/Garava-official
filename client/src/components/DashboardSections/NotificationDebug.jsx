@@ -101,7 +101,7 @@ const NotificationDebug = () => {
         </button>
       </div>
       
-      <div className="bg-gray-100 p-4 rounded-lg">
+      <div className="bg-gray-50 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Debug Information:</h3>
         <pre className="text-sm whitespace-pre-wrap">{debugInfo}</pre>
       </div>

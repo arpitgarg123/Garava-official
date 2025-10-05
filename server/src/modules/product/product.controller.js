@@ -2,7 +2,18 @@ import { asyncHandler } from "../../shared/utils/asyncHandler.js";
 import * as service from "./product.service.js";
 
 export const listProducts = asyncHandler(async (req, res) => {
-  const { page, limit, q, type, category, priceMin, priceMax, sort } = req.query;
+  const { page, limit, q, type, category, priceMin, priceMax, sort, colors } = req.query;
+  
+  // Parse colors if it's a string (comma-separated) or array
+  let parsedColors = null;
+  if (colors) {
+    if (typeof colors === 'string') {
+      parsedColors = colors.split(',').map(c => c.trim()).filter(Boolean);
+    } else if (Array.isArray(colors)) {
+      parsedColors = colors;
+    }
+  }
+  
   const result = await service.listProductsService({
     page: Number(page) || 1,
     limit: Number(limit) || 20,
@@ -12,6 +23,7 @@ export const listProducts = asyncHandler(async (req, res) => {
     priceMin,
     priceMax,
     sort,
+    colors: parsedColors,
   });  
   res.json({ success: true, ...result });
 });

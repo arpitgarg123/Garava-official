@@ -1,5 +1,5 @@
 // src/components/AddressSelector.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { 
@@ -19,7 +19,12 @@ import {
   clearError
 } from '../features/address/slice';
 
-const AddressSelector = ({ selectedAddressId, onAddressSelect, onAddressChange, showAsManagement = false }) => {
+// Global mount tracking to prevent spam across component instances
+let globalMountCount = 0;
+let lastMountTime = 0;
+
+// Memoized component to prevent unnecessary re-renders
+const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddressChange, showAsManagement = false }) => {
   const dispatch = useDispatch();
   const addresses = useSelector(selectAddresses);
   const defaultAddress = useSelector(selectDefaultAddress);
@@ -43,20 +48,41 @@ const AddressSelector = ({ selectedAddressId, onAddressSelect, onAddressChange, 
     isDefault: false
   });
 
-  // Fetch addresses on mount
+  // Fetch addresses on mount - with global spam prevention
+  const hasMounted = useRef(false);
+  
   useEffect(() => {
+    const now = Date.now();
+    globalMountCount++;
+    
+    // Prevent multiple mounts within 1 second
+    if (now - lastMountTime < 1000) {
+      console.log(`AddressSelector - Rapid mount #${globalMountCount} detected, skipping fetch (${now - lastMountTime}ms since last)`);
+      return;
+    }
+    
+    lastMountTime = now;
+    console.log(`AddressSelector - Mount #${globalMountCount}, fetching addresses`);
     dispatch(fetchAddresses());
   }, [dispatch]);
 
   // Auto-select default address if none selected
+  const hasAutoSelected = useRef(false);
+  
   useEffect(() => {
-    if (!selectedAddressId && defaultAddress && onAddressSelect) {
+    if (!selectedAddressId && defaultAddress && onAddressSelect && !hasAutoSelected.current) {
+      hasAutoSelected.current = true;
       onAddressSelect(defaultAddress._id);
       if (onAddressChange) {
         onAddressChange(defaultAddress);
       }
     }
-  }, [selectedAddressId, defaultAddress, onAddressSelect, onAddressChange]);
+    
+    // Reset flag when selectedAddressId changes externally
+    if (selectedAddressId) {
+      hasAutoSelected.current = false;
+    }
+  }, [selectedAddressId, defaultAddress?._id]); // Only depend on IDs, not callback functions
 
   // Clear errors
   useEffect(() => {
@@ -267,7 +293,7 @@ const AddressSelector = ({ selectedAddressId, onAddressSelect, onAddressChange, 
                   <p className="text-sm text-gray-600 mb-1">
                     {formatAddress(address)}
                   </p>
-                  <span className="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded capitalize">
+                  <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded capitalize">
                     {address.label}
                   </span>
                 </div>
@@ -441,6 +467,6 @@ const AddressSelector = ({ selectedAddressId, onAddressSelect, onAddressChange, 
       )}
     </div>
   );
-};
+});
 
 export default AddressSelector;

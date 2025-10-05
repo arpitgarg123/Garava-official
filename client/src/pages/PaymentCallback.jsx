@@ -146,7 +146,7 @@ const PaymentCallback = () => {
           <p className="mt-2 text-gray-600 mb-6">{error}</p>
           
           {orderId && (
-            <div className="mt-4 p-3 bg-gray-100 rounded-lg">
+            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-600">
                 Order ID: <span className="font-mono font-semibold">{orderId}</span>
               </p>
@@ -198,7 +198,7 @@ const PaymentCallback = () => {
           </div>
 
           {txnId && (
-            <div className="mt-3 p-3 bg-gray-100 rounded-lg">
+            <div className="mt-3 p-3 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-600">
                 Transaction ID: <span className="font-mono font-semibold">{txnId}</span>
               </p>
@@ -206,7 +206,7 @@ const PaymentCallback = () => {
           )}
 
           {orderId && (
-            <div className="mt-2 p-3 bg-gray-100 rounded-lg">
+            <div className="mt-2 p-3 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-600">
                 Order ID: <span className="font-mono font-semibold">{orderId}</span>
               </p>
@@ -257,7 +257,7 @@ const PaymentCallback = () => {
           </div>
 
           {orderId && (
-            <div className="mt-3 p-3 bg-gray-100 rounded-lg">
+            <div className="mt-3 p-3 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-600">
                 Order ID: <span className="font-mono font-semibold">{orderId}</span>
               </p>
@@ -306,7 +306,7 @@ const PaymentCallback = () => {
         </p>
         
         {txnId && (
-          <div className="mt-4 p-3 bg-gray-100 rounded-lg">
+          <div className="mt-4 p-3 bg-gray-50 rounded-lg">
             <p className="text-sm text-gray-600">
               Transaction ID: <span className="font-mono font-semibold">{txnId}</span>
             </p>

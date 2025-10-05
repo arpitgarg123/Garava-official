@@ -97,7 +97,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
     return (
       <div className={`grid grid-cols-2 ${compact ? 'gap-2' : 'lg:grid-cols-4 gap-3'}`}>
         {Array.from({ length: compact ? 2 : 4 }).map((_, i) => (
-          <div key={i} className="animate-pulse h-24 bg-gray-100 rounded" />
+          <div key={i} className="animate-pulse h-24 bg-gray-50 rounded" />
         ))}
       </div>
     );

@@ -22,13 +22,28 @@ const authHttp = axios.create({
   }
 });
 
-// Utility function for exponential backoff retry
-const retryRequest = async (requestFn, maxRetries = 2, baseDelay = 1000) => {
+// Utility function for exponential backoff retry with circuit breaker
+let failureCount = 0;
+let lastFailureTime = 0;
+const CIRCUIT_BREAKER_THRESHOLD = 5;
+const CIRCUIT_BREAKER_TIMEOUT = 60000; // 1 minute
+
+const retryRequest = async (requestFn, maxRetries = 1, baseDelay = 2000) => {
+  // Circuit breaker check
+  const now = Date.now();
+  if (failureCount >= CIRCUIT_BREAKER_THRESHOLD && 
+      (now - lastFailureTime) < CIRCUIT_BREAKER_TIMEOUT) {
+    throw new Error('Circuit breaker open - too many recent failures');
+  }
+  
   let lastError;
   
   for (let attempt = 1; attempt <= maxRetries + 1; attempt++) {
     try {
-      return await requestFn();
+      const result = await requestFn();
+      // Reset failure count on success
+      failureCount = 0;
+      return result;
     } catch (error) {
       lastError = error;
       
@@ -36,26 +51,35 @@ const retryRequest = async (requestFn, maxRetries = 2, baseDelay = 1000) => {
       if (error.response?.status === 401 || 
           error.response?.status === 403 || 
           error.response?.status === 422 ||
+          error.response?.status === 404 ||
           attempt > maxRetries) {
+        failureCount++;
+        lastFailureTime = now;
         throw error;
       }
       
       // Only retry on network errors or 5xx server errors
       const isRetryableError = error.code === 'ECONNABORTED' || 
                                error.code === 'NETWORK_ERROR' ||
+                               error.message?.includes('timeout') ||
                                (error.response?.status >= 500);
       
       if (!isRetryableError) {
+        failureCount++;
+        lastFailureTime = now;
         throw error;
       }
       
-      // Exponential backoff delay
-      const delay = baseDelay * Math.pow(2, attempt - 1);
-      console.log(`Request failed (attempt ${attempt}), retrying in ${delay}ms...`);
-      await new Promise(resolve => setTimeout(resolve, delay));
+      // Exponential backoff delay with jitter
+      const jitter = Math.random() * 1000; // Add random delay up to 1s
+      const delay = baseDelay * Math.pow(1.5, attempt - 1) + jitter; // Use 1.5x instead of 2x
+      console.log(`Request failed (attempt ${attempt}/${maxRetries + 1}), retrying in ${Math.round(delay)}ms...`);
+      await new Promise(resolve => setTimeout(resolve, Math.min(delay, 8000))); // Cap at 8s
     }
   }
   
+  failureCount++;
+  lastFailureTime = now;
   throw lastError;
 };
 
@@ -115,6 +139,12 @@ authHttp.interceptors.response.use(
   }
 );
 
+// Auth refresh tracking
+let refreshAttempts = 0;
+let lastRefreshAttempt = 0;
+const MAX_REFRESH_ATTEMPTS = 2;
+const REFRESH_COOLDOWN = 5000; // 5 seconds between refresh attempts
+
 http.interceptors.response.use(
   (res) => res,
   async (error) => {
@@ -132,9 +162,18 @@ http.interceptors.response.use(
     if (error.response?.status === 401) {
       console.log('HTTP Interceptor - 401 Unauthorized detected:', original.url);
       
-      // If this is already a logout request, don't try to refresh
-      if (original.url?.includes('/auth/logout')) {
-        console.log('HTTP Interceptor - Logout request failed, clearing auth state');
+      // If this is already a logout or refresh request, don't try to refresh
+      if (original.url?.includes('/auth/logout') || original.url?.includes('/auth/refresh')) {
+        console.log('HTTP Interceptor - Auth endpoint failed, clearing auth state');
+        logoutCb();
+        return Promise.reject(error);
+      }
+      
+      // Check refresh cooldown and attempt limits
+      const now = Date.now();
+      if (refreshAttempts >= MAX_REFRESH_ATTEMPTS || 
+          (now - lastRefreshAttempt) < REFRESH_COOLDOWN) {
+        console.log('HTTP Interceptor - Too many refresh attempts or cooldown active, logging out');
         logoutCb();
         return Promise.reject(error);
       }
@@ -153,9 +192,11 @@ http.interceptors.response.use(
 
       original._retry = true;
       isRefreshing = true;
+      refreshAttempts++;
+      lastRefreshAttempt = now;
 
       try {
-        console.log('HTTP Interceptor - Attempting token refresh...');
+        console.log('HTTP Interceptor - Attempting token refresh... (attempt', refreshAttempts, '/', MAX_REFRESH_ATTEMPTS, ')');
         const { data } = await authHttp.post('/auth/refresh', {});
         const newToken = data?.accessToken;
         
@@ -171,6 +212,8 @@ http.interceptors.response.use(
         }
         
         console.log('HTTP Interceptor - Token refresh successful');
+        // Reset refresh attempts on successful refresh
+        refreshAttempts = 0;
         setTokenCb(newToken);
         flushQueue(null, newToken);
         original.headers.Authorization = `Bearer ${newToken}`;

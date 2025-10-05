@@ -58,20 +58,20 @@ discover btton click done ✅ & navigate all products are also done✅ but all p
 
 
 # # new fixs
-automatic logout for some time
-dashboard blogs ui fix 
-dashboard all button are not cursor-pointer
+
+dashboard blogs ui fix ✅
 dashbaord review ui fix✅
 dashshord review comments not show✅
 dashbaord appointment add butn remove and ui fix✅
-navbar faq link are not active 
+navbar faq link are not active ✅
 chatbot ui fix and button center img✅
 products card remove color text ✅
-product color filter 
+product color filter ✅
 product page add banner ✅
+essentaial responsive✅
 event details ui fix✅
-testtinotial dashboard ui fix 
-news/events details img fix
+testtinotial dashboard ui fix ✅
+news/events details img fix✅
 shopping cart button fix route mismacth✅
 profile ui fix✅
 wishlist img not show and ui fix ✅
@@ -80,4 +80,19 @@ profile page loading fix ✅
 product details ui✅
 testinomial  ui fix ✅
 order details ui fix✅
+loader fix✅
+automatic logout for some time
 logout krne k bad logout nhi ho rha nav bar wala
+email message fix
+dashboard testinominal fetch gogle buttin not work
+products not respnsive
+overview original data 
+toast message dynamic
+dashboards section css custom 
+
+
+
+
+
+# # FEATURES COMPLETED
+google auth✅

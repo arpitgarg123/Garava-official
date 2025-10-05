@@ -2,7 +2,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 export default function BackButton({
-  fallback = "/products",
+  fallback = "/products ",
   className = "",
 }) {
   const navigate = useNavigate();

@@ -114,7 +114,7 @@ export default function Overview({
                   {recentOrders.slice(0, 5).map((order) => (
                     <div 
                       key={order._id} 
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                       onClick={() => onOpenOrder(order)}
                     >
                       <div>
@@ -127,7 +127,7 @@ export default function Overview({
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
                           order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-gray-100 text-gray-800'
+                          'bg-gray-50 text-gray-800'
                         }`}>
                           {order.status}
                         </span>
@@ -155,7 +155,7 @@ export default function Overview({
                   {topProducts.slice(0, 5).map((product, index) => (
                     <div 
                       key={product._id} 
-                      className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                      className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                       onClick={() => onOpenProduct(product)}
                     >
                       <div className="w-12 h-12 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
@@ -194,7 +194,7 @@ export default function Overview({
                   {recentReviews.slice(0, 5).map((review) => (
                     <div 
                       key={review._id} 
-                      className="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                      className="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                       onClick={() => onOpenReview(review)}
                     >
                       <div className="flex items-center justify-between mb-2">
@@ -233,7 +233,7 @@ export default function Overview({
                   {upcomingAppointments.slice(0, 5).map((appointment) => (
                     <div 
                       key={appointment._id} 
-                      className="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+                      className="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
                       onClick={() => onOpenAppointment(appointment)}
                     >
                       <div className="flex items-center justify-between">
@@ -246,7 +246,7 @@ export default function Overview({
                           <span className={`inline-block px-2 py-1 text-xs rounded-full font-medium ${
                             appointment.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                             appointment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-gray-100 text-gray-800'
+                            'bg-gray-50 text-gray-800'
                           }`}>
                             {appointment.status}
                           </span>

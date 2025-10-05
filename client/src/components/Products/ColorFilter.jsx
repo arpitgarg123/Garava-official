@@ -21,17 +21,24 @@ const ColorFilter = ({ selected = [], onChange = () => {} }) => {
             <button
               key={c.key}
               onClick={() => toggle(c.key)}
-              className={`flex w-32 items-start self-start px-2 py-2  rounded-md text-sm transition focus:outline-none ${
-                active ? "bg-black text-white" : "bg-white text-gray-800 hover:bg-gray-50"
+              className={`flex w-full items-center gap-3 px-3 py-2 rounded-md text-sm transition focus:outline-none ${
+                active ? "bg-black text-white" : "bg-white text-gray-800 hover:bg-gray-50 border border-gray-200"
               }`}
               aria-pressed={active}
             >
               <span
                 aria-hidden="true"
-                className="inline-block w-5 h-5 rounded-full border"
-                style={{ background: c.hex, borderColor: active ? "#fff" : "#e5e7eb" }}
+                className="inline-block w-5 h-5 rounded-full border-2"
+                style={{ 
+                  background: c.hex, 
+                  borderColor: active ? "#fff" : "#e5e7eb",
+                  boxShadow: active ? "0 0 0 2px rgba(0,0,0,0.1)" : "none"
+                }}
               />
-              <span>{c.label}</span>
+              <span className="flex-1 text-left">{c.label}</span>
+              {active && (
+                <span className="text-sm">✓</span>
+              )}
             </button>
           );
         })}
