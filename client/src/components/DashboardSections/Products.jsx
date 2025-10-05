@@ -208,9 +208,9 @@ export default function Products() {
 
   // Desktop Table Component
   const DesktopTable = () => (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[900px]">
-        <thead className="bg-gray-50 sticky top-0 z-10">
+    <div className="overflow-x-auto w-full">
+      <table className="w-full ">
+        <thead className="bg-gray-50 sticky w-full top-0 z-10">
           <tr>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Product
@@ -377,7 +377,7 @@ export default function Products() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="w-full pl-10 pr-4 py-2 border outline-none border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border outline-none border-gray-300 rounded-md "
               />
             </div>
           </div>
@@ -385,7 +385,7 @@ export default function Products() {
           <select
             value={localFilters.status || ''}
             onChange={(e) => handleFilterChange({ status: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md outline-none"
           >
             <option value="">All Status</option>
             <option value="published">Published</option>
@@ -396,7 +396,7 @@ export default function Products() {
           <select
             value={localFilters.category || ''}
             onChange={(e) => handleFilterChange({ category: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md outline-none"
           >
             <option value="">All Categories</option>
             <option value="fragrance">Fragrance</option>
@@ -454,7 +454,7 @@ export default function Products() {
                   placeholder="Search products..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none"
                 />
               </div>
             </div>
@@ -465,7 +465,7 @@ export default function Products() {
               <select
                 value={localFilters.status || ''}
                 onChange={(e) => handleFilterChange({ status: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
               >
                 <option value="">All Status</option>
                 <option value="published">Published</option>
@@ -480,7 +480,7 @@ export default function Products() {
               <select
                 value={localFilters.category || ''}
                 onChange={(e) => handleFilterChange({ category: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
               >
                 <option value="">All Categories</option>
                 <option value="fragrance">Fragrance</option>
@@ -496,7 +496,7 @@ export default function Products() {
                 handleClearFilters();
                 setShowMobileFilters(false);
               }}
-              className="flex-1 py-3 border border-gray-300 rounded-md text-center hover:bg-gray-50 transition-colors"
+              className="btn"
             >
               Clear All
             </button>
@@ -505,7 +505,7 @@ export default function Products() {
                 handleSearch();
                 setShowMobileFilters(false);
               }}
-              className="flex-1 py-3 bg-blue-600 text-white rounded-md text-center hover:bg-blue-700 transition-colors"
+              className="btn-black btn-small"
             >
               Apply Filters
             </button>
@@ -514,7 +514,7 @@ export default function Products() {
       </div>
 
       {/* Products Content - Responsive */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden w-full">
         {loading ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">
@@ -536,7 +536,7 @@ export default function Products() {
               {Object.values(localFilters).some(val => val) && (
                 <button
                   onClick={handleClearFilters}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className="btn-black btn-small"
                 >
                   Clear Filters
                 </button>
@@ -544,7 +544,7 @@ export default function Products() {
             </div>
           </div>
         ) : (
-          <div className="h-full overflow-auto">
+          <div className="h-full overflow-auto w-full  ">
             {/* Mobile Cards */}
             <div className="block lg:hidden p-4 space-y-4">
               {products.map((product) => (
@@ -553,7 +553,7 @@ export default function Products() {
             </div>
             
             {/* Desktop Table */}
-            <div className="hidden lg:block h-full">
+            <div className="hidden lg:block h-full w-full  ">
               <DesktopTable />
             </div>
           </div>
@@ -569,7 +569,7 @@ export default function Products() {
             </div>
             
             {/* Mobile Pagination */}
-            <div className="flex items-center gap-2 sm:hidden">
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
@@ -590,7 +590,7 @@ export default function Products() {
             </div>
             
             {/* Desktop Pagination */}
-            <div className="hidden sm:flex items-center gap-2">
+            {/* <div className="hidden sm:flex items-center gap-2">
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
@@ -621,7 +621,7 @@ export default function Products() {
               >
                 Next
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       )}

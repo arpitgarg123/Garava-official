@@ -135,7 +135,7 @@ export default function EnhancedChatbotWidget({
           aria-label="Open chat"
           className={`group fixed bottom-5 right-5 z-40 cursor-pointer inline-flex items-center gap-2 rounded-full px-3 py-2 bg-gray-200`}
         >
-          <div className="hidden sm:flex items-center justify-center ">
+          <div className="flex items-center justify-center ">
             <img className="h-10" src={iconlogo} alt="Garava Assistant" />
           </div>
           

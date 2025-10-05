@@ -350,7 +350,7 @@ export default function Orders() {
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm  border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -368,7 +368,7 @@ export default function Orders() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none"
               />
             </div>
           </div>
@@ -376,7 +376,7 @@ export default function Orders() {
           <select
             value={localFilters.status || ''}
             onChange={(e) => handleFilterChange({ status: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md outline-none"
           >
             <option value="">All Status</option>
             <option value="pending">Pending</option>
@@ -391,7 +391,7 @@ export default function Orders() {
           <select
             value={localFilters.paymentStatus || ''}
             onChange={(e) => handleFilterChange({ paymentStatus: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300 rounded-md outline-none"
           >
             <option value="">All Payment Status</option>
             <option value="pending">Payment Pending</option>
@@ -450,7 +450,7 @@ export default function Orders() {
                   placeholder="Search orders by ID, customer..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none"
                 />
               </div>
             </div>
@@ -461,7 +461,7 @@ export default function Orders() {
               <select
                 value={localFilters.status || ''}
                 onChange={(e) => handleFilterChange({ status: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
               >
                 <option value="">All Status</option>
                 <option value="pending">Pending</option>
@@ -480,7 +480,7 @@ export default function Orders() {
               <select
                 value={localFilters.paymentStatus || ''}
                 onChange={(e) => handleFilterChange({ paymentStatus: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
               >
                 <option value="">All Payment Status</option>
                 <option value="pending">Payment Pending</option>
@@ -491,13 +491,13 @@ export default function Orders() {
             </div>
           </div>
           
-          <div className="border-t p-4 flex gap-4">
+          <div className="border-t p-4 flex gap-4 justify-between">
             <button 
               onClick={() => {
                 handleClearFilters();
                 setShowMobileFilters(false);
               }}
-              className="flex-1 py-3 border border-gray-300 rounded-md text-center hover:bg-gray-50 transition-colors"
+              className="border py-1  btn-small px-4"
             >
               Clear All
             </button>
@@ -506,7 +506,7 @@ export default function Orders() {
                 handleSearch();
                 setShowMobileFilters(false);
               }}
-              className="flex-1 py-3 bg-blue-600 text-white rounded-md text-center hover:bg-blue-700 transition-colors"
+              className="btn-black btn-small"
             >
               Apply Filters
             </button>
@@ -591,7 +591,7 @@ export default function Orders() {
             </div>
             
             {/* Desktop Pagination */}
-            <div className="hidden sm:flex items-center gap-2">
+            {/* <div className="hidden sm:flex items-center gap-2">
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
@@ -622,7 +622,7 @@ export default function Orders() {
               >
                 Next
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       )}

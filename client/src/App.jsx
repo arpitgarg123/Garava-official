@@ -344,15 +344,15 @@ const App = () => {
   };
 
   // Show loader until everything is loaded
-  if (isWebsiteLoading) {
-    return (
-      <WebsiteLoader
-        onLoadingComplete={handleLoadingComplete}
-        minLoadTime={3000}
-        loadingProgress={loadingStates}
-      />
-    );
-  }
+  // if (isWebsiteLoading) {
+  //   return (
+  //     <WebsiteLoader
+  //       onLoadingComplete={handleLoadingComplete}
+  //       minLoadTime={3000}
+  //       loadingProgress={loadingStates}
+  //     />
+  //   );
+  // }
 
   return (
    <ToastProvider >

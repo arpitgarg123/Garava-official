@@ -299,14 +299,10 @@ body:has(.submenu-container) {
 .btn-black:hover {
   background-color: transparent;
   color: #0c0c0c;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(12, 12, 12, 0.2);
+
 }
 
-.btn-black:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(12, 12, 12, 0.2);
-}
+
 
 .btn-black:focus {
   outline: 2px solid #0c0c0c;

@@ -520,7 +520,7 @@ export default function Reviews() {
 
   // Mobile Review Card Component
   const MobileReviewCard = ({ review }) => (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden mb-4">
+    <div className="bg-white rounded-lg border border-gray-300  w-full overflow-hidden mb-4">
       <div className="p-4">
         {/* Mobile Card Header */}
         <div className="flex justify-between items-start mb-3">
@@ -872,8 +872,8 @@ export default function Reviews() {
   return (
     <div className="h-full flex flex-col overflow-hidden">
       {/* Header with Actions - Responsive */}
-      <div className="flex-shrink-0 p-4 sm:p-6 border-b border-gray-200 bg-white">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+      <div className="flex-shrink-0 p-4 sm:p-6 border-b w-full border-gray-200 bg-white">
+        <div className="flex flex-col sm:flex-row w-full items-start sm:items-center justify-between gap-4 mb-4">
           <div className="min-w-0 flex-1">
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
               Reviews Management
@@ -899,7 +899,7 @@ export default function Reviews() {
         </div>
 
         {/* Desktop Filters */}
-        <div className="hidden lg:flex flex-wrap items-center gap-4">
+        <div className="hidden w-full lg:flex flex-wrap items-center gap-4">
           <div className="flex-1 min-w-64">
             <div className="relative">
               <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -1050,7 +1050,7 @@ export default function Reviews() {
       </div>
 
       {/* Reviews Content - Responsive */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden w-full">
         {loading ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">
@@ -1080,9 +1080,9 @@ export default function Reviews() {
             </div>
           </div>
         ) : (
-          <div className="h-full overflow-auto">
+          <div className="h-full overflow-auto w-full">
             {/* Mobile Cards */}
-            <div className="block lg:hidden p-4">
+            <div className="block lg:hidden p-4 w-full">
               {filteredReviews.map((review) => (
                 <MobileReviewCard key={review._id} review={review} />
               ))}
