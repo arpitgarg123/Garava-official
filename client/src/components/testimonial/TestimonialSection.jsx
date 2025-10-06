@@ -409,7 +409,7 @@
 //         <h4 className="font-semibold text-gray-900 text-base sm:text-lg mb-1">
 //           {testimonial.name}
 //         </h4>
-//         <p className="text-gray-500 text-xs sm:text-md font-medium">
+//         <p className="text-gray-500 text-sm sm:text-md font-medium">
 //           {testimonial.location || 'Verified Customer'}
 //         </p>
 //       </div>

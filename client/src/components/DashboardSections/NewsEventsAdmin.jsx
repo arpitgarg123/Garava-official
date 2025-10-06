@@ -181,20 +181,20 @@ export default function NewsEventsAdmin() {
                 {item.title}
               </h3>
               <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}>
+                <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(item.status)}`}>
                   {item.status}
                 </span>
-                <div className="flex items-center text-xs text-gray-500">
+                <div className="flex items-center text-sm text-gray-500">
                   {getTypeIcon(item.type)}
                   <span className="ml-1">{item.type === 'media-coverage' ? 'Media' : 'Event'}</span>
                 </div>
               </div>
             </div>
-            <p className="text-xs sm:text-md text-gray-600 line-clamp-2 mb-3">
+            <p className="text-sm sm:text-md text-gray-600 line-clamp-2 mb-3">
               {item.excerpt || 'No excerpt available'}
             </p>
 
-            <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+            <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
               <span>{formatDate(item.date)}</span>
               <div className="flex items-center">
                 <AiOutlineEye className="w-3 h-3 mr-1" />
@@ -220,7 +220,7 @@ export default function NewsEventsAdmin() {
           <select
             value={item.status}
             onChange={(e) => handleStatusUpdate(item._id, e.target.value)}
-            className="text-xs border border-gray-300 rounded px-2 py-1 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="text-sm border border-gray-300 rounded px-2 py-1 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             title="Update Status"
           >
             <option value="draft">Draft</option>
@@ -245,22 +245,22 @@ export default function NewsEventsAdmin() {
         <table className="w-full min-w-[1000px]">
           <thead className="bg-gray-50 sticky top-0 z-10">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                 Title
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                 Type
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                 Date
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                 Views
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
@@ -296,7 +296,7 @@ export default function NewsEventsAdmin() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(item.status)}`}>
+                  <span className={`inline-flex px-2 py-1 text-sm font-semibold rounded-full ${getStatusColor(item.status)}`}>
                     {item.status}
                   </span>
                 </td>
@@ -328,7 +328,7 @@ export default function NewsEventsAdmin() {
                     <select
                       value={item.status}
                       onChange={(e) => handleStatusUpdate(item._id, e.target.value)}
-                      className="text-xs border rounded px-2 py-1 outline-none"
+                      className="text-sm border rounded px-2 py-1 outline-none"
                       title="Update Status"
                     >
                       <option value="draft">Draft</option>
@@ -395,27 +395,27 @@ export default function NewsEventsAdmin() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-4 sm:mb-6">
             <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-gray-900">{stats.total}</div>
-              <div className="text-xs sm:text-md text-gray-600 truncate">Total Items</div>
+              <div className="text-sm sm:text-md text-gray-600 truncate">Total Items</div>
             </div>
             <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-green-600">{stats.published}</div>
-              <div className="text-xs sm:text-md text-gray-600 truncate">Published</div>
+              <div className="text-sm sm:text-md text-gray-600 truncate">Published</div>
             </div>
             <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-yellow-600">{stats.draft}</div>
-              <div className="text-xs sm:text-md text-gray-600 truncate">Drafts</div>
+              <div className="text-sm sm:text-md text-gray-600 truncate">Drafts</div>
             </div>
             <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-red-600">{stats.archived}</div>
-              <div className="text-xs sm:text-md text-gray-600 truncate">Archived</div>
+              <div className="text-sm sm:text-md text-gray-600 truncate">Archived</div>
             </div>
             <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-blue-600">{stats.events}</div>
-              <div className="text-xs sm:text-md text-gray-600 truncate">Events</div>
+              <div className="text-sm sm:text-md text-gray-600 truncate">Events</div>
             </div>
             <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-300">
               <div className="text-lg sm:text-xl lg:text-2xl font-bold text-purple-600">{stats.mediaCoverage}</div>
-              <div className="text-xs sm:text-md text-gray-600">Media Coverage</div>
+              <div className="text-sm sm:text-md text-gray-600">Media Coverage</div>
             </div>
           </div>
           

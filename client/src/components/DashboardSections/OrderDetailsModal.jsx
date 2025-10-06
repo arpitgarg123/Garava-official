@@ -115,11 +115,11 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Variant</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Variant</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Qty</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Total</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -151,10 +151,10 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                               <div className="font-medium">{item.variantSnapshot.sizeLabel}</div>
                             )}
                             {item.variantSnapshot.color && (
-                              <div className="text-xs text-gray-500">{item.variantSnapshot.color}</div>
+                              <div className="text-sm text-gray-500">{item.variantSnapshot.color}</div>
                             )}
                             {item.variantSnapshot.sku && (
-                              <div className="text-xs text-gray-400">SKU: {item.variantSnapshot.sku}</div>
+                              <div className="text-sm text-gray-400">SKU: {item.variantSnapshot.sku}</div>
                             )}
                             {!item.variantSnapshot.sizeLabel && !item.variantSnapshot.color && !item.variantSnapshot.sku && (
                               <span className="text-gray-500">Standard</span>

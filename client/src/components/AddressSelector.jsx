@@ -276,7 +276,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                     <span className="font-medium">{address.fullName}</span>
                     <span className="text-md text-gray-600">({address.phone})</span>
                     {address.isDefault && (
-                      <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
+                      <span className="px-2 py-1 bg-green-100 text-green-800 text-sm rounded">
                         Default
                       </span>
                     )}
@@ -284,7 +284,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                   <p className="text-md text-gray-600 mb-1">
                     {formatAddress(address)}
                   </p>
-                  <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded capitalize">
+                  <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-sm rounded capitalize">
                     {address.label}
                   </span>
                 </div>

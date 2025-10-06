@@ -125,7 +125,7 @@ const PaymentFailure = () => {
         {/* Common payment failure reasons and solutions */}
         <div className="mt-6 text-left bg-gray-50 p-4 rounded-lg">
           <h3 className="font-semibold text-md text-gray-900 mb-2">Common issues:</h3>
-          <ul className="text-xs text-gray-600 space-y-1">
+          <ul className="text-sm text-gray-600 space-y-1">
             <li>• Insufficient balance in your account</li>
             <li>• Card limit exceeded</li>
             <li>• Network connectivity issues</li>

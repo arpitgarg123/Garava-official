@@ -43,7 +43,7 @@ const NewsletterForm = () => {
           onChange={handleChange}
           className="input-field"
         />
-        <span className="text-xs text-red-500">*Required</span>
+        <span className="text-sm text-red-500">*Required</span>
       </div>
 
       <div className="flex gap-4">
@@ -57,7 +57,7 @@ const NewsletterForm = () => {
             onChange={handleChange}
             className="input-field"
           />
-          <span className="text-xs text-red-500">*Required</span>
+          <span className="text-sm text-red-500">*Required</span>
         </div>
 
         <div className="w-1/2">
@@ -70,14 +70,14 @@ const NewsletterForm = () => {
             onChange={handleChange}
             className="input-field"
           />
-          <span className="text-xs text-red-500">*Required</span>
+          <span className="text-sm text-red-500">*Required</span>
         </div>
       </div>
 
 
    
 
-      <p className="text-xs text-gray-500 leading-5">
+      <p className="text-sm text-gray-500 leading-5">
         (*) mandatory fields <br />
         You can unsubscribe from the link provided in our newsletter at any
         time. Your personal information will be stored & used in accordance with

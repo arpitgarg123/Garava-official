@@ -45,11 +45,11 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                   </div>
                   <div>
                     <span className="font-medium text-gray-700 text-md sm:text-base">Slug:</span>
-                    <p className="text-gray-600 font-mono text-xs sm:text-md break-all">{item.slug}</p>
+                    <p className="text-gray-600 font-mono text-sm sm:text-md break-all">{item.slug}</p>
                   </div>
                   <div>
                     <span className="font-medium text-gray-700 text-md sm:text-base">Type:</span>
-                    <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
+                    <span className={`ml-2 px-2 py-1 text-sm rounded-full ${
                       item.type === 'event' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
                     }`}>
                       {item.type === 'media-coverage' ? 'Media Coverage' : item.kind}
@@ -61,7 +61,7 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                   </div>
                   <div>
                     <span className="font-medium text-gray-700 text-md sm:text-base">Status:</span>
-                    <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
+                    <span className={`ml-2 px-2 py-1 text-sm rounded-full ${
                       item.status === 'published' ? 'bg-green-100 text-green-800' :
                       item.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
                       'bg-red-100 text-red-800'
@@ -184,7 +184,7 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
             {/* Responsive Metadata */}
             <div>
               <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Metadata</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 bg-gray-50 p-3 sm:p-4 rounded-lg text-xs sm:text-md">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 bg-gray-50 p-3 sm:p-4 rounded-lg text-sm sm:text-md">
                 <div>
                   <span className="font-medium text-gray-700">Created:</span>
                   <p className="text-gray-600 break-words">{formatDate(item.createdAt)}</p>

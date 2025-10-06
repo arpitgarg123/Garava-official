@@ -117,10 +117,10 @@ const ShippingPolicy = () => {
                   <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Delivery Time</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shipping Cost</th>
-                        <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">COD Available</th>
+                        <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                        <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Delivery Time</th>
+                        <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Shipping Cost</th>
+                        <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">COD Available</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
@@ -321,7 +321,7 @@ const ShippingPolicy = () => {
                       <div>
                         <h4 className="font-semibold text-gray-900 text-md">Customer Support</h4>
                         <p className="text-gray-600 text-md">+91-7738543881</p>
-                        <p className="text-xs text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
+                        <p className="text-sm text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
                       </div>
                     </div>
                     
@@ -335,7 +335,7 @@ const ShippingPolicy = () => {
                       <div>
                         <h4 className="font-semibold text-gray-900 text-md">Email Support</h4>
                         <p className="text-gray-600 text-md">info@garava.in</p>
-                        <p className="text-xs text-gray-500">Response within 24 hours</p>
+                        <p className="text-sm text-gray-500">Response within 24 hours</p>
                       </div>
                     </div>
                     
@@ -348,7 +348,7 @@ const ShippingPolicy = () => {
                       <div>
                         <h4 className="font-semibold text-gray-900 text-md">Order Tracking</h4>
                         <p className="text-gray-600 text-md">Track your shipment</p>
-                        <p className="text-xs text-gray-500">Real-time updates via SMS</p>
+                        <p className="text-sm text-gray-500">Real-time updates via SMS</p>
                       </div>
                     </div>
                   </div>
@@ -361,7 +361,7 @@ const ShippingPolicy = () => {
                       <p className="text-md text-gray-700">
                         Garava Luxury Jewellery, Bandra West, Mumbai - 400050
                       </p>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-sm text-gray-500 mt-1">
                         Visit us: Tuesday to Sunday, 11:00 AM - 8:00 PM
                       </p>
                     </div>
@@ -376,7 +376,7 @@ const ShippingPolicy = () => {
             <p className="text-md text-gray-600">
               © 2025 Garava. All rights reserved. This shipping policy is effective as of October 2, 2025.
             </p>
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-sm text-gray-500 mt-2">
               Shipping terms are subject to change based on location and product availability. 
               Delivery timelines are estimates and may vary during peak seasons or unforeseen circumstances.
             </p>

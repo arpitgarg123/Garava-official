@@ -15,9 +15,9 @@ const MediaCard =({ item }) =>{
         <div className="flex h-1/2 items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             
-            <span className="text-xs font-medium">{item.outlet}</span>
+            <span className="text-sm font-medium">{item.outlet}</span>
           </div>
-          <time className="text-xs text-muted-foreground" dateTime={item.date}>
+          <time className="text-sm text-muted-foreground" dateTime={item.date}>
             {new Date(item.date).toLocaleDateString(undefined, { year: "numeric", month: "short" })}
           </time>
         </div>
@@ -28,7 +28,7 @@ const MediaCard =({ item }) =>{
             href={item.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center rounded-xl bg-primary px-3 py-2 text-xs font-medium text-primary-foreground"
+            className="inline-flex items-center rounded-xl bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
           >
             Read article ↗
           </a>

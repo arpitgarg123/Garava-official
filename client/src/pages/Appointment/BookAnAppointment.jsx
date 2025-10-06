@@ -169,7 +169,7 @@ const BookAnAppointment = () => {
             className="w-full border p-2 resize-none rounded min-h-[120px]"
             placeholder="Describe what you’re looking for (optional)"
           />
-          <p className="mt-1 text-xs text-gray-500">Note: This will be sent as “notes” to our team.</p>
+          <p className="mt-1 text-sm text-gray-500">Note: This will be sent as “notes” to our team.</p>
         </div>
 
         <button

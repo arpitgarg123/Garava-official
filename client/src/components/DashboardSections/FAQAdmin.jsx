@@ -186,26 +186,26 @@ const FAQAdmin = () => {
             {faq.question}
           </h3>
           <div className="flex flex-col items-end gap-1 flex-shrink-0">
-            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+            <span className={`px-2 py-1 rounded-full text-sm font-medium ${
               faq.isActive 
                 ? 'bg-green-100 text-green-800' 
                 : 'bg-red-100 text-red-800'
             }`}>
               {faq.isActive ? 'Active' : 'Inactive'}
             </span>
-            <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+            <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
               {faq.category}
             </span>
           </div>
         </div>
         
         {/* Answer */}
-        <p className="text-xs sm:text-md text-gray-600 line-clamp-3">
+        <p className="text-sm sm:text-md text-gray-600 line-clamp-3">
           {faq.answer}
         </p>
         
         {/* Stats */}
-        <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+        <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
           <span className="bg-gray-100 px-2 py-1 rounded">Priority: {faq.priority}</span>
           <span className="bg-gray-100 px-2 py-1 rounded">Matches: {faq.timesMatched}</span>
           <span className="bg-gray-100 px-2 py-1 rounded">👍 {faq.helpfulVotes}</span>
@@ -214,7 +214,7 @@ const FAQAdmin = () => {
 
         {/* Keywords */}
         {faq.keywords && faq.keywords.length > 0 && (
-          <div className="text-xs text-gray-500">
+          <div className="text-sm text-gray-500">
             <span className="font-medium">Keywords:</span> {faq.keywords.slice(0, 3).join(', ')}
             {faq.keywords.length > 3 && ` +${faq.keywords.length - 3} more`}
           </div>
@@ -508,14 +508,14 @@ const FAQAdmin = () => {
                           <h3 className="text-lg font-medium text-gray-900 line-clamp-2 flex-1">
                             {faq.question}
                           </h3>
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+                          <span className={`px-2 py-1 rounded-full text-sm font-medium flex-shrink-0 ${
                             faq.isActive 
                               ? 'bg-green-100 text-green-800' 
                               : 'bg-red-100 text-red-800'
                           }`}>
                             {faq.isActive ? 'Active' : 'Inactive'}
                           </span>
-                          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium flex-shrink-0">
+                          <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium flex-shrink-0">
                             {faq.category}
                           </span>
                         </div>
@@ -1076,7 +1076,7 @@ const CSVUploadPanel = ({ onClose }) => {
         {/* Instructions */}
         <div className="space-y-4">
           <h4 className="font-medium text-md sm:text-base">CSV Format Requirements:</h4>
-          <ul className="text-xs sm:text-md text-gray-600 space-y-2">
+          <ul className="text-sm sm:text-md text-gray-600 space-y-2">
             <li>• <strong>question</strong>: The FAQ question (required)</li>
             <li>• <strong>answer</strong>: The FAQ answer (required)</li>
             <li>• <strong>category</strong>: Category (general, products, shipping, etc.)</li>
@@ -1084,7 +1084,7 @@ const CSVUploadPanel = ({ onClose }) => {
             <li>• <strong>keywords</strong>: Comma-separated keywords for matching</li>
           </ul>
           
-          <div className="text-xs sm:text-md text-amber-600 bg-amber-50 p-3 rounded-lg">
+          <div className="text-sm sm:text-md text-amber-600 bg-amber-50 p-3 rounded-lg">
             <strong>Tip:</strong> Download the template to see the exact format required.
           </div>
         </div>
@@ -1105,7 +1105,7 @@ const CSVUploadPanel = ({ onClose }) => {
           {uploadResults.errors.length > 0 && (
             <details className="mt-3">
               <summary className="cursor-pointer text-red-600 font-medium text-md">View Errors</summary>
-              <div className="mt-2 text-xs sm:text-md text-red-700 space-y-1 max-h-32 overflow-y-auto">
+              <div className="mt-2 text-sm sm:text-md text-red-700 space-y-1 max-h-32 overflow-y-auto">
                 {uploadResults.errors.map((error, index) => (
                   <p key={index}>Row {error.index + 2}: {error.error}</p>
                 ))}

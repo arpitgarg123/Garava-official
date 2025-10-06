@@ -42,7 +42,7 @@
 //         </button>
 //       </div>
 
-//       <p className="mt-3 text-xs text-gray-500">
+//       <p className="mt-3 text-sm text-gray-500">
 //         Price shown is in INR. Leave blank to ignore.
 //       </p>
 //     </div>

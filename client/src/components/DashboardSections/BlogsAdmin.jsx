@@ -154,22 +154,22 @@
 //             <table className="w-full">
 //               <thead className="bg-gray-50 sticky top-0 z-10">
 //                 <tr>
-//                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Post
 //                   </th>
-//                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Author
 //                   </th>
-//                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Date
 //                   </th>
-//                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Status
 //                   </th>
-//                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Views
 //                   </th>
-//                   <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Actions
 //                   </th>
 //                 </tr>
@@ -213,7 +213,7 @@
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(blog.status)}`}>
+//                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(blog.status)}`}>
 //                         {blog.status}
 //                       </span>
 //                     </td>
@@ -408,16 +408,16 @@ export default function BlogsAdmin() {
             <h3 className="text-md sm:text-base font-medium text-gray-900 line-clamp-2 flex-1">
               {blog.title}
             </h3>
-            <span className={`ml-2 inline-flex items-center px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${getStatusColor(blog.status)}`}>
+            <span className={`ml-2 inline-flex items-center px-2 py-1 rounded-full text-sm font-medium flex-shrink-0 ${getStatusColor(blog.status)}`}>
               {blog.status}
             </span>
           </div>
           
-          <p className="text-xs sm:text-md text-gray-600 line-clamp-2 mb-2">
+          <p className="text-sm sm:text-md text-gray-600 line-clamp-2 mb-2">
             {blog.description}
           </p>
 
-          <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+          <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
             <span>{formatDate(blog.createdAt)}</span>
             <div className="flex items-center">
               <FiEye className="w-3 h-3 mr-1" />
@@ -478,22 +478,22 @@ export default function BlogsAdmin() {
       <table className="w-full min-w-[1000px]">
         <thead className="bg-gray-50 sticky top-0 z-10">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Post
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Author
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Date
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Views
             </th>
-            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -537,7 +537,7 @@ export default function BlogsAdmin() {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(blog.status)}`}>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(blog.status)}`}>
                   {blog.status}
                 </span>
               </td>

@@ -146,7 +146,7 @@ const ProductCard = ({
       {/* High Jewellery Badge */}
       {isHighJewellery && (
         <div className="absolute top-3 left-3 z-10">
-          <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black text-xs font-bold px-3 py-1 rounded-full shadow-md">
+          <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black text-sm font-bold px-3 py-1 rounded-full shadow-md">
             HIGH JEWELLERY
           </span>
         </div>
@@ -286,23 +286,23 @@ const ProductCard = ({
       <div className="p-2 flex flex-col flex-grow">
         {(product.type === "fragrance" || product.category === "fragrance") ? (
           <>
-            <div className="text-xs uppercase tracking-wider text-gray-500 leading-0  max-sm:my-4  font-medium">{product.type || "Fragrance"}</div>
+            <div className="text-sm uppercase tracking-wider text-gray-500 leading-0  max-sm:my-4  font-medium">{product.type || "Fragrance"}</div>
             <h3 className="text-base leading-none sm:text-lg font-playfair tracking-wide line-clamp-1 text-gray-900">{product.name}</h3>
             {product.shortDescription && (
-              <p className="text-xs text-gray-600 line-clamp-2 font-light  max-sm:mt-2">{product.shortDescription}</p>
+              <p className="text-sm text-gray-600 line-clamp-2 font-light  max-sm:mt-2">{product.shortDescription}</p>
             )}
             <div className="text-base sm:text-lg font-medium tracking-wide">{displayPrice}</div>
           </>
         ) : (
           <>
-            <div className="text-xs uppercase leading-0 tracking-wider text-gray-500 font-medium">
+            <div className="text-sm uppercase leading-0 tracking-wider text-gray-500 font-medium">
               {isHighJewellery ? "HIGH JEWELLERY" : (product.type || product.category || "jewellery")}
             </div>
             <h3 className="text-base sm:text-lg font-playfair tracking-wide line-clamp-2 my-2  max-sm:my-3 text-gray-900 leading-none">{product.name}</h3>
             
             {/* High Jewellery Description */}
             {isHighJewellery && product.shortDescription && (
-              <p className="text-xs text-gray-600 line-clamp-2 font-light italic">{product.shortDescription}</p>
+              <p className="text-sm text-gray-600 line-clamp-2 font-light italic">{product.shortDescription}</p>
             )}
             
             {/* Price or Price on Demand for High Jewellery */}
@@ -342,7 +342,7 @@ const ProductCard = ({
                         </div>
                         <div>
                           <div className="font-medium text-gray-900">WhatsApp</div>
-                          <div className="text-xs text-gray-500">Instant messaging</div>
+                          <div className="text-sm text-gray-500">Instant messaging</div>
                         </div>
                       </button>
                       <button
@@ -357,7 +357,7 @@ const ProductCard = ({
                         </div>
                         <div>
                           <div className="font-medium text-gray-900">Email</div>
-                          <div className="text-xs text-gray-500">Detailed inquiry</div>
+                          <div className="text-sm text-gray-500">Detailed inquiry</div>
                         </div>
                       </button>
                     </div>

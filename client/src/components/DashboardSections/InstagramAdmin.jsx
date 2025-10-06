@@ -345,7 +345,7 @@ const InstagramAdmin = () => {
                   
                   {/* Status Badge */}
                   <div className="absolute top-2 left-2">
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                    <span className={`px-2 py-1 text-sm font-medium rounded-full ${
                       post.isActive 
                         ? 'bg-green-100 text-green-800' 
                         : 'bg-red-100 text-red-800'
@@ -357,7 +357,7 @@ const InstagramAdmin = () => {
                   {/* Featured Badge */}
                   {post.isFeatured && (
                     <div className="absolute top-2 right-2">
-                      <span className="px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">
+                      <span className="px-2 py-1 text-sm font-medium rounded-full bg-yellow-100 text-yellow-800">
                         Featured
                       </span>
                     </div>
@@ -418,7 +418,7 @@ const InstagramAdmin = () => {
                       </button>
                     </div>
 
-                    <span className="text-xs text-gray-500">
+                    <span className="text-sm text-gray-500">
                       Order: {post.sortOrder}
                     </span>
                   </div>
@@ -489,7 +489,7 @@ const InstagramAdmin = () => {
                     {/* Image Preview */}
                     {imagePreview && (
                       <div className="mt-3">
-                        <label className="block text-xs text-gray-500 mb-1">Preview</label>
+                        <label className="block text-sm text-gray-500 mb-1">Preview</label>
                         <img
                           src={imagePreview}
                           alt="Preview"
@@ -525,7 +525,7 @@ const InstagramAdmin = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 mt-1">
                     Examples: instagram.com/garavaofficial, www.instagram.com/p/ABC123/, https://instagram.com/reel/XYZ456/
                   </p>
                 </div>

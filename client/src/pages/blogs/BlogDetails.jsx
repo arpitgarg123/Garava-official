@@ -140,7 +140,7 @@ export default function BlogDetails() {
                 </span>
               )}
               {blog.readingTime && (
-                <span className="text-xs flex-center"> ● {blog.readingTime} min read</span>
+                <span className="text-sm flex-center"> ● {blog.readingTime} min read</span>
               )}
             </div>
             <h1 className="text-balance text-3xl font-semibold leading-tight sm:text-4xl">
@@ -156,7 +156,7 @@ export default function BlogDetails() {
               />
               <div>
                 <div className="text-md font-medium">Posted by {blog.author?.name || 'Garava'}</div>
-                <div className="text-xs text-gray-600">Updated {formatDate(blog.publishAt || blog.createdAt)}</div>
+                <div className="text-sm text-gray-600">Updated {formatDate(blog.publishAt || blog.createdAt)}</div>
               </div>
             </div>
           </header>
@@ -184,7 +184,7 @@ export default function BlogDetails() {
           {blog.tags?.length > 0 && (
             <div className="flex flex-wrap items-center gap-2 border-t px-5 py-6 sm:px-8">
               {blog.tags.map((tag, index) => (
-                <span key={index} className="rounded-full border px-3 py-1 text-xs text-gray-600">
+                <span key={index} className="rounded-full border px-3 py-1 text-sm text-gray-600">
                   #{tag}
                 </span>
               ))}

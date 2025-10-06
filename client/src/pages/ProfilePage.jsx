@@ -217,7 +217,7 @@
 //                 <div>
 //                   <label className="block text-md font-medium text-gray-700 mb-2">Email Verification</label>
 //                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-//                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs sm:text-md font-medium ${
+//                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm sm:text-md font-medium ${
 //                       form.isVerified 
 //                         ? "bg-green-100 text-green-800" 
 //                         : "bg-orange-100 text-orange-800"
@@ -228,7 +228,7 @@
 //                       <button
 //                         type="button"
 //                         onClick={onResend}
-//                         className="text-xs sm:text-md border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
+//                         className="text-sm sm:text-md border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
 //                       >
 //                         Resend
 //                       </button>
@@ -351,7 +351,7 @@
 //                         <p className="font-medium">
 //                           ₹{(order.grandTotal || 0).toLocaleString('en-IN')}
 //                         </p>
-//                         <span className={`inline-block px-2 py-1 rounded-full text-xs ${
+//                         <span className={`inline-block px-2 py-1 rounded-full text-sm ${
 //                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
 //                           order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
 //                           order.status === 'shipped' ? 'bg-purple-100 text-purple-800' :
@@ -466,7 +466,7 @@
 //                 {form.name?.charAt(0)?.toUpperCase() || "U"}
 //               </div>
 //               <h3 className="font-semibold text-gray-900 text-md sm:text-base">{form.name || "User"}</h3>
-//               <p className="text-xs sm:text-md text-gray-600">{form.email}</p>
+//               <p className="text-sm sm:text-md text-gray-600">{form.email}</p>
 //             </div>
 
 //             {/* Navigation */}
@@ -755,7 +755,7 @@ const ProfilePage = () => {
                 <div>
                   <label className="block text-md font-medium text-gray-700 mb-2">Email Verification</label>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs sm:text-md font-medium ${
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm sm:text-md font-medium ${
                       form.isVerified 
                         ? "bg-green-100 text-green-800" 
                         : "bg-orange-100 text-orange-800"
@@ -766,7 +766,7 @@ const ProfilePage = () => {
                       <button
                         type="button"
                         onClick={onResend}
-                        className="text-xs sm:text-md border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
+                        className="text-sm sm:text-md border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
                       >
                         Resend
                       </button>
@@ -889,7 +889,7 @@ const ProfilePage = () => {
                         <p className="font-medium">
                           ₹{(order.grandTotal || 0).toLocaleString('en-IN')}
                         </p>
-                        <span className={`inline-block px-2 py-1 rounded-full text-xs ${
+                        <span className={`inline-block px-2 py-1 rounded-full text-sm ${
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
                           order.status === 'shipped' ? 'bg-purple-100 text-purple-800' :
@@ -998,7 +998,7 @@ const ProfilePage = () => {
                   {form.name?.charAt(0)?.toUpperCase() || "U"}
                 </div>
                 <h3 className="font-semibold text-gray-900 text-md sm:text-base truncate">{form.name || "User"}</h3>
-                <p className="text-xs sm:text-md text-gray-600 truncate">{form.email}</p>
+                <p className="text-sm sm:text-md text-gray-600 truncate">{form.email}</p>
               </div>
 
               {/* Navigation */}

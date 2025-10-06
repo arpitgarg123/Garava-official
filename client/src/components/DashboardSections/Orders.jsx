@@ -125,18 +125,18 @@ export default function Orders() {
           {/* Mobile Card Header */}
           <div className="flex justify-between items-start mb-3 ">
             <div className="flex-1 ">
-              <h3 className="text-xs font-medium text-gray-900 truncate pl-2">
+              <h3 className="text-sm font-medium text-gray-900 truncate pl-2">
                 #{order.orderNumber}
               </h3>
-              <p className="text-xs text-gray-500 mt-1 pl-2">
+              <p className="text-sm text-gray-500 mt-1 pl-2">
                 {order.items?.length || 0} items • {formatDateTime(order.createdAt)}
               </p>
             </div>
             <div className="flex flex-col items-end gap-1 ">
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusBgColor(order.status)}`}>
+              <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusBgColor(order.status)}`}>
                 {order.status || 'pending'}
               </span>
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPaymentBgColor(order.paymentStatus)}`}>
+              <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getPaymentBgColor(order.paymentStatus)}`}>
                 {order.paymentStatus || 'pending'}
               </span>
             </div>
@@ -151,13 +151,13 @@ export default function Orders() {
             </div>
             <div className="ml-3 flex-1 min-w-0">
               <p className="text-md font-medium text-gray-900 truncate">{customerName}</p>
-              <p className="text-xs text-gray-500 truncate">{customerEmail}</p>
+              <p className="text-sm text-gray-500 truncate">{customerEmail}</p>
             </div>
           </div>
 
           {/* Amount */}
           <div className="mb-4">
-            <p className="text-xs text-gray-500 mb-1">Total Amount</p>
+            <p className="text-sm text-gray-500 mb-1">Total Amount</p>
             <p className="text-lg font-semibold text-gray-900">
               {formatCurrency(order.grandTotal || 0)}
             </p>
@@ -202,25 +202,25 @@ export default function Orders() {
       <table className="w-full min-w-[1000px]">
         <thead className="bg-gray-50 sticky top-0 z-10">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Order
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Customer
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Date
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Amount
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Payment
             </th>
-            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -260,12 +260,12 @@ export default function Orders() {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusBgColor(order.status)}`}>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusBgColor(order.status)}`}>
                   {order.status || 'pending'}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getPaymentBgColor(order.paymentStatus)}`}>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getPaymentBgColor(order.paymentStatus)}`}>
                   {order.paymentStatus || 'pending'}
                 </span>
               </td>
@@ -565,7 +565,7 @@ export default function Orders() {
       {pagination.totalPages > 1 && (
         <div className="flex-shrink-0 px-4 sm:px-6 py-4 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-xs text-gray-700 text-center sm:text-left">
+            <div className="text-sm text-gray-700 text-center sm:text-left">
               Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
             </div>
             
@@ -578,7 +578,7 @@ export default function Orders() {
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-black text-white rounded-lg font-medium text-xs min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-black text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button

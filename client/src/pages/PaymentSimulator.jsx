@@ -52,7 +52,7 @@ const PaymentSimulator = () => {
             <p className="text-md text-blue-700 mb-2">
               🔧 <strong>Development Mode</strong>
             </p>
-            <p className="text-xs text-blue-600">
+            <p className="text-sm text-blue-600">
               This is a payment simulator for testing. Auto-completing in {countdown} seconds...
             </p>
           </div>
@@ -80,7 +80,7 @@ const PaymentSimulator = () => {
             </button>
           </div>
 
-          <div className="mt-6 text-xs text-gray-500">
+          <div className="mt-6 text-sm text-gray-500">
             <p>⚠️ This simulator will be removed once PhonePe credentials are activated</p>
           </div>
         </div>

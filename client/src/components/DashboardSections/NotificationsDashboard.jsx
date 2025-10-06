@@ -222,18 +222,18 @@ const NotificationsDashboard = () => {
           
           {/* Tags */}
           <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(notification.severity)}`}>
+            <span className={`px-2 py-1 rounded-full text-sm font-medium border ${getSeverityColor(notification.severity)}`}>
               {notification.severity.toUpperCase()}
             </span>
             {notification.actionTaken && (
-              <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">
+              <span className="px-2 py-1 text-sm bg-green-100 text-green-800 rounded-full">
                 ✓ Resolved
               </span>
             )}
           </div>
           
           {/* Meta Info */}
-          <div className="text-xs text-gray-500 mb-3">
+          <div className="text-sm text-gray-500 mb-3">
             <div>{formatDate(notification.createdAt)}</div>
             {notification.productId && (
               <div className="truncate">Product: {notification.productId.name || 'Unknown'}</div>
@@ -340,7 +340,7 @@ const NotificationsDashboard = () => {
                 <FaBell className="text-blue-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-xs sm:text-md font-medium text-gray-600 truncate">Total</p>
+                <p className="text-sm sm:text-md font-medium text-gray-600 truncate">Total</p>
                 <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.total || 0}</p>
               </div>
             </div>
@@ -352,7 +352,7 @@ const NotificationsDashboard = () => {
                 <FaEye className="text-yellow-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-xs sm:text-md font-medium text-gray-600 truncate">Unread</p>
+                <p className="text-sm sm:text-md font-medium text-gray-600 truncate">Unread</p>
                 <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.unread || 0}</p>
               </div>
             </div>
@@ -364,7 +364,7 @@ const NotificationsDashboard = () => {
                 <FaBox className="text-red-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-xs sm:text-md font-medium text-gray-600 truncate">Out of Stock</p>
+                <p className="text-sm sm:text-md font-medium text-gray-600 truncate">Out of Stock</p>
                 <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.outOfStock || 0}</p>
               </div>
             </div>
@@ -376,7 +376,7 @@ const NotificationsDashboard = () => {
                 <FaExclamationTriangle className="text-orange-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-xs sm:text-md font-medium text-gray-600 truncate">Low Stock</p>
+                <p className="text-sm sm:text-md font-medium text-gray-600 truncate">Low Stock</p>
                 <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.lowStock || 0}</p>
               </div>
             </div>
@@ -545,7 +545,7 @@ const NotificationsDashboard = () => {
                             <h3 className="font-semibold text-gray-900 truncate">
                               {notification.title}
                             </h3>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(notification.severity)}`}>
+                            <span className={`px-2 py-1 rounded-full text-sm font-medium border ${getSeverityColor(notification.severity)}`}>
                               {notification.severity.toUpperCase()}
                             </span>
                             {!notification.isRead && (
@@ -553,7 +553,7 @@ const NotificationsDashboard = () => {
                             )}
                           </div>
                           <p className="text-gray-700 mb-2 text-md">{notification.message}</p>
-                          <div className="flex items-center space-x-4 text-xs text-gray-500">
+                          <div className="flex items-center space-x-4 text-sm text-gray-500">
                             <span>{formatDate(notification.createdAt)}</span>
                             {notification.productId && (
                               <span>Product: {notification.productId.name || 'Unknown'}</span>
@@ -606,7 +606,7 @@ const NotificationsDashboard = () => {
                         </button>
                         
                         {notification.actionTaken && (
-                          <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded">
+                          <span className="px-2 py-1 text-sm bg-green-100 text-green-800 rounded">
                             ✓ Resolved
                           </span>
                         )}
@@ -644,11 +644,11 @@ const NotificationsDashboard = () => {
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-base sm:text-lg break-words">{selectedNotification.title}</h3>
                   <div className="flex flex-wrap items-center gap-2 mt-1">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(selectedNotification.severity)}`}>
+                    <span className={`px-2 py-1 rounded-full text-sm font-medium border ${getSeverityColor(selectedNotification.severity)}`}>
                       {selectedNotification.severity.toUpperCase()}
                     </span>
                     {selectedNotification.actionRequired && (
-                      <span className="px-2 py-1 text-xs bg-orange-100 text-orange-800 rounded">
+                      <span className="px-2 py-1 text-sm bg-orange-100 text-orange-800 rounded">
                         Action Required
                       </span>
                     )}
@@ -681,7 +681,7 @@ const NotificationsDashboard = () => {
               
               <div className="border-t pt-4">
                 <h4 className="font-medium text-gray-900 mb-2 text-md sm:text-base">Notification Details</h4>
-                <div className="text-xs sm:text-md text-gray-600 space-y-1">
+                <div className="text-sm sm:text-md text-gray-600 space-y-1">
                   <p><strong>Created:</strong> {formatDate(selectedNotification.createdAt)}</p>
                   <p><strong>Type:</strong> {selectedNotification.type.replace('_', ' ').toUpperCase()}</p>
                   <p><strong>Status:</strong> {selectedNotification.isRead ? 'Read' : 'Unread'}</p>
@@ -692,7 +692,7 @@ const NotificationsDashboard = () => {
                         <p className="text-green-700 text-md mt-1">{selectedNotification.actionNotes}</p>
                       )}
                       {selectedNotification.actionAt && (
-                        <p className="text-green-600 text-xs mt-1">Resolved: {formatDate(selectedNotification.actionAt)}</p>
+                        <p className="text-green-600 text-sm mt-1">Resolved: {formatDate(selectedNotification.actionAt)}</p>
                       )}
                     </div>
                   )}

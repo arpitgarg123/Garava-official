@@ -425,7 +425,7 @@ const Navbar = () => {
                 <div className="relative cursor-pointer hover:opacity-70 transition-opacity" onClick={() => navigate('/cart')}>
                   <PiBagLight size={22} aria-hidden="true" />
                   {cartItemCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-sm rounded-full h-5 w-5 flex items-center justify-center">
                       {cartItemCount > 99 ? '99+' : cartItemCount}
                     </span>
                   )}
@@ -464,8 +464,8 @@ const Navbar = () => {
                           <div className="py-1">
                             <div className="px-4 py-2 text-md text-gray-700 border-b bg-gradient-to-b from-white to-gray-50">
                               <div className="font-medium">{user?.name}</div>
-                              <div className="text-xs text-gray-500">{user?.email}</div>
-                              {isAdmin && <div className="text-xs text-black font-medium">Admin</div>}
+                              <div className="text-sm text-gray-500">{user?.email}</div>
+                              {isAdmin && <div className="text-sm text-black font-medium">Admin</div>}
                             </div>
 
                             <button

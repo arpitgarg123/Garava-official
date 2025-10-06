@@ -145,14 +145,14 @@ export default function Products() {
               <h3 className="text-md font-medium text-gray-900 line-clamp-2 mb-1">
                 {product.name}
               </h3>
-              <p className="text-xs text-gray-500 mb-2">
+              <p className="text-sm text-gray-500 mb-2">
                 SKU: {firstVariant.sku || product.sku || 'No SKU'}
               </p>
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
                   {product.category || 'Uncategorized'}
                 </span>
-                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(product.status)}`}>
+                <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(product.status)}`}>
                   {product.status}
                 </span>
               </div>
@@ -162,14 +162,14 @@ export default function Products() {
           {/* Product Details */}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <p className="text-xs text-gray-500 mb-1">Price</p>
+              <p className="text-sm text-gray-500 mb-1">Price</p>
               <p className="text-md font-medium text-gray-900">
                 {formatCurrency(firstVariant.price || 0)}
               </p>
             </div>
             <div>
-              <p className="text-xs text-gray-500 mb-1">Stock</p>
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(stockStatus)}`}>
+              <p className="text-sm text-gray-500 mb-1">Stock</p>
+              <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(stockStatus)}`}>
                 {firstVariant.stock || 0} units
               </span>
             </div>
@@ -212,22 +212,22 @@ export default function Products() {
       <table className="w-full ">
         <thead className="bg-gray-50 sticky w-full top-0 z-10">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Product
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Category
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Price
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Stock
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
-            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -260,7 +260,7 @@ export default function Products() {
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-50 text-gray-800">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-50 text-gray-800">
                     {product.category || 'Uncategorized'}
                   </span>
                 </td>
@@ -268,12 +268,12 @@ export default function Products() {
                   {formatCurrency(firstVariant.price || 0)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(stockStatus)}`}>
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(stockStatus)}`}>
                     {firstVariant.stock || 0} units
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(product.status)}`}>
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(product.status)}`}>
                     {product.status}
                   </span>
                 </td>

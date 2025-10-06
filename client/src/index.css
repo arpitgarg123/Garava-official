@@ -434,7 +434,7 @@ body:has(.submenu-container) {
   border-radius: 9999px;       /* rounded-full */
   background-color: #1f2937;   /* bg-gray-800 */
   padding: 0.25rem 1rem;       /* py-1 px-4 */
-  font-size: 0.75rem;          /* text-xs */
+  font-size: 0.75rem;          /* text-sm */
   line-height: 1rem;
   font-weight: 500;            /* font-medium */
   color: #ffffff;              /* text-white */

@@ -216,25 +216,25 @@
 //             <table className="w-full ">
 //               <thead className="bg-gray-50 sticky top-0 z-10 ">
 //                 <tr>
-//                   <th className="pl-14 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-14 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Customer
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Product
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Rating
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Review
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Date
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Status
 //                   </th>
-//                   <th className="pr-20 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pr-20 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Actions
 //                   </th>
 //                 </tr>
@@ -247,13 +247,13 @@
 //                         <div className="text-md font-medium text-gray-900 pl-8">
 //                           {review.user?.name || 'Anonymous'}
 //                         </div>
-//                         <div className="text-xs text-gray-500 pl-8">
+//                         <div className="text-sm text-gray-500 pl-8">
 //                           {review.user?.email || 'N/A'}
 //                         </div>
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <div className="text-xs text-gray-900">
+//                       <div className="text-sm text-gray-900">
 //                         {review.product || 'Unknown Product'}
 //                       </div>
 //                     </td>
@@ -265,23 +265,23 @@
 //                             className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} 
 //                           />
 //                         ))}
-//                         <span className=" text-xs text-gray-600">({review.rating})</span>
+//                         <span className=" text-sm text-gray-600">({review.rating})</span>
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4">
 //                       <div className="max-w-xs">
-//                         <div className="text-xs text-gray-900 line-clamp-2">
+//                         <div className="text-sm text-gray-900 line-clamp-2">
 //                           {review.body || 'No comment provided'}
 //                         </div>
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <div className="text-xs text-gray-900">
+//                       <div className="text-sm text-gray-900">
 //                         {formatDate(review.createdAt)}
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+//                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
 //                         {getStatusText(review.isApproved, review.flagged)}
 //                       </span>
 //                     </td>
@@ -534,13 +534,13 @@ export default function Reviews() {
               <h3 className="text-md font-medium text-gray-900 truncate">
                 {review.user?.name || 'Anonymous'}
               </h3>
-              <p className="text-xs text-gray-500 truncate">
+              <p className="text-sm text-gray-500 truncate">
                 {review.user?.email || 'N/A'}
               </p>
             </div>
           </div>
           <div className="flex flex-col items-end gap-1 ml-3">
-            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+            <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
               {getStatusText(review.isApproved, review.flagged)}
             </span>
           </div>
@@ -548,7 +548,7 @@ export default function Reviews() {
 
         {/* Product & Rating */}
         <div className="mb-3">
-          <p className="text-xs text-gray-500 mb-1">Product</p>
+          <p className="text-sm text-gray-500 mb-1">Product</p>
           <p className="text-md font-medium text-gray-900 mb-2">
             {review.product || 'Unknown Product'}
           </p>
@@ -561,13 +561,13 @@ export default function Reviews() {
                 />
               ))}
             </div>
-            <span className="text-xs text-gray-600">({review.rating}/5)</span>
+            <span className="text-sm text-gray-600">({review.rating}/5)</span>
           </div>
         </div>
 
         {/* Review Content */}
         <div className="mb-3">
-          <p className="text-xs text-gray-500 mb-1">Review</p>
+          <p className="text-sm text-gray-500 mb-1">Review</p>
           <p className="text-md text-gray-900 line-clamp-3">
             {review.body || 'No comment provided'}
           </p>
@@ -575,7 +575,7 @@ export default function Reviews() {
 
         {/* Date */}
         <div className="mb-4">
-          <p className="text-xs text-gray-500">
+          <p className="text-sm text-gray-500">
             {formatDate(review.createdAt)}
           </p>
         </div>
@@ -642,25 +642,25 @@ export default function Reviews() {
       <table className="w-full min-w-[1000px]">
         <thead className="bg-gray-50 sticky top-0 z-10">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Customer
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Product
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Rating
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Review
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Date
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
-            <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -679,7 +679,7 @@ export default function Reviews() {
                     <div className="text-md font-medium text-gray-900">
                       {review.user?.name || 'Anonymous'}
                     </div>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-sm text-gray-500">
                       {review.user?.email || 'N/A'}
                     </div>
                   </div>
@@ -698,7 +698,7 @@ export default function Reviews() {
                       className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} 
                     />
                   ))}
-                  <span className="ml-1 text-xs text-gray-600">({review.rating})</span>
+                  <span className="ml-1 text-sm text-gray-600">({review.rating})</span>
                 </div>
               </td>
               <td className="px-6 py-4">
@@ -714,7 +714,7 @@ export default function Reviews() {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
                   {getStatusText(review.isApproved, review.flagged)}
                 </span>
               </td>
@@ -795,7 +795,7 @@ export default function Reviews() {
               <div>
                 <p className="text-md font-medium text-gray-700 mb-1">Customer</p>
                 <p className="text-md text-gray-900">{review.user?.name || 'Anonymous'}</p>
-                <p className="text-xs text-gray-500">{review.user?.email || 'N/A'}</p>
+                <p className="text-sm text-gray-500">{review.user?.email || 'N/A'}</p>
               </div>
               <div>
                 <p className="text-md font-medium text-gray-700 mb-1">Product</p>
@@ -832,7 +832,7 @@ export default function Reviews() {
               </div>
               <div>
                 <p className="text-md font-medium text-gray-700 mb-1">Status</p>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
                   {getStatusText(review.isApproved, review.flagged)}
                 </span>
               </div>

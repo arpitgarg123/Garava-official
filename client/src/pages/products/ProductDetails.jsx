@@ -244,7 +244,7 @@ const ProductDetails = () => {
   {/* Description */}
             <div className="mt-5 ">
               <h3 className="text-lg sm:text-xl font-semibold">Product Description</h3>
-              <p className="mt-2 text-gray-800 text-xs leading-relaxed">
+              <p className="mt-2 text-gray-800 text-sm leading-relaxed">
                 {product?.description || 'Description not available'}
               </p>
             </div>
@@ -278,7 +278,7 @@ const ProductDetails = () => {
                           </div>
                           <div>
                             <div className="font-medium text-gray-900">WhatsApp</div>
-                            <div className="text-xs text-gray-500">Instant messaging for quick response</div>
+                            <div className="text-sm text-gray-500">Instant messaging for quick response</div>
                           </div>
                         </button>
                         <button
@@ -290,7 +290,7 @@ const ProductDetails = () => {
                           </div>
                           <div>
                             <div className="font-medium text-gray-900">Email</div>
-                            <div className="text-xs text-gray-500">Detailed inquiry with specifications</div>
+                            <div className="text-sm text-gray-500">Detailed inquiry with specifications</div>
                           </div>
                         </button>
                       </div>

@@ -304,10 +304,10 @@ const Dashboard = () => {
           {/* Sidebar Footer */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
             <div className="text-center">
-              <p className="text-xs text-gray-500">Garava Admin v2.0</p>
+              <p className="text-sm text-gray-500">Garava Admin v2.0</p>
               <div className="flex items-center justify-center gap-1 mt-1">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                <span className="text-xs text-gray-400">Online</span>
+                <span className="text-sm text-gray-400">Online</span>
               </div>
             </div>
           </div>
@@ -332,7 +332,7 @@ const Dashboard = () => {
               {/* <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-md">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-xs font-medium text-green-700">Live</span>
+                  <span className="text-sm font-medium text-green-700">Live</span>
                 </div>
                 <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-md font-medium hover:bg-blue-700 transition-colors">
                   Export

@@ -355,7 +355,7 @@ const ProductReviews = ({ productId }) => {
                               )}
                             </span>
                           ))}
-                          <span className="ml-2 text-xs text-gray-500">
+                          <span className="ml-2 text-sm text-gray-500">
                             {new Date(review.createdAt).toLocaleDateString('en-US', { 
                               year: 'numeric', 
                               month: 'long', 
@@ -368,7 +368,7 @@ const ProductReviews = ({ productId }) => {
                       {review.verifiedPurchase && (
                         <div className="flex items-center px-2 py-1 bg-green-50 text-green-700 rounded-full">
                           <BsCheckCircleFill size={12} className="mr-1" />
-                          <span className="text-xs font-medium">Verified Purchase</span>
+                          <span className="text-sm font-medium">Verified Purchase</span>
                         </div>
                       )}
                     </div>

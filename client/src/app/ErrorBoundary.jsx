@@ -71,7 +71,7 @@ export default class ErrorBoundary extends React.Component {
                 <summary className="cursor-pointer text-gray-600">
                   Error Details (Dev)
                 </summary>
-                <pre className="mt-2 bg-gray-100 p-2 rounded text-xs overflow-auto max-h-32">
+                <pre className="mt-2 bg-gray-100 p-2 rounded text-sm overflow-auto max-h-32">
                   {this.state.error.toString()}
                 </pre>
               </details>

@@ -130,7 +130,7 @@ export default function ChatbotWidget({
                   <h3 className="text-white text-md font-semibold tracking-wide">
                     {title}
                   </h3>
-                  <p className="text-white/70 text-xs">{subtitle}</p>
+                  <p className="text-white/70 text-sm">{subtitle}</p>
                 </div>
 
                 <div className="flex items-center gap-1">
@@ -167,7 +167,7 @@ export default function ChatbotWidget({
                     <button
                       key={i}
                       onClick={() => sendMessage(s)}
-                      className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium hover:bg-neutral-50 active:scale-[0.98] transition"
+                      className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-neutral-50 active:scale-[0.98] transition"
                     >
                       {s}
                     </button>
