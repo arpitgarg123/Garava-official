@@ -21,24 +21,24 @@ const Footer = () => {
       Contact Detail
     </h3>
 
-    <div className="flex items-start gap-3">
+    <div className="flex  gap-3 max-sm:gap-5">
       <FiMapPin size={18} />
-      <p className="text-sm leading-6">
+      <p className="text-sm max-sm:text-xs leading-6">
         Advir & Co. <br />
         416, Saumya Apartment, Lane no 2,<br /> Rajapark, Jaipur, 302004
       </p>
     </div>
 
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 max-sm:gap-5">
       <FiMail size={18} />
-      <a href="mailto:info@garava.in" className="text-sm hover:underline">
+      <a href="mailto:info@garava.in" className="text-sm max-sm:text-xs hover:underline">
         info@garava.in
       </a>
     </div>
 
     <div className="flex items-center gap-3">
       <FiPhone size={18} />
-      <a href="tel:+917738543881" className="text-sm hover:underline">
+      <a href="tel:+917738543881" className="text-sm max-sm:text-xs hover:underline">
         +91-7738543881
       </a>
     </div>
@@ -79,12 +79,12 @@ const Footer = () => {
           </div>
 
           {/* Right: Navigation */}
-          <div className="flex  h-[30vh] items-start justify-between ">
-            <div className="space-y-4 self-start">
+          <div className="flex  h-[30vh] items-start justify-between max-sm:items-end max-sm:pt-10">
+            <div className="space-y-4 text-sm self-start max-sm:text-xs">
               <h3 className="text-sm uppercase tracking-widest font-medium">
                 Navigation
               </h3>
-              <ul className="space-y-2 text-sm">
+              <ul className="space-y-2 ">
                 <li>
                   <a href="/about" className="hover:underline">
                     About Us
@@ -107,11 +107,11 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="space-y-4 self-start">
+            <div className="space-y-4  self-start max-sm:text-xs">
               <h3 className="text-sm uppercase tracking-widest font-medium">
                 Important Links
               </h3>
-              <ul className="space-y-2 text-sm">
+              <ul className="space-y-2 ">
                 <li>
                   <a href="/privacy-policy" className="hover:underline">
                     Privacy Policy

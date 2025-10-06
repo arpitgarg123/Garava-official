@@ -55,13 +55,12 @@ const EventDetailPage = () => {
   }
 
   return (
-    <div className="mt-20">
-   
-    <div className="sticky top-36 z-10 mb-3">
+    <div className="mt-20 max-md:mt-0">
+      <div className="sticky top-36 max-md:top-7 z-10 mb-3 max-md:mb-0">
         <BackButton />
       </div>
       <section className="relative overflow-hidden ">
-        <div className="mx-auto max-w-6xl px-4  pt-12 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl px-4 max-md:p-0 max-md:px-4  pt-12 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <p className="badge">{event.kind}</p>

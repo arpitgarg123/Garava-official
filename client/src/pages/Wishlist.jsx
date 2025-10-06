@@ -18,6 +18,7 @@ import { selectIsAuthenticated } from '../features/auth/selectors';
 import { toast } from 'react-hot-toast';
 import { WishlistSkeleton } from '../components/ui/LoadingSkeleton';
 import BackButton from '../components/BackButton';
+import PageHeader from '../components/header/PageHeader';
 
 const Wishlist = () => {
   const navigate = useNavigate();
@@ -151,13 +152,12 @@ const Wishlist = () => {
   }
 
   return (
-  <div className=" min-h-[60vh] mt-28">
- <div className="sticky top-35 z-10 mb-3">
+  <div className=" min-h-[60vh] mt-28 max-md:mt-0">
+ <div className="sticky top-35 z-10 mb-3 max-md:top-7">
         <BackButton />
       </div>
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold mb-8">My Wishlist</h1>
-
+      <div className="max-w-7xl mx-auto px-4 py-8 max-md:py-0">
+<PageHeader title="My Wishlist" />
         {products.length === 0 ? (
           <div className="flex flex-col items-center justify-center space-y-4">
             <CiHeart size={60} className="text-gray-300" />
