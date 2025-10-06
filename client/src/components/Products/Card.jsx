@@ -1,11 +1,24 @@
 import React from 'react'
 
 import './product.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-const Card = ({img,title = "Product", price = ""}) => {
+const Card = ({img, title = "Product", price = "", slug, id}) => {
+  const navigate = useNavigate();
+  
+  const handleCardClick = () => {
+    if (slug) {
+      navigate(`/product_details/${slug}`);
+    }
+  };
+
   return (
-     <article className="card group" tabIndex="0" aria-label={`${title} - ${price}`}>
+     <article 
+       className="card group cursor-pointer" 
+       tabIndex="0" 
+       aria-label={`${title} - ${price}`}
+       onClick={handleCardClick}
+     >
       <div className="card-img-wrapper">
         <img
           className="card-img"
