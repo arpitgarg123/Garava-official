@@ -175,8 +175,8 @@ const ProductDetails = () => {
   //   "/placeholder.jpg";
 
   return (
-    <div className="w-full py-10 mt-26 sm:py-12 max-sm:mt-0">
-       <div className="sticky top-16 z-10 mb-3">
+    <div className="w-full py-10 mt-26 sm:py-12 max-md:py-0 max-sm:mt-0">
+       <div className="sticky top-16 z-10 mb-3 max-md:top-5">
     <BackButton />
   </div>
       <div className="mx-auto w-[95%] max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -184,13 +184,7 @@ const ProductDetails = () => {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
    
           <div className="lg:col-span-5">
-            {/* <div className="w-full overflow-hidden bg-gray-50">
-              <img
-                src={heroSrc}
-                alt={product?.name || "Product image"}
-                className="w-full h-auto object-cover"
-              />
-            </div> */}
+          
             <ProductGallery product={product} />
           </div>
 

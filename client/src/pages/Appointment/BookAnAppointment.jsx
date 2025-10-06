@@ -88,11 +88,11 @@ const BookAnAppointment = () => {
 
   return (
     <>
-     <div className="sticky top-30 z-10 mb-3">
+     <div className="sticky top-30 z-10 mb-3 max-md:mb-0 max-md:top-10">
         <BackButton />
       </div>
    
-    <div className="max-w-xl mx-auto mt-30 p-6">
+    <div className="max-w-xl mx-auto mt-30 max-md:mt-0 max-md:px-4 p-6">
       
       <h1 className="text-2xl font-semibold mb-4">Book an appointment</h1>
 

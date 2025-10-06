@@ -136,8 +136,8 @@ import {
   // Show loading state
   if (loading && EVENTS_DATA.length === 0) {
     return (
-      <div className="mt-32">
-        <div className="sticky top-16 z-10 mb-3">
+      <div className="mt-32 max-md:mt-0">
+        <div className="sticky top-16 z-10 mb-3 max-md:top-7">
           <BackButton />
         </div>
         <div className="flex justify-center items-center h-64">
@@ -148,8 +148,8 @@ import {
   }
 
   return (
-    <div className="mt-32">
-    <div className="sticky top-16 z-10 mb-3">
+    <div className="mt-32 max-md:mt-0">
+      <div className="sticky top-16 z-10 mb-3 max-md:top-7">
         <BackButton />
       </div>
       <section className="relative overflow-hidden ">
@@ -162,7 +162,7 @@ import {
             Launches, trunk shows, and press moments—curated in one elegant place.
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-2 rounded-md w-1/4 border border-gray-300 bg-card p-1 text-sm ">
+          <div className="mt-6 flex flex-wrap items-center gap-2 rounded-md w-1/4 max-md:w-full border border-gray-300 bg-card p-1 text-sm ">
             {(["Upcoming", "Past", "All"]).map((t) => (
               <button
                 key={t}

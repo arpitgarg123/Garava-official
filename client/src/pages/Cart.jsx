@@ -184,8 +184,8 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-[60vh] mt-30">
-       <div className="sticky top-30 z-10 ">
+    <div className="min-h-[60vh] mt-30 max-md:mt-0">
+       <div className="sticky top-30 z-10 max-md:top-7">
         <BackButton />
       </div>
       <div className="max-w-7xl mx-auto px-4">
