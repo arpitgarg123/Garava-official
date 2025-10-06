@@ -47,7 +47,7 @@ const Wishlist = () => {
       const productsCount = products.length;
       
       if (productIdsCount > productsCount && productIdsCount > 0) {
-        console.log(`Wishlist page - Product count mismatch (${productsCount} products vs ${productIdsCount} IDs), fetching fresh data...`);
+        // Product count mismatch detected, fetching fresh data
         dispatch(fetchWishlist({ force: true }));
       }
     }
@@ -100,8 +100,6 @@ const Wishlist = () => {
       toast.error("Product variant information is missing. Please try again or contact support.");
       return;
     }
-
-    console.log('Moving to cart:', { cartItem, product: product.name });
 
     // Add to cart
     dispatch(addToCart(cartItem))
@@ -191,16 +189,7 @@ const Wishlist = () => {
                               product?.gallery?.[0] || 
                               'https://via.placeholder.com/300x300?text=No+Image';
               
-              // Debug image handling
-              if (!product?.heroImage?.url && !product?.heroImage) {
-                console.log('Product missing images:', {
-                  productName: product?.name,
-                  heroImage: product?.heroImage,
-                  gallery: product?.gallery,
-                  usingFallback: imageUrl
-                });
-              }
-              
+              // Product image handling with fallback
               return (
                 <div key={productId || `wishlist-item-${index}`} className="p-4 space-y-3">
                   <div 
@@ -212,7 +201,6 @@ const Wishlist = () => {
                       alt={product?.name || 'Product'}
                       className="w-full aspect-square object-cover hover:scale-105  transition duration-300 bg-gray-200"
                       onError={(e) => {
-                        console.log('Image failed to load:', imageUrl);
                         e.target.src = 'https://via.placeholder.com/300x300?text=No+Image';
                       }}
                     />

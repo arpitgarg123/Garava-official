@@ -6,9 +6,9 @@ import { env } from '../../config/env.js';
 // CRUD Operations
 export const createTestimonialService = async (data) => {
   try {
-    const testimonial = new Testimonial(data);
+    const testimonial = new Testimonial(data); 
     await testimonial.save();
-    return testimonial.toPublicJSON();
+    return testimonial.toAdminJSON();
   } catch (error) {
     if (error.code === 11000) {
       throw new ApiError(400, 'Testimonial already exists');
@@ -23,7 +23,7 @@ export const getTestimonialsService = async (filters = {}) => {
       page = 1,
       limit = 10,
       sort = '-createdAt',
-      isActive = true,
+      isActive, // Remove default value to show all testimonials unless specifically filtered
       isFeatured,
       rating,
       source,
@@ -33,7 +33,7 @@ export const getTestimonialsService = async (filters = {}) => {
     const query = {};
 
     // Apply filters with proper type conversion
-    if (isActive !== undefined) {
+    if (isActive !== undefined && isActive !== '') {
       query.isActive = isActive === 'true' || isActive === true;
     }
     if (isFeatured !== undefined && isFeatured !== '') {
@@ -62,7 +62,7 @@ export const getTestimonialsService = async (filters = {}) => {
     ]);
 
     return {
-      testimonials: testimonials.map(t => t.toPublicJSON()),
+      testimonials: testimonials.map(t => t.toAdminJSON()),
       pagination: {
         page: parseInt(page),
         limit: parseInt(limit),
@@ -81,7 +81,7 @@ export const getTestimonialByIdService = async (id) => {
     if (!testimonial) {
       throw new ApiError(404, 'Testimonial not found');
     }
-    return testimonial.toPublicJSON();
+    return testimonial.toAdminJSON();
   } catch (error) {
     throw new ApiError(400, error.message);
   }
@@ -97,7 +97,7 @@ export const updateTestimonialService = async (id, data) => {
     Object.assign(testimonial, data);
     await testimonial.save();
     
-    return testimonial.toPublicJSON();
+    return testimonial.toAdminJSON();
   } catch (error) {
     throw new ApiError(400, error.message);
   }

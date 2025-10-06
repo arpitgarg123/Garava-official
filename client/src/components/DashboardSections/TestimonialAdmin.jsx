@@ -65,7 +65,7 @@ const TestimonialAdmin = () => {
     limit: 10,
     search: '',
     source: '',
-    isActive: '',
+    isActive: '', // This will show all testimonials by default
     isFeatured: ''
   });
 
@@ -482,7 +482,7 @@ const TestimonialAdmin = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {testimonials.map((testimonial) => (
+                  {testimonials && testimonials.length > 0 ? testimonials.map((testimonial) => (
                     <tr key={testimonial._id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
@@ -560,7 +560,35 @@ const TestimonialAdmin = () => {
                         </div>
                       </td>
                     </tr>
-                  ))}
+                  )) : (
+                    <tr>
+                      <td colSpan="6" className="px-6 py-12 text-center">
+                        <div className="text-gray-500">
+                          <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v8a2 2 0 002 2h6a2 2 0 002-2V8m0 0H7m5 5.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                          </svg>
+                          <h3 className="mt-2 text-sm font-medium text-gray-900">No testimonials found</h3>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {filters.search || filters.source || filters.isActive || filters.isFeatured 
+                              ? "Try adjusting your filters or search term."
+                              : "Get started by adding your first testimonial."
+                            }
+                          </p>
+                          {!filters.search && !filters.source && !filters.isActive && !filters.isFeatured && (
+                            <div className="mt-6">
+                              <button
+                                onClick={() => openModal('create')}
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                              >
+                                <FaPlus className="mr-2" />
+                                Add First Testimonial
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

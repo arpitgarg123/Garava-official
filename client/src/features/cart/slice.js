@@ -19,30 +19,24 @@ export const fetchCart = createAsyncThunk(
       
       // Smart deduplication: prevent requests within cooldown unless forced
       if (!force && cart.status === 'loading') {
-        console.log('Cart slice - Already loading, skipping duplicate request');
         return rejectWithValue('Already loading');
       }
       
       // Cache check: if data is fresh and force is not set, skip fetch
       if (!force && cart.items.length > 0 && now - lastCacheTime < CACHE_TTL) {
-        console.log('Cart slice - Using cached data, skipping fetch');
         return cart; // Return current cart data
       }
       
       // Cooldown protection for rapid successive calls
       if (!force && now - lastFetchTime < FETCH_COOLDOWN) {
-        console.log('Cart slice - Too soon since last fetch, skipping');
         return rejectWithValue('Too soon');
       }
       
       lastFetchTime = now;
-      console.log('Cart slice - Fetching cart');
       const response = await cartApi.getCart();
-      console.log('Cart slice - Fetch cart response:', response);
       lastCacheTime = now; // Update cache time on successful fetch
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Fetch cart error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch cart';
       return rejectWithValue(errorMessage);
     }
@@ -53,8 +47,6 @@ export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (payload, { rejectWithValue }) => {
     try {
-      console.log('Cart slice - Adding to cart with payload:', payload);
-      
       // Validate payload before making API call
       if (!payload.productId) {
         throw new Error('Product ID is required');
@@ -67,11 +59,8 @@ export const addToCart = createAsyncThunk(
       }
       
       const response = await cartApi.addToCart(payload);
-      console.log('Cart slice - Add to cart response:', response);
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Add to cart error:', error);
-      
       let errorMessage = 'Failed to add item to cart';
       
       // Handle specific error types
@@ -103,12 +92,9 @@ export const updateCartItem = createAsyncThunk(
   "cart/updateCartItem", 
   async (payload, { rejectWithValue }) => {
     try {
-      console.log('Cart slice - Updating cart item:', payload);
       const response = await cartApi.updateCartItem(payload);
-      console.log('Cart slice - Update cart item response:', response);
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Update cart item error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to update cart item';
       return rejectWithValue(errorMessage);
     }
@@ -119,12 +105,9 @@ export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async (payload, { rejectWithValue }) => {
     try {
-      console.log('Cart slice - Removing from cart:', payload);
       const response = await cartApi.removeCartItem(payload);
-      console.log('Cart slice - Remove from cart response:', response);
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Remove from cart error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to remove item from cart';
       return rejectWithValue(errorMessage);
     }
@@ -135,12 +118,9 @@ export const clearCart = createAsyncThunk(
   "cart/clearCart", 
   async (_, { rejectWithValue }) => {
     try {
-      console.log('Cart slice - Clearing cart');
       const response = await cartApi.clearCart();
-      console.log('Cart slice - Clear cart response:', response);
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Clear cart error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to clear cart';
       return rejectWithValue(errorMessage);
     }
@@ -317,7 +297,6 @@ const cartSlice = createSlice({
         // Reset cache times
         lastFetchTime = 0;
         lastCacheTime = 0;
-        console.log('Cart slice - Cleared cart data on logout');
       })
       .addCase(initAuth.rejected, (state, { payload }) => {
         const errorData = payload || {};
@@ -332,10 +311,8 @@ const cartSlice = createSlice({
           // Reset cache times
           lastFetchTime = 0;
           lastCacheTime = 0;
-          console.log('Cart slice - Cleared cart data on auth failure');
         } else if (errorData.type === 'NETWORK_ERROR') {
-          // Don't clear cart on network errors, just log
-          console.log('Cart slice - Network error during auth init, keeping cart data');
+          // Don't clear cart on network errors
         }
       });
   },

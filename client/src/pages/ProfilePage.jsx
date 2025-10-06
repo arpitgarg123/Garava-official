@@ -597,7 +597,7 @@ const ProfilePage = () => {
       
       // Debounce the fetch calls
       fetchTimeoutRef.current = setTimeout(() => {
-        console.log('ProfilePage - Fetching user data...');
+        // Fetching user data
         dispatch(fetchUserOrders());
         dispatch(fetchAddresses());
       }, 100); // Small delay to prevent rapid calls
@@ -930,22 +930,14 @@ const ProfilePage = () => {
         );
 
       case "addresses":
-        console.log('ProfilePage - Rendering addresses tab, isAddressLoading:', isAddressLoading);
         return (
           <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            {isAddressLoading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-1  border-gray-100 mx-auto"></div>
-                <p className="mt-4 text-gray-500">Loading addresses...</p>
-              </div>
-            ) : (
-              <AddressSelector 
-                selectedAddressId={null}
-                onAddressSelect={handleAddressSelect}
-                onAddressChange={handleAddressChange}
-                showAsManagement={true}
-              />
-            )}
+            <AddressSelector 
+              selectedAddressId={null}
+              onAddressSelect={handleAddressSelect}
+              onAddressChange={handleAddressChange}
+              showAsManagement={true}
+            />
           </div>
         );
 

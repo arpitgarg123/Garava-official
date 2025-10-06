@@ -456,7 +456,7 @@ const TestimonialSection = () => {
   // Clear errors
   useEffect(() => {
     if (error) {
-      console.error('Testimonial error:', error);
+      // console.error('Testimonial error:', error);
       dispatch(clearError());
     }
   }, [error, dispatch]);
@@ -782,7 +782,7 @@ const TestimonialSection = () => {
       </div>
 
       {/* Hide Scrollbar CSS */}
-      <style jsx>{`
+      <style jsx="true">{`
         .testimonials-scroll::-webkit-scrollbar {
           display: none;
         }

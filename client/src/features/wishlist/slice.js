@@ -19,13 +19,11 @@ export const fetchWishlist = createAsyncThunk(
       
       // Smart deduplication: prevent requests within cooldown unless forced
       if (!force && wishlist.status === 'loading') {
-        console.log('Wishlist slice - Already loading, skipping duplicate request');
         return rejectWithValue('Already loading');
       }
       
       // Cache check: if data is fresh and force is not set, skip fetch
       if (!force && wishlist.products.length > 0 && now - lastWishlistCacheTime < WISHLIST_CACHE_TTL) {
-        console.log('Wishlist slice - Using cached data, skipping fetch');
         // Return the current wishlist structure that matches the API response
         return {
           products: wishlist.products,
@@ -37,18 +35,14 @@ export const fetchWishlist = createAsyncThunk(
       
       // Cooldown protection for rapid successive calls
       if (!force && now - lastWishlistFetchTime < WISHLIST_FETCH_COOLDOWN) {
-        console.log('Wishlist slice - Too soon since last fetch, skipping');
         return rejectWithValue('Too soon');
       }
       
       lastWishlistFetchTime = now;
-      console.log('Wishlist slice - Fetching wishlist:', params);
       const response = await wishlistApi.getWishlist(params);
-      console.log('Wishlist slice - Fetch wishlist response:', response);
       lastWishlistCacheTime = now; // Update cache time on successful fetch
       return response.data;
     } catch (error) {
-      console.error('Wishlist slice - Fetch wishlist error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch wishlist';
       return rejectWithValue(errorMessage);
     }
@@ -59,12 +53,9 @@ export const addToWishlist = createAsyncThunk(
   "wishlist/addToWishlist",
   async (productId, { rejectWithValue }) => {
     try {
-      console.log('Wishlist slice - Adding to wishlist:', productId);
       const response = await wishlistApi.addToWishlist(productId);
-      console.log('Wishlist slice - Add to wishlist response:', response);
       return { productId, wishlist: response.data.wishlist };
     } catch (error) {
-      console.error('Wishlist slice - Add to wishlist error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to add to wishlist';
       return rejectWithValue(errorMessage);
     }
@@ -75,12 +66,9 @@ export const removeFromWishlist = createAsyncThunk(
   "wishlist/removeFromWishlist",
   async (productId, { rejectWithValue }) => {
     try {
-      console.log('Wishlist slice - Removing from wishlist:', productId);
       const response = await wishlistApi.removeFromWishlist(productId);
-      console.log('Wishlist slice - Remove from wishlist response:', response);
       return { productId, ...response.data };
     } catch (error) {
-      console.error('Wishlist slice - Remove from wishlist error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to remove from wishlist';
       return rejectWithValue(errorMessage);
     }
@@ -91,12 +79,9 @@ export const toggleWishlistItem = createAsyncThunk(
   "wishlist/toggleWishlistItem",
   async (productId, { rejectWithValue, getState }) => {
     try {
-      console.log('Wishlist slice - Toggling wishlist item:', productId);
       const response = await wishlistApi.toggleWishlist(productId);
-      console.log('Wishlist slice - Toggle wishlist response:', response);
       return { productId, ...response.data };
     } catch (error) {
-      console.error('Wishlist slice - Toggle wishlist error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to toggle wishlist';
       return rejectWithValue(errorMessage);
     }
@@ -266,7 +251,6 @@ const wishlistSlice = createSlice({
         // Reset cache times
         lastWishlistFetchTime = 0;
         lastWishlistCacheTime = 0;
-        console.log('Wishlist slice - Cleared wishlist data on logout');
       })
       .addCase(initAuth.rejected, (state, { payload }) => {
         const errorData = payload || {};
@@ -281,10 +265,8 @@ const wishlistSlice = createSlice({
           // Reset cache times
           lastWishlistFetchTime = 0;
           lastWishlistCacheTime = 0;
-          console.log('Wishlist slice - Cleared wishlist data on auth failure');
         } else if (errorData.type === 'NETWORK_ERROR') {
-          // Don't clear wishlist on network errors, just log
-          console.log('Wishlist slice - Network error during auth init, keeping wishlist data');
+          // Don't clear wishlist on network errors
         }
       });
   },

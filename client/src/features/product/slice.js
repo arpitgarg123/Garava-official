@@ -41,7 +41,6 @@ export const fetchProducts = createAsyncThunk(
       product.list.status === "succeeded" &&
       product.list.items.length > 0 // Only use cache if we have actual items
     ) {
-      console.log('Product slice - Using cached products for:', params);
       return {
         products: product.list.items,
         pagination: {
@@ -55,7 +54,6 @@ export const fetchProducts = createAsyncThunk(
 
     // Check for duplicate requests
     if (productRequestPromises[signature]) {
-      console.log('Product slice - Deduplicating product request for:', params);
       try {
         const result = await productRequestPromises[signature];
         return result;
@@ -67,7 +65,6 @@ export const fetchProducts = createAsyncThunk(
     // Create new request promise
     const requestPromise = (async () => {
       try {
-        console.log('Product slice - Fetching products with params:', params);
         const { data } = await listProductsApi(params);
         
         const result = {
@@ -153,13 +150,11 @@ export const fetchCategoryCounts = createAsyncThunk(
     // Check if we have fresh cached data
     const cached = categoryCountsCache[cacheKey];
     if (cached && now - cached.timestamp < COUNTS_CACHE_TTL) {
-      console.log('Product slice - Using cached category counts for:', type);
       return { type, counts: cached.counts, _cached: true };
     }
     
     // Check if there's already a pending request for this cache key
     if (categoryCountsPromises[cacheKey]) {
-      console.log('Product slice - Deduplicating category counts request for:', type);
       try {
         const result = await categoryCountsPromises[cacheKey];
         return result;
@@ -171,7 +166,6 @@ export const fetchCategoryCounts = createAsyncThunk(
     // Create new request promise
     const requestPromise = (async () => {
       try {
-        console.log('Product slice - Fetching category counts for:', type, categories);
         const counts = {};
 
         // Use Promise.all for parallel requests instead of sequential

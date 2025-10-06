@@ -20,7 +20,7 @@ const AuthCallback = () => {
     const error = params.get('error');
     const welcome = params.get('welcome');
 
-    console.log('AuthCallback - Checking URL params:', { error, welcome, pathname: location.pathname });
+    // console.log('AuthCallback - Checking URL params:', { error, welcome, pathname: location.pathname });
 
     // Handle OAuth errors
     if (error) {

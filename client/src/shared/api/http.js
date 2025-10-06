@@ -73,7 +73,7 @@ const retryRequest = async (requestFn, maxRetries = 1, baseDelay = 2000) => {
       // Exponential backoff delay with jitter
       const jitter = Math.random() * 1000; // Add random delay up to 1s
       const delay = baseDelay * Math.pow(1.5, attempt - 1) + jitter; // Use 1.5x instead of 2x
-      console.log(`Request failed (attempt ${attempt}/${maxRetries + 1}), retrying in ${Math.round(delay)}ms...`);
+      // console.log(`Request failed (attempt ${attempt}/${maxRetries + 1}), retrying in ${Math.round(delay)}ms...`);
       await new Promise(resolve => setTimeout(resolve, Math.min(delay, 8000))); // Cap at 8s
     }
   }
@@ -103,12 +103,12 @@ const flushQueue = (error, token = null) => {
 
 http.interceptors.request.use((config) => {
   const token = getToken();
-  console.log('HTTP Request:', {
-    url: config.url,
-    method: config.method?.toUpperCase(),
-    hasToken: !!token,
-    tokenPreview: token ? `${token.substring(0, 20)}...` : 'none'
-  });
+  // console.log('HTTP Request:', {
+  //   url: config.url,
+  //   method: config.method?.toUpperCase(),
+  //   hasToken: !!token,
+  //   tokenPreview: token ? `${token.substring(0, 20)}...` : 'none'
+  // });
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -116,13 +116,13 @@ http.interceptors.request.use((config) => {
 // Add similar interceptors for authHttp
 authHttp.interceptors.request.use((config) => {
   const token = getToken();
-  console.log('AuthHttp Request:', {
-    url: config.url,
-    method: config.method?.toUpperCase(),
-    hasToken: !!token,
-    tokenPreview: token ? `${token.substring(0, 20)}...` : 'none',
-    body: config.data
-  });
+  // console.log('AuthHttp Request:', {
+  //   url: config.url,
+  //   method: config.method?.toUpperCase(),
+  //   hasToken: !!token,
+  //   tokenPreview: token ? `${token.substring(0, 20)}...` : 'none',
+  //   body: config.data
+  // });
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });

@@ -12,10 +12,10 @@ const router = Router();
 
 router.use(authenticated);
 
-router.get("/",authenticated, listAddresses);         
-router.post("/create",authenticated, createAddress);        
-router.get("/:id",authenticated, getAddress);         
-router.put("/update/:id",authenticated, updateAddress);      
-router.delete("/delete/:id",authenticated, deleteAddress);  
+router.get("/", listAddresses);         
+router.post("/create", createAddress);        
+router.get("/:id", getAddress);         
+router.put("/update/:id", updateAddress);      
+router.delete("/delete/:id", deleteAddress);  
 
 export default router;

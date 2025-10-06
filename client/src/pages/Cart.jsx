@@ -118,13 +118,7 @@ const Cart = () => {
   const cartTotal = useSelector(selectCartTotal);
   const isLoading = useSelector(selectIsCartLoading);
   
-  // Debug logging - testing if backend sends rupees not paise
-  console.log('Cart Debug:', {
-    cartTotal,
-    calculatedTotal: cartItems.reduce((acc, item) => acc + (item.unitPrice * item.quantity), 0),
-    itemCount: cartItems.length,
-    sampleItem: cartItems[0]
-  });
+  // Cart calculations handled by backend pricing service
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
     // Find the cart item to get productId and variantId

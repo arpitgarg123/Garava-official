@@ -118,6 +118,27 @@ testimonialSchema.methods.toPublicJSON = function() {
   };
 };
 
+testimonialSchema.methods.toAdminJSON = function() {
+  return {
+    _id: this._id,
+    name: this.name,
+    email: this.email,
+    content: this.content,
+    rating: this.rating,
+    avatar: this.avatar,
+    location: this.location,
+    designation: this.designation,
+    source: this.source,
+    isActive: this.isActive,
+    isFeatured: this.isFeatured,
+    order: this.order,
+    dateOfExperience: this.dateOfExperience,
+    formattedDate: this.formattedDate,
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt
+  };
+};
+
 // Static methods
 testimonialSchema.statics.getFeatured = function(limit = 8) {
   return this.find({ 

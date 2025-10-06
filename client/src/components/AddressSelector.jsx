@@ -19,10 +19,6 @@ import {
   clearError
 } from '../features/address/slice';
 
-// Global mount tracking to prevent spam across component instances
-let globalMountCount = 0;
-let lastMountTime = 0;
-
 // Memoized component to prevent unnecessary re-renders
 const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddressChange, showAsManagement = false }) => {
   const dispatch = useDispatch();
@@ -48,21 +44,16 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
     isDefault: false
   });
 
-  // Fetch addresses on mount - with global spam prevention
+  // Fetch addresses on mount
   const hasMounted = useRef(false);
   
   useEffect(() => {
-    const now = Date.now();
-    globalMountCount++;
-    
-    // Prevent multiple mounts within 1 second
-    if (now - lastMountTime < 1000) {
-      console.log(`AddressSelector - Rapid mount #${globalMountCount} detected, skipping fetch (${now - lastMountTime}ms since last)`);
+    // Only prevent if the exact same component instance tries to fetch multiple times
+    if (hasMounted.current) {
       return;
     }
     
-    lastMountTime = now;
-    console.log(`AddressSelector - Mount #${globalMountCount}, fetching addresses`);
+    hasMounted.current = true;
     dispatch(fetchAddresses());
   }, [dispatch]);
 

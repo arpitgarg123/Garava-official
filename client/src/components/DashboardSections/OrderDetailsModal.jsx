@@ -192,12 +192,12 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
-                  <span>{formatCurrency(order.subtotal || 0)}</span>
+                                    <span>{formatCurrency(order.subtotal || 0)}</span>
                 </div>
                 {(order.shippingTotal || 0) > 0 && (
                   <div className="flex justify-between">
                     <span>Shipping:</span>
-                    <span>{formatCurrency(order.shippingTotal || 0)}</span>
+                                        <span>{formatCurrency(order.shippingTotal || 0)}</span>
                   </div>
                 )}
                 {(order.taxTotal || 0) > 0 && (

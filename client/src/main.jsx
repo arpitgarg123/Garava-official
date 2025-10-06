@@ -39,18 +39,16 @@ store.subscribe(() => {
     
     if (accessToken && user) {
       // Start refresh cycle when user is authenticated
-      console.log('Store subscriber - User authenticated, starting token refresh cycle');
       tokenRefreshManager.startRefreshCycle(accessToken);
     } else {
       // Stop refresh cycle when user is logged out
-      console.log('Store subscriber - User not authenticated, stopping token refresh cycle');
       tokenRefreshManager.stop();
     }
   }
 });
 
 // Bootstrap session (refresh cookie -> accessToken)
-console.log('Main.jsx - Dispatching initAuth on app bootstrap');
+// Initialize authentication on app startup
 store.dispatch(initAuth());
 
 ReactDOM.createRoot(document.getElementById("root")).render(

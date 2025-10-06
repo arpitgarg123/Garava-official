@@ -96,7 +96,6 @@ const MainLayout = ({children}) => {
       const now = Date.now();
       // Prevent retries more than once per minute
       if (now - lastRetryTime.current < 60000) {
-        console.log('MainLayout - Skipping retry, too soon since last attempt');
         return;
       }
       
@@ -104,7 +103,7 @@ const MainLayout = ({children}) => {
       
       // Small delay to ensure connection is stable
       const retryTimer = setTimeout(() => {
-        console.log('MainLayout - Connection restored, retrying data fetch...');
+        // Connection restored, retry data fetch
         dispatch(fetchCart({ force: true })).unwrap().catch(() => {});
         dispatch(fetchWishlist({ force: true })).unwrap().catch(() => {});
       }, 2000);
