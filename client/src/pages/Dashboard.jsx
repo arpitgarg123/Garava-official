@@ -14,7 +14,8 @@ import {
   FaSignOutAlt,
   FaQuestionCircle,
   FaNewspaper,
-  FaComments
+  FaComments,
+  FaInstagram
 } from "react-icons/fa";
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
@@ -32,6 +33,7 @@ import Overview from '../components/DashboardSections/Overview';
 import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
 import NotificationDebug from '../components/DashboardSections/NotificationDebug';
 import NewsEventsAdmin from '../components/DashboardSections/NewsEventsAdmin';
+import InstagramAdmin from '../components/DashboardSections/InstagramAdmin';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Redux imports for real data
@@ -137,6 +139,7 @@ const Dashboard = () => {
     { id: "testimonials", label: "Testimonials", icon: FaComments },
     { id: "blogs", label: "Blogs", icon: FaBlog },
     { id: "newsevents", label: "News & Events", icon: FaNewspaper },
+    { id: "instagram", label: "Instagram", icon: FaInstagram },
     { id: "faq", label: "FAQ", icon: FaQuestionCircle },
     { id: "notifications", label: "Notifications", icon: FaBell },
     { id: "debug", label: "Debug", icon: FaBell },
@@ -186,6 +189,8 @@ const Dashboard = () => {
         return <Blogs />;
       case "newsevents":
         return <NewsEventsAdmin />;
+      case "instagram":
+        return <InstagramAdmin />;
       case "faq":
         return <FAQAdmin />;
       case "notifications":

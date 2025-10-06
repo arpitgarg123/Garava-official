@@ -35,6 +35,7 @@ import newseventsRouter from "./modules/newsevents/newsevents.router.js";
 import newseventsAdminRouter from "./modules/newsevents/admin/newsevents.admin.router.js";
 import contactRouter from "./modules/contact/contact.router.js";
 import testimonialRouter from "./modules/testimonial/testimonial.router.js";
+import instagramRouter from "./modules/instagram/instagram.router.js";
 
   // routers
   const app = express();
@@ -188,6 +189,7 @@ import testimonialRouter from "./modules/testimonial/testimonial.router.js";
   app.use("/api/admin/newsevents", newseventsAdminRouter);
   app.use("/api/contact", contactRouter);
   app.use("/api/testimonials", testimonialRouter);
+  app.use("/api/instagram", instagramRouter);
 
   // global error handler
   app.use(errorHandler);
