@@ -36,7 +36,7 @@ const MobileNav = ({ open, onClose, navItems = [] }) => {
                   <details className="group">
                     <summary className="py-4 px-2 cursor-pointer flex justify-between items-center">
                       <span className="font-medium">{item.title}</span>
-                      {item.submenu?.length > 0 && <span className="text-sm group-open:rotate-180 transition-transform">▾</span>}
+                      {item.submenu?.length > 0 && <span className="text-md group-open:rotate-180 transition-transform">▾</span>}
                     </summary>
 
                     {item.submenu?.length > 0 && (

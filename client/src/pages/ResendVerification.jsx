@@ -41,8 +41,8 @@ export default function ResendVerification() {
           {status === "loading" ? "Sending..." : "Send verification email"}
         </button>
       </form>
-      {message && <p className="mt-3 text-sm">{message}</p>}
-      <div className="mt-4 text-sm flex items-center justify-between">
+      {message && <p className="mt-3 text-md">{message}</p>}
+      <div className="mt-4 text-md flex items-center justify-between">
         <Link to="/login" className="underline">Back to login</Link>
         <Link to="/" className="underline">Home</Link>
       </div>

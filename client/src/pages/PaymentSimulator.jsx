@@ -41,15 +41,15 @@ const PaymentSimulator = () => {
             PhonePe Payment Simulator
           </h1>
           <div className="mb-6">
-            <p className="text-sm text-gray-600">Transaction ID: {txnId}</p>
-            <p className="text-sm text-gray-600">Order ID: {orderId}</p>
+            <p className="text-md text-gray-600">Transaction ID: {txnId}</p>
+            <p className="text-md text-gray-600">Order ID: {orderId}</p>
             <p className="text-lg font-semibold text-gray-800">
               Amount: ₹{amount ? parseInt(amount).toFixed(2) : '0.00'}
             </p>
           </div>
           
           <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <p className="text-sm text-blue-700 mb-2">
+            <p className="text-md text-blue-700 mb-2">
               🔧 <strong>Development Mode</strong>
             </p>
             <p className="text-xs text-blue-600">

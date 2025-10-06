@@ -156,7 +156,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
         <div className="flex items-center justify-between p-6 border-b">
           <div>
             <h2 className="text-xl font-semibold">Manage Variants</h2>
-            <p className="text-sm text-gray-500">{product.name}</p>
+            <p className="text-md text-gray-500">{product.name}</p>
           </div>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <AiOutlineClose className="h-6 w-6" />
@@ -195,7 +195,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
               <form onSubmit={handleAddVariant} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">SKU *</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">SKU *</label>
                     <input
                       type="text"
                       value={newVariant.sku}
@@ -206,7 +206,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Size Label *</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">Size Label *</label>
                     <input
                       type="text"
                       value={newVariant.sizeLabel}
@@ -218,7 +218,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Price (₹) *</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">Price (₹) *</label>
                     <input
                       type="number"
                       step="0.01"
@@ -230,7 +230,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">MRP (₹)</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">MRP (₹)</label>
                     <input
                       type="number"
                       step="0.01"
@@ -241,7 +241,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Stock</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">Stock</label>
                     <input
                       type="number"
                       value={newVariant.stock}
@@ -251,7 +251,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Weight (grams)</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">Weight (grams)</label>
                     <input
                       type="number"
                       step="0.1"
@@ -312,7 +312,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
               <form onSubmit={handleEditVariant} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">SKU *</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">SKU *</label>
                     <input
                       type="text"
                       value={editingVariant.sku}
@@ -323,7 +323,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Size Label *</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">Size Label *</label>
                     <input
                       type="text"
                       value={editingVariant.sizeLabel}
@@ -334,7 +334,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Price (₹) *</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">Price (₹) *</label>
                     <input
                       type="number"
                       step="0.01"
@@ -346,7 +346,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">MRP (₹)</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">MRP (₹)</label>
                     <input
                       type="number"
                       step="0.01"
@@ -357,7 +357,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Stock</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">Stock</label>
                     <input
                       type="number"
                       value={editingVariant.stock}
@@ -367,7 +367,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Weight (grams)</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">Weight (grams)</label>
                     <input
                       type="number"
                       step="0.1"
@@ -428,7 +428,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
               <form onSubmit={handleStockUpdate} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">SKU</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">SKU</label>
                     <input
                       type="text"
                       value={stockUpdate.variantSku}
@@ -438,7 +438,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">New Stock *</label>
+                    <label className="block text-md font-medium text-gray-700 mb-1">New Stock *</label>
                     <input
                       type="number"
                       value={stockUpdate.stock}
@@ -496,7 +496,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                       
                       return (
                         <tr key={variant._id || index} className={variant.isDefault ? 'bg-blue-50' : 'bg-white'}>
-                          <td className="px-4 py-3 text-sm text-gray-900">
+                          <td className="px-4 py-3 text-md text-gray-900">
                             <div className="flex items-center">
                               {variant.sku}
                               {variant.isDefault && (
@@ -506,25 +506,25 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                               )}
                             </div>
                           </td>
-                          <td className="px-4 py-3 text-sm text-gray-900">{variant.sizeLabel}</td>
-                          <td className="px-4 py-3 text-sm text-gray-900 font-medium">{formatCurrency(variant.price)}</td>
-                          <td className="px-4 py-3 text-sm text-gray-500">
+                          <td className="px-4 py-3 text-md text-gray-900">{variant.sizeLabel}</td>
+                          <td className="px-4 py-3 text-md text-gray-900 font-medium">{formatCurrency(variant.price)}</td>
+                          <td className="px-4 py-3 text-md text-gray-500">
                             {variant.mrp ? formatCurrency(variant.mrp) : '-'}
                           </td>
-                          <td className="px-4 py-3 text-sm">
+                          <td className="px-4 py-3 text-md">
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
                               {variant.stock || 0}
                             </span>
                           </td>
-                          <td className="px-4 py-3 text-sm text-gray-900">
+                          <td className="px-4 py-3 text-md text-gray-900">
                             {variant.weight ? `${variant.weight}g` : '-'}
                           </td>
-                          <td className="px-4 py-3 text-sm">
+                          <td className="px-4 py-3 text-md">
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${variant.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                               {variant.isActive ? 'Active' : 'Inactive'}
                             </span>
                           </td>
-                          <td className="px-4 py-3 text-right text-sm font-medium">
+                          <td className="px-4 py-3 text-right text-md font-medium">
                             <div className="flex items-center justify-end gap-2">
                               <button
                                 onClick={() => startEditVariant(variant)}
@@ -552,7 +552,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
               <div className="text-center py-8 text-gray-500">
                 <MdInventory className="h-16 w-16 mx-auto mb-4 text-gray-300" />
                 <p>No variants found for this product.</p>
-                <p className="text-sm">Add variants to manage inventory and pricing.</p>
+                <p className="text-md">Add variants to manage inventory and pricing.</p>
               </div>
             )}
           </div>

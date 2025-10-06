@@ -18,7 +18,7 @@ const AuthDebugPanel = () => {
         <h3 className="font-semibold text-yellow-800">Authentication Debug</h3>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-md">
         <div className="flex items-center gap-2">
           <FaUser className={isAuthenticated ? "text-green-600" : "text-red-600"} />
           <span>

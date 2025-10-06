@@ -202,7 +202,7 @@
 //               What Our Customers Say
 //             </h2>
 //             <div className="bg-red-50 border border-red-200 rounded-xl sm:rounded-2xl p-6 sm:p-8 max-w-sm sm:max-w-md mx-auto">
-//               <p className="text-red-600 font-medium text-sm sm:text-base mb-4">Unable to load testimonials</p>
+//               <p className="text-red-600 font-medium text-md sm:text-base mb-4">Unable to load testimonials</p>
 //               <button 
 //                 onClick={() => dispatch(fetchFeaturedTestimonials(8))}
 //                 className="btn btn-small bg-red-600 text-white hover:bg-red-700 transition-colors w-full sm:w-auto"
@@ -392,7 +392,7 @@
 
 //       {/* Responsive Content */}
 //       <div className="text-center mb-4 sm:mb-6">
-//         <blockquote className="text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed font-normal line-clamp-4 min-h-[4rem] sm:min-h-[5rem]">
+//         <blockquote className="text-gray-700 text-md sm:text-base lg:text-lg leading-relaxed font-normal line-clamp-4 min-h-[4rem] sm:min-h-[5rem]">
 //           "{testimonial.content}"
 //         </blockquote>
 //       </div>
@@ -409,7 +409,7 @@
 //         <h4 className="font-semibold text-gray-900 text-base sm:text-lg mb-1">
 //           {testimonial.name}
 //         </h4>
-//         <p className="text-gray-500 text-xs sm:text-sm font-medium">
+//         <p className="text-gray-500 text-xs sm:text-md font-medium">
 //           {testimonial.location || 'Verified Customer'}
 //         </p>
 //       </div>
@@ -798,7 +798,7 @@ const TestimonialCard = ({ testimonial, renderStars, getAlphabetAvatar }) => {
       {/* Quote Icon - Fixed positioning */}
       <div className="flex justify-center mb-4">
         <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-          <FaQuoteLeft className="text-amber-600 text-sm" />
+          <FaQuoteLeft className="text-amber-600 text-md" />
         </div>
       </div>
 
@@ -830,7 +830,7 @@ const TestimonialCard = ({ testimonial, renderStars, getAlphabetAvatar }) => {
         <h4 className="font-semibold text-gray-900 text-lg mb-1">
           {testimonial.name}
         </h4>
-        <p className="text-gray-500 text-sm font-medium">
+        <p className="text-gray-500 text-md font-medium">
           {testimonial.location || 'Verified Customer'}
         </p>
       </div>

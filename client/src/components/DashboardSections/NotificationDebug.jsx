@@ -103,12 +103,12 @@ const NotificationDebug = () => {
       
       <div className="bg-gray-50 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Debug Information:</h3>
-        <pre className="text-sm whitespace-pre-wrap">{debugInfo}</pre>
+        <pre className="text-md whitespace-pre-wrap">{debugInfo}</pre>
       </div>
       
       <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
         <h4 className="font-semibold text-yellow-800">Instructions:</h4>
-        <p className="text-sm text-yellow-700 mt-1">
+        <p className="text-md text-yellow-700 mt-1">
           1. Make sure you're logged in as an admin user<br/>
           2. Check that the backend server is running on port 8080<br/>
           3. Verify the notification endpoints are properly registered<br/>

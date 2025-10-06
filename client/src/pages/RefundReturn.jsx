@@ -25,7 +25,7 @@ const RefundReturn = () => {
               <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-gray-900 mb-4">
                 Refund & Returns
               </h1>
-              <p className="text-gray-600 text-sm  max-w-2xl mx-auto">
+              <p className="text-gray-600 text-md  max-w-2xl mx-auto">
                 Your satisfaction is our priority. Learn about our simple return and refund process for Garava products.
               </p>
             </div>
@@ -42,20 +42,20 @@ const RefundReturn = () => {
                   Return Policy
                 </h2>
                 <div className="prose max-w-none text-gray-700">
-                  <p className="mb-4 text-sm  leading-relaxed">
+                  <p className="mb-4 text-md  leading-relaxed">
                     At Garava, we want you to be completely satisfied with your purchase. If for any reason you are not happy with your order, 
                     we offer a simple return policy to ensure your peace of mind.
                   </p>
                   
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-6">
                     <h3 className="font-semibold text-amber-900 mb-3">Return Window</h3>
-                    <p className="text-amber-800 text-sm ">
+                    <p className="text-amber-800 text-md ">
                       You may return items within <strong>7 days</strong> of delivery for a full refund, provided the items are in their original condition.
                     </p>
                   </div>
 
                   <h3 className="font-semibold text-gray-900 mb-3 text-lg">Eligible Items for Return:</h3>
-                  <ul className="list-disc list-inside space-y-2 text-sm  mb-6">
+                  <ul className="list-disc list-inside space-y-2 text-md  mb-6">
                     <li>Items in original packaging with all tags attached</li>
                     <li>Unused and unworn jewellery pieces</li>
                     <li>Unopened fragrance products with intact seals</li>
@@ -63,7 +63,7 @@ const RefundReturn = () => {
                   </ul>
 
                   <h3 className="font-semibold text-gray-900 mb-3 text-lg">Non-Returnable Items:</h3>
-                  <ul className="list-disc list-inside space-y-2 text-sm  mb-6">
+                  <ul className="list-disc list-inside space-y-2 text-md  mb-6">
                     <li>Personalized or customized jewellery</li>
                     <li>Items damaged by customer use</li>
                     <li>Opened fragrance products</li>
@@ -79,51 +79,51 @@ const RefundReturn = () => {
                   How to Return
                 </h2>
                 <div className="prose max-w-none text-gray-700">
-                  <p className="mb-4 text-sm  leading-relaxed">
+                  <p className="mb-4 text-md  leading-relaxed">
                     Returning your Garava purchase is simple and hassle-free. Follow these easy steps:
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-md">
                           1
                         </div>
                         <div>
                           <h4 className="font-semibold text-gray-900 mb-1">Contact Us</h4>
-                          <p className="text-sm text-gray-600">Email us at info@garava.in or call our customer service team to initiate your return.</p>
+                          <p className="text-md text-gray-600">Email us at info@garava.in or call our customer service team to initiate your return.</p>
                         </div>
                       </div>
                       
                       <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-md">
                           2
                         </div>
                         <div>
                           <h4 className="font-semibold text-gray-900 mb-1">Pack Your Items</h4>
-                          <p className="text-sm text-gray-600">Carefully pack your items in the original packaging with all accessories and documentation.</p>
+                          <p className="text-md text-gray-600">Carefully pack your items in the original packaging with all accessories and documentation.</p>
                         </div>
                       </div>
                     </div>
                     
                     <div className="space-y-4">
                       <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-md">
                           3
                         </div>
                         <div>
                           <h4 className="font-semibold text-gray-900 mb-1">Ship Back</h4>
-                          <p className="text-sm text-gray-600">Use the prepaid return label provided or ship to our return address as instructed.</p>
+                          <p className="text-md text-gray-600">Use the prepaid return label provided or ship to our return address as instructed.</p>
                         </div>
                       </div>
                       
                       <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-md">
                           4
                         </div>
                         <div>
                           <h4 className="font-semibold text-gray-900 mb-1">Get Refund</h4>
-                          <p className="text-sm text-gray-600">Receive your refund within 5-7 business days after we process your return.</p>
+                          <p className="text-md text-gray-600">Receive your refund within 5-7 business days after we process your return.</p>
                         </div>
                       </div>
                     </div>
@@ -138,14 +138,14 @@ const RefundReturn = () => {
                   Refund Process
                 </h2>
                 <div className="prose max-w-none text-gray-700">
-                  <p className="mb-6 text-sm  leading-relaxed">
+                  <p className="mb-6 text-md  leading-relaxed">
                     Once we receive your returned item, we will inspect it and process your refund accordingly.
                   </p>
                   
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
                       <h3 className="font-semibold text-blue-900 mb-4">Refund Timeline</h3>
-                      <ul className="space-y-2 text-sm text-blue-800">
+                      <ul className="space-y-2 text-md text-blue-800">
                         <li>• Items inspected within 2 business days</li>
                         <li>• Refund processed within 3-5 business days</li>
                         <li>• Amount credited to original payment method</li>
@@ -155,7 +155,7 @@ const RefundReturn = () => {
                     
                     <div className="bg-green-50 rounded-lg p-6 border border-green-200">
                       <h3 className="font-semibold text-green-900 mb-4">What You Get Back</h3>
-                      <ul className="space-y-2 text-sm text-green-800">
+                      <ul className="space-y-2 text-md text-green-800">
                         <li>• Full product price refunded</li>
                         <li>• Original shipping charges (if applicable)</li>
                         <li>• Taxes and fees included</li>
@@ -173,7 +173,7 @@ const RefundReturn = () => {
                   Need Help?
                 </h2>
                 <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg p-6 border border-amber-200">
-                  <p className="text-gray-700 text-sm  mb-6 leading-relaxed">
+                  <p className="text-gray-700 text-md  mb-6 leading-relaxed">
                     Our customer service team is here to assist you with any questions about returns or refunds.
                   </p>
                   
@@ -186,8 +186,8 @@ const RefundReturn = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-sm">Email Support</h4>
-                        <p className="text-gray-600 text-sm">info@garava.in</p>
+                        <h4 className="font-semibold text-gray-900 text-md">Email Support</h4>
+                        <p className="text-gray-600 text-md">info@garava.in</p>
                         <p className="text-xs text-gray-500">Response within 24 hours</p>
                       </div>
                     </div>
@@ -199,15 +199,15 @@ const RefundReturn = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-sm">Phone Support</h4>
-                        <p className="text-gray-600 text-sm">+91-7738543881</p>
+                        <h4 className="font-semibold text-gray-900 text-md">Phone Support</h4>
+                        <p className="text-gray-600 text-md">+91-7738543881</p>
                         <p className="text-xs text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-6 pt-6 border-t border-amber-200 text-center">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-md text-gray-600">
                       <strong>Return Address:</strong> Garava, Bandra West, Mumbai - 400050
                     </p>
                   </div>
@@ -218,7 +218,7 @@ const RefundReturn = () => {
 
           {/* Footer */}
           <div className="bg-gray-50 border-t border-gray-200 p-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-md text-gray-600">
               © 2025 Garava. All rights reserved.
             </p>
           </div>

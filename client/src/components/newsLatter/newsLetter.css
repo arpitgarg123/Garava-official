@@ -24,7 +24,6 @@
 
 /* small uppercase label */
 .heading {
-  font-family: var(--headFont, "Montserrat", sans-serif);
   font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;

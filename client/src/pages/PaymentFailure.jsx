@@ -73,14 +73,14 @@ const PaymentFailure = () => {
         </p>
         
         <div className="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
-          <p className="text-sm text-red-800 font-medium">
+          <p className="text-md text-red-800 font-medium">
             Reason: {reason}
           </p>
         </div>
 
         {txnId && (
           <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">
+            <p className="text-md text-gray-600">
               Transaction ID: <span className="font-mono font-semibold">{txnId}</span>
             </p>
           </div>
@@ -88,7 +88,7 @@ const PaymentFailure = () => {
 
         {orderId && (
           <div className="mt-2 p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">
+            <p className="text-md text-gray-600">
               Order ID: <span className="font-mono font-semibold">{orderId}</span>
             </p>
           </div>
@@ -117,14 +117,14 @@ const PaymentFailure = () => {
           </button>
         </div>
 
-        <div className="mt-6 text-sm text-gray-500">
+        <div className="mt-6 text-md text-gray-500">
           <p>Need help? Contact our support team</p>
           <p>We're here to assist you with your order</p>
         </div>
 
         {/* Common payment failure reasons and solutions */}
         <div className="mt-6 text-left bg-gray-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-sm text-gray-900 mb-2">Common issues:</h3>
+          <h3 className="font-semibold text-md text-gray-900 mb-2">Common issues:</h3>
           <ul className="text-xs text-gray-600 space-y-1">
             <li>• Insufficient balance in your account</li>
             <li>• Card limit exceeded</li>

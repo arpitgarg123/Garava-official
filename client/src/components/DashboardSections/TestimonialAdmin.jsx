@@ -258,7 +258,7 @@ const TestimonialAdmin = () => {
           <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Name *</label>
+                  <label className="block text-md font-medium mb-1">Name *</label>
                   <input
                     type="text"
                     value={formData.name}
@@ -268,7 +268,7 @@ const TestimonialAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Email</label>
+                  <label className="block text-md font-medium mb-1">Email</label>
                   <input
                     type="email"
                     value={formData.email}
@@ -277,7 +277,7 @@ const TestimonialAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Content *</label>
+                  <label className="block text-md font-medium mb-1">Content *</label>
                   <textarea
                     value={formData.content}
                     onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
@@ -286,7 +286,7 @@ const TestimonialAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Rating</label>
+                  <label className="block text-md font-medium mb-1">Rating</label>
                   <select
                     value={formData.rating}
                     onChange={(e) => setFormData(prev => ({ ...prev, rating: parseInt(e.target.value) }))}
@@ -298,7 +298,7 @@ const TestimonialAdmin = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Location</label>
+                  <label className="block text-md font-medium mb-1">Location</label>
                   <input
                     type="text"
                     value={formData.location}
@@ -307,7 +307,7 @@ const TestimonialAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Designation</label>
+                  <label className="block text-md font-medium mb-1">Designation</label>
                   <input
                     type="text"
                     value={formData.designation}
@@ -371,7 +371,7 @@ const TestimonialAdmin = () => {
         <nav className="flex space-x-8">
           <button
             onClick={() => setActiveTab('list')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+            className={`py-2 px-1 border-b-2 font-medium text-md ${
               activeTab === 'list'
                 ? 'border-blue-500 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -381,7 +381,7 @@ const TestimonialAdmin = () => {
           </button>
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`py-2 px-1 border-b-2 font-medium text-sm ${
+            className={`py-2 px-1 border-b-2 font-medium text-md ${
               activeTab === 'analytics'
                 ? 'border-blue-500 text-blue-600'
                 : 'border-transparent text-gray-500 hover:text-gray-700'
@@ -486,16 +486,16 @@ const TestimonialAdmin = () => {
                     <tr key={testimonial._id}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-md font-medium text-gray-900">
                             {testimonial.name}
                           </div>
                           {testimonial.location && (
-                            <div className="text-sm text-gray-500">{testimonial.location}</div>
+                            <div className="text-md text-gray-500">{testimonial.location}</div>
                           )}
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900 max-w-xs truncate">
+                        <div className="text-md text-gray-900 max-w-xs truncate">
                           {testimonial.content}
                         </div>
                       </td>
@@ -531,7 +531,7 @@ const TestimonialAdmin = () => {
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <td className="px-6 py-4 whitespace-nowrap text-md font-medium">
                         <div className="flex items-center space-x-2">
                           <button
                             onClick={() => openModal('edit', testimonial)}
@@ -567,8 +567,8 @@ const TestimonialAdmin = () => {
                           <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10m0 0V6a2 2 0 00-2-2H9a2 2 0 00-2 2v2m0 0v8a2 2 0 002 2h6a2 2 0 002-2V8m0 0H7m5 5.5a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                           </svg>
-                          <h3 className="mt-2 text-sm font-medium text-gray-900">No testimonials found</h3>
-                          <p className="mt-1 text-sm text-gray-500">
+                          <h3 className="mt-2 text-md font-medium text-gray-900">No testimonials found</h3>
+                          <p className="mt-1 text-md text-gray-500">
                             {filters.search || filters.source || filters.isActive || filters.isFeatured 
                               ? "Try adjusting your filters or search term."
                               : "Get started by adding your first testimonial."
@@ -578,7 +578,7 @@ const TestimonialAdmin = () => {
                             <div className="mt-6">
                               <button
                                 onClick={() => openModal('create')}
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-md font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
                               >
                                 <FaPlus className="mr-2" />
                                 Add First Testimonial
@@ -629,7 +629,7 @@ const TestimonialAdmin = () => {
                 <div className="flex items-center">
                   <FaChartBar className="text-blue-600 text-2xl" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Total</p>
+                    <p className="text-md font-medium text-gray-600">Total</p>
                     <p className="text-2xl font-semibold text-gray-900">{stats.total}</p>
                   </div>
                 </div>
@@ -638,7 +638,7 @@ const TestimonialAdmin = () => {
                 <div className="flex items-center">
                   <FaEye className="text-green-600 text-2xl" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Active</p>
+                    <p className="text-md font-medium text-gray-600">Active</p>
                     <p className="text-2xl font-semibold text-gray-900">{stats.active}</p>
                   </div>
                 </div>
@@ -647,7 +647,7 @@ const TestimonialAdmin = () => {
                 <div className="flex items-center">
                   <FaStar className="text-yellow-600 text-2xl" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Featured</p>
+                    <p className="text-md font-medium text-gray-600">Featured</p>
                     <p className="text-2xl font-semibold text-gray-900">{stats.featured}</p>
                   </div>
                 </div>
@@ -656,7 +656,7 @@ const TestimonialAdmin = () => {
                 <div className="flex items-center">
                   <FaGoogle className="text-red-600 text-2xl" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600">Google</p>
+                    <p className="text-md font-medium text-gray-600">Google</p>
                     <p className="text-2xl font-semibold text-gray-900">{stats.google}</p>
                   </div>
                 </div>

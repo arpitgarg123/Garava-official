@@ -22,7 +22,7 @@ const MediaCard =({ item }) =>{
           </time>
         </div>
         <h3 className="line-clamp-2 text-lg font-medium leading-snug">{item.title}</h3>
-        {item.excerpt && <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">{item.excerpt}</p>}
+        {item.excerpt && <p className="mt-2 line-clamp-3 text-md text-muted-foreground">{item.excerpt}</p>}
         <div className="mt-4 flex items-center gap-3">
           <a
             href={item.url}

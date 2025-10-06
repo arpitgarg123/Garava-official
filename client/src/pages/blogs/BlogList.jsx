@@ -14,7 +14,7 @@
 //             <button
 //               key={category.id}
 //               onClick={() => handleCategoryChange(category.id)}
-//               className={`px-6 py-2 rounded-full transition-all duration-300 uppercase tracking-wider text-sm font-medium ${
+//               className={`px-6 py-2 rounded-full transition-all duration-300 uppercase tracking-wider text-md font-medium ${
 //                 activeCategory === category.id
 //                   ? 'bg-black text-white'
 //                   : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
@@ -114,7 +114,7 @@ const BlogList = () => {
             <button
               key={category.id}
               onClick={() => handleCategoryChange(category.id)}
-              className={`px-6 py-2 rounded-full cursor-pointer max-sm:m-2 transition-all duration-300 uppercase tracking-wider text-sm font-medium ${
+              className={`px-6 py-2 rounded-full cursor-pointer max-sm:m-2 transition-all duration-300 uppercase tracking-wider text-md font-medium ${
                 activeCategory === category.id
                   ? 'bg-black text-white'
                   : 'bg-gray-50 text-gray-700 hover:bg-gray-200'

@@ -131,9 +131,9 @@
 //         <div className="flex items-center justify-between mb-4">
 //           <div>
 //             <h2 className="text-lg font-semibold text-gray-900">Reviews Management</h2>
-//             <p className="text-sm text-gray-600">Moderate and manage customer reviews</p>
+//             <p className="text-md text-gray-600">Moderate and manage customer reviews</p>
 //           </div>
-//           <div className="text-sm text-gray-600">
+//           <div className="text-md text-gray-600">
 //             {pagination.total} total reviews
 //           </div>
 //         </div>
@@ -208,7 +208,7 @@
 //             <div className="text-center">
 //               <FiMessageSquare className="w-16 h-16 text-gray-300 mx-auto mb-4" />
 //               <p className="text-gray-500 font-medium">No reviews found</p>
-//               <p className="text-gray-400 text-sm mt-1">Customer reviews will appear here</p>
+//               <p className="text-gray-400 text-md mt-1">Customer reviews will appear here</p>
 //             </div>
 //           </div>
 //         ) : (
@@ -244,7 +244,7 @@
 //                   <tr key={review._id} className="hover:bg-gray-50 ">
 //                     <td className="px-6 py-4 whitespace-nowrap">
 //                       <div className="">
-//                         <div className="text-sm font-medium text-gray-900 pl-8">
+//                         <div className="text-md font-medium text-gray-900 pl-8">
 //                           {review.user?.name || 'Anonymous'}
 //                         </div>
 //                         <div className="text-xs text-gray-500 pl-8">
@@ -285,7 +285,7 @@
 //                         {getStatusText(review.isApproved, review.flagged)}
 //                       </span>
 //                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+//                     <td className="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
 //                       <div className="flex items-center justify-end gap-2">
 //                         {!review.isApproved && !review.flagged && (
 //                           <button
@@ -335,14 +335,14 @@
 //       {pagination.totalPages > 1 && (
 //         <div className="flex-shrink-0 px-6 py-4 border-t border-gray-200">
 //           <div className="flex items-center justify-between">
-//             <div className="text-sm text-gray-700">
+//             <div className="text-md text-gray-700">
 //               Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
 //             </div>
 //             <div className="flex items-center gap-2">
 //               <button
 //                 onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: pagination.page - 1 }))}
 //                 disabled={pagination.page <= 1}
-//                 className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+//                 className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
 //               >
 //                 Previous
 //               </button>
@@ -350,7 +350,7 @@
 //                 <button
 //                   key={i + 1}
 //                   onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: i + 1 }))}
-//                   className={`px-3 py-1 border rounded text-sm ${
+//                   className={`px-3 py-1 border rounded text-md ${
 //                     pagination.page === i + 1
 //                       ? 'bg-blue-600 text-white border-blue-600'
 //                       : 'border-gray-300 hover:bg-gray-50'
@@ -362,7 +362,7 @@
 //               <button
 //                 onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: pagination.page + 1 }))}
 //                 disabled={pagination.page >= pagination.totalPages}
-//                 className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+//                 className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
 //               >
 //                 Next
 //               </button>
@@ -531,7 +531,7 @@ export default function Reviews() {
               </div>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-medium text-gray-900 truncate">
+              <h3 className="text-md font-medium text-gray-900 truncate">
                 {review.user?.name || 'Anonymous'}
               </h3>
               <p className="text-xs text-gray-500 truncate">
@@ -549,7 +549,7 @@ export default function Reviews() {
         {/* Product & Rating */}
         <div className="mb-3">
           <p className="text-xs text-gray-500 mb-1">Product</p>
-          <p className="text-sm font-medium text-gray-900 mb-2">
+          <p className="text-md font-medium text-gray-900 mb-2">
             {review.product || 'Unknown Product'}
           </p>
           <div className="flex items-center gap-2">
@@ -568,7 +568,7 @@ export default function Reviews() {
         {/* Review Content */}
         <div className="mb-3">
           <p className="text-xs text-gray-500 mb-1">Review</p>
-          <p className="text-sm text-gray-900 line-clamp-3">
+          <p className="text-md text-gray-900 line-clamp-3">
             {review.body || 'No comment provided'}
           </p>
         </div>
@@ -676,7 +676,7 @@ export default function Reviews() {
                     </div>
                   </div>
                   <div className="ml-3">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-md font-medium text-gray-900">
                       {review.user?.name || 'Anonymous'}
                     </div>
                     <div className="text-xs text-gray-500">
@@ -686,7 +686,7 @@ export default function Reviews() {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900 max-w-32 truncate">
+                <div className="text-md text-gray-900 max-w-32 truncate">
                   {review.product || 'Unknown Product'}
                 </div>
               </td>
@@ -703,13 +703,13 @@ export default function Reviews() {
               </td>
               <td className="px-6 py-4">
                 <div className="max-w-xs">
-                  <div className="text-sm text-gray-900 line-clamp-2">
+                  <div className="text-md text-gray-900 line-clamp-2">
                     {review.body || 'No comment provided'}
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
+                <div className="text-md text-gray-900">
                   {formatDate(review.createdAt)}
                 </div>
               </td>
@@ -718,7 +718,7 @@ export default function Reviews() {
                   {getStatusText(review.isApproved, review.flagged)}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+              <td className="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
                 <div className="flex items-center justify-end gap-2">
                   <button
                     onClick={() => {
@@ -793,18 +793,18 @@ export default function Reviews() {
           <div className="p-6 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">Customer</p>
-                <p className="text-sm text-gray-900">{review.user?.name || 'Anonymous'}</p>
+                <p className="text-md font-medium text-gray-700 mb-1">Customer</p>
+                <p className="text-md text-gray-900">{review.user?.name || 'Anonymous'}</p>
                 <p className="text-xs text-gray-500">{review.user?.email || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">Product</p>
-                <p className="text-sm text-gray-900">{review.product || 'Unknown Product'}</p>
+                <p className="text-md font-medium text-gray-700 mb-1">Product</p>
+                <p className="text-md text-gray-900">{review.product || 'Unknown Product'}</p>
               </div>
             </div>
             
             <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">Rating</p>
+              <p className="text-md font-medium text-gray-700 mb-2">Rating</p>
               <div className="flex items-center gap-2">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
@@ -814,24 +814,24 @@ export default function Reviews() {
                     />
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">({review.rating}/5)</span>
+                <span className="text-md text-gray-600">({review.rating}/5)</span>
               </div>
             </div>
             
             <div>
-              <p className="text-sm font-medium text-gray-700 mb-2">Review</p>
-              <p className="text-sm text-gray-900 leading-relaxed">
+              <p className="text-md font-medium text-gray-700 mb-2">Review</p>
+              <p className="text-md text-gray-900 leading-relaxed">
                 {review.body || 'No comment provided'}
               </p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">Date</p>
-                <p className="text-sm text-gray-900">{formatDate(review.createdAt)}</p>
+                <p className="text-md font-medium text-gray-700 mb-1">Date</p>
+                <p className="text-md text-gray-900">{formatDate(review.createdAt)}</p>
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-1">Status</p>
+                <p className="text-md font-medium text-gray-700 mb-1">Status</p>
                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
                   {getStatusText(review.isApproved, review.flagged)}
                 </span>
@@ -857,7 +857,7 @@ export default function Reviews() {
       <div className="h-full flex items-center justify-center p-4">
         <div className="text-center max-w-md mx-auto">
           <p className="text-red-600 font-medium mb-2">Error loading reviews</p>
-          <p className="text-gray-500 text-sm mb-4">{error}</p>
+          <p className="text-gray-500 text-md mb-4">{error}</p>
           <button 
             onClick={() => dispatch(fetchReviewsAdmin({ page: 1, limit: 20 }))}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -878,7 +878,7 @@ export default function Reviews() {
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
               Reviews Management
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-md text-gray-600 mt-1">
               Moderate and manage customer reviews • {pagination.total || 0} total reviews
             </p>
           </div>
@@ -886,12 +886,12 @@ export default function Reviews() {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4">
-          <p className="text-sm text-gray-600">
+          <p className="text-md text-gray-600">
             {filteredReviews.length} reviews
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-md border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -980,7 +980,7 @@ export default function Reviews() {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Search */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+              <label className="block text-md font-medium text-gray-700 mb-2">Search</label>
               <div className="relative">
                 <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -995,7 +995,7 @@ export default function Reviews() {
 
             {/* Mobile Status Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-md font-medium text-gray-700 mb-2">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -1010,7 +1010,7 @@ export default function Reviews() {
 
             {/* Mobile Rating Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+              <label className="block text-md font-medium text-gray-700 mb-2">Rating</label>
               <select
                 value={ratingFilter}
                 onChange={(e) => setRatingFilter(e.target.value)}
@@ -1063,7 +1063,7 @@ export default function Reviews() {
             <div className="text-center max-w-md mx-auto">
               <FiMessageSquare className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 font-medium mb-2">No reviews found</p>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="text-gray-400 text-md mb-4">
                 {searchTerm || statusFilter || ratingFilter 
                   ? "Try adjusting your filters or search terms"
                   : "Customer reviews will appear here"
@@ -1100,7 +1100,7 @@ export default function Reviews() {
       {pagination.totalPages > 1 && (
         <div className="flex-shrink-0 px-4 sm:px-6 py-4 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-gray-700 text-center sm:text-left">
+            <div className="text-md text-gray-700 text-center sm:text-left">
               Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
             </div>
             
@@ -1109,17 +1109,17 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-md min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
               >
                 Next →
               </button>
@@ -1130,7 +1130,7 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Previous
               </button>
@@ -1140,7 +1140,7 @@ export default function Reviews() {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 border rounded text-sm ${
+                    className={`px-3 py-1 border rounded text-md ${
                       pagination.page === pageNum
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'border-gray-300 hover:bg-gray-50'
@@ -1153,7 +1153,7 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Next
               </button>

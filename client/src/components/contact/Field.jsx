@@ -4,7 +4,7 @@ const Field = ({ id, label, name, value, onChange, onBlur, required, placeholder
      const Comp = as === "textarea" ? "textarea" : "input";
   return (
      <div>
-      <label htmlFor={id} className="text-sm font-medium">
+      <label htmlFor={id} className="text-md font-medium">
         {label} {required && <span className="text-red-600">*</span>}
       </label>
       <Comp

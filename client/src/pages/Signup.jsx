@@ -67,61 +67,61 @@ const Signup = () => {
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-gray-300"></div>
           </div>
-          <div className="relative flex justify-center text-sm">
+          <div className="relative flex justify-center text-md">
             <span className="px-2 bg-white text-gray-500">or sign up with email</span>
           </div>
         </div>
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm text-gray-700">Full Name</label>
+          <label className="block text-md text-gray-700">Full Name</label>
           <input
             type="text"
             name="name"
             required
             value={form.name}
             onChange={handleChange}
-            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-black"
+            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-md focus:outline-none focus:ring-1 focus:ring-black"
           />
         </div>
 
         <div>
-          <label className="block text-sm text-gray-700">Email</label>
+          <label className="block text-md text-gray-700">Email</label>
           <input
             type="email"
             name="email"
             required
             value={form.email}
             onChange={handleChange}
-            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-black"
+            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-md focus:outline-none focus:ring-1 focus:ring-black"
           />
         </div>
 
         <div>
-          <label className="block text-sm text-gray-700">Password</label>
+          <label className="block text-md text-gray-700">Password</label>
           <input
             type="password"
             name="password"
             required
             value={form.password}
             onChange={handleChange}
-            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-black"
+            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-md focus:outline-none focus:ring-1 focus:ring-black"
           />
         </div>
 
         <div>
-          <label className="block text-sm text-gray-700">Confirm Password</label>
+          <label className="block text-md text-gray-700">Confirm Password</label>
           <input
             type="password"
             name="confirmPassword"
             required
             value={form.confirmPassword}
             onChange={handleChange}
-            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-black"
+            className="mt-1 w-full border border-gray-300 px-4 py-2 rounded-md text-md focus:outline-none focus:ring-1 focus:ring-black"
           />
         </div>
 
-        {message && <p className="text-sm text-green-700">{message}</p>}
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {message && <p className="text-md text-green-700">{message}</p>}
+        {error && <p className="text-md text-red-600">{error}</p>}
 
         <button
           type="submit"
@@ -132,7 +132,7 @@ const Signup = () => {
         </button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-gray-600">
+      <p className="mt-6 text-center text-md text-gray-600">
         Already have an account?{" "}
         <Link to="/login" className="underline hover:text-black">
           Login

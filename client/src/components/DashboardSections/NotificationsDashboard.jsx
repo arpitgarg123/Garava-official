@@ -208,7 +208,7 @@ const NotificationsDashboard = () => {
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between mb-2">
-            <h3 className="font-medium text-gray-900 text-sm line-clamp-2 flex-1">
+            <h3 className="font-medium text-gray-900 text-md line-clamp-2 flex-1">
               {notification.title}
             </h3>
             {!notification.isRead && (
@@ -216,7 +216,7 @@ const NotificationsDashboard = () => {
             )}
           </div>
           
-          <p className="text-gray-600 text-sm line-clamp-2 mb-3">
+          <p className="text-gray-600 text-md line-clamp-2 mb-3">
             {notification.message}
           </p>
           
@@ -247,7 +247,7 @@ const NotificationsDashboard = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => viewNotification(notification._id)}
-              className="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-md text-sm font-medium hover:bg-blue-100 transition-colors"
+              className="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-md text-md font-medium hover:bg-blue-100 transition-colors"
             >
               View Details
             </button>
@@ -317,7 +317,7 @@ const NotificationsDashboard = () => {
               <FaBell className="text-blue-600" />
               Notifications
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-md text-gray-600 mt-1">
               Monitor system alerts and important updates
             </p>
           </div>
@@ -340,7 +340,7 @@ const NotificationsDashboard = () => {
                 <FaBell className="text-blue-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Total</p>
+                <p className="text-xs sm:text-md font-medium text-gray-600 truncate">Total</p>
                 <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.total || 0}</p>
               </div>
             </div>
@@ -352,7 +352,7 @@ const NotificationsDashboard = () => {
                 <FaEye className="text-yellow-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Unread</p>
+                <p className="text-xs sm:text-md font-medium text-gray-600 truncate">Unread</p>
                 <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.unread || 0}</p>
               </div>
             </div>
@@ -364,7 +364,7 @@ const NotificationsDashboard = () => {
                 <FaBox className="text-red-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Out of Stock</p>
+                <p className="text-xs sm:text-md font-medium text-gray-600 truncate">Out of Stock</p>
                 <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.outOfStock || 0}</p>
               </div>
             </div>
@@ -376,7 +376,7 @@ const NotificationsDashboard = () => {
                 <FaExclamationTriangle className="text-orange-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">Low Stock</p>
+                <p className="text-xs sm:text-md font-medium text-gray-600 truncate">Low Stock</p>
                 <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.lowStock || 0}</p>
               </div>
             </div>
@@ -385,12 +385,12 @@ const NotificationsDashboard = () => {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4 max-sm:mb-0">
-          <p className="text-sm text-gray-600">
+          <p className="text-md text-gray-600">
             {notifications.length} notifications
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-md border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
           >
             <FiFilter className="w-4 h-4" />
             Filters
@@ -401,15 +401,15 @@ const NotificationsDashboard = () => {
         <div className="hidden lg:block">
           <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center gap-2 mr-4">
-              <FaFilter className="text-gray-500 text-sm" />
-              <span className="text-sm font-medium text-gray-700">Filter:</span>
+              <FaFilter className="text-gray-500 text-md" />
+              <span className="text-md font-medium text-gray-700">Filter:</span>
             </div>
             
             {['all', 'out_of_stock', 'low_stock', 'order_placed', 'payment_failed'].map((filterType) => (
               <button
                 key={filterType}
                 onClick={() => setFilter(filterType)}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                className={`px-3 py-1 rounded-full text-md font-medium transition-colors ${
                   filter === filterType
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
@@ -421,7 +421,7 @@ const NotificationsDashboard = () => {
             
             <button
               onClick={() => setUnreadOnly(!unreadOnly)}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+              className={`px-3 py-1 rounded-full text-md font-medium transition-colors ${
                 unreadOnly
                   ? 'bg-yellow-600 text-white'
                   : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
@@ -459,13 +459,13 @@ const NotificationsDashboard = () => {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Type Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">Type</label>
+              <label className="block text-md font-medium text-gray-700 mb-3">Type</label>
               <div className="space-y-2">
                 {['all', 'out_of_stock', 'low_stock', 'order_placed', 'payment_failed'].map((filterType) => (
                   <button
                     key={filterType}
                     onClick={() => setFilter(filterType)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`w-full text-left px-3 py-2 rounded-lg text-md font-medium transition-colors ${
                       filter === filterType
                         ? 'bg-blue-100 text-blue-800 border border-blue-300'
                         : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
@@ -479,10 +479,10 @@ const NotificationsDashboard = () => {
 
             {/* Mobile Unread Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">Status</label>
+              <label className="block text-md font-medium text-gray-700 mb-3">Status</label>
               <button
                 onClick={() => setUnreadOnly(!unreadOnly)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`w-full text-left px-3 py-2 rounded-lg text-md font-medium transition-colors ${
                   unreadOnly
                     ? 'bg-yellow-100 text-yellow-800 border border-yellow-300'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
@@ -512,7 +512,7 @@ const NotificationsDashboard = () => {
               <div className="text-center max-w-md mx-auto">
                 <FaBell className="mx-auto text-4xl sm:text-6xl text-gray-300 mb-4" />
                 <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">No notifications</h3>
-                <p className="text-sm sm:text-base text-gray-600">
+                <p className="text-md sm:text-base text-gray-600">
                   All caught up! No notifications match your current filters.
                 </p>
               </div>
@@ -552,7 +552,7 @@ const NotificationsDashboard = () => {
                               <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
                             )}
                           </div>
-                          <p className="text-gray-700 mb-2 text-sm">{notification.message}</p>
+                          <p className="text-gray-700 mb-2 text-md">{notification.message}</p>
                           <div className="flex items-center space-x-4 text-xs text-gray-500">
                             <span>{formatDate(notification.createdAt)}</span>
                             {notification.productId && (
@@ -657,14 +657,14 @@ const NotificationsDashboard = () => {
               </div>
               
               <div className="border-t pt-4">
-                <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Message</h4>
-                <p className="text-gray-700 text-sm sm:text-base break-words">{selectedNotification.message}</p>
+                <h4 className="font-medium text-gray-900 mb-2 text-md sm:text-base">Message</h4>
+                <p className="text-gray-700 text-md sm:text-base break-words">{selectedNotification.message}</p>
               </div>
               
               {selectedNotification.productId && (
                 <div className="border-t pt-4">
-                  <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Product Information</h4>
-                  <div className="bg-gray-50 p-3 rounded text-sm">
+                  <h4 className="font-medium text-gray-900 mb-2 text-md sm:text-base">Product Information</h4>
+                  <div className="bg-gray-50 p-3 rounded text-md">
                     <p><strong>Product:</strong> {selectedNotification.productId.name || 'Unknown'}</p>
                     {selectedNotification.metadata?.variantSizeLabel && (
                       <p><strong>Variant:</strong> {selectedNotification.metadata.variantSizeLabel}</p>
@@ -680,8 +680,8 @@ const NotificationsDashboard = () => {
               )}
               
               <div className="border-t pt-4">
-                <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Notification Details</h4>
-                <div className="text-xs sm:text-sm text-gray-600 space-y-1">
+                <h4 className="font-medium text-gray-900 mb-2 text-md sm:text-base">Notification Details</h4>
+                <div className="text-xs sm:text-md text-gray-600 space-y-1">
                   <p><strong>Created:</strong> {formatDate(selectedNotification.createdAt)}</p>
                   <p><strong>Type:</strong> {selectedNotification.type.replace('_', ' ').toUpperCase()}</p>
                   <p><strong>Status:</strong> {selectedNotification.isRead ? 'Read' : 'Unread'}</p>
@@ -689,7 +689,7 @@ const NotificationsDashboard = () => {
                     <div className="mt-2 p-2 bg-green-50 rounded">
                       <p className="text-green-800"><strong>✓ Action Taken</strong></p>
                       {selectedNotification.actionNotes && (
-                        <p className="text-green-700 text-sm mt-1">{selectedNotification.actionNotes}</p>
+                        <p className="text-green-700 text-md mt-1">{selectedNotification.actionNotes}</p>
                       )}
                       {selectedNotification.actionAt && (
                         <p className="text-green-600 text-xs mt-1">Resolved: {formatDate(selectedNotification.actionAt)}</p>
@@ -708,7 +708,7 @@ const NotificationsDashboard = () => {
                       markAsRead(selectedNotification._id);
                       setSelectedNotification(prev => ({ ...prev, isRead: true }));
                     }}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-md"
                   >
                     Mark as Read
                   </button>
@@ -720,7 +720,7 @@ const NotificationsDashboard = () => {
                       markActionTaken(selectedNotification._id);
                       setSelectedNotification(prev => ({ ...prev, actionTaken: true, isRead: true }));
                     }}
-                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-sm"
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-md"
                   >
                     Mark as Resolved
                   </button>
@@ -731,14 +731,14 @@ const NotificationsDashboard = () => {
                     deleteNotification(selectedNotification._id);
                     setShowDetailModal(false);
                   }}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-sm"
+                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-md"
                 >
                   Delete
                 </button>
                 
                 <button
                   onClick={() => setShowDetailModal(false)}
-                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors text-sm sm:ml-auto"
+                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors text-md sm:ml-auto"
                 >
                   Close
                 </button>

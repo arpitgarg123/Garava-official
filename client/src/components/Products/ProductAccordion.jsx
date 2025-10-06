@@ -68,7 +68,7 @@
 //             </span>
 //           </button>
 //           {activeIndex === idx && (
-//             <div className="mt-4 text-sm">{section.content}</div>
+//             <div className="mt-4 text-md">{section.content}</div>
 //           )}
 //         </div>
 //       ))}
@@ -153,7 +153,7 @@ const ProductAccordion = () => {
             }`}
           >
             <div className="overflow-hidden">
-              <div className="mt-3 text-sm sm:text-base">{section.content}</div>
+              <div className="mt-3 text-md sm:text-base">{section.content}</div>
             </div>
           </div>
         </div>

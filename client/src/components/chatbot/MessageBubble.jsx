@@ -25,7 +25,7 @@ const MessageBubble = ({ role = "bot", time, children }) =>{
         }`}
       >
         
-        <div className="text-sm leading-relaxed whitespace-pre-wrap">{children}</div>
+        <div className="text-md leading-relaxed whitespace-pre-wrap">{children}</div>
         <div
           className={`mt-1 text-[10px] ${
             isUser ? "text-white/70" : "text-neutral-500"

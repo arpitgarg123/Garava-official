@@ -167,7 +167,7 @@ const ProductCard = ({
         {/* Out of Stock Overlay */}
         {isOutOfStock && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <span className="bg-red-600 text-white px-3 py-1 rounded-md font-medium text-sm">
+            <span className="bg-red-600 text-white px-3 py-1 rounded-md font-medium text-md">
               Out of Stock
             </span>
           </div>
@@ -322,7 +322,7 @@ const ProductCard = ({
                       e.stopPropagation();
                       setShowContactOptions(!showContactOptions);
                     }}
-                    className="w-full bg-gradient-to-r from-gray-900 to-black text-white px-4 py-2.5 text-sm font-medium rounded-lg hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    className="w-full bg-gradient-to-r from-gray-900 to-black text-white px-4 py-2.5 text-md font-medium rounded-lg hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                   >
                     Contact for Details
                   </button>
@@ -335,10 +335,10 @@ const ProductCard = ({
                           e.stopPropagation();
                           handleWhatsAppContact(product, setShowContactOptions);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-green-50 transition-colors border-b border-gray-100"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-md text-left hover:bg-green-50 transition-colors border-b border-gray-100"
                       >
                         <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                          <FiPhone className="text-white text-sm" />
+                          <FiPhone className="text-white text-md" />
                         </div>
                         <div>
                           <div className="font-medium text-gray-900">WhatsApp</div>
@@ -350,10 +350,10 @@ const ProductCard = ({
                           e.stopPropagation();
                           handleEmailContact(product, setShowContactOptions);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-blue-50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-md text-left hover:bg-blue-50 transition-colors"
                       >
                         <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                          <FiMail className="text-white text-sm" />
+                          <FiMail className="text-white text-md" />
                         </div>
                         <div>
                           <div className="font-medium text-gray-900">Email</div>

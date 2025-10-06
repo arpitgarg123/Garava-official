@@ -83,7 +83,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
               <MdEventAvailable className="h-6 w-6 mr-2" />
               Update Appointment
             </h3>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-md text-gray-500 mt-1">
               {appointment.name} • {serviceInfo.label}
             </p>
           </div>
@@ -99,14 +99,14 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
         <form onSubmit={handleSubmit}>
           {/* Current Status */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-md font-medium text-gray-700 mb-2">
               Current Status
             </label>
             <div className="flex items-center gap-3">
-              <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getAppointmentStatusColor(appointment.status)}`}>
+              <span className={`inline-flex items-center px-3 py-1 rounded-full text-md font-medium border ${getAppointmentStatusColor(appointment.status)}`}>
                 {currentStatus?.label || appointment.status}
               </span>
-              <span className="text-sm text-gray-500">
+              <span className="text-md text-gray-500">
                 {currentStatus?.description}
               </span>
             </div>
@@ -115,7 +115,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
           {/* Appointment Details Summary */}
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
             <h4 className="font-medium text-gray-900 mb-2">Appointment Details</h4>
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-4 text-md">
               <div>
                 <span className="text-gray-600">Service:</span>
                 <span className="ml-2 font-medium">{serviceInfo.label}</span>
@@ -143,7 +143,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
 
           {/* New Status Selection */}
           <div className="mb-6">
-            <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="status" className="block text-md font-medium text-gray-700 mb-2">
               New Status *
             </label>
             <select
@@ -174,7 +174,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
                     {selectedStatusInfo.label}
                   </span>
                 </div>
-                <p className="text-sm text-blue-700">{selectedStatusInfo.description}</p>
+                <p className="text-md text-blue-700">{selectedStatusInfo.description}</p>
               </div>
             )}
           </div>
@@ -190,7 +190,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
                   onChange={(e) => setIsRescheduling(e.target.checked)}
                   className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <label htmlFor="reschedule" className="text-sm font-medium text-gray-700">
+                <label htmlFor="reschedule" className="text-md font-medium text-gray-700">
                   Reschedule appointment time
                 </label>
               </div>
@@ -199,7 +199,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
                 <div className="pl-6 border-l-2 border-blue-200 space-y-4">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label htmlFor="rescheduleDate" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="rescheduleDate" className="block text-md font-medium text-gray-700 mb-1">
                         New Date
                       </label>
                       <input
@@ -213,7 +213,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
                       />
                     </div>
                     <div>
-                      <label htmlFor="rescheduleTime" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label htmlFor="rescheduleTime" className="block text-md font-medium text-gray-700 mb-1">
                         New Time
                       </label>
                       <input
@@ -227,7 +227,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
                     </div>
                   </div>
                   {rescheduleDate && rescheduleTime && (
-                    <div className="text-sm text-blue-600 bg-blue-50 p-2 rounded">
+                    <div className="text-md text-blue-600 bg-blue-50 p-2 rounded">
                       <BiCalendar className="inline h-4 w-4 mr-1" />
                       New appointment time: {new Date(`${rescheduleDate}T${rescheduleTime}`).toLocaleDateString()} at{' '}
                       {new Date(`${rescheduleDate}T${rescheduleTime}`).toLocaleTimeString([], { 
@@ -243,7 +243,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
 
           {/* Admin Notes */}
           <div className="mb-6">
-            <label htmlFor="adminNotes" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="adminNotes" className="block text-md font-medium text-gray-700 mb-2">
               Admin Notes
             </label>
             <textarea
@@ -263,11 +263,11 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
           {/* Customer's Original Notes */}
           {appointment.notes && (
             <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-md font-medium text-gray-700 mb-2">
                 Customer's Original Notes
               </label>
               <div className="p-3 bg-gray-50 border border-gray-200 rounded-lg">
-                <p className="text-sm text-gray-700">{appointment.notes}</p>
+                <p className="text-md text-gray-700">{appointment.notes}</p>
               </div>
             </div>
           )}
@@ -276,7 +276,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
           {selectedStatus === 'cancelled' && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
               <h4 className="font-medium text-red-800 mb-1">⚠️ Appointment Cancellation</h4>
-              <p className="text-sm text-red-700">
+              <p className="text-md text-red-700">
                 This will cancel the appointment. The customer will be notified via email if email notifications are configured.
               </p>
             </div>
@@ -285,7 +285,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
           {selectedStatus === 'completed' && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
               <h4 className="font-medium text-green-800 mb-1">✅ Mark as Completed</h4>
-              <p className="text-sm text-green-700">
+              <p className="text-md text-green-700">
                 This will mark the service as completed. This action indicates the appointment was successfully fulfilled.
               </p>
             </div>
@@ -294,7 +294,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
           {selectedStatus === 'confirmed' && !isRescheduling && (
             <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
               <h4 className="font-medium text-blue-800 mb-1">📅 Confirm Appointment</h4>
-              <p className="text-sm text-blue-700">
+              <p className="text-md text-blue-700">
                 This will confirm the appointment at the currently scheduled time. The customer will be notified of the confirmation.
               </p>
             </div>
@@ -303,7 +303,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
           {selectedStatus === 'confirmed' && isRescheduling && (
             <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
               <h4 className="font-medium text-orange-800 mb-1">🔄 Confirm & Reschedule</h4>
-              <p className="text-sm text-orange-700">
+              <p className="text-md text-orange-700">
                 This will confirm the appointment and update it to the new date/time. The customer will be notified of both the confirmation and schedule change.
               </p>
             </div>

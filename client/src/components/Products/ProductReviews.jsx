@@ -147,7 +147,7 @@ const ProductReviews = ({ productId }) => {
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-montserrat font-semibold text-gray-900">Customer Reviews</h2>
+          <h2 className="text-3xl  font-semibold text-gray-900">Customer Reviews</h2>
           <div className="w-16 h-1 bg-black mx-auto mt-4"></div>
         </div>
 
@@ -156,7 +156,7 @@ const ProductReviews = ({ productId }) => {
           <div className="lg:col-span-4">
             <div className="bg-white p-6 sm:p-8 rounded-lg shadow-sm">
               <div className="flex flex-col items-center">
-                <div className="text-5xl font-montserrat font-bold mb-2">{averageRating}</div>
+                <div className="text-5xl  font-bold mb-2">{averageRating}</div>
                 <div className="flex mb-2">
                   {[1, 2, 3, 4, 5].map(star => (
                     <span key={star}>
@@ -168,7 +168,7 @@ const ProductReviews = ({ productId }) => {
                     </span>
                   ))}
                 </div>
-                <p className="text-sm text-gray-500">Based on {reviews.length} reviews</p>
+                <p className="text-md text-gray-500">Based on {reviews.length} reviews</p>
                 
                 <div className="w-full mt-6 space-y-3">
                   {[5, 4, 3, 2, 1].map(rating => {
@@ -176,7 +176,7 @@ const ProductReviews = ({ productId }) => {
                     const percentage = reviews.length ? Math.round((count / reviews.length) * 100) : 0;
                     
                     return (
-                      <div key={rating} className="flex  items-center text-sm">
+                      <div key={rating} className="flex  items-center text-md">
                         <span className="w-8">{rating}</span>
                         <span className="text-yellow-400 mx-1"><AiFillStar /></span>
                         <div className="flex-1 ml-2">
@@ -197,7 +197,7 @@ const ProductReviews = ({ productId }) => {
                   <button 
                     type="button"
                     onClick={() => setShowReviewForm(!showReviewForm)} 
-                    className="w-full py-3 border border-black hover:bg-black hover:text-white transition-colors font-medium text-sm uppercase tracking-wider"
+                    className="w-full py-3 border border-black hover:bg-black hover:text-white transition-colors font-medium text-md uppercase tracking-wider"
                   >
                     {userReview ? "Edit Your Review" : "Write a Review"}
                   </button>
@@ -219,7 +219,7 @@ const ProductReviews = ({ productId }) => {
                       sort: 'recent' 
                     }));
                   }}
-                  className={`w-full text-left px-3 py-2 rounded text-sm ${
+                  className={`w-full text-left px-3 py-2 rounded text-md ${
                     sortOption === 'recent' 
                       ? 'bg-black text-white' 
                       : 'hover:bg-gray-50'
@@ -237,7 +237,7 @@ const ProductReviews = ({ productId }) => {
                       sort: 'top' 
                     }));
                   }}
-                  className={`w-full text-left px-3 py-2 rounded text-sm ${
+                  className={`w-full text-left px-3 py-2 rounded text-md ${
                     sortOption === 'top' 
                       ? 'bg-black text-white' 
                       : 'hover:bg-gray-50'
@@ -255,7 +255,7 @@ const ProductReviews = ({ productId }) => {
                       sort: 'helpful' 
                     }));
                   }}
-                  className={`w-full text-left px-3 py-2 rounded text-sm ${
+                  className={`w-full text-left px-3 py-2 rounded text-md ${
                     sortOption === 'helpful' 
                       ? 'bg-black text-white' 
                       : 'hover:bg-gray-50'
@@ -275,7 +275,7 @@ const ProductReviews = ({ productId }) => {
                   {userReview ? 'Edit Your Review' : 'Share Your Thoughts'}
                 </h3>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Rating</label>
+                  <label className="block text-md font-medium text-gray-700 mb-1">Rating</label>
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map(star => (
                       <button 
@@ -294,22 +294,22 @@ const ProductReviews = ({ productId }) => {
                   </div>
                 </div>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Title (Optional)</label>
+                  <label className="block text-md font-medium text-gray-700 mb-1">Title (Optional)</label>
                   <input
                     type="text"
                     value={newReview.title}
                     onChange={(e) => setNewReview({...newReview, title: e.target.value})}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black sm:text-sm p-2"
+                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black sm:text-md p-2"
                     placeholder="Summarize your experience"
                     maxLength={100}
                   />
                 </div>
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Review</label>
+                  <label className="block text-md font-medium text-gray-700 mb-1">Review</label>
                   <textarea 
                     value={newReview.body}
                     onChange={(e) => setNewReview({...newReview, body: e.target.value})}
-                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black sm:text-sm p-2 min-h-[100px]"
+                    className="w-full border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black sm:text-md p-2 min-h-[100px]"
                     placeholder="Share your experience with this product..."
                     maxLength={1000}
                   ></textarea>
@@ -319,14 +319,14 @@ const ProductReviews = ({ productId }) => {
                     type="button"
                     onClick={handleAddReview}
                     disabled={loading}
-                    className="px-6 py-2.5 bg-black text-white hover:bg-gray-800 transition-colors text-sm uppercase tracking-wider disabled:opacity-50"
+                    className="px-6 py-2.5 bg-black text-white hover:bg-gray-800 transition-colors text-md uppercase tracking-wider disabled:opacity-50"
                   >
                     {loading ? 'Submitting...' : (userReview ? 'Update Review' : 'Submit Review')}
                   </button>
                   <button 
                     type="button"
                     onClick={() => setShowReviewForm(false)}
-                    className="px-6 py-2.5 border border-gray-300 hover:bg-gray-50 text-sm uppercase tracking-wider"
+                    className="px-6 py-2.5 border border-gray-300 hover:bg-gray-50 text-md uppercase tracking-wider"
                   >
                     Cancel
                   </button>
@@ -396,17 +396,17 @@ const ProductReviews = ({ productId }) => {
                     
                     {/* Helpful buttons */}
                     <div className="mt-4 flex items-center">
-                      <span className="text-sm text-gray-500 mr-3">Was this helpful?</span>
+                      <span className="text-md text-gray-500 mr-3">Was this helpful?</span>
                       <button 
                         onClick={() => handleVote(review._id, 'helpful')}
-                        className="flex items-center text-sm text-gray-500 hover:text-black px-2 py-1 border rounded-md mr-2"
+                        className="flex items-center text-md text-gray-500 hover:text-black px-2 py-1 border rounded-md mr-2"
                       >
                         <BiLike className="mr-1" />
                         <span>{review.helpfulCount || 0}</span>
                       </button>
                       <button 
                         onClick={() => handleVote(review._id, 'unhelpful')}
-                        className="flex items-center text-sm text-gray-500 hover:text-black px-2 py-1 border rounded-md"
+                        className="flex items-center text-md text-gray-500 hover:text-black px-2 py-1 border rounded-md"
                       >
                         <BiDislike className="mr-1" />
                         <span>{review.unhelpfulCount || 0}</span>
@@ -416,8 +416,8 @@ const ProductReviews = ({ productId }) => {
                     {/* Admin reply if any */}
                     {review.adminReply && (
                       <div className="mt-4 pl-4 border-l-2 border-gray-300">
-                        <p className="text-sm font-medium">Response from Garava:</p>
-                        <p className="text-sm text-gray-600 mt-1">{review.adminReply}</p>
+                        <p className="text-md font-medium">Response from Garava:</p>
+                        <p className="text-md text-gray-600 mt-1">{review.adminReply}</p>
                       </div>
                     )}
                   </div>
@@ -463,13 +463,13 @@ const ProductReviews = ({ productId }) => {
                   !showReviewForm && (
                     <button 
                       onClick={() => setShowReviewForm(true)}
-                      className="mt-4 px-6 py-2 border border-black hover:bg-black hover:text-white transition-colors text-sm uppercase tracking-wider"
+                      className="mt-4 px-6 py-2 border border-black hover:bg-black hover:text-white transition-colors text-md uppercase tracking-wider"
                     >
                       Write a Review
                     </button>
                   )
                 ) : (
-                  <p className="mt-4 text-sm text-gray-500">
+                  <p className="mt-4 text-md text-gray-500">
                     Please <button 
                       onClick={() => navigate('/login', { state: { from: window.location.pathname } })} 
                       className="text-black underline"

@@ -64,7 +64,7 @@ export default function ResetPassword() {
           {status === "loading" ? "Resetting..." : "Reset password"}
         </button>
       </form>
-      {message && <p className="mt-3 text-sm">{message}</p>}
+      {message && <p className="mt-3 text-md">{message}</p>}
     </div>
   );
 }

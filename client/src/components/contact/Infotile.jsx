@@ -11,7 +11,7 @@ const Infotile = ({ title, value, href }) => {
     >
       <div>
         <div className="text-xs text-muted-foreground">{title}</div>
-        <div className="text-sm font-medium">{value}</div>
+        <div className="text-md font-medium">{value}</div>
       </div>
       <span className="opacity-40 group-hover:opacity-100">↗</span>
     </Comp>

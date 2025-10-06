@@ -77,12 +77,10 @@ const Contact = () => {
       <section className="relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-4  sm:px-6 lg:px-8">
           <div className="max-w-2xl">
-            <p className="badge">
-              Contact Garava
-            </p>
+            
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">We’d love to hear from you</h1>
             <p className="mt-3 text-muted-foreground">
-              Questions about orders, ring sizing, or lab-grown diamonds? Send us a note—our team typically responds within one business day.
+              Questions about orders, ring sizing? Send us a note—our team typically responds within one business day.
             </p>
           </div>
         </div>
@@ -160,14 +158,14 @@ const Contact = () => {
 
               {/* Honeypot */}
               <div className="hidden">
-                <label htmlFor={`${formId}-website`} className="text-sm">Website</label>
+                <label htmlFor={`${formId}-website`} className="text-md">Website</label>
                 <input id={`${formId}-website`} name="website" value={values.website} onChange={onChange} className="mt-1 w-full rounded-xl border bg-background px-3 py-2" />
               </div>
             </div>
 
             {status.type !== "idle" && status.message && (
               <p
-                className={`mt-4 text-sm ${
+                className={`mt-4 text-md ${
                   status.type === "success" ? "text-green-600" : status.type === "error" ? "text-red-600" : "text-muted-foreground"
                 }`}
               >
@@ -198,8 +196,8 @@ const Contact = () => {
           </div>
 
           <div className="">
-            <h3 className="text-sm font-semibold">FAQ</h3>
-            <ul className="mt-3 space-y-3 text-sm">
+            <h3 className="text-md font-semibold">FAQ</h3>
+            <ul className="mt-3 space-y-3 text-md">
               <li>
                 <Summary title="How long does shipping take?">
                   Most orders dispatch within 24–48 hours. Delivery timelines vary by location (typically 2–6 days in India).
@@ -211,9 +209,7 @@ const Contact = () => {
                 </Summary>
               </li>
               <li>
-                <Summary title="Do you use lab-grown diamonds?">
-                  Absolutely. We prioritize ethical sourcing and quality.
-                </Summary>
+                
               </li>
             </ul>
           </div>

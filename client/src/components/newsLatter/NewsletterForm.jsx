@@ -27,7 +27,7 @@ const NewsletterForm = () => {
     <div className="w-[38%] mr-[16rem]">
     <div className="h-28">
         <h1 className="font-[bion] text-2xl  ">UNSAID PARIS NEWSLETTER</h1>
-        <p className="font-['montserrat]  ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse cumque ex rerum atque unde laborum!
+        <p className="  ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse cumque ex rerum atque unde laborum!
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique!
         </p>
     </div>

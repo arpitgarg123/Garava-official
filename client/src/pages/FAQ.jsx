@@ -46,10 +46,7 @@ const FAQ = () => {
     {
       category: "Products & Quality",
       questions: [
-        {
-          question: "Are your diamonds lab-grown or natural?",
-          answer: "We offer both lab-grown and natural diamonds. Each product listing clearly indicates the diamond type. Our lab-grown diamonds are certified and offer the same brilliance and quality as natural diamonds at a more accessible price point."
-        },
+       
         {
           question: "What metals do you use for jewelry?",
           answer: "Our jewelry is crafted from premium materials including 925 Sterling Silver, 14K and 18K Gold (Yellow, White, and Rose), and Platinum. All metals are clearly specified in each product description."

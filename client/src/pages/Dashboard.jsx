@@ -232,7 +232,7 @@ const Dashboard = () => {
 
           {/* Center: Current Page */}
           <div className="hidden md:block">
-            <h2 className="text-sm font-medium uppercase tracking-wider font-montserrat
+            <h2 className="text-md font-medium uppercase tracking-wider 
              text-gray-600">
               {tabs.find(t => t.id === activeTab)?.label}
             </h2>
@@ -246,7 +246,7 @@ const Dashboard = () => {
               <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
                 <FaUser className="w-3 h-3 text-white" />
               </div>
-              <span className="text-sm font-medium text-gray-700">Admin</span>
+              <span className="text-md font-medium text-gray-700">Admin</span>
             </div>
 
             <Link 
@@ -319,7 +319,7 @@ const Dashboard = () => {
                 <h1 className="text-2xl font-semibold text-gray-900">
                   {tabs.find(t => t.id === activeTab)?.label}
                 </h1>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-md text-gray-600 mt-1">
                   Manage your {tabs.find(t => t.id === activeTab)?.label.toLowerCase()}
                 </p>
               </div>
@@ -329,7 +329,7 @@ const Dashboard = () => {
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   <span className="text-xs font-medium text-green-700">Live</span>
                 </div>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-md font-medium hover:bg-blue-700 transition-colors">
                   Export
                 </button>
               </div> */}

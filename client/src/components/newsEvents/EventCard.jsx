@@ -22,7 +22,7 @@ const EventCard = ({item}) => {
           <span className="text-muted-foreground">{item.city}</span>
         </div>
         <h3 className="line-clamp-2 text-lg font-medium leading-snug self-start">{item.title}</h3>
-        <p className=" line-clamp-3 text-sm text-muted-foreground self-start" >{item.excerpt}</p>
+        <p className=" line-clamp-3 text-md text-muted-foreground self-start" >{item.excerpt}</p>
 
         <div className="mt-4 flex  gap-3 self-start">
           {item.rsvpUrl && (

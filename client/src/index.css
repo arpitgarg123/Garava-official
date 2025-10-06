@@ -10,8 +10,8 @@
     src: url('./assets/fonts/PlayfairDisplay-Italic-VariableFont_wght.ttf') format('truetype');
 }
 @font-face {
-  font-family:'montserrat';
-  src: url('./assets/fonts/Montserrat-VariableFont_wght.ttf') format('truetype');
+  font-family:'nunito';
+  src: url('./assets/fonts/NunitoSans-VariableFont_YTLC\,opsz\,wdth\,wght.ttf') format('truetype');
 }
 @font-face {
   font-family:'headFont';
@@ -28,7 +28,7 @@ body, html{
     background-color: var(--primary);
     color: var(--dark-text);
     overflow-x: hidden;
-    font-family: 'montserrat';
+    font-family: 'nunito';
 }
 
 /* Modern Dashboard Styles */
@@ -497,3 +497,121 @@ html.has-scroll-dragging {
   transform: translateY(0);
 }
 
+
+/* ...existing code... */
+
+/* Ultra-wide screen navbar fixes */
+@media (min-width: 1920px) {
+  .navbar {
+    min-height: 140px; /* Increased height for ultra-wide */
+  }
+  
+  .navTop {
+    height: 7vw;
+    max-height: 140px; /* Prevent excessive height */
+    padding: 0 5rem; /* Better spacing on ultra-wide */
+  }
+  
+  .flex-center {
+    gap: 6vw; /* Increased gap for better spacing */
+    max-gap: 4rem; /* Prevent excessive gaps */
+  }
+}
+
+@media (min-width: 2400px) {
+  .navbar {
+    min-height: 160px;
+  }
+  
+  .navTop {
+    height: 8vw;
+    max-height: 160px;
+    padding: 0 8rem;
+  }
+  
+  .flex-center {
+    gap: 5rem; /* Fixed gap instead of viewport units */
+  }
+}
+
+/* Fix submenu positioning for ultra-wide screens */
+.submenu-container {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  border-top: 1px solid #eee;
+  /* Dynamic top positioning based on navbar height */
+  /* top: calc(6vw + 2.3vw + 20px) !important; */
+  top: 100%;
+}
+
+@media (min-width: 1920px) {
+  .submenu-container {
+    top: calc(7vw + 2.3vw + 20px) !important;
+    max-top: 180px;
+  }
+}
+
+@media (min-width: 2500px) {
+  .submenu-container {
+    top: 100% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+@media (min-width: 2485px) {
+  .submenu-container {
+    top: 60% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+@media (min-width: 2465px) {
+  .submenu-container {
+    top: 60% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+@media (min-width: 2350px) {
+  .submenu-container {
+    top: 60% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+@media (min-width: 2270px) {
+  .submenu-container {
+    top: 60% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+@media (min-width: 2120px) {
+  .submenu-container {
+    top: 60% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+@media (min-width: 1920px) {
+  .submenu-container {
+    top: 60% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+@media (min-width: 2505px) {
+  .submenu-container {
+    top: 60% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+/* Ensure nav items are visible on ultra-wide screens */
+.nav-items {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+@media (min-width: 2400px) {
+  .nav-items button {
+    font-size: 1rem; /* Slightly larger for readability */
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* ...existing code... */

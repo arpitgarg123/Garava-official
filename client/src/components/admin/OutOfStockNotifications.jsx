@@ -160,7 +160,7 @@ const OutOfStockNotifications = () => {
               <span className="text-blue-600 text-xl">📊</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Total</p>
+              <p className="text-md font-medium text-gray-600">Total</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.total || 0}</p>
             </div>
           </div>
@@ -172,7 +172,7 @@ const OutOfStockNotifications = () => {
               <span className="text-yellow-600 text-xl">👁️</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Unread</p>
+              <p className="text-md font-medium text-gray-600">Unread</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.unread || 0}</p>
             </div>
           </div>
@@ -184,7 +184,7 @@ const OutOfStockNotifications = () => {
               <span className="text-red-600 text-xl">📦</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Out of Stock</p>
+              <p className="text-md font-medium text-gray-600">Out of Stock</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.outOfStock || 0}</p>
             </div>
           </div>
@@ -196,7 +196,7 @@ const OutOfStockNotifications = () => {
               <span className="text-orange-600 text-xl">⚠️</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Low Stock</p>
+              <p className="text-md font-medium text-gray-600">Low Stock</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.lowStock || 0}</p>
             </div>
           </div>
@@ -210,7 +210,7 @@ const OutOfStockNotifications = () => {
             <button
               key={filterType}
               onClick={() => setFilter(filterType)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-md font-medium transition-colors ${
                 filter === filterType
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
@@ -256,7 +256,7 @@ const OutOfStockNotifications = () => {
                       )}
                     </div>
                     <p className="text-gray-700 mb-2">{notification.message}</p>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <div className="flex items-center space-x-4 text-md text-gray-500">
                       <span>
                         {new Date(notification.createdAt).toLocaleDateString('en-US', {
                           year: 'numeric',
@@ -283,7 +283,7 @@ const OutOfStockNotifications = () => {
                   {!notification.isRead && (
                     <button
                       onClick={() => markAsRead(notification._id)}
-                      className="px-3 py-1 text-sm bg-gray-50 text-gray-700 rounded hover:bg-gray-200 transition-colors"
+                      className="px-3 py-1 text-md bg-gray-50 text-gray-700 rounded hover:bg-gray-200 transition-colors"
                     >
                       Mark Read
                     </button>
@@ -291,13 +291,13 @@ const OutOfStockNotifications = () => {
                   {notification.actionRequired && !notification.actionTaken && (
                     <button
                       onClick={() => markActionTaken(notification._id, 'Stock restocked')}
-                      className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                      className="px-3 py-1 text-md bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
                     >
                       Mark Resolved
                     </button>
                   )}
                   {notification.actionTaken && (
-                    <span className="px-3 py-1 text-sm bg-green-100 text-green-800 rounded">
+                    <span className="px-3 py-1 text-md bg-green-100 text-green-800 rounded">
                       ✓ Resolved
                     </span>
                   )}

@@ -367,7 +367,7 @@ const SearchPage = () => {
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-6 py-2 rounded-lg text-md font-medium transition-all duration-200 ${
                   activeTab === tab.id
                     ? 'bg-black text-white shadow-sm'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -393,7 +393,7 @@ const SearchPage = () => {
                 <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
                 <button
                   onClick={() => dispatch(clearFilters())}
-                  className="text-sm text-red-500 hover:text-red-700 font-medium"
+                  className="text-md text-red-500 hover:text-red-700 font-medium"
                 >
                   Clear All
                 </button>
@@ -402,7 +402,7 @@ const SearchPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Price Range */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-md font-medium text-gray-700 mb-2">
                     Price Range
                   </label>
                   <div className="flex gap-2">
@@ -425,7 +425,7 @@ const SearchPage = () => {
 
                 {/* Sort By */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-md font-medium text-gray-700 mb-2">
                     Sort By
                   </label>
                   <select
@@ -443,7 +443,7 @@ const SearchPage = () => {
                 {/* Category (if jewellery is selected) */}
                 {activeTab === 'jewellery' && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-md font-medium text-gray-700 mb-2">
                       Category
                     </label>
                     <select
@@ -502,7 +502,7 @@ const SearchPage = () => {
         {process.env.NODE_ENV === 'development' && currentQuery && (
           <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <h4 className="font-semibold text-yellow-800 mb-2">Debug Info:</h4>
-            <div className="text-sm text-yellow-700">
+            <div className="text-md text-yellow-700">
               <div>Status: {searchResults.status}</div>
               <div>Products Count: {searchResults.products?.length || 0}</div>
               <div>Total: {searchResults.total}</div>
@@ -563,13 +563,13 @@ const SearchPage = () => {
                 We couldn't find any products matching "{currentQuery}". Try different keywords or browse our categories.
               </p>
               <div className="space-y-2">
-                <p className="text-sm font-medium text-gray-700">Try searching for:</p>
+                <p className="text-md font-medium text-gray-700">Try searching for:</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {popularSearches.slice(0, 4).map((term, index) => (
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(term)}
-                      className="px-3 py-1 bg-gray-50 text-gray-700 text-sm rounded-full hover:bg-gray-200 transition-colors"
+                      className="px-3 py-1 bg-gray-50 text-gray-700 text-md rounded-full hover:bg-gray-200 transition-colors"
                     >
                       {term}
                     </button>
@@ -621,7 +621,7 @@ const SearchPage = () => {
                 >
                   <div className="text-2xl mb-2">💎</div>
                   <h4 className="font-semibold text-gray-900 group-hover:text-yellow-800">Jewellery</h4>
-                  <p className="text-sm text-gray-600">Rings, Earrings, Pendants</p>
+                  <p className="text-md text-gray-600">Rings, Earrings, Pendants</p>
                 </button>
                 
                 <button
@@ -630,7 +630,7 @@ const SearchPage = () => {
                 >
                   <div className="text-2xl mb-2">🌸</div>
                   <h4 className="font-semibold text-gray-900 group-hover:text-purple-800">Fragrance</h4>
-                  <p className="text-sm text-gray-600">Premium Perfumes</p>
+                  <p className="text-md text-gray-600">Premium Perfumes</p>
                 </button>
               </div>
             </div>

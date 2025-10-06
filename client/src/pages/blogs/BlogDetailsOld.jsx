@@ -40,7 +40,6 @@ const DEFAULT_POST = {
 
     <h3 id="faqs">FAQs</h3>
     <p><strong>Can a jeweler resize a ring?</strong> Usually 1–2 sizes. Check brand policies.</p>
-    <p><strong>Are lab-grown diamonds good?</strong> Yes—ethical, budget-friendly, and gorgeous.</p>
   `,
 
 };
@@ -94,7 +93,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
     
           <header className="p-5 sm:p-8">
             <div className="mb-3 flex flex-wrap items-center gap-3">
-              <span className="rounded-xl bg-black text-white px-3 py-1 text-sm font-medium text-primary">
+              <span className="rounded-xl bg-black text-white px-3 py-1 text-md font-medium text-primary">
                 {post.category}
               </span>
               <span className="text-xs  flex-center "> ● {post.readTimeMinutes} min read</span>
@@ -111,7 +110,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
                 loading="lazy"
               />
               <div>
-                <div className="text-sm font-medium">Posted by {post.postedBy?.name}</div>
+                <div className="text-md font-medium">Posted by {post.postedBy?.name}</div>
                 <div className="text-xs text-muted-foreground">Updated {formatDate(post.publishedAt)}</div>
               </div>
             </div>
@@ -135,7 +134,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
           </section>
 
           <div className="border-t px-5 py-6 sm:px-8">
-            <h3 className="mb-3 text-sm font-semibold">Share this article</h3>
+            <h3 className="mb-3 text-md font-semibold">Share this article</h3>
             <ShareButton title={post.title} url={canonicalUrl} />
           </div>
 

@@ -40,15 +40,15 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                 <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Basic Information</h3>
                 <div className="space-y-2 sm:space-y-3">
                   <div>
-                    <span className="font-medium text-gray-700 text-sm sm:text-base">Title:</span>
-                    <p className="text-gray-900 text-sm sm:text-base break-words">{item.title}</p>
+                    <span className="font-medium text-gray-700 text-md sm:text-base">Title:</span>
+                    <p className="text-gray-900 text-md sm:text-base break-words">{item.title}</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700 text-sm sm:text-base">Slug:</span>
-                    <p className="text-gray-600 font-mono text-xs sm:text-sm break-all">{item.slug}</p>
+                    <span className="font-medium text-gray-700 text-md sm:text-base">Slug:</span>
+                    <p className="text-gray-600 font-mono text-xs sm:text-md break-all">{item.slug}</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700 text-sm sm:text-base">Type:</span>
+                    <span className="font-medium text-gray-700 text-md sm:text-base">Type:</span>
                     <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
                       item.type === 'event' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
                     }`}>
@@ -56,11 +56,11 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700 text-sm sm:text-base">Date:</span>
-                    <p className="text-gray-900 text-sm sm:text-base">{formatDate(item.date)}</p>
+                    <span className="font-medium text-gray-700 text-md sm:text-base">Date:</span>
+                    <p className="text-gray-900 text-md sm:text-base">{formatDate(item.date)}</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700 text-sm sm:text-base">Status:</span>
+                    <span className="font-medium text-gray-700 text-md sm:text-base">Status:</span>
                     <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
                       item.status === 'published' ? 'bg-green-100 text-green-800' :
                       item.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
@@ -70,8 +70,8 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700 text-sm sm:text-base">Views:</span>
-                    <p className="text-gray-900 text-sm sm:text-base">{item.views || 0}</p>
+                    <span className="font-medium text-gray-700 text-md sm:text-base">Views:</span>
+                    <p className="text-gray-900 text-md sm:text-base">{item.views || 0}</p>
                   </div>
                 </div>
               </div>
@@ -85,24 +85,24 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                     <>
                       {item.city && (
                         <div>
-                          <span className="font-medium text-gray-700 text-sm sm:text-base">City:</span>
-                          <p className="text-gray-900 text-sm sm:text-base">{item.city}</p>
+                          <span className="font-medium text-gray-700 text-md sm:text-base">City:</span>
+                          <p className="text-gray-900 text-md sm:text-base">{item.city}</p>
                         </div>
                       )}
                       {item.location && (
                         <div>
-                          <span className="font-medium text-gray-700 text-sm sm:text-base">Location:</span>
-                          <p className="text-gray-900 text-sm sm:text-base break-words">{item.location}</p>
+                          <span className="font-medium text-gray-700 text-md sm:text-base">Location:</span>
+                          <p className="text-gray-900 text-md sm:text-base break-words">{item.location}</p>
                         </div>
                       )}
                       {item.rsvpUrl && (
                         <div>
-                          <span className="font-medium text-gray-700 text-sm sm:text-base">RSVP URL:</span>
+                          <span className="font-medium text-gray-700 text-md sm:text-base">RSVP URL:</span>
                           <a 
                             href={item.rsvpUrl} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 underline text-sm sm:text-base break-all block"
+                            className="text-blue-600 hover:text-blue-800 underline text-md sm:text-base break-all block"
                           >
                             {item.rsvpUrl}
                           </a>
@@ -113,18 +113,18 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                     <>
                       {item.outlet && (
                         <div>
-                          <span className="font-medium text-gray-700 text-sm sm:text-base">Outlet:</span>
-                          <p className="text-gray-900 text-sm sm:text-base">{item.outlet}</p>
+                          <span className="font-medium text-gray-700 text-md sm:text-base">Outlet:</span>
+                          <p className="text-gray-900 text-md sm:text-base">{item.outlet}</p>
                         </div>
                       )}
                       {item.url && (
                         <div>
-                          <span className="font-medium text-gray-700 text-sm sm:text-base">Article URL:</span>
+                          <span className="font-medium text-gray-700 text-md sm:text-base">Article URL:</span>
                           <a 
                             href={item.url} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 underline text-sm sm:text-base break-all block"
+                            className="text-blue-600 hover:text-blue-800 underline text-md sm:text-base break-all block"
                           >
                             {item.url}
                           </a>
@@ -140,7 +140,7 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
             {item.excerpt && (
               <div>
                 <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Excerpt</h3>
-                <p className="text-gray-700 bg-gray-50 p-3 sm:p-4 rounded-lg text-sm sm:text-base leading-relaxed">
+                <p className="text-gray-700 bg-gray-50 p-3 sm:p-4 rounded-lg text-md sm:text-base leading-relaxed">
                   {item.excerpt}
                 </p>
               </div>
@@ -152,7 +152,7 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                 <h3 className="text-base sm:text-lg font-semibold mb-2 max-sm:mb-0 sm:mb-3">Content</h3>
                 <div className="prose prose-sm sm:prose max-w-none bg-gray-50 p-3 sm:p-4 rounded-lg">
                   {item.content.split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-2 text-sm sm:text-base leading-relaxed text-gray-700">
+                    <p key={index} className="mb-2 text-md sm:text-base leading-relaxed text-gray-700">
                       {paragraph}
                     </p>
                   ))}
@@ -167,14 +167,14 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                 <div className="space-y-2 sm:space-y-3 bg-gray-50 p-3 sm:p-4 rounded-lg">
                   {item.metaTitle && (
                     <div>
-                      <span className="font-medium text-gray-700 text-sm sm:text-base">Meta Title:</span>
-                      <p className="text-gray-900 text-sm sm:text-base break-words">{item.metaTitle}</p>
+                      <span className="font-medium text-gray-700 text-md sm:text-base">Meta Title:</span>
+                      <p className="text-gray-900 text-md sm:text-base break-words">{item.metaTitle}</p>
                     </div>
                   )}
                   {item.metaDescription && (
                     <div>
-                      <span className="font-medium text-gray-700 text-sm sm:text-base">Meta Description:</span>
-                      <p className="text-gray-900 text-sm sm:text-base break-words">{item.metaDescription}</p>
+                      <span className="font-medium text-gray-700 text-md sm:text-base">Meta Description:</span>
+                      <p className="text-gray-900 text-md sm:text-base break-words">{item.metaDescription}</p>
                     </div>
                   )}
                 </div>
@@ -184,7 +184,7 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
             {/* Responsive Metadata */}
             <div>
               <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Metadata</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 bg-gray-50 p-3 sm:p-4 rounded-lg text-xs sm:text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 bg-gray-50 p-3 sm:p-4 rounded-lg text-xs sm:text-md">
                 <div>
                   <span className="font-medium text-gray-700">Created:</span>
                   <p className="text-gray-600 break-words">{formatDate(item.createdAt)}</p>
@@ -214,7 +214,7 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
         <div className="flex justify-end p-4 sm:p-6 border-t bg-gray-50">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm sm:text-base"
+            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-md sm:text-base"
           >
             Close
           </button>
