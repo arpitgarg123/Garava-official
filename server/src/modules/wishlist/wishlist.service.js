@@ -21,7 +21,7 @@ export const getWishlistService = async (userId, { page = 1, limit = 50 } = {}) 
   const wishlist = await Wishlist.findOne({ user: userId })
     .populate({
       path: "products.product",
-      select: "name slug heroImage variants type isActive status",
+      select: "name slug heroImage gallery variants type isActive status",
       options: { lean: true }
     })
     .lean();

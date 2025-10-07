@@ -14,7 +14,7 @@ const cleanupInstagramPosts = async () => {
     // Find and remove posts with undefined title or image
     const postsToDelete = await InstagramPost.find({
       $or: [
-        { title: { $exists: false } },
+        { title: { $exists: false } }, 
         { title: undefined },
         { title: null },
         { title: '' },

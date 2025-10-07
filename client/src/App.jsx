@@ -159,6 +159,7 @@ const EventDetails = lazy(()=> import("./pages/newsEvents/EventDetails.jsx"))
 const Contact = lazy(()=> import("./pages/Contact.jsx"))
 const SearchResults = lazy(() => import("./pages/SearchResults.jsx"))
 
+
 const App = () => {
   const [isWebsiteLoading, setIsWebsiteLoading] = useState(true);
   const [loadingStates, setLoadingStates] = useState({
@@ -397,17 +398,20 @@ const App = () => {
           <Route path="products/:category" element={<ProductPage />} />
           <Route path="/product_details/:slug" element={<ProductDetails />} />
           
+          {/* Routes accessible to both guests and authenticated users */}
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          
           {/* Protected routes - require authentication */}
-          <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
           <Route path="/orders/:orderId" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-          <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           <Route path="/appointment" element={<ProtectedRoute><BookAnAppointment /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
           
-          {/* Payment simulator for development */}
+          {/* Development and testing routes */}
           <Route path="/simulate-payment" element={<PaymentSimulator />} />
+
         </Route>
         
         {/* Admin routes - require admin role */}

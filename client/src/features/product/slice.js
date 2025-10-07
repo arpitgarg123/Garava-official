@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   listProductsApi,
   getProductBySlugApi,
+  getProductByIdApi,
   getProductBySkuApi,
   checkPincodeApi,
 } from "./api.js";
@@ -118,6 +119,15 @@ export const fetchProductBySlug = createAsyncThunk(
   }
 );
 
+// Product by ID  
+export const fetchProductById = createAsyncThunk(
+  "product/fetchById",
+  async (id) => {
+    const { data } = await getProductByIdApi(id);
+    return data?.product || data;
+  }
+);
+
 // Product by SKU
 export const fetchProductBySku = createAsyncThunk(
   "product/fetchBySku",
@@ -229,6 +239,7 @@ const initialState = {
     fetchedAt: null,
   },
   bySlug: {},
+  byId: {},
   availability: {},
   filters: {
     type: "",
@@ -319,6 +330,35 @@ const slice = createSlice({
     b.addCase(fetchProductBySlug.rejected, (s, { error, meta }) => {
       const slug = meta.arg;
       s.bySlug[slug] = {
+        data: null,
+        status: "failed",
+        error: error?.message || "Failed to load product",
+        fetchedAt: Date.now(),
+      };
+    });
+
+    // product by id (similar to bySlug but stored in byId)
+    b.addCase(fetchProductById.pending, (s, a) => {
+      const id = a.meta.arg;
+      s.byId = s.byId || {};
+      s.byId[id] = s.byId[id] || {};
+      s.byId[id].status = "loading";
+      s.byId[id].error = null;
+    });
+    b.addCase(fetchProductById.fulfilled, (s, { payload, meta }) => {
+      const id = meta.arg;
+      s.byId = s.byId || {};
+      s.byId[id] = {
+        data: payload,
+        status: "succeeded",
+        error: null,
+        fetchedAt: Date.now(),
+      };
+    });
+    b.addCase(fetchProductById.rejected, (s, { error, meta }) => {
+      const id = meta.arg;
+      s.byId = s.byId || {};
+      s.byId[id] = {
         data: null,
         status: "failed",
         error: error?.message || "Failed to load product",

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as wishlistApi from "./api.js";
 import { logout, initAuth } from "../auth/slice.js";
+import { guestWishlist } from "../../shared/utils/guestStorage.js";
 
 // Smart request deduplication with timestamp tracking and caching
 let lastWishlistFetchTime = 0;
@@ -88,6 +89,55 @@ export const toggleWishlistItem = createAsyncThunk(
   }
 );
 
+// Guest wishlist actions (for non-authenticated users)
+export const addToGuestWishlist = createAsyncThunk(
+  "wishlist/addToGuestWishlist",
+  async ({ productId, productDetails }, { rejectWithValue }) => {
+    try {
+      const result = guestWishlist.add(productId, productDetails);
+      return { productId, ...result, action: 'added' };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to add to guest wishlist');
+    }
+  }
+);
+
+export const removeFromGuestWishlist = createAsyncThunk(
+  "wishlist/removeFromGuestWishlist",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const result = guestWishlist.remove(productId);
+      return { productId, ...result, action: 'removed' };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to remove from guest wishlist');
+    }
+  }
+);
+
+export const toggleGuestWishlistItem = createAsyncThunk(
+  "wishlist/toggleGuestWishlistItem",
+  async ({ productId, productDetails }, { rejectWithValue }) => {
+    try {
+      const result = guestWishlist.toggle(productId, productDetails);
+      return { productId, ...result };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to toggle guest wishlist');
+    }
+  }
+);
+
+export const loadGuestWishlist = createAsyncThunk(
+  "wishlist/loadGuestWishlist",
+  async (_, { rejectWithValue }) => {
+    try {
+      const guestWishlistData = guestWishlist.get();
+      return guestWishlistData;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to load guest wishlist');
+    }
+  }
+);
+
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState: {
@@ -101,6 +151,7 @@ const wishlistSlice = createSlice({
     },
     status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
+    isGuest: false, // Track if wishlist is in guest mode
   },
   reducers: {
     clearWishlistError: (state) => {
@@ -240,12 +291,75 @@ const wishlistSlice = createSlice({
         state.error = action.payload || action.error.message;
       });
 
+    // Guest wishlist actions
+    builder
+      .addCase(loadGuestWishlist.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.products = action.payload?.products || [];
+        state.productIds = action.payload?.productIds || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+        state.error = null;
+      })
+      .addCase(addToGuestWishlist.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(addToGuestWishlist.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        const { productId } = action.payload;
+        state.products = action.payload?.products || [];
+        state.productIds = action.payload?.productIds || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+        state.error = null;
+      })
+      .addCase(addToGuestWishlist.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(removeFromGuestWishlist.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(removeFromGuestWishlist.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.products = action.payload?.products || [];
+        state.productIds = action.payload?.productIds || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+        state.error = null;
+      })
+      .addCase(removeFromGuestWishlist.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(toggleGuestWishlistItem.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(toggleGuestWishlistItem.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.products = action.payload?.products || [];
+        state.productIds = action.payload?.productIds || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+        state.error = null;
+      })
+      .addCase(toggleGuestWishlistItem.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      });
+
     // Clear wishlist data when user logs out or auth fails
     builder
       .addCase(logout, (state) => {
-        state.products = [];
-        state.productIds = [];
-        state.pagination = { total: 0, page: 1, limit: 50, totalPages: 0 };
+        // On logout, switch to guest mode and load guest wishlist
+        const guestWishlistData = guestWishlist.get();
+        state.products = guestWishlistData.products;
+        state.productIds = guestWishlistData.productIds;
+        state.pagination = guestWishlistData.pagination;
+        state.isGuest = true;
         state.status = "idle";
         state.error = null;
         // Reset cache times

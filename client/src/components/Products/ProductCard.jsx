@@ -6,11 +6,12 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { FiPhone, FiMail } from "react-icons/fi";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../../features/cart/slice";
-import { toggleWishlistItem } from "../../features/wishlist/slice";
+import { addToCart, addToGuestCart } from "../../features/cart/slice";
+import { toggleWishlistItem, toggleGuestWishlistItem } from "../../features/wishlist/slice";
 import { selectIsAuthenticated } from "../../features/auth/selectors";
 import { selectIsProductInWishlist } from "../../features/wishlist/selectors";
 import { logout } from "../../features/auth/slice";
+import { guestWishlist } from "../../shared/utils/guestStorage.js";
 import { toast } from "react-hot-toast";
 import { handleEmailContact, handleWhatsAppContact } from "../../hooks/contact";
 
@@ -26,7 +27,9 @@ const ProductCard = ({
   const location = useLocation();
   
   const productId = product._id || product.id;
-  const isInWishlist = useSelector(state => selectIsProductInWishlist(state, productId));
+  const isInWishlistBackend = useSelector(state => selectIsProductInWishlist(state, productId));
+  const isInWishlistGuest = !isAuthenticated ? guestWishlist.isInWishlist(productId) : false;
+  const isInWishlist = isAuthenticated ? isInWishlistBackend : isInWishlistGuest;
 
   const isHighJewelleryProduct = 
     product.type === "high_jewellery" || 
@@ -193,19 +196,24 @@ const ProductCard = ({
                 toast.error("This product is currently out of stock");
                 return;
               }
-              
-              if (!isAuthenticated) {
-                toast.error("Please login to add items to cart");
-                navigate("/login");
-                return;
-              }
 
               const variant = product.variants?.[0] || product.defaultVariant;
               const cartItem = {
                 productId: product._id || product.id,
                 variantId: variant?._id,
                 variantSku: variant?.sku,
-                quantity: 1
+                quantity: 1,
+                unitPrice: variant?.finalPrice || variant?.price || product.price || 0,
+                productDetails: {
+                  _id: product._id || product.id,
+                  name: product.name,
+                  images: product.images,
+                  heroImage: product.heroImage,
+                  gallery: product.gallery,
+                  type: product.type,
+                  category: product.category,
+                  slug: product.slug
+                }
               };
 
               if (!cartItem.variantId && !cartItem.variantSku) {
@@ -213,10 +221,13 @@ const ProductCard = ({
                 return;
               }
 
-              dispatch(addToCart(cartItem))
+              const cartAction = isAuthenticated ? addToCart : addToGuestCart;
+              const successMessage = isAuthenticated ? "Item added to cart!" : "Item added to bag! Sign in to save across devices.";
+
+              dispatch(cartAction(cartItem))
                 .unwrap()
                 .then(() => {
-                  toast.success("Item added to cart!");
+                  toast.success(successMessage);
                 })
                 .catch((error) => {
                   if (error.message?.includes('Insufficient stock')) {
@@ -240,28 +251,39 @@ const ProductCard = ({
             onClick={(e) => {
               e.stopPropagation();
               
-              if (!isAuthenticated) {
-                toast.error("Please login to manage wishlist");
-                navigate("/login");
-                return;
-              }
+              const productDetails = {
+                _id: product._id || product.id,
+                name: product.name,
+                images: product.images,
+                heroImage: product.heroImage,
+                gallery: product.gallery,
+                type: product.type,
+                category: product.category,
+                price: product.price,
+                variants: product.variants,
+                slug: product.slug
+              };
 
-              dispatch(toggleWishlistItem(productId))
+              const wishlistAction = isAuthenticated ? toggleWishlistItem : toggleGuestWishlistItem;
+              const wishlistPayload = isAuthenticated ? productId : { productId, productDetails };
+              const addMessage = isAuthenticated ? "Added to wishlist!" : "Added to wishlist! Sign in to save across devices.";
+              const removeMessage = "Removed from wishlist!";
+
+              dispatch(wishlistAction(wishlistPayload))
                 .unwrap()
                 .then((result) => {
                   if (result.action === "added") {
-                    toast.success("Added to wishlist!");
+                    toast.success(addMessage);
                   } else if (result.action === "removed") {
-                    toast.success("Removed from wishlist!");
+                    toast.success(removeMessage);
                   }
                 })
                 .catch((error) => {
-                  console.error("Wishlist error:", error);
-                  if (error.message?.includes('Authentication failed') || error.message?.includes('login again')) {
+                  if (isAuthenticated && (error.message?.includes('Authentication failed') || error.message?.includes('login again'))) {
                     toast.error("Session expired. Please login again.");
                     dispatch(logout());
                     navigate("/login");
-                  } else if (error.message?.includes('login') || error.message?.includes('401')) {
+                  } else if (isAuthenticated && (error.message?.includes('login') || error.message?.includes('401'))) {
                     toast.error("Please login to manage wishlist");
                     navigate("/login");
                   } else {

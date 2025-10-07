@@ -14,7 +14,7 @@ const sampleColorVariants = [
   },
   {
     name: "Silver",
-    code: "silver", 
+    code: "silver",  
     hexColor: "#d9d9d9",
     isAvailable: true
   },

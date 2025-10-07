@@ -8,6 +8,9 @@ export const listProductsApi = (params = {}) =>
 export const getProductBySlugApi = (slug) =>
   http.get(`/product/${encodeURIComponent(slug)}`);
 
+export const getProductByIdApi = (id) =>
+  http.get(`/product/id/${encodeURIComponent(id)}`);
+
 export const getProductBySkuApi = (sku) =>
   http.get(`/product/sku/${encodeURIComponent(sku)}`);
 

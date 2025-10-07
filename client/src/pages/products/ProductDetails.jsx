@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ProductAccordion from '../../components/Products/ProductAccordion';
 import { Link, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductBySlug } from '../../features/product/slice';
-import { addToCart } from '../../features/cart/slice';
-import { toggleWishlistItem } from '../../features/wishlist/slice';
+import { fetchProductBySlug, fetchProductById } from '../../features/product/slice';
+import { addToCart, addToGuestCart } from '../../features/cart/slice';
+import { toggleWishlistItem, toggleGuestWishlistItem } from '../../features/wishlist/slice';
 import { selectIsAuthenticated } from '../../features/auth/selectors';
 import { logout } from '../../features/auth/slice';
 import { FiPhone, FiMail, FiChevronDown, FiChevronUp } from 'react-icons/fi';
@@ -12,7 +12,8 @@ import { handleEmailContact, handleWhatsAppContact } from '../../hooks/contact';
 
 import { selectIsProductInWishlist } from '../../features/wishlist/selectors';
 import { toast } from 'react-hot-toast';
-import Recommendation from '../../components/recommendation/Recommendation';
+import YouMayAlsoLike from '../../components/Products/YouMayAlsoLike';
+import Explore from '../../components/Products/Explore';
 import BackButton from '../../components/BackButton';
 import ProductGallery from '../../components/Products/ProductGallery';
 import ProductReviews from '../../components/Products/ProductReviews';
@@ -25,7 +26,13 @@ const ProductDetails = () => {
   const location = useLocation();
 
   const productSlug = slug || searchParams.get('slug');
-  const productData = useSelector(state => state.product.bySlug[productSlug]);
+  
+  // Smart selector: check if productSlug is ObjectId and use appropriate store location
+  const productData = useSelector(state => {
+    const isObjectId = /^[0-9a-fA-F]{24}$/.test(productSlug);
+    return isObjectId ? state.product.byId[productSlug] : state.product.bySlug[productSlug];
+  });
+  
   const { data: product, status, error } = productData || {};
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
@@ -71,7 +78,16 @@ const ProductDetails = () => {
   }, [product, selectedVariant, isVariantOutOfStock, isOutOfStock]);
 
   useEffect(() => {
-    if (productSlug) dispatch(fetchProductBySlug(productSlug));
+    if (productSlug) {
+      // Check if productSlug is actually a MongoDB ObjectId (24 hex characters)
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(productSlug);
+      
+      if (isObjectId) {
+        dispatch(fetchProductById(productSlug));
+      } else {
+        dispatch(fetchProductBySlug(productSlug));
+      }
+    }
   }, [dispatch, productSlug]);
 
   const handleAddToCart = () => {
@@ -80,15 +96,10 @@ const ProductDetails = () => {
       toast.error("Product information not available");
       return;
     }
+
     
     if (isOutOfStock) {
       toast.error("This product is currently out of stock");
-      return;
-    }
-    
-    if (!isAuthenticated) {
-      toast.error("Please login to add items to cart");
-      navigate("/login");
       return;
     }
     
@@ -110,7 +121,7 @@ const ProductDetails = () => {
       return;
     }
     
-    // Send only variantSku, let backend find the variant and use its _id
+    // Create cart item with appropriate data for both authenticated and guest users
     const cartItem = {
       productId: product?._id || product?.id,
       variantSku: variantSku,
@@ -122,9 +133,27 @@ const ProductDetails = () => {
       cartItem.variantId = variantId;
     }
     
-    dispatch(addToCart(cartItem))
+    // For guest users, add additional product details
+    if (!isAuthenticated) {
+      cartItem.unitPrice = selectedVariant?.finalPrice || selectedVariant?.price || product?.price || 0;
+      cartItem.productDetails = {
+        _id: product._id || product.id,
+        name: product.name,
+        images: product.images,
+        heroImage: product.heroImage,
+        gallery: product.gallery,
+        type: product.type,
+        category: product.category,
+        slug: product.slug
+      };
+    }
+    
+    const cartAction = isAuthenticated ? addToCart : addToGuestCart;
+    const successMessage = isAuthenticated ? "Item added to cart!" : "Item added to bag! Sign in to save across devices.";
+    
+    dispatch(cartAction(cartItem))
       .unwrap()
-      .then(() => toast.success("Item added to cart!"))
+      .then(() => toast.success(successMessage))
       .catch((e) => {
         if (e.message?.includes('Insufficient stock')) {
           toast.error(e.message);
@@ -135,27 +164,41 @@ const ProductDetails = () => {
   };
 
   const handleToggleWishlist = () => {
-    if (!isAuthenticated) {
-      toast.error("Please login to manage wishlist");
-      navigate("/login");
-      return;
-    }
     if (!productId) {
       toast.error("Product information is missing");
       return;
     }
-    dispatch(toggleWishlistItem(productId))
+    
+    const productDetails = {
+      _id: product._id || product.id,
+      name: product.name,
+      images: product.images,
+      heroImage: product.heroImage,
+      gallery: product.gallery,
+      type: product.type,
+      category: product.category,
+      price: product.price,
+      variants: product.variants,
+      slug: product.slug
+    };
+
+    const wishlistAction = isAuthenticated ? toggleWishlistItem : toggleGuestWishlistItem;
+    const wishlistPayload = isAuthenticated ? productId : { productId, productDetails };
+    const addMessage = isAuthenticated ? "Added to wishlist!" : "Added to wishlist! Sign in to save across devices.";
+    const removeMessage = "Removed from wishlist!";
+    
+    dispatch(wishlistAction(wishlistPayload))
       .unwrap()
       .then((result) => {
-        if (result.action === "added") toast.success("Added to wishlist!");
+        if (result.action === "added") toast.success(addMessage);
         else if (result.action === "removed") toast.success("Removed from wishlist!");
       })
       .catch((err) => {
-        if (err.message?.includes('Authentication failed') || err.message?.includes('login again')) {
+        if (isAuthenticated && (err.message?.includes('Authentication failed') || err.message?.includes('login again'))) {
           toast.error("Session expired. Please login again.");
           dispatch(logout());
           navigate("/login");
-        } else if (err.message?.includes('login') || err.message?.includes('401')) {
+        } else if (isAuthenticated && (err.message?.includes('login') || err.message?.includes('401'))) {
           toast.error("Please login to manage wishlist");
           navigate("/login");
         } else {
@@ -190,24 +233,63 @@ const ProductDetails = () => {
 
           {/* Info */}
           <div className="lg:col-span-7">
+            {/* Product Badges */}
+            {product?.badges && product.badges.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {product.badges.map((badge, index) => (
+                  <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            )}
+
             <h1 className="text-xl sm:text-2xl font-semibold">
               {product?.name || 'Untitled Product'}
             </h1>
 
+            {/* Category and Short Description */}
+            <div className="mt-2 space-y-1">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <span className="capitalize">{product?.category}</span>
+                {product?.subcategory && (
+                  <>
+                    <span>•</span>
+                    <span className="capitalize">{product.subcategory}</span>
+                  </>
+                )}
+              </div>
+              {product?.shortDescription && (
+                <p className="text-gray-700 text-sm leading-relaxed font-medium">
+                  {product.shortDescription}
+                </p>
+              )}
+            </div>
+
             {/* Price Display - Different for High Jewellery */}
             {isHighJewellery ? (
-              <div className="mt-2">
+              <div className="mt-3">
                 <div className="text-2xl font-playfair font-semibold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                  Price on Demand
+                  {selectedVariant?.priceOnDemandText || 'Price on Demand'}
                 </div>
                 <p className="text-md text-gray-600 mt-1">Contact us for pricing details</p>
               </div>
             ) : (
-              <div className="mt-2">
-                <div className="text-2xl font-playfair font-semibold">
-                  ₹{selectedVariant?.price ?? 'Price not available'}
+              <div className="mt-3">
+                <div className="flex items-baseline gap-3">
+                  <div className="text-2xl font-playfair font-semibold">
+                    ₹{selectedVariant?.price ?? 'Price not available'}
+                  </div>
+                  {selectedVariant?.mrp && selectedVariant.mrp > selectedVariant.price && (
+                    <div className="text-lg text-gray-500 line-through">
+                      ₹{selectedVariant.mrp}
+                    </div>
+                  )}
                 </div>
                 <p className="text-md text-gray-600 mt-1">(inclusive of GST)</p>
+                {selectedVariant?.sizeLabel && (
+                  <p className="text-sm text-gray-600">Size: {selectedVariant.sizeLabel}</p>
+                )}
               </div>
             )}
 
@@ -229,11 +311,86 @@ const ProductDetails = () => {
               <span className="font-medium">SKU:</span>{" "}
               {selectedVariant?.sku || 'SKU not available'}
             </p>
-{
-  product?.type != "fragrance" && (
-<div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
+
+            {/* Ratings and Reviews */}
+            {(product?.avgRating > 0 || product?.reviewCount > 0) && (
+              <div className="mt-2 flex items-center gap-2">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className={`text-sm ${i < Math.floor(product.avgRating || 0) ? 'text-yellow-400' : 'text-gray-300'}`}>
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="text-sm text-gray-600">
+                  {product.avgRating && `${product.avgRating.toFixed(1)} `}
+                  ({product.reviewCount || 0} reviews)
+                </span>
+              </div>
+            )}
+
+            {/* Product Tags */}
+            {product?.tags && product.tags.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-1">
+                {product.tags.slice(0, 5).map((tag, index) => (
+                  <span key={index} className="inline-flex items-center px-2 py-1 rounded-md text-xs bg-gray-100 text-gray-700">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            {/* Product Specific Information */}
+            {product?.type === 'jewellery' && (
+              <div className="mt-4 p-3 bg-gray-50 rounded-lg space-y-2">
+                {product?.material && (
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Material:</span> {product.material}
+                  </p>
+                )}
+                {product?.dimensions && (
+                  <p className="text-sm text-gray-700">
+                    <span className="font-medium">Dimensions:</span> {product.dimensions}
+                  </p>
+                )}
+                {product?.colorVariants && product.colorVariants.length > 0 && (
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-gray-700">Available Colors:</span>
+                    <div className="flex gap-2">
+                      {product.colorVariants.filter(color => color.isAvailable).slice(0, 4).map((color, index) => (
+                        <div key={index} className="flex items-center gap-1">
+                          {color.hexColor && (
+                            <div 
+                              className="w-4 h-4 rounded-full border border-gray-300 shadow-sm" 
+                              style={{ backgroundColor: color.hexColor }}
+                              title={color.name}
+                            />
+                          )}
+                          <span className="text-xs text-gray-600">{color.name}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* High Jewellery Customization */}
+            {isHighJewellery && product?.customizationOptions?.enabled && (
+              <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                <h4 className="text-md font-semibold text-amber-900 mb-1">Customization Available</h4>
+                <p className="text-sm text-amber-800">{product.customizationOptions.description}</p>
+                {product.customizationOptions.estimatedDays && (
+                  <p className="text-xs text-amber-700 mt-1">
+                    Estimated time: {product.customizationOptions.estimatedDays} days
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-md sm:text-lg font-regular">
-                Customize your jewellery Design
+                {isHighJewellery || product?.bookAppointment ? 'Customize your jewellery Design' : 'Expert Consultation Available'}
               </h2>
              <Link to='/appointment'>
               <button className="btn-black uppercase text-md max-sm: my-2 tracking-wider w-full sm:w-auto">
@@ -245,12 +402,42 @@ const ProductDetails = () => {
 }
             
 
-  {/* Description */}
+            {/* Description */}
             <div className="mt-5 ">
               <h3 className="text-lg sm:text-xl font-semibold">Product Description</h3>
               <p className="mt-2 text-gray-800 text-sm leading-relaxed">
                 {product?.description || 'Description not available'}
               </p>
+
+              {/* Collections */}
+              {product?.collections && product.collections.length > 0 && (
+                <div className="mt-3">
+                  <p className="text-sm text-gray-600">
+                    <span className="font-medium">Collections:</span>
+                    <span className="ml-2">{product.collections.join(', ')}</span>
+                  </p>
+                </div>
+              )}
+
+              {/* Gift Options */}
+              {(product?.freeGiftWrap || product?.giftWrap?.enabled || product?.giftMessageAvailable) && (
+                <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <h4 className="text-md font-semibold text-green-900 mb-2">Gift Options Available</h4>
+                  <div className="space-y-1">
+                    {product?.freeGiftWrap && (
+                      <p className="text-sm text-green-800">✓ Complimentary gift wrapping</p>
+                    )}
+                    {product?.giftWrap?.enabled && !product?.freeGiftWrap && (
+                      <p className="text-sm text-green-800">
+                        ✓ Gift wrapping {product.giftWrap.price > 0 ? `(₹${product.giftWrap.price})` : 'available'}
+                      </p>
+                    )}
+                    {product?.giftMessageAvailable && (
+                      <p className="text-sm text-green-800">✓ Personal message card</p>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
             {/* Action buttons - Different for High Jewellery */}
             <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
@@ -347,19 +534,57 @@ const ProductDetails = () => {
         {/* Bottom: Accordion + Shipping info */}
         <div className="mt-18 grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
           <div className="lg:col-span-8">
-            <ProductAccordion />
+            <ProductAccordion product={product} />
           </div>
           <div className="lg:col-span-4">
-            <h5 className="text-md sm:text-base leading-relaxed">
-              <span className="font-semibold">Order now:</span>{" "}
-              Complimentary Express Delivery by{" "}
-              {product?.shippingInfo?.maxDeliveryDays || 'Delivery time not available'} days
-            </h5>
+            <div className="bg-gray-50 p-4 rounded-lg space-y-3">
+              <h4 className="font-semibold text-gray-900">Shipping & Delivery</h4>
+              
+              {product?.shippingInfo?.complementary && (
+                <p className="text-sm text-green-700 font-medium">
+                  ✓ Complimentary Express Delivery
+                </p>
+              )}
+              
+              <p className="text-sm text-gray-700">
+                {product?.expectedDeliveryText || (
+                  product?.shippingInfo?.maxDeliveryDays 
+                    ? `Delivery in ${product.shippingInfo.minDeliveryDays || 3}-${product.shippingInfo.maxDeliveryDays} days`
+                    : 'Standard delivery available'
+                )}
+              </p>
+
+              {product?.shippingInfo?.codAvailable && (
+                <p className="text-sm text-gray-600">
+                  ✓ Cash on Delivery available
+                </p>
+              )}
+
+              {product?.shippingInfo?.note && (
+                <p className="text-xs text-gray-500 italic">
+                  {product.shippingInfo.note}
+                </p>
+              )}
+
+              {/* Purchase limits */}
+              {product?.purchaseLimitPerOrder > 0 && (
+                <p className="text-xs text-orange-600">
+                  Max {product.purchaseLimitPerOrder} per order
+                </p>
+              )}
+
+              {product?.minOrderQty > 1 && (
+                <p className="text-xs text-gray-600">
+                  Minimum order: {product.minOrderQty} pieces
+                </p>
+              )}
+            </div>
           </div>
         </div>
      
       </div>
-         <Recommendation />
+         <YouMayAlsoLike currentProduct={product} />
+         <Explore currentProduct={product} />
              <ProductReviews productId={product?._id || product?.id} />
 
     </div>
@@ -526,7 +751,7 @@ export default ProductDetails;
 //   if (status === 'loading') return <p className="p-4">Loading product details...</p>;
 //   if (status === 'failed') return <p className="p-4 text-red-500">{error}</p>;
 //   if (!product) return <p className="p-4">Product not found.</p>;
-//   console.log(product);
+
   
   
 //   return (

@@ -11,9 +11,11 @@ import {
 } from '../features/wishlist/selectors';
 import { 
   fetchWishlist, 
-  removeFromWishlist 
+  removeFromWishlist,
+  removeFromGuestWishlist,
+  loadGuestWishlist
 } from '../features/wishlist/slice';
-import { addToCart, fetchCart } from '../features/cart/slice';
+import { addToCart, fetchCart, addToGuestCart } from '../features/cart/slice';
 import { selectIsAuthenticated } from '../features/auth/selectors';
 import { toast } from 'react-hot-toast';
 import { WishlistSkeleton } from '../components/ui/LoadingSkeleton';
@@ -31,11 +33,15 @@ const Wishlist = () => {
   const error = useSelector(selectWishlistError);
   const status = useSelector(selectWishlistStatus);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isGuest = useSelector(state => state.wishlist.isGuest);
 
   // Fetch wishlist on component mount if needed
   useEffect(() => {
     if (isAuthenticated && (status === 'idle' || status === 'failed')) {
       dispatch(fetchWishlist({ force: false }));
+    } else if (!isAuthenticated && status === 'idle') {
+      // Load guest wishlist if not authenticated
+      dispatch(loadGuestWishlist());
     }
   }, [dispatch, isAuthenticated, status]);
 
@@ -54,7 +60,9 @@ const Wishlist = () => {
   }, [dispatch, isAuthenticated, products.length, productIds.length, status]);
 
   const handleRemove = (productId) => {
-    dispatch(removeFromWishlist(productId))
+    const removeAction = isAuthenticated ? removeFromWishlist : removeFromGuestWishlist;
+    
+    dispatch(removeAction(productId))
       .unwrap()
       .then(() => {
         toast.success("Removed from wishlist!");
@@ -73,18 +81,19 @@ const Wishlist = () => {
       return;
     }
 
-    // Check authentication
-    if (!isAuthenticated) {
-      toast.error("Please login to add items to cart");
-      navigate("/login");
-      return;
-    }
-
     // Prepare cart item data
     const variant = product.variants?.[0];
     const cartItem = {
       productId: product._id || product.id,
-      quantity: 1
+      quantity: 1,
+      unitPrice: variant?.finalPrice || variant?.price || product.price || 0,
+      productDetails: {
+        _id: product._id || product.id,
+        name: product.name,
+        images: product.images,
+        type: product.type,
+        category: product.category
+      }
     };
 
     // Set variant information - prioritize variantId over variantSku
@@ -102,12 +111,16 @@ const Wishlist = () => {
     }
 
     // Add to cart
-    dispatch(addToCart(cartItem))
+    const cartAction = isAuthenticated ? addToCart : addToGuestCart;
+    const successMessage = isAuthenticated ? "Added to cart!" : "Added to bag! Sign in to save across devices.";
+    
+    dispatch(cartAction(cartItem))
       .unwrap()
       .then(() => {
-        toast.success("Added to cart!");
+        toast.success(successMessage);
         // Remove from wishlist after successful cart addition
-        dispatch(removeFromWishlist(wishlistItem.productId || product._id))
+        const removeAction = isAuthenticated ? removeFromWishlist : removeFromGuestWishlist;
+        dispatch(removeAction(wishlistItem.productId || product._id))
           .unwrap()
           .then(() => {
             // No need to manually refresh - Redux states are updated automatically
@@ -151,7 +164,7 @@ const Wishlist = () => {
 
   return (
   <div className=" min-h-[60vh] mt-28 max-md:mt-0">
- <div className="sticky top-35 z-10 mb-3 max-md:top-7">
+ <div className="sticky top-35 z-50 mb-3 max-md:top-7">
         <BackButton />
       </div>
       <div className="max-w-7xl mx-auto px-4 py-8 max-md:py-0">
@@ -171,6 +184,7 @@ const Wishlist = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((item, index) => {
               const product = item.product;
+              
               const productId = item.productId || product?._id;
               const productSlug = product?.slug || productId;
               const productPrice = product?.variants?.[0]?.price || product?.price || 0;
@@ -182,12 +196,26 @@ const Wishlist = () => {
                 variant.stockStatus !== 'out_of_stock'
               );
               
-              // Better image URL handling
-              const imageUrl = product?.heroImage?.url || 
-                              product?.heroImage || 
-                              product?.gallery?.[0]?.url || 
-                              product?.gallery?.[0] || 
-                              'https://via.placeholder.com/300x300?text=No+Image';
+              // Better image URL handling for both authenticated and guest users
+              // Backend structure: heroImage: {url, fileId}, gallery: [{url, fileId}]
+              let imageUrl = 'https://via.placeholder.com/300x300?text=No+Image';
+              
+              // Try multiple image sources in order of priority (backend structure)
+              if (product?.heroImage?.url) {
+                imageUrl = product.heroImage.url;
+              } else if (typeof product?.heroImage === 'string') {
+                imageUrl = product.heroImage;
+              } else if (product?.gallery?.[0]?.url) {
+                imageUrl = product.gallery[0].url;
+              } else if (typeof product?.gallery?.[0] === 'string') {
+                imageUrl = product.gallery[0];
+              } 
+              // Guest storage fallback (different structure)
+              else if (product?.images?.[0]?.url) {
+                imageUrl = product.images[0].url;
+              } else if (typeof product?.images?.[0] === 'string') {
+                imageUrl = product.images[0];
+              }
               
               // Product image handling with fallback
               return (
@@ -199,7 +227,8 @@ const Wishlist = () => {
                     <img 
                       src={imageUrl}
                       alt={product?.name || 'Product'}
-                      className="w-full aspect-square object-cover hover:scale-105  transition duration-300 bg-gray-200"
+                      className="w-full aspect-square object-cover hover:scale-105 transition duration-300 bg-gray-200 relative z-0"
+                      style={{ display: 'block', minHeight: '200px' }}
                       onError={(e) => {
                         e.target.src = 'https://via.placeholder.com/300x300?text=No+Image';
                       }}

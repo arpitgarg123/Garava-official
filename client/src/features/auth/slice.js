@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { loginApi, logoutApi, signupApi, refreshApi, initiateGoogleAuth } from "./api";
+import { syncGuestData } from "../../shared/utils/syncGuestData.js";
 
 export const login = createAsyncThunk("auth/login", async (payload) => {
   const { data } = await loginApi(payload);
@@ -48,6 +49,25 @@ export const initAuth = createAsyncThunk("auth/init", async (_, { rejectWithValu
   }
 });
 
+export const loginWithSync = createAsyncThunk("auth/loginWithSync", async (payload, { dispatch, rejectWithValue }) => {
+  try {
+    // First perform the login
+    const loginResult = await dispatch(login(payload)).unwrap();
+    
+    // Then sync guest data if login was successful
+    try {
+      await dispatch(syncGuestData()).unwrap();
+    } catch (syncError) {
+      // Don't fail the login if sync fails, just log it
+      console.warn('Guest data sync failed after login:', syncError);
+    }
+    
+    return loginResult;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
+
 const slice = createSlice({
   name: "auth",
   initialState: { accessToken: null, user: null, status: "idle", error: null },
@@ -68,6 +88,17 @@ const slice = createSlice({
       s.user = payload?.user || null;
     });
     b.addCase(login.rejected, (s, { error }) => {
+      s.status = "failed";
+      s.error = error?.message || "Login failed";
+    });
+
+    b.addCase(loginWithSync.pending, (s) => { s.status = "loading"; s.error = null; });
+    b.addCase(loginWithSync.fulfilled, (s, { payload }) => {
+      s.status = "succeeded";
+      s.accessToken = payload?.accessToken || null;
+      s.user = payload?.user || null;
+    });
+    b.addCase(loginWithSync.rejected, (s, { error }) => {
       s.status = "failed";
       s.error = error?.message || "Login failed";
     });
