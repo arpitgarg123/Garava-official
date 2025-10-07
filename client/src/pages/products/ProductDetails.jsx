@@ -229,8 +229,9 @@ const ProductDetails = () => {
               <span className="font-medium">SKU:</span>{" "}
               {selectedVariant?.sku || 'SKU not available'}
             </p>
-
-            <div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
+{
+  product?.type != "fragrance" && (
+<div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-md sm:text-lg font-regular">
                 Customize your jewellery Design
               </h2>
@@ -240,6 +241,9 @@ const ProductDetails = () => {
               </button>
               </Link>
             </div>
+  )
+}
+            
 
   {/* Description */}
             <div className="mt-5 ">
