@@ -11,7 +11,8 @@
 }
 @font-face {
   font-family:'nunito';
-  src: url('./assets/fonts/NunitoSans-VariableFont_YTLC\,opsz\,wdth\,wght.ttf') format('truetype');
+  src: url('./assets/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf') format('truetype');
+  font-display: swap;
 }
 @font-face {
   font-family:'headFont';
@@ -28,7 +29,7 @@ body, html{
     background-color: var(--primary);
     color: var(--dark-text);
     overflow-x: hidden;
-    font-family: 'nunito';
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
 }
 
 /* Modern Dashboard Styles */
