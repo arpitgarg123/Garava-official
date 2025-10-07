@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import ProductAccordion from '../../components/Products/ProductAccordion';
 import { Link, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductBySlug } from '../../features/product/slice';
-import { addToCart } from '../../features/cart/slice';
-import { toggleWishlistItem } from '../../features/wishlist/slice';
+import { fetchProductBySlug, fetchProductById } from '../../features/product/slice';
+import { addToCart, addToGuestCart } from '../../features/cart/slice';
+import { toggleWishlistItem, toggleGuestWishlistItem } from '../../features/wishlist/slice';
 import { selectIsAuthenticated } from '../../features/auth/selectors';
 import { logout } from '../../features/auth/slice';
 import { FiPhone, FiMail, FiChevronDown, FiChevronUp } from 'react-icons/fi';
@@ -25,7 +25,13 @@ const ProductDetails = () => {
   const location = useLocation();
 
   const productSlug = slug || searchParams.get('slug');
-  const productData = useSelector(state => state.product.bySlug[productSlug]);
+  
+  // Smart selector: check if productSlug is ObjectId and use appropriate store location
+  const productData = useSelector(state => {
+    const isObjectId = /^[0-9a-fA-F]{24}$/.test(productSlug);
+    return isObjectId ? state.product.byId[productSlug] : state.product.bySlug[productSlug];
+  });
+  
   const { data: product, status, error } = productData || {};
   const isAuthenticated = useSelector(selectIsAuthenticated);
 
@@ -71,7 +77,16 @@ const ProductDetails = () => {
   }, [product, selectedVariant, isVariantOutOfStock, isOutOfStock]);
 
   useEffect(() => {
-    if (productSlug) dispatch(fetchProductBySlug(productSlug));
+    if (productSlug) {
+      // Check if productSlug is actually a MongoDB ObjectId (24 hex characters)
+      const isObjectId = /^[0-9a-fA-F]{24}$/.test(productSlug);
+      
+      if (isObjectId) {
+        dispatch(fetchProductById(productSlug));
+      } else {
+        dispatch(fetchProductBySlug(productSlug));
+      }
+    }
   }, [dispatch, productSlug]);
 
   const handleAddToCart = () => {
@@ -80,15 +95,10 @@ const ProductDetails = () => {
       toast.error("Product information not available");
       return;
     }
+
     
     if (isOutOfStock) {
       toast.error("This product is currently out of stock");
-      return;
-    }
-    
-    if (!isAuthenticated) {
-      toast.error("Please login to add items to cart");
-      navigate("/login");
       return;
     }
     
@@ -110,7 +120,7 @@ const ProductDetails = () => {
       return;
     }
     
-    // Send only variantSku, let backend find the variant and use its _id
+    // Create cart item with appropriate data for both authenticated and guest users
     const cartItem = {
       productId: product?._id || product?.id,
       variantSku: variantSku,
@@ -122,9 +132,27 @@ const ProductDetails = () => {
       cartItem.variantId = variantId;
     }
     
-    dispatch(addToCart(cartItem))
+    // For guest users, add additional product details
+    if (!isAuthenticated) {
+      cartItem.unitPrice = selectedVariant?.finalPrice || selectedVariant?.price || product?.price || 0;
+      cartItem.productDetails = {
+        _id: product._id || product.id,
+        name: product.name,
+        images: product.images,
+        heroImage: product.heroImage,
+        gallery: product.gallery,
+        type: product.type,
+        category: product.category,
+        slug: product.slug
+      };
+    }
+    
+    const cartAction = isAuthenticated ? addToCart : addToGuestCart;
+    const successMessage = isAuthenticated ? "Item added to cart!" : "Item added to bag! Sign in to save across devices.";
+    
+    dispatch(cartAction(cartItem))
       .unwrap()
-      .then(() => toast.success("Item added to cart!"))
+      .then(() => toast.success(successMessage))
       .catch((e) => {
         if (e.message?.includes('Insufficient stock')) {
           toast.error(e.message);
@@ -135,27 +163,41 @@ const ProductDetails = () => {
   };
 
   const handleToggleWishlist = () => {
-    if (!isAuthenticated) {
-      toast.error("Please login to manage wishlist");
-      navigate("/login");
-      return;
-    }
     if (!productId) {
       toast.error("Product information is missing");
       return;
     }
-    dispatch(toggleWishlistItem(productId))
+    
+    const productDetails = {
+      _id: product._id || product.id,
+      name: product.name,
+      images: product.images,
+      heroImage: product.heroImage,
+      gallery: product.gallery,
+      type: product.type,
+      category: product.category,
+      price: product.price,
+      variants: product.variants,
+      slug: product.slug
+    };
+
+    const wishlistAction = isAuthenticated ? toggleWishlistItem : toggleGuestWishlistItem;
+    const wishlistPayload = isAuthenticated ? productId : { productId, productDetails };
+    const addMessage = isAuthenticated ? "Added to wishlist!" : "Added to wishlist! Sign in to save across devices.";
+    const removeMessage = "Removed from wishlist!";
+    
+    dispatch(wishlistAction(wishlistPayload))
       .unwrap()
       .then((result) => {
-        if (result.action === "added") toast.success("Added to wishlist!");
+        if (result.action === "added") toast.success(addMessage);
         else if (result.action === "removed") toast.success("Removed from wishlist!");
       })
       .catch((err) => {
-        if (err.message?.includes('Authentication failed') || err.message?.includes('login again')) {
+        if (isAuthenticated && (err.message?.includes('Authentication failed') || err.message?.includes('login again'))) {
           toast.error("Session expired. Please login again.");
           dispatch(logout());
           navigate("/login");
-        } else if (err.message?.includes('login') || err.message?.includes('401')) {
+        } else if (isAuthenticated && (err.message?.includes('login') || err.message?.includes('401'))) {
           toast.error("Please login to manage wishlist");
           navigate("/login");
         } else {
@@ -522,7 +564,7 @@ export default ProductDetails;
 //   if (status === 'loading') return <p className="p-4">Loading product details...</p>;
 //   if (status === 'failed') return <p className="p-4 text-red-500">{error}</p>;
 //   if (!product) return <p className="p-4">Product not found.</p>;
-//   console.log(product);
+
   
   
 //   return (

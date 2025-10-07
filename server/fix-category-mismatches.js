@@ -10,7 +10,7 @@ async function fixCategoryMismatches() {
     console.log('🔧 FIXING CATEGORY MISMATCHES');
     console.log('===============================\n');
     
-    await connectDb();
+    await connectDb(); 
     
     // 1. Fix high jewellery category mismatch
     console.log('1️⃣ Fixing High Jewellery Categories...');
