@@ -49,7 +49,7 @@ export default function Overview({
       <div className="bg-white p-6 rounded-lg border border-gray-200">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-md font-medium text-gray-600">{title}</p>
+            <p className="text-sm font-medium text-gray-600">{title}</p>
             <p className="text-2xl font-semibold text-gray-900 mt-1">{value}</p>
             {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
           </div>
@@ -119,7 +119,7 @@ export default function Overview({
                     >
                       <div>
                         <p className="font-medium text-gray-900">#{order.orderNumber}</p>
-                        <p className="text-md text-gray-600">{fmtDate(order.createdAt)}</p>
+                        <p className="text-sm text-gray-600">{fmtDate(order.createdAt)}</p>
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">{fmtINR(order.totalINR)}</p>
@@ -165,11 +165,11 @@ export default function Overview({
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-900 truncate">{product.name}</p>
-                        <p className="text-md text-gray-600">{product.units} units sold</p>
+                        <p className="text-sm text-gray-600">{product.units} units sold</p>
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">{fmtINR(product.salesINR)}</p>
-                        <p className="text-md text-gray-600">#{index + 1}</p>
+                        <p className="text-sm text-gray-600">#{index + 1}</p>
                       </div>
                     </div>
                   ))}
@@ -208,7 +208,7 @@ export default function Overview({
                           ))}
                         </div>
                       </div>
-                      <p className="text-md text-gray-600 line-clamp-2">{review.comment}</p>
+                      <p className="text-sm text-gray-600 line-clamp-2">{review.comment}</p>
                       <p className="text-sm text-gray-500 mt-2">{fmtDate(review.createdAt)}</p>
                     </div>
                   ))}
@@ -239,10 +239,10 @@ export default function Overview({
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="font-medium text-gray-900">{appointment.customerName}</p>
-                          <p className="text-md text-gray-600">{appointment.serviceType}</p>
+                          <p className="text-sm text-gray-600">{appointment.serviceType}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-md font-medium text-gray-900">{fmtDateTime(appointment.appointmentAt)}</p>
+                          <p className="text-sm font-medium text-gray-900">{fmtDateTime(appointment.appointmentAt)}</p>
                           <span className={`inline-block px-2 py-1 text-sm rounded-full font-medium ${
                             appointment.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                             appointment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :

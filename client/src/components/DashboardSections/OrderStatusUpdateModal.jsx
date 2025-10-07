@@ -64,7 +64,7 @@ export default function OrderStatusUpdateModal({ isOpen, onClose, order }) {
               <MdLocalShipping className="h-6 w-6 mr-2" />
               Update Order Status
             </h3>
-            <p className="text-md text-gray-500 mt-1">Order #{order.orderNumber}</p>
+            <p className="text-sm text-gray-500 mt-1">Order #{order.orderNumber}</p>
           </div>
           <button
             onClick={onClose}
@@ -78,14 +78,14 @@ export default function OrderStatusUpdateModal({ isOpen, onClose, order }) {
         <form onSubmit={handleSubmit}>
           {/* Current Status */}
           <div className="mb-6">
-            <label className="block text-md font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Current Status
             </label>
             <div className="flex items-center gap-3">
-              <span className={`inline-flex items-center px-3 py-1 rounded-full text-md font-medium border ${getOrderStatusColor(order.status)}`}>
+              <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getOrderStatusColor(order.status)}`}>
                 {currentStatus?.label || order.status}
               </span>
-              <span className="text-md text-gray-500">
+              <span className="text-sm text-gray-500">
                 {currentStatus?.description}
               </span>
             </div>
@@ -93,7 +93,7 @@ export default function OrderStatusUpdateModal({ isOpen, onClose, order }) {
 
           {/* New Status Selection */}
           <div className="mb-6">
-            <label htmlFor="status" className="block text-md font-medium text-gray-700 mb-2">
+            <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
               New Status *
             </label>
             <select
@@ -124,14 +124,14 @@ export default function OrderStatusUpdateModal({ isOpen, onClose, order }) {
                     {selectedStatusInfo.label}
                   </span>
                 </div>
-                <p className="text-md text-blue-700">{selectedStatusInfo.description}</p>
+                <p className="text-sm text-blue-700">{selectedStatusInfo.description}</p>
               </div>
             )}
           </div>
 
           {/* Status Update Notes */}
           <div className="mb-6">
-            <label htmlFor="notes" className="block text-md font-medium text-gray-700 mb-2">
+            <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-2">
               Update Notes (Optional)
             </label>
             <textarea
@@ -152,7 +152,7 @@ export default function OrderStatusUpdateModal({ isOpen, onClose, order }) {
           {selectedStatus === 'cancelled' && (
             <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
               <h4 className="font-medium text-red-800 mb-1">⚠️ Order Cancellation</h4>
-              <p className="text-md text-red-700">
+              <p className="text-sm text-red-700">
                 Cancelling this order will mark it as cancelled. Make sure to process any necessary refunds separately.
               </p>
             </div>
@@ -161,7 +161,7 @@ export default function OrderStatusUpdateModal({ isOpen, onClose, order }) {
           {selectedStatus === 'refunded' && (
             <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
               <h4 className="font-medium text-orange-800 mb-1">💰 Refund Status</h4>
-              <p className="text-md text-orange-700">
+              <p className="text-sm text-orange-700">
                 This status indicates the order has been refunded. Ensure the actual refund has been processed through your payment provider.
               </p>
             </div>
@@ -170,7 +170,7 @@ export default function OrderStatusUpdateModal({ isOpen, onClose, order }) {
           {selectedStatus === 'delivered' && (
             <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
               <h4 className="font-medium text-green-800 mb-1">✅ Order Completion</h4>
-              <p className="text-md text-green-700">
+              <p className="text-sm text-green-700">
                 Marking as delivered indicates successful order completion. This status change cannot be easily reversed.
               </p>
             </div>

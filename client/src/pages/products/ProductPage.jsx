@@ -357,12 +357,12 @@ const toast = useToastContext();
             <main className="ml-0 md:ml-10 w-full">
               {/* Desktop Sort Controls */}
               <div className="flex items-center justify-between mb-6">
-                <div className="text-md text-gray-600">
+                <div className="text-sm text-gray-600">
                   {status === "loading" ? "Loading..." : `Showing ${items.length} products`}
                 </div>
                 
                 <select
-                  className="border px-3 py-1 rounded text-md"
+                  className="border px-3 py-1 rounded text-sm"
                   value={filters.sort || "newest"}
                   onChange={(e) => dispatch(setFilters({ sort: e.target.value, page: 1 }))}
                 >
@@ -375,7 +375,7 @@ const toast = useToastContext();
               </div>
 
               {status === "failed" && (
-                <div className="text-red-500 text-md mb-4">
+                <div className="text-red-500 text-sm mb-4">
                   Error: {error}
                   <button 
                     onClick={() => dispatch(fetchProducts({ page: 1, limit: 20 }))}

@@ -222,7 +222,7 @@ const ProductDetails = () => {
        <div className="sticky top-16 z-10 mb-3 max-md:top-5">
     <BackButton />
   </div>
-      <div className="mx-auto w-[95%] max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
   
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
    
@@ -232,12 +232,12 @@ const ProductDetails = () => {
           </div>
 
           {/* Info */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 pl-6">
             {/* Product Badges */}
             {product?.badges && product.badges.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-3">
                 {product.badges.map((badge, index) => (
-                  <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
+                  <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800 border border-amber-200">
                     {badge}
                   </span>
                 ))}
@@ -260,7 +260,7 @@ const ProductDetails = () => {
                 )}
               </div>
               {product?.shortDescription && (
-                <p className="text-gray-700 text-sm leading-relaxed font-medium">
+                <p className="text-gray-700 text-sm my-2 leading-relaxed font-medium">
                   {product.shortDescription}
                 </p>
               )}
@@ -272,12 +272,12 @@ const ProductDetails = () => {
                 <div className="text-2xl font-playfair font-semibold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
                   {selectedVariant?.priceOnDemandText || 'Price on Demand'}
                 </div>
-                <p className="text-md text-gray-600 mt-1">Contact us for pricing details</p>
+                <p className="text-sm text-gray-600 mt-1">Contact us for pricing details</p>
               </div>
             ) : (
               <div className="mt-3">
                 <div className="flex items-baseline gap-3">
-                  <div className="text-2xl font-playfair font-semibold">
+                  <div className="text-2xl  font-semibold">
                     ₹{selectedVariant?.price ?? 'Price not available'}
                   </div>
                   {selectedVariant?.mrp && selectedVariant.mrp > selectedVariant.price && (
@@ -286,28 +286,28 @@ const ProductDetails = () => {
                     </div>
                   )}
                 </div>
-                <p className="text-md text-gray-600 mt-1">(inclusive of GST)</p>
+                <p className="text-sm text-gray-600 mt-1">(inclusive of GST)</p>
                 {selectedVariant?.sizeLabel && (
-                  <p className="text-sm text-gray-600">Size: {selectedVariant.sizeLabel}</p>
+                  <p className="text-sm my-1 text-gray-600">Size: {selectedVariant.sizeLabel}</p>
                 )}
               </div>
             )}
 
             {/* Stock status indicator */}
-            <div className="mt-2 flex items-center gap-3 ">
+            <div className="my-3 flex items-center gap-3 ">
               {isOutOfStock ? (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-md font-medium bg-red-100 text-red-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
                   Out of Stock
                 </span>
               ) : (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-md font-medium bg-green-100 text-green-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                   In Stock
                 </span>
               )}
 
             </div>
 
-            <p className="mt-2 text-md text-gray-700">
+            <p className="mt-2 text-sm text-gray-700">
               <span className="font-medium">SKU:</span>{" "}
               {selectedVariant?.sku || 'SKU not available'}
             </p>
@@ -333,7 +333,7 @@ const ProductDetails = () => {
             {product?.tags && product.tags.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1">
                 {product.tags.slice(0, 5).map((tag, index) => (
-                  <span key={index} className="inline-flex items-center px-2 py-1 rounded-md text-xs bg-gray-100 text-gray-700">
+                  <span key={index} className="inline-flex items-center px-2 py-1 rounded-md text-sm bg-gray-100 text-gray-700">
                     #{tag}
                   </span>
                 ))}
@@ -366,7 +366,7 @@ const ProductDetails = () => {
                               title={color.name}
                             />
                           )}
-                          <span className="text-xs text-gray-600">{color.name}</span>
+                          <span className="text-sm text-gray-600">{color.name}</span>
                         </div>
                       ))}
                     </div>
@@ -378,10 +378,10 @@ const ProductDetails = () => {
             {/* High Jewellery Customization */}
             {isHighJewellery && product?.customizationOptions?.enabled && (
               <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                <h4 className="text-md font-semibold text-amber-900 mb-1">Customization Available</h4>
+                <h4 className="text-sm font-semibold text-amber-900 mb-1">Customization Available</h4>
                 <p className="text-sm text-amber-800">{product.customizationOptions.description}</p>
                 {product.customizationOptions.estimatedDays && (
-                  <p className="text-xs text-amber-700 mt-1">
+                  <p className="text-sm text-amber-700 mt-1">
                     Estimated time: {product.customizationOptions.estimatedDays} days
                   </p>
                 )}
@@ -389,14 +389,17 @@ const ProductDetails = () => {
             )}
 
             <div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-md sm:text-lg font-regular">
-                {isHighJewellery || product?.bookAppointment ? 'Customize your jewellery Design' : 'Expert Consultation Available'}
+              <h2 className="text-sm sm:text-lg font-regular">
+                {isHighJewellery || product?.bookAppointment ? 'Customize your jewellery Design' : ""}
               </h2>
-             <Link to='/appointment'>
-              <button className="btn-black uppercase text-md max-sm: my-2 tracking-wider w-full sm:w-auto">
+              {
+                product?.type != "fragrance" && (<Link to='/appointment'>
+              <button className="btn-black uppercase  max-sm:my-2 tracking-wider w-full sm:w-auto">
                 Book an appointment
               </button>
-              </Link>
+              </Link>)
+              }
+             
             </div>
 
             
@@ -421,7 +424,7 @@ const ProductDetails = () => {
               {/* Gift Options */}
               {(product?.freeGiftWrap || product?.giftWrap?.enabled || product?.giftMessageAvailable) && (
                 <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                  <h4 className="text-md font-semibold text-green-900 mb-2">Gift Options Available</h4>
+                  <h4 className="text-sm font-semibold text-green-900 mb-2">Gift Options Available</h4>
                   <div className="space-y-1">
                     {product?.freeGiftWrap && (
                       <p className="text-sm text-green-800">✓ Complimentary gift wrapping</p>
@@ -445,7 +448,7 @@ const ProductDetails = () => {
                 <div className="relative w-full sm:w-auto">
                   <button 
                     onClick={() => setShowContactOptions(!showContactOptions)}
-                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-md font-medium rounded-lg hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium rounded-lg hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                   >
                     Contact for Pricing
                   </button>
@@ -461,10 +464,10 @@ const ProductDetails = () => {
                       <div className="absolute top-full left-0 right-0 sm:right-auto sm:w-80 mt-2 bg-white border border-gray-200 rounded-lg shadow-xl z-20 overflow-hidden">
                         <button
                           onClick={() => handleWhatsAppContact(product, setShowContactOptions)}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-md text-left hover:bg-green-50 transition-colors border-b border-gray-100"
+                          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-green-50 transition-colors border-b border-gray-100"
                         >
                           <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                            <FiPhone className="text-white text-md" />
+                            <FiPhone className="text-white text-sm" />
                           </div>
                           <div>
                             <div className="font-medium text-gray-900">WhatsApp</div>
@@ -473,10 +476,10 @@ const ProductDetails = () => {
                         </button>
                         <button
                           onClick={() => handleEmailContact(product, setShowContactOptions)}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-md text-left hover:bg-blue-50 transition-colors"
+                          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-blue-50 transition-colors"
                         >
                           <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                            <FiMail className="text-white text-md" />
+                            <FiMail className="text-white text-sm" />
                           </div>
                           <div>
                             <div className="font-medium text-gray-900">Email</div>
@@ -493,7 +496,7 @@ const ProductDetails = () => {
                   <button 
                     onClick={handleAddToCart} 
                     disabled={isOutOfStock}
-                    className={`w-full sm:w-auto px-6 py-3  text-md font-medium transition-colors ${
+                    className={`w-full sm:w-auto px-6 py-3 text-xs  ${
                       isOutOfStock 
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                         : 'btn-black'
@@ -504,7 +507,7 @@ const ProductDetails = () => {
                   <button 
                     onClick={() => navigate('/checkout')} 
                     disabled={isOutOfStock}
-                    className={`w-full sm:w-auto px-6 py-3 text-md  font-medium transition-colors ${
+                    className={`w-full sm:w-auto px-6 py-3 text-sm  font-medium transition-colors ${
                       isOutOfStock 
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                         : 'btn'
@@ -531,14 +534,17 @@ const ProductDetails = () => {
         </div>
 
         {/* Bottom: Accordion + Shipping info */}
-        <div className="mt-18 grid grid-cols-1 gap-8 lg:grid-cols-12 items-start">
+        <div className="mt-15 grid grid-cols-1  gap-8 lg:grid-cols-12 items-start">
           <div className="lg:col-span-8">
             <ProductAccordion product={product} />
           </div>
           <div className="lg:col-span-4">
-            <div className="bg-gray-50 p-4 rounded-lg space-y-3">
-              <h4 className="font-semibold text-gray-900">Shipping & Delivery</h4>
-              
+            <div className=" space-y-3">
+              {/* <h4 className="font-semibold text-gray-900">Shipping & Delivery</h4> */}
+                            <h4 className=" text-gray-900">-	Order by Phone +91-7738543881 </h4>
+              <h4 className=" text-gray-900">-	Message us (opens links to the website chat)</h4>
+              <h4 className=" text-gray-900">-	Contact a Client Advisor</h4>
+
               {product?.shippingInfo?.complementary && (
                 <p className="text-sm text-green-700 font-medium">
                   ✓ Complimentary Express Delivery
@@ -560,20 +566,20 @@ const ProductDetails = () => {
               )}
 
               {product?.shippingInfo?.note && (
-                <p className="text-xs text-gray-500 italic">
+                <p className="text-sm text-gray-500 italic">
                   {product.shippingInfo.note}
                 </p>
               )}
 
               {/* Purchase limits */}
               {product?.purchaseLimitPerOrder > 0 && (
-                <p className="text-xs text-orange-600">
+                <p className="text-sm text-orange-600">
                   Max {product.purchaseLimitPerOrder} per order
                 </p>
               )}
 
               {product?.minOrderQty > 1 && (
-                <p className="text-xs text-gray-600">
+                <p className="text-sm text-gray-600">
                   Minimum order: {product.minOrderQty} pieces
                 </p>
               )}

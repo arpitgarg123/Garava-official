@@ -93,7 +93,7 @@
 //         <div className="flex items-center justify-between mb-4">
 //           <div>
 //             <h2 className="text-lg font-semibold text-gray-900">Blog Management</h2>
-//             <p className="text-md text-gray-600">Create and manage blog posts</p>
+//             <p className="text-sm text-gray-600">Create and manage blog posts</p>
 //           </div>
 //           <button 
 //             onClick={handleCreateNew}
@@ -146,7 +146,7 @@
 //             <div className="text-center">
 //               <FiFileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
 //               <p className="text-gray-500 font-medium">No blog posts found</p>
-//               <p className="text-gray-400 text-md mt-1">Create your first blog post to get started</p>
+//               <p className="text-gray-400 text-sm mt-1">Create your first blog post to get started</p>
 //             </div>
 //           </div>
 //         ) : (
@@ -193,22 +193,22 @@
 //                           )}
 //                         </div>
 //                         <div className="ml-4">
-//                           <div className="text-md font-medium text-gray-900 max-w-xs truncate">
+//                           <div className="text-sm font-medium text-gray-900 max-w-xs truncate">
 //                             {blog.title}
 //                           </div>
-//                           <div className="text-md text-gray-500 max-w-xs truncate">
+//                           <div className="text-sm text-gray-500 max-w-xs truncate">
 //                             {blog.description}
 //                           </div>
 //                         </div>
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <div className="text-md text-gray-900">
+//                       <div className="text-sm text-gray-900">
 //                         {blog.author?.name || 'Unknown'}
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <div className="text-md text-gray-900">
+//                       <div className="text-sm text-gray-900">
 //                         {formatDate(blog.createdAt)}
 //                       </div>
 //                     </td>
@@ -218,12 +218,12 @@
 //                       </span>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <div className="flex items-center text-md text-gray-900">
+//                       <div className="flex items-center text-sm text-gray-900">
 //                         <FiEye className="w-4 h-4 mr-1 text-gray-400" />
 //                         {blog.views || 0}
 //                       </div>
 //                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+//                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 //                       <div className="flex items-center justify-end gap-2">
 //                         <button 
 //                           onClick={() => handleView(blog._id)}
@@ -405,7 +405,7 @@ export default function BlogsAdmin() {
         {/* Blog Content */}
         <div className="flex-1 ml-4">
           <div className="flex items-start justify-between mb-2">
-            <h3 className="text-md sm:text-base font-medium text-gray-900 line-clamp-2 flex-1">
+            <h3 className="text-sm sm:text-base font-medium text-gray-900 line-clamp-2 flex-1">
               {blog.title}
             </h3>
             <span className={`ml-2 inline-flex items-center px-2 py-1 rounded-full text-sm font-medium flex-shrink-0 ${getStatusColor(blog.status)}`}>
@@ -413,7 +413,7 @@ export default function BlogsAdmin() {
             </span>
           </div>
           
-          <p className="text-sm sm:text-md text-gray-600 line-clamp-2 mb-2">
+          <p className="text-sm sm:text-sm text-gray-600 line-clamp-2 mb-2">
             {blog.description}
           </p>
 
@@ -517,22 +517,22 @@ export default function BlogsAdmin() {
                     )}
                   </div>
                   <div className="ml-4">
-                    <div className="text-md font-medium text-gray-900 max-w-xs truncate">
+                    <div className="text-sm font-medium text-gray-900 max-w-xs truncate">
                       {blog.title}
                     </div>
-                    <div className="text-md text-gray-500 max-w-xs truncate">
+                    <div className="text-sm text-gray-500 max-w-xs truncate">
                       {blog.description}
                     </div>
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-md text-gray-900">
+                <div className="text-sm text-gray-900">
                   {blog.author?.name || 'Unknown'}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-md text-gray-900">
+                <div className="text-sm text-gray-900">
                   {formatDate(blog.createdAt)}
                 </div>
               </td>
@@ -542,12 +542,12 @@ export default function BlogsAdmin() {
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="flex items-center text-md text-gray-900">
+                <div className="flex items-center text-sm text-gray-900">
                   <FiEye className="w-4 h-4 mr-1 text-gray-400" />
                   {blog.views || 0}
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div className="flex items-center justify-end gap-2">
                   <button 
                     onClick={() => handleView(blog._id)}
@@ -602,7 +602,7 @@ export default function BlogsAdmin() {
       <div className="h-full flex items-center justify-center p-4">
         <div className="text-center max-w-md mx-auto">
           <p className="text-red-600 font-medium mb-2">Error loading blogs</p>
-          <p className="text-gray-500 text-md mb-4">{error}</p>
+          <p className="text-gray-500 text-sm mb-4">{error}</p>
           <button 
             onClick={() => dispatch(fetchBlogsAdmin({ page: 1, limit: 50 }))}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -623,7 +623,7 @@ export default function BlogsAdmin() {
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
               Blog Management
             </h2>
-            <p className="text-md text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               Create and manage blog posts • {pagination.total || filteredBlogs.length} total posts
             </p>
           </div>
@@ -638,12 +638,12 @@ export default function BlogsAdmin() {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4">
-          <p className="text-md text-gray-600">
+          <p className="text-sm text-gray-600">
             {filteredBlogs.length} posts
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-md border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -713,7 +713,7 @@ export default function BlogsAdmin() {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Search */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Search</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
               <div className="relative">
                 <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -728,7 +728,7 @@ export default function BlogsAdmin() {
 
             {/* Mobile Status Filter */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -773,7 +773,7 @@ export default function BlogsAdmin() {
             <div className="text-center max-w-md mx-auto">
               <FiFileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 font-medium mb-2">No blog posts found</p>
-              <p className="text-gray-400 text-md mb-4">
+              <p className="text-gray-400 text-sm mb-4">
                 {searchTerm || statusFilter 
                   ? "Try adjusting your filters or search terms"
                   : "Create your first blog post to get started"

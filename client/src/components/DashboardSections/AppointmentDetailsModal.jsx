@@ -21,7 +21,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
               <MdEventAvailable className="h-6 w-6 mr-2" />
               Appointment Details
             </h3>
-            <p className="text-md text-gray-500 mt-1">ID: {appointment._id}</p>
+            <p className="text-sm text-gray-500 mt-1">ID: {appointment._id}</p>
           </div>
           <button
             onClick={onClose}
@@ -40,10 +40,10 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                 Status & Priority
               </h4>
               <div className="space-y-3">
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-md font-medium border ${getAppointmentStatusColor(appointment.status)}`}>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getAppointmentStatusColor(appointment.status)}`}>
                   {appointment.status}
                 </span>
-                <div className={`text-md font-medium ${urgency.color}`}>
+                <div className={`text-sm font-medium ${urgency.color}`}>
                   {urgency.label} • {urgency.level === 'past' ? 'Past appointment' : 
                    urgency.level === 'urgent' ? 'Requires immediate attention' :
                    urgency.level === 'today' ? 'Scheduled for today' :
@@ -57,7 +57,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                 <span className="text-lg mr-2">{serviceInfo.icon}</span>
                 Service Information
               </h4>
-              <div className="space-y-2 text-md">
+              <div className="space-y-2 text-sm">
                 <div><strong>Service:</strong> {serviceInfo.label}</div>
                 <div><strong>Duration:</strong> {serviceInfo.duration}</div>
                 <div className="text-gray-600">{serviceInfo.description}</div>
@@ -78,7 +78,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                     <AiOutlineUser className="h-4 w-4 text-gray-400" />
                     <div>
                       <div className="font-medium text-gray-900">{formattedAppointment.customerName}</div>
-                      <div className="text-md text-gray-500">Full Name</div>
+                      <div className="text-sm text-gray-500">Full Name</div>
                     </div>
                   </div>
                   
@@ -86,7 +86,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                     <BiEnvelope className="h-4 w-4 text-gray-400" />
                     <div>
                       <div className="text-gray-900">{formattedAppointment.customerEmail}</div>
-                      <div className="text-md text-gray-500">Email Address</div>
+                      <div className="text-sm text-gray-500">Email Address</div>
                     </div>
                   </div>
                 </div>
@@ -97,7 +97,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                       <BiPhone className="h-4 w-4 text-gray-400" />
                       <div>
                         <div className="text-gray-900">{formattedAppointment.customerPhone}</div>
-                        <div className="text-md text-gray-500">Phone Number</div>
+                        <div className="text-sm text-gray-500">Phone Number</div>
                       </div>
                     </div>
                   )}
@@ -107,7 +107,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                       <AiOutlineUser className="h-4 w-4 text-gray-400" />
                       <div>
                         <div className="text-gray-900">Registered User</div>
-                        <div className="text-md text-gray-500">Account Holder</div>
+                        <div className="text-sm text-gray-500">Account Holder</div>
                       </div>
                     </div>
                   )}
@@ -117,7 +117,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                       <AiOutlineUser className="h-4 w-4 text-gray-400" />
                       <div>
                         <div className="text-gray-600">Guest Customer</div>
-                        <div className="text-md text-gray-500">No account</div>
+                        <div className="text-sm text-gray-500">No account</div>
                       </div>
                     </div>
                   )}
@@ -138,7 +138,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                   <BiCalendar className="h-6 w-6 text-blue-500" />
                   <div>
                     <div className="font-medium text-gray-900">{formattedAppointment.formattedDate}</div>
-                    <div className="text-md text-gray-500">Date</div>
+                    <div className="text-sm text-gray-500">Date</div>
                   </div>
                 </div>
                 
@@ -146,7 +146,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                   <BiTime className="h-6 w-6 text-green-500" />
                   <div>
                     <div className="font-medium text-gray-900">{formattedAppointment.formattedTime}</div>
-                    <div className="text-md text-gray-500">Time</div>
+                    <div className="text-sm text-gray-500">Time</div>
                   </div>
                 </div>
                 
@@ -154,7 +154,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
                   <MdEventNote className="h-6 w-6 text-orange-500" />
                   <div>
                     <div className={`font-medium ${urgency.color}`}>{urgency.label}</div>
-                    <div className="text-md text-gray-500">Status</div>
+                    <div className="text-sm text-gray-500">Status</div>
                   </div>
                 </div>
               </div>
@@ -197,7 +197,7 @@ export default function AppointmentDetailsModal({ isOpen, onClose, appointment }
           <div className="mb-6">
             <h4 className="font-semibold text-gray-900 mb-4">Timeline</h4>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="space-y-2 text-md">
+              <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-600">Created:</span>
                   <span className="text-gray-900">{new Date(appointment.createdAt).toLocaleDateString()} at {new Date(appointment.createdAt).toLocaleTimeString()}</span>

@@ -174,7 +174,7 @@ const MobileNavItem = ({ item, onNavigate }) => {
             <button
               key={idx}
               onClick={() => handleSubItemClick(subItem)}
-              className="block w-full text-left text-md text-gray-600 hover:text-black transition-colors py-1"
+              className="block w-full text-left text-sm text-gray-600 hover:text-black transition-colors py-1"
             >
               {subItem.label}
             </button>
@@ -306,7 +306,7 @@ const Navbar = () => {
               transition={{ duration: 0.22, ease: 'easeOut' }}
               className="border-t "
             >
-              <div className="flex items-center  justify-between px-4 py-2 text-md">
+              <div className="flex items-center  justify-between px-4 py-2 text-sm">
                 <Link to="/contact" onClick={() => setMobileOpen(false)} className="font-medium">
                   Contact us
                 </Link>
@@ -341,27 +341,27 @@ const Navbar = () => {
                     <div className="flex items-start gap-9 text-start self-start py-6 justify-between w-full ">
                       <button
                         onClick={() => { setMobileOpen(false); navigate('/profile'); }}
-                        className="text-md underline underline-offset-4"
+                        className="text-sm underline underline-offset-4"
                       >
                         Profile
                       </button>
                       <button
                         onClick={() => { setMobileOpen(false); navigate('/orders'); }}
-                        className="text-md underline  underline-offset-4"
+                        className="text-sm underline  underline-offset-4"
                       >
                         Orders
                       </button>
                       {isAdmin && (
                         <button
                           onClick={() => { setMobileOpen(false); navigate('/dashboard'); }}
-                          className="text-md underline underline-offset-4 text-blue-600"
+                          className="text-sm underline underline-offset-4 text-blue-600"
                         >
                           Admin
                         </button>
                       )}
                       <button
                         onClick={() => { setMobileOpen(false); dispatch(doLogout()); navigate('/'); }}
-                        className="flex items-center  text-md text-red-600"
+                        className="flex items-center  text-sm text-red-600"
                       >
                         <FiLogOut className="mr-1" /> Logout
                       </button>
@@ -389,14 +389,14 @@ const Navbar = () => {
 
 <div className='flex items-center justify-center'>
   <PiPhoneIncomingThin size={23} className="" />
-  <Link to="/contact" className="tracking-wide text-md "> 
+  <Link to="/contact" className="tracking-wide text-sm "> 
     Contact us
   </Link>
 </div>
 <div className='flex items-center '>
   <CiCalendarDate className='' size={20} />
   <h4
-    className=" tracking-wide text-md  cursor-pointer"
+    className=" tracking-wide text-sm  cursor-pointer"
     onClick={() => navigate('/appointment')}
   >
     book an appointment
@@ -462,7 +462,7 @@ const Navbar = () => {
 
                         <div className="overflow-hidden rounded-xl border border-gray-200/80 bg-white shadow-xl ring-1 ring-black/5 backdrop-blur-[2px]">
                           <div className="py-1">
-                            <div className="px-4 py-2 text-md text-gray-700 border-b bg-gradient-to-b from-white to-gray-50">
+                            <div className="px-4 py-2 text-sm text-gray-700 border-b bg-gradient-to-b from-white to-gray-50">
                               <div className="font-medium">{user?.name}</div>
                               <div className="text-sm text-gray-500">{user?.email}</div>
                               {isAdmin && <div className="text-sm text-black font-medium">Admin</div>}
@@ -470,14 +470,14 @@ const Navbar = () => {
 
                             <button
                               onClick={() => { setShowUserMenu(false); navigate('/profile'); }}
-                              className="block w-full text-left  cursor-pointer px-4 py-2 text-md text-gray-700 hover:bg-gray-50"
+                              className="block w-full text-left  cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                               role="menuitem"
                             >
                               Profile
                             </button>
                             <button
                               onClick={() => { setShowUserMenu(false); navigate('/orders'); }}
-                              className="block w-full text-left cursor-pointer px-4 py-2 text-md text-gray-700 hover:bg-gray-50"
+                              className="block w-full text-left cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
                               role="menuitem"
                             >
                               Orders
@@ -486,7 +486,7 @@ const Navbar = () => {
                             {isAdmin && (
                               <button
                                 onClick={() => { setShowUserMenu(false); navigate('/dashboard'); }}
-                                className="block w-full cursor-pointer text-left px-4 py-2 text-md text-black hover:bg-blue-50 font-medium"
+                                className="block w-full cursor-pointer text-left px-4 py-2 text-sm text-black hover:bg-blue-50 font-medium"
                                 role="menuitem"
                               >
                                 Admin Dashboard
@@ -496,7 +496,7 @@ const Navbar = () => {
                             <div className="border-t">
                               <button
                                 onClick={() => { setShowUserMenu(false); dispatch(doLogout()); navigate('/'); }}
-                                className="flex items-center cursor-pointer w-full text-left px-4 py-2 text-md text-red-600 hover:bg-red-50"
+                                className="flex items-center cursor-pointer w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
                                 role="menuitem"
                               >
                                 <FiLogOut className="mr-2" size={16} />

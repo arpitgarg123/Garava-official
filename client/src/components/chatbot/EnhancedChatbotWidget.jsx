@@ -156,10 +156,10 @@ export default function EnhancedChatbotWidget({
             <div className={`relative ${COLORS.brand} px-4 py-3`}>
               <div className="flex items-center gap-3">
                 <div className="h-9 w-9 rounded-full bg-white/15 flex items-center justify-center ring-1 ring-white/20">
-                  <span className="text-white/90 text-md font-semibold">GA</span>
+                  <span className="text-white/90 text-sm font-semibold">GA</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-white text-md font-semibold tracking-wide">
+                  <h3 className="text-white text-sm font-semibold tracking-wide">
                     {title}
                   </h3>
                   <p className="text-white/70 text-sm">{subtitle}</p>
@@ -276,7 +276,7 @@ export default function EnhancedChatbotWidget({
                 <button
                   onClick={() => sendMessage(input)}
                   disabled={isTyping || !input.trim()}
-                  className="inline-flex h-10 items-center justify-center rounded-xl bg-amber-500 px-4 text-white text-md font-medium shadow hover:brightness-105 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex h-10 items-center justify-center rounded-xl bg-amber-500 px-4 text-white text-sm font-medium shadow hover:brightness-105 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <FiSend className="mr-1" />
                   Send

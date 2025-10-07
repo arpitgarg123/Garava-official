@@ -36,17 +36,17 @@ export default function DeleteNewsEventModal({
                 Are you sure you want to delete this {item.type === 'event' ? 'event' : 'media coverage'}?
               </h3>
               <div className="mb-4">
-                <p className="text-md text-gray-600 mb-2">
+                <p className="text-sm text-gray-600 mb-2">
                   <strong>Title:</strong> {item.title}
                 </p>
-                <p className="text-md text-gray-600 mb-2">
+                <p className="text-sm text-gray-600 mb-2">
                   <strong>Type:</strong> {item.type === 'media-coverage' ? 'Media Coverage' : item.kind}
                 </p>
-                <p className="text-md text-gray-600">
+                <p className="text-sm text-gray-600">
                   <strong>Status:</strong> {item.status}
                 </p>
               </div>
-              <p className="text-md text-red-600 font-medium">
+              <p className="text-sm text-red-600 font-medium">
                 This action cannot be undone. The {item.type === 'event' ? 'event' : 'media coverage'} will be permanently removed from the system.
               </p>
             </div>

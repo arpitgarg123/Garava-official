@@ -24,11 +24,11 @@ const ShippingPolicy = () => {
               <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-gray-900 mb-4">
                 Shipping Policy
               </h1>
-              <p className="text-gray-600 text-md  max-w-2xl mx-auto">
+              <p className="text-gray-600 text-sm  max-w-2xl mx-auto">
                 We are committed to delivering your luxury jewellery and fragrances safely and efficiently. 
                 Learn about our shipping options, delivery timelines, and policies.
               </p>
-              <div className="mt-4 text-md text-amber-700 font-medium">
+              <div className="mt-4 text-sm text-amber-700 font-medium">
                 Last updated: October 2, 2025
               </div>
             </div>
@@ -54,7 +54,7 @@ const ShippingPolicy = () => {
                     </div>
                     <div className="ml-3">
                       <h3 className="text-lg font-semibold text-amber-900 mb-2">Delivery Commitment</h3>
-                      <p className="text-amber-800 text-md  leading-relaxed">
+                      <p className="text-amber-800 text-sm  leading-relaxed">
                         At Garava, we ensure secure and timely delivery of all our luxury products. 
                         All orders are carefully packaged and shipped with trusted courier partners to ensure 
                         your precious items reach you safely.
@@ -78,10 +78,10 @@ const ShippingPolicy = () => {
                       </svg>
                     </div>
                     <h3 className="font-semibold text-blue-900 mb-3">Ready to Ship Items</h3>
-                    <p className="text-md text-blue-800 mb-3">
+                    <p className="text-sm text-blue-800 mb-3">
                       Orders for in-stock items are processed within 24-48 hours of order confirmation.
                     </p>
-                    <ul className="space-y-1 text-md text-blue-800">
+                    <ul className="space-y-1 text-sm text-blue-800">
                       <li>• Same day processing for orders placed before 2 PM</li>
                       <li>• Quality check before dispatch</li>
                       <li>• Tracking information provided via SMS & Email</li>
@@ -95,10 +95,10 @@ const ShippingPolicy = () => {
                       </svg>
                     </div>
                     <h3 className="font-semibold text-purple-900 mb-3">Custom & Bespoke Orders</h3>
-                    <p className="text-md text-purple-800 mb-3">
+                    <p className="text-sm text-purple-800 mb-3">
                       Made-to-order and customized items require additional processing time.
                     </p>
-                    <ul className="space-y-1 text-md text-purple-800">
+                    <ul className="space-y-1 text-sm text-purple-800">
                       <li>• 7-14 business days for custom sizing</li>
                       <li>• 14-21 days for personalized engraving</li>
                       <li>• High jewellery: 21-45 days (consultation required)</li>
@@ -125,34 +125,34 @@ const ShippingPolicy = () => {
                     </thead>
                     <tbody className="divide-y divide-gray-200">
                       <tr>
-                        <td className="px-6 py-4 text-md font-medium text-gray-900">Mumbai Metropolitan Area</td>
-                        <td className="px-6 py-4 text-md text-gray-700">1-2 business days</td>
-                        <td className="px-6 py-4 text-md text-green-700 font-semibold">Free</td>
-                        <td className="px-6 py-4 text-md text-green-700">✓ Yes</td>
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900">Mumbai Metropolitan Area</td>
+                        <td className="px-6 py-4 text-sm text-gray-700">1-2 business days</td>
+                        <td className="px-6 py-4 text-sm text-green-700 font-semibold">Free</td>
+                        <td className="px-6 py-4 text-sm text-green-700">✓ Yes</td>
                       </tr>
                       <tr className="bg-gray-50">
-                        <td className="px-6 py-4 text-md font-medium text-gray-900">Major Cities (Delhi, Bangalore, etc.)</td>
-                        <td className="px-6 py-4 text-md text-gray-700">2-4 business days</td>
-                        <td className="px-6 py-4 text-md text-green-700 font-semibold">Free</td>
-                        <td className="px-6 py-4 text-md text-green-700">✓ Yes</td>
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900">Major Cities (Delhi, Bangalore, etc.)</td>
+                        <td className="px-6 py-4 text-sm text-gray-700">2-4 business days</td>
+                        <td className="px-6 py-4 text-sm text-green-700 font-semibold">Free</td>
+                        <td className="px-6 py-4 text-sm text-green-700">✓ Yes</td>
                       </tr>
                       <tr>
-                        <td className="px-6 py-4 text-md font-medium text-gray-900">Other Cities & Towns</td>
-                        <td className="px-6 py-4 text-md text-gray-700">3-7 business days</td>
-                        <td className="px-6 py-4 text-md text-green-700 font-semibold">Free</td>
-                        <td className="px-6 py-4 text-md text-amber-700">Select locations</td>
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900">Other Cities & Towns</td>
+                        <td className="px-6 py-4 text-sm text-gray-700">3-7 business days</td>
+                        <td className="px-6 py-4 text-sm text-green-700 font-semibold">Free</td>
+                        <td className="px-6 py-4 text-sm text-amber-700">Select locations</td>
                       </tr>
                       <tr className="bg-gray-50">
-                        <td className="px-6 py-4 text-md font-medium text-gray-900">Remote Areas</td>
-                        <td className="px-6 py-4 text-md text-gray-700">5-10 business days</td>
-                        <td className="px-6 py-4 text-md text-gray-700">₹100-200</td>
-                        <td className="px-6 py-4 text-md text-red-700">✗ No</td>
+                        <td className="px-6 py-4 text-sm font-medium text-gray-900">Remote Areas</td>
+                        <td className="px-6 py-4 text-sm text-gray-700">5-10 business days</td>
+                        <td className="px-6 py-4 text-sm text-gray-700">₹100-200</td>
+                        <td className="px-6 py-4 text-sm text-red-700">✗ No</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-md text-blue-800">
+                  <p className="text-sm text-blue-800">
                     <strong>Note:</strong> Delivery timelines are estimates and may vary during festivals, monsoons, 
                     or unforeseen circumstances. Free shipping applies to all orders above ₹1,999.
                   </p>
@@ -174,7 +174,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Premium Packaging
                       </h3>
-                      <ul className="space-y-2 text-md text-amber-800">
+                      <ul className="space-y-2 text-sm text-amber-800">
                         <li className="flex items-start">
                           <span className="w-2 h-2 bg-amber-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                           Signature Garava luxury boxes
@@ -203,7 +203,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Security Features
                       </h3>
-                      <ul className="space-y-2 text-md text-green-800">
+                      <ul className="space-y-2 text-sm text-green-800">
                         <li className="flex items-start">
                           <span className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                           Tamper-evident packaging seals
@@ -241,7 +241,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Before Delivery
                       </h3>
-                      <ul className="space-y-1 text-md text-blue-800">
+                      <ul className="space-y-1 text-sm text-blue-800">
                         <li>• Ensure accurate delivery address</li>
                         <li>• Provide working contact number</li>
                         <li>• Specify delivery preferences</li>
@@ -256,7 +256,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Delivery Attempts
                       </h3>
-                      <ul className="space-y-1 text-md text-amber-800">
+                      <ul className="space-y-1 text-sm text-amber-800">
                         <li>• 3 delivery attempts will be made</li>
                         <li>• Customer notification before each attempt</li>
                         <li>• Package return after failed delivery</li>
@@ -273,7 +273,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Upon Delivery
                       </h3>
-                      <ul className="space-y-1 text-md text-green-800">
+                      <ul className="space-y-1 text-sm text-green-800">
                         <li>• Check package condition before signing</li>
                         <li>• Verify order contents immediately</li>
                         <li>• Keep packaging for potential returns</li>
@@ -288,7 +288,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Special Requirements
                       </h3>
-                      <ul className="space-y-1 text-md text-red-800">
+                      <ul className="space-y-1 text-sm text-red-800">
                         <li>• Valid ID required for high-value orders</li>
                         <li>• Apartment access coordination needed</li>
                         <li>• Office deliveries during business hours</li>
@@ -306,7 +306,7 @@ const ShippingPolicy = () => {
                   Shipping Support & Tracking
                 </h2>
                 <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg p-6 border border-amber-200">
-                  <p className="text-gray-700 text-md  mb-6 leading-relaxed">
+                  <p className="text-gray-700 text-sm  mb-6 leading-relaxed">
                     Need assistance with your shipment? Our customer service team is available to help you track your order, 
                     modify delivery details, or answer any shipping-related questions.
                   </p>
@@ -319,8 +319,8 @@ const ShippingPolicy = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-md">Customer Support</h4>
-                        <p className="text-gray-600 text-md">+91-7738543881</p>
+                        <h4 className="font-semibold text-gray-900 text-sm">Customer Support</h4>
+                        <p className="text-gray-600 text-sm">+91-7738543881</p>
                         <p className="text-sm text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
                       </div>
                     </div>
@@ -333,8 +333,8 @@ const ShippingPolicy = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-md">Email Support</h4>
-                        <p className="text-gray-600 text-md">info@garava.in</p>
+                        <h4 className="font-semibold text-gray-900 text-sm">Email Support</h4>
+                        <p className="text-gray-600 text-sm">info@garava.in</p>
                         <p className="text-sm text-gray-500">Response within 24 hours</p>
                       </div>
                     </div>
@@ -346,8 +346,8 @@ const ShippingPolicy = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-md">Order Tracking</h4>
-                        <p className="text-gray-600 text-md">Track your shipment</p>
+                        <h4 className="font-semibold text-gray-900 text-sm">Order Tracking</h4>
+                        <p className="text-gray-600 text-sm">Track your shipment</p>
                         <p className="text-sm text-gray-500">Real-time updates via SMS</p>
                       </div>
                     </div>
@@ -355,10 +355,10 @@ const ShippingPolicy = () => {
 
                   <div className="mt-6 pt-6 border-t border-amber-200">
                     <div className="text-center">
-                      <p className="text-md text-gray-600 mb-2">
+                      <p className="text-sm text-gray-600 mb-2">
                         <strong>Flagship Store Address:</strong>
                       </p>
-                      <p className="text-md text-gray-700">
+                      <p className="text-sm text-gray-700">
                         Garava Luxury Jewellery, Bandra West, Mumbai - 400050
                       </p>
                       <p className="text-sm text-gray-500 mt-1">
@@ -373,7 +373,7 @@ const ShippingPolicy = () => {
 
           {/* Footer */}
           <div className="bg-gray-50 border-t border-gray-200 p-6 text-center">
-            <p className="text-md text-gray-600">
+            <p className="text-sm text-gray-600">
               © 2025 Garava. All rights reserved. This shipping policy is effective as of October 2, 2025.
             </p>
             <p className="text-sm text-gray-500 mt-2">

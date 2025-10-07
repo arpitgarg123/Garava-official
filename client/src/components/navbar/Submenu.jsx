@@ -25,7 +25,7 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
   const Content = () => (
     <>
       {isTextOnly ? (
-        <div className="bg-gray-200 text-black flex items-center justify-center h-28 w-28 sm:h-42 sm:w-42 mb-2 text-center font-semibold text-md">
+        <div className="bg-gray-200 text-black flex items-center justify-center h-28 w-28 sm:h-42 sm:w-42 mb-2 text-center font-semibold text-sm">
           {sub.label}
         </div>
       ) : (

@@ -68,7 +68,7 @@
 //             </span>
 //           </button>
 //           {activeIndex === idx && (
-//             <div className="mt-4 text-md">{section.content}</div>
+//             <div className="mt-4 text-sm">{section.content}</div>
 //           )}
 //         </div>
 //       ))}
@@ -196,7 +196,7 @@ const ProductAccordion = ({ product }) => {
             <div>
               <h5 className="font-semibold text-gray-900 mb-1">Manufactured by</h5>
               <p>Next Care Inc., Plot no. 155, DIC Industrial Area Baddi, Distt. Solan, HP -173205</p>
-              <p className="text-xs text-gray-600 mt-1">
+              <p className="text-sm text-gray-600 mt-1">
                 Mfg. Lic. No. HIM/COS/18/267, St.Ex.Lic.No. BBN-07/2018-19
               </p>
             </div>
@@ -221,7 +221,7 @@ const ProductAccordion = ({ product }) => {
 
           {/* Static Made in India badge */}
           <div className="text-center py-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
               🇮🇳 MADE IN INDIA
             </span>
           </div>
@@ -240,25 +240,25 @@ const ProductAccordion = ({ product }) => {
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
               <span className="text-green-600 text-xl">🌱</span>
             </div>
-            <span className="text-xs font-medium">Sustainable</span>
+            <span className="text-sm font-medium">Sustainable</span>
           </div>
           <div className="flex flex-col items-center space-y-1">
             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
               <span className="text-blue-600 text-xl">♻️</span>
             </div>
-            <span className="text-xs font-medium">Eco-Friendly</span>
+            <span className="text-sm font-medium">Eco-Friendly</span>
           </div>
           <div className="flex flex-col items-center space-y-1">
             <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
               <span className="text-purple-600 text-xl">🚫</span>
             </div>
-            <span className="text-xs font-medium">Cruelty Free</span>
+            <span className="text-sm font-medium">Cruelty Free</span>
           </div>
           <div className="flex flex-col items-center space-y-1">
             <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
               <span className="text-amber-600 text-xl">✨</span>
             </div>
-            <span className="text-xs font-medium">Premium</span>
+            <span className="text-sm font-medium">Premium</span>
           </div>
         </div>
         <p className="text-sm text-center text-gray-600 mt-3">
@@ -374,7 +374,7 @@ const ProductAccordion = ({ product }) => {
   const toggleSection = (idx) => setActiveIndex(activeIndex === idx ? null : idx);
 
   return (
-    <div className="w-full max-w-2xl lg:max-w-none divide-y divide-gray-200">
+    <div className="w-full max-w-2xl pr-22 lg:max-w-none divide-y divide-gray-200">
       {sections.map((section, idx) => (
         <div key={idx} className="py-4">
           <button
@@ -400,7 +400,7 @@ const ProductAccordion = ({ product }) => {
             }`}
           >
             <div className="overflow-hidden">
-              <div className="mt-3 text-md sm:text-base">{section.content}</div>
+              <div className="mt-3 text-sm sm:text-base">{section.content}</div>
             </div>
           </div>
         </div>

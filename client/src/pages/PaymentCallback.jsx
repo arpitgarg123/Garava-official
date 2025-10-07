@@ -147,7 +147,7 @@ const PaymentCallback = () => {
           
           {orderId && (
             <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-              <p className="text-md text-gray-600">
+              <p className="text-sm text-gray-600">
                 Order ID: <span className="font-mono font-semibold">{orderId}</span>
               </p>
             </div>
@@ -192,14 +192,14 @@ const PaymentCallback = () => {
           </p>
           
           <div className="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
-            <p className="text-md text-red-800 font-medium">
+            <p className="text-sm text-red-800 font-medium">
               Your payment was not successful. Please try again.
             </p>
           </div>
 
           {txnId && (
             <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-              <p className="text-md text-gray-600">
+              <p className="text-sm text-gray-600">
                 Transaction ID: <span className="font-mono font-semibold">{txnId}</span>
               </p>
             </div>
@@ -207,7 +207,7 @@ const PaymentCallback = () => {
 
           {orderId && (
             <div className="mt-2 p-3 bg-gray-50 rounded-lg">
-              <p className="text-md text-gray-600">
+              <p className="text-sm text-gray-600">
                 Order ID: <span className="font-mono font-semibold">{orderId}</span>
               </p>
             </div>
@@ -228,7 +228,7 @@ const PaymentCallback = () => {
             </button>
           </div>
 
-          <div className="mt-6 text-md text-gray-500">
+          <div className="mt-6 text-sm text-gray-500">
             <p>Need help? Contact our support team</p>
             <p>We're here to assist you with your order</p>
           </div>
@@ -251,14 +251,14 @@ const PaymentCallback = () => {
           </p>
           
           <div className="mt-4 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-            <p className="text-md text-yellow-800 font-medium">
+            <p className="text-sm text-yellow-800 font-medium">
               Your payment may have been processed. Please check your order status or contact support.
             </p>
           </div>
 
           {orderId && (
             <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-              <p className="text-md text-gray-600">
+              <p className="text-sm text-gray-600">
                 Order ID: <span className="font-mono font-semibold">{orderId}</span>
               </p>
             </div>
@@ -285,7 +285,7 @@ const PaymentCallback = () => {
             </button>
           </div>
 
-          <div className="mt-6 text-md text-gray-500">
+          <div className="mt-6 text-sm text-gray-500">
             <p>Need help? Contact our support team</p>
             <p>We're here to assist you with your order</p>
           </div>
@@ -307,7 +307,7 @@ const PaymentCallback = () => {
         
         {txnId && (
           <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-            <p className="text-md text-gray-600">
+            <p className="text-sm text-gray-600">
               Transaction ID: <span className="font-mono font-semibold">{txnId}</span>
             </p>
           </div>
@@ -315,7 +315,7 @@ const PaymentCallback = () => {
 
         {orderId && (
           <div className="mt-2 p-3 bg-blue-50 rounded-lg">
-            <p className="text-md text-blue-800">
+            <p className="text-sm text-blue-800">
               Order ID: <span className="font-mono font-semibold">{orderId}</span>
             </p>
           </div>
@@ -336,7 +336,7 @@ const PaymentCallback = () => {
           </button>
         </div>
 
-        <div className="mt-6 text-md text-gray-500">
+        <div className="mt-6 text-sm text-gray-500">
           <p>You will receive an email confirmation shortly.</p>
           <p>If you have any questions, please contact our support team.</p>
         </div>

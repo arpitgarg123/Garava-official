@@ -239,7 +239,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
         </h2>
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="text-blue-600 hover:text-blue-700 text-md font-medium"
+          className="text-blue-600 hover:text-blue-700 text-sm font-medium"
         >
           {showAddForm ? 'Cancel' : '+ Add New Address'}
         </button>
@@ -274,14 +274,14 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-1">
                     <span className="font-medium">{address.fullName}</span>
-                    <span className="text-md text-gray-600">({address.phone})</span>
+                    <span className="text-sm text-gray-600">({address.phone})</span>
                     {address.isDefault && (
                       <span className="px-2 py-1 bg-green-100 text-green-800 text-sm rounded">
                         Default
                       </span>
                     )}
                   </div>
-                  <p className="text-md text-gray-600 mb-1">
+                  <p className="text-sm text-gray-600 mb-1">
                     {formatAddress(address)}
                   </p>
                   <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-sm rounded capitalize">
@@ -295,7 +295,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                         e.preventDefault();
                         handleEditAddress(address);
                       }}
-                      className="text-blue-600 hover:text-blue-700 text-md"
+                      className="text-blue-600 hover:text-blue-700 text-sm"
                     >
                       Edit
                     </button>
@@ -304,7 +304,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                         e.preventDefault();
                         handleDeleteAddress(address._id);
                       }}
-                      className="text-red-600 hover:text-red-700 text-md"
+                      className="text-red-600 hover:text-red-700 text-sm"
                     >
                       Delete
                     </button>
@@ -324,7 +324,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-md font-medium mb-1">Full Name *</label>
+              <label className="block text-sm font-medium mb-1">Full Name *</label>
               <input
                 type="text"
                 name="fullName"
@@ -335,7 +335,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
               />
             </div>
             <div>
-              <label className="block text-md font-medium mb-1">Phone Number *</label>
+              <label className="block text-sm font-medium mb-1">Phone Number *</label>
               <input
                 type="tel"
                 name="phone"
@@ -346,7 +346,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-md font-medium mb-1">Address Line 1 *</label>
+              <label className="block text-sm font-medium mb-1">Address Line 1 *</label>
               <input
                 type="text"
                 name="addressLine1"
@@ -357,7 +357,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
               />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-md font-medium mb-1">Address Line 2</label>
+              <label className="block text-sm font-medium mb-1">Address Line 2</label>
               <input
                 type="text"
                 name="addressLine2"
@@ -367,7 +367,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
               />
             </div>
             <div>
-              <label className="block text-md font-medium mb-1">City *</label>
+              <label className="block text-sm font-medium mb-1">City *</label>
               <input
                 type="text"
                 name="city"
@@ -378,7 +378,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
               />
             </div>
             <div>
-              <label className="block text-md font-medium mb-1">State *</label>
+              <label className="block text-sm font-medium mb-1">State *</label>
               <input
                 type="text"
                 name="state"
@@ -389,7 +389,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
               />
             </div>
             <div>
-              <label className="block text-md font-medium mb-1">Postal Code *</label>
+              <label className="block text-sm font-medium mb-1">Postal Code *</label>
               <input
                 type="text"
                 name="postalCode"
@@ -400,7 +400,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
               />
             </div>
             <div>
-              <label className="block text-md font-medium mb-1">Label</label>
+              <label className="block text-sm font-medium mb-1">Label</label>
               <select
                 name="label"
                 value={newAddress.label}
@@ -421,7 +421,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                   onChange={handleInputChange}
                   className="rounded"
                 />
-                <span className="text-md">Set as default address</span>
+                <span className="text-sm">Set as default address</span>
               </label>
             </div>
           </div>

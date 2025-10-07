@@ -149,7 +149,7 @@ const BookAnAppointment = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-          <label className="text-md text-gray-700">Preferred date & time</label>
+          <label className="text-sm text-gray-700">Preferred date & time</label>
           <input
             name="appointmentAtLocal"
             type="datetime-local"
@@ -182,7 +182,7 @@ const BookAnAppointment = () => {
       </form>
 
       {message && (
-        <p className={`mt-3 text-md ${status === "failed" ? "text-red-600" : "text-green-700"}`}>
+        <p className={`mt-3 text-sm ${status === "failed" ? "text-red-600" : "text-green-700"}`}>
           {message}
         </p>
       )}

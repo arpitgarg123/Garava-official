@@ -26,7 +26,7 @@
 //                 }`}
 //                 aria-pressed={isActive}
 //               >
-//                 <span className="text-md">{c.label}</span>
+//                 <span className="text-sm">{c.label}</span>
 //                 <span
 //                   className={`text-sm px-2 py-0.5 rounded-full ${
 //                     isActive ? "bg-white text-black" : "bg-gray-50 text-gray-600"
@@ -77,7 +77,7 @@ const CategoryFilter = ({ selected, onChange, categories, counts = {}, isMobile 
                     checked={isActive}
                     onChange={() => handleCategoryChange(cat.id)}
                   />
-                  <label htmlFor={`mobile-cat-${cat.id}`} className="ml-2 text-md font-medium">
+                  <label htmlFor={`mobile-cat-${cat.id}`} className="ml-2 text-sm font-medium">
                     {cat.label}
                   </label>
                 </div>
@@ -117,7 +117,7 @@ const CategoryFilter = ({ selected, onChange, categories, counts = {}, isMobile 
                 }`}
                 aria-pressed={isActive}
               >
-                <span className="text-md">{c.label}</span>
+                <span className="text-sm">{c.label}</span>
                 <span
                   className={`text-sm px-2 py-0.5 rounded-full ${
                     isActive ? "bg-white text-black" : "bg-gray-50 text-gray-600"

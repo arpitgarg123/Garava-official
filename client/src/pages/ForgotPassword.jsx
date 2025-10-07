@@ -41,9 +41,9 @@ export default function ForgotPassword() {
           {status === "loading" ? "Sending..." : "Send reset link"}
         </button>
       </form>
-      {message && <p className="mt-3 text-md">{message}</p>}
+      {message && <p className="mt-3 text-sm">{message}</p>}
 
-      <div className="mt-4 text-md flex items-center justify-between">
+      <div className="mt-4 text-sm flex items-center justify-between">
         <Link to="/login" className="underline">Back to login</Link>
       </div>
     </div>

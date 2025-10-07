@@ -236,7 +236,7 @@ const Wishlist = () => {
                     {/* Out of Stock Overlay */}
                     {isOutOfStock && (
                       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                        <span className="bg-red-600 text-white px-3 py-1 rounded-md font-medium text-md">
+                        <span className="bg-red-600 text-white px-3 py-1 rounded-md font-medium text-sm">
                           Out of Stock
                         </span>
                       </div>
@@ -249,7 +249,7 @@ const Wishlist = () => {
                     <div className="flex items-center justify-between">
                       <p className="font-semibold">₹{productPrice.toLocaleString()}</p>
                       {isOutOfStock && (
-                        <span className="text-red-600 text-md font-medium">Out of Stock</span>
+                        <span className="text-red-600 text-sm font-medium">Out of Stock</span>
                       )}
                     </div>
                   </div>
@@ -257,7 +257,7 @@ const Wishlist = () => {
                     <button
                       onClick={() => handleMoveToCart(item)}
                       disabled={isLoading || isOutOfStock}
-                      className={`px-4 py-2 text-md transition cursor-pointer ${
+                      className={`px-4 py-2 text-sm transition cursor-pointer ${
                         isOutOfStock 
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                           : 'bg-black text-white hover:bg-gray-800'

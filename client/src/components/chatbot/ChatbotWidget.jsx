@@ -103,7 +103,7 @@ export default function ChatbotWidget({
           className={`group fixed bottom-5  right-5 z-50 inline-flex cursor-pointer  items-center gap-2 rounded-full px-4 py-3 bg-red-500 hover:brightness-110 transition`}
         >
           {/* <FiMessageCircle className="text-lg" /> */}
-          <div className="hidden sm:inline text-md font-medium  ">
+          <div className="hidden sm:inline text-sm font-medium  ">
             <img className="h-10 cursor-pointer" src={iconlogo} alt="" />
             
           </div>
@@ -124,10 +124,10 @@ export default function ChatbotWidget({
             <div className={`relative ${COLORS.brand} px-4 py-3`}>
               <div className="flex items-center gap-3">
                 <div className="h-9 w-9 rounded-full bg-white/15 flex items-center justify-center ring-1 ring-white/20">
-                  <span className="text-white/90 text-md font-semibold">GA</span>
+                  <span className="text-white/90 text-sm font-semibold">GA</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-white text-md font-semibold tracking-wide">
+                  <h3 className="text-white text-sm font-semibold tracking-wide">
                     {title}
                   </h3>
                   <p className="text-white/70 text-sm">{subtitle}</p>
@@ -207,7 +207,7 @@ export default function ChatbotWidget({
                     onKeyDown={onKeyDown}
                     rows={1}
                     placeholder={placeholder}
-                    className="w-full resize-none rounded-xl border border-neutral-200 bg-white px-3 py-2 text-md outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-300 leading-6 max-h-28"
+                    className="w-full resize-none rounded-xl border border-neutral-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-300 leading-6 max-h-28"
                   />
                   <div className="pointer-events-none absolute right-3 bottom-2 text-[10px] text-neutral-400">
                     Enter ↵
@@ -224,7 +224,7 @@ export default function ChatbotWidget({
 
                 <button
                   onClick={() => sendMessage(input)}
-                  className="inline-flex h-10 items-center justify-center rounded-xl bg-amber-500 px-4 text-white text-md font-medium shadow hover:brightness-105 active:scale-[0.98] transition"
+                  className="inline-flex h-10 items-center justify-center rounded-xl bg-amber-500 px-4 text-white text-sm font-medium shadow hover:brightness-105 active:scale-[0.98] transition"
                 >
                   <FiSend className="mr-1" />
                   Send

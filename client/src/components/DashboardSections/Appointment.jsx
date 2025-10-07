@@ -71,7 +71,7 @@ export default function Appointment() {
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-600 font-medium">Error loading appointments</p>
-          <p className="text-gray-500 text-md mt-1">{error}</p>
+          <p className="text-gray-500 text-sm mt-1">{error}</p>
           <button 
             onClick={() => dispatch(fetchAppointmentsAdmin({}))}
             className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -90,7 +90,7 @@ export default function Appointment() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Appointments Management</h2>
-            <p className="text-md text-gray-600">Manage customer appointments and bookings</p>
+            <p className="text-sm text-gray-600">Manage customer appointments and bookings</p>
           </div>
           
         </div>
@@ -150,7 +150,7 @@ export default function Appointment() {
             <div className="text-center">
               <BiCalendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 font-medium">No appointments found</p>
-              <p className="text-gray-400 text-md mt-1">Customer appointments will appear here</p>
+              <p className="text-gray-400 text-sm mt-1">Customer appointments will appear here</p>
             </div>
           </div>
         ) : (
@@ -189,10 +189,10 @@ export default function Appointment() {
                           </div>
                         </div>
                         <div className="ml-3">
-                          <div className="text-md font-medium text-gray-900">
+                          <div className="text-sm font-medium text-gray-900">
                             {appointment.customerName}
                           </div>
-                          <div className="text-md text-gray-500">
+                          <div className="text-sm text-gray-500">
                             {appointment.customerEmail}
                           </div>
                           <div className="text-sm text-gray-400 flex items-center gap-1">
@@ -208,7 +208,7 @@ export default function Appointment() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-md text-gray-900">
+                      <div className="text-sm text-gray-900">
                         {formatDateTime(appointment.appointmentAt)}
                       </div>
                     </td>
@@ -218,11 +218,11 @@ export default function Appointment() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-md text-gray-900 max-w-xs truncate">
+                      <div className="text-sm text-gray-900 max-w-xs truncate">
                         {appointment.adminNotes || 'No notes'}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => handleViewDetails(appointment)}

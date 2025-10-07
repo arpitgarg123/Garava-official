@@ -90,7 +90,7 @@ const LuxuryLoader = ({
 
           {/* Loading Message */}
           {showMessage && (
-            <p className="loading-message text-gray-700 font-light text-md tracking-wide animate-fade-in-out">
+            <p className="loading-message text-gray-700 font-light text-sm tracking-wide animate-fade-in-out">
               {message}
             </p>
           )}
