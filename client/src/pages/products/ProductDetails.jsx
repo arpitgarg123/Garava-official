@@ -398,8 +398,7 @@ const ProductDetails = () => {
               </button>
               </Link>
             </div>
-  )
-}
+
             
 
             {/* Description */}
