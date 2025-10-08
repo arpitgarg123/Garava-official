@@ -216,6 +216,7 @@ const ProductDetails = () => {
   //   product?.heroImage ||
   //   product?.gallery?.[0]?.url ||
   //   "/placeholder.jpg";
+console.log(product.badges);
 
   return (
     <div className="w-full py-10 mt-26 sm:py-12 max-md:py-0 max-sm:mt-0">
@@ -233,16 +234,69 @@ const ProductDetails = () => {
 
           {/* Info */}
           <div className="lg:col-span-7 pl-6">
-            {/* Product Badges */}
-            {product?.badges && product.badges.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-3">
-                {product.badges.map((badge, index) => (
-                  <span key={index} className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800 border border-amber-200">
-                    {badge}
-                  </span>
-                ))}
-              </div>
-            )}
+           {product?.badges && Array.isArray(product.badges) && product.badges.length > 0 && (
+  <div className="flex flex-wrap gap-2 mb-3">
+    {product.badges
+      .map((badge, index) => {
+        // Function to extract clean text from various badge formats
+        const extractBadgeText = (badgeData) => {
+          // Handle null/undefined
+          if (!badgeData) return null;
+          
+          // Handle string
+          if (typeof badgeData === 'string') {
+            // Check if it's a stringified array like '["exclusive"]'
+            if (badgeData.startsWith('[') && badgeData.endsWith(']')) {
+              try {
+                const parsed = JSON.parse(badgeData);
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                  return extractBadgeText(parsed[0]);
+                }
+              } catch (e) {
+                // If parsing fails, return the original string without brackets
+                return badgeData.replace(/^\[|\]$/g, '').replace(/"/g, '');
+              }
+            }
+            return badgeData.trim();
+          }
+          
+          // Handle arrays (nested arrays like [["exclusive"]])
+          if (Array.isArray(badgeData)) {
+            if (badgeData.length === 0) return null;
+            // Get first non-empty element and recursively extract
+            const firstItem = badgeData.find(item => item);
+            return firstItem ? extractBadgeText(firstItem) : null;
+          }
+          
+          // Handle objects
+          if (typeof badgeData === 'object') {
+            return badgeData.name || badgeData.label || badgeData.text || badgeData.value || null;
+          }
+          
+          // Handle other types
+          return String(badgeData).trim();
+        };
+
+        const badgeText = extractBadgeText(badge);
+        
+        // Skip empty or invalid badges
+        if (!badgeText || badgeText === '[]' || badgeText === '""') {
+          return null;
+        }
+
+        return (
+          <span 
+            key={index} 
+            className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800 border border-amber-200"
+          >
+            {badgeText}
+          </span>
+        );
+      })
+      .filter(badge => badge !== null) // Remove null badges
+    }
+  </div>
+)}
 
             <h1 className="text-xl sm:text-2xl font-semibold">
               {product?.name || 'Untitled Product'}
@@ -329,16 +383,7 @@ const ProductDetails = () => {
               </div>
             )}
 
-            {/* Product Tags */}
-            {product?.tags && product.tags.length > 0 && (
-              <div className="mt-2 flex flex-wrap gap-1">
-                {product.tags.slice(0, 5).map((tag, index) => (
-                  <span key={index} className="inline-flex items-center px-2 py-1 rounded-md text-sm bg-gray-100 text-gray-700">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            )}
+          
 
             {/* Product Specific Information */}
             {product?.type === 'jewellery' && (
@@ -390,7 +435,7 @@ const ProductDetails = () => {
 
             <div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
               <h2 className="text-sm sm:text-lg font-regular">
-                {isHighJewellery || product?.bookAppointment ? 'Customize your jewellery Design' : ""}
+                {isHighJewellery || product?.type == "jewellery" || product?.bookAppointment ? 'Customize your jewellery Design' : ""}
               </h2>
               {
                 product?.type != "fragrance" && (<Link to='/appointment'>
@@ -410,7 +455,70 @@ const ProductDetails = () => {
               <p className="mt-2 text-gray-800 text-sm leading-relaxed">
                 {product?.description || 'Description not available'}
               </p>
+{product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {product.tags
+                    .map((tag, index) => {
+                      // Function to extract clean text from various tag formats
+                      const extractTagText = (tagData) => {
+                        // Handle null/undefined
+                        if (!tagData) return null;
+                        
+                        // Handle string
+                        if (typeof tagData === 'string') {
+                          // Check if it's a stringified array like '["exclusive"]'
+                          if (tagData.startsWith('[') && tagData.endsWith(']')) {
+                            try {
+                              const parsed = JSON.parse(tagData);
+                              if (Array.isArray(parsed) && parsed.length > 0) {
+                                return extractTagText(parsed[0]);
+                              }
+                            } catch (e) {
+                              // If parsing fails, return the original string without brackets
+                              return tagData.replace(/^\[|\]$/g, '').replace(/"/g, '');
+                            }
+                          }
+                          return tagData.trim();
+                        }
+                        
+                        // Handle arrays (nested arrays like [["luxury"]])
+                        if (Array.isArray(tagData)) {
+                          if (tagData.length === 0) return null;
+                          // Get first non-empty element and recursively extract
+                          const firstItem = tagData.find(item => item);
+                          return firstItem ? extractTagText(firstItem) : null;
+                        }
+                        
+                        // Handle objects
+                        if (typeof tagData === 'object') {
+                          return tagData.name || tagData.label || tagData.text || tagData.value || null;
+                        }
+                        
+                        // Handle other types
+                        return String(tagData).trim();
+                      };
 
+                      const tagText = extractTagText(tag);
+                      
+                      // Skip empty or invalid tags
+                      if (!tagText || tagText === '[]' || tagText === '""') {
+                        return null;
+                      }
+
+                      return (
+                        <span 
+                          key={`tag-${index}`} 
+                          className="inline-flex items-center px-2 py-1 rounded-md text-sm bg-gray-100 text-gray-700"
+                        >
+                          #{tagText}
+                        </span>
+                      );
+                    })
+                    .filter(tag => tag !== null) // Remove null tags
+                    .slice(0, 5) // Limit to 5 tags
+                  }
+                </div>
+              )}
               {/* Collections */}
               {product?.collections && product.collections.length > 0 && (
                 <div className="mt-3">

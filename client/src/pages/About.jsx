@@ -14,7 +14,7 @@ const About = () => {
       <div className="w-full max-w-6xl px-6 flex flex-col ">
         <AboutHeading text={"Where Purpose-led Luxury Meets Prestige"} />
         <AboutText
-          className="text-xl text-center mx-auto max-w-3xl mt-2 tracking-tight leading-8 text-head-italic"
+          className="text-xl text-center mx-auto mt-2 tracking-tight leading-8 text-head-italic"
           paragraph={`Explore GARAVA Because when you know your worth, luxury becomes your story.`}
         />
         <Link to='/about'>
