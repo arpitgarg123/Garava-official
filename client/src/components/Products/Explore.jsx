@@ -95,7 +95,7 @@ const Explore = ({ currentProduct }) => {
         <div className="h-[0.5px] mt-2 bg-black w-full"></div>
       </header>
       
-      <div className="w-[95%] flex items-center justify-center mx-auto relative group">
+      <div className="max-w-[95%] mx-auto relative group">
         <button 
           className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 cursor-pointer p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hover:bg-white"
           onClick={() => scrollRef.current.scrollBy({ left: -400, behavior: 'smooth' })}
