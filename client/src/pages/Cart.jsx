@@ -34,7 +34,7 @@
 //                   />
 //                   <div className="flex-1 space-y-2">
 //                     <h3 className="font-medium">{item.name}</h3>
-//                     <p className="text-md text-gray-500">{item.variantSku}</p>
+//                     <p className="text-sm text-gray-500">{item.variantSku}</p>
 //                     <div className="flex items-center space-x-4">
 //                       <select 
 //                         value={item.quantity}
@@ -272,9 +272,9 @@ const Cart = () => {
                   />
                   <div className="flex-1 space-y-2">
                     <h3 className="font-medium">{productName}</h3>
-                    <p className="text-md text-gray-500">SKU: {item.variantSku || 'N/A'}</p>
+                    <p className="text-sm text-gray-500">SKU: {item.variantSku || 'N/A'}</p>
                     {item.color && (
-                      <p className="text-md text-gray-500">Color: {item.color}</p>
+                      <p className="text-sm text-gray-500">Color: {item.color}</p>
                     )}
                     <div className="flex items-center space-x-4">
                       <select 

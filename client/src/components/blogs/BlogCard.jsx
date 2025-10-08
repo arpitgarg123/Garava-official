@@ -32,7 +32,7 @@ const BlogCard = ({ blog }) => {
 
       {/* Content */}
       <div className="p-5">
-        <div className="flex items-center justify-between text-gray-500 text-md mb-2">
+        <div className="flex items-center justify-between text-gray-500 text-sm mb-2">
           <span>{blog.author?.name || 'Garava'}</span>
           <span>{formatDate(blog.publishAt || blog.createdAt)}</span>
         </div>
@@ -40,7 +40,7 @@ const BlogCard = ({ blog }) => {
         <h3 className="blog-title text-lg font-semibold text-gray-800 mb-2">
           {blog.title}
         </h3>
-        <p className="blog-desc text-gray-600 text-md mb-4">
+        <p className="blog-desc text-gray-600 text-sm mb-4">
           {blog.excerpt || blog.description || 'No description available'}
         </p>
 

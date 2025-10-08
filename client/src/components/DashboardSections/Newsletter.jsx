@@ -92,7 +92,7 @@ export default function Newsletter({
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between mb-2">
-            <h3 className="text-md font-medium text-gray-900 truncate flex-1">
+            <h3 className="text-sm font-medium text-gray-900 truncate flex-1">
               {subscriber.email}
             </h3>
             <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(subscriber.status)} ml-2 flex-shrink-0`}>
@@ -109,7 +109,7 @@ export default function Newsletter({
             {subscriber.status === 'unsubscribed' && (
               <button
                 onClick={() => handleStatusUpdate(subscriber._id, 'subscribed')}
-                className="flex-1 px-3 py-2 bg-green-50 text-green-600 rounded-md text-md font-medium hover:bg-green-100 transition-colors"
+                className="flex-1 px-3 py-2 bg-green-50 text-green-600 rounded-md text-sm font-medium hover:bg-green-100 transition-colors"
                 title="Reactivate Subscription"
               >
                 Reactivate
@@ -118,7 +118,7 @@ export default function Newsletter({
             {subscriber.status === 'subscribed' && (
               <button
                 onClick={() => handleStatusUpdate(subscriber._id, 'unsubscribed')}
-                className="flex-1 px-3 py-2 bg-red-50 text-red-600 rounded-md text-md font-medium hover:bg-red-100 transition-colors"
+                className="flex-1 px-3 py-2 bg-red-50 text-red-600 rounded-md text-sm font-medium hover:bg-red-100 transition-colors"
                 title="Unsubscribe"
               >
                 Unsubscribe
@@ -146,7 +146,7 @@ export default function Newsletter({
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
               Newsletter Subscribers
             </h2>
-            <p className="text-md text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               Manage newsletter subscriptions • {pagination.total} total subscribers
             </p>
           </div>
@@ -163,12 +163,12 @@ export default function Newsletter({
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4 max-sm:mb-0">
-          <p className="text-md text-gray-600">
+          <p className="text-sm text-gray-600">
             {filteredSubscribers.length} subscribers
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-md border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -248,7 +248,7 @@ export default function Newsletter({
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Search */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Search Email</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search Email</label>
               <div className="relative">
                 <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -263,7 +263,7 @@ export default function Newsletter({
 
             {/* Mobile Status Filter */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -301,7 +301,7 @@ export default function Newsletter({
             <div className="text-center max-w-md mx-auto">
               <FiMail className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-4" />
               <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">No subscribers found</h3>
-              <p className="text-md sm:text-base text-gray-600">
+              <p className="text-sm sm:text-base text-gray-600">
                 {searchTerm || statusFilter 
                   ? "Try adjusting your search or filters"
                   : "Newsletter subscribers will appear here"
@@ -356,7 +356,7 @@ export default function Newsletter({
                             </div>
                           </div>
                           <div className="ml-3">
-                            <div className="text-md font-medium text-gray-900">
+                            <div className="text-sm font-medium text-gray-900">
                               {subscriber.email}
                             </div>
                           </div>
@@ -368,11 +368,11 @@ export default function Newsletter({
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-md text-gray-900">
+                        <div className="text-sm text-gray-900">
                           {formatDate(subscriber.createdAt)}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex items-center justify-end gap-2">
                           {subscriber.status === 'unsubscribed' && (
                             <button
@@ -414,7 +414,7 @@ export default function Newsletter({
       {pagination.totalPages > 1 && (
         <div className="flex-shrink-0 px-4 sm:px-6 py-4 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-md text-gray-700 text-center sm:text-left">
+            <div className="text-sm text-gray-700 text-center sm:text-left">
               Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
             </div>
             
@@ -423,17 +423,17 @@ export default function Newsletter({
               <button
                 onClick={() => onPageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
+                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-md min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => onPageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
+                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>
@@ -444,7 +444,7 @@ export default function Newsletter({
               <button
                 onClick={() => onPageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
               >
                 Previous
               </button>
@@ -452,7 +452,7 @@ export default function Newsletter({
                 <button
                   key={i + 1}
                   onClick={() => onPageChange(i + 1)}
-                  className={`px-3 py-1 border rounded text-md transition-colors ${
+                  className={`px-3 py-1 border rounded text-sm transition-colors ${
                     pagination.page === i + 1
                       ? 'bg-blue-600 text-white border-blue-600'
                       : 'border-gray-300 hover:bg-gray-50'
@@ -464,7 +464,7 @@ export default function Newsletter({
               <button
                 onClick={() => onPageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
               >
                 Next
               </button>

@@ -254,7 +254,7 @@ export default function BlogCreateEditModal() {
 
             {error && (
               <div className="mb-4 bg-red-50 border border-red-200 rounded-md p-3">
-                <div className="text-red-800 text-md">
+                <div className="text-red-800 text-sm">
                   {error}
                 </div>
               </div>
@@ -264,7 +264,7 @@ export default function BlogCreateEditModal() {
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                 {/* Title */}
                 <div className="sm:col-span-2">
-                  <label htmlFor="title" className="block text-md font-medium text-gray-700">
+                  <label htmlFor="title" className="block text-sm font-medium text-gray-700">
                     Title *
                   </label>
                   <input
@@ -279,13 +279,13 @@ export default function BlogCreateEditModal() {
                     placeholder="Enter blog title"
                   />
                   {validationErrors.title && (
-                    <p className="mt-1 text-md text-red-600">{validationErrors.title}</p>
+                    <p className="mt-1 text-sm text-red-600">{validationErrors.title}</p>
                   )}
                 </div>
 
                 {/* Slug */}
                 <div className="sm:col-span-2">
-                  <label htmlFor="slug" className="block text-md font-medium text-gray-700">
+                  <label htmlFor="slug" className="block text-sm font-medium text-gray-700">
                     Slug *
                   </label>
                   <input
@@ -300,13 +300,13 @@ export default function BlogCreateEditModal() {
                     placeholder="url-friendly-slug"
                   />
                   {validationErrors.slug && (
-                    <p className="mt-1 text-md text-red-600">{validationErrors.slug}</p>
+                    <p className="mt-1 text-sm text-red-600">{validationErrors.slug}</p>
                   )}
                 </div>
 
                 {/* Category */}
                 <div>
-                  <label htmlFor="category" className="block text-md font-medium text-gray-700">
+                  <label htmlFor="category" className="block text-sm font-medium text-gray-700">
                     Category *
                   </label>
                   <select
@@ -326,13 +326,13 @@ export default function BlogCreateEditModal() {
                     <option value="news">News</option>
                   </select>
                   {validationErrors.category && (
-                    <p className="mt-1 text-md text-red-600">{validationErrors.category}</p>
+                    <p className="mt-1 text-sm text-red-600">{validationErrors.category}</p>
                   )}
                 </div>
 
                 {/* Status */}
                 <div>
-                  <label htmlFor="status" className="block text-md font-medium text-gray-700">
+                  <label htmlFor="status" className="block text-sm font-medium text-gray-700">
                     Status
                   </label>
                   <select
@@ -351,7 +351,7 @@ export default function BlogCreateEditModal() {
                 {/* Publish Date (for scheduled posts) */}
                 {formData.status === 'scheduled' && (
                   <div className="sm:col-span-2">
-                    <label htmlFor="publishAt" className="block text-md font-medium text-gray-700">
+                    <label htmlFor="publishAt" className="block text-sm font-medium text-gray-700">
                       Publish Date *
                     </label>
                     <input
@@ -365,14 +365,14 @@ export default function BlogCreateEditModal() {
                       }`}
                     />
                     {validationErrors.publishAt && (
-                      <p className="mt-1 text-md text-red-600">{validationErrors.publishAt}</p>
+                      <p className="mt-1 text-sm text-red-600">{validationErrors.publishAt}</p>
                     )}
                   </div>
                 )}
 
                 {/* Tags */}
                 <div className="sm:col-span-2">
-                  <label htmlFor="tags" className="block text-md font-medium text-gray-700">
+                  <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
                     Tags
                   </label>
                   <input
@@ -384,12 +384,12 @@ export default function BlogCreateEditModal() {
                     className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                     placeholder="tag1, tag2, tag3"
                   />
-                  <p className="mt-1 text-md text-gray-500">Separate tags with commas</p>
+                  <p className="mt-1 text-sm text-gray-500">Separate tags with commas</p>
                 </div>
 
                 {/* Excerpt */}
                 <div className="sm:col-span-2">
-                  <label htmlFor="excerpt" className="block text-md font-medium text-gray-700">
+                  <label htmlFor="excerpt" className="block text-sm font-medium text-gray-700">
                     Excerpt
                   </label>
                   <textarea
@@ -406,7 +406,7 @@ export default function BlogCreateEditModal() {
 
               {/* Cover Image */}
               <div>
-                <label htmlFor="coverImage" className="block text-md font-medium text-gray-700">
+                <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700">
                   Cover Image
                 </label>
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
@@ -418,7 +418,7 @@ export default function BlogCreateEditModal() {
                     ) : (
                       <AiOutlineUpload className="mx-auto h-12 w-12 text-gray-400" />
                     )}
-                    <div className="flex text-md text-gray-600">
+                    <div className="flex text-sm text-gray-600">
                       <label
                         htmlFor="coverImage"
                         className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
@@ -474,7 +474,7 @@ export default function BlogCreateEditModal() {
                 <h4 className="text-lg font-medium text-gray-900 mb-4">SEO Settings</h4>
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="metaTitle" className="block text-md font-medium text-gray-700">
+                    <label htmlFor="metaTitle" className="block text-sm font-medium text-gray-700">
                       Meta Title
                     </label>
                     <input
@@ -488,7 +488,7 @@ export default function BlogCreateEditModal() {
                     />
                   </div>
                   <div>
-                    <label htmlFor="metaDescription" className="block text-md font-medium text-gray-700">
+                    <label htmlFor="metaDescription" className="block text-sm font-medium text-gray-700">
                       Meta Description
                     </label>
                     <textarea
@@ -509,14 +509,14 @@ export default function BlogCreateEditModal() {
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="px-4 py-2 border border-gray-300 rounded-md text-md font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-md font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {actionLoading ? (
                     <div className="flex items-center">

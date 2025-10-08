@@ -113,7 +113,7 @@ const BlogList = ({ showHeader = true, limit = 12 }) => {
               <div className="border-t pt-4 mt-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-md font-medium text-gray-700 mb-2">Category</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
                     <select
                       value={filters.category}
                       onChange={(e) => handleFilterChange({ category: e.target.value })}
@@ -128,7 +128,7 @@ const BlogList = ({ showHeader = true, limit = 12 }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-md font-medium text-gray-700 mb-2">Sort By</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
                     <select
                       value={filters.sort}
                       onChange={(e) => handleFilterChange({ sort: e.target.value })}

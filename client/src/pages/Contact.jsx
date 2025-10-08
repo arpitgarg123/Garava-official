@@ -69,29 +69,24 @@ const Contact = () => {
 
   return (
     <div className="mt-36">
-      {/* Back Button - Fixed positioning */}
-      <div className="sticky top-34 z-10 mb-3">
+      <div className="sticky top-34  z-10 mb-3">
         <BackButton />
       </div>
 
-      {/* Header Section - Fixed structure */}
-      <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
+    
+      <section className="mx-auto  grid max-w-6xl gap-18   lg:grid-cols-12 ">
+      
+        <div className="lg:col-span-7 ">
+            {/* Form Section */}
+         <div className=" ">
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              We'd love to hear from you
+             Got a Questions?
             </h1>
-            <p className="mt-3 text-muted-foreground">
-              Questions about orders, ring sizing? Send us a note—our team typically responds within one business day.
+            <p className="my-3 text-muted-foreground">
+              We would love to hear from you to assist you with your orders, style advice, gift ideas, and more. 
+              Please select your preferred method of contact below.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* Main Content Grid - Fixed layout */}
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-12 lg:px-8">
-        {/* Form Section */}
-        <div className="lg:col-span-7">
           <form onSubmit={handleSubmit} noValidate className="mr-16 max-sm:mr-0 max-md:mr-0 max-lg:mr-0">
             <h2 className="text-lg font-medium">Send us a message</h2>
 
@@ -162,7 +157,7 @@ const Contact = () => {
 
               {/* Honeypot */}
               <div className="hidden">
-                <label htmlFor={`${formId}-website`} className="text-md">Website</label>
+                <label htmlFor={`${formId}-website`} className="text-sm">Website</label>
                 <input 
                   id={`${formId}-website`} 
                   name="website" 
@@ -175,7 +170,7 @@ const Contact = () => {
 
             {status.type !== "idle" && status.message && (
               <p
-                className={`mt-4 text-md ${
+                className={`mt-4 text-sm ${
                   status.type === "success" ? "text-green-600" : 
                   status.type === "error" ? "text-red-600" : "text-muted-foreground"
                 }`}
@@ -197,15 +192,8 @@ const Contact = () => {
         </div>
 
         {/* Sidebar Section - Fixed structure */}
-        <aside className="lg:col-span-5 space-y-6">
-          {/* Center-aligned Questions Section */}
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Got a Questions?</h2>
-            <p className="text-base text-gray-600 leading-relaxed max-w-md mx-auto">
-              We would love to hear from you to assist you with your orders, style advice, gift ideas, and more. 
-              Please select your preferred method of contact below.
-            </p>
-          </div>
+        <aside className="lg:col-span-5 space-y-6 ">
+         
 
           {/* Contact Information */}
           <div>
@@ -220,12 +208,11 @@ const Contact = () => {
 
           {/* FAQ Section */}
           <div>
-            <h3 className="text-md font-semibold">FAQ</h3>
-            <ul className="mt-3 space-y-3 text-md">
+            <h3 className="text-sm font-semibold">FAQ</h3>
+            <ul className="mt-3 space-y-3 text-sm">
               <li>
-                <Summary title="How long does shipping take?">
-                  Most orders dispatch within 24–48 hours. Delivery timelines vary by location (typically 2–6 days in India).
-                </Summary>
+                <Summary title="Do you work with natural gemstones? ">
+Yes, we use only natural and ethically sourced gemstones.                </Summary>
               </li>
               <li>
                 <Summary title="Can I resize my ring?">

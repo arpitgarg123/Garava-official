@@ -107,11 +107,11 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
     return (
       <div className="text-center py-8 text-gray-500">
         <CiHeart size={40} className="mx-auto mb-3 text-gray-300" />
-        <p className="text-md">Your wishlist is empty</p>
+        <p className="text-sm">Your wishlist is empty</p>
         {!compact && (
           <button 
             onClick={() => navigate('/jewellery')}
-            className="mt-3 bg-black text-white px-4 py-2 text-md rounded hover:bg-gray-800"
+            className="mt-3 bg-black text-white px-4 py-2 text-sm rounded hover:bg-gray-800"
           >
             Start Shopping
           </button>
@@ -179,14 +179,14 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
               </div>
               
               <div className={`${compact ? 'p-2' : 'p-3'} space-y-1`}>
-                <h3 className={`font-medium text-gray-900 ${compact ? 'text-md' : 'text-base'} line-clamp-1`}>
+                <h3 className={`font-medium text-gray-900 ${compact ? 'text-sm' : 'text-base'} line-clamp-1`}>
                   {product?.name || 'Product Name'}
                 </h3>
-                <p className={`text-gray-500 my-2 uppercase tracking-wide ${compact ? 'text-sm' : 'text-md'}`}>
+                <p className={`text-gray-500 my-2 uppercase tracking-wide ${compact ? 'text-sm' : 'text-sm'}`}>
                   {product?.type || product?.category || 'Product'}
                 </p>
                 <div className="flex items-center gap-2">
-                  <p className={`font-semibold text-gray-900 ${compact ? 'text-md' : 'text-base'}`}>
+                  <p className={`font-semibold text-gray-900 ${compact ? 'text-sm' : 'text-base'}`}>
                     ₹{price.toLocaleString()}
                   </p>
                   {isOutOfStock && (
@@ -226,7 +226,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
         <div className="text-center mt-4">
           <button 
             onClick={() => navigate("/wishlist")} 
-            className="text-md text-black hover:underline"
+            className="text-sm text-black hover:underline"
           >
             View all {products.length} items →
           </button>

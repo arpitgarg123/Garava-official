@@ -162,7 +162,7 @@ import {
             Launches, trunk shows, and press moments—curated in one elegant place.
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-2 rounded-md w-1/4 max-md:w-full border border-gray-300 bg-card p-1 text-md ">
+          <div className="mt-6 flex flex-wrap items-center gap-2 rounded-md w-1/4 max-md:w-full border border-gray-300 bg-card p-1 text-sm ">
             {(["Upcoming", "Past", "All"]).map((t) => (
               <button
                 key={t}
@@ -205,7 +205,7 @@ function EmptyState() {
     <div className="flex flex-col items-center justify-center rounded-2xl border bg-card py-16 text-center">
       <div className="text-3xl">💎</div>
       <h3 className="mt-2 text-lg font-medium">No results</h3>
-      <p className="mt-1 max-w-md text-md text-muted-foreground">
+      <p className="mt-1 max-w-md text-sm text-muted-foreground">
         Try adjusting filters or searching a different term.
       </p>
     </div>

@@ -67,7 +67,7 @@ export default class ErrorBoundary extends React.Component {
             </div>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <details className="mt-4 text-left text-md">
+              <details className="mt-4 text-left text-sm">
                 <summary className="cursor-pointer text-gray-600">
                   Error Details (Dev)
                 </summary>

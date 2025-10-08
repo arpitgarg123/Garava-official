@@ -176,24 +176,24 @@
 //             <form onSubmit={onSave} className="space-y-6">
 //               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
 //                 <div>
-//                   <label className="block text-md font-medium text-gray-700 mb-2">Full Name</label>
+//                   <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
 //                   <input
 //                     name="name"
 //                     type="text"
 //                     value={form.name}
 //                     onChange={onChange}
-//                     className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+//                     className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
 //                     placeholder="Enter your full name"
 //                     required
 //                   />
 //                 </div>
 //                 <div>
-//                   <label className="block text-md font-medium text-gray-700 mb-2">Email Address</label>
+//                   <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
 //                   <input
 //                     name="email"
 //                     type="email"
 //                     value={form.email}
-//                     className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 cursor-not-allowed text-md sm:text-base"
+//                     className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 cursor-not-allowed text-sm sm:text-base"
 //                     placeholder="Email address"
 //                     disabled
 //                   />
@@ -202,22 +202,22 @@
 
 //               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
 //                 <div>
-//                   <label className="block text-md font-medium text-gray-700 mb-2">Phone Number</label>
+//                   <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
 //                   <input
 //                     name="phone"
 //                     type="tel"
 //                     value={form.phone}
 //                     onChange={onChange}
-//                     className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+//                     className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
 //                     placeholder="Enter your phone number"
 //                     pattern="^[0-9+\-\s()]{7,}$"
 //                     title="Enter a valid phone number"
 //                   />
 //                 </div>
 //                 <div>
-//                   <label className="block text-md font-medium text-gray-700 mb-2">Email Verification</label>
+//                   <label className="block text-sm font-medium text-gray-700 mb-2">Email Verification</label>
 //                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-//                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm sm:text-md font-medium ${
+//                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm sm:text-sm font-medium ${
 //                       form.isVerified 
 //                         ? "bg-green-100 text-green-800" 
 //                         : "bg-orange-100 text-orange-800"
@@ -228,7 +228,7 @@
 //                       <button
 //                         type="button"
 //                         onClick={onResend}
-//                         className="text-sm sm:text-md border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
+//                         className="text-sm sm:text-sm border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
 //                       >
 //                         Resend
 //                       </button>
@@ -240,7 +240,7 @@
 //               <div className="flex justify-end">
 //                 <button
 //                   type="submit"
-//                   className="w-full sm:w-auto bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-50 text-md sm:text-base"
+//                   className="w-full sm:w-auto bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-50 text-sm sm:text-base"
 //                   disabled={saving}
 //                 >
 //                   {saving ? "Saving..." : "Save Changes"}
@@ -248,7 +248,7 @@
 //               </div>
 
 //               {msg && (
-//                 <div className={`p-4 rounded-lg text-md ${
+//                 <div className={`p-4 rounded-lg text-sm ${
 //                   msg.includes("Failed") || msg.includes("Failed") 
 //                     ? "bg-red-50 text-red-800 border border-red-200" 
 //                     : "bg-green-50 text-green-800 border border-green-200"
@@ -266,39 +266,39 @@
 //             <h2 className="text-xl font-semibold mb-6">Change Password</h2>
 //             <form onSubmit={onChangePassword} className="space-y-6">
 //               <div>
-//                 <label className="block text-md font-medium text-gray-700 mb-2">Current Password</label>
+//                 <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
 //                 <input
 //                   name="currentPassword"
 //                   type="password"
 //                   value={pwdForm.currentPassword}
 //                   onChange={onPwdChange}
-//                   className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+//                   className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
 //                   placeholder="Enter current password"
 //                   required
 //                 />
 //               </div>
 //               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
 //                 <div>
-//                   <label className="block text-md font-medium text-gray-700 mb-2">New Password</label>
+//                   <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
 //                   <input
 //                     name="newPassword"
 //                     type="password"
 //                     value={pwdForm.newPassword}
 //                     onChange={onPwdChange}
-//                     className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+//                     className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
 //                     placeholder="Enter new password"
 //                     minLength={8}
 //                     required
 //                   />
 //                 </div>
 //                 <div>
-//                   <label className="block text-md font-medium text-gray-700 mb-2">Confirm Password</label>
+//                   <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
 //                   <input
 //                     name="confirm"
 //                     type="password"
 //                     value={pwdForm.confirm}
 //                     onChange={onPwdChange}
-//                     className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+//                     className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
 //                     placeholder="Confirm new password"
 //                     minLength={8}
 //                     required
@@ -308,14 +308,14 @@
 //               <div className="flex justify-end">
 //                 <button
 //                   type="submit"
-//                   className="w-full sm:w-auto bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-50 text-md sm:text-base"
+//                   className="w-full sm:w-auto bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-50 text-sm sm:text-base"
 //                   disabled={pwdSaving}
 //                 >
 //                   {pwdSaving ? "Updating..." : "Update Password"}
 //                 </button>
 //               </div>
 //               {pwdMsg && (
-//                 <div className={`p-4 rounded-lg text-md ${
+//                 <div className={`p-4 rounded-lg text-sm ${
 //                   pwdMsg.includes("Failed") 
 //                     ? "bg-red-50 text-red-800 border border-red-200" 
 //                     : "bg-green-50 text-green-800 border border-green-200"
@@ -343,7 +343,7 @@
 //                     <div className="flex justify-between items-start mb-3">
 //                       <div>
 //                         <h3 className="font-medium">Order #{order.orderNumber}</h3>
-//                         <p className="text-md text-gray-500">
+//                         <p className="text-sm text-gray-500">
 //                           {new Date(order.createdAt).toLocaleDateString()}
 //                         </p>
 //                       </div>
@@ -363,17 +363,17 @@
 //                       </div>
 //                     </div>
 //                     <div className="border-t pt-3">
-//                       <p className="text-md text-gray-600 mb-2">
+//                       <p className="text-sm text-gray-600 mb-2">
 //                         {order.items?.length || 0} item(s)
 //                       </p>
 //                       <div className="flex justify-between items-center">
-//                         <div className="text-md text-gray-600">
+//                         <div className="text-sm text-gray-600">
 //                           Payment: {order.payment?.method || 'N/A'} • 
 //                           Status: {order.payment?.status || 'N/A'}
 //                         </div>
 //                         <button 
 //                           onClick={() => navigate(`/orders/${order._id}`)}
-//                           className="text-md text-blue-600 hover:text-blue-700"
+//                           className="text-sm text-blue-600 hover:text-blue-700"
 //                         >
 //                           View Details →
 //                         </button>
@@ -385,7 +385,7 @@
 //             ) : (
 //               <div className="text-center py-12 text-gray-500">
 //                 <div className="text-4xl mb-4">📦</div>
-//                 <p className="text-md sm:text-base">No orders found. Start shopping to see your orders here.</p>
+//                 <p className="text-sm sm:text-base">No orders found. Start shopping to see your orders here.</p>
 //               </div>
 //             )}
 //           </div>
@@ -417,7 +417,7 @@
 //               <h2 className="text-xl font-semibold">My Wishlist</h2>
 //               <button 
             
-//                 className="text-md text-gray-600 hover:text-black"
+//                 className="text-sm text-gray-600 hover:text-black"
 //               >
 //                 View Full Page →
 //               </button>
@@ -440,7 +440,7 @@
 
 //       <div className="mb-6 sm:mb-8">
 //         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Account</h1>
-//         <p className="text-gray-600 mt-2 text-md sm:text-base">Manage your profile and preferences</p>
+//         <p className="text-gray-600 mt-2 text-sm sm:text-base">Manage your profile and preferences</p>
 //       </div>
 
 //       <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
@@ -465,8 +465,8 @@
 //               <div className="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-semibold mx-auto mb-3">
 //                 {form.name?.charAt(0)?.toUpperCase() || "U"}
 //               </div>
-//               <h3 className="font-semibold text-gray-900 text-md sm:text-base">{form.name || "User"}</h3>
-//               <p className="text-sm sm:text-md text-gray-600">{form.email}</p>
+//               <h3 className="font-semibold text-gray-900 text-sm sm:text-base">{form.name || "User"}</h3>
+//               <p className="text-sm sm:text-sm text-gray-600">{form.email}</p>
 //             </div>
 
 //             {/* Navigation */}
@@ -478,7 +478,7 @@
 //                     setActiveTab(tab.id);
 //                     setSidebarOpen(false); // Close mobile menu after selection
 //                   }}
-//                   className={`w-full cursor-pointer flex items-center gap-3 p-3 rounded-lg text-left transition text-md sm:text-base ${
+//                   className={`w-full cursor-pointer flex items-center gap-3 p-3 rounded-lg text-left transition text-sm sm:text-base ${
 //                     activeTab === tab.id
 //                       ? "bg-black text-white"
 //                       : "text-gray-700 hover:bg-gray-50"
@@ -494,7 +494,7 @@
 //             <div className="mt-6 pt-6 border-t">
 //               <button
 //                 onClick={handleLogout}
-//                 className="w-full flex items-center gap-3 p-3 rounded-lg cursor-pointer text-left transition text-md sm:text-base text-red-600 hover:bg-red-50"
+//                 className="w-full flex items-center gap-3 p-3 rounded-lg cursor-pointer text-left transition text-sm sm:text-base text-red-600 hover:bg-red-50"
 //               >
 //                 <span className="text-base sm:text-lg">🚪</span>
 //                 <span className="font-medium">Logout</span>
@@ -714,24 +714,24 @@ const ProfilePage = () => {
             <form onSubmit={onSave} className="space-y-6">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">Full Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
                   <input
                     name="name"
                     type="text"
                     value={form.name}
                     onChange={onChange}
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
                     placeholder="Enter your full name"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">Email Address</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                   <input
                     name="email"
                     type="email"
                     value={form.email}
-                    className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 cursor-not-allowed text-md sm:text-base"
+                    className="w-full border border-gray-300 p-3 rounded-lg bg-gray-50 cursor-not-allowed text-sm sm:text-base"
                     placeholder="Email address"
                     disabled
                   />
@@ -740,22 +740,22 @@ const ProfilePage = () => {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">Phone Number</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                   <input
                     name="phone"
                     type="tel"
                     value={form.phone}
                     onChange={onChange}
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
                     placeholder="Enter your phone number"
                     pattern="^[0-9+\-\s()]{7,}$"
                     title="Enter a valid phone number"
                   />
                 </div>
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">Email Verification</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Email Verification</label>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm sm:text-md font-medium ${
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm sm:text-sm font-medium ${
                       form.isVerified 
                         ? "bg-green-100 text-green-800" 
                         : "bg-orange-100 text-orange-800"
@@ -766,7 +766,7 @@ const ProfilePage = () => {
                       <button
                         type="button"
                         onClick={onResend}
-                        className="text-sm sm:text-md border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
+                        className="text-sm sm:text-sm border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
                       >
                         Resend
                       </button>
@@ -778,7 +778,7 @@ const ProfilePage = () => {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="w-full sm:w-auto bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-50 text-md sm:text-base"
+                  className="w-full sm:w-auto bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition disabled:opacity-50 text-sm sm:text-base"
                   disabled={saving}
                 >
                   {saving ? "Saving..." : "Save Changes"}
@@ -786,7 +786,7 @@ const ProfilePage = () => {
               </div>
 
               {msg && (
-                <div className={`p-4 rounded-lg text-md ${
+                <div className={`p-4 rounded-lg text-sm ${
                   msg.includes("Failed") || msg.includes("Failed") 
                     ? "bg-red-50 text-red-800 border border-red-200" 
                     : "bg-green-50 text-green-800 border border-green-200"
@@ -804,39 +804,39 @@ const ProfilePage = () => {
             <h2 className="text-xl font-semibold mb-6">Change Password</h2>
             <form onSubmit={onChangePassword} className="space-y-6">
               <div>
-                <label className="block text-md font-medium text-gray-700 mb-2">Current Password</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
                 <input
                   name="currentPassword"
                   type="password"
                   value={pwdForm.currentPassword}
                   onChange={onPwdChange}
-                  className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+                  className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
                   placeholder="Enter current password"
                   required
                 />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">New Password</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
                   <input
                     name="newPassword"
                     type="password"
                     value={pwdForm.newPassword}
                     onChange={onPwdChange}
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
                     placeholder="Enter new password"
                     minLength={8}
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">Confirm Password</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
                   <input
                     name="confirm"
                     type="password"
                     value={pwdForm.confirm}
                     onChange={onPwdChange}
-                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-md sm:text-base"
+                    className="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm sm:text-base"
                     placeholder="Confirm new password"
                     minLength={8}
                     required
@@ -853,7 +853,7 @@ const ProfilePage = () => {
                 </button>
               </div>
               {pwdMsg && (
-                <div className={`p-4 rounded-lg text-md ${
+                <div className={`p-4 rounded-lg text-sm ${
                   pwdMsg.includes("Failed") 
                     ? "bg-red-50 text-red-800 border border-red-200" 
                     : "bg-green-50 text-green-800 border border-green-200"
@@ -881,7 +881,7 @@ const ProfilePage = () => {
                     <div className="flex justify-between items-start mb-3">
                       <div>
                         <h3 className="font-medium">Order #{order.orderNumber}</h3>
-                        <p className="text-md text-gray-500">
+                        <p className="text-sm text-gray-500">
                           {new Date(order.createdAt).toLocaleDateString()}
                         </p>
                       </div>
@@ -901,17 +901,17 @@ const ProfilePage = () => {
                       </div>
                     </div>
                     <div className="border-t border-gray-100 pt-3">
-                      <p className="text-md text-gray-600 mb-2">
+                      <p className="text-sm text-gray-600 mb-2">
                         {order.items?.length || 0} item(s)
                       </p>
                       <div className="flex justify-between items-center">
-                        <div className="text-md text-gray-600">
+                        <div className="text-sm text-gray-600">
                           Payment: {order.payment?.method || 'N/A'} • 
                           Status: {order.payment?.status || 'N/A'}
                         </div>
                         <button 
                           onClick={() => navigate(`/orders/${order._id}`)}
-                          className="text-md text-blue-600 hover:text-blue-700"
+                          className="text-sm text-blue-600 hover:text-blue-700"
                         >
                           View Details →
                         </button>
@@ -923,7 +923,7 @@ const ProfilePage = () => {
             ) : (
               <div className="text-center py-12 text-gray-500">
                 <div className="text-4xl mb-4">📦</div>
-                <p className="text-md sm:text-base">No orders found. Start shopping to see your orders here.</p>
+                <p className="text-sm sm:text-base">No orders found. Start shopping to see your orders here.</p>
               </div>
             )}
           </div>
@@ -948,7 +948,7 @@ const ProfilePage = () => {
               <h2 className="text-xl font-semibold">My Wishlist</h2>
               <button 
                 onClick={() => navigate('/wishlist')}
-                className="text-md text-gray-600 hover:text-black"
+                className="text-sm text-gray-600 hover:text-black"
               >
                 View Full Page →
               </button>
@@ -972,7 +972,7 @@ const ProfilePage = () => {
       <div className="max-w-7xl mx-auto p-4 sm:p-6 pt-8">
         <div className="mb-6 sm:mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Account</h1>
-          <p className="text-gray-600 mt-2 text-md sm:text-base">Manage your profile and preferences</p>
+          <p className="text-gray-600 mt-2 text-sm sm:text-base">Manage your profile and preferences</p>
         </div>
 
         <div className="lg:grid lg:grid-cols-4 lg:gap-8">
@@ -997,8 +997,8 @@ const ProfilePage = () => {
                 <div className="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-semibold mx-auto mb-3">
                   {form.name?.charAt(0)?.toUpperCase() || "U"}
                 </div>
-                <h3 className="font-semibold text-gray-900 text-md sm:text-base truncate">{form.name || "User"}</h3>
-                <p className="text-sm sm:text-md text-gray-600 truncate">{form.email}</p>
+                <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{form.name || "User"}</h3>
+                <p className="text-sm sm:text-sm text-gray-600 truncate">{form.email}</p>
               </div>
 
               {/* Navigation */}
@@ -1010,7 +1010,7 @@ const ProfilePage = () => {
                       setActiveTab(tab.id);
                       setSidebarOpen(false); // Close mobile menu after selection
                     }}
-                    className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition text-md sm:text-base ${
+                    className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition text-sm sm:text-base ${
                       activeTab === tab.id
                         ? "bg-black text-white"
                         : "text-gray-700 hover:bg-gray-50"
@@ -1026,7 +1026,7 @@ const ProfilePage = () => {
               <div className="mt-6 pt-6 border-t">
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition text-md sm:text-base text-red-600 hover:bg-red-50"
+                  className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition text-sm sm:text-base text-red-600 hover:bg-red-50"
                 >
                   <span className="text-base sm:text-lg">🚪</span>
                   <span className="font-medium">Logout</span>

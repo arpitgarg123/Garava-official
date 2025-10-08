@@ -142,7 +142,7 @@ export default function Products() {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-md font-medium text-gray-900 line-clamp-2 mb-1">
+              <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">
                 {product.name}
               </h3>
               <p className="text-sm text-gray-500 mb-2">
@@ -163,7 +163,7 @@ export default function Products() {
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
               <p className="text-sm text-gray-500 mb-1">Price</p>
-              <p className="text-md font-medium text-gray-900">
+              <p className="text-sm font-medium text-gray-900">
                 {formatCurrency(firstVariant.price || 0)}
               </p>
             </div>
@@ -252,8 +252,8 @@ export default function Products() {
                       />
                     </div>
                     <div className="ml-4">
-                      <div className="text-md font-medium text-gray-900">{product.name}</div>
-                      <div className="text-md text-gray-500">
+                      <div className="text-sm font-medium text-gray-900">{product.name}</div>
+                      <div className="text-sm text-gray-500">
                         SKU: {firstVariant.sku || product.sku || 'No SKU'}
                       </div>
                     </div>
@@ -264,7 +264,7 @@ export default function Products() {
                     {product.category || 'Uncategorized'}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-md text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {formatCurrency(firstVariant.price || 0)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -277,7 +277,7 @@ export default function Products() {
                     {product.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-md font-medium">
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <div className="flex items-center justify-end gap-2">
                     <button
                       onClick={() => handleViewProduct(product)}
@@ -315,7 +315,7 @@ export default function Products() {
       <div className="h-full flex items-center justify-center p-4">
         <div className="text-center max-w-md mx-auto">
           <p className="text-red-600 font-medium mb-2">Error loading products</p>
-          <p className="text-gray-500 text-md mb-4">{error}</p>
+          <p className="text-gray-500 text-sm mb-4">{error}</p>
           <button 
             onClick={() => dispatch(fetchProductsAdmin({ ...filters, page: pagination.page }))}
             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
@@ -336,7 +336,7 @@ export default function Products() {
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
               Products Management
             </h2>
-            <p className="text-md text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               {pagination.total || 0} total products
             </p>
           </div>
@@ -354,12 +354,12 @@ export default function Products() {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4">
-          <p className="text-md text-gray-600">
+          <p className="text-sm text-gray-600">
             {products.length} products
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 px-3 py-2 text-md border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -446,7 +446,7 @@ export default function Products() {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Search */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Search</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
               <div className="relative">
                 <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -461,7 +461,7 @@ export default function Products() {
 
             {/* Mobile Status Filter */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
               <select
                 value={localFilters.status || ''}
                 onChange={(e) => handleFilterChange({ status: e.target.value })}
@@ -476,7 +476,7 @@ export default function Products() {
 
             {/* Mobile Category Filter */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Category</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
               <select
                 value={localFilters.category || ''}
                 onChange={(e) => handleFilterChange({ category: e.target.value })}
@@ -527,7 +527,7 @@ export default function Products() {
             <div className="text-center max-w-md mx-auto">
               <BiCategory className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 font-medium mb-2">No products found</p>
-              <p className="text-gray-400 text-md mb-4">
+              <p className="text-gray-400 text-sm mb-4">
                 {Object.values(localFilters).some(val => val) 
                   ? "Try adjusting your filters or search terms"
                   : "Add your first product to get started"
@@ -564,7 +564,7 @@ export default function Products() {
       {pagination.totalPages > 1 && (
         <div className="flex-shrink-0 px-4 sm:px-6 py-4 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-md text-gray-700 text-center sm:text-left">
+            <div className="text-sm text-gray-700 text-center sm:text-left">
               Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
             </div>
             
@@ -573,17 +573,17 @@ export default function Products() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
+                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-black text-white rounded-lg font-medium text-md min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-black text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
+                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>
@@ -594,7 +594,7 @@ export default function Products() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Previous
               </button>
@@ -604,7 +604,7 @@ export default function Products() {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 border rounded text-md ${
+                    className={`px-3 py-1 border rounded text-sm ${
                       pagination.page === pageNum
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'border-gray-300 hover:bg-gray-50'
@@ -617,7 +617,7 @@ export default function Products() {
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Next
               </button>

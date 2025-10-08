@@ -53,7 +53,7 @@ const Login = () => {
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-gray-300"></div>
           </div>
-          <div className="relative flex justify-center text-md">
+          <div className="relative flex justify-center text-sm">
             <span className="px-2 bg-white text-gray-500">or continue with email</span>
           </div>
         </div>
@@ -80,17 +80,17 @@ const Login = () => {
             <button
               type="button"
               onClick={() => setShowPwd((s) => !s)}
-              className="absolute right-2 top-2 text-md text-gray-600"
+              className="absolute right-2 top-2 text-sm text-gray-600"
             >
               {showPwd ? "Hide" : "Show"}
             </button>
           </div>
   <div className="flex items-center justify-center underline">
-            <Link to="/forgot-password" className="text-md text-gray-600 hover:text-black">
+            <Link to="/forgot-password" className="text-sm text-gray-600 hover:text-black">
               Forgot password?
             </Link>
           </div>
-          {error && <p className="text-md text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
             type="submit"
@@ -101,7 +101,7 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="mt-4 text-md">
+        <div className="mt-4 text-sm">
           <span className="text-gray-600">No account?</span>{" "}
           <Link to="/signup" className="underline">
             Create one

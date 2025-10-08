@@ -213,7 +213,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
             {/* Type Selection */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-md font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Type *
                 </label>
                 <select
@@ -234,7 +234,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
 
               {formData.type === 'event' && (
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Kind *
                   </label>
                   <select
@@ -258,7 +258,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
             {/* Basic Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-md font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Title *
                 </label>
                 <input
@@ -276,7 +276,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
               </div>
 
               <div>
-                <label className="block text-md font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Slug *
                 </label>
                 <input
@@ -296,7 +296,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
 
             {/* Date */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Date *
               </label>
               <input
@@ -317,7 +317,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
             {formData.type === 'event' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     City
                   </label>
                   <input
@@ -330,7 +330,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                 </div>
 
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Location
                   </label>
                   <input
@@ -343,7 +343,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-md font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     RSVP URL
                   </label>
                   <input
@@ -361,7 +361,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
             {formData.type === 'media-coverage' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Outlet *
                   </label>
                   <input
@@ -379,7 +379,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                 </div>
 
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Article URL *
                   </label>
                   <input
@@ -400,7 +400,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
 
             {/* Excerpt */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Excerpt *
               </label>
               <textarea
@@ -419,7 +419,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
 
             {/* Content */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Content
               </label>
               <textarea
@@ -433,7 +433,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
 
             {/* Cover Image */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
                 Cover Image
               </label>
               <div className="flex items-center space-x-4">
@@ -460,7 +460,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
             {/* Status and Publishing */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-md font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Status
                 </label>
                 <select
@@ -476,7 +476,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
               </div>
 
               <div>
-                <label className="block text-md font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
                   Publish At
                 </label>
                 <input
@@ -494,7 +494,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
               <h3 className="text-lg font-medium mb-4">SEO Settings</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Meta Title
                   </label>
                   <input
@@ -507,7 +507,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                 </div>
 
                 <div>
-                  <label className="block text-md font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     Meta Description
                   </label>
                   <textarea

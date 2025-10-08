@@ -182,7 +182,7 @@ const FAQAdmin = () => {
       <div className="space-y-3">
         {/* Header with status and category */}
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-md sm:text-base font-medium text-gray-900 line-clamp-2 flex-1">
+          <h3 className="text-sm sm:text-base font-medium text-gray-900 line-clamp-2 flex-1">
             {faq.question}
           </h3>
           <div className="flex flex-col items-end gap-1 flex-shrink-0">
@@ -200,7 +200,7 @@ const FAQAdmin = () => {
         </div>
         
         {/* Answer */}
-        <p className="text-sm sm:text-md text-gray-600 line-clamp-3">
+        <p className="text-sm sm:text-sm text-gray-600 line-clamp-3">
           {faq.answer}
         </p>
         
@@ -265,7 +265,7 @@ const FAQAdmin = () => {
             <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 truncate">
               FAQ Management
             </h2>
-            <p className="text-md text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               Manage chatbot FAQ responses • {list.total || 0} total FAQs
             </p>
           </div>
@@ -291,12 +291,12 @@ const FAQAdmin = () => {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4 max-sm:mb-0">
-          <p className="text-md text-gray-600">
+          <p className="text-sm text-gray-600">
             {list.faqs?.length || 0} FAQs
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-md border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
           >
             <FiFilter className="w-4 h-4" />
             Filters
@@ -383,7 +383,7 @@ const FAQAdmin = () => {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Search */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Search</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
               <div className="relative">
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -398,7 +398,7 @@ const FAQAdmin = () => {
 
             {/* Mobile Category Filter */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Category</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
               <select
                 value={categoryFilter}
                 onChange={(e) => handleFilterChange('category', e.target.value)}
@@ -414,7 +414,7 @@ const FAQAdmin = () => {
 
             {/* Mobile Status Filter */}
             <div>
-              <label className="block text-md font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => handleFilterChange('status', e.target.value)}
@@ -524,7 +524,7 @@ const FAQAdmin = () => {
                           {faq.answer}
                         </p>
                         
-                        <div className="flex items-center gap-4 text-md text-gray-500">
+                        <div className="flex items-center gap-4 text-sm text-gray-500">
                           <span>Priority: {faq.priority}</span>
                           <span>Matches: {faq.timesMatched}</span>
                           <span>👍 {faq.helpfulVotes}</span>
@@ -575,7 +575,7 @@ const FAQAdmin = () => {
       {list.totalPages > 1 && (
         <div className="flex-shrink-0 p-4 sm:p-6 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-md text-gray-600 text-center sm:text-left">
+            <div className="text-sm text-gray-600 text-center sm:text-left">
               Showing {((currentPage - 1) * 10) + 1} to {Math.min(currentPage * 10, list.total)} of {list.total} results
             </div>
             
@@ -584,17 +584,17 @@ const FAQAdmin = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
+                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-md min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
                 {currentPage}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, list.totalPages))}
                 disabled={currentPage === list.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
+                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>
@@ -605,17 +605,17 @@ const FAQAdmin = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
               >
                 Previous
               </button>
-              <span className="px-3 py-1 bg-blue-600 text-white rounded text-md">
+              <span className="px-3 py-1 bg-blue-600 text-white rounded text-sm">
                 {currentPage}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, list.totalPages))}
                 disabled={currentPage === list.totalPages}
-                className="px-3 py-1 border border-gray-300 rounded text-md disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
               >
                 Next
               </button>
@@ -687,7 +687,7 @@ const FAQCreateModal = () => {
         
         <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 max-h-[calc(95vh-80px)] sm:max-h-[calc(90vh-120px)] overflow-y-auto">
           <div>
-            <label className="block text-md font-medium mb-2">Question *</label>
+            <label className="block text-sm font-medium mb-2">Question *</label>
             <input
               type="text"
               value={formData.question}
@@ -698,7 +698,7 @@ const FAQCreateModal = () => {
           </div>
           
           <div>
-            <label className="block text-md font-medium mb-2">Answer *</label>
+            <label className="block text-sm font-medium mb-2">Answer *</label>
             <textarea
               value={formData.answer}
               onChange={(e) => setFormData({...formData, answer: e.target.value})}
@@ -710,7 +710,7 @@ const FAQCreateModal = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-md font-medium mb-2">Category</label>
+              <label className="block text-sm font-medium mb-2">Category</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
@@ -728,7 +728,7 @@ const FAQCreateModal = () => {
             </div>
             
             <div>
-              <label className="block text-md font-medium mb-2">Priority (0-10)</label>
+              <label className="block text-sm font-medium mb-2">Priority (0-10)</label>
               <input
                 type="number"
                 min="0"
@@ -741,7 +741,7 @@ const FAQCreateModal = () => {
           </div>
           
           <div>
-            <label className="block text-md font-medium mb-2">Keywords (comma-separated)</label>
+            <label className="block text-sm font-medium mb-2">Keywords (comma-separated)</label>
             <input
               type="text"
               value={formData.keywords}
@@ -837,7 +837,7 @@ const FAQEditModal = () => {
         
         <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 max-h-[calc(95vh-80px)] sm:max-h-[calc(90vh-120px)] overflow-y-auto">
           <div>
-            <label className="block text-md font-medium mb-2">Question *</label>
+            <label className="block text-sm font-medium mb-2">Question *</label>
             <input
               type="text"
               value={formData.question}
@@ -848,7 +848,7 @@ const FAQEditModal = () => {
           </div>
           
           <div>
-            <label className="block text-md font-medium mb-2">Answer *</label>
+            <label className="block text-sm font-medium mb-2">Answer *</label>
             <textarea
               value={formData.answer}
               onChange={(e) => setFormData({...formData, answer: e.target.value})}
@@ -860,7 +860,7 @@ const FAQEditModal = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-md font-medium mb-2">Category</label>
+              <label className="block text-sm font-medium mb-2">Category</label>
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
@@ -878,7 +878,7 @@ const FAQEditModal = () => {
             </div>
             
             <div>
-              <label className="block text-md font-medium mb-2">Priority (0-10)</label>
+              <label className="block text-sm font-medium mb-2">Priority (0-10)</label>
               <input
                 type="number"
                 min="0"
@@ -891,7 +891,7 @@ const FAQEditModal = () => {
           </div>
           
           <div>
-            <label className="block text-md font-medium mb-2">Keywords (comma-separated)</label>
+            <label className="block text-sm font-medium mb-2">Keywords (comma-separated)</label>
             <input
               type="text"
               value={formData.keywords}
@@ -908,7 +908,7 @@ const FAQEditModal = () => {
               onChange={(e) => setFormData({...formData, isActive: e.target.checked})}
               className="mr-2"
             />
-            <label htmlFor="isActive" className="text-md font-medium">Active</label>
+            <label htmlFor="isActive" className="text-sm font-medium">Active</label>
           </div>
           
           <div className="flex flex-col sm:flex-row max-sm:justify-between max-sm:flex-row justify-end gap-3 pt-4 border-t">
@@ -1044,19 +1044,19 @@ const CSVUploadPanel = ({ onClose }) => {
         {/* Upload Section */}
         <div className="space-y-4">
           <div>
-            <label className="block text-md font-medium mb-2">Select CSV File</label>
+            <label className="block text-sm font-medium mb-2">Select CSV File</label>
             <input
               type="file"
               accept=".csv"
               onChange={handleFileChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none text-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none text-sm"
             />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={downloadTemplate}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-md"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
             >
               <FaDownload className="w-4 h-4" />
               Download Template
@@ -1065,7 +1065,7 @@ const CSVUploadPanel = ({ onClose }) => {
             <button
               onClick={handleUpload}
               disabled={!csvFile || isUploading}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-md"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             >
               <FaUpload className="w-4 h-4" />
               {isUploading ? 'Uploading...' : 'Upload FAQs'}
@@ -1075,8 +1075,8 @@ const CSVUploadPanel = ({ onClose }) => {
 
         {/* Instructions */}
         <div className="space-y-4">
-          <h4 className="font-medium text-md sm:text-base">CSV Format Requirements:</h4>
-          <ul className="text-sm sm:text-md text-gray-600 space-y-2">
+          <h4 className="font-medium text-sm sm:text-base">CSV Format Requirements:</h4>
+          <ul className="text-sm sm:text-sm text-gray-600 space-y-2">
             <li>• <strong>question</strong>: The FAQ question (required)</li>
             <li>• <strong>answer</strong>: The FAQ answer (required)</li>
             <li>• <strong>category</strong>: Category (general, products, shipping, etc.)</li>
@@ -1084,7 +1084,7 @@ const CSVUploadPanel = ({ onClose }) => {
             <li>• <strong>keywords</strong>: Comma-separated keywords for matching</li>
           </ul>
           
-          <div className="text-sm sm:text-md text-amber-600 bg-amber-50 p-3 rounded-lg">
+          <div className="text-sm sm:text-sm text-amber-600 bg-amber-50 p-3 rounded-lg">
             <strong>Tip:</strong> Download the template to see the exact format required.
           </div>
         </div>
@@ -1094,7 +1094,7 @@ const CSVUploadPanel = ({ onClose }) => {
       {uploadResults && (
         <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
           <h4 className="font-medium text-green-800 mb-2">Upload Results</h4>
-          <div className="text-md space-y-1">
+          <div className="text-sm space-y-1">
             <p>✅ <strong>{uploadResults.summary.created}</strong> FAQs created successfully</p>
             {uploadResults.summary.failed > 0 && (
               <p>❌ <strong>{uploadResults.summary.failed}</strong> FAQs failed to create</p>
@@ -1104,8 +1104,8 @@ const CSVUploadPanel = ({ onClose }) => {
           
           {uploadResults.errors.length > 0 && (
             <details className="mt-3">
-              <summary className="cursor-pointer text-red-600 font-medium text-md">View Errors</summary>
-              <div className="mt-2 text-sm sm:text-md text-red-700 space-y-1 max-h-32 overflow-y-auto">
+              <summary className="cursor-pointer text-red-600 font-medium text-sm">View Errors</summary>
+              <div className="mt-2 text-sm sm:text-sm text-red-700 space-y-1 max-h-32 overflow-y-auto">
                 {uploadResults.errors.map((error, index) => (
                   <p key={index}>Row {error.index + 2}: {error.error}</p>
                 ))}

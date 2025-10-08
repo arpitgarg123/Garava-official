@@ -54,7 +54,7 @@ const [submenuTop, setSubmenuTop] = useState(130);
     >
       {/* Trigger */}
       <button
-        className="uppercase w-full cursor-pointer text-left z-50 font-medium text-md tracking-wide flex items-center justify-between"
+        className="uppercase w-full cursor-pointer text-left z-50 font-medium text-sm tracking-wide flex items-center justify-between"
         onClick={isMobile ? handleToggleMobile : undefined}
         aria-expanded={isMobile ? !!isOpenMobile : hovered === item.title}
         aria-controls={isMobile ? `${item.title}-submenu` : undefined}
