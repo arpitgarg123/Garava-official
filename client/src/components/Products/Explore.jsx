@@ -118,7 +118,7 @@ const Explore = ({ currentProduct }) => {
           onMouseLeave={handleMouseLeave}
           onMouseMove={handleMouseMove}
         >
-          <div className="flex gap-6 min-w-max px-4">
+          <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max px-4">
             {randomProducts.map((product) => {
               // Get the first available image using the correct structure
               const productImage = product.heroImage?.url || 
@@ -140,6 +140,7 @@ const Explore = ({ currentProduct }) => {
                     price={productPrice ? `₹${productPrice.toLocaleString('en-IN')}` : 'Price on demand'}
                     slug={product.slug}
                     id={product._id}
+                    isHorizontal={true}
                   />
                 </div>
               );

@@ -57,7 +57,7 @@ const AboutText = ({ paragraph = "", className = "" }) => {
       {lines.map((line, idx) => (
         <span key={idx} className="about-line block overflow-hidden">
         
-          <span className="about-line-inner block translate-y-full w-[25vw] ">{line}</span>
+          <span className="about-line-inner block translate-y-full w-full sm:w-5/6 md:w-4/5 lg:w-3/4 xl:w-2/3 mx-auto">{line}</span>
         </span>
       ))}
     </div>

@@ -5,13 +5,15 @@ import j from "../assets/images/jewellry4.png";
 import j2 from "../assets/images/j.jpg";
 import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '../components/header/PageHeader';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { listProductsApi } from '../features/product/api';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 const Jewellry = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const scrollRef = useRef(null);
   
   // Fallback static products (same as before to maintain exact UI)
   const staticProducts = [
@@ -77,18 +79,31 @@ const Jewellry = () => {
   return (
     <div className='w-full py-6 '>
         <PageHeader title="Jewellery" />
-       <section className="bg-gray-50  w-[98%] mx-auto py-10  ">
-        <div className="mx-auto  w-[95%] h-[80%]">
-      
-          <div className="products-grid">
+       <section className="bg-gray-50 w-[98%] mx-auto py-10">
+        <div className="mx-auto w-[95%] max-w-7xl">
+          {/* Horizontal scrollable container */}
+          <div className="relative group">
            
-             {products.map((p) => (
             
-              <Card key={p.id} img={p.img} title={p.title} price={p.price} slug={p.slug} id={p.id} />
-            
-            ))}
-            
-          
+            <div 
+              ref={scrollRef}
+              className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+            >
+              <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max py-4">
+                {products.map((p) => (
+                  <div key={p.id} className="w-[250px] sm:w-[280px] md:w-[300px] flex-shrink-0">
+                    <Card 
+                      img={p.img} 
+                      title={p.title} 
+                      price={p.price} 
+                      slug={p.slug} 
+                      id={p.id} 
+                      isHorizontal={true}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="flex-center mt-10 text-center ">
