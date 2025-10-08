@@ -13,7 +13,7 @@ const EventCard = ({item}) => {
         />
       </figure>
       <div className="p-4  h-fit flex flex-col items-start justify-between">
-        <div className=" flex  gap-2 text-xs self-start">
+        <div className=" flex  gap-2 text-sm self-start">
           <span className={`rounded-full px-2 py-0.5  ${item.kind === "Event" ? "bg-primary/10 text-primary" : "bg-amber-100 text-amber-700 dark:bg-amber-800 dark:text-amber-200"}`}>
             {item.kind}
           </span>
@@ -28,14 +28,14 @@ const EventCard = ({item}) => {
           {item.rsvpUrl && (
             <a
               href={item.rsvpUrl}
-              className="inline-flex  rounded-xl bg-primary px-3 py-2 text-xs font-medium text-primary-foreground"
+              className="inline-flex  rounded-xl bg-primary px-3 py-2 text-sm font-medium text-primary-foreground"
             >
               RSVP
             </a>
           )}
           <a
             href={`/event_details/${item.slug}`}
-            className="text-xs font-medium underline underline-offset-4 hover:opacity-80"
+            className="text-sm font-medium underline underline-offset-4 hover:opacity-80"
           >
             View details
           </a>

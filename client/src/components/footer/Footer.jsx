@@ -4,6 +4,7 @@ import {
   FaFacebookF,
   FaPinterestP,
   FaTwitter,
+  FaLinkedin 
 } from "react-icons/fa";
 import { FiMapPin, FiMail, FiPhone } from "react-icons/fi"; 
 import dark from "../../assets/images/gav-dark.png";
@@ -21,24 +22,24 @@ const Footer = () => {
       Contact Detail
     </h3>
 
-    <div className="flex items-start gap-3">
+    <div className="flex  gap-3 max-sm:gap-5">
       <FiMapPin size={18} />
-      <p className="text-sm leading-6">
+      <p className="text-sm max-sm:text-sm leading-6">
         Advir & Co. <br />
         416, Saumya Apartment, Lane no 2,<br /> Rajapark, Jaipur, 302004
       </p>
     </div>
 
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 max-sm:gap-5">
       <FiMail size={18} />
-      <a href="mailto:info@garava.in" className="text-sm hover:underline">
+      <a href="mailto:info@garava.in" className="text-sm max-sm:text-sm hover:underline">
         info@garava.in
       </a>
     </div>
 
     <div className="flex items-center gap-3">
       <FiPhone size={18} />
-      <a href="tel:+917738543881" className="text-sm hover:underline">
+      <a href="tel:+917738543881" className="text-sm max-sm:text-sm hover:underline">
         +91-7738543881
       </a>
     </div>
@@ -48,17 +49,20 @@ const Footer = () => {
   <div className="space-y-3 md:space-y-4 self-start">
     <p className="text-sm">Stay in the know</p>
     <div className="flex gap-4 text-lg mt-2">
-      <a href="#" aria-label="Instagram" className="hover:text-gray-500">
+      <a href="https://www.instagram.com/garavaofficial?igsh=MTE2MWZrMzU1aGMx" aria-label="Instagram" className="hover:text-gray-500">
         <FaInstagram />
       </a>
-      <a href="#" aria-label="Facebook" className="hover:text-gray-500">
+      <a href="https://www.facebook.com/garavaofficial" aria-label="Facebook" className="hover:text-gray-500">
         <FaFacebookF />
       </a>
-      <a href="#" aria-label="Pinterest" className="hover:text-gray-500">
+      <a href="https://in.pinterest.com/garaaaaofficial/" aria-label="Pinterest" className="hover:text-gray-500">
         <FaPinterestP />
       </a>
       <a href="#" aria-label="Twitter" className="hover:text-gray-500">
         <FaTwitter />
+      </a>
+      <a href="https://in.linkedin.com/company/garavaofficial" aria-label="LinkedIn" className="hover:text-gray-500">
+        <FaLinkedin />
       </a>
     </div>
   </div>
@@ -71,20 +75,19 @@ const Footer = () => {
             <img
               src={dark}
               alt="Garava"
-              className="h-36 w-auto mb-2"
+              className="h-48 "
               loading="lazy"
             />
- <p className="font-regular text-center max-sm:text-xs text-sm font-[montserrat] ">At GARAVA, we believe luxury is self-worth — for those who feel worthy, timeless beauty awaits.</p>
           
           </div>
 
           {/* Right: Navigation */}
-          <div className="flex  h-[30vh] items-start justify-between ">
-            <div className="space-y-4 self-start">
+          <div className="flex  h-[30vh] items-start justify-between max-sm:items-end max-sm:pt-10">
+            <div className="space-y-4 text-sm self-start max-sm:text-sm">
               <h3 className="text-sm uppercase tracking-widest font-medium">
                 Navigation
               </h3>
-              <ul className="space-y-2 text-sm">
+              <ul className="space-y-2 ">
                 <li>
                   <a href="/about" className="hover:underline">
                     About Us
@@ -107,11 +110,11 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="space-y-4 self-start">
+            <div className="space-y-4  self-start max-sm:text-sm">
               <h3 className="text-sm uppercase tracking-widest font-medium">
                 Important Links
               </h3>
-              <ul className="space-y-2 text-sm">
+              <ul className="space-y-2 ">
                 <li>
                   <a href="/privacy-policy" className="hover:underline">
                     Privacy Policy
@@ -141,7 +144,7 @@ const Footer = () => {
     
     </div>
      <div className="text-center ">
-          <h5 className="text-xs  mt-12 text-gray-400 ">
+          <h5 className="text-sm  mt-12 text-gray-400 ">
               © {new Date().getFullYear()} Garava. All Rights Reserved | Design by Rebellians.studio.
             </h5>
        </div>

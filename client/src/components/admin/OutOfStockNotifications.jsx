@@ -248,7 +248,7 @@ const OutOfStockNotifications = () => {
                       <h3 className="font-semibold text-gray-900">
                         {notification.title}
                       </h3>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(notification.severity)}`}>
+                      <span className={`px-2 py-1 rounded-full text-sm font-medium border ${getSeverityColor(notification.severity)}`}>
                         {notification.severity.toUpperCase()}
                       </span>
                       {!notification.isRead && (

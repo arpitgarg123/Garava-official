@@ -228,7 +228,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                   <option value="media-coverage">Media Coverage</option>
                 </select>
                 {validationErrors.type && (
-                  <p className="text-red-500 text-xs mt-1">{validationErrors.type}</p>
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.type}</p>
                 )}
               </div>
 
@@ -249,7 +249,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                     <option value="News">News</option>
                   </select>
                   {validationErrors.kind && (
-                    <p className="text-red-500 text-xs mt-1">{validationErrors.kind}</p>
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.kind}</p>
                   )}
                 </div>
               )}
@@ -271,7 +271,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                   }`}
                 />
                 {validationErrors.title && (
-                  <p className="text-red-500 text-xs mt-1">{validationErrors.title}</p>
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.title}</p>
                 )}
               </div>
 
@@ -289,7 +289,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                   }`}
                 />
                 {validationErrors.slug && (
-                  <p className="text-red-500 text-xs mt-1">{validationErrors.slug}</p>
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.slug}</p>
                 )}
               </div>
             </div>
@@ -309,7 +309,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                 }`}
               />
               {validationErrors.date && (
-                <p className="text-red-500 text-xs mt-1">{validationErrors.date}</p>
+                <p className="text-red-500 text-sm mt-1">{validationErrors.date}</p>
               )}
             </div>
 
@@ -374,7 +374,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                     }`}
                   />
                   {validationErrors.outlet && (
-                    <p className="text-red-500 text-xs mt-1">{validationErrors.outlet}</p>
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.outlet}</p>
                   )}
                 </div>
 
@@ -392,7 +392,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                     }`}
                   />
                   {validationErrors.url && (
-                    <p className="text-red-500 text-xs mt-1">{validationErrors.url}</p>
+                    <p className="text-red-500 text-sm mt-1">{validationErrors.url}</p>
                   )}
                 </div>
               </div>
@@ -413,7 +413,7 @@ export default function NewsEventCreateEditModal({ isOpen, item, onClose, onSucc
                 }`}
               />
               {validationErrors.excerpt && (
-                <p className="text-red-500 text-xs mt-1">{validationErrors.excerpt}</p>
+                <p className="text-red-500 text-sm mt-1">{validationErrors.excerpt}</p>
               )}
             </div>
 

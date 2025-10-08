@@ -339,7 +339,7 @@ const AddressManager = () => {
               <div className="flex justify-between items-start">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
+                    <span className={`inline-flex items-center px-2 py-1 rounded text-sm font-medium ${
                       address.label === 'home' || address.type === 'home' ? 'bg-blue-100 text-blue-800' :
                       address.label === 'work' || address.type === 'work' ? 'bg-green-100 text-green-800' :
                       'bg-gray-50 text-gray-800'
@@ -347,7 +347,7 @@ const AddressManager = () => {
                       {(address.label || address.type)?.toUpperCase() || 'OTHER'}
                     </span>
                     {address.isDefault && (
-                      <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-black text-white">
+                      <span className="inline-flex items-center px-2 py-1 rounded text-sm font-medium bg-black text-white">
                         DEFAULT
                       </span>
                     )}

@@ -122,6 +122,24 @@ export const getProductBySlugService = async (slug) => {
 
   if (!product) throw new ApiError(404, "Product not found");
 
+  return processProductDetails(product);
+};
+
+export const getProductByIdService = async (id) => {
+  const product = await Product.findOne({
+    _id: id,
+    isActive: true,
+    status: "published",
+  }).lean();
+
+  if (!product) throw new ApiError(404, "Product not found");
+
+  return processProductDetails(product);
+};
+
+// Helper function to process product details
+const processProductDetails = (product) => {
+
   // Calculate total stock and out-of-stock status
   const totalStock = product.variants.reduce((sum, variant) => sum + (variant.stock || 0), 0);
   const isOutOfStock = totalStock === 0 || product.variants.every(v => v.stockStatus === 'out_of_stock');

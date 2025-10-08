@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as cartApi from "./api.js";
 import { logout, initAuth } from "../auth/slice.js";
+import { guestCart } from "../../shared/utils/guestStorage.js";
 
 // Smart request deduplication with timestamp tracking and caching
 let lastFetchTime = 0;
@@ -19,30 +20,24 @@ export const fetchCart = createAsyncThunk(
       
       // Smart deduplication: prevent requests within cooldown unless forced
       if (!force && cart.status === 'loading') {
-        console.log('Cart slice - Already loading, skipping duplicate request');
         return rejectWithValue('Already loading');
       }
       
       // Cache check: if data is fresh and force is not set, skip fetch
       if (!force && cart.items.length > 0 && now - lastCacheTime < CACHE_TTL) {
-        console.log('Cart slice - Using cached data, skipping fetch');
         return cart; // Return current cart data
       }
       
       // Cooldown protection for rapid successive calls
       if (!force && now - lastFetchTime < FETCH_COOLDOWN) {
-        console.log('Cart slice - Too soon since last fetch, skipping');
         return rejectWithValue('Too soon');
       }
       
       lastFetchTime = now;
-      console.log('Cart slice - Fetching cart');
       const response = await cartApi.getCart();
-      console.log('Cart slice - Fetch cart response:', response);
       lastCacheTime = now; // Update cache time on successful fetch
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Fetch cart error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch cart';
       return rejectWithValue(errorMessage);
     }
@@ -53,8 +48,6 @@ export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (payload, { rejectWithValue }) => {
     try {
-      console.log('Cart slice - Adding to cart with payload:', payload);
-      
       // Validate payload before making API call
       if (!payload.productId) {
         throw new Error('Product ID is required');
@@ -67,11 +60,8 @@ export const addToCart = createAsyncThunk(
       }
       
       const response = await cartApi.addToCart(payload);
-      console.log('Cart slice - Add to cart response:', response);
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Add to cart error:', error);
-      
       let errorMessage = 'Failed to add item to cart';
       
       // Handle specific error types
@@ -103,12 +93,9 @@ export const updateCartItem = createAsyncThunk(
   "cart/updateCartItem", 
   async (payload, { rejectWithValue }) => {
     try {
-      console.log('Cart slice - Updating cart item:', payload);
       const response = await cartApi.updateCartItem(payload);
-      console.log('Cart slice - Update cart item response:', response);
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Update cart item error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to update cart item';
       return rejectWithValue(errorMessage);
     }
@@ -119,12 +106,9 @@ export const removeFromCart = createAsyncThunk(
   "cart/removeFromCart",
   async (payload, { rejectWithValue }) => {
     try {
-      console.log('Cart slice - Removing from cart:', payload);
       const response = await cartApi.removeCartItem(payload);
-      console.log('Cart slice - Remove from cart response:', response);
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Remove from cart error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to remove item from cart';
       return rejectWithValue(errorMessage);
     }
@@ -135,14 +119,83 @@ export const clearCart = createAsyncThunk(
   "cart/clearCart", 
   async (_, { rejectWithValue }) => {
     try {
-      console.log('Cart slice - Clearing cart');
       const response = await cartApi.clearCart();
-      console.log('Cart slice - Clear cart response:', response);
       return response.data.cart;
     } catch (error) {
-      console.error('Cart slice - Clear cart error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to clear cart';
       return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+// Guest cart actions (for non-authenticated users)
+export const addToGuestCart = createAsyncThunk(
+  "cart/addToGuestCart",
+  async (payload, { rejectWithValue }) => {
+    try {
+      // Validate payload
+      if (!payload.productId) {
+        throw new Error('Product ID is required');
+      }
+      if (!payload.variantId && !payload.variantSku) {
+        throw new Error('Either variant ID or variant SKU is required');
+      }
+      if (!payload.quantity || payload.quantity <= 0) {
+        payload.quantity = 1;
+      }
+      
+      const updatedCart = guestCart.add(payload);
+      return updatedCart;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to add item to guest cart');
+    }
+  }
+);
+
+export const updateGuestCartItem = createAsyncThunk(
+  "cart/updateGuestCartItem",
+  async ({ itemId, quantity }, { rejectWithValue }) => {
+    try {
+      const updatedCart = guestCart.update(itemId, quantity);
+      return updatedCart;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to update guest cart item');
+    }
+  }
+);
+
+export const removeFromGuestCart = createAsyncThunk(
+  "cart/removeFromGuestCart",
+  async (itemId, { rejectWithValue }) => {
+    try {
+      const updatedCart = guestCart.remove(itemId);
+      return updatedCart;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to remove item from guest cart');
+    }
+  }
+);
+
+export const clearGuestCart = createAsyncThunk(
+  "cart/clearGuestCart",
+  async (_, { rejectWithValue }) => {
+    try {
+      const updatedCart = guestCart.clear();
+      return updatedCart;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to clear guest cart');
+    }
+  }
+);
+
+export const loadGuestCart = createAsyncThunk(
+  "cart/loadGuestCart",
+  async (_, { rejectWithValue }) => {
+    try {
+      const guestCartData = guestCart.get();
+      return guestCartData;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to load guest cart');
     }
   }
 );
@@ -155,6 +208,7 @@ const cartSlice = createSlice({
     totalItems: 0,
     status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
+    isGuest: false, // Track if cart is in guest mode
   },
   reducers: {
     clearError: (state) => {
@@ -306,18 +360,87 @@ const cartSlice = createSlice({
         state.error = action.payload || action.error.message;
       });
 
-    // Clear cart data when user logs out or auth fails
+    // Guest cart actions
     builder
-      .addCase(logout, (state) => {
+      .addCase(loadGuestCart.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.items = action.payload?.items || [];
+        state.totalAmount = action.payload?.totalAmount || 0;
+        state.totalItems = action.payload?.totalItems || 0;
+        state.error = null;
+      })
+      .addCase(addToGuestCart.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(addToGuestCart.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.items = action.payload?.items || [];
+        state.totalAmount = action.payload?.totalAmount || 0;
+        state.totalItems = action.payload?.totalItems || 0;
+        state.error = null;
+      })
+      .addCase(addToGuestCart.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(updateGuestCartItem.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(updateGuestCartItem.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.items = action.payload?.items || [];
+        state.totalAmount = action.payload?.totalAmount || 0;
+        state.totalItems = action.payload?.totalItems || 0;
+        state.error = null;
+      })
+      .addCase(updateGuestCartItem.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(removeFromGuestCart.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(removeFromGuestCart.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.items = action.payload?.items || [];
+        state.totalAmount = action.payload?.totalAmount || 0;
+        state.totalItems = action.payload?.totalItems || 0;
+        state.error = null;
+      })
+      .addCase(removeFromGuestCart.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(clearGuestCart.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
         state.items = [];
         state.totalAmount = 0;
         state.totalItems = 0;
+        state.error = null;
+      });
+
+    // Clear cart data when user logs out or auth fails
+    builder
+      .addCase(logout, (state) => {
+        // On logout, switch to guest mode and load guest cart
+        const guestCartData = guestCart.get();
+        state.items = guestCartData.items;
+        state.totalAmount = guestCartData.totalAmount;
+        state.totalItems = guestCartData.totalItems;
+        state.isGuest = true;
         state.status = "idle";
         state.error = null;
         // Reset cache times
         lastFetchTime = 0;
         lastCacheTime = 0;
-        console.log('Cart slice - Cleared cart data on logout');
       })
       .addCase(initAuth.rejected, (state, { payload }) => {
         const errorData = payload || {};
@@ -332,10 +455,8 @@ const cartSlice = createSlice({
           // Reset cache times
           lastFetchTime = 0;
           lastCacheTime = 0;
-          console.log('Cart slice - Cleared cart data on auth failure');
         } else if (errorData.type === 'NETWORK_ERROR') {
-          // Don't clear cart on network errors, just log
-          console.log('Cart slice - Network error during auth init, keeping cart data');
+          // Don't clear cart on network errors
         }
       });
   },

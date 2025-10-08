@@ -33,6 +33,11 @@ export const getProductBySlug = asyncHandler(async (req, res) => {
   res.json({ success: true, product });
 });
 
+export const getProductById = asyncHandler(async (req, res) => {
+  const product = await service.getProductByIdService(req.params.id);
+  res.json({ success: true, product });
+});
+
 export const getProductBySku = asyncHandler(async (req, res) => {
   const result = await service.getProductBySkuService(req.params.sku);
   res.json({ success: true, ...result });

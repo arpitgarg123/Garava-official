@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { login, googleLogin } from "./slice";
+import { login, googleLogin, loginWithSync } from "./slice";
 import AuthLayout from "../../layouts/AuthLayout";
 import { FcGoogle } from 'react-icons/fc';
 import { CiMail, CiLock } from 'react-icons/ci';
@@ -22,7 +22,7 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await dispatch(login(form)).unwrap();
+      const res = await dispatch(loginWithSync(form)).unwrap();
       if (res?.accessToken) {
         navigate(from, { replace: true });
       }

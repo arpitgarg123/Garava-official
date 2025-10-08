@@ -147,7 +147,7 @@ const ProductReviews = ({ productId }) => {
     <section className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-montserrat font-semibold text-gray-900">Customer Reviews</h2>
+          <h2 className="text-3xl  font-semibold text-gray-900">Customer Reviews</h2>
           <div className="w-16 h-1 bg-black mx-auto mt-4"></div>
         </div>
 
@@ -156,7 +156,7 @@ const ProductReviews = ({ productId }) => {
           <div className="lg:col-span-4">
             <div className="bg-white p-6 sm:p-8 rounded-lg shadow-sm">
               <div className="flex flex-col items-center">
-                <div className="text-5xl font-montserrat font-bold mb-2">{averageRating}</div>
+                <div className="text-5xl  font-bold mb-2">{averageRating}</div>
                 <div className="flex mb-2">
                   {[1, 2, 3, 4, 5].map(star => (
                     <span key={star}>
@@ -355,7 +355,7 @@ const ProductReviews = ({ productId }) => {
                               )}
                             </span>
                           ))}
-                          <span className="ml-2 text-xs text-gray-500">
+                          <span className="ml-2 text-sm text-gray-500">
                             {new Date(review.createdAt).toLocaleDateString('en-US', { 
                               year: 'numeric', 
                               month: 'long', 
@@ -368,7 +368,7 @@ const ProductReviews = ({ productId }) => {
                       {review.verifiedPurchase && (
                         <div className="flex items-center px-2 py-1 bg-green-50 text-green-700 rounded-full">
                           <BsCheckCircleFill size={12} className="mr-1" />
-                          <span className="text-xs font-medium">Verified Purchase</span>
+                          <span className="text-sm font-medium">Verified Purchase</span>
                         </div>
                       )}
                     </div>

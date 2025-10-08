@@ -21,6 +21,7 @@ import faqReducer from "../features/faq/slice.js";
 import faqAdminReducer from "../features/faq/adminSlice.js";
 import testimonialReducer from "../features/testimonial/slice.js";
 import newsEventsReducer from "../features/newsevents/slice.js";
+import instagramReducer from "../features/instagram/slice.js";
 
 // Persist configuration
 const persistConfig = {
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   faqAdmin: faqAdminReducer,
   testimonials: testimonialReducer,
   newsevents: newsEventsReducer,
+  instagram: instagramReducer,
 });
 
 // Create persisted reducer

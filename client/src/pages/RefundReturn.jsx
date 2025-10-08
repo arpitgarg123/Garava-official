@@ -188,7 +188,7 @@ const RefundReturn = () => {
                       <div>
                         <h4 className="font-semibold text-gray-900 text-sm">Email Support</h4>
                         <p className="text-gray-600 text-sm">info@garava.in</p>
-                        <p className="text-xs text-gray-500">Response within 24 hours</p>
+                        <p className="text-sm text-gray-500">Response within 24 hours</p>
                       </div>
                     </div>
                     
@@ -201,7 +201,7 @@ const RefundReturn = () => {
                       <div>
                         <h4 className="font-semibold text-gray-900 text-sm">Phone Support</h4>
                         <p className="text-gray-600 text-sm">+91-7738543881</p>
-                        <p className="text-xs text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
+                        <p className="text-sm text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
                       </div>
                     </div>
                   </div>

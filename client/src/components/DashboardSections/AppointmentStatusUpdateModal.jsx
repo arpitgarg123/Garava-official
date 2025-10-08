@@ -170,7 +170,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
             {selectedStatusInfo && selectedStatus !== appointment.status && (
               <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getAppointmentStatusColor(selectedStatus)}`}>
+                  <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium border ${getAppointmentStatusColor(selectedStatus)}`}>
                     {selectedStatusInfo.label}
                   </span>
                 </div>
@@ -255,7 +255,7 @@ export default function AppointmentStatusUpdateModal({ isOpen, onClose, appointm
               disabled={operationLoading}
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-gray-50 resize-none"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 mt-1">
               These notes are internal and will not be visible to the customer.
             </p>
           </div>

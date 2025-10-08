@@ -19,10 +19,6 @@ import {
   clearError
 } from '../features/address/slice';
 
-// Global mount tracking to prevent spam across component instances
-let globalMountCount = 0;
-let lastMountTime = 0;
-
 // Memoized component to prevent unnecessary re-renders
 const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddressChange, showAsManagement = false }) => {
   const dispatch = useDispatch();
@@ -48,21 +44,16 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
     isDefault: false
   });
 
-  // Fetch addresses on mount - with global spam prevention
+  // Fetch addresses on mount
   const hasMounted = useRef(false);
   
   useEffect(() => {
-    const now = Date.now();
-    globalMountCount++;
-    
-    // Prevent multiple mounts within 1 second
-    if (now - lastMountTime < 1000) {
-      console.log(`AddressSelector - Rapid mount #${globalMountCount} detected, skipping fetch (${now - lastMountTime}ms since last)`);
+    // Only prevent if the exact same component instance tries to fetch multiple times
+    if (hasMounted.current) {
       return;
     }
     
-    lastMountTime = now;
-    console.log(`AddressSelector - Mount #${globalMountCount}, fetching addresses`);
+    hasMounted.current = true;
     dispatch(fetchAddresses());
   }, [dispatch]);
 
@@ -285,7 +276,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                     <span className="font-medium">{address.fullName}</span>
                     <span className="text-sm text-gray-600">({address.phone})</span>
                     {address.isDefault && (
-                      <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
+                      <span className="px-2 py-1 bg-green-100 text-green-800 text-sm rounded">
                         Default
                       </span>
                     )}
@@ -293,7 +284,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                   <p className="text-sm text-gray-600 mb-1">
                     {formatAddress(address)}
                   </p>
-                  <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded capitalize">
+                  <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-sm rounded capitalize">
                     {address.label}
                   </span>
                 </div>

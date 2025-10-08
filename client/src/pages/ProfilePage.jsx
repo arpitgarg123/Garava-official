@@ -217,7 +217,7 @@
 //                 <div>
 //                   <label className="block text-sm font-medium text-gray-700 mb-2">Email Verification</label>
 //                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-//                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
+//                     <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm sm:text-sm font-medium ${
 //                       form.isVerified 
 //                         ? "bg-green-100 text-green-800" 
 //                         : "bg-orange-100 text-orange-800"
@@ -228,7 +228,7 @@
 //                       <button
 //                         type="button"
 //                         onClick={onResend}
-//                         className="text-xs sm:text-sm border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
+//                         className="text-sm sm:text-sm border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
 //                       >
 //                         Resend
 //                       </button>
@@ -351,7 +351,7 @@
 //                         <p className="font-medium">
 //                           ₹{(order.grandTotal || 0).toLocaleString('en-IN')}
 //                         </p>
-//                         <span className={`inline-block px-2 py-1 rounded-full text-xs ${
+//                         <span className={`inline-block px-2 py-1 rounded-full text-sm ${
 //                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
 //                           order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
 //                           order.status === 'shipped' ? 'bg-purple-100 text-purple-800' :
@@ -466,7 +466,7 @@
 //                 {form.name?.charAt(0)?.toUpperCase() || "U"}
 //               </div>
 //               <h3 className="font-semibold text-gray-900 text-sm sm:text-base">{form.name || "User"}</h3>
-//               <p className="text-xs sm:text-sm text-gray-600">{form.email}</p>
+//               <p className="text-sm sm:text-sm text-gray-600">{form.email}</p>
 //             </div>
 
 //             {/* Navigation */}
@@ -597,7 +597,7 @@ const ProfilePage = () => {
       
       // Debounce the fetch calls
       fetchTimeoutRef.current = setTimeout(() => {
-        console.log('ProfilePage - Fetching user data...');
+        // Fetching user data
         dispatch(fetchUserOrders());
         dispatch(fetchAddresses());
       }, 100); // Small delay to prevent rapid calls
@@ -755,7 +755,7 @@ const ProfilePage = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Email Verification</label>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm sm:text-sm font-medium ${
                       form.isVerified 
                         ? "bg-green-100 text-green-800" 
                         : "bg-orange-100 text-orange-800"
@@ -766,7 +766,7 @@ const ProfilePage = () => {
                       <button
                         type="button"
                         onClick={onResend}
-                        className="text-xs sm:text-sm border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
+                        className="text-sm sm:text-sm border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-50 transition w-fit"
                       >
                         Resend
                       </button>
@@ -889,7 +889,7 @@ const ProfilePage = () => {
                         <p className="font-medium">
                           ₹{(order.grandTotal || 0).toLocaleString('en-IN')}
                         </p>
-                        <span className={`inline-block px-2 py-1 rounded-full text-xs ${
+                        <span className={`inline-block px-2 py-1 rounded-full text-sm ${
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
                           order.status === 'shipped' ? 'bg-purple-100 text-purple-800' :
@@ -930,22 +930,14 @@ const ProfilePage = () => {
         );
 
       case "addresses":
-        console.log('ProfilePage - Rendering addresses tab, isAddressLoading:', isAddressLoading);
         return (
           <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6">
-            {isAddressLoading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-1  border-gray-100 mx-auto"></div>
-                <p className="mt-4 text-gray-500">Loading addresses...</p>
-              </div>
-            ) : (
-              <AddressSelector 
-                selectedAddressId={null}
-                onAddressSelect={handleAddressSelect}
-                onAddressChange={handleAddressChange}
-                showAsManagement={true}
-              />
-            )}
+            <AddressSelector 
+              selectedAddressId={null}
+              onAddressSelect={handleAddressSelect}
+              onAddressChange={handleAddressChange}
+              showAsManagement={true}
+            />
           </div>
         );
 
@@ -1006,7 +998,7 @@ const ProfilePage = () => {
                   {form.name?.charAt(0)?.toUpperCase() || "U"}
                 </div>
                 <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{form.name || "User"}</h3>
-                <p className="text-xs sm:text-sm text-gray-600 truncate">{form.email}</p>
+                <p className="text-sm sm:text-sm text-gray-600 truncate">{form.email}</p>
               </div>
 
               {/* Navigation */}

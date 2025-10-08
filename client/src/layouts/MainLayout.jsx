@@ -48,7 +48,7 @@ const MainLayout = ({children}) => {
           console.error('MainLayout - Cart fetch failed:', error);
           if (error !== 'Already loading' && error !== 'Too soon') {
             if (error.includes('401') || error.includes('Unauthorized')) {
-              console.log('MainLayout - Authentication invalid, clearing auth state');
+              // Authentication invalid, clearing auth state
             } else if (error.includes('timeout') || error.includes('ECONNABORTED')) {
               console.warn('MainLayout - Cart fetch timeout, will retry when online');
               // Don't show error toast for timeouts when offline
@@ -68,7 +68,7 @@ const MainLayout = ({children}) => {
           console.error('MainLayout - Wishlist fetch failed:', error);
           if (error !== 'Already loading' && error !== 'Too soon') {
             if (error.includes('401') || error.includes('Unauthorized')) {
-              console.log('MainLayout - Authentication invalid, clearing auth state');
+              // Authentication invalid, clearing auth state
             } else if (error.includes('timeout') || error.includes('ECONNABORTED')) {
               console.warn('MainLayout - Wishlist fetch timeout, will retry when online');
               // Don't show error toast for timeouts when offline
@@ -96,7 +96,6 @@ const MainLayout = ({children}) => {
       const now = Date.now();
       // Prevent retries more than once per minute
       if (now - lastRetryTime.current < 60000) {
-        console.log('MainLayout - Skipping retry, too soon since last attempt');
         return;
       }
       
@@ -104,7 +103,7 @@ const MainLayout = ({children}) => {
       
       // Small delay to ensure connection is stable
       const retryTimer = setTimeout(() => {
-        console.log('MainLayout - Connection restored, retrying data fetch...');
+        // Connection restored, retry data fetch
         dispatch(fetchCart({ force: true })).unwrap().catch(() => {});
         dispatch(fetchWishlist({ force: true })).unwrap().catch(() => {});
       }, 2000);

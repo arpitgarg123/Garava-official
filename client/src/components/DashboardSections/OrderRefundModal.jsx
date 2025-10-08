@@ -208,7 +208,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
                 placeholder="0.00"
               />
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 mt-1">
               Maximum refundable amount: {formatCurrency(maxRefundAmount)}
             </p>
           </div>

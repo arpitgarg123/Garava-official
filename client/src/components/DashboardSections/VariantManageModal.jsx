@@ -480,14 +480,14 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                 <table className="min-w-full border border-gray-200 rounded-lg">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">SKU</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Size</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">MRP</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weight</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                      <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase">Actions</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">SKU</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Size</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Price</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">MRP</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Stock</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Weight</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Status</th>
+                      <th className="px-4 py-3 text-right text-sm font-medium text-gray-500 uppercase">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -500,7 +500,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                             <div className="flex items-center">
                               {variant.sku}
                               {variant.isDefault && (
-                                <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
+                                <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded font-medium">
                                   Default
                                 </span>
                               )}
@@ -512,7 +512,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                             {variant.mrp ? formatCurrency(variant.mrp) : '-'}
                           </td>
                           <td className="px-4 py-3 text-sm">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${stockStatus.color}`}>
+                            <span className={`px-2 py-1 rounded-full text-sm font-medium ${stockStatus.color}`}>
                               {variant.stock || 0}
                             </span>
                           </td>
@@ -520,7 +520,7 @@ const VariantManageModal = ({ isOpen, onClose, product }) => {
                             {variant.weight ? `${variant.weight}g` : '-'}
                           </td>
                           <td className="px-4 py-3 text-sm">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${variant.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                            <span className={`px-2 py-1 rounded-full text-sm font-medium ${variant.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                               {variant.isActive ? 'Active' : 'Inactive'}
                             </span>
                           </td>

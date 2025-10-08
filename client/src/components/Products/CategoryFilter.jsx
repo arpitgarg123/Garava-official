@@ -28,7 +28,7 @@
 //               >
 //                 <span className="text-sm">{c.label}</span>
 //                 <span
-//                   className={`text-xs px-2 py-0.5 rounded-full ${
+//                   className={`text-sm px-2 py-0.5 rounded-full ${
 //                     isActive ? "bg-white text-black" : "bg-gray-50 text-gray-600"
 //                   }`}
 //                 >
@@ -81,7 +81,7 @@ const CategoryFilter = ({ selected, onChange, categories, counts = {}, isMobile 
                     {cat.label}
                   </label>
                 </div>
-                <span className="text-xs text-gray-500">
+                <span className="text-sm text-gray-500">
                   {displayCount}
                 </span>
               </div>
@@ -119,7 +119,7 @@ const CategoryFilter = ({ selected, onChange, categories, counts = {}, isMobile 
               >
                 <span className="text-sm">{c.label}</span>
                 <span
-                  className={`text-xs px-2 py-0.5 rounded-full ${
+                  className={`text-sm px-2 py-0.5 rounded-full ${
                     isActive ? "bg-white text-black" : "bg-gray-50 text-gray-600"
                   }`}
                 >

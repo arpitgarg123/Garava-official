@@ -435,7 +435,7 @@ export default function BlogCreateEditModal() {
                       </label>
                       <p className="pl-1">or drag and drop</p>
                     </div>
-                    <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                    <p className="text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
                   </div>
                 </div>
               </div>

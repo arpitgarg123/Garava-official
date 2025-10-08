@@ -123,7 +123,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-gray-600">Status</p>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(product.status)}`}>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium border ${getStatusColor(product.status)}`}>
                       <MdPublish className="h-3 w-3 mr-1" />
                       {product.status}
                     </span>
@@ -131,7 +131,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
 
                   <div>
                     <p className="text-sm text-gray-600">Total Stock</p>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getStatusColor(getStockStatus(getTotalStock()))}`}>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium border ${getStatusColor(getStockStatus(getTotalStock()))}`}>
                       <MdInventory className="h-3 w-3 mr-1" />
                       {getTotalStock()}
                     </span>
@@ -151,7 +151,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                     <p className="text-sm text-gray-600 mb-2">Tags</p>
                     <div className="flex flex-wrap gap-2">
                       {product.tags.map((tag, index) => (
-                        <span key={index} className="px-2 py-1 bg-gray-50 text-gray-700 text-xs rounded">
+                        <span key={index} className="px-2 py-1 bg-gray-50 text-gray-700 text-sm rounded">
                           {tag}
                         </span>
                       ))}
@@ -161,12 +161,12 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
 
                 <div className="flex gap-4">
                   {product.isFeatured && (
-                    <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded font-medium">
                       Featured
                     </span>
                   )}
                   {product.isActive && (
-                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded font-medium">
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-sm rounded font-medium">
                       Active
                     </span>
                   )}
@@ -184,13 +184,13 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                 <table className="min-w-full border border-gray-200 rounded-lg">
                   <thead className="bg-gray-50">
                     <tr>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">SKU</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Size</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">MRP</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Stock</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Weight</th>
-                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">SKU</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Size</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Price</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">MRP</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Stock</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Weight</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-500 uppercase">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -199,7 +199,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                         <td className="px-4 py-3 text-sm text-gray-900">
                           {variant.sku}
                           {variant.isDefault && (
-                            <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded font-medium">
+                            <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded font-medium">
                               Default
                             </span>
                           )}
@@ -210,7 +210,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                           {variant.mrp ? formatCurrency(variant.mrp) : '-'}
                         </td>
                         <td className="px-4 py-3 text-sm">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(getStockStatus(variant.stock))}`}>
+                          <span className={`px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(getStockStatus(variant.stock))}`}>
                             {variant.stock || 0}
                           </span>
                         </td>
@@ -218,7 +218,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                           {variant.weight ? `${variant.weight}g` : '-'}
                         </td>
                         <td className="px-4 py-3 text-sm">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${variant.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                          <span className={`px-2 py-1 rounded-full text-sm font-medium ${variant.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                             {variant.isActive ? 'Active' : 'Inactive'}
                           </span>
                         </td>
@@ -262,7 +262,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                     <p className="text-sm font-medium text-gray-700 mb-2">Top Notes</p>
                     <div className="flex flex-wrap gap-1">
                       {product.fragranceNotes.top.map((note, index) => (
-                        <span key={index} className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded">
+                        <span key={index} className="px-2 py-1 bg-yellow-100 text-yellow-800 text-sm rounded">
                           {note}
                         </span>
                       ))}
@@ -275,7 +275,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                     <p className="text-sm font-medium text-gray-700 mb-2">Middle Notes</p>
                     <div className="flex flex-wrap gap-1">
                       {product.fragranceNotes.middle.map((note, index) => (
-                        <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
+                        <span key={index} className="px-2 py-1 bg-green-100 text-green-800 text-sm rounded">
                           {note}
                         </span>
                       ))}
@@ -288,7 +288,7 @@ const ProductDetailsModal = ({ isOpen, onClose, product }) => {
                     <p className="text-sm font-medium text-gray-700 mb-2">Base Notes</p>
                     <div className="flex flex-wrap gap-1">
                       {product.fragranceNotes.base.map((note, index) => (
-                        <span key={index} className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">
+                        <span key={index} className="px-2 py-1 bg-purple-100 text-purple-800 text-sm rounded">
                           {note}
                         </span>
                       ))}

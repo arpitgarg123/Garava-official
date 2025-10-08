@@ -95,13 +95,14 @@
 // export default Cart;
 
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoBagHandleOutline } from 'react-icons/io5';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCartItems, selectCartTotal, selectIsCartLoading } from '../features/cart/selectors';
-import { updateCartItem, removeFromCart } from '../features/cart/slice';
+import { updateCartItem, removeFromCart, updateGuestCartItem, removeFromGuestCart, loadGuestCart, fetchCart } from '../features/cart/slice';
+import { selectIsAuthenticated } from '../features/auth/selectors';
 import { toast } from 'react-hot-toast';
 import { CartSkeleton } from '../components/ui/LoadingSkeleton';
 import formatCurrency from '../utils/pricing';
@@ -117,14 +118,21 @@ const Cart = () => {
   const cartItems = useSelector(selectCartItems);
   const cartTotal = useSelector(selectCartTotal);
   const isLoading = useSelector(selectIsCartLoading);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isGuest = useSelector(state => state.cart.isGuest);
+  const cartStatus = useSelector(state => state.cart.status);
   
-  // Debug logging - testing if backend sends rupees not paise
-  console.log('Cart Debug:', {
-    cartTotal,
-    calculatedTotal: cartItems.reduce((acc, item) => acc + (item.unitPrice * item.quantity), 0),
-    itemCount: cartItems.length,
-    sampleItem: cartItems[0]
-  });
+  // Load cart data on component mount
+  useEffect(() => {
+    if (isAuthenticated && (cartStatus === 'idle' || cartStatus === 'failed')) {
+      dispatch(fetchCart({ force: false }));
+    } else if (!isAuthenticated && cartStatus === 'idle') {
+      // Load guest cart if not authenticated
+      dispatch(loadGuestCart());
+    }
+  }, [dispatch, isAuthenticated, cartStatus]);
+  
+  // Cart calculations handled by backend pricing service
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
     // Find the cart item to get productId and variantId
@@ -134,12 +142,18 @@ const Cart = () => {
       return;
     }
     
-    dispatch(updateCartItem({ 
+    const updateAction = isAuthenticated ? updateCartItem : updateGuestCartItem;
+    const payload = isAuthenticated ? {
       productId: cartItem.product,
       variantId: cartItem.variantId,
       variantSku: cartItem.variantSku,
       quantity: newQuantity 
-    }))
+    } : {
+      itemId,
+      quantity: newQuantity
+    };
+    
+    dispatch(updateAction(payload))
     .unwrap()
     .then(() => {
       toast.success("Cart updated");
@@ -158,11 +172,14 @@ const Cart = () => {
       return;
     }
     
-    dispatch(removeFromCart({
+    const removeAction = isAuthenticated ? removeFromCart : removeFromGuestCart;
+    const payload = isAuthenticated ? {
       productId: cartItem.product,
       variantId: cartItem.variantId,
       variantSku: cartItem.variantSku
-    }))
+    } : itemId;
+    
+    dispatch(removeAction(payload))
     .unwrap()
     .then(() => {
       toast.success("Item removed from cart");
@@ -190,8 +207,8 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-[60vh] mt-30">
-       <div className="sticky top-30 z-10 ">
+    <div className="min-h-[60vh] mt-30 max-md:mt-0">
+       <div className="sticky top-30 z-50 max-md:top-7">
         <BackButton />
       </div>
       <div className="max-w-7xl mx-auto px-4">
@@ -211,15 +228,50 @@ const Cart = () => {
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              {cartItems.map((item, index) => (
+              {cartItems.map((item, index) => {
+                // Handle image URL for both authenticated and guest users
+                // Backend structure: heroImage: {url, fileId}, gallery: [{url, fileId}]
+                let imageUrl = '/placeholder.jpg';
+                
+                // For authenticated users (backend structure)
+                if (item.heroImage?.url) {
+                  imageUrl = item.heroImage.url;
+                } else if (typeof item.heroImage === 'string') {
+                  imageUrl = item.heroImage;
+                } 
+                // For guest users (productDetails structure)
+                else if (item.productDetails?.heroImage?.url) {
+                  imageUrl = item.productDetails.heroImage.url;
+                } else if (typeof item.productDetails?.heroImage === 'string') {
+                  imageUrl = item.productDetails.heroImage;
+                } else if (item.productDetails?.gallery?.[0]?.url) {
+                  imageUrl = item.productDetails.gallery[0].url;
+                } else if (typeof item.productDetails?.gallery?.[0] === 'string') {
+                  imageUrl = item.productDetails.gallery[0];
+                } else if (item.productDetails?.images?.[0]?.url) {
+                  imageUrl = item.productDetails.images[0].url;
+                } else if (typeof item.productDetails?.images?.[0] === 'string') {
+                  imageUrl = item.productDetails.images[0];
+                } else if (item.image) {
+                  imageUrl = item.image;
+                }
+                
+                // Handle product name for both authenticated and guest users  
+                const productName = item.name || item.productDetails?.name || 'Product';
+                
+                return (
                 <div key={item._id || `cart-item-${index}`} className="flex border-b py-4 space-x-4">
                   <img 
-                    src={item.heroImage || '/placeholder.jpg'} 
-                    alt={item.name || 'Product'}
-                    className="w-24 h-24 object-cover"
+                    src={imageUrl} 
+                    alt={productName}
+                    className="w-24 h-24 object-cover relative z-0 bg-gray-200"
+                    style={{ display: 'block', minWidth: '96px', minHeight: '96px' }}
+                    onError={(e) => {
+                      e.target.src = 'https://via.placeholder.com/96x96?text=No+Image';
+                    }}
                   />
                   <div className="flex-1 space-y-2">
-                    <h3 className="font-medium">{item.name || 'Product Name'}</h3>
+                    <h3 className="font-medium">{productName}</h3>
                     <p className="text-sm text-gray-500">SKU: {item.variantSku || 'N/A'}</p>
                     {item.color && (
                       <p className="text-sm text-gray-500">Color: {item.color}</p>
@@ -248,7 +300,8 @@ const Cart = () => {
                     <p className="font-semibold">₹{(item.unitPrice || 0).toLocaleString()}</p>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="lg:col-span-1">

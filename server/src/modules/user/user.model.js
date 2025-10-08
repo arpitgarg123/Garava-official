@@ -176,8 +176,7 @@ userSchema.methods.toJSON = function () {
 };
 
 // Create indexes for better query performance
-userSchema.index({ email: 1 }, { unique: true });
-userSchema.index({ googleId: 1 }, { sparse: true });
+// Note: email and googleId indexes are already defined in schema with unique: true
 // Removed role, isVerified, and refreshTokens.createdAt indexes - rarely queried
 
 const User = mongoose.model('User', userSchema);

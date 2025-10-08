@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
   listProductsApi,
   getProductBySlugApi,
+  getProductByIdApi,
   getProductBySkuApi,
   checkPincodeApi,
 } from "./api.js";
@@ -41,7 +42,6 @@ export const fetchProducts = createAsyncThunk(
       product.list.status === "succeeded" &&
       product.list.items.length > 0 // Only use cache if we have actual items
     ) {
-      console.log('Product slice - Using cached products for:', params);
       return {
         products: product.list.items,
         pagination: {
@@ -55,7 +55,6 @@ export const fetchProducts = createAsyncThunk(
 
     // Check for duplicate requests
     if (productRequestPromises[signature]) {
-      console.log('Product slice - Deduplicating product request for:', params);
       try {
         const result = await productRequestPromises[signature];
         return result;
@@ -67,7 +66,6 @@ export const fetchProducts = createAsyncThunk(
     // Create new request promise
     const requestPromise = (async () => {
       try {
-        console.log('Product slice - Fetching products with params:', params);
         const { data } = await listProductsApi(params);
         
         const result = {
@@ -121,6 +119,15 @@ export const fetchProductBySlug = createAsyncThunk(
   }
 );
 
+// Product by ID  
+export const fetchProductById = createAsyncThunk(
+  "product/fetchById",
+  async (id) => {
+    const { data } = await getProductByIdApi(id);
+    return data?.product || data;
+  }
+);
+
 // Product by SKU
 export const fetchProductBySku = createAsyncThunk(
   "product/fetchBySku",
@@ -153,13 +160,11 @@ export const fetchCategoryCounts = createAsyncThunk(
     // Check if we have fresh cached data
     const cached = categoryCountsCache[cacheKey];
     if (cached && now - cached.timestamp < COUNTS_CACHE_TTL) {
-      console.log('Product slice - Using cached category counts for:', type);
       return { type, counts: cached.counts, _cached: true };
     }
     
     // Check if there's already a pending request for this cache key
     if (categoryCountsPromises[cacheKey]) {
-      console.log('Product slice - Deduplicating category counts request for:', type);
       try {
         const result = await categoryCountsPromises[cacheKey];
         return result;
@@ -171,7 +176,6 @@ export const fetchCategoryCounts = createAsyncThunk(
     // Create new request promise
     const requestPromise = (async () => {
       try {
-        console.log('Product slice - Fetching category counts for:', type, categories);
         const counts = {};
 
         // Use Promise.allSettled for parallel requests to handle failures gracefully
@@ -243,6 +247,7 @@ const initialState = {
     fetchedAt: null,
   },
   bySlug: {},
+  byId: {},
   availability: {},
   filters: {
     type: "",
@@ -333,6 +338,35 @@ const slice = createSlice({
     b.addCase(fetchProductBySlug.rejected, (s, { error, meta }) => {
       const slug = meta.arg;
       s.bySlug[slug] = {
+        data: null,
+        status: "failed",
+        error: error?.message || "Failed to load product",
+        fetchedAt: Date.now(),
+      };
+    });
+
+    // product by id (similar to bySlug but stored in byId)
+    b.addCase(fetchProductById.pending, (s, a) => {
+      const id = a.meta.arg;
+      s.byId = s.byId || {};
+      s.byId[id] = s.byId[id] || {};
+      s.byId[id].status = "loading";
+      s.byId[id].error = null;
+    });
+    b.addCase(fetchProductById.fulfilled, (s, { payload, meta }) => {
+      const id = meta.arg;
+      s.byId = s.byId || {};
+      s.byId[id] = {
+        data: payload,
+        status: "succeeded",
+        error: null,
+        fetchedAt: Date.now(),
+      };
+    });
+    b.addCase(fetchProductById.rejected, (s, { error, meta }) => {
+      const id = meta.arg;
+      s.byId = s.byId || {};
+      s.byId[id] = {
         data: null,
         status: "failed",
         error: error?.message || "Failed to load product",

@@ -159,7 +159,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                   {/* Out of Stock Overlay */}
                   {isOutOfStock && (
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                      <span className="bg-red-600 text-white px-2 py-1 rounded text-xs font-medium">
+                      <span className="bg-red-600 text-white px-2 py-1 rounded text-sm font-medium">
                         Out of Stock
                       </span>
                     </div>
@@ -182,7 +182,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                 <h3 className={`font-medium text-gray-900 ${compact ? 'text-sm' : 'text-base'} line-clamp-1`}>
                   {product?.name || 'Product Name'}
                 </h3>
-                <p className={`text-gray-500 my-2 uppercase tracking-wide ${compact ? 'text-xs' : 'text-sm'}`}>
+                <p className={`text-gray-500 my-2 uppercase tracking-wide ${compact ? 'text-sm' : 'text-sm'}`}>
                   {product?.type || product?.category || 'Product'}
                 </p>
                 <div className="flex items-center gap-2">
@@ -190,7 +190,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                     ₹{price.toLocaleString()}
                   </p>
                   {isOutOfStock && (
-                    <span className="text-red-600 text-xs font-medium">Out of Stock</span>
+                    <span className="text-red-600 text-sm font-medium">Out of Stock</span>
                   )}
                 </div>
                 
@@ -199,7 +199,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                     <button 
                       onClick={() => handleMoveToCart(productId)}
                       disabled={isOutOfStock}
-                      className={`flex-1 py-1.5 px-2 text-xs rounded transition ${
+                      className={`flex-1 py-1.5 px-2 text-sm rounded transition ${
                         isOutOfStock 
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                           : 'bg-black text-white hover:bg-gray-800'
@@ -209,7 +209,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                     </button>
                     <button 
                       onClick={() => handleRemoveItem(productId)}
-                      className="px-2 py-1.5 border text-xs rounded hover:bg-gray-50"
+                      className="px-2 py-1.5 border text-sm rounded hover:bg-gray-50"
                       title="Remove from wishlist"
                     >
                       ✕

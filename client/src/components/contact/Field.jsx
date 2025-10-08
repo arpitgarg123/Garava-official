@@ -21,7 +21,7 @@ const Field = ({ id, label, name, value, onChange, onBlur, required, placeholder
           error ? "border-red-300" : "border-muted"
         }`}
       />
-      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
   )
 }

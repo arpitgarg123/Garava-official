@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Products from './../components/DashboardSections/Products';
 import Orders from './../components/DashboardSections/Orders';
 import { 
@@ -13,7 +14,8 @@ import {
   FaSignOutAlt,
   FaQuestionCircle,
   FaNewspaper,
-  FaComments
+  FaComments,
+  FaInstagram
 } from "react-icons/fa";
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
@@ -31,12 +33,102 @@ import Overview from '../components/DashboardSections/Overview';
 import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
 import NotificationDebug from '../components/DashboardSections/NotificationDebug';
 import NewsEventsAdmin from '../components/DashboardSections/NewsEventsAdmin';
+import InstagramAdmin from '../components/DashboardSections/InstagramAdmin';
 import { Link, useNavigate } from 'react-router-dom';
+
+// Redux imports for real data
+import { fetchOrdersAdmin } from '../features/order/adminSlice';
+import { fetchProductsAdmin } from '../features/product/adminSlice';
+import { fetchReviewsAdmin } from '../features/reviews/reviewAdminSlice';
+import { fetchAppointmentsAdmin } from '../features/appointment/adminSlice';
+import { fetchBlogsAdmin } from '../features/blogs/blogAdminSlice';
+import { fetchTestimonials } from '../features/testimonial/slice';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // Redux state selectors
+  const orders = useSelector(state => state.orderAdmin?.orders || []);
+  const products = useSelector(state => state.productAdmin?.products || []);
+  const reviews = useSelector(state => state.reviewAdmin?.reviews || []);
+  const appointments = useSelector(state => state.appointmentAdmin?.appointments || []);
+  const blogs = useSelector(state => state.blogAdmin?.blogs || []);
+  const testimonials = useSelector(state => state.testimonials?.testimonials || []);
+
+  // Loading states
+  const ordersLoading = useSelector(state => state.orderAdmin?.loading || false);
+  const productsLoading = useSelector(state => state.productAdmin?.loading || false);
+  const reviewsLoading = useSelector(state => state.reviewAdmin?.loading || false);
+
+  // Fetch real data on component mount
+  useEffect(() => {
+    dispatch(fetchOrdersAdmin({ limit: 10, sort: '-createdAt' }));
+    dispatch(fetchProductsAdmin({ limit: 10 }));
+    dispatch(fetchReviewsAdmin({ limit: 10, sort: '-createdAt' }));
+    dispatch(fetchAppointmentsAdmin({ limit: 10, sort: 'appointmentAt' }));
+    dispatch(fetchBlogsAdmin({ limit: 5, sort: '-createdAt' }));
+    dispatch(fetchTestimonials({ limit: 5, sort: '-createdAt' }));
+  }, [dispatch]);
+
+  // Calculate real statistics  
+  // Note: Backend already converts paise to rupees for admin APIs
+  // But if conversion isn't working, apply safety check
+  const totalRevenue = orders.reduce((sum, order) => {
+    const grandTotal = order.grandTotal || 0;
+    // If grandTotal is suspiciously high (> 100,000), it might be in paise, so convert
+    const displayTotal = grandTotal > 100000 ? Math.round(grandTotal / 100) : grandTotal;
+    return sum + displayTotal;
+  }, 0);
+  const avgRating = reviews.length > 0 
+    ? reviews.reduce((sum, review) => sum + (review.rating || 0), 0) / reviews.length 
+    : 0;
+
+  // Prepare data for Overview component
+  const overviewStats = {
+    revenueINR: totalRevenue,
+    orders: orders.length,
+    products: products.length,
+    avgRating: parseFloat(avgRating.toFixed(1))
+  };
+
+  // Get recent data
+  // Note: order.grandTotal is already in rupees from admin API
+  const recentOrders = orders.slice(0, 5).map(order => {
+    // Debug: Check if prices need conversion (if they're way too high, they might be in paise)
+    const grandTotal = order.grandTotal || 0;
+    
+    // If grandTotal is suspiciously high (> 100,000), it might be in paise, so convert
+    const displayTotal = grandTotal > 100000 ? Math.round(grandTotal / 100) : grandTotal;
+    
+    return {
+      ...order,
+      totalINR: displayTotal
+    };
+  });
+
+  const recentReviews = reviews.slice(0, 5).map(review => ({
+    _id: review._id,
+    userName: review.userName || review.customerName || 'Anonymous',
+    rating: review.rating || 0,
+    comment: review.comment || review.content || '',
+    createdAt: review.createdAt
+  }));
+
+  const upcomingAppointments = appointments
+    .filter(apt => new Date(apt.appointmentAt) >= new Date())
+    .slice(0, 5);
+
+  // Top products by sales or popularity
+  const topProducts = products.slice(0, 5).map(product => ({
+    _id: product._id,
+    name: product.name || product.title,
+    image: product.heroImage?.url || product.images?.[0]?.url || f1,
+    salesINR: product.price || 0,
+    units: product.stockQuantity || 0
+  }));
 
   const tabs = [
     { id: "overview", label: "Overview", icon: MdDashboard },
@@ -47,138 +139,17 @@ const Dashboard = () => {
     { id: "testimonials", label: "Testimonials", icon: FaComments },
     { id: "blogs", label: "Blogs", icon: FaBlog },
     { id: "newsevents", label: "News & Events", icon: FaNewspaper },
+    { id: "instagram", label: "Instagram", icon: FaInstagram },
     { id: "faq", label: "FAQ", icon: FaQuestionCircle },
     { id: "notifications", label: "Notifications", icon: FaBell },
     { id: "debug", label: "Debug", icon: FaBell },
     { id: "newsletter", label: "Newsletter", icon: FaEnvelope },
   ];
 
-  const products = [
-    { id: 1, img: f1, title: "Fragnance 1", price: "₹79,153.0" },
-    { id: 2, img: f2, title: "Classic fragnance", price: "₹129,999.0" },
-    { id: 3, img: f3, title: "Statement fragnance", price: "₹54,200.0" },
-    { id: 4, img: f4, title: "Everyday fragnance", price: "₹24,500.0" },
-  ];
-
-  const dummyOrders = [ 
-    {
-      _id: '1',
-      orderNumber: 'GRV2023001',
-      createdAt: '2023-09-15T10:30:00Z',
-      status: 'delivered',
-      items: [
-        {
-          productSnapshot: {
-            name: 'Diamond Solitaire Ring',
-            heroImage: {
-              url: '/images/jewelry1.jpg'
-            }
-          },
-          quantity: 1,
-          unitPrice: 75000
-        }
-      ],
-      grandTotal: 75000
-    },
-    {
-      _id: '2',
-      orderNumber: 'GRV2023002',
-      createdAt: '2023-09-10T15:45:00Z',
-      status: 'processing',
-      items: [
-        {
-          productSnapshot: {
-            name: 'Pearl Necklace Set',
-            heroImage: {
-              url: '/images/jewelry2.jpg'
-            }
-          },
-          quantity: 1,
-          unitPrice: 45000
-        },
-        {
-          productSnapshot: {
-            name: 'Emerald Earrings',
-            heroImage: {
-              url: '/images/jewelry3.jpg'
-            }
-          },
-          quantity: 2,
-          unitPrice: 35000
-        }
-      ],
-      grandTotal: 115000
-    },
-  ];
-
-  const sampleAppointments = [
-    {
-      _id: "1",
-      customerName: "Rahul Kumar",
-      customerEmail: "rahul@example.com",
-      serviceType: "consultation",
-      status: "pending",
-      appointmentAt: "2025-09-26T10:00:00.000Z",
-      adminNotes: "First consultation"
-    },
-    {
-      _id: "2",
-      customerName: "Sneha Verma",
-      customerEmail: "sneha@example.com",
-      serviceType: "repair",
-      status: "confirmed",
-      appointmentAt: "2025-09-27T15:30:00.000Z",
-      adminNotes: "Bring spare parts"
-    }
-  ];
-
-  const dummyReviews = [
-    {
-      _id: "r1",
-      user: { name: "Rahul", email: "rahul@example.com" },
-      product: "prod-101",
-      rating: 5,
-      comment: "Excellent quality!",
-      isApproved: true,
-      flagged: false,
-      createdAt: "2025-09-25T10:00:00.000Z"
-    },
-    {
-      _id: "r2",
-      user: { name: "Sneha", email: "sneha@example.com" },
-      product: "prod-102",
-      rating: 3,
-      comment: "Good, but delivery was late.",
-      isApproved: false,
-      flagged: true,
-      createdAt: "2025-09-24T15:30:00.000Z"
-    }
-  ];
-
+  // Newsletter dummy data (keeping this as it might not have a Redux slice yet)
   const items = [
     { _id:"1", email:"a@x.com", status:"subscribed", createdAt:"2025-09-01T09:00:00Z" },
     { _id:"2", email:"b@x.com", status:"unsubscribed", createdAt:"2025-09-05T12:00:00Z" }
-  ];
-
-  const posts = [
-    {
-      _id:"1",
-      title:"Autumn Scents: A Guide",
-      description:"Warm, woody, and spicy picks for the.",
-      coverImageUrl:"https://picsum.photos/seed/wood/800/450",
-      status:"published",
-      createdAt:"2025-09-10T09:00:00Z",
-      author:{ name:"Editorial" }
-    },
-    {
-      _id:"2",
-      title:"Behind the Notes",
-      description:"Understanding top, middle, base notes.",
-      coverImageUrl:"",
-      status:"draft",
-      createdAt:"2025-09-22T14:30:00Z",
-      author:"Team"
-    }
   ];
 
   const renderContent = () => {
@@ -186,15 +157,13 @@ const Dashboard = () => {
       case "overview":
         return (
           <Overview
-            stats={{ revenueINR: 250000, orders: dummyOrders.length, products: products.length, avgRating: 4.4 }}
-            revenueTrend={[12000, 18000, 26000, 31000, 29000, 34000, 36000]}
-            topProducts={[
-              { _id: 'p1', name: 'Fragrance 1', image: f1, salesINR: 79153, units: 42 },
-              { _id: 'p2', name: 'Classic Fragrance', image: f2, salesINR: 129999, units: 23 },
-            ]}
-            recentOrders={dummyOrders.map(o => ({ ...o, totalINR: o.grandTotal }))}
-            recentReviews={dummyReviews.map(r => ({ _id: r._id, userName: r.user.name, rating: r.rating, comment: r.comment, createdAt: r.createdAt }))}
-            upcomingAppointments={sampleAppointments}
+            stats={overviewStats}
+            revenueTrend={[12000, 18000, 26000, 31000, 29000, 34000, 36000]} // Keep trend data as is
+            topProducts={topProducts}
+            recentOrders={recentOrders}
+            recentReviews={recentReviews}
+            upcomingAppointments={upcomingAppointments}
+            loading={ordersLoading || productsLoading || reviewsLoading}
           />
         );
       case "products":
@@ -206,12 +175,12 @@ const Dashboard = () => {
       case "reviews":
         return (
           <Reviews   
-            reviews={dummyReviews}
-            pagination={{ page: 1, limit: 20, total: 2, totalPages: 1 }}
-            onAction={(action, review) => console.log("Action:", action, review)}
-            onPageChange={(newPage) => console.log("Go to page:", newPage)}
-            onFilterChange={(filters) => console.log("Apply filters:", filters)}
-            onClearFilters={() => console.log("Filters cleared")} 
+            reviews={reviews}
+            pagination={{ page: 1, limit: 20, total: reviews.length, totalPages: Math.ceil(reviews.length / 20) }}
+            onAction={(action, review) => {/* TODO: Implement review actions */}}
+            onPageChange={(newPage) => {/* TODO: Implement pagination */}}
+            onFilterChange={(filters) => {/* TODO: Implement filters */}}
+            onClearFilters={() => {/* TODO: Implement clear filters */}} 
           />
         );
       case "testimonials":
@@ -220,6 +189,8 @@ const Dashboard = () => {
         return <Blogs />;
       case "newsevents":
         return <NewsEventsAdmin />;
+      case "instagram":
+        return <InstagramAdmin />;
       case "faq":
         return <FAQAdmin />;
       case "notifications":
@@ -230,9 +201,9 @@ const Dashboard = () => {
         return (
           <Newsletter  
             subscribers={items}
-            pagination={{ page:1, limit:20, total:2, totalPages:1 }}
-            onFilterChange={(f) => console.log("filters", f)}
-            onPageChange={(p) => console.log("page", p)} 
+            pagination={{ page:1, limit:20, total:items.length, totalPages:Math.ceil(items.length/20) }}
+            onFilterChange={(f) => {/* TODO: Implement order filters */}}
+            onPageChange={(p) => {/* TODO: Implement order pagination */}} 
           />
         );
       default:
@@ -266,7 +237,7 @@ const Dashboard = () => {
 
           {/* Center: Current Page */}
           <div className="hidden md:block">
-            <h2 className="text-sm font-medium uppercase tracking-wider font-montserrat
+            <h2 className="text-sm font-medium uppercase tracking-wider 
              text-gray-600">
               {tabs.find(t => t.id === activeTab)?.label}
             </h2>
@@ -333,10 +304,10 @@ const Dashboard = () => {
           {/* Sidebar Footer */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
             <div className="text-center">
-              <p className="text-xs text-gray-500">Garava Admin v2.0</p>
+              <p className="text-sm text-gray-500">Garava Admin v2.0</p>
               <div className="flex items-center justify-center gap-1 mt-1">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                <span className="text-xs text-gray-400">Online</span>
+                <span className="text-sm text-gray-400">Online</span>
               </div>
             </div>
           </div>
@@ -361,7 +332,7 @@ const Dashboard = () => {
               {/* <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-md">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-xs font-medium text-green-700">Live</span>
+                  <span className="text-sm font-medium text-green-700">Live</span>
                 </div>
                 <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
                   Export

@@ -12,10 +12,10 @@ const About = () => {
   return (
   <main  className="w-full text-black py-20 flex flex-col items-center">
       <div className="w-full max-w-6xl px-6 flex flex-col ">
-        <AboutHeading text={"''Worn by the Worthy''"} />
+        <AboutHeading text={"Where Purpose-led Luxury Meets Prestige"} />
         <AboutText
-          className="text-xl text-center mx-auto max-w-3xl tracking-tight leading-8 text-head-italic"
-          paragraph={`Explore GARAVA. Because when you know your worth, luxury becomes your story`}
+          className="text-xl text-center mx-auto max-w-3xl mt-2 tracking-tight leading-8 text-head-italic"
+          paragraph={`Explore GARAVA Because when you know your worth, luxury becomes your story.`}
         />
         <Link to='/about'>
          <button

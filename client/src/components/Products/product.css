@@ -53,7 +53,6 @@
 .overlay-text {
   color: #fff;
   font-size: 1.1vw;
-  /* font-family: 'montserrat'; */
   font-weight: 400;
   text-decoration: underline;
 }
@@ -75,7 +74,6 @@
   font-size: 1.2vw;
   font-weight: 500;
   color: rgb(81, 81, 81);
-  font-family: 'montserrat', sans-serif;
 }
 
 .products-grid {

@@ -11,6 +11,7 @@ import { bindAuth } from "./shared/api/http.js";
 import { setToken, logout, initAuth } from "./features/auth/slice.js";
 import ErrorBoundary from "./app/ErrorBoundary.jsx";
 import { tokenRefreshManager } from "./shared/auth/tokenRefreshManager.js";
+import { initializeGuestMode, shouldInitializeGuestMode } from "./shared/utils/guestModeInit.js";
 
 bindAuth({
   getToken: () => store.getState().auth?.accessToken,
@@ -39,19 +40,29 @@ store.subscribe(() => {
     
     if (accessToken && user) {
       // Start refresh cycle when user is authenticated
-      console.log('Store subscriber - User authenticated, starting token refresh cycle');
       tokenRefreshManager.startRefreshCycle(accessToken);
     } else {
       // Stop refresh cycle when user is logged out
-      console.log('Store subscriber - User not authenticated, stopping token refresh cycle');
       tokenRefreshManager.stop();
     }
   }
 });
 
 // Bootstrap session (refresh cookie -> accessToken)
-console.log('Main.jsx - Dispatching initAuth on app bootstrap');
-store.dispatch(initAuth());
+// Initialize authentication on app startup
+store.dispatch(initAuth()).then((result) => {
+  // If auth initialization fails or user is not authenticated, initialize guest mode
+  if (result.type === 'auth/init/rejected' || !store.getState().auth.accessToken) {
+    setTimeout(() => {
+      const authState = store.getState().auth;
+      if (shouldInitializeGuestMode(authState)) {
+        initializeGuestMode(store.dispatch, store.getState);
+      }
+    }, 100); // Small delay to ensure auth state is settled
+  }
+}).catch(error => {
+  console.error('Auth initialization error:', error);
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>

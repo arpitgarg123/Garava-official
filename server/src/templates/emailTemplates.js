@@ -84,7 +84,6 @@ contactConfirmation: ({ name, subject }) => {
         <ul>
           <li>Orders and shipping</li>
           <li>Ring sizing and customizations</li>
-          <li>Lab-grown diamonds and gemstones</li>
           <li>Product availability</li>
           <li>General support</li>
         </ul>

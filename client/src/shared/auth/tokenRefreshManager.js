@@ -41,11 +41,11 @@ class TokenRefreshManager {
       const refreshBuffer = 60 * 60 * 1000; // 1 hour
       const refreshTime = Math.max(0, timeUntilExpiry - refreshBuffer);
       
-      console.log('Token Refresh Manager - Setting refresh timer:', {
-        expiresAt: new Date(expiresAt).toISOString(),
-        timeUntilExpiry: Math.round(timeUntilExpiry / 1000) + 's',
-        refreshIn: Math.round(refreshTime / 1000) + 's'
-      });
+      // console.log('Token Refresh Manager - Setting refresh timer:', {
+      //   expiresAt: new Date(expiresAt).toISOString(),
+      //   timeUntilExpiry: Math.round(timeUntilExpiry / 1000) + 's',
+      //   refreshIn: Math.round(refreshTime / 1000) + 's'
+      // });
       
       this.refreshTimer = setTimeout(() => {
         this.performRefresh();
@@ -108,7 +108,7 @@ class TokenRefreshManager {
     if (this.refreshTimer) {
       clearTimeout(this.refreshTimer);
       this.refreshTimer = null;
-      console.log('Token Refresh Manager - Refresh timer cleared');
+      // console.log('Token Refresh Manager - Refresh timer cleared');
     }
   }
 

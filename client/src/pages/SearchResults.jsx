@@ -256,7 +256,7 @@ const SearchPage = () => {
                     {/* Suggestions */}
                     {inputQuery.length > 0 && suggestions.items.length > 0 && (
                       <div className="p-2">
-                        <div className="text-xs font-medium text-gray-500 px-3 py-2 flex items-center gap-2">
+                        <div className="text-sm font-medium text-gray-500 px-3 py-2 flex items-center gap-2">
                           <CiSearch className="h-3 w-3" />
                           Suggestions
                         </div>
@@ -276,14 +276,14 @@ const SearchPage = () => {
                     {/* Recent Searches */}
                     {inputQuery.length === 0 && recentSearches.length > 0 && (
                       <div className="p-2 border-t border-gray-100">
-                        <div className="text-xs font-medium text-gray-500 px-3 py-2 flex items-center gap-2 justify-between">
+                        <div className="text-sm font-medium text-gray-500 px-3 py-2 flex items-center gap-2 justify-between">
                           <span className="flex items-center gap-2">
                             <RiHistoryLine className="h-3 w-3" />
                             Recent Searches
                           </span>
                           <button
                             onClick={() => dispatch(clearRecentSearches())}
-                            className="text-xs text-red-500 hover:text-red-700"
+                            className="text-sm text-red-500 hover:text-red-700"
                           >
                             Clear All
                           </button>
@@ -311,7 +311,7 @@ const SearchPage = () => {
                     {/* Popular Searches */}
                     {inputQuery.length === 0 && (
                       <div className="p-2 border-t border-gray-100">
-                        <div className="text-xs font-medium text-gray-500 px-3 py-2 flex items-center gap-2">
+                        <div className="text-sm font-medium text-gray-500 px-3 py-2 flex items-center gap-2">
                           <RiFireLine className="h-3 w-3" />
                           Popular Searches
                         </div>

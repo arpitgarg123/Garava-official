@@ -56,12 +56,12 @@ export const MediaCoveragePage = () => {
   }
 
   return (
-    <div className="mt-32">
-      <div className="sticky top-16 z-10 mb-3">
+    <div className="mt-32 max-md:mt-0">
+      <div className="sticky top-16 z-10 mb-3 max-md:top-7">
         <BackButton />
       </div>
       <section className="relative overflow-hidden ">
-        <div className="mx-auto max-w-6xl  py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl  py-16 max-md:py-0 max-md:px-4 sm:px-6 lg:px-8">
           <p className="badge">Garava — Media Coverage</p>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Press & Features</h1>
           <p className="mt-3 max-w-2xl text-muted-foreground">A selection of articles, interviews, and editorials featuring Garava.</p>

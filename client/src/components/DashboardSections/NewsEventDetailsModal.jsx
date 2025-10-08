@@ -6,62 +6,62 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
   if (!isOpen || !item) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[94vh] overflow-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold">News/Event Details</h2>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-50">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[95vh] sm:max-h-[94vh] overflow-hidden">
+        {/* Responsive Header */}
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b">
+          <h2 className="text-lg sm:text-xl font-semibold truncate flex-1">News/Event Details</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors ml-4"
           >
-            <AiOutlineClose className="w-6 h-6" />
+            <AiOutlineClose className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
 
-        {/* Content */}
-        <div className="overflow-y-auto max-h-[calc(90vh-120px)] p-6">
-          <div className="space-y-6">
+        {/* Responsive Content */}
+        <div className="overflow-y-auto max-h-[calc(95vh-80px)] sm:max-h-[calc(90vh-120px)] p-4 sm:p-6">
+          <div className="space-y-4 sm:space-y-6">
             
-            {/* Cover Image */}
+            {/* Responsive Cover Image */}
             {item.cover?.url && (
-              <div>
+              <div className="w-full">
                 <img
                   src={item.cover.url}
                   alt={item.title}
-                  className=" h-64 object-contain "
+                  className="h-48 sm:h-64 md:h-80 object-cover rounded-lg border border-gray-200"
                 />
               </div>
             )}
 
-            {/* Basic Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Responsive Basic Info Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <div>
-                <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
-                <div className="space-y-3">
+                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Basic Information</h3>
+                <div className="space-y-2 sm:space-y-3">
                   <div>
-                    <span className="font-medium text-gray-700">Title:</span>
-                    <p className="text-gray-900">{item.title}</p>
+                    <span className="font-medium text-gray-700 text-sm sm:text-base">Title:</span>
+                    <p className="text-gray-900 text-sm sm:text-base break-words">{item.title}</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Slug:</span>
-                    <p className="text-gray-600 font-mono text-sm">{item.slug}</p>
+                    <span className="font-medium text-gray-700 text-sm sm:text-base">Slug:</span>
+                    <p className="text-gray-600 font-mono text-sm sm:text-sm break-all">{item.slug}</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Type:</span>
-                    <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
+                    <span className="font-medium text-gray-700 text-sm sm:text-base">Type:</span>
+                    <span className={`ml-2 px-2 py-1 text-sm rounded-full ${
                       item.type === 'event' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
                     }`}>
                       {item.type === 'media-coverage' ? 'Media Coverage' : item.kind}
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Date:</span>
-                    <p className="text-gray-900">{formatDate(item.date)}</p>
+                    <span className="font-medium text-gray-700 text-sm sm:text-base">Date:</span>
+                    <p className="text-gray-900 text-sm sm:text-base">{formatDate(item.date)}</p>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Status:</span>
-                    <span className={`ml-2 px-2 py-1 text-xs rounded-full ${
+                    <span className="font-medium text-gray-700 text-sm sm:text-base">Status:</span>
+                    <span className={`ml-2 px-2 py-1 text-sm rounded-full ${
                       item.status === 'published' ? 'bg-green-100 text-green-800' :
                       item.status === 'draft' ? 'bg-yellow-100 text-yellow-800' :
                       'bg-red-100 text-red-800'
@@ -70,39 +70,39 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                     </span>
                   </div>
                   <div>
-                    <span className="font-medium text-gray-700">Views:</span>
-                    <p className="text-gray-900">{item.views || 0}</p>
+                    <span className="font-medium text-gray-700 text-sm sm:text-base">Views:</span>
+                    <p className="text-gray-900 text-sm sm:text-base">{item.views || 0}</p>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-4">
+                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
                   {item.type === 'event' ? 'Event Details' : 'Media Details'}
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {item.type === 'event' ? (
                     <>
                       {item.city && (
                         <div>
-                          <span className="font-medium text-gray-700">City:</span>
-                          <p className="text-gray-900">{item.city}</p>
+                          <span className="font-medium text-gray-700 text-sm sm:text-base">City:</span>
+                          <p className="text-gray-900 text-sm sm:text-base">{item.city}</p>
                         </div>
                       )}
                       {item.location && (
                         <div>
-                          <span className="font-medium text-gray-700">Location:</span>
-                          <p className="text-gray-900">{item.location}</p>
+                          <span className="font-medium text-gray-700 text-sm sm:text-base">Location:</span>
+                          <p className="text-gray-900 text-sm sm:text-base break-words">{item.location}</p>
                         </div>
                       )}
                       {item.rsvpUrl && (
                         <div>
-                          <span className="font-medium text-gray-700">RSVP URL:</span>
+                          <span className="font-medium text-gray-700 text-sm sm:text-base">RSVP URL:</span>
                           <a 
                             href={item.rsvpUrl} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 underline"
+                            className="text-blue-600 hover:text-blue-800 underline text-sm sm:text-base break-all block"
                           >
                             {item.rsvpUrl}
                           </a>
@@ -113,18 +113,18 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
                     <>
                       {item.outlet && (
                         <div>
-                          <span className="font-medium text-gray-700">Outlet:</span>
-                          <p className="text-gray-900">{item.outlet}</p>
+                          <span className="font-medium text-gray-700 text-sm sm:text-base">Outlet:</span>
+                          <p className="text-gray-900 text-sm sm:text-base">{item.outlet}</p>
                         </div>
                       )}
                       {item.url && (
                         <div>
-                          <span className="font-medium text-gray-700">Article URL:</span>
+                          <span className="font-medium text-gray-700 text-sm sm:text-base">Article URL:</span>
                           <a 
                             href={item.url} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 underline"
+                            className="text-blue-600 hover:text-blue-800 underline text-sm sm:text-base break-all block"
                           >
                             {item.url}
                           </a>
@@ -136,69 +136,73 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
               </div>
             </div>
 
-            {/* Excerpt */}
+            {/* Responsive Excerpt */}
             {item.excerpt && (
               <div>
-                <h3 className="text-lg font-semibold mb-3">Excerpt</h3>
-                <p className="text-gray-700 bg-gray-50 p-4 rounded-lg">{item.excerpt}</p>
+                <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Excerpt</h3>
+                <p className="text-gray-700 bg-gray-50 p-3 sm:p-4 rounded-lg text-sm sm:text-base leading-relaxed">
+                  {item.excerpt}
+                </p>
               </div>
             )}
 
-            {/* Content */}
+            {/* Responsive Content */}
             {item.content && (
               <div>
-                <h3 className="text-lg font-semibold mb-3">Content</h3>
-                <div className="prose max-w-none bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-base sm:text-lg font-semibold mb-2 max-sm:mb-0 sm:mb-3">Content</h3>
+                <div className="prose prose-sm sm:prose max-w-none bg-gray-50 p-3 sm:p-4 rounded-lg">
                   {item.content.split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-2">{paragraph}</p>
+                    <p key={index} className="mb-2 text-sm sm:text-base leading-relaxed text-gray-700">
+                      {paragraph}
+                    </p>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* SEO Information */}
+            {/* Responsive SEO Information */}
             {(item.metaTitle || item.metaDescription) && (
               <div>
-                <h3 className="text-lg font-semibold mb-3">SEO Information</h3>
-                <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
+                <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">SEO Information</h3>
+                <div className="space-y-2 sm:space-y-3 bg-gray-50 p-3 sm:p-4 rounded-lg">
                   {item.metaTitle && (
                     <div>
-                      <span className="font-medium text-gray-700">Meta Title:</span>
-                      <p className="text-gray-900">{item.metaTitle}</p>
+                      <span className="font-medium text-gray-700 text-sm sm:text-base">Meta Title:</span>
+                      <p className="text-gray-900 text-sm sm:text-base break-words">{item.metaTitle}</p>
                     </div>
                   )}
                   {item.metaDescription && (
                     <div>
-                      <span className="font-medium text-gray-700">Meta Description:</span>
-                      <p className="text-gray-900">{item.metaDescription}</p>
+                      <span className="font-medium text-gray-700 text-sm sm:text-base">Meta Description:</span>
+                      <p className="text-gray-900 text-sm sm:text-base break-words">{item.metaDescription}</p>
                     </div>
                   )}
                 </div>
               </div>
             )}
 
-            {/* Metadata */}
+            {/* Responsive Metadata */}
             <div>
-              <h3 className="text-lg font-semibold mb-3">Metadata</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg text-sm">
+              <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-3">Metadata</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 bg-gray-50 p-3 sm:p-4 rounded-lg text-sm sm:text-sm">
                 <div>
                   <span className="font-medium text-gray-700">Created:</span>
-                  <p className="text-gray-600">{formatDate(item.createdAt)}</p>
+                  <p className="text-gray-600 break-words">{formatDate(item.createdAt)}</p>
                 </div>
                 <div>
                   <span className="font-medium text-gray-700">Updated:</span>
-                  <p className="text-gray-600">{formatDate(item.updatedAt)}</p>
+                  <p className="text-gray-600 break-words">{formatDate(item.updatedAt)}</p>
                 </div>
                 {item.author && (
                   <div>
                     <span className="font-medium text-gray-700">Author:</span>
-                    <p className="text-gray-600">{item.author.name || item.author.email}</p>
+                    <p className="text-gray-600 break-words">{item.author.name || item.author.email}</p>
                   </div>
                 )}
                 {item.publishAt && (
                   <div>
                     <span className="font-medium text-gray-700">Publish Date:</span>
-                    <p className="text-gray-600">{formatDate(item.publishAt)}</p>
+                    <p className="text-gray-600 break-words">{formatDate(item.publishAt)}</p>
                   </div>
                 )}
               </div>
@@ -206,11 +210,11 @@ export default function NewsEventDetailsModal({ isOpen, item, onClose }) {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="flex justify-end p-6 border-t bg-gray-50">
+        {/* Responsive Footer */}
+        <div className="flex justify-end p-4 sm:p-6 border-t bg-gray-50">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+            className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors text-sm sm:text-base"
           >
             Close
           </button>

@@ -51,7 +51,7 @@ export default function Overview({
           <div>
             <p className="text-sm font-medium text-gray-600">{title}</p>
             <p className="text-2xl font-semibold text-gray-900 mt-1">{value}</p>
-            {subtitle && <p className="text-xs text-gray-500 mt-1">{subtitle}</p>}
+            {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
           </div>
           <div className={`p-3 rounded-lg ${colorClasses[color]}`}>
             {icon}
@@ -123,7 +123,7 @@ export default function Overview({
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">{fmtINR(order.totalINR)}</p>
-                        <span className={`inline-block px-2 py-1 text-xs rounded-full font-medium ${
+                        <span className={`inline-block px-2 py-1 text-sm rounded-full font-medium ${
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
                           order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
@@ -209,7 +209,7 @@ export default function Overview({
                         </div>
                       </div>
                       <p className="text-sm text-gray-600 line-clamp-2">{review.comment}</p>
-                      <p className="text-xs text-gray-500 mt-2">{fmtDate(review.createdAt)}</p>
+                      <p className="text-sm text-gray-500 mt-2">{fmtDate(review.createdAt)}</p>
                     </div>
                   ))}
                 </div>
@@ -243,7 +243,7 @@ export default function Overview({
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-medium text-gray-900">{fmtDateTime(appointment.appointmentAt)}</p>
-                          <span className={`inline-block px-2 py-1 text-xs rounded-full font-medium ${
+                          <span className={`inline-block px-2 py-1 text-sm rounded-full font-medium ${
                             appointment.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                             appointment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                             'bg-gray-50 text-gray-800'

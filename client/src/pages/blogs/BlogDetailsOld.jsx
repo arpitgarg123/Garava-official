@@ -40,7 +40,6 @@ const DEFAULT_POST = {
 
     <h3 id="faqs">FAQs</h3>
     <p><strong>Can a jeweler resize a ring?</strong> Usually 1–2 sizes. Check brand policies.</p>
-    <p><strong>Are lab-grown diamonds good?</strong> Yes—ethical, budget-friendly, and gorgeous.</p>
   `,
 
 };
@@ -97,7 +96,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
               <span className="rounded-xl bg-black text-white px-3 py-1 text-sm font-medium text-primary">
                 {post.category}
               </span>
-              <span className="text-xs  flex-center "> ● {post.readTimeMinutes} min read</span>
+              <span className="text-sm  flex-center "> ● {post.readTimeMinutes} min read</span>
             </div>
             <h1 className="text-balance text-3xl font-semibold leading-tight sm:text-4xl">
               {post.title}
@@ -112,7 +111,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
               />
               <div>
                 <div className="text-sm font-medium">Posted by {post.postedBy?.name}</div>
-                <div className="text-xs text-muted-foreground">Updated {formatDate(post.publishedAt)}</div>
+                <div className="text-sm text-muted-foreground">Updated {formatDate(post.publishedAt)}</div>
               </div>
             </div>
           </header>
@@ -143,7 +142,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
           {/* {post.tags?.length > 0 && (
             <div className="flex flex-wrap items-center gap-2 border-t px-5 py-6 sm:px-8">
               {post.tags.map((t) => (
-                <span key={t} className="rounded-full border px-3 py-1 text-xs text-muted-foreground">
+                <span key={t} className="rounded-full border px-3 py-1 text-sm text-muted-foreground">
                   #{t}
                 </span>
               ))}

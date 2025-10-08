@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as wishlistApi from "./api.js";
 import { logout, initAuth } from "../auth/slice.js";
+import { guestWishlist } from "../../shared/utils/guestStorage.js";
 
 // Smart request deduplication with timestamp tracking and caching
 let lastWishlistFetchTime = 0;
@@ -19,13 +20,11 @@ export const fetchWishlist = createAsyncThunk(
       
       // Smart deduplication: prevent requests within cooldown unless forced
       if (!force && wishlist.status === 'loading') {
-        console.log('Wishlist slice - Already loading, skipping duplicate request');
         return rejectWithValue('Already loading');
       }
       
       // Cache check: if data is fresh and force is not set, skip fetch
       if (!force && wishlist.products.length > 0 && now - lastWishlistCacheTime < WISHLIST_CACHE_TTL) {
-        console.log('Wishlist slice - Using cached data, skipping fetch');
         // Return the current wishlist structure that matches the API response
         return {
           products: wishlist.products,
@@ -37,18 +36,14 @@ export const fetchWishlist = createAsyncThunk(
       
       // Cooldown protection for rapid successive calls
       if (!force && now - lastWishlistFetchTime < WISHLIST_FETCH_COOLDOWN) {
-        console.log('Wishlist slice - Too soon since last fetch, skipping');
         return rejectWithValue('Too soon');
       }
       
       lastWishlistFetchTime = now;
-      console.log('Wishlist slice - Fetching wishlist:', params);
       const response = await wishlistApi.getWishlist(params);
-      console.log('Wishlist slice - Fetch wishlist response:', response);
       lastWishlistCacheTime = now; // Update cache time on successful fetch
       return response.data;
     } catch (error) {
-      console.error('Wishlist slice - Fetch wishlist error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch wishlist';
       return rejectWithValue(errorMessage);
     }
@@ -59,12 +54,9 @@ export const addToWishlist = createAsyncThunk(
   "wishlist/addToWishlist",
   async (productId, { rejectWithValue }) => {
     try {
-      console.log('Wishlist slice - Adding to wishlist:', productId);
       const response = await wishlistApi.addToWishlist(productId);
-      console.log('Wishlist slice - Add to wishlist response:', response);
       return { productId, wishlist: response.data.wishlist };
     } catch (error) {
-      console.error('Wishlist slice - Add to wishlist error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to add to wishlist';
       return rejectWithValue(errorMessage);
     }
@@ -75,12 +67,9 @@ export const removeFromWishlist = createAsyncThunk(
   "wishlist/removeFromWishlist",
   async (productId, { rejectWithValue }) => {
     try {
-      console.log('Wishlist slice - Removing from wishlist:', productId);
       const response = await wishlistApi.removeFromWishlist(productId);
-      console.log('Wishlist slice - Remove from wishlist response:', response);
       return { productId, ...response.data };
     } catch (error) {
-      console.error('Wishlist slice - Remove from wishlist error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to remove from wishlist';
       return rejectWithValue(errorMessage);
     }
@@ -91,14 +80,60 @@ export const toggleWishlistItem = createAsyncThunk(
   "wishlist/toggleWishlistItem",
   async (productId, { rejectWithValue, getState }) => {
     try {
-      console.log('Wishlist slice - Toggling wishlist item:', productId);
       const response = await wishlistApi.toggleWishlist(productId);
-      console.log('Wishlist slice - Toggle wishlist response:', response);
       return { productId, ...response.data };
     } catch (error) {
-      console.error('Wishlist slice - Toggle wishlist error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Failed to toggle wishlist';
       return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+// Guest wishlist actions (for non-authenticated users)
+export const addToGuestWishlist = createAsyncThunk(
+  "wishlist/addToGuestWishlist",
+  async ({ productId, productDetails }, { rejectWithValue }) => {
+    try {
+      const result = guestWishlist.add(productId, productDetails);
+      return { productId, ...result, action: 'added' };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to add to guest wishlist');
+    }
+  }
+);
+
+export const removeFromGuestWishlist = createAsyncThunk(
+  "wishlist/removeFromGuestWishlist",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const result = guestWishlist.remove(productId);
+      return { productId, ...result, action: 'removed' };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to remove from guest wishlist');
+    }
+  }
+);
+
+export const toggleGuestWishlistItem = createAsyncThunk(
+  "wishlist/toggleGuestWishlistItem",
+  async ({ productId, productDetails }, { rejectWithValue }) => {
+    try {
+      const result = guestWishlist.toggle(productId, productDetails);
+      return { productId, ...result };
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to toggle guest wishlist');
+    }
+  }
+);
+
+export const loadGuestWishlist = createAsyncThunk(
+  "wishlist/loadGuestWishlist",
+  async (_, { rejectWithValue }) => {
+    try {
+      const guestWishlistData = guestWishlist.get();
+      return guestWishlistData;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to load guest wishlist');
     }
   }
 );
@@ -116,6 +151,7 @@ const wishlistSlice = createSlice({
     },
     status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
+    isGuest: false, // Track if wishlist is in guest mode
   },
   reducers: {
     clearWishlistError: (state) => {
@@ -255,18 +291,80 @@ const wishlistSlice = createSlice({
         state.error = action.payload || action.error.message;
       });
 
+    // Guest wishlist actions
+    builder
+      .addCase(loadGuestWishlist.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.products = action.payload?.products || [];
+        state.productIds = action.payload?.productIds || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+        state.error = null;
+      })
+      .addCase(addToGuestWishlist.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(addToGuestWishlist.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        const { productId } = action.payload;
+        state.products = action.payload?.products || [];
+        state.productIds = action.payload?.productIds || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+        state.error = null;
+      })
+      .addCase(addToGuestWishlist.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(removeFromGuestWishlist.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(removeFromGuestWishlist.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.products = action.payload?.products || [];
+        state.productIds = action.payload?.productIds || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+        state.error = null;
+      })
+      .addCase(removeFromGuestWishlist.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      })
+      .addCase(toggleGuestWishlistItem.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(toggleGuestWishlistItem.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isGuest = true;
+        state.products = action.payload?.products || [];
+        state.productIds = action.payload?.productIds || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+        state.error = null;
+      })
+      .addCase(toggleGuestWishlistItem.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || action.error.message;
+      });
+
     // Clear wishlist data when user logs out or auth fails
     builder
       .addCase(logout, (state) => {
-        state.products = [];
-        state.productIds = [];
-        state.pagination = { total: 0, page: 1, limit: 50, totalPages: 0 };
+        // On logout, switch to guest mode and load guest wishlist
+        const guestWishlistData = guestWishlist.get();
+        state.products = guestWishlistData.products;
+        state.productIds = guestWishlistData.productIds;
+        state.pagination = guestWishlistData.pagination;
+        state.isGuest = true;
         state.status = "idle";
         state.error = null;
         // Reset cache times
         lastWishlistFetchTime = 0;
         lastWishlistCacheTime = 0;
-        console.log('Wishlist slice - Cleared wishlist data on logout');
       })
       .addCase(initAuth.rejected, (state, { payload }) => {
         const errorData = payload || {};
@@ -281,10 +379,8 @@ const wishlistSlice = createSlice({
           // Reset cache times
           lastWishlistFetchTime = 0;
           lastWishlistCacheTime = 0;
-          console.log('Wishlist slice - Cleared wishlist data on auth failure');
         } else if (errorData.type === 'NETWORK_ERROR') {
-          // Don't clear wishlist on network errors, just log
-          console.log('Wishlist slice - Network error during auth init, keeping wishlist data');
+          // Don't clear wishlist on network errors
         }
       });
   },

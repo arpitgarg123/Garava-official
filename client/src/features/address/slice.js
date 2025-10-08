@@ -5,23 +5,8 @@ import { addressApi } from './api';
 // Async thunks
 export const fetchAddresses = createAsyncThunk(
   'address/fetchAddresses',
-  async (_, { rejectWithValue, getState }) => {
-    const state = getState();
-    
-    // Prevent redundant fetches if already loading or have data
-    if (state.address.isLoading) {
-      console.log('Address slice - Fetch already in progress, skipping');
-      return state.address.addresses;
-    }
-    
-    // Don't refetch if we have addresses (more aggressive caching)
-    if (state.address.addresses.length > 0) {
-      console.log('Address slice - Already have', state.address.addresses.length, 'addresses, skipping fetch');
-      return state.address.addresses;
-    }
-    
+  async (_, { rejectWithValue }) => {
     try {
-      console.log('Address slice - Fetching addresses...');
       const response = await addressApi.getAddresses();
       return response.addresses;
     } catch (error) {
@@ -35,7 +20,6 @@ export const forceRefreshAddresses = createAsyncThunk(
   'address/forceRefreshAddresses',
   async (_, { rejectWithValue }) => {
     try {
-      console.log('Address slice - Force refreshing addresses...');
       const response = await addressApi.getAddresses();
       return response.addresses;
     } catch (error) {
@@ -126,20 +110,13 @@ const addressSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // Fetch addresses
-      .addCase(fetchAddresses.pending, (state, action) => {
-        // Only set loading if we're actually going to fetch new data
-        const willFetchNew = !state.addresses.length && !state.isLoading;
-        if (willFetchNew) {
-          state.isLoading = true;
-        }
+      .addCase(fetchAddresses.pending, (state) => {
+        state.isLoading = true;
         state.error = null;
       })
       .addCase(fetchAddresses.fulfilled, (state, action) => {
         state.isLoading = false;
-        // Only update if we got new data
-        if (action.payload && action.payload.length >= 0) {
-          state.addresses = action.payload;
-        }
+        state.addresses = action.payload || [];
       })
       .addCase(fetchAddresses.rejected, (state, action) => {
         state.isLoading = false;

@@ -65,7 +65,6 @@ const Checkout = () => {
   useEffect(() => {
     if (paymentUrl && !isProcessingPayment) {
       setIsProcessingPayment(true);
-      console.log('Redirecting to PhonePe payment URL:', paymentUrl);
       
       // Open payment URL in current window
       window.location.href = paymentUrl;
@@ -140,8 +139,6 @@ const Checkout = () => {
         paymentMethod
       };
 
-      console.log('Placing order with data:', orderData);
-
       if (paymentMethod === 'phonepe') {
         // Initiate PhonePe payment
         dispatch(initiatePayment(orderData));
@@ -197,7 +194,7 @@ const Checkout = () => {
                   />
                   <span className="flex items-center space-x-2">
                     <span>PhonePe Payment Gateway</span>
-                    <span className="text-xs text-gray-500">(Cards, UPI, Wallets)</span>
+                    <span className="text-sm text-gray-500">(Cards, UPI, Wallets)</span>
                   </span>
                 </label>
                 <label className="flex items-center space-x-3 cursor-pointer">
@@ -234,7 +231,7 @@ const Checkout = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
                         No Image
                       </div>
                     )}
@@ -247,12 +244,12 @@ const Checkout = () => {
                     </h3>
                     <div className="flex items-center space-x-2 mt-1">
                       {item.variantSku && (
-                        <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded">
+                        <span className="text-sm text-gray-500 bg-white px-2 py-1 rounded">
                           SKU: {item.variantSku}
                         </span>
                       )}
                       {item.variant?.sizeLabel && (
-                        <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded">
+                        <span className="text-sm text-gray-500 bg-white px-2 py-1 rounded">
                           Size: {item.variant.sizeLabel}
                         </span>
                       )}
@@ -266,7 +263,7 @@ const Checkout = () => {
                           {formatCurrency((item.unitPrice || 0) * item.quantity)}
                         </div>
                         {item.quantity > 1 && (
-                          <div className="text-xs text-gray-500">
+                          <div className="text-sm text-gray-500">
                             {formatCurrency(item.unitPrice || 0)} each
                           </div>
                         )}

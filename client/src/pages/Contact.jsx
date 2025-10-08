@@ -5,8 +5,6 @@ import Summary from "../components/contact/Summary";
 import BackButton from "../components/BackButton";
 import { submitContactForm } from "../shared/api/contact.api.js";
 
-
-
 const Contact = () => {
   const formId = useId();
   const [status, setStatus] = useState({ type: "idle", message: "" });
@@ -38,7 +36,7 @@ const Contact = () => {
   const msgOk = values.message.trim().length >= 10;
   const canSubmit = emailOk && phoneOk && nameOk && subjectOk && msgOk && status.type !== "submitting";
 
- const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (values.website) return; // honeypot triggered
     if (!canSubmit) {
@@ -49,7 +47,7 @@ const Contact = () => {
     try {
       setStatus({ type: "submitting", message: "" });
       
-      // Submit contact form via API
+      // Submit contact form via API following shared/api pattern
       const result = await submitContactForm({
         name: values.name,
         email: values.email,
@@ -67,29 +65,28 @@ const Contact = () => {
       const errorMessage = err.response?.data?.message || "Something went wrong. Please try again.";
       setStatus({ type: "error", message: errorMessage });
     }
-  }
+  };
 
   return (
     <div className="mt-36">
-       <div className="sticky top-34 z-10 mb-3">
+      <div className="sticky top-34  z-10 mb-3">
         <BackButton />
       </div>
-      <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-7xl px-4  sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
-            <p className="badge">
-              Contact Garava
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">We’d love to hear from you</h1>
-            <p className="mt-3 text-muted-foreground">
-              Questions about orders, ring sizing, or lab-grown diamonds? Send us a note—our team typically responds within one business day.
+
+    
+      <section className="mx-auto  grid max-w-6xl gap-18   lg:grid-cols-12 ">
+      
+        <div className="lg:col-span-7 ">
+            {/* Form Section */}
+         <div className=" ">
+            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+             Got a Questions?
+            </h1>
+            <p className="my-3 text-muted-foreground">
+              We would love to hear from you to assist you with your orders, style advice, gift ideas, and more. 
+              Please select your preferred method of contact below.
             </p>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-12 lg:px-8">
-        <div className="lg:col-span-7">
           <form onSubmit={handleSubmit} noValidate className="mr-16 max-sm:mr-0 max-md:mr-0 max-lg:mr-0">
             <h2 className="text-lg font-medium">Send us a message</h2>
 
@@ -138,7 +135,7 @@ const Contact = () => {
                 onChange={onChange}
                 onBlur={onBlur}
                 required
-                placeholder="What’s this about?"
+                placeholder="What's this about?"
                 error={touched.subject && !subjectOk ? "Please enter at least 2 characters." : ""}
               />
 
@@ -161,14 +158,21 @@ const Contact = () => {
               {/* Honeypot */}
               <div className="hidden">
                 <label htmlFor={`${formId}-website`} className="text-sm">Website</label>
-                <input id={`${formId}-website`} name="website" value={values.website} onChange={onChange} className="mt-1 w-full rounded-xl border bg-background px-3 py-2" />
+                <input 
+                  id={`${formId}-website`} 
+                  name="website" 
+                  value={values.website} 
+                  onChange={onChange} 
+                  className="mt-1 w-full rounded-xl border bg-background px-3 py-2" 
+                />
               </div>
             </div>
 
             {status.type !== "idle" && status.message && (
               <p
                 className={`mt-4 text-sm ${
-                  status.type === "success" ? "text-green-600" : status.type === "error" ? "text-red-600" : "text-muted-foreground"
+                  status.type === "success" ? "text-green-600" : 
+                  status.type === "error" ? "text-red-600" : "text-muted-foreground"
                 }`}
               >
                 {status.message}
@@ -186,44 +190,41 @@ const Contact = () => {
             </div>
           </form>
         </div>
-        <aside className="lg:col-span-5 space-y-6">
+
+        {/* Sidebar Section - Fixed structure */}
+        <aside className="lg:col-span-5 space-y-6 ">
+         
+
+          {/* Contact Information */}
           <div>
             <h2 className="text-lg font-medium">Get in touch</h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <Infotile title="Email" value="support@garava.in" href="mailto:support@garava.in" />
-              <Infotile title="Phone" value="(+91) 98765-43210" href="tel:+919876543210" />
-              <Infotile title="WhatsApp" value="Chat now" href="https://wa.me/919876543210" />
-              <Infotile title="Instagram" value="@garava.in" href="https://instagram.com/garava.in" />
+              <Infotile title="Email" value="info@garava.in" href="mailto:info@garava.in" />
+              <Infotile title="Phone" value="(+91) 7738543881" href="tel:+917738543881" />
+              <Infotile title="WhatsApp" value="Chat now" href="https://wa.me/917738543881" />
+              <Infotile title="Instagram" value="@garava.in" href="https://www.instagram.com/garavaofficial?igsh=MTE2MWZrMzU1aGMx" />
             </div>
           </div>
 
-          <div className="">
+          {/* FAQ Section */}
+          <div>
             <h3 className="text-sm font-semibold">FAQ</h3>
             <ul className="mt-3 space-y-3 text-sm">
               <li>
-                <Summary title="How long does shipping take?">
-                  Most orders dispatch within 24–48 hours. Delivery timelines vary by location (typically 2–6 days in India).
-                </Summary>
+                <Summary title="Do you work with natural gemstones? ">
+Yes, we use only natural and ethically sourced gemstones.                </Summary>
               </li>
               <li>
                 <Summary title="Can I resize my ring?">
                   Yes, we offer complimentary resizing for select styles within 30 days of purchase.
                 </Summary>
               </li>
-              <li>
-                <Summary title="Do you use lab-grown diamonds?">
-                  Absolutely. We prioritize ethical sourcing and quality.
-                </Summary>
-              </li>
             </ul>
           </div>
         </aside>
-
-      
       </section>
     </div>
   );
-}
-export default Contact
+};
 
-
+export default Contact;

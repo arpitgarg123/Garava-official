@@ -24,7 +24,7 @@ const BlogCard = ({ blog }) => {
           className="w-full h-56 object-cover"
         />
         {blog.category && (
-          <div className="absolute bottom-3 left-3 bg-black/60 text-white text-xs px-3 py-1 rounded-full">
+          <div className="absolute bottom-3 left-3 bg-black/60 text-white text-sm px-3 py-1 rounded-full">
             {blog.category}
           </div>
         )}
