@@ -150,10 +150,11 @@ const HeroSection = () => {
     <section className="hero-root  text-[#f5e6d7] relative w-full h-screen flex items-end justify-end flex-col overflow-hidden">
       <div className="hero-overlay" />
 
-      <div className="hero-inner relative  flex items-start justify-between w-[95%]    h-[70vh]">
-        <div className="hero-left w-[30vw] h-80   flex flex-col  items-start ">
+      <div className="hero-inner relative  flex items-start justify-between w-[95%]  max-md:w-ful
+        h-[70vh]">
+        <div className="hero-left w-[30vw] max-md:w-full h-80   flex flex-col  items-start ">
           {/* <TextSlider isFragrance={isFragrance} /> */}
-          <button onClick={handleDiscoverMore} className="btn-luxury rounded-4xl w-62 mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50"
+          <button onClick={handleDiscoverMore} className="btn-luxury rounded-4xl w-62 mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50 max-md:bottom-23  "
           style={
             {
               padding:'0.5rem 2.1rem'
@@ -187,7 +188,7 @@ const HeroSection = () => {
 
 
         {/* <img className="h-[95vh] scale-120  absolute left-[29%] -bottom-12 object-cover " src={model} alt="" /> */}
-        <img className="h-[95vh]  absolute left-[29%] max-sm:left-[0%] z-  bottom-0 object-cover " src={o} alt="" />
+        <img className="h-[95vh]  absolute left-[29%] max-sm:left-[0%]  bottom-0  max object-contain max-sm:scale-110 max-sm:-bottom-26" src={o} alt="" />
       </div>
     </section>
   );

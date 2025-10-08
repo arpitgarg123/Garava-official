@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PageHeader from '../components/header/PageHeader'
 import { 
@@ -7,6 +7,7 @@ import {
   selectFeaturedLoading, 
   selectFeaturedError 
 } from '../features/instagram/slice.js'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 // Default fallback images
 import insta1 from '../assets/images/insta.jpg'
 import insta2 from '../assets/images/insta1.jpg'
@@ -16,6 +17,7 @@ import insta4 from '../assets/images/insta3.jpg'
 
 const InstaPost = () => {
   const dispatch = useDispatch()
+  const scrollRef = useRef(null)
   const featuredPosts = useSelector(selectFeaturedPosts)
   const loading = useSelector(selectFeaturedLoading)
   const error = useSelector(selectFeaturedError)
@@ -73,39 +75,64 @@ const InstaPost = () => {
       ) : null}
 
       <section className="w-[98%] mx-auto py-10">
-        <div className="mx-auto w-[95%] h-[80%]">
-          <div className="products-grid">
-            {products.map((p) => (
-              <article 
-                key={p.id} 
-                className="card cursor-pointer transform transition-transform hover:scale-105" 
-                tabIndex="0"
-                onClick={() => handlePostClick(p)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    handlePostClick(p)
-                  }
-                }}
-              >
-                <div className="card-img-wrapper">
-                  <img
-                    className="card-img"
-                    src={p.img}
-                    alt={p.title || `Instagram post ${p.id}`}
-                    loading="lazy"
-                    width="800"
-                    height="800"
-                  />
-                </div>
+        <div className="mx-auto w-[95%] max-w-7xl">
+          {/* Horizontal scrollable container */}
+          <div className="relative group">
+            {/* Left Arrow */}
+            <button 
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+              onClick={() => scrollRef.current?.scrollBy({ left: -300, behavior: 'smooth' })}
+            >
+              <IoIosArrowBack size={20} />
+            </button>
+            
+            {/* Right Arrow */}
+            <button 
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+              onClick={() => scrollRef.current?.scrollBy({ left: 300, behavior: 'smooth' })}
+            >
+              <IoIosArrowForward size={20} />
+            </button>
+            
+            <div 
+              ref={scrollRef}
+              className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+            >
+              <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max px-4 py-4">
+                {products.map((p) => (
+                  <div key={p.id} className="w-[250px] sm:w-[280px] md:w-[300px] flex-shrink-0">
+                    <article 
+                      className="card cursor-pointer transform transition-transform hover:scale-105 w-full h-full" 
+                      tabIndex="0"
+                      onClick={() => handlePostClick(p)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          handlePostClick(p)
+                        }
+                      }}
+                    >
+                      <div className="card-img-wrapper">
+                        <img
+                          className="card-img"
+                          src={p.img}
+                          alt={p.title || `Instagram post ${p.id}`}
+                          loading="lazy"
+                          width="800"
+                          height="800"
+                        />
+                      </div>
 
-                {p.title && (
-                  <div className="mt-3 text-center">
-                    <h3 className="card-title">{p.title}</h3>
+                      {p.title && (
+                        <div className="mt-2 sm:mt-3 text-center px-1">
+                          <h3 className="card-title line-clamp-2">{p.title}</h3>
+                        </div>
+                      )}
+                    </article>
                   </div>
-                )}
-              </article>
-            ))}
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="flex-center mt-12 text-center cursor-pointer">

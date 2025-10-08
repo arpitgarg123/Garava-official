@@ -16,6 +16,15 @@
   cursor: pointer;
   width: 100%;
   height: 100%;
+  min-width: 0; /* Allows text truncation */
+}
+
+/* Horizontal layout specific styles */
+.card.horizontal-card {
+  min-width: 250px;
+  max-width: 300px;
+  flex-shrink: 0;
+  margin: 0 8px; /* Additional margin for better spacing */
 }
 
 .card-img-wrapper {
@@ -41,7 +50,7 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(60, 60, 60, 0.215);
     backdrop-filter: blur(3px); 
   opacity: 0;
   display: flex;
@@ -52,9 +61,10 @@
 
 .overlay-text {
   color: #fff;
-  font-size: 1.1vw;
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
   font-weight: 400;
   text-decoration: underline;
+  white-space: nowrap;
 }
 
 /* Hover effect */
@@ -64,14 +74,21 @@
 
 
 .card-title {
-  font-size:1.3vw;
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
   font-family:'playfair';
   font-weight: 100;
-  letter-spacing: 2;
+  letter-spacing: 1px;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .card-rupe-text {
-  font-size: 1.2vw;
+  font-size: clamp(0.8rem, 2.2vw, 1rem);
   font-weight: 500;
   color: rgb(81, 81, 81);
 }
@@ -109,22 +126,55 @@
 
 
 
-@media (max-width: 768px) {
-  
-  .overlay-text {
-    font-size: 1rem;
+/* Mobile first responsive design */
+@media (max-width: 480px) {
+  .card.horizontal-card {
+    min-width: 200px;
+    max-width: 250px;
+  }
+  .overlay-text { 
+    font-size: 0.75rem; 
+  }
+  .card-title { 
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+  .card-rupe-text { 
+    font-size: 0.85rem; 
   }
 }
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .card.horizontal-card {
+    min-width: 220px;
+    max-width: 270px;
+  }
+  .overlay-text { 
+    font-size: 0.85rem; 
+  }
+  .card-title { 
+    font-size: 1rem;
+  }
+  .card-rupe-text { 
+    font-size: 0.9rem; 
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .card.horizontal-card {
+    min-width: 240px;
+    max-width: 280px;
+  }
+}
+
 @media (min-width: 1024px) {
   .card-img-wrapper {
     aspect-ratio: 1 / 1;
   }
-}
-@media (max-width: 768px) {
-  .overlay-text { font-size: 0.9rem; }
-  .card-title { font-size: 1.2rem; }
-  .card-rupe-text { font-size: 1rem; }
-  .card-img-wrapper { aspect-ratio: 1 / 1; }
+  .card.horizontal-card {
+    min-width: 250px;
+    max-width: 300px;
+  }
 }
 
 

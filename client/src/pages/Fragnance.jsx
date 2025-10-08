@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Card from '../components/Products/Card'
 import f1 from "../assets/images/f-front.png";
 import f2 from "../assets/images/fragnance.png";
@@ -7,10 +7,12 @@ import f4 from "../assets/images/essential-f.png";
 import { Link } from 'react-router-dom';
 import PageHeader from '../components/header/PageHeader';
 import { listProductsApi } from '../features/product/api';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 const Fragnance = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const scrollRef = useRef(null);
   
   // Fallback static products (same as before to maintain exact UI)
   const staticProducts = [
@@ -76,13 +78,31 @@ const Fragnance = () => {
   return (
      <div className='w-full py-6'>
        <PageHeader title="Fragnance" />
-         <section className="bg-gray-50 w-[98%] mx-auto py-10 ">
-        <div className="mx-auto w-[95%] h-[80%] ">
-      
-          <div className="products-grid">
-            {products.map((p) => (
-              <Card key={p.id} img={p.img} title={p.title} price={p.price} slug={p.slug} id={p.id} />
-            ))}
+         <section className="bg-gray-50 w-[98%] mx-auto py-10">
+        <div className="mx-auto w-[95%] max-w-7xl">
+          {/* Horizontal scrollable container */}
+          <div className="relative group">
+           
+            
+            <div 
+              ref={scrollRef}
+              className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+            >
+              <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max px-4 py-4">
+                {products.map((p) => (
+                  <div key={p.id} className="w-[250px] sm:w-[280px] md:w-[300px] flex-shrink-0">
+                    <Card 
+                      img={p.img} 
+                      title={p.title} 
+                      price={p.price} 
+                      slug={p.slug} 
+                      id={p.id} 
+                      isHorizontal={true}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="flex-center mt-12  text-center  cursor-pointer"  >
