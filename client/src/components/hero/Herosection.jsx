@@ -188,7 +188,7 @@ const HeroSection = () => {
 
 
         {/* <img className="h-[95vh] scale-120  absolute left-[29%] -bottom-12 object-cover " src={model} alt="" /> */}
-        <img className="h-[95vh]  absolute left-[29%] max-sm:left-[0%]  bottom-0  max object-contain max-sm:scale-110 max-sm:-bottom-26" src={o} alt="" />
+        <img className="h-[95vh]  absolute left-[29%] max-sm:left-[0%]  bottom-0   object-cover max-sm:scale-110 max-sm:bottom-0" src={o} alt="" />
       </div>
     </section>
   );
