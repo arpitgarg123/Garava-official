@@ -273,8 +273,25 @@ const Cart = () => {
                   <div className="flex-1 space-y-2">
                     <h3 className="font-medium">{productName}</h3>
                     <p className="text-sm text-gray-500">SKU: {item.variantSku || 'N/A'}</p>
-                    {item.color && (
-                      <p className="text-sm text-gray-500">Color: {item.color}</p>
+                    {/* Display selected color information */}
+                    {(item.selectedColor || item.productDetails?.selectedColor || item.color) && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-500">Color:</span>
+                        {(item.selectedColor || item.productDetails?.selectedColor) ? (
+                          <div className="flex items-center gap-1">
+                            <div 
+                              className="w-4 h-4 rounded-full border border-gray-300" 
+                              style={{ backgroundColor: (item.selectedColor || item.productDetails?.selectedColor)?.hexColor }}
+                              title={(item.selectedColor || item.productDetails?.selectedColor)?.name}
+                            />
+                            <span className="text-sm text-gray-700">
+                              {(item.selectedColor || item.productDetails?.selectedColor)?.name}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-sm text-gray-700">{item.color}</span>
+                        )}
+                      </div>
                     )}
                     <div className="flex items-center space-x-4">
                       <select 

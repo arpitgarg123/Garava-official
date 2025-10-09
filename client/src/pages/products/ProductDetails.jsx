@@ -17,6 +17,8 @@ import Explore from '../../components/Products/Explore';
 import BackButton from '../../components/BackButton';
 import ProductGallery from '../../components/Products/ProductGallery';
 import ProductReviews from '../../components/Products/ProductReviews';
+import ColorSelector from '../../components/Products/ColorSelector';
+import AvailabilityChecker from '../../components/Products/AvailabilityChecker';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -51,6 +53,20 @@ const ProductDetails = () => {
   
   // State for contact options dropdown
   const [showContactOptions, setShowContactOptions] = useState(false);
+  
+  // State for selected color
+  const [selectedColor, setSelectedColor] = useState(null);
+  
+  // Helper function to check if color selection is required
+  const isColorSelectionRequired = () => {
+    return product?.colorVariants && 
+           product.colorVariants.length > 0 && 
+           product.colorVariants.some(color => color.isAvailable);
+  };
+  
+  const isColorSelectionMissing = () => {
+    return isColorSelectionRequired() && !selectedColor;
+  };
 
   // Check out-of-stock status
   // Find the default variant or use the first variant
@@ -110,6 +126,12 @@ const ProductDetails = () => {
       return;
     }
     
+    // Check if color selection is required and validate it
+    if (isColorSelectionMissing()) {
+      toast.error("Please select a color before adding to cart");
+      return;
+    }
+    
     // Handle both _id and id fields (MongoDB subdocuments use _id, frontend might use id)
     const variantId = selectedVariant._id || selectedVariant.id;
     const variantSku = selectedVariant.sku;
@@ -133,6 +155,15 @@ const ProductDetails = () => {
       cartItem.variantId = variantId;
     }
     
+    // Include selected color information if color was selected
+    if (selectedColor) {
+      cartItem.selectedColor = {
+        name: selectedColor.name,
+        code: selectedColor.code,
+        hexColor: selectedColor.hexColor
+      };
+    }
+    
     // For guest users, add additional product details
     if (!isAuthenticated) {
       cartItem.unitPrice = selectedVariant?.finalPrice || selectedVariant?.price || product?.price || 0;
@@ -146,6 +177,11 @@ const ProductDetails = () => {
         category: product.category,
         slug: product.slug
       };
+      
+      // Include selected color in product details for guest users
+      if (selectedColor) {
+        cartItem.productDetails.selectedColor = selectedColor;
+      }
     }
     
     const cartAction = isAuthenticated ? addToCart : addToGuestCart;
@@ -398,25 +434,6 @@ console.log(product.badges);
                     <span className="font-medium">Dimensions:</span> {product.dimensions}
                   </p>
                 )}
-                {product?.colorVariants && product.colorVariants.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-700">Available Colors:</span>
-                    <div className="flex gap-2">
-                      {product.colorVariants.filter(color => color.isAvailable).slice(0, 4).map((color, index) => (
-                        <div key={index} className="flex items-center gap-1">
-                          {color.hexColor && (
-                            <div 
-                              className="w-4 h-4 rounded-full border border-gray-300 shadow-sm" 
-                              style={{ backgroundColor: color.hexColor }}
-                              title={color.name}
-                            />
-                          )}
-                          <span className="text-sm text-gray-600">{color.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
             )}
 
@@ -549,6 +566,27 @@ console.log(product.badges);
                 </div>
               )}
             </div>
+
+            {/* Color Selection and Availability Check - Only for regular products */}
+            {!isHighJewellery && (
+              <div className="mt-4 space-y-4">
+                {/* Color Selector */}
+                {product?.colorVariants && product.colorVariants.length > 0 && (
+                  <ColorSelector
+                    colorVariants={product.colorVariants}
+                    selectedColor={selectedColor}
+                    onColorSelect={setSelectedColor}
+                  />
+                )}
+                
+                {/* Availability Checker */}
+                <AvailabilityChecker
+                  product={product}
+                  selectedVariant={selectedVariant}
+                />
+              </div>
+            )}
+
             {/* Action buttons - Different for High Jewellery */}
             <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
               {isHighJewellery ? (
@@ -603,25 +641,29 @@ console.log(product.badges);
                 <>
                   <button 
                     onClick={handleAddToCart} 
-                    disabled={isOutOfStock}
+                    disabled={isOutOfStock || isColorSelectionMissing()}
                     className={`w-full sm:w-auto px-6 py-3 text-xs  ${
-                      isOutOfStock 
+                      (isOutOfStock || isColorSelectionMissing())
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                         : 'btn-black'
                     }`}
                   >
-                    {isOutOfStock ? 'OUT OF STOCK' : 'ADD TO BAG'}
+                    {isOutOfStock ? 'OUT OF STOCK' : 
+                     isColorSelectionMissing() ? 'SELECT COLOR FIRST' : 
+                     'ADD TO BAG'}
                   </button>
                   <button 
                     onClick={() => navigate('/checkout')} 
-                    disabled={isOutOfStock}
+                    disabled={isOutOfStock || isColorSelectionMissing()}
                     className={`w-full sm:w-auto px-6 py-3 text-sm  font-medium transition-colors ${
-                      isOutOfStock 
+                      (isOutOfStock || isColorSelectionMissing()) 
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                         : 'btn'
                     }`}
                   >
-                    BUY NOW
+                    {isOutOfStock ? 'OUT OF STOCK' : 
+                     isColorSelectionMissing() ? 'SELECT COLOR' : 
+                     'BUY NOW'}
                   </button>
                 </>
               )}
