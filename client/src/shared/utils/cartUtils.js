@@ -91,13 +91,15 @@ export const createCartPayload = (product, quantity = 1) => {
 
 /**
  * Format price for display
- * @param {number} price - Price in rupees (already converted by backend)
+ * @param {number} price - Price in rupees (backend sends values in rupees)
  * @param {string} currency - Currency symbol (default: ₹)
  * @returns {string} - Formatted price string
  */
 export const formatPrice = (price, currency = '₹') => {
   if (!price || isNaN(price)) return `${currency}0.00`;
-  return `${currency}${Number(price).toFixed(2)}`;
+  // Round to avoid decimal precision issues and format with appropriate decimal places
+  const roundedPrice = Math.round(price * 100) / 100;
+  return `${currency}${roundedPrice.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}`;
 };
 
 /**

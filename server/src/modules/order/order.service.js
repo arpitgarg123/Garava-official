@@ -8,7 +8,7 @@ import Address from "../address/address.model.js";
 import { generateOrderNumber, toPaise } from "./order.utils.js";
 import Idempotency from "./idempotency.model.js"; // optional
 import { createPhonePeOrder } from "../payment.adapters/phonepe.adapter.js";
-import { calculateOrderPricingRupees } from "./order.pricing.js";
+import { calculateOrderPricingRupees, toRupees } from "./order.pricing.js";
 import { validateStockAvailability, reserveStock } from "../../shared/stockManager.js";
 
 
@@ -90,8 +90,8 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
       const product = await Product.findById(reservation.productId).session(session);
       const variant = product.variants.find(v => String(v._id) === String(reservation.variantId));
 
-      // use price directly in rupees (no conversion)
-      const unitPriceRupees = Number(variant.price);
+      // Convert price from paise to rupees - database stores prices in paise
+      const unitPriceRupees = toRupees(variant.price); // Convert from paise to rupees
       const lineTotal = unitPriceRupees * item.quantity;
       subtotal += lineTotal;
 
@@ -102,7 +102,7 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
         variantSnapshot: { sku: variant.sku, sizeLabel: variant.sizeLabel, images: variant.images || [] },
         quantity: item.quantity,
         unitPrice: unitPriceRupees,
-        mrp: Number(variant.mrp || 0),
+        mrp: toRupees(variant.mrp || 0), // Convert MRP from paise to rupees
         taxAmount: 0,
         discountAmount: 0,
         lineTotal: lineTotal,
@@ -189,7 +189,7 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
 // Helper function to handle PhonePe order creation
 export const initializePhonePePayment = async (order, userPhone) => {
   try {
-    // Convert order amounts from rupees to paise for PhonePe (since order is now stored in rupees)
+    // Convert order amount from rupees to paise for PhonePe
     const amountPaise = toPaise(order.grandTotal);
       
     const phonepeOrder = await createPhonePeOrder({

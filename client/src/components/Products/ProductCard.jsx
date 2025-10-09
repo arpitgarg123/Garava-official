@@ -14,6 +14,7 @@ import { logout } from "../../features/auth/slice";
 import { guestWishlist } from "../../shared/utils/guestStorage.js";
 import { toast } from "react-hot-toast";
 import { handleEmailContact, handleWhatsAppContact } from "../../hooks/contact";
+import ColorSelector from "./ColorSelector";
 
 const ProductCard = ({
   product,
@@ -48,12 +49,21 @@ const ProductCard = ({
     (product.defaultVariant && product.defaultVariant.stock === 0) ||
     (product.variants && product.variants.length > 0 && product.variants.every(v => v.stock === 0));
 
-  const getProductColors = () => {
+  // Get available color variants, prioritizing new colorVariants structure
+  const getColorVariants = () => {
     // Don't show colors for high jewellery products
     if (isHighJewelleryProduct) {
       return [];
     }
     
+    // Use new colorVariants structure if available
+    if (product.colorVariants && Array.isArray(product.colorVariants) && product.colorVariants.length > 0) {
+      return product.colorVariants
+        .filter(variant => variant.isAvailable !== false)
+        .sort((a, b) => (a.priority || 0) - (b.priority || 0));
+    }
+    
+    // Fallback: Convert old color structure to new format
     let colors = [];
     
     if (Array.isArray(product.colors) && product.colors.length > 0) {
@@ -92,24 +102,40 @@ const ProductCard = ({
       }
     }
     
+    // Default jewelry colors
     if (colors.length === 0 && (
       product.category?.toLowerCase() === "jewellery" || 
       product.type?.toLowerCase() === "jewellery"
     )) {
-      colors = ["#c79b3a", "#d9d9d9", "#e7b9a4"];
+      return [
+        { name: "Yellow Gold", code: "yellow-gold", hexColor: "#c79b3a", isAvailable: true, priority: 0 },
+        { name: "White Gold", code: "white-gold", hexColor: "#d9d9d9", isAvailable: true, priority: 1 },
+        { name: "Rose Gold", code: "rose-gold", hexColor: "#e7b9a4", isAvailable: true, priority: 2 }
+      ];
     }
     
-    return colors.filter(Boolean);
+    // Convert legacy colors to new format
+    return colors.filter(Boolean).map((color, index) => ({
+      name: color,
+      code: color.toLowerCase().replace(/\s+/g, '-'),
+      hexColor: color,
+      isAvailable: true,
+      priority: index
+    }));
   };
 
-  const colors = getProductColors();
+  const colorVariants = getColorVariants();
   
-  const [activeColor, setActiveColor] = useState(colors.length ? colors[0] : null);
+  const [selectedColorVariant, setSelectedColorVariant] = useState(
+    colorVariants.length > 0 ? colorVariants[0] : null
+  );
   const [showContactOptions, setShowContactOptions] = useState(false);
   
   useEffect(() => {
-    setActiveColor(colors.length ? colors[0] : null);
-  }, [colors.join("|")]);
+    if (colorVariants.length > 0) {
+      setSelectedColorVariant(colorVariants[0]);
+    }
+  }, [product._id || product.id, colorVariants.length]);
 
   if (!product) return null;
 
@@ -126,11 +152,35 @@ const ProductCard = ({
     : (typeof price === 'number' ? `₹${price.toLocaleString()}` : price);
 
   const slug = product.slug || product.productSlug || product.id || product._id;
-  const heroSrc = product?.heroImage?.url ||
-                 product?.heroImage ||
-                 product?.gallery?.[0]?.url ||
-                 product?.gallery?.[0] ||
-                 "/placeholder.jpg";
+  
+  // Get dynamic image based on selected color variant
+  const getImageForSelectedColor = () => {
+    if (selectedColorVariant && selectedColorVariant.heroImage && selectedColorVariant.heroImage.url) {
+      return selectedColorVariant.heroImage.url;
+    }
+    
+    // Temporary: Use different images based on color for demonstration
+    // Replace these URLs with your actual ImageKit URLs for each color variant
+    if (selectedColorVariant && product.gallery && product.gallery.length > 1) {
+      const galleryIndex = selectedColorVariant.code === 'white_gold' ? 0 :
+                          selectedColorVariant.code === 'yellow_gold' ? 1 :
+                          selectedColorVariant.code === 'rose_gold' ? 2 : 0;
+      
+      const selectedImage = product.gallery[galleryIndex % product.gallery.length];
+      if (selectedImage?.url || selectedImage) {
+        return selectedImage.url || selectedImage;
+      }
+    }
+    
+    // Fallback to default product images
+    return product?.heroImage?.url ||
+           product?.heroImage ||
+           product?.gallery?.[0]?.url ||
+           product?.gallery?.[0] ||
+           "/placeholder.jpg";
+  };
+  
+  const heroSrc = getImageForSelectedColor();
 
   const handleProductClick = () => {
     if (!slug) {
@@ -204,6 +254,12 @@ const ProductCard = ({
                 variantSku: variant?.sku,
                 quantity: 1,
                 unitPrice: variant?.finalPrice || variant?.price || product.price || 0,
+                // Include selected color information
+                selectedColor: selectedColorVariant ? {
+                  name: selectedColorVariant.name,
+                  code: selectedColorVariant.code,
+                  hexColor: selectedColorVariant.hexColor
+                } : null,
                 productDetails: {
                   _id: product._id || product.id,
                   name: product.name,
@@ -212,7 +268,8 @@ const ProductCard = ({
                   gallery: product.gallery,
                   type: product.type,
                   category: product.category,
-                  slug: product.slug
+                  slug: product.slug,
+                  selectedColor: selectedColorVariant
                 }
               };
 
@@ -390,31 +447,17 @@ const ProductCard = ({
               <div className="text-base sm:text-lg font-medium tracking-wide mt-auto">{displayPrice}</div>
             )}
 
-            {/* Color options - Only for non-high jewellery products */}
-            {!isHighJewelleryProduct && colors.length > 0 && (
-              <div className="flex flex-wrap items-start gap-2 mt-2">
-                {colors.map((c, i) => (
-                  <button
-                    key={i}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveColor(c);
-                    }}
-                    className={`w-6 h-6 cursor-pointer rounded-full border-2 transition-all ${
-                      activeColor === c 
-                        ? "scale-110 shadow-lg border-gray-400" 
-                        : "scale-100 border-gray-200 hover:border-gray-300"
-                    }`}
-                    style={{ 
-                      backgroundColor: c || '#FFFFFF',
-                      boxShadow: (c === '#FFFFFF' || c === 'white' || c === '#ffffff') 
-                        ? 'inset 0 0 0 1px rgba(0,0,0,0.1)' 
-                        : 'none'
-                    }}
-                    aria-label={`Select ${c} color`}
-                    title={`Color: ${c}`}
-                  />
-                ))}
+            {/* Color Selector - Only for non-high jewellery products */}
+            {!isHighJewelleryProduct && colorVariants.length > 0 && (
+              <div className="mt-2" onClick={(e) => e.stopPropagation()}>
+                <ColorSelector
+                  colorVariants={colorVariants}
+                  selectedColor={selectedColorVariant}
+                  onColorSelect={setSelectedColorVariant}
+                  size="small"
+                  showLabels={false}
+                  className="color-selector-card"
+                />
               </div>
             )}
           </>

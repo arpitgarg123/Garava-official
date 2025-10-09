@@ -1,16 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { IoIosArrowBack, IoIosArrowForward, IoIosExpand } from 'react-icons/io';
+import { IoClose } from 'react-icons/io5';
 
-const ProductGallery = ({ product }) => {
+const ProductGallery = ({ product, selectedColor }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [images, setImages] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImageIndex, setModalImageIndex] = useState(0);
 
   useEffect(() => {
-    // Collect all available product images
-    const heroImage = product?.heroImage?.url || product?.heroImage || null;
-    const galleryImages = Array.isArray(product?.gallery) 
-      ? product.gallery.map(img => img?.url || img)
-      : [];
+    // Get images for selected color variant, or fallback to default product images
+    let heroImage = null;
+    let galleryImages = [];
+    
+    if (selectedColor) {
+      // Use color-specific images if available
+      if (selectedColor.heroImage && selectedColor.heroImage.url) {
+        heroImage = selectedColor.heroImage.url;
+      }
+      
+      if (selectedColor.gallery && Array.isArray(selectedColor.gallery)) {
+        galleryImages = selectedColor.gallery.map(img => img?.url || img).filter(Boolean);
+      }
+    }
+    
+    // Fallback to default product images if no color-specific images
+    if (!heroImage) {
+      heroImage = product?.heroImage?.url || product?.heroImage || null;
+    }
+    
+    if (galleryImages.length === 0) {
+      galleryImages = Array.isArray(product?.gallery) 
+        ? product.gallery.map(img => img?.url || img)
+        : [];
+    }
     
     // Combine hero and gallery images, removing duplicates and nulls
     const allImages = [heroImage, ...galleryImages]
@@ -23,7 +46,9 @@ const ProductGallery = ({ product }) => {
     }
     
     setImages(allImages);
-  }, [product]);
+    // Reset active image index when color changes to show first image of new color
+    setActiveImageIndex(0);
+  }, [product, selectedColor]);
 
   const handleThumbnailClick = (index) => {
     setActiveImageIndex(index);
@@ -37,30 +62,87 @@ const ProductGallery = ({ product }) => {
     setActiveImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
+  // Modal functions
+  const openModal = (index) => {
+    setModalImageIndex(index);
+    setIsModalOpen(true);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.body.style.overflow = 'unset'; // Restore scrolling
+  };
+
+  const handleModalPrevious = () => {
+    setModalImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleModalNext = () => {
+    setModalImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  // Handle keyboard navigation in modal
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (!isModalOpen) return;
+      
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'ArrowLeft') {
+        handleModalPrevious();
+      } else if (e.key === 'ArrowRight') {
+        handleModalNext();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [isModalOpen, images.length]);
+
   if (!images.length) return null;
 
   return (
     <div className="">
-      <div className="relative w-full overflow-hidden bg-gray-50">
-        <div className="aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] relative">
+      <div className="relative w-full overflow-hidden bg-gray-50 group cursor-pointer">
+        <div 
+          className="aspect-square sm:aspect-[4/3] lg:aspect-[3/2] relative"
+          onClick={() => openModal(activeImageIndex)}
+        >
           <img 
             src={images[activeImageIndex]} 
             alt={`Product view ${activeImageIndex + 1}`}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
           />
+          
+          {/* Expand icon in top-right corner */}
+          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
+              <IoIosExpand size={20} className="text-gray-800" />
+            </div>
+          </div>
+          
+          {/* Subtle overlay on hover */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
           
           {images.length > 1 && (
             <>
               <button 
-                onClick={handlePrevious}
-                className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-80 shadow-md hover:bg-opacity-100 transition-all"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrevious();
+                }}
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-80 shadow-md hover:bg-opacity-100 transition-all z-10"
                 aria-label="Previous image"
               >
                 <IoIosArrowBack size={20} />
               </button>
               <button 
-                onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-80 shadow-md hover:bg-opacity-100 transition-all"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white bg-opacity-80 shadow-md hover:bg-opacity-100 transition-all z-10"
                 aria-label="Next image"
               >
                 <IoIosArrowForward size={20} />
@@ -71,28 +153,168 @@ const ProductGallery = ({ product }) => {
       </div>
 
       {images.length > 1 && (
-        <div className="mt-4 relative">
-          <div className="flex space-x-2 overflow-x-auto py-2 scrollbar-hide">
-            {images.map((image, index) => (
-              <button
-                key={index}
-                onClick={() => handleThumbnailClick(index)}
-                className={`relative flex-shrink-0 cursor-pointer border-2 transition-all ${
-                  activeImageIndex === index 
-                    ? 'border-gray-500' 
-                    : 'border-transparent hover:border-gray-300'
-                }`}
-              >
-                <div className="w-20 h-20 sm:w-24 sm:h-24">
-                  <img 
-                    src={image} 
+        <div className="mt-3 relative">
+          {/* Fashion Gallery Layout - 2x2 Grid */}
+          <div className="grid grid-cols-2 gap-2 h-auto">
+            {images.slice(1, 5).map((image, index) => {
+              const actualIndex = index + 1; // Since we're starting from index 1
+              return (
+                <button
+                  key={actualIndex}
+                  onClick={() => handleThumbnailClick(actualIndex)}
+                  onDoubleClick={() => openModal(actualIndex)}
+                  className={`relative cursor-pointer transition-all duration-300 overflow-hidden group aspect-square ${
+                    activeImageIndex === actualIndex 
+                      ? 'ring-2 ring-black shadow-lg' 
+                      : 'hover:shadow-md hover:scale-[0.99]'
+                  }`}
+                >
+                  <div className="w-full h-full relative bg-gray-100">
+                    <img 
+                      src={image} 
+                      alt={`Product view ${actualIndex + 1}`}
+                      className={`w-full h-full object-cover transition-all duration-500 ${
+                        activeImageIndex === actualIndex 
+                          ? 'brightness-100' 
+                          : 'group-hover:brightness-105 hover:scale-105'
+                      }`}
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                    
+                    {/* Clean overlay for active state */}
+                    {activeImageIndex === actualIndex && (
+                      <div className="absolute inset-0 bg-black/10"></div>
+                    )}
+                    
+                    {/* Minimal hover effect */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
+                  </div>
+                </button>
+              );
+            })}
+            
+            {/* Add more images if available */}
+            {images.length > 5 && (
+              <>
+                {images.slice(5, 7).map((image, index) => {
+                  const actualIndex = index + 5;
+                  return (
+                    <button
+                      key={actualIndex}
+                      onClick={() => handleThumbnailClick(actualIndex)}
+                      className={`relative cursor-pointer transition-all duration-300 overflow-hidden group aspect-square ${
+                        activeImageIndex === actualIndex 
+                          ? 'ring-2 ring-black shadow-lg' 
+                          : 'hover:shadow-md hover:scale-[0.99]'
+                      }`}
+                    >
+                      <div className="w-full h-full relative bg-gray-100">
+                        <img 
+                          src={image} 
+                          alt={`Product view ${actualIndex + 1}`}
+                          className={`w-full h-full object-cover transition-all duration-500 ${
+                            activeImageIndex === actualIndex 
+                              ? 'brightness-100' 
+                              : 'group-hover:brightness-105 hover:scale-105'
+                          }`}
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                        
+                        {activeImageIndex === actualIndex && (
+                          <div className="absolute inset-0 bg-black/10"></div>
+                        )}
+                        
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Full Screen Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center">
+          {/* Modal Content */}
+          <div className="relative w-full h-full flex items-center justify-center p-4">
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300 z-10"
+              aria-label="Close modal"
+            >
+              <IoClose size={24} className="text-white" />
+            </button>
+
+            {/* Image Counter */}
+            <div className="absolute top-6 left-6 px-4 py-2 bg-black/50 text-white text-sm rounded-full z-10">
+              {modalImageIndex + 1} / {images.length}
+            </div>
+
+            {/* Main Modal Image */}
+            <div className="relative max-w-full max-h-full">
+              <img
+                src={images[modalImageIndex]}
+                alt={`Product view ${modalImageIndex + 1}`}
+                className="max-w-full max-h-full object-contain"
+                style={{ maxHeight: '90vh', maxWidth: '90vw' }}
+              />
+            </div>
+
+            {/* Navigation Arrows */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={handleModalPrevious}
+                  className="absolute left-6 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300"
+                  aria-label="Previous image"
+                >
+                  <IoIosArrowBack size={28} className="text-white" />
+                </button>
+                <button
+                  onClick={handleModalNext}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 p-4 bg-white/10 hover:bg-white/20 rounded-full transition-all duration-300"
+                  aria-label="Next image"
+                >
+                  <IoIosArrowForward size={28} className="text-white" />
+                </button>
+              </>
+            )}
+
+            {/* Thumbnail Strip */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 bg-black/50 p-3 rounded-lg max-w-[90vw] overflow-x-auto">
+              {images.map((image, index) => (
+                <button
+                  key={index}
+                  onClick={() => setModalImageIndex(index)}
+                  className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all duration-300 ${
+                    modalImageIndex === index
+                      ? 'border-white shadow-lg'
+                      : 'border-transparent hover:border-white/50'
+                  }`}
+                >
+                  <img
+                    src={image}
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
-                </div>
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {/* Click outside to close */}
+          <div
+            className="absolute inset-0 -z-10"
+            onClick={closeModal}
+          ></div>
         </div>
       )}
     </div>

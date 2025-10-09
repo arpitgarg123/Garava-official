@@ -10,6 +10,13 @@ const cartItemSchema = new mongoose.Schema(
     mrp: { type: Number, default: 0 }, // in paise
     name: { type: String }, // product snapshot
     heroImage: { type: String }, // product snapshot
+    // Selected color variant information
+    selectedColor: {
+      name: { type: String }, // "Rose Gold"
+      code: { type: String }, // "rose-gold"
+      hexColor: { type: String }, // "#e7b9a4"
+      heroImage: { type: String } // Color-specific image URL
+    },
     // optional flags
     outOfStock: { type: Boolean, default: false },
   },

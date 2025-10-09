@@ -1,6 +1,24 @@
 import Product from "./product.model.js";
 import ApiError from "../../shared/utils/ApiError.js";
 import mongoose from "mongoose";
+import { toRupees, toPaise } from "../order/order.pricing.js";
+
+/**
+ * Convert product prices from paise to rupees for frontend response
+ */
+const convertProductPricesToRupees = (product) => {
+  if (!product) return product;
+  
+  return {
+    ...product,
+    variants: product.variants?.map(variant => ({
+      ...variant,
+      price: variant.price ? toRupees(variant.price) : variant.price,
+      mrp: variant.mrp ? toRupees(variant.mrp) : variant.mrp,
+      salePrice: variant.salePrice ? toRupees(variant.salePrice) : variant.salePrice
+    })) || []
+  };
+};
 
 /**
  * List products (public API)
@@ -26,11 +44,12 @@ export const listProductsService = async ({
   if (category) filter.category = { $regex: `^${escapeRegex(category)}$`, $options: "i" };
   if (q) filter.$text = { $search: q };
 
-  // Price filter: check variants
+  // Price filter: check variants (convert rupees to paise for database query)
   if (priceMin || priceMax) {
     filter["variants.price"] = {};
-    if (priceMin) filter["variants.price"].$gte = Number(priceMin);
-    if (priceMax) filter["variants.price"].$lte = Number(priceMax);
+    // Convert frontend rupees to backend paise for filtering
+    if (priceMin) filter["variants.price"].$gte = toPaise(Number(priceMin));
+    if (priceMax) filter["variants.price"].$lte = toPaise(Number(priceMax));
   }
 
   // Color filter: check colorVariants
@@ -61,26 +80,29 @@ export const listProductsService = async ({
 
   // Normalize products for list view
   const normalized = products.map((p) => {
+    // Convert prices to rupees for frontend first
+    const productWithRupees = convertProductPricesToRupees(p);
+    
     const defaultVariant =
-      p.variants.find((v) => v.isDefault) || p.variants[0] || null;
-      const prices = (p.variants || []).map(v => Number(v.price)).filter(p => !isNaN(p));
+      productWithRupees.variants.find((v) => v.isDefault) || productWithRupees.variants[0] || null;
+      const prices = (productWithRupees.variants || []).map(v => Number(v.price)).filter(p => !isNaN(p));
       const priceRange = prices.length ? { min: Math.min(...prices), max: Math.max(...prices) } : { min: null, max: null };
 
     // Check if product is out of stock based on variants
-    const isOutOfStock = p.variants.every(v => v.stockStatus === 'out_of_stock' || v.stock === 0);
+    const isOutOfStock = productWithRupees.variants.every(v => v.stockStatus === 'out_of_stock' || v.stock === 0);
 
     return {
-      id: p._id,
-      name: p.name,
-      slug: p.slug,
-      type: p.type,
-      category: p.category,
-      shortDescription: p.shortDescription,
-      heroImage: p.heroImage,
-      colorVariants: p.colorVariants || [], // Add colorVariants to response
+      id: productWithRupees._id,
+      name: productWithRupees.name,
+      slug: productWithRupees.slug,
+      type: productWithRupees.type,
+      category: productWithRupees.category,
+      shortDescription: productWithRupees.shortDescription,
+      heroImage: productWithRupees.heroImage,
+      colorVariants: productWithRupees.colorVariants || [], // Add colorVariants to response
       priceRange: {
-        min: Math.min(...p.variants.map((v) => v.price)),
-        max: Math.max(...p.variants.map((v) => v.price)),
+        min: Math.min(...productWithRupees.variants.map((v) => v.price)),
+        max: Math.max(...productWithRupees.variants.map((v) => v.price)),
       },
       defaultVariant: defaultVariant
         ? {
@@ -122,7 +144,8 @@ export const getProductBySlugService = async (slug) => {
 
   if (!product) throw new ApiError(404, "Product not found");
 
-  return processProductDetails(product);
+  const processedProduct = processProductDetails(product);
+  return convertProductPricesToRupees(processedProduct);
 };
 
 export const getProductByIdService = async (id) => {
@@ -134,7 +157,8 @@ export const getProductByIdService = async (id) => {
 
   if (!product) throw new ApiError(404, "Product not found");
 
-  return processProductDetails(product);
+  const processedProduct = processProductDetails(product);
+  return convertProductPricesToRupees(processedProduct);
 };
 
 // Helper function to process product details
@@ -180,7 +204,7 @@ export const getProductBySkuService = async (sku) => {
       id: variant._id,
       sku: variant.sku,
       sizeLabel: variant.sizeLabel,
-      price: variant.price,
+      price: toRupees(variant.price), // Convert to rupees
       stock: variant.stock,
       stockStatus: variant.stockStatus,
     },
