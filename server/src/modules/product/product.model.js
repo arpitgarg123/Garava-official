@@ -84,9 +84,22 @@ const productSchema = new mongoose.Schema(
     // color options for jewellery
     colorVariants: [{
       name: { type: String }, // "Rose Gold", "Silver", "Yellow Gold"
-      code: { type: String }, // "rose", "silver", "gold"
+      code: { type: String }, // "rose", "silver", "gold"  
       hexColor: { type: String }, // "#e7b9a4", "#d9d9d9", "#c79b3a"
-      isAvailable: { type: Boolean, default: true }
+      isAvailable: { type: Boolean, default: true },
+      // Images specific to this color variant
+      heroImage: {
+        url: { type: String },
+        fileId: { type: String }
+      },
+      gallery: [{
+        url: { type: String },
+        fileId: { type: String }
+      }],
+      // Additional metadata for this color
+      stockStatus: { type: String, enum: ["in_stock", "out_of_stock", "limited"], default: "in_stock" },
+      priority: { type: Number, default: 0 }, // Display order
+      description: { type: String } // Color-specific description
     }],
 
     // product structure

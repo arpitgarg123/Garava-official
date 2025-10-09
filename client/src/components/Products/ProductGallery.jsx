@@ -2,18 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { IoIosArrowBack, IoIosArrowForward, IoIosExpand } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 
-const ProductGallery = ({ product }) => {
+const ProductGallery = ({ product, selectedColor }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [images, setImages] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
   useEffect(() => {
-    // Collect all available product images
-    const heroImage = product?.heroImage?.url || product?.heroImage || null;
-    const galleryImages = Array.isArray(product?.gallery) 
-      ? product.gallery.map(img => img?.url || img)
-      : [];
+    // Get images for selected color variant, or fallback to default product images
+    let heroImage = null;
+    let galleryImages = [];
+    
+    if (selectedColor) {
+      // Use color-specific images if available
+      if (selectedColor.heroImage && selectedColor.heroImage.url) {
+        heroImage = selectedColor.heroImage.url;
+      }
+      
+      if (selectedColor.gallery && Array.isArray(selectedColor.gallery)) {
+        galleryImages = selectedColor.gallery.map(img => img?.url || img).filter(Boolean);
+      }
+    }
+    
+    // Fallback to default product images if no color-specific images
+    if (!heroImage) {
+      heroImage = product?.heroImage?.url || product?.heroImage || null;
+    }
+    
+    if (galleryImages.length === 0) {
+      galleryImages = Array.isArray(product?.gallery) 
+        ? product.gallery.map(img => img?.url || img)
+        : [];
+    }
     
     // Combine hero and gallery images, removing duplicates and nulls
     const allImages = [heroImage, ...galleryImages]
@@ -26,7 +46,9 @@ const ProductGallery = ({ product }) => {
     }
     
     setImages(allImages);
-  }, [product]);
+    // Reset active image index when color changes to show first image of new color
+    setActiveImageIndex(0);
+  }, [product, selectedColor]);
 
   const handleThumbnailClick = (index) => {
     setActiveImageIndex(index);

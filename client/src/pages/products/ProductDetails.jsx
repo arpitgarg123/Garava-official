@@ -265,7 +265,7 @@ console.log(product.badges);
    
           <div className="lg:col-span-5">
           
-            <ProductGallery product={product} />
+            <ProductGallery product={product} selectedColor={selectedColor} />
           </div>
 
           {/* Info */}
