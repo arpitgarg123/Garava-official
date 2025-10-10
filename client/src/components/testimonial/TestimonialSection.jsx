@@ -651,7 +651,7 @@ const TestimonialSection = () => {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 font-playfair">
               What Our Customers Say
             </h2>
-            <div className="bg-gray-50 rounded-2xl p-12 max-w-2xl mx-auto">
+            <div className="bg-gray-50  p-12 max-w-2xl mx-auto">
               <div className="text-6xl mb-6">💎</div>
               <p className="text-gray-600 text-lg leading-relaxed">
                 We're gathering precious testimonials from our valued customers. 
@@ -666,7 +666,7 @@ const TestimonialSection = () => {
 
   return (
     <section className="w-full py-12 sm:py-16 lg:py-20 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header - Fixed responsive typography */}
         <div className="text-center mb-12 lg:mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 lg:mb-6 font-playfair leading-tight">
@@ -794,7 +794,7 @@ const TestimonialSection = () => {
 // Fixed TestimonialCard component with proper responsive design
 const TestimonialCard = ({ testimonial, renderStars, getAlphabetAvatar }) => {
   return (
-    <article className="flex-shrink-0 w-80 bg-gray-50 rounded-2xl p-8 hover:bg-gray-100 transition-all duration-300 border border-transparent hover:border-gray-200 shadow-sm hover:shadow-md">
+    <article className="flex-shrink-0 w-80 bg-gray-50  p-8 hover:bg-gray-100 transition-all duration-300 border border-transparent hover:border-gray-200 shadow-sm hover:shadow-md">
       {/* Quote Icon - Fixed positioning */}
       <div className="flex justify-center mb-4">
         <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">

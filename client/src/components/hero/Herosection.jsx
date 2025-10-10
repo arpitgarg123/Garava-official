@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import TextSlider from "./TextSlider";
+// import TextSlider from "./TextSlider";
 import './hero.css'
 
 import jBack from "../../assets/images/j-back.jpg";
-import jFront from "../../assets/images/j-front.jpg";
+import jFront from "../../assets/images/essential-j.png";
 // import fFront from "../../assets/images/f-front.png";
 import fFront from "../../assets/images/f-front.png";
 import fBack from '../../assets/images/f-back.png'

@@ -204,7 +204,7 @@ const FAQ = () => {
           </p>
           <a
             href="/contact"
-            className="inline-block bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-colors"
+            className="btn-black w-1/2"
           >
             Contact Support
           </a>

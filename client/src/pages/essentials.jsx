@@ -1,6 +1,6 @@
 import Card from "../components/essentials/Card";
-import jewelleryImg from "../assets/images/j-front.jpg";
-import fragranceImg from "../assets/images/essential-f.png";
+import jewelleryImg from "../assets/images/essential-j.png";
+import fragranceImg from "../assets/images/essential-f.jpg";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

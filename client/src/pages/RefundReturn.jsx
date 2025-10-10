@@ -18,9 +18,9 @@ const RefundReturn = () => {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 mt-26 max-md:mt-0">
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="bg-white  shadow-lg overflow-hidden">
           {/* Header Section */}
-          <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-b border-amber-100 p-6 sm:p-8">
+          <div className="bg-gradient-to-r from-gray-50 to-gray-50 border-b border-gray-100 p-6 sm:p-8">
             <div className="text-center">
               <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-gray-900 mb-4">
                 Refund & Returns
@@ -38,7 +38,7 @@ const RefundReturn = () => {
               {/* Return Policy */}
               <section className="border-b border-gray-100 pb-8">
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
-                  <span className="w-2 h-8 bg-gradient-to-b from-amber-400 to-yellow-500 rounded-full mr-3"></span>
+                  <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Return Policy
                 </h2>
                 <div className="prose max-w-none text-gray-700">
@@ -47,9 +47,9 @@ const RefundReturn = () => {
                     we offer a simple return policy to ensure your peace of mind.
                   </p>
                   
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 mb-6">
-                    <h3 className="font-semibold text-amber-900 mb-3">Return Window</h3>
-                    <p className="text-amber-800 text-sm ">
+                  <div className="bg-gray-50 border border-gray-200  p-6 mb-6">
+                    <h3 className="font-semibold text-gray-900 mb-3">Return Window</h3>
+                    <p className="text-gray-800 text-sm ">
                       You may return items within <strong>7 days</strong> of delivery for a full refund, provided the items are in their original condition.
                     </p>
                   </div>
@@ -75,7 +75,7 @@ const RefundReturn = () => {
               {/* How to Return */}
               <section className="border-b border-gray-100 pb-8">
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
-                  <span className="w-2 h-8 bg-gradient-to-b from-amber-400 to-yellow-500 rounded-full mr-3"></span>
+                  <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   How to Return
                 </h2>
                 <div className="prose max-w-none text-gray-700">
@@ -86,7 +86,7 @@ const RefundReturn = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-gray-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
                           1
                         </div>
                         <div>
@@ -96,7 +96,7 @@ const RefundReturn = () => {
                       </div>
                       
                       <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-gray-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
                           2
                         </div>
                         <div>
@@ -108,7 +108,7 @@ const RefundReturn = () => {
                     
                     <div className="space-y-4">
                       <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-gray-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
                           3
                         </div>
                         <div>
@@ -118,7 +118,7 @@ const RefundReturn = () => {
                       </div>
                       
                       <div className="flex items-start space-x-3">
-                        <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
+                        <div className="w-8 h-8 bg-gray-500 text-white rounded-full flex items-center justify-center font-bold text-sm">
                           4
                         </div>
                         <div>
@@ -134,7 +134,7 @@ const RefundReturn = () => {
               {/* Refund Process */}
               <section className="border-b border-gray-100 pb-8">
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
-                  <span className="w-2 h-8 bg-gradient-to-b from-amber-400 to-yellow-500 rounded-full mr-3"></span>
+                  <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Refund Process
                 </h2>
                 <div className="prose max-w-none text-gray-700">
@@ -143,9 +143,9 @@ const RefundReturn = () => {
                   </p>
                   
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
-                      <h3 className="font-semibold text-blue-900 mb-4">Refund Timeline</h3>
-                      <ul className="space-y-2 text-sm text-blue-800">
+                    <div className="bg-gray-50  p-6 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-4">Refund Timeline</h3>
+                      <ul className="space-y-2 text-sm text-gray-800">
                         <li>• Items inspected within 2 business days</li>
                         <li>• Refund processed within 3-5 business days</li>
                         <li>• Amount credited to original payment method</li>
@@ -153,9 +153,9 @@ const RefundReturn = () => {
                       </ul>
                     </div>
                     
-                    <div className="bg-green-50 rounded-lg p-6 border border-green-200">
-                      <h3 className="font-semibold text-green-900 mb-4">What You Get Back</h3>
-                      <ul className="space-y-2 text-sm text-green-800">
+                    <div className="bg-gray-50  p-6 border border-gray-200">
+                      <h3 className="font-semibold text-gray-900 mb-4">What You Get Back</h3>
+                      <ul className="space-y-2 text-sm text-gray-800">
                         <li>• Full product price refunded</li>
                         <li>• Original shipping charges (if applicable)</li>
                         <li>• Taxes and fees included</li>
@@ -169,18 +169,18 @@ const RefundReturn = () => {
               {/* Contact Information */}
               <section>
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
-                  <span className="w-2 h-8 bg-gradient-to-b from-amber-400 to-yellow-500 rounded-full mr-3"></span>
+                  <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Need Help?
                 </h2>
-                <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-lg p-6 border border-amber-200">
+                <div className="bg-gradient-to-br from-gray-50 to-gray-50  p-6 border border-gray-200">
                   <p className="text-gray-700 text-sm  mb-6 leading-relaxed">
                     Our customer service team is here to assist you with any questions about returns or refunds.
                   </p>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="flex items-start space-x-3">
-                      <div className="w-10 h-10 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-amber-700" fill="currentColor" viewBox="0 0 20 20">
+                      <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                           <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                         </svg>
@@ -193,8 +193,8 @@ const RefundReturn = () => {
                     </div>
                     
                     <div className="flex items-start space-x-3">
-                      <div className="w-10 h-10 bg-amber-200 rounded-full flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 text-amber-700" fill="currentColor" viewBox="0 0 20 20">
+                      <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                         </svg>
                       </div>
@@ -206,7 +206,7 @@ const RefundReturn = () => {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-6 border-t border-amber-200 text-center">
+                  <div className="mt-6 pt-6 border-t border-gray-200 text-center">
                     <p className="text-sm text-gray-600">
                       <strong>Return Address:</strong> Garava, Bandra West, Mumbai - 400050
                     </p>
