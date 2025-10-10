@@ -263,13 +263,13 @@ console.log(product.badges);
   
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
    
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-8">
           
             <ProductGallery product={product} selectedColor={selectedColor} />
           </div>
 
           {/* Info */}
-          <div className="lg:col-span-7 pl-6 max-md:pl-0">
+          <div className="lg:col-span-4 pl-6 max-md:pl-0 ">
            {product?.badges && Array.isArray(product.badges) && product.badges.length > 0 && (
   <div className="flex flex-wrap gap-2 mb-3">
     {product.badges
