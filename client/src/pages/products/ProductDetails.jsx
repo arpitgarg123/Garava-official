@@ -736,7 +736,6 @@ const ProductDetails = () => {
          <YouMayAlsoLike currentProduct={product} />
          <Explore currentProduct={product} />
              <ProductReviews productId={product?._id || product?.id} />
-
     </div>
   );
 };

@@ -99,7 +99,7 @@ const navItems = [
       },
   ]},
   { title: 'Services', submenu: [
-     { label: 'Book an appointment', img: '/images/for-her.jpg', to: '/appointment' },
+     { label: 'Book an Appointment', img: '/images/for-her.jpg', to: '/appointment' },
      { label: 'FAQ', img: '/images/for-him.jpg', to: '/faq' },
   ]},
   { title: 'About Us', submenu: [
@@ -321,7 +321,7 @@ const Navbar = () => {
                   }}
                   className="font-medium"
                 >
-                Book an appointment
+                Book an Appointment
                 </button>
               
               </div>
@@ -402,7 +402,7 @@ const Navbar = () => {
     className=" tracking-wide text-sm  cursor-pointer"
     onClick={() => navigate('/appointment')}
   >
-    Book an appointment
+    Book an Appointment
   </h4>
 </div>
 
