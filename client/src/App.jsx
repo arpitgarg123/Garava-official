@@ -281,12 +281,12 @@ const App = () => {
           {/* Routes accessible to both guests and authenticated users */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/appointment" element={<BookAnAppointment />} />
           
           {/* Protected routes - require authentication */}
           <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
           <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
           <Route path="/orders/:orderId" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
-          <Route path="/appointment" element={<ProtectedRoute><BookAnAppointment /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
           
           {/* Development and testing routes */}

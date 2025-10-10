@@ -15,7 +15,7 @@ const databaseValues = {
 console.log('Database values (what we found in check-order-pricing.js):')
 Object.entries(databaseValues).forEach(([key, value]) => {
   console.log(`  ${key}: ${value}`)
-})
+})           
 
 console.log('\n=== Testing toRupees() function ===')
 console.log('If database stores RUPEES but toRupees() treats them as PAISE:')
