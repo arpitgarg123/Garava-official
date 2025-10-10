@@ -106,7 +106,7 @@ const ProductGallery = ({ product, selectedColor }) => {
     <div className="">
       <div className="relative w-full overflow-hidden bg-gray-50 group cursor-pointer">
         <div 
-          className="aspect-square sm:aspect-[4/3] lg:aspect-[3/2] relative"
+          className="aspect-auto  sm:aspect-[4/3] lg:aspect-[2/2]  relative"
           onClick={() => openModal(activeImageIndex)}
         >
           <img 

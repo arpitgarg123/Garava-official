@@ -24,6 +24,7 @@ import RefundReturn from "./pages/RefundReturn.jsx";
 import TermCondition from "./pages/TermCondition.jsx";
 import WebsiteLoader from "./layouts/WebsiteLoader.jsx";
 import { ToastProvider } from "./layouts/Toast.jsx";
+// import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
 const Login = lazy(() => import("./features/auth/Login.jsx"));
@@ -274,6 +275,7 @@ const App = () => {
           <Route path="/terms-and-conditions" element={<TermCondition />} />
           <Route path="/refund-return" element={<RefundReturn />} />
           <Route path="/shipping-policy" element={<ShippingPolicy />} />
+          {/* <Route path="/privacy-policy" element={<PrivacyPolicy />} /> */}
 
           <Route path="products/:category" element={<ProductPage />} />
           <Route path="/product_details/:slug" element={<ProductDetails />} />

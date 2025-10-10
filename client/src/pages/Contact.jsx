@@ -4,6 +4,7 @@ import Infotile from "../components/contact/Infotile";
 import Summary from "../components/contact/Summary";
 import BackButton from "../components/BackButton";
 import { submitContactForm } from "../shared/api/contact.api.js";
+import PageHeader from "../components/header/PageHeader.jsx";
 
 const Contact = () => {
   const formId = useId();
@@ -69,25 +70,25 @@ const Contact = () => {
 
   return (
     <div className="mt-28">
-      <div className="sticky top-30  z-10">
+      <div className="sticky top-30 left-24 w-1/2 z-10">
         <BackButton />
       </div>  
-        <div className="w-full text-center ">
+        {/* <div className="w-full text-center  mb-7">
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
              Got a Questions?
             </h1>
-            <p className="my-3 text-muted-foreground w-1/2  mx-auto">
-              We would love to hear from you to assist you with your orders, style advice, gift ideas, and more. 
-              Please select your preferred method of contact below.
-            </p>
-          </div>
+           
+          </div> */}
+          <PageHeader title="Got a Questions?" />
       <section className="mx-auto  grid max-w-6xl gap-18   lg:grid-cols-12 ">     
         
         <div className="lg:col-span-7 ">
             {/* Form Section */}
-       
+        <p className="my-3 text-muted-foreground ">
+              We would love to hear from you to assist you with your orders, style advice, gift ideas, and more. 
+              Please select your preferred method of contact below.
+            </p>
           <form onSubmit={handleSubmit} noValidate className="mr-16 max-sm:mr-0 max-md:mr-0 max-lg:mr-0">
-            <h2 className="text-lg font-medium">Send us a message</h2>
 
             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field
