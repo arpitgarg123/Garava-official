@@ -59,7 +59,7 @@ const Jewellry = () => {
   return (
     <div className='w-full py-6 '>
         <PageHeader title="Jewellery" />
-       <section className="bg-gray-50 w-[98%] mx-auto py-10">
+       <section className="w-[98%] mx-auto py-10">
         <div className="mx-auto w-[95%] max-w-7xl">
           
           {loading ? (

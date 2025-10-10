@@ -99,7 +99,7 @@ const navItems = [
       },
   ]},
   { title: 'Services', submenu: [
-     { label: 'book an appointment', img: '/images/for-her.jpg', to: '/appointment' },
+     { label: 'Book an appointment', img: '/images/for-her.jpg', to: '/appointment' },
      { label: 'FAQ', img: '/images/for-him.jpg', to: '/faq' },
   ]},
   { title: 'About Us', submenu: [
@@ -244,15 +244,18 @@ const Navbar = () => {
   const navTextColor = isHeroPage && !scrolled && !isNavActive ? 'text-white' : 'text-black';
   const shouldShowNavItemsDesktop = isHeroPage && !scrolled;
   
-  const navbarClass = `navbar hidden md:block mt-6 transition-transform duration-300 ease-out ${
+  const navbarClass = `navbar hidden md:block py-3.5 transition-transform duration-300 ease-out ${
     isHidden ? '-translate-y-48' : 'translate-y-0'
-  } ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white' : 'bg-transparent'} ${
+  } ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'} ${
     isNavActive ? 'expanded' : ''
   }`;
 
   return (
     <>
-      <Header />
+    {
+      scrolled ? null : <Header />
+    }
+      
 
       {/* Mobile Navigation */}
       <nav
@@ -318,7 +321,7 @@ const Navbar = () => {
                   }}
                   className="font-medium"
                 >
-                  book an appointment
+                Book an appointment
                 </button>
               
               </div>
@@ -399,7 +402,7 @@ const Navbar = () => {
     className=" tracking-wide text-sm  cursor-pointer"
     onClick={() => navigate('/appointment')}
   >
-    book an appointment
+    Book an appointment
   </h4>
 </div>
 

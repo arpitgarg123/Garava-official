@@ -219,7 +219,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
 
   if (isLoading) {
     return (
-      <div className="bg-white p-6 rounded-lg shadow-sm">
+      <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
         <div className="animate-pulse">
           <div className="h-4 bg-gray-200 rounded w-1/4 mb-4"></div>
           <div className="space-y-3">
@@ -232,7 +232,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
   }
 
   return (
-    <div className={showAsManagement ? '' : 'bg-white p-6 rounded-lg shadow-sm'}>
+    <div className={showAsManagement ? '' : ' p-6'}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">
           {showAsManagement ? 'My Addresses' : 'Shipping Address'}
@@ -251,11 +251,11 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
           {addresses.map((address) => (
             <div
               key={address._id}
-              className={`block p-4 border rounded-lg transition-colors ${
+              className={`block p-4 border  transition-colors ${
                 showAsManagement 
                   ? 'border-gray-200 hover:border-gray-300'
                   : selectedAddressId === address._id
-                    ? 'border-black bg-gray-50 cursor-pointer'
+                    ? 'border-gray-400 bg-gray-50 cursor-pointer'
                     : 'border-gray-200 hover:border-gray-300 cursor-pointer'
               }`}
               onClick={!showAsManagement ? () => handleAddressSelect(address._id) : undefined}
@@ -276,7 +276,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                     <span className="font-medium">{address.fullName}</span>
                     <span className="text-sm text-gray-600">({address.phone})</span>
                     {address.isDefault && (
-                      <span className="px-2 py-1 bg-green-100 text-green-800 text-sm rounded">
+                      <span className="px-2 py-1 bg-green-100 text-green-800 text-sm ">
                         Default
                       </span>
                     )}
@@ -284,7 +284,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                   <p className="text-sm text-gray-600 mb-1">
                     {formatAddress(address)}
                   </p>
-                  <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-sm rounded capitalize">
+                  <span className="inline-block px-2 py-1 bg-gray-50 text-gray-700 text-sm  capitalize">
                     {address.label}
                   </span>
                 </div>
@@ -330,7 +330,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 name="fullName"
                 value={newAddress.fullName}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full border border-gray-300  px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 required
               />
             </div>
@@ -341,7 +341,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 name="phone"
                 value={newAddress.phone}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full border border-gray-300  px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 required
               />
             </div>
@@ -352,7 +352,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 name="addressLine1"
                 value={newAddress.addressLine1}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 required
               />
             </div>
@@ -363,7 +363,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 name="addressLine2"
                 value={newAddress.addressLine2}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
               />
             </div>
             <div>
@@ -373,7 +373,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 name="city"
                 value={newAddress.city}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 required
               />
             </div>
@@ -384,7 +384,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 name="state"
                 value={newAddress.state}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 required
               />
             </div>
@@ -395,7 +395,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 name="postalCode"
                 value={newAddress.postalCode}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                 required
               />
             </div>
@@ -405,7 +405,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                 name="label"
                 value={newAddress.label}
                 onChange={handleInputChange}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
               >
                 <option value="home">Home</option>
                 <option value="work">Work</option>
@@ -430,13 +430,13 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
             <button
               onClick={handleCreateAddress}
               disabled={isCreating}
-              className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 disabled:opacity-50"
+              className="btn-black"
             >
               {isCreating ? (editingId ? 'Updating...' : 'Adding...') : (editingId ? 'Update Address' : 'Add Address')}
             </button>
             <button
               onClick={handleCancelEdit}
-              className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
+              className="btn"
             >
               Cancel
             </button>
@@ -450,7 +450,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
           <p className="text-gray-500 mb-4">No saved addresses found</p>
           <button
             onClick={() => setShowAddForm(true)}
-            className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800"
+            className="px-4 py-2 bg-black text-white hover:bg-gray-800"
           >
             Add Your First Address
           </button>

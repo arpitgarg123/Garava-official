@@ -7,7 +7,7 @@ const Infotile = ({ title, value, href }) => {
       href={href}
       target={href?.startsWith("http") ? "_blank" : undefined}
       rel={href?.startsWith("http") ? "noreferrer" : undefined}
-      className="group flex items-center justify-between rounded-xl border border-gray-400 bg-background px-4 py-3 hover:bg-muted/50"
+      className="group flex items-center justify-between  border border-gray-400 bg-background px-4 py-3 hover:bg-muted/50"
     >
       <div>
         <div className="text-sm text-muted-foreground">{title}</div>

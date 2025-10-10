@@ -68,10 +68,6 @@ const ProductDetails = () => {
     return isColorSelectionRequired() && !selectedColor;
   };
 
-  // Check out-of-stock status
-  // Find the default variant or use the first variant
-  // Handle both product list structure (with defaultVariant) and product details structure (with variants array)
-  // Select variant - prefer one with stock if available
   const selectedVariant = product?.variants?.find(v => v.stock > 0 && v.stockStatus !== 'out_of_stock') ||
                           product?.defaultVariant || 
                           product?.variants?.find(v => v.isDefault) || 
@@ -252,7 +248,6 @@ const ProductDetails = () => {
   //   product?.heroImage ||
   //   product?.gallery?.[0]?.url ||
   //   "/placeholder.jpg";
-console.log(product.badges);
 
   return (
     <div className="w-full py-10 mt-26 sm:py-12 max-md:py-0 max-sm:mt-0">

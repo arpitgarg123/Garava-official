@@ -83,7 +83,7 @@ const AvailabilityChecker = ({ product, selectedVariant, className = "" }) => {
           <button
             onClick={handleCheckAvailability}
             disabled={isChecking || !pincode || pincode.length < 5}
-            className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+            className={`px-4 py-2 text-sm font-medium  transition-colors ${
               isChecking || !pincode || pincode.length < 5
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-gray-900 text-white hover:bg-gray-800'
