@@ -8,8 +8,8 @@ import BackButton from "../../components/BackButton";
 import { BiFilterAlt, BiX } from "react-icons/bi";
 import Pagination from "../../components/Pagination";
 import { buildFilterParams } from "../../shared/utils/filterUtils";
-import fBanner  from '../../assets/images/essential-f.jpg'
-import jBanner  from '../../assets/images/essential-j.png'
+import fBanner  from '../../assets/images/frame.png'
+import jBanner  from '../../assets/images/frame3.png'
 // import jewelleryImg from "../assets/images/essential-j.png";
 // import fragranceImg from "../assets/images/essential-f.jpg";
 import all  from '../../assets/images/allproduct.webp'
