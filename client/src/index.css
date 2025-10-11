@@ -32,7 +32,6 @@
 body, html{
     background-color: var(--primary);
     color: var(--dark-text);
-    /* overflow-x: hidden; */
     font-family: 'nunito';
 }
 

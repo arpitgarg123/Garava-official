@@ -192,7 +192,7 @@ const ProductCard = ({
 
   return (
     <article
-      className="ph-card group relative flex flex-col w-full pb-4 overflow-hidden transition-all duration-300 shadow-lg bg-white rounded-lg "
+      className="ph-card group relative flex flex-col w-full pb-4 overflow-hidden transition-all duration-300 shadow-sm bg-white rounded-lg "
       tabIndex="0"
       aria-label={`${product.name || "Product"} - ${displayPrice}`}
     >
@@ -213,7 +213,7 @@ const ProductCard = ({
         <img
           src={heroSrc}
           alt={product.name || "Product image"}
-          className="ph-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="ph-image w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
         

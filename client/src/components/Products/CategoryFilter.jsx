@@ -21,7 +21,7 @@
 //             <li key={c.id}>
 //               <button
 //                 onClick={() => handleCategoryChange(c.id)}
-//                 className={`w-full flex items-center justify-between text-left px-2 py-2 rounded-md transition ${
+//                 className={`w-full flex items-center justify-between text-left px-2 py-2  transition ${
 //                   isActive ? "bg-black text-white" : "text-gray-700 hover:bg-gray-50"
 //                 }`}
 //                 aria-pressed={isActive}
@@ -112,7 +112,7 @@ const CategoryFilter = ({ selected, onChange, categories, counts = {}, isMobile 
             <li key={c.id}>
               <button
                 onClick={() => handleCategoryChange(c.id)}
-                className={`w-full flex items-center justify-between text-left px-2 py-2 rounded-md transition ${
+                className={`w-full flex items-center justify-between text-left px-2 py-2  transition ${
                   isActive ? "bg-black text-white" : "text-gray-700 hover:bg-gray-50"
                 }`}
                 aria-pressed={isActive}

@@ -85,7 +85,7 @@ const PriceFilter = ({
                 pattern="[0-9]*"
                 value={value.min}
                 onChange={(e) => handleInputChange('min', e)}
-                className="w-full pl-8 pr-3 py-2 border rounded-md"
+                className="w-full pl-8 pr-3 py-2 border "
                 placeholder="0"
               />
             </div>
@@ -103,7 +103,7 @@ const PriceFilter = ({
                 pattern="[0-9]*"
                 value={value.max}
                 onChange={(e) => handleInputChange('max', e)}
-                className="w-full pl-8 pr-3 py-2 border rounded-md"
+                className="w-full pl-8 pr-3 py-2 border "
                 placeholder="100000"
               />
             </div>
@@ -131,7 +131,7 @@ const PriceFilter = ({
               pattern="[0-9]*"
               value={value.min}
               onChange={(e) => handleInputChange('min', e)}
-              className="w-full pl-8 pr-3 py-2 border rounded-md"
+              className="w-full pl-8 pr-3 py-2 border "
               placeholder="0"
             />
           </div>
@@ -149,7 +149,7 @@ const PriceFilter = ({
               pattern="[0-9]*"
               value={value.max}
               onChange={(e) => handleInputChange('max', e)}
-              className="w-full pl-8 pr-3 py-2 border rounded-md"
+              className="w-full pl-8 pr-3 py-2 border "
               placeholder="100000"
             />
           </div>
