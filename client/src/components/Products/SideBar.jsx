@@ -451,7 +451,7 @@ const SideBar = ({
               setSelectedType(cat.id);
               setCategory(""); // Reset subcategory when changing main type
             }}
-            className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+            className={`w-full text-left px-3 py-2  text-sm transition-colors ${
               selectedType === cat.id
                 ? "bg-black text-white"
                 : "text-gray-700 hover:bg-gray-50"
@@ -487,7 +487,7 @@ const SideBar = ({
                     <button
                       key={cat.id}
                       onClick={() => setCategory(cat.id)}
-                      className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+                      className={`w-full text-left px-3 py-2  text-sm transition-colors ${
                         category === cat.id
                           ? "bg-black text-white"
                           : "text-gray-700 hover:bg-gray-50"

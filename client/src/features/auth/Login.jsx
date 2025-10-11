@@ -44,7 +44,7 @@ const Login = () => {
         <h1 className="text-2xl font-semibold mb-4 text-center">Login</h1>
         <button
           onClick={handleGoogleLogin}
-          className="w-full mb-6 cursor-pointer flex items-center justify-center gap-3 border border-gray-300 p-2.5 rounded-md hover:bg-gray-50 transition-colors"
+          className="w-full mb-6 cursor-pointer flex items-center justify-center gap-3 border border-gray-300 p-2.5  hover:bg-gray-50 transition-colors"
         >
           <FcGoogle size={20} />
           <span className="text-gray-600">Continue with Google</span>
@@ -63,7 +63,7 @@ const Login = () => {
             type="email"
             value={form.email}
             onChange={onChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 "
             placeholder="Email"
             required
           />
@@ -73,7 +73,7 @@ const Login = () => {
               type={showPwd ? "text" : "password"}
               value={form.password}
               onChange={onChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 "
               placeholder="Password"
               required
             />
@@ -94,7 +94,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded disabled:opacity-50"
+            className="w-full bg-black text-white py-2  disabled:opacity-50"
             disabled={status === "loading"}
           >
             {status === "loading" ? "Signing in..." : "Login"}

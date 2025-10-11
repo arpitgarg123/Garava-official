@@ -3,20 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { setFilters, fetchProducts, clearFilters } from "../../features/product/slice";
 import SideBar from "../../components/Products/SideBar";
-import ProductCard from "../../components/Products/ProductCard";
 import PageHeader from "../../components/header/PageHeader";
 import BackButton from "../../components/BackButton";
 import { BiFilterAlt, BiX } from "react-icons/bi";
 import Pagination from "../../components/Pagination";
 import { buildFilterParams } from "../../shared/utils/filterUtils";
-import fBanner  from '../../assets/images/f-banner.webp'
-import jBanner  from '../../assets/images/j-banner.webp'
+import fBanner  from '../../assets/images/frame.png'
+import jBanner  from '../../assets/images/frame3.png'
+// import jewelleryImg from "../assets/images/essential-j.png";
+// import fragranceImg from "../assets/images/essential-f.jpg";
 import all  from '../../assets/images/allproduct.webp'
 import mobileFraganceBanner  from '../../assets/images/mobfbanner.webp'
 import mobileJewellryBanner  from '../../assets/images/mobjbanner.webp'
 import mobileallProdsBanner  from '../../assets/images/mobAllProductsBanner.webp'
 
 import { useToastContext } from "../../layouts/Toast";
+import ProductCard from "../../components/Products/ProductCard";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -260,7 +262,7 @@ const toast = useToastContext();
 
        <img
           src={banner.desktop}
-          className="w-full h-full object-cover block md:block"
+          className="w-full h-full object-cover object-center block md:block"
           alt={`${getPageHeading()} banner`}
           onError={(e) => {
             e.target.style.display = 'none';

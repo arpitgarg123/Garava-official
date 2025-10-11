@@ -21,7 +21,7 @@ const ColorFilter = ({ selected = [], onChange = () => {} }) => {
             <button
               key={c.key}
               onClick={() => toggle(c.key)}
-              className={`flex w-full items-center gap-3 px-3 py-2 rounded-md text-sm transition focus:outline-none ${
+              className={`flex w-full items-center gap-3 px-3 py-2  text-sm transition focus:outline-none ${
                 active ? "bg-black text-white" : "bg-white text-gray-800 hover:bg-gray-50 border border-gray-200"
               }`}
               aria-pressed={active}

@@ -7,7 +7,8 @@ import { addToCart, addToGuestCart } from '../../features/cart/slice';
 import { toggleWishlistItem, toggleGuestWishlistItem } from '../../features/wishlist/slice';
 import { selectIsAuthenticated } from '../../features/auth/selectors';
 import { logout } from '../../features/auth/slice';
-import { FiPhone, FiMail, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { FiPhone, FiMail, FiChevronDown, FiChevronUp, FiShare2 } from 'react-icons/fi';
+import { CiShare2 } from "react-icons/ci";
 import { handleEmailContact, handleWhatsAppContact } from '../../hooks/contact';
 
 import { selectIsProductInWishlist } from '../../features/wishlist/selectors';
@@ -19,6 +20,7 @@ import ProductGallery from '../../components/Products/ProductGallery';
 import ProductReviews from '../../components/Products/ProductReviews';
 import ColorSelector from '../../components/Products/ColorSelector';
 import AvailabilityChecker from '../../components/Products/AvailabilityChecker';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -68,10 +70,6 @@ const ProductDetails = () => {
     return isColorSelectionRequired() && !selectedColor;
   };
 
-  // Check out-of-stock status
-  // Find the default variant or use the first variant
-  // Handle both product list structure (with defaultVariant) and product details structure (with variants array)
-  // Select variant - prefer one with stock if available
   const selectedVariant = product?.variants?.find(v => v.stock > 0 && v.stockStatus !== 'out_of_stock') ||
                           product?.defaultVariant || 
                           product?.variants?.find(v => v.isDefault) || 
@@ -252,24 +250,22 @@ const ProductDetails = () => {
   //   product?.heroImage ||
   //   product?.gallery?.[0]?.url ||
   //   "/placeholder.jpg";
-console.log(product.badges);
 
   return (
-    <div className="w-full py-10 mt-26 sm:py-12 max-md:py-0 max-sm:mt-0">
+    <div className=" py-10 mt-26 sm:py-12 max-md:py-0 max-sm:mt-0">
        <div className="sticky top-16 z-10 mb-3 max-md:top-5">
     <BackButton />
   </div>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8 pb-10">
   
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="flex flex-col lg:flex-row gap-8 w-full">
    
-          <div className="lg:col-span-5">
-          
+          <div className="lg:w-[60%]">
             <ProductGallery product={product} selectedColor={selectedColor} />
           </div>
 
           {/* Info */}
-          <div className="lg:col-span-7 pl-6 max-md:pl-0">
+          <div className="lg:w-[40%] pl-6 max-md:pl-0 lg:sticky lg:top-20 lg:self-start">
            {product?.badges && Array.isArray(product.badges) && product.badges.length > 0 && (
   <div className="flex flex-wrap gap-2 mb-3">
     {product.badges
@@ -689,12 +685,13 @@ console.log(product.badges);
             <ProductAccordion product={product} />
           </div>
           <div className="lg:col-span-4">
-            <div className=" space-y-3">
+            <div className="space-y-3 w-full">
               {/* <h4 className="font-semibold text-gray-900">Shipping & Delivery</h4> */}
-                            <h4 className=" text-gray-900">-	Order by Phone +91-7738543881 </h4>
-              <h4 className=" text-gray-900">-	Message us (opens links to the website chat)</h4>
-              <h4 className=" text-gray-900">-	Contact a Client Advisor</h4>
+                            <h4 className=" text-gray-900 flex bg-gray-50 p-4">-	Order by Phone +91-7738543881   |  <FaWhatsapp size={24} /><span className='font-semibold'>Message us</span>  </h4>
+             <div className='flex '>
+               <h4 className="bg-gray-50 p-4 text-gray-900">-	Contact a Client Advisor </h4><h4 className='flex bg-gray-50 p-4 font-semibold'> <CiShare2 size={24} /> Share</h4>
 
+             </div>
               {product?.shippingInfo?.complementary && (
                 <p className="text-sm text-green-700 font-medium">
                   ✓ Complimentary Express Delivery
@@ -740,8 +737,7 @@ console.log(product.badges);
       </div>
          <YouMayAlsoLike currentProduct={product} />
          <Explore currentProduct={product} />
-             <ProductReviews productId={product?._id || product?.id} />
-
+             {/* <ProductReviews productId={product?._id || product?.id} /> */}
     </div>
   );
 };

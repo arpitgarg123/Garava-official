@@ -239,7 +239,7 @@ const InstagramAdmin = () => {
             </div>
             <button
               onClick={() => openModal()}
-              className="btn-black flex items-center gap-2 mt-4 sm:mt-0"
+              className="btn-black btn-small flex"
             >
               <AiOutlinePlus className="w-4 h-4" />
               Add New Post
@@ -248,7 +248,7 @@ const InstagramAdmin = () => {
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div className="  shadow-sm p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -261,7 +261,7 @@ const InstagramAdmin = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search posts..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none "
                 />
               </div>
             </div>
@@ -273,7 +273,7 @@ const InstagramAdmin = () => {
               <select
                 value={statusFilter === undefined ? '' : statusFilter.toString()}
                 onChange={(e) => setStatusFilter(e.target.value === '' ? undefined : e.target.value === 'true')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300  outline-none "
               >
                 <option value="">All Status</option>
                 <option value="true">Active</option>
@@ -288,7 +288,7 @@ const InstagramAdmin = () => {
               <select
                 value={featuredFilter === undefined ? '' : featuredFilter.toString()}
                 onChange={(e) => setFeaturedFilter(e.target.value === '' ? undefined : e.target.value === 'true')}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300  outline-none "
               >
                 <option value="">All Posts</option>
                 <option value="true">Featured</option>
@@ -296,16 +296,16 @@ const InstagramAdmin = () => {
               </select>
             </div>
 
-            <div className="flex items-end gap-2">
+            <div className="flex items-end justify-between">
               <button
                 onClick={handleSearch}
-                className="btn-black flex-1"
+                className="btn-black btn-small self-end  "
               >
                 Apply Filters
               </button>
               <button
                 onClick={clearFilters}
-                className="btn border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                className="btn  self-end "
               >
                 Clear
               </button>
@@ -315,7 +315,7 @@ const InstagramAdmin = () => {
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3  mb-6">
             {error}
           </div>
         )}
@@ -334,7 +334,7 @@ const InstagramAdmin = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {posts.map((post) => (
-              <div key={post._id} className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div key={post._id} className="  shadow-sm overflow-hidden">
                 {/* Post Image */}
                 <div className="aspect-square relative">
                   <img
@@ -436,7 +436,7 @@ const InstagramAdmin = () => {
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`px-3 py-2 rounded ${
+                  className={`px-3 py-2  ${
                     page === pagination.page
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -453,7 +453,7 @@ const InstagramAdmin = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="  max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <h2 className="text-xl font-bold mb-4">
                 {editingPost ? 'Edit Instagram Post' : 'Add New Instagram Post'}
@@ -468,7 +468,7 @@ const InstagramAdmin = () => {
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300  outline-none "
                     required
                   />
                 </div>
@@ -482,7 +482,7 @@ const InstagramAdmin = () => {
                       type="file"
                       accept="image/*"
                       onChange={handleImageFileChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 border border-gray-300  outline-none "
                       required={!editingPost}
                     />
 
@@ -493,7 +493,7 @@ const InstagramAdmin = () => {
                         <img
                           src={imagePreview}
                           alt="Preview"
-                          className="w-32 h-32 object-cover rounded-md border border-gray-300"
+                          className="w-32 h-32 object-cover  border border-gray-300"
                         />
                       </div>
                     )}
@@ -508,7 +508,7 @@ const InstagramAdmin = () => {
                     type="text"
                     value={formData.imageAlt}
                     onChange={(e) => setFormData({ ...formData, imageAlt: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300  outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Describe the image for accessibility"
                   />
                 </div>
@@ -522,7 +522,7 @@ const InstagramAdmin = () => {
                     value={formData.instagramUrl}
                     onChange={(e) => setFormData({ ...formData, instagramUrl: e.target.value })}
                     placeholder="https://www.instagram.com/p/ABC123/ or instagram.com/username"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300  outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
                   <p className="text-sm text-gray-500 mt-1">
@@ -538,7 +538,7 @@ const InstagramAdmin = () => {
                     type="number"
                     value={formData.sortOrder}
                     onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300  outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
@@ -568,7 +568,7 @@ const InstagramAdmin = () => {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="btn border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                    className="btn border border-gray-300  text-gray-700 hover:bg-gray-50"
                   >
                     Cancel
                   </button>

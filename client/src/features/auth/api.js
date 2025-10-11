@@ -18,6 +18,6 @@ export const verifyEmailApi = (params) =>
 // Google OAuth
 export const initiateGoogleAuth = () => {
   // Redirect to Google OAuth endpoint
-  const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+  const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:8080/api';
   window.location.href = `${backendUrl}/auth/google`;
 };

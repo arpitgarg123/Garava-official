@@ -100,7 +100,7 @@ const Orders = () => {
       return (
         <div className="min-h-screen bg-gray-50 py-8 mt-30">
           <div className="max-w-4xl mx-auto px-4">
-            <div className="bg-white rounded-lg shadow-sm p-8">
+            <div className=" p-8">
               <div className="animate-pulse">
                 <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
                 <div className="h-4 bg-gray-200 rounded w-1/2 mb-8"></div>
@@ -119,7 +119,7 @@ const Orders = () => {
       return (
         <div className="min-h-screen bg-gray-50 py-8">
           <div className="max-w-4xl mx-auto px-4">
-            <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+            <div className=" p-8 text-center">
               <p className="text-gray-500">Order not found</p>
               <button 
                 onClick={() => navigate('/orders')}
@@ -143,7 +143,7 @@ const Orders = () => {
               </div>
               {/* <PageHeader title={heading} /> */}
         <div className="max-w-5xl mx-auto px-4">
-          <div className=" rounded-lg shadow-sm overflow-hidden">
+          <div className="  overflow-hidden">
             {/* Order Header */}
             <div className="border-b px-6 py-4">
               <div className="flex justify-between items-start">
@@ -171,7 +171,7 @@ const Orders = () => {
                     <img
                       src={item.productSnapshot?.heroImage?.url || '/placeholder.jpg'}
                       alt={item.productSnapshot?.name}
-                      className="w-16 h-16 object-cover rounded"
+                      className="w-16 h-16 object-cover "
                     />
                     <div className="flex-1">
                       <h4 className="font-medium">{item.productSnapshot?.name}</h4>
@@ -251,13 +251,13 @@ const Orders = () => {
   // Loading state for orders list
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8 mt-30">
+      <div className="min-h-screen  py-8 mt-30">
         <div className="max-w-6xl mx-auto px-4">
        <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-lg shadow-sm p-6 animate-pulse">
-                <div className="h-6 bg-gray-200 rounded w-1/4 mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              <div key={i} className=" p-6 animate-pulse">
+                <div className="h-6 bg-gray-200  w-1/4 mb-4"></div>
+                <div className="h-4 bg-gray-200  w-1/2"></div>
               </div>
             ))}
           </div>
@@ -266,57 +266,7 @@ const Orders = () => {
     );
   }
 
-  // Orders list view
-  const dummyOrders = [
-  {
-    _id: '1',
-    orderNumber: 'GRV2023001',
-    createdAt: '2023-09-15T10:30:00Z',
-    status: 'delivered',
-    items: [
-      {
-        productSnapshot: {
-          name: 'Diamond Solitaire Ring',
-          heroImage: {
-            url: '/images/jewelry1.jpg'
-          }
-        },
-        quantity: 1,
-        unitPrice: 75000 // 75,000 INR in rupees
-      }
-    ],
-    grandTotal: 75000
-  },
-  {
-    _id: '2',
-    orderNumber: 'GRV2023002',
-    createdAt: '2023-09-10T15:45:00Z',
-    status: 'processing',
-    items: [
-      {
-        productSnapshot: {
-          name: 'Pearl Necklace Set',
-          heroImage: {
-            url: '/images/jewelry2.jpg'
-          }
-        },
-        quantity: 1,
-        unitPrice: 45000 // 45,000 INR in rupees
-      },
-      {
-        productSnapshot: {
-          name: 'Emerald Earrings',
-          heroImage: {
-            url: '/images/jewelry3.jpg'
-          }
-        },
-        quantity: 2,
-        unitPrice: 35000 // 35,000 INR in rupees
-      }
-    ],
-    grandTotal: 115000
-  },
-]
+
   return (
    <div className=" min-h-[60vh] mt-30">
      <div className="sticky top-20 z-10 ">
@@ -356,11 +306,11 @@ const Orders = () => {
 
                 <div className="space-y-4">
                   {order.items?.slice(0, 2).map((item, idx) => (
-                    <div key={idx} className="flex space-x-4 hover:bg-gray-50 p-2 rounded">
+                    <div key={idx} className="flex space-x-4 hover:bg-gray-50 p-2 ">
                       <img 
                         src={item.productSnapshot?.heroImage?.url || '/placeholder.jpg'} 
                         alt={item.productSnapshot?.name}
-                        className="w-20 h-20 object-cover rounded"
+                        className="w-20 h-20 object-cover "
                       />
                       <div>
                         <h3 className="font-medium">{item.productSnapshot?.name}</h3>

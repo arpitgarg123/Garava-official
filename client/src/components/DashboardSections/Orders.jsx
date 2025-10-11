@@ -120,7 +120,7 @@ export default function Orders() {
     const customerEmail = order.user?.email || order.customer?.email || order.shippingAddress?.email || 'No email provided';
     
     return (
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white  border border-gray-200 shadow-sm overflow-hidden">
         <div className="p-4">
           {/* Mobile Card Header */}
           <div className="flex justify-between items-start mb-3 ">
@@ -168,14 +168,14 @@ export default function Orders() {
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => handleViewOrder(order)}
-                className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
+                className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50  transition-colors"
                 title="View Details"
               >
                 <AiOutlineEye className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleUpdateStatus(order)}
-                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-md transition-colors"
+                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50  transition-colors"
                 title="Update Status"
               >
                 <MdLocalShipping className="w-4 h-4" />
@@ -184,7 +184,7 @@ export default function Orders() {
             {(order.paymentStatus === 'success' && order.status !== 'refunded') && (
               <button
                 onClick={() => handleRefund(order)}
-                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-md transition-colors"
+                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50  transition-colors"
                 title="Process Refund"
               >
                 <MdPayment className="w-4 h-4" />
@@ -311,7 +311,7 @@ export default function Orders() {
           <p className="text-gray-500 text-sm mb-4">{error}</p>
           <button 
             onClick={() => dispatch(fetchOrdersAdmin({ ...filters, page: pagination.page }))}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
           >
             Retry
           </button>
@@ -350,7 +350,7 @@ export default function Orders() {
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm  border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm  border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -368,7 +368,7 @@ export default function Orders() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none"
               />
             </div>
           </div>
@@ -376,7 +376,7 @@ export default function Orders() {
           <select
             value={localFilters.status || ''}
             onChange={(e) => handleFilterChange({ status: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md outline-none"
+            className="px-3 py-2 border border-gray-300  outline-none"
           >
             <option value="">All Status</option>
             <option value="pending">Pending</option>
@@ -391,7 +391,7 @@ export default function Orders() {
           <select
             value={localFilters.paymentStatus || ''}
             onChange={(e) => handleFilterChange({ paymentStatus: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md outline-none"
+            className="px-3 py-2 border border-gray-300  outline-none"
           >
             <option value="">All Payment Status</option>
             <option value="pending">Payment Pending</option>
@@ -402,7 +402,7 @@ export default function Orders() {
           
           <button
             onClick={handleSearch}
-            className="px-4 py-2 bg-gray-50 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 bg-gray-50 text-gray-700  hover:bg-gray-200 transition-colors"
           >
             Search
           </button>
@@ -450,7 +450,7 @@ export default function Orders() {
                   placeholder="Search orders by ID, customer..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none"
                 />
               </div>
             </div>
@@ -461,7 +461,7 @@ export default function Orders() {
               <select
                 value={localFilters.status || ''}
                 onChange={(e) => handleFilterChange({ status: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="">All Status</option>
                 <option value="pending">Pending</option>
@@ -480,7 +480,7 @@ export default function Orders() {
               <select
                 value={localFilters.paymentStatus || ''}
                 onChange={(e) => handleFilterChange({ paymentStatus: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="">All Payment Status</option>
                 <option value="pending">Payment Pending</option>
@@ -537,7 +537,7 @@ export default function Orders() {
               {Object.values(localFilters).some(val => val) && (
                 <button
                   onClick={handleClearFilters}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
                 >
                   Clear Filters
                 </button>
@@ -574,17 +574,17 @@ export default function Orders() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-black text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-black text-white  font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>

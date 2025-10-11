@@ -16,6 +16,8 @@ import { initiatePayment, clearPaymentError, clearCurrentOrder } from '../featur
 import { clearCart } from '../features/cart/slice';
 import AddressSelector from '../components/AddressSelector';
 import formatCurrency, { CHARGES } from '../utils/pricing';
+import BackButton from '../components/BackButton';
+import PageHeader from '../components/header/PageHeader';
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -164,10 +166,12 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
-        
+    <div className="min-h-screen  py-8">
+      <div className="max-w-7xl mx-auto mt-16  px-4 ">
+ <div className="sticky top-36 z-10 mb-3 max-md:top-5">
+    <BackButton />
+  </div>
+  <PageHeader title="Checkout" />        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Forms */}
           <div className="lg:col-span-2 space-y-6">
@@ -180,7 +184,7 @@ const Checkout = () => {
             />
 
             {/* Payment Method */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className=" p-6 ">
               <h2 className="text-xl font-semibold mb-4">Payment Method</h2>
               <div className="space-y-3">
                 <label className="flex items-center space-x-3 cursor-pointer">
@@ -213,15 +217,15 @@ const Checkout = () => {
           </div>
 
           {/* Right Column - Order Summary */}
-          <div className="bg-white p-6 rounded-lg shadow-sm h-fit">
+          <div className=" p-6  h-fit">
             <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
             
             {/* Cart Items */}
             <div className="space-y-4 mb-6">
               {cartItems.map((item, index) => (
-                <div key={item._id || index} className="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
+                <div key={item._id || index} className="flex items-start space-x-3 p-3 ">
                   {/* Product Image */}
-                  <div className="flex-shrink-0 w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
+                  <div className="flex-shrink-0 w-16 h-16 bg-gray-50  overflow-hidden">
                     {item.product?.heroImage ? (
                       <img
                         src={typeof item.product.heroImage === 'string' 
@@ -244,12 +248,12 @@ const Checkout = () => {
                     </h3>
                     <div className="flex items-center space-x-2 mt-1">
                       {item.variantSku && (
-                        <span className="text-sm text-gray-500 bg-white px-2 py-1 rounded">
+                        <span className="text-sm text-gray-500 px-2 py-1 ">
                           SKU: {item.variantSku}
                         </span>
                       )}
                       {item.variant?.sizeLabel && (
-                        <span className="text-sm text-gray-500 bg-white px-2 py-1 rounded">
+                        <span className="text-sm text-gray-500 px-2 py-1 ">
                           Size: {item.variant.sizeLabel}
                         </span>
                       )}
@@ -337,7 +341,7 @@ const Checkout = () => {
 
             {/* Error Message */}
             {paymentError && (
-              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 ">
                 <p className="text-red-800 text-sm">{paymentError}</p>
               </div>
             )}
@@ -346,7 +350,7 @@ const Checkout = () => {
             <button
               onClick={handlePlaceOrder}
               disabled={isProcessing || isCreating || isProcessingPayment}
-              className="w-full mt-6 bg-black text-white py-3 px-6 rounded-md hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-black mt-3 w-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isProcessing || isCreating || isProcessingPayment ? (
                 <span className="flex items-center justify-center">

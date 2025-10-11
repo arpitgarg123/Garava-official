@@ -192,7 +192,7 @@ const ProductCard = ({
 
   return (
     <article
-      className="ph-card group relative flex flex-col w-full pb-4 overflow-hidden transition-all duration-300 shadow-lg bg-white rounded-lg "
+      className="ph-card group relative flex flex-col w-full pb-4 overflow-hidden transition-all duration-300 shadow-sm bg-white rounded-lg "
       tabIndex="0"
       aria-label={`${product.name || "Product"} - ${displayPrice}`}
     >
@@ -213,7 +213,7 @@ const ProductCard = ({
         <img
           src={heroSrc}
           alt={product.name || "Product image"}
-          className="ph-image w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="ph-image w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
         
@@ -366,18 +366,18 @@ const ProductCard = ({
         {(product.type === "fragrance" || product.category === "fragrance") ? (
           <>
             <div className="text-sm uppercase tracking-wider text-gray-500 leading-0  max-sm:my-4  font-medium">{product.type || "Fragrance"}</div>
-            <h3 className="text-base leading-none sm:text-lg font-playfair tracking-wide line-clamp-1 text-gray-900">{product.name}</h3>
+            <h3 className="card-title">{product.name}</h3>
             {product.shortDescription && (
-              <p className="text-sm text-gray-600 line-clamp-2 font-light  max-sm:mt-2">{product.shortDescription}</p>
+              <p className="card-title">{product.shortDescription}</p>
             )}
-            <div className="text-base sm:text-lg font-medium tracking-wide">{displayPrice}</div>
+            <div className="card-rupe-tex">{displayPrice}</div>
           </>
         ) : (
           <>
             <div className="text-sm uppercase leading-0 tracking-wider text-gray-500 font-medium">
               {isHighJewellery ? "HIGH JEWELLERY" : (product.type || product.category || "jewellery")}
             </div>
-            <h3 className="text-base sm:text-lg font-playfair tracking-wide line-clamp-2 my-2  max-sm:my-3 text-gray-900 leading-none">{product.name}</h3>
+            <h3 className="card-title">{product.name}</h3>
             
             {/* High Jewellery Description */}
             {isHighJewellery && product.shortDescription && (
@@ -444,7 +444,7 @@ const ProductCard = ({
                 </div>
               </div>
             ) : (
-              <div className="text-base sm:text-lg font-medium tracking-wide mt-auto">{displayPrice}</div>
+              <div className="card-rupe-tex">{displayPrice}</div>
             )}
 
             {/* Color Selector - Only for non-high jewellery products */}

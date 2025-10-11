@@ -46,14 +46,14 @@ export default function Overview({
     };
 
     return (
-      <div className="bg-white p-6 rounded-lg border border-gray-200">
+      <div className="bg-white p-6  border border-gray-200">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">{title}</p>
             <p className="text-2xl font-semibold text-gray-900 mt-1">{value}</p>
             {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
           </div>
-          <div className={`p-3 rounded-lg ${colorClasses[color]}`}>
+          <div className={`p-3  ${colorClasses[color]}`}>
             {icon}
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function Overview({
         {/* Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Recent Orders */}
-          <div className="bg-white rounded-lg border border-gray-200">
+          <div className="bg-white  border border-gray-200">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Recent Orders</h3>
             </div>
@@ -114,7 +114,7 @@ export default function Overview({
                   {recentOrders.slice(0, 5).map((order) => (
                     <div 
                       key={order._id} 
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                      className="flex items-center justify-between p-3 bg-gray-50  cursor-pointer hover:bg-gray-50 transition-colors"
                       onClick={() => onOpenOrder(order)}
                     >
                       <div>
@@ -140,7 +140,7 @@ export default function Overview({
           </div>
 
           {/* Top Products */}
-          <div className="bg-white rounded-lg border border-gray-200">
+          <div className="bg-white  border border-gray-200">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Top Products</h3>
             </div>
@@ -155,10 +155,10 @@ export default function Overview({
                   {topProducts.slice(0, 5).map((product, index) => (
                     <div 
                       key={product._id} 
-                      className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-4 p-3 bg-gray-50  cursor-pointer hover:bg-gray-50 transition-colors"
                       onClick={() => onOpenProduct(product)}
                     >
-                      <div className="w-12 h-12 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
+                      <div className="w-12 h-12 bg-gray-200  overflow-hidden flex-shrink-0">
                         {product.image && (
                           <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                         )}
@@ -179,7 +179,7 @@ export default function Overview({
           </div>
 
           {/* Recent Reviews */}
-          <div className="bg-white rounded-lg border border-gray-200">
+          <div className="bg-white  border border-gray-200">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Recent Reviews</h3>
             </div>
@@ -194,7 +194,7 @@ export default function Overview({
                   {recentReviews.slice(0, 5).map((review) => (
                     <div 
                       key={review._id} 
-                      className="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                      className="p-3 bg-gray-50  cursor-pointer hover:bg-gray-50 transition-colors"
                       onClick={() => onOpenReview(review)}
                     >
                       <div className="flex items-center justify-between mb-2">
@@ -218,7 +218,7 @@ export default function Overview({
           </div>
 
           {/* Upcoming Appointments */}
-          <div className="bg-white rounded-lg border border-gray-200">
+          <div className="bg-white  border border-gray-200">
             <div className="px-6 py-4 border-b border-gray-200">
               <h3 className="text-lg font-semibold text-gray-900">Upcoming Appointments</h3>
             </div>
@@ -233,7 +233,7 @@ export default function Overview({
                   {upcomingAppointments.slice(0, 5).map((appointment) => (
                     <div 
                       key={appointment._id} 
-                      className="p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
+                      className="p-3 bg-gray-50  cursor-pointer hover:bg-gray-50 transition-colors"
                       onClick={() => onOpenAppointment(appointment)}
                     >
                       <div className="flex items-center justify-between">

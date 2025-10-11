@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import TextSlider from "./TextSlider";
+// import TextSlider from "./TextSlider";
 import './hero.css'
 
 import jBack from "../../assets/images/j-back.jpg";
-import jFront from "../../assets/images/j-front.jpg";
+import jFront from "../../assets/images/essential-j.png";
 // import fFront from "../../assets/images/f-front.png";
 import fFront from "../../assets/images/f-front.png";
 import fBack from '../../assets/images/f-back.png'
@@ -154,7 +154,7 @@ const HeroSection = () => {
         h-[70vh]">
         <div className="hero-left w-[30vw] max-md:w-full h-80   flex flex-col  items-start ">
           {/* <TextSlider isFragrance={isFragrance} /> */}
-          <button onClick={handleDiscoverMore} className="btn-luxury rounded-4xl w-62 mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50 max-md:bottom-23  "
+          <button onClick={handleDiscoverMore} className="btn-luxury cursor-pointer  mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50 max-md:bottom-23  "
           style={
             {
               padding:'0.5rem 2.1rem'

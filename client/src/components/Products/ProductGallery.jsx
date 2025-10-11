@@ -46,12 +46,13 @@ const ProductGallery = ({ product, selectedColor }) => {
     }
     
     setImages(allImages);
-    // Reset active image index when color changes to show first image of new color
-    setActiveImageIndex(0);
+    // Keep current active image index if it's valid, otherwise reset to 0
+    setActiveImageIndex(prev => prev < allImages.length ? prev : 0);
   }, [product, selectedColor]);
 
   const handleThumbnailClick = (index) => {
-    setActiveImageIndex(index);
+    // Disabled: Don't change main image when thumbnail is clicked
+    // setActiveImageIndex(index);
   };
 
   const handlePrevious = () => {
@@ -103,27 +104,26 @@ const ProductGallery = ({ product, selectedColor }) => {
   if (!images.length) return null;
 
   return (
-    <div className="">
-      <div className="relative w-full overflow-hidden bg-gray-50 group cursor-pointer">
+    <div className="sticky top-20 z-20">
+      <div className="w-full bg-gray-50 group cursor-pointer">
         <div 
-          className="aspect-square sm:aspect-[4/3] lg:aspect-[3/2] relative"
+          className="aspect-auto sm:aspect-[4/3] lg:aspect-[2/2] relative"
           onClick={() => openModal(activeImageIndex)}
         >
           <img 
             src={images[activeImageIndex]} 
             alt={`Product view ${activeImageIndex + 1}`}
-            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-contain transition-opacity duration-300"
           />
           
           {/* Expand icon in top-right corner */}
           <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white hover:scale-110 transition-all duration-200">
+            <div className="bg-white/90 backdrop-blur-sm rounded-full p-3 shadow-lg hover:bg-white transition-colors duration-200">
               <IoIosExpand size={20} className="text-gray-800" />
             </div>
           </div>
           
-          {/* Subtle overlay on hover */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
+{/*          
           
           {images.length > 1 && (
             <>
@@ -148,7 +148,7 @@ const ProductGallery = ({ product, selectedColor }) => {
                 <IoIosArrowForward size={20} />
               </button>
             </>
-          )}
+          )} */}
         </div>
       </div>
 
@@ -161,35 +161,18 @@ const ProductGallery = ({ product, selectedColor }) => {
               return (
                 <button
                   key={actualIndex}
-                  onClick={() => handleThumbnailClick(actualIndex)}
-                  onDoubleClick={() => openModal(actualIndex)}
-                  className={`relative cursor-pointer transition-all duration-300 overflow-hidden group aspect-square ${
-                    activeImageIndex === actualIndex 
-                      ? 'ring-2 ring-black shadow-lg' 
-                      : 'hover:shadow-md hover:scale-[0.99]'
-                  }`}
+                  onClick={() => openModal(actualIndex)}
+                  className={`relative cursor-pointer transition-all duration-200 overflow-hidden group aspect-square hover:shadow-md`}
                 >
                   <div className="w-full h-full relative bg-gray-100">
                     <img 
                       src={image} 
                       alt={`Product view ${actualIndex + 1}`}
-                      className={`w-full h-full object-cover transition-all duration-500 ${
-                        activeImageIndex === actualIndex 
-                          ? 'brightness-100' 
-                          : 'group-hover:brightness-105 hover:scale-105'
-                      }`}
+                      className="w-full h-full object-cover transition-opacity duration-200 opacity-90 hover:opacity-100"
                       onError={(e) => {
                         e.target.style.display = 'none';
                       }}
                     />
-                    
-                    {/* Clean overlay for active state */}
-                    {activeImageIndex === actualIndex && (
-                      <div className="absolute inset-0 bg-black/10"></div>
-                    )}
-                    
-                    {/* Minimal hover effect */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
                   </div>
                 </button>
               );
@@ -203,32 +186,18 @@ const ProductGallery = ({ product, selectedColor }) => {
                   return (
                     <button
                       key={actualIndex}
-                      onClick={() => handleThumbnailClick(actualIndex)}
-                      className={`relative cursor-pointer transition-all duration-300 overflow-hidden group aspect-square ${
-                        activeImageIndex === actualIndex 
-                          ? 'ring-2 ring-black shadow-lg' 
-                          : 'hover:shadow-md hover:scale-[0.99]'
-                      }`}
+                      onClick={() => openModal(actualIndex)}
+                      className="relative cursor-pointer transition-all duration-200 overflow-hidden group aspect-square hover:shadow-md"
                     >
                       <div className="w-full h-full relative bg-gray-100">
                         <img 
                           src={image} 
                           alt={`Product view ${actualIndex + 1}`}
-                          className={`w-full h-full object-cover transition-all duration-500 ${
-                            activeImageIndex === actualIndex 
-                              ? 'brightness-100' 
-                              : 'group-hover:brightness-105 hover:scale-105'
-                          }`}
+                          className="w-full h-full object-cover transition-opacity duration-200 opacity-90 hover:opacity-100"
                           onError={(e) => {
-                            e.target.style.display = 'none';
+                            e.target.display = 'none';
                           }}
                         />
-                        
-                        {activeImageIndex === actualIndex && (
-                          <div className="absolute inset-0 bg-black/10"></div>
-                        )}
-                        
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
                       </div>
                     </button>
                   );
