@@ -60,12 +60,13 @@ export const generatePasswordResetToken = (user) =>
 
 export const setAuthCookies = (res, accessToken, refreshToken) => {
   const isProduction = process.env.NODE_ENV === 'production';
+  const isDevelopment = process.env.NODE_ENV === 'development';
   
   // Access token cookie (shorter lived)
   res.cookie('token', accessToken, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'none' : 'lax', // 'none' for production cross-origin, 'lax' for dev
+    sameSite: isProduction ? 'none' : (isDevelopment ? 'none' : 'lax'), // 'none' for production cross-origin, 'lax' for dev
     maxAge: 24 * 60 * 60 * 1000, // 24h
     path: '/',
   });

@@ -260,12 +260,12 @@ const ProductDetails = () => {
   
         <div className="flex flex-col lg:flex-row gap-8 w-full">
    
-          <div className="lg:w-5/12">
+          <div className="lg:w-[60%]">
             <ProductGallery product={product} selectedColor={selectedColor} />
           </div>
 
           {/* Info */}
-          <div className="lg:w-6/12 pl-6 max-md:pl-0 sticky top-[0px] py-5 self-start h-fit max-h-screen ">
+          <div className="lg:w-[40%] pl-6 max-md:pl-0 lg:sticky lg:top-20 lg:self-start">
            {product?.badges && Array.isArray(product.badges) && product.badges.length > 0 && (
   <div className="flex flex-wrap gap-2 mb-3">
     {product.badges
