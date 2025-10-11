@@ -103,8 +103,8 @@ const ProductGallery = ({ product, selectedColor }) => {
   if (!images.length) return null;
 
   return (
-    <div className="">
-      <div className="relative w-full overflow-hidden bg-gray-50 group cursor-pointer">
+    <div className="sticky top-20 z-20">
+      <div className="w-full bg-gray-50 group cursor-pointer">
         <div 
           className="aspect-auto  sm:aspect-[4/3] lg:aspect-[2/2]  relative"
           onClick={() => openModal(activeImageIndex)}
@@ -122,8 +122,7 @@ const ProductGallery = ({ product, selectedColor }) => {
             </div>
           </div>
           
-          {/* Subtle overlay on hover */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-all duration-300"></div>
+{/*          
           
           {images.length > 1 && (
             <>
@@ -148,7 +147,7 @@ const ProductGallery = ({ product, selectedColor }) => {
                 <IoIosArrowForward size={20} />
               </button>
             </>
-          )}
+          )} */}
         </div>
       </div>
 

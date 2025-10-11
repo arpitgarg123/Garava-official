@@ -252,21 +252,20 @@ const ProductDetails = () => {
   //   "/placeholder.jpg";
 
   return (
-    <div className="w-full py-10 mt-26 sm:py-12 max-md:py-0 max-sm:mt-0">
+    <div className=" py-10 mt-26 sm:py-12 max-md:py-0 max-sm:mt-0">
        <div className="sticky top-16 z-10 mb-3 max-md:top-5">
     <BackButton />
   </div>
-      <div className="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8 pb-10">
   
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 w-full">
+        <div className="flex flex-col lg:flex-row gap-8 w-full">
    
-          <div className="lg:col-span-5 w-full ">
-          
+          <div className="lg:w-5/12">
             <ProductGallery product={product} selectedColor={selectedColor} />
           </div>
 
           {/* Info */}
-          <div className="lg:col-span-7 pl-6 max-md:pl-0">
+          <div className="lg:w-6/12 pl-6 max-md:pl-0 sticky top-[0px] py-5 self-start h-fit max-h-screen ">
            {product?.badges && Array.isArray(product.badges) && product.badges.length > 0 && (
   <div className="flex flex-wrap gap-2 mb-3">
     {product.badges
