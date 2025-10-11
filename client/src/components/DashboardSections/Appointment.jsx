@@ -74,7 +74,7 @@ export default function Appointment() {
           <p className="text-gray-500 text-sm mt-1">{error}</p>
           <button 
             onClick={() => dispatch(fetchAppointmentsAdmin({}))}
-            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="mt-4 px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
           >
             Retry
           </button>
@@ -105,7 +105,7 @@ export default function Appointment() {
                 placeholder="Search appointments..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none "
+                className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none "
               />
             </div>
           </div>
@@ -113,7 +113,7 @@ export default function Appointment() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="">All Status</option>
             <option value="pending">Pending</option>
@@ -125,7 +125,7 @@ export default function Appointment() {
           <select
             value={serviceFilter}
             onChange={(e) => setServiceFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="">All Services</option>
             <option value="consultation">Consultation</option>

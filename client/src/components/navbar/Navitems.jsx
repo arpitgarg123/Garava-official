@@ -72,15 +72,15 @@ const [submenuTop, setSubmenuTop] = useState(130);
         <AnimatePresence>
           {hovered === item.title && hasSubmenu && (
             <>
-              <div className="absolute h-8 w-full  -bottom-8 bg-transparent" />
+              <div className="absolute left-0 h-8 w-full  -bottom-8 bg-transparent" />
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="submenu-container w-screen h-[20vw] fixed  bg-white text-black left-0 -top-36 py-8 "
+                className="submenu-container w-full h-[20vw] fixed  bg-white text-black left-0 -top-36 py-8 "
               >
-                <div className="max-w-7xl mx-auto flex items-center justify-center h-full ">
+                <div className="max-w-7xl mx-auto flex  items-center justify-center h-full ">
                   <div className="flex-center">
                     {item.submenu.map((sub, i) => (
                       <Submenu key={i} sub={sub} parentTitle={item.title} />

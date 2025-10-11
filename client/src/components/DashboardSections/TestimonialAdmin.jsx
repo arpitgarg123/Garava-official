@@ -244,7 +244,7 @@ const TestimonialAdmin = () => {
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <div className="bg-white  p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-semibold">
               {modalType === 'create' && 'Create Testimonial'}
@@ -263,7 +263,7 @@ const TestimonialAdmin = () => {
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border  px-3 py-2"
                     required
                   />
                 </div>
@@ -273,7 +273,7 @@ const TestimonialAdmin = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border  px-3 py-2"
                   />
                 </div>
                 <div>
@@ -281,7 +281,7 @@ const TestimonialAdmin = () => {
                   <textarea
                     value={formData.content}
                     onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
-                    className="w-full border rounded px-3 py-2 h-24"
+                    className="w-full border  px-3 py-2 h-24"
                     required
                   />
                 </div>
@@ -290,7 +290,7 @@ const TestimonialAdmin = () => {
                   <select
                     value={formData.rating}
                     onChange={(e) => setFormData(prev => ({ ...prev, rating: parseInt(e.target.value) }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border  px-3 py-2"
                   >
                     {[1, 2, 3, 4, 5].map(rating => (
                       <option key={rating} value={rating}>{rating} Star{rating > 1 ? 's' : ''}</option>
@@ -303,7 +303,7 @@ const TestimonialAdmin = () => {
                     type="text"
                     value={formData.location}
                     onChange={(e) => setFormData(prev => ({ ...prev, location: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border  px-3 py-2"
                   />
                 </div>
                 <div>
@@ -312,7 +312,7 @@ const TestimonialAdmin = () => {
                     type="text"
                     value={formData.designation}
                     onChange={(e) => setFormData(prev => ({ ...prev, designation: e.target.value }))}
-                    className="w-full border rounded px-3 py-2"
+                    className="w-full border  px-3 py-2"
                   />
                 </div>
                 <div className="flex space-x-4">
@@ -340,14 +340,14 @@ const TestimonialAdmin = () => {
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="px-4 py-2 text-gray-600 border rounded hover:bg-gray-50"
+                  className="px-4 py-2 text-gray-600 border  hover:bg-gray-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+                  className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 disabled:opacity-50"
                 >
                   {actionLoading ? <FaSave className="animate-spin" /> : 'Save'}
                 </button>
@@ -399,14 +399,14 @@ const TestimonialAdmin = () => {
             <div className="flex space-x-2">
               <button
                 onClick={() => openModal('create')}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center space-x-2"
+                className="bg-blue-600 text-white px-4 py-2  hover:bg-blue-700 flex items-center space-x-2"
               >
                 <FaPlus /> <span>Add Manual</span>
               </button>
               <button
                 onClick={handleGoogleFetch}
                 disabled={googleLoading}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 flex items-center space-x-2 disabled:opacity-50"
+                className="bg-green-600 text-white px-4 py-2  hover:bg-green-700 flex items-center space-x-2 disabled:opacity-50"
               >
                 <FaGoogle /> <span>{googleLoading ? 'Fetching...' : 'Fetch Google'}</span>
               </button>
@@ -420,12 +420,12 @@ const TestimonialAdmin = () => {
               placeholder="Search testimonials..."
               value={filters.search}
               onChange={(e) => handleFilterChange('search', e.target.value)}
-              className="border rounded px-3 py-2"
+              className="border border-gray-300 outline-none   px-3 py-2"
             />
             <select
               value={filters.source}
               onChange={(e) => handleFilterChange('source', e.target.value)}
-              className="border rounded px-3 py-2"
+              className="border border-gray-300  px-3 py-2"
             >
               <option value="">All Sources</option>
               <option value="manual">Manual</option>
@@ -434,7 +434,7 @@ const TestimonialAdmin = () => {
             <select
               value={filters.isActive}
               onChange={(e) => handleFilterChange('isActive', e.target.value)}
-              className="border rounded px-3 py-2"
+              className="border border-gray-300  px-3 py-2"
             >
               <option value="">All Status</option>
               <option value="true">Active</option>
@@ -443,7 +443,7 @@ const TestimonialAdmin = () => {
             <select
               value={filters.isFeatured}
               onChange={(e) => handleFilterChange('isFeatured', e.target.value)}
-              className="border rounded px-3 py-2"
+              className="border border-gray-300  px-3 py-2"
             >
               <option value="">All Types</option>
               <option value="true">Featured</option>
@@ -457,7 +457,7 @@ const TestimonialAdmin = () => {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
           ) : (
-            <div className="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div className="bg-white shadow-sm  overflow-hidden">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -578,7 +578,7 @@ const TestimonialAdmin = () => {
                             <div className="mt-6">
                               <button
                                 onClick={() => openModal('create')}
-                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+                                className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium  text-white bg-blue-600 hover:bg-blue-700"
                               >
                                 <FaPlus className="mr-2" />
                                 Add First Testimonial
@@ -602,7 +602,7 @@ const TestimonialAdmin = () => {
                   <button
                     key={page}
                     onClick={() => handlePageChange(page)}
-                    className={`px-3 py-2 rounded ${
+                    className={`px-3 py-2  ${
                       page === pagination.page
                         ? 'bg-blue-600 text-white'
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -625,7 +625,7 @@ const TestimonialAdmin = () => {
             </div>
           ) : (
             <>
-              <div className="bg-white p-6 rounded-lg shadow">
+              <div className="bg-white p-6  shadow">
                 <div className="flex items-center">
                   <FaChartBar className="text-blue-600 text-2xl" />
                   <div className="ml-4">
@@ -634,7 +634,7 @@ const TestimonialAdmin = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow">
+              <div className="bg-white p-6  shadow">
                 <div className="flex items-center">
                   <FaEye className="text-green-600 text-2xl" />
                   <div className="ml-4">
@@ -643,7 +643,7 @@ const TestimonialAdmin = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow">
+              <div className="bg-white p-6  shadow">
                 <div className="flex items-center">
                   <FaStar className="text-yellow-600 text-2xl" />
                   <div className="ml-4">
@@ -652,7 +652,7 @@ const TestimonialAdmin = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow">
+              <div className="bg-white p-6  shadow">
                 <div className="flex items-center">
                   <FaGoogle className="text-red-600 text-2xl" />
                   <div className="ml-4">

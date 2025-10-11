@@ -195,7 +195,7 @@ const NotificationsDashboard = () => {
   // Mobile Notification Card Component
   const MobileNotificationCard = ({ notification }) => (
     <div
-      className={`bg-white rounded-lg border shadow-sm p-4 mb-3 transition-all ${
+      className={`bg-white  border shadow-sm p-4 mb-3 transition-all ${
         notification.isRead ? 'opacity-75' : 'border-l-4 border-l-blue-500'
       }`}
     >
@@ -212,7 +212,7 @@ const NotificationsDashboard = () => {
               {notification.title}
             </h3>
             {!notification.isRead && (
-              <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0 ml-2 mt-1"></div>
+              <div className="w-2 h-2 bg-blue-600 -full flex-shrink-0 ml-2 mt-1"></div>
             )}
           </div>
           
@@ -222,7 +222,8 @@ const NotificationsDashboard = () => {
           
           {/* Tags */}
           <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span className={`px-2 py-1 rounded-full text-sm font-medium border ${getSeverityColor(notification.severity)}`}>
+            <span className={`px-2 py-1 rounded-full text-sm font-medium border border-gray-300
+               ${getSeverityColor(notification.severity)}`}>
               {notification.severity.toUpperCase()}
             </span>
             {notification.actionTaken && (
@@ -247,7 +248,7 @@ const NotificationsDashboard = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => viewNotification(notification._id)}
-              className="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-md text-sm font-medium hover:bg-blue-100 transition-colors"
+              className="flex-1 px-3 py-2 bg-blue-50 text-blue-600  text-sm font-medium hover:bg-blue-100 transition-colors"
             >
               View Details
             </button>
@@ -255,7 +256,7 @@ const NotificationsDashboard = () => {
             {!notification.isRead && (
               <button
                 onClick={() => markAsRead(notification._id)}
-                className="px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md transition-colors"
+                className="px-3 py-2 text-gray-600 hover:bg-gray-50  transition-colors"
                 title="Mark as read"
               >
                 <FaEnvelopeOpen className="w-4 h-4" />
@@ -265,7 +266,7 @@ const NotificationsDashboard = () => {
             {notification.actionRequired && !notification.actionTaken && (
               <button
                 onClick={() => markActionTaken(notification._id)}
-                className="px-3 py-2 text-green-600 hover:bg-green-50 rounded-md transition-colors"
+                className="px-3 py-2 text-green-600 hover:bg-green-50  transition-colors"
                 title="Mark as resolved"
               >
                 <FaCheck className="w-4 h-4" />
@@ -274,7 +275,7 @@ const NotificationsDashboard = () => {
             
             <button
               onClick={() => deleteNotification(notification._id)}
-              className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+              className="px-3 py-2 text-red-600 hover:bg-red-50  transition-colors"
               title="Delete"
             >
               <FaTrash className="w-4 h-4" />
@@ -293,12 +294,12 @@ const NotificationsDashboard = () => {
           <div className="animate-pulse">
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
               {[...Array(4)].map((_, i) => (
-                <div key={i} className="h-20 bg-gray-200 rounded-lg"></div>
+                <div key={i} className="h-20 bg-gray-200 "></div>
               ))}
             </div>
             <div className="space-y-3">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="h-20 bg-gray-200 rounded-lg"></div>
+                <div key={i} className="h-20 bg-gray-200 "></div>
               ))}
             </div>
           </div>
@@ -312,7 +313,7 @@ const NotificationsDashboard = () => {
       {/* Responsive Header */}
       <div className="flex-shrink-0 p-4 sm:p-6 border-b border-gray-200 bg-white">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
-          <div className="min-w-0 flex-1">
+          <div className="min-w-5xl flex-1">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
               <FaBell className="text-blue-600" />
               Notifications
@@ -334,9 +335,9 @@ const NotificationsDashboard = () => {
 
         {/* Responsive Stats Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
-          <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+          <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
             <div className="flex items-center">
-              <div className="p-2 bg-blue-100 rounded-lg flex-shrink-0">
+              <div className="p-2 bg-blue-100  flex-shrink-0">
                 <FaBell className="text-blue-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
@@ -346,9 +347,9 @@ const NotificationsDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+          <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
             <div className="flex items-center">
-              <div className="p-2 bg-yellow-100 rounded-lg flex-shrink-0">
+              <div className="p-2 bg-yellow-100  flex-shrink-0">
                 <FaEye className="text-yellow-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
@@ -358,9 +359,9 @@ const NotificationsDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+          <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
             <div className="flex items-center">
-              <div className="p-2 bg-red-100 rounded-lg flex-shrink-0">
+              <div className="p-2 bg-red-100  flex-shrink-0">
                 <FaBox className="text-red-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
@@ -370,9 +371,9 @@ const NotificationsDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+          <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
             <div className="flex items-center">
-              <div className="p-2 bg-orange-100 rounded-lg flex-shrink-0">
+              <div className="p-2 bg-orange-100  flex-shrink-0">
                 <FaExclamationTriangle className="text-orange-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
@@ -390,7 +391,7 @@ const NotificationsDashboard = () => {
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <FiFilter className="w-4 h-4" />
             Filters
@@ -465,7 +466,7 @@ const NotificationsDashboard = () => {
                   <button
                     key={filterType}
                     onClick={() => setFilter(filterType)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`w-full text-left px-3 py-2  text-sm font-medium transition-colors ${
                       filter === filterType
                         ? 'bg-blue-100 text-blue-800 border border-blue-300'
                         : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
@@ -482,7 +483,7 @@ const NotificationsDashboard = () => {
               <label className="block text-sm font-medium text-gray-700 mb-3">Status</label>
               <button
                 onClick={() => setUnreadOnly(!unreadOnly)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`w-full text-left px-3 py-2  text-sm font-medium transition-colors ${
                   unreadOnly
                     ? 'bg-yellow-100 text-yellow-800 border border-yellow-300'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
@@ -527,11 +528,11 @@ const NotificationsDashboard = () => {
               </div>
               
               {/* Desktop List */}
-              <div className="hidden lg:block p-6 space-y-3">
+              <div className="hidden lg:block  p-6 space-y-3">
                 {notifications.map((notification) => (
                   <div
                     key={notification._id}
-                    className={`bg-white rounded-lg shadow border p-4 transition-all hover:shadow-md ${
+                    className={`bg-white   shadow border border-gray-300 p-4 transition-all hover:shadow-md ${
                       notification.isRead ? 'opacity-75' : 'border-l-4 border-l-blue-500'
                     }`}
                   >
@@ -572,7 +573,7 @@ const NotificationsDashboard = () => {
                         {!notification.isRead && (
                           <button
                             onClick={() => markAsRead(notification._id)}
-                            className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+                            className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50  transition-colors"
                             title="Mark as read"
                           >
                             <FaEnvelopeOpen />
@@ -581,7 +582,7 @@ const NotificationsDashboard = () => {
                         
                         <button
                           onClick={() => viewNotification(notification._id)}
-                          className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded transition-colors"
+                          className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50  transition-colors"
                           title="View details"
                         >
                           <FaSearchPlus />
@@ -590,7 +591,7 @@ const NotificationsDashboard = () => {
                         {notification.actionRequired && !notification.actionTaken && (
                           <button
                             onClick={() => markActionTaken(notification._id)}
-                            className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded transition-colors"
+                            className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50  transition-colors"
                             title="Mark as resolved"
                           >
                             <FaCheck />
@@ -599,14 +600,14 @@ const NotificationsDashboard = () => {
                         
                         <button
                           onClick={() => deleteNotification(notification._id)}
-                          className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+                          className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50  transition-colors"
                           title="Delete notification"
                         >
                           <FaTrash />
                         </button>
                         
                         {notification.actionTaken && (
-                          <span className="px-2 py-1 text-sm bg-green-100 text-green-800 rounded">
+                          <span className="px-2 py-1 text-sm bg-green-100 text-green-800 ">
                             ✓ Resolved
                           </span>
                         )}
@@ -623,7 +624,7 @@ const NotificationsDashboard = () => {
       {/* Responsive Notification Detail Modal */}
       {showDetailModal && selectedNotification && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
+          <div className="bg-white  shadow-xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
             <div className="p-4 sm:p-6 border-b">
               <div className="flex items-center justify-between">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-900">Notification Details</h2>
@@ -648,7 +649,7 @@ const NotificationsDashboard = () => {
                       {selectedNotification.severity.toUpperCase()}
                     </span>
                     {selectedNotification.actionRequired && (
-                      <span className="px-2 py-1 text-sm bg-orange-100 text-orange-800 rounded">
+                      <span className="px-2 py-1 text-sm bg-orange-100 text-orange-800 ">
                         Action Required
                       </span>
                     )}
@@ -664,7 +665,7 @@ const NotificationsDashboard = () => {
               {selectedNotification.productId && (
                 <div className="border-t pt-4">
                   <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Product Information</h4>
-                  <div className="bg-gray-50 p-3 rounded text-sm">
+                  <div className="bg-gray-50 p-3  text-sm">
                     <p><strong>Product:</strong> {selectedNotification.productId.name || 'Unknown'}</p>
                     {selectedNotification.metadata?.variantSizeLabel && (
                       <p><strong>Variant:</strong> {selectedNotification.metadata.variantSizeLabel}</p>
@@ -686,7 +687,7 @@ const NotificationsDashboard = () => {
                   <p><strong>Type:</strong> {selectedNotification.type.replace('_', ' ').toUpperCase()}</p>
                   <p><strong>Status:</strong> {selectedNotification.isRead ? 'Read' : 'Unread'}</p>
                   {selectedNotification.actionTaken && (
-                    <div className="mt-2 p-2 bg-green-50 rounded">
+                    <div className="mt-2 p-2 bg-green-50 ">
                       <p className="text-green-800"><strong>✓ Action Taken</strong></p>
                       {selectedNotification.actionNotes && (
                         <p className="text-green-700 text-sm mt-1">{selectedNotification.actionNotes}</p>
@@ -708,7 +709,7 @@ const NotificationsDashboard = () => {
                       markAsRead(selectedNotification._id);
                       setSelectedNotification(prev => ({ ...prev, isRead: true }));
                     }}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+                    className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors text-sm"
                   >
                     Mark as Read
                   </button>
@@ -720,7 +721,7 @@ const NotificationsDashboard = () => {
                       markActionTaken(selectedNotification._id);
                       setSelectedNotification(prev => ({ ...prev, actionTaken: true, isRead: true }));
                     }}
-                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors text-sm"
+                    className="px-4 py-2 bg-green-600 text-white  hover:bg-green-700 transition-colors text-sm"
                   >
                     Mark as Resolved
                   </button>
@@ -731,14 +732,14 @@ const NotificationsDashboard = () => {
                     deleteNotification(selectedNotification._id);
                     setShowDetailModal(false);
                   }}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors text-sm"
+                  className="px-4 py-2 bg-red-600 text-white  hover:bg-red-700 transition-colors text-sm"
                 >
                   Delete
                 </button>
                 
                 <button
                   onClick={() => setShowDetailModal(false)}
-                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors text-sm sm:ml-auto"
+                  className="px-4 py-2 bg-gray-300 text-gray-700  hover:bg-gray-400 transition-colors text-sm sm:ml-auto"
                 >
                   Close
                 </button>

@@ -103,7 +103,7 @@ const BookAnAppointment = () => {
             type="text"
             value={form.name}
             onChange={onChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 a"
             placeholder="Full name"
             required
           />
@@ -112,7 +112,7 @@ const BookAnAppointment = () => {
             type="email"
             value={form.email}
             onChange={onChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 a"
             placeholder="Email"
             required
           />
@@ -124,7 +124,7 @@ const BookAnAppointment = () => {
             type="tel"
             value={form.phone}
             onChange={onChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 a"
             placeholder="Phone"
             pattern="^[0-9+\-\s()]{7,}$"
             title="Enter a valid phone number"
@@ -134,7 +134,7 @@ const BookAnAppointment = () => {
             name="serviceType"
             value={form.serviceType}
             onChange={onChange}
-            className="w-full border p-2 rounded bg-white"
+            className="w-full border p-2 a bg-white"
             required
           >
             <option value="" disabled>
@@ -155,7 +155,7 @@ const BookAnAppointment = () => {
             type="datetime-local"
             value={form.appointmentAtLocal}
             onChange={onChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 a"
             min={minLocal}
             required
           />
@@ -166,7 +166,7 @@ const BookAnAppointment = () => {
             name="description"
             value={form.description}
             onChange={onChange}
-            className="w-full border p-2 resize-none rounded min-h-[120px]"
+            className="w-full border p-2 resize-none a min-h-[120px]"
             placeholder="Describe what you’re looking for (optional)"
           />
           <p className="mt-1 text-sm text-gray-500">Note: This will be sent as “notes” to our team.</p>

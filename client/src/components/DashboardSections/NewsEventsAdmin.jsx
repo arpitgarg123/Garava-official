@@ -158,19 +158,19 @@ export default function NewsEventsAdmin() {
   };
 
  const MobileNewsEventCard = ({ item }) => (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden mb-4">
+    <div className="bg-white  border border-gray-200 shadow-sm overflow-hidden mb-4">
       <div className="p-4">
         <div className="flex gap-3">
           {/* Item Image */}
           <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20">
             {item.cover?.url ? (
               <img 
-                className="w-full h-full rounded-lg object-cover" 
+                className="w-full h-full  object-cover" 
                 src={item.cover.url} 
                 alt={item.title}
               />
             ) : (
-              <div className="w-full h-full rounded-lg bg-gray-200 flex items-center justify-center">
+              <div className="w-full h-full  bg-gray-200 flex items-center justify-center">
                 {getTypeIcon(item.type)}
               </div>
             )}
@@ -206,13 +206,13 @@ export default function NewsEventsAdmin() {
 <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
           <button 
             onClick={() => openModal('details', item)}
-            className="flex-1 px-3 py-2 bg-blue-50 text-blue-600 rounded-md text-sm font-medium hover:bg-blue-100 transition-colors"
+            className="flex-1 px-3 py-2 bg-blue-50 text-blue-600  text-sm font-medium hover:bg-blue-100 transition-colors"
           >
             View Details
           </button>
           <button 
             onClick={() => openModal('createEdit', item)}
-            className="px-3 py-2 text-green-600 hover:bg-green-50 rounded-md transition-colors"
+            className="px-3 py-2 text-green-600 hover:bg-green-50  transition-colors"
             title="Edit Item"
           >
             <FiEdit3 className="w-4 h-4" />
@@ -220,7 +220,7 @@ export default function NewsEventsAdmin() {
           <select
             value={item.status}
             onChange={(e) => handleStatusUpdate(item._id, e.target.value)}
-            className="text-sm border border-gray-300 rounded px-2 py-1 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="text-sm border border-gray-300  px-2 py-1 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             title="Update Status"
           >
             <option value="draft">Draft</option>
@@ -229,7 +229,7 @@ export default function NewsEventsAdmin() {
           </select>
           <button
             onClick={() => openModal('delete', item)}
-            className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+            className="px-3 py-2 text-red-600 hover:bg-red-50  transition-colors"
             title="Delete Item"
           >
             <RiDeleteBin6Line className="w-4 h-4" />
@@ -240,7 +240,7 @@ export default function NewsEventsAdmin() {
   );
   // Desktop Table Component
   const DesktopTable = () => (
-    <div className="bg-white rounded-lg border border-gray-300 overflow-hidden">
+    <div className="bg-white  border border-gray-300 overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full min-w-[1000px]">
           <thead className="bg-gray-50 sticky top-0 z-10">
@@ -274,7 +274,7 @@ export default function NewsEventsAdmin() {
                       <img
                         src={item.cover.url}
                         alt=""
-                        className="w-10 h-10 rounded object-cover mr-3 flex-shrink-0"
+                        className="w-10 h-10  object-cover mr-3 flex-shrink-0"
                       />
                     )}
                     <div className="min-w-0">
@@ -328,7 +328,7 @@ export default function NewsEventsAdmin() {
                     <select
                       value={item.status}
                       onChange={(e) => handleStatusUpdate(item._id, e.target.value)}
-                      className="text-sm border rounded px-2 py-1 outline-none"
+                      className="text-sm border border-gray-300 px-2 py-1 outline-none"
                       title="Update Status"
                     >
                       <option value="draft">Draft</option>
@@ -360,7 +360,7 @@ export default function NewsEventsAdmin() {
           <p className="text-gray-500 text-sm mb-4">{error}</p>
           <button 
             onClick={() => fetchNewsEvents()}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
           >
             Retry
           </button>
@@ -384,7 +384,7 @@ export default function NewsEventsAdmin() {
           </div>
           <button
             onClick={() => openModal('createEdit')}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors text-sm"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-gray-900 text-white  hover:bg-gray-800 transition-colors text-sm"
           >
             <AiOutlinePlus className="w-4 h-4" />
             <span>Add New</span>
@@ -393,27 +393,27 @@ export default function NewsEventsAdmin() {
 
        {stats && (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-4 sm:mb-6">
-            <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+            <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-gray-900">{stats.total}</div>
               <div className="text-sm sm:text-sm text-gray-600 truncate">Total Items</div>
             </div>
-            <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+            <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-green-600">{stats.published}</div>
               <div className="text-sm sm:text-sm text-gray-600 truncate">Published</div>
             </div>
-            <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+            <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-yellow-600">{stats.draft}</div>
               <div className="text-sm sm:text-sm text-gray-600 truncate">Drafts</div>
             </div>
-            <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+            <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-red-600">{stats.archived}</div>
               <div className="text-sm sm:text-sm text-gray-600 truncate">Archived</div>
             </div>
-            <div className="bg-white p-3 sm:p-4 rounded-lg shadow border border-gray-300">
+            <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-blue-600">{stats.events}</div>
               <div className="text-sm sm:text-sm text-gray-600 truncate">Events</div>
             </div>
-            <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-300">
+            <div className="bg-white p-3 sm:p-4  border border-gray-300">
               <div className="text-lg sm:text-xl lg:text-2xl font-bold text-purple-600">{stats.mediaCoverage}</div>
               <div className="text-sm sm:text-sm text-gray-600">Media Coverage</div>
             </div>
@@ -428,7 +428,7 @@ export default function NewsEventsAdmin() {
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -446,14 +446,14 @@ export default function NewsEventsAdmin() {
                   placeholder="Search by title, content..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none"
                 />
               </div>
             </div>
             <select
               value={typeFilter}
               onChange={(e) => setTypeFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg outline-none"
+              className="px-4 py-2 border border-gray-300  outline-none"
             >
               <option value="">All Types</option>
               <option value="event">Events</option>
@@ -462,7 +462,7 @@ export default function NewsEventsAdmin() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg outline-none"
+              className="px-4 py-2 border border-gray-300  outline-none"
             >
               <option value="">All Status</option>
               <option value="published">Published</option>
@@ -479,7 +479,7 @@ export default function NewsEventsAdmin() {
             {(searchTerm || typeFilter || statusFilter) && (
               <button
                 onClick={handleClearFilters}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors"
               >
                 Clear
               </button>
@@ -522,7 +522,7 @@ export default function NewsEventsAdmin() {
                   placeholder="Search by title, content..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none"
                 />
               </div>
             </div>
@@ -533,7 +533,7 @@ export default function NewsEventsAdmin() {
               <select
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="">All Types</option>
                 <option value="event">Events</option>
@@ -547,7 +547,7 @@ export default function NewsEventsAdmin() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="">All Status</option>
                 <option value="published">Published</option>
@@ -560,13 +560,13 @@ export default function NewsEventsAdmin() {
           <div className="border-t p-4 flex gap-4">
             <button 
               onClick={handleClearFilters}
-              className="flex-1 py-3 border border-gray-300 rounded-lg text-center hover:bg-gray-50 transition-colors"
+              className="flex-1 py-3 border border-gray-300  text-center hover:bg-gray-50 transition-colors"
             >
               Clear All
             </button>
             <button 
               onClick={handleSearch}
-              className="flex-1 py-3 bg-blue-600 text-white rounded-lg text-center hover:bg-blue-700 transition-colors"
+              className="flex-1 py-3 bg-blue-600 text-white  text-center hover:bg-blue-700 transition-colors"
             >
               Apply Filters
             </button>
@@ -597,7 +597,7 @@ export default function NewsEventsAdmin() {
               {(searchTerm || typeFilter || statusFilter) && (
                 <button
                   onClick={handleClearFilters}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
                 >
                   Clear Filters
                 </button>
@@ -634,17 +634,17 @@ export default function NewsEventsAdmin() {
               <button
                 onClick={() => fetchNewsEvents(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-blue-600 text-white  font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => fetchNewsEvents(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>
@@ -658,7 +658,7 @@ export default function NewsEventsAdmin() {
                   <button
                     key={pageNum}
                     onClick={() => fetchNewsEvents(pageNum)}
-                    className={`px-3 py-2 text-sm border rounded-lg transition-colors ${
+                    className={`px-3 py-2 text-sm border  transition-colors ${
                       pageNum === pagination.page
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'

@@ -127,13 +127,13 @@ export default function Products() {
     const stockStatus = getStockStatus(firstVariant);
     
     return (
-      <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-white  border border-gray-200 shadow-sm overflow-hidden">
         <div className="p-4">
           {/* Product Header */}
           <div className="flex items-start space-x-3 mb-3">
             <div className="h-16 w-16 flex-shrink-0">
               <img 
-                className="h-16 w-16 rounded-lg object-cover" 
+                className="h-16 w-16  object-cover" 
                 src={product.heroImage?.url || '/placeholder.jpg'} 
                 alt={product.name}
                 onError={(e) => {
@@ -180,14 +180,14 @@ export default function Products() {
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => handleViewProduct(product)}
-                className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
+                className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50  transition-colors"
                 title="View Details"
               >
                 <AiOutlineEye className="w-4 h-4" />
               </button>
               <button
                 onClick={() => handleEditProduct(product)}
-                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-md transition-colors"
+                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50  transition-colors"
                 title="Edit Product"
               >
                 <FiEdit className="w-4 h-4" />
@@ -195,7 +195,7 @@ export default function Products() {
             </div>
             <button
               onClick={() => handleDeleteProduct(product._id)}
-              className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors"
+              className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50  transition-colors"
               title="Archive Product"
             >
               <RiDeleteBin6Line className="w-4 h-4" />
@@ -243,7 +243,7 @@ export default function Products() {
                   <div className="flex items-center">
                     <div className="h-12 w-12 flex-shrink-0">
                       <img 
-                        className="h-12 w-12 rounded-lg object-cover" 
+                        className="h-12 w-12  object-cover" 
                         src={product.heroImage?.url || '/placeholder.jpg'} 
                         alt={product.name}
                         onError={(e) => {
@@ -318,7 +318,7 @@ export default function Products() {
           <p className="text-gray-500 text-sm mb-4">{error}</p>
           <button 
             onClick={() => dispatch(fetchProductsAdmin({ ...filters, page: pagination.page }))}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
           >
             Retry
           </button>
@@ -359,7 +359,7 @@ export default function Products() {
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -377,7 +377,7 @@ export default function Products() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="w-full pl-10 pr-4 py-2 border outline-none border-gray-300 rounded-md "
+                className="w-full pl-10 pr-4 py-2 border outline-none border-gray-300  "
               />
             </div>
           </div>
@@ -385,7 +385,7 @@ export default function Products() {
           <select
             value={localFilters.status || ''}
             onChange={(e) => handleFilterChange({ status: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md outline-none"
+            className="px-3 py-2 border border-gray-300  outline-none"
           >
             <option value="">All Status</option>
             <option value="published">Published</option>
@@ -396,7 +396,7 @@ export default function Products() {
           <select
             value={localFilters.category || ''}
             onChange={(e) => handleFilterChange({ category: e.target.value })}
-            className="px-3 py-2 border border-gray-300 rounded-md outline-none"
+            className="px-3 py-2 border border-gray-300  outline-none"
           >
             <option value="">All Categories</option>
             <option value="fragrance">Fragrance</option>
@@ -406,7 +406,7 @@ export default function Products() {
           
           <button
             onClick={handleSearch}
-            className="px-4 py-2 bg-gray-50 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 bg-gray-50 text-gray-700  hover:bg-gray-200 transition-colors"
           >
             Search
           </button>
@@ -454,7 +454,7 @@ export default function Products() {
                   placeholder="Search products..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none"
                 />
               </div>
             </div>
@@ -465,7 +465,7 @@ export default function Products() {
               <select
                 value={localFilters.status || ''}
                 onChange={(e) => handleFilterChange({ status: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="">All Status</option>
                 <option value="published">Published</option>
@@ -480,7 +480,7 @@ export default function Products() {
               <select
                 value={localFilters.category || ''}
                 onChange={(e) => handleFilterChange({ category: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="">All Categories</option>
                 <option value="fragrance">Fragrance</option>
@@ -573,17 +573,17 @@ export default function Products() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-black text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-black text-white  font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>

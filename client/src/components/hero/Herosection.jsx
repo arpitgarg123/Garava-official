@@ -154,7 +154,7 @@ const HeroSection = () => {
         h-[70vh]">
         <div className="hero-left w-[30vw] max-md:w-full h-80   flex flex-col  items-start ">
           {/* <TextSlider isFragrance={isFragrance} /> */}
-          <button onClick={handleDiscoverMore} className="btn-luxury rounded-4xl w-62 mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50 max-md:bottom-23  "
+          <button onClick={handleDiscoverMore} className="btn-luxury cursor-pointer  mt-8 absolute bottom-10 left-1/2 -translate-x-1/2 z-50 max-md:bottom-23  "
           style={
             {
               padding:'0.5rem 2.1rem'

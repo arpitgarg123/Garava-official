@@ -73,18 +73,6 @@ const navItems = [
         to: '/products/fragrance?category=sila',
         category: 'sila'
       },
-      // { 
-      //   label: 'Sayonee', 
-      //   img: './src/assets/images/sayonee.jpge', 
-      //   to: '/products/fragrance?category=sayonee',
-      //   category: 'sayonee'
-      // },
-      // { 
-      //   label: 'Mangata', 
-      //   img: './src/assets/images/mangata.jpg', 
-      //   to: '/products/fragrance?category=mangata',
-      //   category: 'mangata'
-      // },
        { 
         label: 'Evara', 
         img: './src/assets/images/evara.jpg', 
@@ -244,7 +232,7 @@ const Navbar = () => {
   const navTextColor = isHeroPage && !scrolled && !isNavActive ? 'text-white' : 'text-black';
   const shouldShowNavItemsDesktop = isHeroPage && !scrolled;
   
-  const navbarClass = `navbar hidden md:block py-3.5 transition-transform duration-300 ease-out ${
+  const navbarClass = `navbar hidden md:block py-3.5 overflow-x-hidde transition-transform duration-300 ease-out ${
     isHidden ? '-translate-y-48' : 'translate-y-0'
   } ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'} ${
     isNavActive ? 'expanded' : ''

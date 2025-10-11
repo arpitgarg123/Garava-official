@@ -20,9 +20,9 @@ import {
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
 import f1 from "../assets/images/f-front.png";
-import f2 from "../assets/images/fragnance.png";
-import f3 from "../assets/images/fragnance1.png";
-import f4 from "../assets/images/essential-f.png";
+// import f2 from "../assets/images/fragnance.png";
+// import f3 from "../assets/images/fragnance1.png";
+// import f4 from "../assets/images/essential-f.png";
 import Appointment from '../components/DashboardSections/Appointment';
 import Reviews from './../components/DashboardSections/Reviews';
 import Newsletter from '../components/DashboardSections/Newsletter';
@@ -220,13 +220,13 @@ const Dashboard = () => {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              className="lg:hidden p-2  text-gray-500 hover:text-gray-700 hover:bg-gray-50"
             >
               <FaBars className="w-5 h-5" />
             </button>
             
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-blue-600  flex items-center justify-center">
                 <MdDashboard className="w-5 h-5 text-white" />
               </div>
               <div>
@@ -247,7 +247,7 @@ const Dashboard = () => {
           <div className="flex items-center gap-3">
           
 
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 rounded-md">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 ">
               <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
                 <FaUser className="w-3 h-3 text-white" />
               </div>
@@ -256,7 +256,7 @@ const Dashboard = () => {
 
             <Link 
               to="/" 
-              className="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+              className="p-2  text-gray-500 hover:text-gray-700 hover:bg-gray-50"
               title="Back to Site"
             >
               <IoIosArrowBack className="w-4 h-4" />
@@ -288,7 +288,7 @@ const Dashboard = () => {
                     setActiveTab(tab.id);
                     setSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center gap-3 px-3 py-2 text-left rounded-md transition-colors ${
+                  className={`w-full flex items-center gap-3 px-3 py-2 text-left  transition-colors ${
                     activeTab === tab.id
                       ? "bg-blue-50 text-blue-700 border-r-2 border-blue-600"
                       : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
@@ -330,11 +330,11 @@ const Dashboard = () => {
               </div>
               
               {/* <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 rounded-md">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 ">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   <span className="text-sm font-medium text-green-700">Live</span>
                 </div>
-                <button className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
+                <button className="px-4 py-2 bg-blue-600 text-white  text-sm font-medium hover:bg-blue-700 transition-colors">
                   Export
                 </button>
               </div> */}
@@ -344,7 +344,7 @@ const Dashboard = () => {
           {/* Content Area */}
           <div className="h-[calc(100%-5rem)] bg-gray-50">
             <div className="h-full p-6">
-              <div className="h-full bg-white rounded-lg border border-gray-200 overflow-hidden">
+              <div className="h-full bg-white  border border-gray-200 overflow-hidden">
                 {renderContent()}
               </div>
             </div>

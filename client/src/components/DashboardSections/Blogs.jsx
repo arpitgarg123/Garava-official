@@ -44,7 +44,7 @@ export default function Blogs(props) {
   return (
     <div className="h-full flex flex-col space-y-6 overflow-y-auto">
       {/* Header Section */}
-      <div className=" rounded-xl border w-full border-gray-200 shadow-sm overflow-hidden">
+      <div className="  border w-full border-gray-200 shadow-sm overflow-hidden">
         <header className="px-6 py-4 border-b w-full border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50">
           <div className="flex flex-col sm:flex-row justify-between w-full  items-start sm:items-center gap-4">
             <div>
@@ -55,7 +55,7 @@ export default function Blogs(props) {
               onClick={function () {
                 onAction("create");
               }}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors duration-200"
+              className="px-4 py-2 bg-blue-600 text-white  text-sm hover:bg-blue-700 transition-colors duration-200"
             >
               New Post
             </button>
@@ -75,7 +75,7 @@ export default function Blogs(props) {
                     return Object.assign({}, f, { q: e.target.value });
                   });
                 }}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                className="w-full px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
               />
             </div>
             <div className="flex gap-3">
@@ -86,7 +86,7 @@ export default function Blogs(props) {
                     return Object.assign({}, f, { status: e.target.value });
                   });
                 }}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white"
+                className="px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 bg-white"
               >
                 {statusOptions.map(function (s) {
                   return (
@@ -98,13 +98,13 @@ export default function Blogs(props) {
               </select>
               <button
                 onClick={applyFilters}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700 transition-colors duration-200"
+                className="px-4 py-2 bg-blue-600 text-white  text-sm hover:bg-blue-700 transition-colors duration-200"
               >
                 Apply
               </button>
               <button
                 onClick={clearFilters}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                className="px-4 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors duration-200"
               >
                 Clear
               </button>
@@ -130,7 +130,7 @@ export default function Blogs(props) {
                 return (
                   <article
                     key={p._id}
-                    className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
+                    className="bg-white  border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
                   >
                     <div className="aspect-[16/9] bg-gray-50 overflow-hidden">
                       {p.coverImageUrl ? (
@@ -173,7 +173,7 @@ export default function Blogs(props) {
                           onClick={function () {
                             onOpen(p);
                           }}
-                          className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors duration-200"
+                          className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50  transition-colors duration-200"
                           title="View details"
                         >
                           <AiOutlineEye size={16} />
@@ -182,7 +182,7 @@ export default function Blogs(props) {
                           onClick={function () {
                             onAction("edit", p);
                           }}
-                          className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors duration-200"
+                          className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50  transition-colors duration-200"
                           title="Edit post"
                         >
                           <AiOutlineEdit size={16} />
@@ -192,7 +192,7 @@ export default function Blogs(props) {
                             onClick={function () {
                               onAction("unpublish", p);
                             }}
-                            className="p-2 text-gray-600 hover:text-yellow-600 hover:bg-yellow-50 rounded transition-colors duration-200"
+                            className="p-2 text-gray-600 hover:text-yellow-600 hover:bg-yellow-50  transition-colors duration-200"
                             title="Unpublish"
                           >
                             <AiOutlineDownload size={16} />
@@ -202,7 +202,7 @@ export default function Blogs(props) {
                             onClick={function () {
                               onAction("publish", p);
                             }}
-                            className="p-2 text-white bg-blue-600 hover:bg-blue-700 rounded transition-colors duration-200"
+                            className="p-2 text-white bg-blue-600 hover:bg-blue-700  transition-colors duration-200"
                             title="Publish"
                           >
                             <AiOutlineUpload size={16} />
@@ -212,7 +212,7 @@ export default function Blogs(props) {
                           onClick={function () {
                             onAction("delete", p);
                           }}
-                          className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded transition-colors duration-200"
+                          className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50  transition-colors duration-200"
                           title="Delete"
                         >
                           <AiOutlineDelete size={16} />
@@ -229,7 +229,7 @@ export default function Blogs(props) {
 
       {/* Pagination */}
       {pagination.totalPages > 1 && (
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+        <div className="bg-white  border border-gray-200 shadow-sm p-6">
           <div className="flex items-center justify-between">
             <div className="text-sm text-gray-600">
               Showing page {pagination.page} of {pagination.totalPages || 1} — {pagination.total || 0} posts
@@ -240,11 +240,11 @@ export default function Blogs(props) {
                   goToPage(pagination.page - 1);
                 }}
                 disabled={pagination.page <= 1}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Previous
               </button>
-              <span className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium">
+              <span className="px-4 py-2 bg-blue-600 text-white  font-medium">
                 {pagination.page}
               </span>
               <button
@@ -252,7 +252,7 @@ export default function Blogs(props) {
                   goToPage(pagination.page + 1);
                 }}
                 disabled={pagination.page >= (pagination.totalPages || 1)}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Next
               </button>
