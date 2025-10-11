@@ -42,8 +42,8 @@ const Card = forwardRef(({ title, subtitle, img, hotspotSize = "40%", link }, re
         </div>
       </article>
 
-      <div className="text-start w-full mt-4 sm:mt-6">
-        <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-playfair uppercase m-0 text-gray-900 leading-tight tracking-wide">
+      <div className="text-start w-full ">
+        <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl  uppercase m-0 text-gray-900 leading-tight ">
           {title}
         </h2>
         <p className="text-sm sm:text-base lg:text-lg text-gray-600 mt-1 sm:mt-2 leading-relaxed">

@@ -199,8 +199,10 @@ body:has(.submenu-container) {
 
 .head-text {
   text-transform: uppercase;
-  line-height: 1.2;
+  /* line-height: 1.2; */
   text-align: center;
+  
+  font-family: 'playfair';
   font-size: clamp(1.5rem, 5vw, 2.5rem); 
 }
 

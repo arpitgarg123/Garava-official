@@ -7,7 +7,8 @@ import { addToCart, addToGuestCart } from '../../features/cart/slice';
 import { toggleWishlistItem, toggleGuestWishlistItem } from '../../features/wishlist/slice';
 import { selectIsAuthenticated } from '../../features/auth/selectors';
 import { logout } from '../../features/auth/slice';
-import { FiPhone, FiMail, FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { FiPhone, FiMail, FiChevronDown, FiChevronUp, FiShare2 } from 'react-icons/fi';
+import { CiShare2 } from "react-icons/ci";
 import { handleEmailContact, handleWhatsAppContact } from '../../hooks/contact';
 
 import { selectIsProductInWishlist } from '../../features/wishlist/selectors';
@@ -19,6 +20,7 @@ import ProductGallery from '../../components/Products/ProductGallery';
 import ProductReviews from '../../components/Products/ProductReviews';
 import ColorSelector from '../../components/Products/ColorSelector';
 import AvailabilityChecker from '../../components/Products/AvailabilityChecker';
+import { FaWhatsapp } from 'react-icons/fa';
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -254,7 +256,7 @@ const ProductDetails = () => {
        <div className="sticky top-16 z-10 mb-3 max-md:top-5">
     <BackButton />
   </div>
-      <div className=" w-full">
+      <div className="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
   
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 w-full">
    
@@ -684,12 +686,13 @@ const ProductDetails = () => {
             <ProductAccordion product={product} />
           </div>
           <div className="lg:col-span-4">
-            <div className=" space-y-3">
+            <div className="space-y-3 w-full">
               {/* <h4 className="font-semibold text-gray-900">Shipping & Delivery</h4> */}
-                            <h4 className=" text-gray-900">-	Order by Phone +91-7738543881 </h4>
-              <h4 className=" text-gray-900">-	Message us (opens links to the website chat)</h4>
-              <h4 className=" text-gray-900">-	Contact a Client Advisor</h4>
+                            <h4 className=" text-gray-900 flex bg-gray-50 p-4">-	Order by Phone +91-7738543881   |  <FaWhatsapp size={24} /><span className='font-semibold'>Message us</span>  </h4>
+             <div className='flex '>
+               <h4 className="bg-gray-50 p-4 text-gray-900">-	Contact a Client Advisor </h4><h4 className='flex bg-gray-50 p-4 font-semibold'> <CiShare2 size={24} /> Share</h4>
 
+             </div>
               {product?.shippingInfo?.complementary && (
                 <p className="text-sm text-green-700 font-medium">
                   ✓ Complimentary Express Delivery
@@ -735,7 +738,7 @@ const ProductDetails = () => {
       </div>
          <YouMayAlsoLike currentProduct={product} />
          <Explore currentProduct={product} />
-             <ProductReviews productId={product?._id || product?.id} />
+             {/* <ProductReviews productId={product?._id || product?.id} /> */}
     </div>
   );
 };
