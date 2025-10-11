@@ -26,7 +26,7 @@ const RefundReturn = () => {
                 Refund & Returns
               </h1>
               <p className="text-gray-600 text-sm  max-w-2xl mx-auto">
-                Your satisfaction is our priority. Learn about our simple return and refund process for Garava products.
+                Learn about our return and refund policy for fragrances and jewelry. Please read carefully as different terms apply to different product categories.
               </p>
             </div>
           </div>
@@ -35,39 +35,42 @@ const RefundReturn = () => {
           <div className="p-6 sm:p-8">
             <div className="space-y-8">
               
-              {/* Return Policy */}
+              {/* Fragrances Policy */}
               <section className="border-b border-gray-100 pb-8">
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
-                  Return Policy
+                  Fragrances
                 </h2>
                 <div className="prose max-w-none text-gray-700">
                   <p className="mb-4 text-sm  leading-relaxed">
-                    At Garava, we want you to be completely satisfied with your purchase. If for any reason you are not happy with your order, 
-                    we offer a simple return policy to ensure your peace of mind.
+                    No return or refund is possible on perfumes. If the perfume order hasn't been shipped then a refund can be done subject to a deduction of payment gateway charges of 2.5%.
+                  </p>
+                </div>
+              </section>
+
+              {/* Jewelry Policy */}
+              <section className="border-b border-gray-100 pb-8">
+                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                  <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
+                  Jewelry
+                </h2>
+                <div className="prose max-w-none text-gray-700">
+                  <p className="mb-4 text-sm  leading-relaxed">
+                    Returns and refunds are only applicable for orders of jewelry already in stock. Customized orders are not applicable for return or refund.
                   </p>
                   
                   <div className="bg-gray-50 border border-gray-200  p-6 mb-6">
-                    <h3 className="font-semibold text-gray-900 mb-3">Return Window</h3>
+                    <h3 className="font-semibold text-gray-900 mb-3">15-day refund of order that is available in stock</h3>
                     <p className="text-gray-800 text-sm ">
-                      You may return items within <strong>7 days</strong> of delivery for a full refund, provided the items are in their original condition.
+                      In case you have requested the return of any of your products, the refund of the same shall be initiated once we receive the product back in our warehouse.
                     </p>
                   </div>
 
-                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Eligible Items for Return:</h3>
+                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">To be eligible for a return:</h3>
                   <ul className="list-disc list-inside space-y-2 text-sm  mb-6">
-                    <li>Items in original packaging with all tags attached</li>
-                    <li>Unused and unworn jewellery pieces</li>
-                    <li>Unopened fragrance products with intact seals</li>
-                    <li>Items with original certificates and documentation</li>
-                  </ul>
-
-                  <h3 className="font-semibold text-gray-900 mb-3 text-lg">Non-Returnable Items:</h3>
-                  <ul className="list-disc list-inside space-y-2 text-sm  mb-6">
-                    <li>Personalized or customized jewellery</li>
-                    <li>Items damaged by customer use</li>
-                    <li>Opened fragrance products</li>
-                    <li>Special order or made-to-order items</li>
+                    <li>You should mail your query to: info@garava.in. Once your return is approved, you will be informed on how to ship the jewelry back to us. Please do not send your purchase back to Garava without informing us beforehand.</li>
+                    <li>You will be responsible for paying for your own shipping costs for returning your item and the cost of insurance. The cost of return shipping will be deducted from your refund amount and shipping costs are non-refundable.</li>
+                    <li>Your item must be unused and in the same condition that you received it. It must also be in the original packaging.</li>
                   </ul>
                 </div>
               </section>
@@ -76,11 +79,11 @@ const RefundReturn = () => {
               <section className="border-b border-gray-100 pb-8">
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
-                  How to Return
+                  Return Process
                 </h2>
                 <div className="prose max-w-none text-gray-700">
                   <p className="mb-4 text-sm  leading-relaxed">
-                    Returning your Garava purchase is simple and hassle-free. Follow these easy steps:
+                    Follow these steps to return eligible jewelry items:
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

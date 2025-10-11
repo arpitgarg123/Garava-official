@@ -26,7 +26,7 @@ const TermsAndConditions = () => {
                 Terms & Conditions
               </h1>
               <p className="text-gray-600 text-sm  max-w-2xl mx-auto">
-                Please read these terms and conditions carefully before using our website and services.
+                Please read these terms of use carefully before using this website. If you do not agree to this Terms of Use you may not use this Website.
               </p>
             </div>
           </div>
@@ -35,17 +35,15 @@ const TermsAndConditions = () => {
           <div className="p-6 sm:p-8">
             <div className="space-y-8">
               
-              {/* Acceptance of Terms */}
+              {/* General */}
               <section className="border-b border-gray-100 pb-8">
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
-                  Agreement to Terms
+                  1. GENERAL
                 </h2>
                 <div className="prose max-w-none text-gray-700">
                   <p className="mb-4 text-sm  leading-relaxed">
-                    By accessing and using the Garava website, you acknowledge that you have read, understood, 
-                    and agree to be bound by these Terms and Conditions. If you do not agree to these terms, 
-                    please do not use our website or services.
+                    "GARAVA" www.garava.in (hereinafter referred to as "GARAVA") is the brand created, owned, and operated by ADVIR & Co. The terms "We", "Us", and "Our" shall mean GARAVA, our employees, and authorized agents that perform any services on behalf of GARAVA. By using our website, you agree that you have read and understood these Terms of Use and that you accept and agree to follow them, without any limitations or conditions, and without requiring a handwritten signature from the Buyer. When you access the website, you also consent to how we collect, use, and share your information, as explained in our Privacy Policy. These general e-selling terms and conditions ("General Terms and Conditions") apply to all sales of GARAVA products made through www.garava.in (the "Online Store" or "Website"). Their primary purpose is to inform potential buyers about the terms and conditions under which GARAVA conducts the sale and delivery of ordered products. Additionally, they outline the rights and obligations of the parties involved in the sale of products by GARAVA to the customer (the "Buyer").
                   </p>
                 </div>
               </section>

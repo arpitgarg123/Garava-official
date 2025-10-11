@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
                 Privacy Policy
               </h1>
               <p className="text-gray-600 text-sm  max-w-2xl mx-auto">
-                At Garava, we are committed to protecting your privacy and ensuring the security of your personal information.
+                At GARAVA, we prioritize our customers' privacy and respect the confidentiality of their personal information. Whether you visit our website or interact with us via social media, email, or phone, we are committed to safeguarding your privacy and addressing any concerns you may have about the protection of your personal data.
               </p>
             </div>
           </div>
@@ -42,8 +42,7 @@ const PrivacyPolicy = () => {
                 </h2>
                 <div className="prose max-w-none text-gray-700">
                   <p className="mb-4 text-sm  leading-relaxed">
-                    We collect information that you provide directly to us when you use our website, create an account, 
-                    make a purchase, or contact our customer service.
+                    By using our website, www.garava.store, you acknowledge and agree to our Privacy Policy. If you do not agree with our Privacy Policy, please exit this page and refrain from accessing or using the website. Our Privacy Policy provides detailed information on how we collect, use, and manage your personal data, regardless of your role as an internet user, customer, prospect, partner, supplier, or candidate ("you"). Please note that our Privacy Policy may be updated periodically without prior notice to ensure compliance with current regulations. We recommend reviewing the policy regularly to stay informed of any changes. To ensure the security of your personal information, we employ advanced encryption technology, digital certificates, secure commerce servers, and authentication measures.
                   </p>
                   
                   <div className="bg-gray-50 border border-gray-200  p-6 mb-6">

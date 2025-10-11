@@ -25,8 +25,7 @@ const ShippingPolicy = () => {
                 Shipping Policy
               </h1>
               <p className="text-gray-600 text-sm  max-w-2xl mx-auto">
-                We are committed to delivering your luxury jewellery and fragrances safely and efficiently. 
-                Learn about our shipping options, delivery timelines, and policies.
+                For our customers in India we provide free shipping at in all major Indian cities. For our international customer the orders will be shipped via FedEx/DHL to the shipping address given at the time of order.
               </p>
               <div className="mt-4 text-sm text-gray-700 font-medium">
                 Last updated: October 2, 2025
@@ -55,9 +54,7 @@ const ShippingPolicy = () => {
                     <div className="ml-3">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Delivery Commitment</h3>
                       <p className="text-gray-800 text-sm  leading-relaxed">
-                        At Garava, we ensure secure and timely delivery of all our luxury products. 
-                        All orders are carefully packaged and shipped with trusted courier partners to ensure 
-                        your precious items reach you safely.
+                        A tracking number for the courier will be shared to the customer to track the parcel. All purchased items are insured for their full value before shipment, insurance lapses immediately after delivery of an item and as soon as the customer signs for a package. Our team will contact you via email or text to schedule the delivery, once your order is ready to ship. Setting up a delivery schedule is important. No order can be shipped without customer's consent delivery schedule.
                       </p>
                     </div>
                   </div>
@@ -77,12 +74,12 @@ const ShippingPolicy = () => {
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414-1.414L9 5.586 7.707 4.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L11 3.586l-1.293 1.293z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <h3 className="font-semibold text-gray-900 mb-3">Ready to Ship Items</h3>
+                    <h3 className="font-semibold text-gray-900 mb-3">Jewelry & Fragrance</h3>
                     <p className="text-sm text-gray-800 mb-3">
-                      Orders for in-stock items are processed within 24-48 hours of order confirmation.
+                      Once the order is ready it will be delivered within 3-5 working days. A tracking number will be shared.
                     </p>
                     <ul className="space-y-1 text-sm text-gray-800">
-                      <li>• Same day processing for orders placed before 2 PM</li>
+                      <li>• An adult signature is required for all deliveries</li>
                       <li>• Quality check before dispatch</li>
                       <li>• Tracking information provided via SMS & Email</li>
                     </ul>
