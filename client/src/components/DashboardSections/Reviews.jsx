@@ -149,7 +149,7 @@
 //                 value={searchTerm}
 //                 onChange={(e) => setSearchTerm(e.target.value)}
 //                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-//                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//                 className="w-full pl-10 pr-4 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 //               />
 //             </div>
 //           </div>
@@ -157,7 +157,7 @@
 //           <select
 //             value={statusFilter}
 //             onChange={(e) => setStatusFilter(e.target.value)}
-//             className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//             className="px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 //           >
 //             <option value="">All Status</option>
 //             <option value="approved">Approved</option>
@@ -168,7 +168,7 @@
 //           <select
 //             value={ratingFilter}
 //             onChange={(e) => setRatingFilter(e.target.value)}
-//             className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+//             className="px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
 //           >
 //             <option value="">All Ratings</option>
 //             <option value="5">5 Stars</option>
@@ -180,7 +180,7 @@
           
 //           <button
 //             onClick={handleSearch}
-//             className="px-4 py-2 bg-gray-50 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+//             className="px-4 py-2 bg-gray-50 text-gray-700  hover:bg-gray-200 transition-colors"
 //           >
 //             Search
 //           </button>
@@ -520,7 +520,7 @@ export default function Reviews() {
 
   // Mobile Review Card Component
   const MobileReviewCard = ({ review }) => (
-    <div className="bg-white rounded-lg border border-gray-300  w-full overflow-hidden mb-4">
+    <div className="bg-white border border-gray-300  w-full overflow-hidden mb-4">
       <div className="p-4">
         {/* Mobile Card Header */}
         <div className="flex justify-between items-start mb-3">
@@ -588,7 +588,7 @@ export default function Reviews() {
                 setSelectedReview(review);
                 setShowDetailsModal(true);
               }}
-              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-md transition-colors"
+              className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50  transition-colors"
               title="View Details"
             >
               <AiOutlineEye className="w-4 h-4" />
@@ -596,7 +596,7 @@ export default function Reviews() {
             {!review.isApproved && !review.flagged && (
               <button
                 onClick={() => handleApprove(review._id)}
-                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50 rounded-md transition-colors"
+                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50  transition-colors"
                 title="Approve Review"
               >
                 <MdCheckCircle className="w-4 h-4" />
@@ -605,7 +605,7 @@ export default function Reviews() {
             {review.isApproved && (
               <button
                 onClick={() => handleReject(review._id)}
-                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50 rounded-md transition-colors"
+                className="p-2 text-orange-600 hover:text-orange-800 hover:bg-orange-50  transition-colors"
                 title="Reject Review"
               >
                 <MdCancel className="w-4 h-4" />
@@ -617,7 +617,7 @@ export default function Reviews() {
             {!review.flagged && (
               <button
                 onClick={() => handleFlag(review._id)}
-                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors"
+                className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50  transition-colors"
                 title="Flag Review"
               >
                 <MdCancel className="w-4 h-4" />
@@ -625,7 +625,7 @@ export default function Reviews() {
             )}
             <button
               onClick={() => handleDelete(review._id)}
-              className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-md transition-colors"
+              className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50  transition-colors"
               title="Delete Review"
             >
               <RiDeleteBin6Line className="w-4 h-4" />
@@ -779,7 +779,7 @@ export default function Reviews() {
 
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="bg-white max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           <div className="flex justify-between items-center p-6 border-b">
             <h3 className="text-lg font-semibold text-gray-900">Review Details</h3>
             <button
@@ -842,7 +842,7 @@ export default function Reviews() {
           <div className="flex justify-end gap-4 p-6 border-t">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+              className="px-4 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors"
             >
               Close
             </button>
@@ -860,7 +860,7 @@ export default function Reviews() {
           <p className="text-gray-500 text-sm mb-4">{error}</p>
           <button 
             onClick={() => dispatch(fetchReviewsAdmin({ page: 1, limit: 20 }))}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
           >
             Retry
           </button>
@@ -891,7 +891,7 @@ export default function Reviews() {
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -909,7 +909,7 @@ export default function Reviews() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>
@@ -917,7 +917,7 @@ export default function Reviews() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="">All Status</option>
             <option value="approved">Approved</option>
@@ -928,7 +928,7 @@ export default function Reviews() {
           <select
             value={ratingFilter}
             onChange={(e) => setRatingFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="">All Ratings</option>
             <option value="5">5 Stars</option>
@@ -940,7 +940,7 @@ export default function Reviews() {
           
           <button
             onClick={handleSearch}
-            className="px-4 py-2 bg-gray-50 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+            className="px-4 py-2 bg-gray-50 text-gray-700  hover:bg-gray-200 transition-colors"
           >
             Search
           </button>
@@ -988,7 +988,7 @@ export default function Reviews() {
                   placeholder="Search reviews..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none"
                 />
               </div>
             </div>
@@ -999,7 +999,7 @@ export default function Reviews() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="">All Status</option>
                 <option value="approved">Approved</option>
@@ -1014,7 +1014,7 @@ export default function Reviews() {
               <select
                 value={ratingFilter}
                 onChange={(e) => setRatingFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-gray-300  focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="">All Ratings</option>
                 <option value="5">5 Stars</option>
@@ -1032,7 +1032,7 @@ export default function Reviews() {
                 handleClearFilters();
                 setShowMobileFilters(false);
               }}
-              className="px-3 py-1 border border-gray-300 rounded-md text-center hover:bg-gray-50 transition-colors"
+              className="px-3 py-1 border border-gray-300  text-center hover:bg-gray-50 transition-colors"
             >
               Clear All
             </button>
@@ -1072,7 +1072,7 @@ export default function Reviews() {
               {(searchTerm || statusFilter || ratingFilter) && (
                 <button
                   onClick={handleClearFilters}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
                 >
                   Clear Filters
                 </button>
@@ -1109,17 +1109,17 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-blue-600 text-white font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>
@@ -1130,7 +1130,7 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300  text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Previous
               </button>
@@ -1140,7 +1140,7 @@ export default function Reviews() {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 border rounded text-sm ${
+                    className={`px-3 py-1 border  text-sm ${
                       pagination.page === pageNum
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'border-gray-300 hover:bg-gray-50'
@@ -1153,7 +1153,7 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300  text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Next
               </button>

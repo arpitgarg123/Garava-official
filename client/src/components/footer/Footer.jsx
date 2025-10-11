@@ -48,7 +48,7 @@ const Footer = () => {
   {/* Right: socials */}
   <div className="space-y-3 sm:space-y-4 w-full sm:w-auto max-sm:mt-4">
     <div className="flex gap-3 sm:gap-4 flex-col text-base sm:text-lg">
-          <p className="text-xs sm:text-sm font-medium">Stay in the know</p>
+          <p className="text-xs sm:text-sm font-medium">Follow us</p>
 <div className="flex  items-center gap-4">
       <a href="https://www.instagram.com/garavaofficial?igsh=MTE2MWZrMzU1aGMx" aria-label="Instagram" className="hover:text-gray-500 transition-colors">
         <FaInstagram />

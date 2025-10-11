@@ -178,7 +178,7 @@ const FAQAdmin = () => {
 
   // Mobile FAQ Card Component
   const MobileFAQCard = ({ faq }) => (
-    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 mb-4">
+    <div className="bg-white  border border-gray-200 shadow-sm p-4 mb-4">
       <div className="space-y-3">
         {/* Header with status and category */}
         <div className="flex items-start justify-between gap-2">
@@ -206,10 +206,10 @@ const FAQAdmin = () => {
         
         {/* Stats */}
         <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500">
-          <span className="bg-gray-100 px-2 py-1 rounded">Priority: {faq.priority}</span>
-          <span className="bg-gray-100 px-2 py-1 rounded">Matches: {faq.timesMatched}</span>
-          <span className="bg-gray-100 px-2 py-1 rounded">👍 {faq.helpfulVotes}</span>
-          <span className="bg-gray-100 px-2 py-1 rounded">👎 {faq.unhelpfulVotes}</span>
+          <span className="bg-gray-100 px-2 py-1 ">Priority: {faq.priority}</span>
+          <span className="bg-gray-100 px-2 py-1 ">Matches: {faq.timesMatched}</span>
+          <span className="bg-gray-100 px-2 py-1 ">👍 {faq.helpfulVotes}</span>
+          <span className="bg-gray-100 px-2 py-1 ">👎 {faq.unhelpfulVotes}</span>
         </div>
 
         {/* Keywords */}
@@ -224,7 +224,7 @@ const FAQAdmin = () => {
         <div className="flex items-center justify-between pt-2 border-t border-gray-100">
           <button
             onClick={() => handleToggleStatus(faq._id)}
-            className={`p-2 rounded-md transition-colors ${
+            className={`p-2  transition-colors ${
               faq.isActive
                 ? 'text-green-600 hover:bg-green-50'
                 : 'text-red-600 hover:bg-red-50'
@@ -237,7 +237,7 @@ const FAQAdmin = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => handleEdit(faq._id)}
-              className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+              className="p-2 text-blue-600 hover:bg-blue-50  transition-colors"
               title="Edit"
             >
               <FaEdit className="w-4 h-4" />
@@ -245,7 +245,7 @@ const FAQAdmin = () => {
             
             <button
               onClick={() => handleDelete(faq._id)}
-              className="p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+              className="p-2 text-red-600 hover:bg-red-50  transition-colors"
               title="Delete"
             >
               <FaTrash className="w-4 h-4" />
@@ -296,7 +296,7 @@ const FAQAdmin = () => {
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <FiFilter className="w-4 h-4" />
             Filters
@@ -315,7 +315,7 @@ const FAQAdmin = () => {
                   placeholder="Search FAQs..."
                   value={searchTerm}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none"
                 />
               </div>
             </div>
@@ -324,7 +324,7 @@ const FAQAdmin = () => {
             <select
               value={categoryFilter}
               onChange={(e) => handleFilterChange('category', e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg outline-none"
+              className="px-4 py-2 border border-gray-300  outline-none"
             >
               {categoryOptions.map(option => (
                 <option key={option.value} value={option.value}>
@@ -337,7 +337,7 @@ const FAQAdmin = () => {
             <select
               value={statusFilter}
               onChange={(e) => handleFilterChange('status', e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg outline-none"
+              className="px-4 py-2 border border-gray-300  outline-none"
             >
               <option value="">All Status</option>
               <option value="true">Active</option>
@@ -348,7 +348,7 @@ const FAQAdmin = () => {
             {(searchTerm || categoryFilter || statusFilter) && (
               <button
                 onClick={handleClearFilters}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors"
               >
                 Clear
               </button>
@@ -391,7 +391,7 @@ const FAQAdmin = () => {
                   placeholder="Search FAQs..."
                   value={searchTerm}
                   onChange={(e) => handleSearchChange(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg outline-none"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300  outline-none"
                 />
               </div>
             </div>
@@ -402,7 +402,7 @@ const FAQAdmin = () => {
               <select
                 value={categoryFilter}
                 onChange={(e) => handleFilterChange('category', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 {categoryOptions.map(option => (
                   <option key={option.value} value={option.value}>
@@ -418,7 +418,7 @@ const FAQAdmin = () => {
               <select
                 value={statusFilter}
                 onChange={(e) => handleFilterChange('status', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="">All Status</option>
                 <option value="true">Active</option>
@@ -481,7 +481,7 @@ const FAQAdmin = () => {
               {(searchTerm || categoryFilter || statusFilter) && (
                 <button
                   onClick={handleClearFilters}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
                 >
                   Clear Filters
                 </button>
@@ -536,7 +536,7 @@ const FAQAdmin = () => {
                       <div className="flex items-center gap-2 ml-4 flex-shrink-0">
                         <button
                           onClick={() => handleToggleStatus(faq._id)}
-                          className={`p-2 rounded-lg transition-colors ${
+                          className={`p-2  transition-colors ${
                             faq.isActive
                               ? 'text-green-600 hover:bg-green-50'
                               : 'text-red-600 hover:bg-red-50'
@@ -548,7 +548,7 @@ const FAQAdmin = () => {
                         
                         <button
                           onClick={() => handleEdit(faq._id)}
-                          className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          className="p-2 text-blue-600 hover:bg-blue-50  transition-colors"
                           title="Edit"
                         >
                           <FaEdit />
@@ -556,7 +556,7 @@ const FAQAdmin = () => {
                         
                         <button
                           onClick={() => handleDelete(faq._id)}
-                          className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          className="p-2 text-red-600 hover:bg-red-50  transition-colors"
                           title="Delete"
                         >
                           <FaTrash />
@@ -584,17 +584,17 @@ const FAQAdmin = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-blue-600 text-white rounded-lg font-medium text-sm min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-blue-600 text-white  font-medium text-sm min-w-[40px] text-center">
                 {currentPage}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, list.totalPages))}
                 disabled={currentPage === list.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>
@@ -605,17 +605,17 @@ const FAQAdmin = () => {
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                className="px-3 py-1 border border-gray-300  text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
               >
                 Previous
               </button>
-              <span className="px-3 py-1 bg-blue-600 text-white rounded text-sm">
+              <span className="px-3 py-1 bg-blue-600 text-white  text-sm">
                 {currentPage}
               </span>
               <button
                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, list.totalPages))}
                 disabled={currentPage === list.totalPages}
-                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
+                className="px-3 py-1 border border-gray-300  text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition-colors"
               >
                 Next
               </button>
@@ -672,7 +672,7 @@ const FAQCreateModal = () => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
-      <div className="bg-white rounded-lg w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
+      <div className="bg-white  w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
         <div className="p-4 sm:p-6 border-b">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold">Create New FAQ</h3>
@@ -692,7 +692,7 @@ const FAQCreateModal = () => {
               type="text"
               value={formData.question}
               onChange={(e) => setFormData({...formData, question: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+              className="w-full px-3 py-2 border border-gray-300  outline-none"
               required
             />
           </div>
@@ -703,7 +703,7 @@ const FAQCreateModal = () => {
               value={formData.answer}
               onChange={(e) => setFormData({...formData, answer: e.target.value})}
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+              className="w-full px-3 py-2 border border-gray-300  outline-none"
               required
             />
           </div>
@@ -714,7 +714,7 @@ const FAQCreateModal = () => {
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="general">General</option>
                 <option value="products">Products</option>
@@ -735,7 +735,7 @@ const FAQCreateModal = () => {
                 max="10"
                 value={formData.priority}
                 onChange={(e) => setFormData({...formData, priority: Number(e.target.value)})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               />
             </div>
           </div>
@@ -747,7 +747,7 @@ const FAQCreateModal = () => {
               value={formData.keywords}
               onChange={(e) => setFormData({...formData, keywords: e.target.value})}
               placeholder="jewelry, ring, gold, price..."
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+              className="w-full px-3 py-2 border border-gray-300  outline-none"
             />
           </div>
           
@@ -755,14 +755,14 @@ const FAQCreateModal = () => {
             <button
               type="button"
               onClick={() => dispatch(closeCreateModal())}
-              className="w-full sm:w-auto px-4 py-2 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="w-full sm:w-auto px-4 py-2 text-gray-700 border border-gray-300  hover:bg-gray-50 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={createModal.status === 'loading'}
-              className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 disabled:opacity-50 transition-colors"
             >
               {createModal.status === 'loading' ? 'Creating...' : 'Create FAQ'}
             </button>
@@ -822,7 +822,7 @@ const FAQEditModal = () => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 sm:p-4">
-      <div className="bg-white rounded-lg w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
+      <div className="bg-white  w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden">
         <div className="p-4 sm:p-6 border-b">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold">Edit FAQ</h3>
@@ -842,7 +842,7 @@ const FAQEditModal = () => {
               type="text"
               value={formData.question}
               onChange={(e) => setFormData({...formData, question: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+              className="w-full px-3 py-2 border border-gray-300  outline-none"
               required
             />
           </div>
@@ -853,7 +853,7 @@ const FAQEditModal = () => {
               value={formData.answer}
               onChange={(e) => setFormData({...formData, answer: e.target.value})}
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+              className="w-full px-3 py-2 border border-gray-300  outline-none"
               required
             />
           </div>
@@ -864,7 +864,7 @@ const FAQEditModal = () => {
               <select
                 value={formData.category}
                 onChange={(e) => setFormData({...formData, category: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               >
                 <option value="general">General</option>
                 <option value="products">Products</option>
@@ -885,7 +885,7 @@ const FAQEditModal = () => {
                 max="10"
                 value={formData.priority}
                 onChange={(e) => setFormData({...formData, priority: Number(e.target.value)})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+                className="w-full px-3 py-2 border border-gray-300  outline-none"
               />
             </div>
           </div>
@@ -896,7 +896,7 @@ const FAQEditModal = () => {
               type="text"
               value={formData.keywords}
               onChange={(e) => setFormData({...formData, keywords: e.target.value})}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none"
+              className="w-full px-3 py-2 border border-gray-300  outline-none"
             />
           </div>
           
@@ -1049,14 +1049,14 @@ const CSVUploadPanel = ({ onClose }) => {
               type="file"
               accept=".csv"
               onChange={handleFileChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none text-sm"
+              className="w-full px-3 py-2 border border-gray-300  outline-none text-sm"
             />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={downloadTemplate}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 text-white  hover:bg-gray-700 transition-colors text-sm"
             >
               <FaDownload className="w-4 h-4" />
               Download Template
@@ -1065,7 +1065,7 @@ const CSVUploadPanel = ({ onClose }) => {
             <button
               onClick={handleUpload}
               disabled={!csvFile || isUploading}
-              className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+              className="flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white  hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
             >
               <FaUpload className="w-4 h-4" />
               {isUploading ? 'Uploading...' : 'Upload FAQs'}
@@ -1084,7 +1084,7 @@ const CSVUploadPanel = ({ onClose }) => {
             <li>• <strong>keywords</strong>: Comma-separated keywords for matching</li>
           </ul>
           
-          <div className="text-sm sm:text-sm text-amber-600 bg-amber-50 p-3 rounded-lg">
+          <div className="text-sm sm:text-sm text-amber-600 bg-amber-50 p-3 ">
             <strong>Tip:</strong> Download the template to see the exact format required.
           </div>
         </div>
@@ -1092,7 +1092,7 @@ const CSVUploadPanel = ({ onClose }) => {
 
       {/* Upload Results */}
       {uploadResults && (
-        <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+        <div className="mt-6 p-4 bg-green-50 border border-green-200 ">
           <h4 className="font-medium text-green-800 mb-2">Upload Results</h4>
           <div className="text-sm space-y-1">
             <p>✅ <strong>{uploadResults.summary.created}</strong> FAQs created successfully</p>

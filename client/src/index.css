@@ -39,6 +39,9 @@ body, html{
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
+::-webkit-scrollbar{
+  display: none;
+}
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -229,19 +232,6 @@ body:has(.submenu-container) {
   object-fit: cover;
 }
 
-.btn-luxury {
-    border: 1px solid rgba(255, 255, 255, 0.6); 
-  color: rgba(255, 255, 255, 0.9);           
-  font-size: 1rem;                           
-  backdrop-filter: blur(4px);                 
-  padding: 0.5rem 1rem;                       
-  transition: all 0.3s ease;   
-  cursor: pointer; 
-}
-.btn-luxury:hover {
-  background: #ffffff; 
-  color: #000000;
-}
 
 .btn{
    padding: 0.5rem 2.5rem;           

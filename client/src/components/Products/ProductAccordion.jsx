@@ -77,7 +77,7 @@ const ProductAccordion = ({ product }) => {
     
     if (product?.caution) {
       careContent.push(
-        <div key="caution" className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+        <div key="caution" className="p-3 bg-yellow-50 border border-yellow-200 ">
           <h5 className="font-semibold text-yellow-900 mb-1">Important Safety Information</h5>
           <p className="text-yellow-800 text-sm">{product.caution}</p>
         </div>
@@ -124,13 +124,13 @@ const ProductAccordion = ({ product }) => {
 
           {/* Dynamic caution - may vary per product */}
           {product?.caution ? (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div className="p-3 bg-red-50 border border-red-200 ">
               <h5 className="font-semibold text-red-900 mb-1">Caution</h5>
               <p className="text-red-800 text-sm">{product.caution}</p>
             </div>
           ) : (
             /* Fallback static caution for all perfumes */
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div className="p-3 bg-red-50 border border-red-200 ">
               <h5 className="font-semibold text-red-900 mb-1">Caution</h5>
               <p className="text-red-800 text-sm">
                 Inflammable. Store at temperature below 50° C. Keep out of reach of children. 
@@ -219,7 +219,7 @@ const ProductAccordion = ({ product }) => {
           
           {/* Dynamic return policy if available */}
           {product?.returnPolicy && (
-            <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="mt-3 p-3 bg-blue-50 border border-blue-200 ">
               <h6 className="font-medium text-blue-900 mb-1">Product Specific Policy</h6>
               <p className="text-blue-800 text-sm">{product.returnPolicy}</p>
             </div>
@@ -248,16 +248,16 @@ const ProductAccordion = ({ product }) => {
         <div>
           <h5 className="font-semibold text-gray-900 mb-2">Payment Methods</h5>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
-            <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-700">💳 Credit Cards</span>
-            <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-700">💳 Debit Cards</span>
-            <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-700">🌐 Net Banking</span>
-            <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-700">📱 Digital Wallets</span>
-            <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-700">🚚 Cash on Delivery</span>
-            <span className="inline-flex items-center px-2 py-1 rounded-md bg-gray-100 text-gray-700">🌍 International Cards</span>
+            <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">💳 Credit Cards</span>
+            <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">💳 Debit Cards</span>
+            <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">🌐 Net Banking</span>
+            <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">📱 Digital Wallets</span>
+            <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">🚚 Cash on Delivery</span>
+            <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">🌍 International Cards</span>
           </div>
         </div>
 
-        <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+        <div className="p-3 bg-yellow-50 border border-yellow-200 ">
           <h6 className="font-medium text-yellow-900 mb-1">International Payments</h6>
           <ul className="text-yellow-800 text-sm space-y-1 list-disc pl-4">
             <li>Currency conversion charges may apply based on your credit card policy</li>
@@ -294,7 +294,7 @@ const ProductAccordion = ({ product }) => {
   const toggleSection = (idx) => setActiveIndex(activeIndex === idx ? null : idx);
 
   return (
-    <div className="w-[95%] max-w-2xl lg:max-w-none divide-y divide-gray-200">
+    <div className="w-[80%] lg:max-w-none divide-y divide-gray-200">
       {sections.map((section, idx) => (
         <div key={idx} className="py-4">
           <button
