@@ -463,11 +463,7 @@ const ProductDetails = () => {
             
 
             {/* Description */}
-            <div className="mt-5 ">
-              <h3 className="text-lg sm:text-xl font-semibold">Product Description</h3>
-              <p className="mt-2 text-gray-800 text-sm leading-relaxed">
-                {product?.description || 'Description not available'}
-              </p>
+            <div className="mt-5">
 {product?.tags && Array.isArray(product.tags) && product.tags.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1">
                   {product.tags

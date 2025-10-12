@@ -17,8 +17,7 @@ const Essentials = () => {
   const essentialItems = [
     {
       id: 1,
-      title: "Jewellery",
-      subtitle: "Signature Collection", 
+      title: "Jewellery", 
       img: jewelleryImg,
       hotspotSize: "42%",
       link: "/products/jewellery"
@@ -26,7 +25,6 @@ const Essentials = () => {
     {
       id: 2,
       title: "Fragrance",
-      subtitle: "Eau de Luxe",
       img: fragranceImg, 
       hotspotSize: "42%",
       link: "/products/fragrance"
@@ -101,7 +99,6 @@ const Essentials = () => {
               <Card
                 ref={(el) => setCardRef(el, index)}
                 title={item.title}
-                subtitle={item.subtitle}
                 img={item.img}
                 hotspotSize={item.hotspotSize}
                 link={item.link}

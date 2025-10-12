@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import connectDB from './src/config/database.js';
+import connectDb from './src/shared/db.js';
 import BulkImportService from './src/utils/bulkImportService.js';
 
 dotenv.config();
@@ -11,14 +11,14 @@ async function runCompleteImport() {
   try {
     // Connect to database
     console.log('🔗 Connecting to database...');
-    await connectDB();
+    await connectDb();
     console.log('✅ Database connected');
 
     // Initialize bulk import service
     const importService = new BulkImportService();
     
     // Set the CSV file path
-    const csvPath = 'c:\\Users\\Samsu\\Downloads\\wc-product-export-9-10-2025-1759992782628.csv';
+    const csvPath = 'c:\\Users\\Samsu\\Downloads\\wc-product-export-9-10-2025-1759992637579.csv';
     
     console.log('📋 Starting complete import...');
     

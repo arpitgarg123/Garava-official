@@ -16,6 +16,16 @@ import { toast } from "react-hot-toast";
 import { handleEmailContact, handleWhatsAppContact } from "../../hooks/contact";
 import ColorSelector from "./ColorSelector";
 
+// Helper function to truncate text to a specific word limit
+const truncateText = (text, wordLimit = 15) => {
+  if (!text) return '';
+  
+  const words = text.split(' ');
+  if (words.length <= wordLimit) return text;
+  
+  return words.slice(0, wordLimit).join(' ') + '...';
+};
+
 const ProductCard = ({
   product,
   onAddToCart = () => {},
@@ -145,7 +155,7 @@ const ProductCard = ({
                product?.variants?.[0]?.price ?? 
                product?.priceRange?.min ?? 
                product?.price ?? 
-               "—";
+               "Price on Demand";
   
   const displayPrice = (isHighJewelleryProduct || (price === 0 && (product.type === "high_jewellery" || product.type === "high-jewellery")))
     ? "Price on Demand" 
@@ -367,9 +377,7 @@ const ProductCard = ({
           <>
             <div className="text-sm uppercase tracking-wider text-gray-500 leading-0  max-sm:my-4  font-medium">{product.type || "Fragrance"}</div>
             <h3 className="card-title">{product.name}</h3>
-            {product.shortDescription && (
-              <p className="card-title">{product.shortDescription}</p>
-            )}
+
             <div className="card-rupe-tex">{displayPrice}</div>
           </>
         ) : (
@@ -377,13 +385,7 @@ const ProductCard = ({
             <div className="text-sm uppercase leading-0 tracking-wider text-gray-500 font-medium">
               {isHighJewellery ? "HIGH JEWELLERY" : (product.type || product.category || "jewellery")}
             </div>
-            <h3 className="card-title">{product.name}</h3>
-            
-            {/* High Jewellery Description */}
-            {isHighJewellery && product.shortDescription && (
-              <p className="text-sm text-gray-600 line-clamp-2 font-light italic">{product.shortDescription}</p>
-            )}
-            
+            <h3 className="card-title">{product.name}</h3>            
             {/* Price or Price on Demand for High Jewellery */}
             {isHighJewelleryProduct ? (
               <div className="flex flex-col gap-3 mt-auto">

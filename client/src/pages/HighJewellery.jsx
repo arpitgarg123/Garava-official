@@ -35,13 +35,21 @@ const HighJewellery = () => {
   useEffect(() => {
     if (productList.items && productList.items.length > 0) {
       // Transform backend data to match UI expectations
-      const transformedProducts = productList.items.slice(0, 4).map(product => ({
-        id: product._id || product.id,
-        img: product.heroImage?.url || product.heroImage || staticProducts[0].img,
-        title: product.name || "High Jewellery Product",
-        price: `₹${product.defaultVariant?.price?.toLocaleString('en-IN') || product.priceRange?.min?.toLocaleString('en-IN') || '0'}.0`,
-        slug: product.slug
-      }));
+      const transformedProducts = productList.items.slice(0, 4).map(product => {
+        // Check if product is price on demand
+        const isPriceOnDemand = product.isPriceOnDemand || product.defaultVariant?.isPriceOnDemand;
+        const price = isPriceOnDemand 
+          ? "Price on Demand" 
+          : `₹${product.defaultVariant?.price?.toLocaleString('en-IN') || product.priceRange?.min?.toLocaleString('en-IN') || '0'}.0`;
+          
+        return {
+          id: product._id || product.id,
+          img: product.heroImage?.url || product.heroImage || staticProducts[0].img,
+          title: product.name || "High Jewellery Product",
+          price: price,
+          slug: product.slug
+        };
+      });
       
       // If we have products from API, use them; otherwise use static
       if (transformedProducts.length >= 4) {

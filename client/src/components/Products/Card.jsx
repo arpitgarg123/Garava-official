@@ -40,7 +40,14 @@ const Card = ({img, title = "Product", price = "", slug, id, isHorizontal = fals
 
       <div className="mt-3 sm:mt-4 text-center px-2">
         <h3 className="card-title leading-6">{title}</h3>
-        {price && <div className="card-rupe-text mt-2">{price}</div>}
+        {
+          price && price !== "Price on Demand" ? (
+            <p className="card-price mt-1 text-gray-700 font-medium">{price}</p>
+          ) : price === "Price on Demand" ? (
+            <p className="card-price mt-1 text-[#DE7600] font-medium italic">{price}</p>
+          ) : null
+          
+        }
       </div>
     </article>
   )

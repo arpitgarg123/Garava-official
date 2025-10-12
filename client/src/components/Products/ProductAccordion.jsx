@@ -1,10 +1,125 @@
 import React, { useState } from 'react';
 
+// Helper function to render bullet points as proper HTML list
+const renderBulletList = (text) => {
+  if (!text) return null;
+  
+  // First, try to split by bullet points in a single line (• pattern)
+  let bulletPoints = [];
+  
+  if (text.includes('•')) {
+    // Split by bullet points and clean up
+    bulletPoints = text
+      .split('•')
+      .map(point => point.trim())
+      .filter(point => point.length > 0)
+      .map(point => {
+        // Remove trailing period before next bullet
+        return point.replace(/\.\s*$/, '').trim();
+      })
+      .filter(point => point.length > 0);
+  } else {
+    // Fallback: split by newlines for traditional format
+    bulletPoints = text
+      .split(/\n/)
+      .map(line => line.trim())
+      .filter(line => line.length > 0)
+      .map(line => {
+        // Remove the bullet point marker if it exists
+        return line.replace(/^[•·\-\*]\s*/, '').trim();
+      })
+      .filter(line => line.length > 0);
+  }
+  
+  if (bulletPoints.length === 0 || bulletPoints.length === 1) {
+    return <div className="whitespace-pre-line">{text}</div>;
+  }
+  
+  return (
+    <ul className="list-disc pl-6 space-y-2">
+      {bulletPoints.map((point, index) => (
+        <li key={index} className="text-sm leading-relaxed">
+          {point}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 const ProductAccordion = ({ product }) => {
   // Dynamic sections based on product data
   const sections = [];
 
-  // Product Details section - always show
+  // Check if we have structured description data
+  const hasStructuredDescription = product?.structuredDescription && 
+                                  Object.keys(product.structuredDescription).length > 0;
+
+  // If we have structured description, use it to create sections (Garava.in style)
+  if (hasStructuredDescription) {
+    const structured = product.structuredDescription;
+    
+    // Product Details section (like garava.in specifications)
+    if (structured.productDetails) {
+      sections.push({
+        title: "Product Details",
+        content: (
+          <div className="text-gray-700">
+            {renderBulletList(structured.productDetails)}
+          </div>
+        ),
+      });
+    }
+    
+    // Care Instructions section
+    if (structured.careInstructions) {
+      sections.push({
+        title: "Care Instructions", 
+        content: (
+          <div className="text-gray-700">
+            {renderBulletList(structured.careInstructions)}
+          </div>
+        ),
+      });
+    }
+    
+    // Size Guide section (for jewelry)
+    if (structured.sizeGuide) {
+      sections.push({
+        title: "Size Guide",
+        content: (
+          <div className="text-gray-700">
+            {renderBulletList(structured.sizeGuide)}
+          </div>
+        ),
+      });
+    }
+    
+    // Materials section
+    if (structured.materials) {
+      sections.push({
+        title: "Materials",
+        content: (
+          <div className="text-gray-700">
+            {renderBulletList(structured.materials)}
+          </div>
+        ),
+      });
+    }
+    
+    // Shipping Info section
+    if (structured.shippingInfo) {
+      sections.push({
+        title: "Shipping & Returns",
+        content: (
+          <div className="text-gray-700">
+            {renderBulletList(structured.shippingInfo)}
+          </div>
+        ),
+      });
+    }
+  }
+
+  // Product Details section - always show (in addition to structured content)
   const productDetailsItems = [];
   
   if (product?.material) productDetailsItems.push(`Material: ${product.material}`);
@@ -268,26 +383,41 @@ const ProductAccordion = ({ product }) => {
     ),
   });
 
-  // Fallback to default content if no product data
-  if (sections.length === 0) {
-    sections.push(
-      {
-        title: "Product Details",
+  // Fallback content for products without structured descriptions
+  if (!hasStructuredDescription && sections.length < 3) {
+    // If we don't have structured description, fall back to original description
+    if (product?.description && !hasStructuredDescription) {
+      sections.unshift({
+        title: "Product Information",
         content: (
-          <p className="text-gray-700 leading-relaxed">
-            Detailed product information will be displayed here once available.
-          </p>
+          <div className="text-gray-700 leading-relaxed">
+            <p>{product.description}</p>
+          </div>
         ),
-      },
-      {
-        title: "Care & Materials", 
-        content: (
-          <p className="text-gray-700 leading-relaxed">
-            Care instructions and material information will be provided with your purchase.
-          </p>
-        ),
-      }
-    );
+      });
+    }
+    
+    // Add default sections if we don't have enough content
+    if (sections.length === 0) {
+      sections.push(
+        {
+          title: "Product Details",
+          content: (
+            <p className="text-gray-700 leading-relaxed">
+              Detailed product information will be displayed here once available.
+            </p>
+          ),
+        },
+        {
+          title: "Care & Materials", 
+          content: (
+            <p className="text-gray-700 leading-relaxed">
+              Care instructions and material information will be provided with your purchase.
+            </p>
+          ),
+        }
+      );
+    }
   }
 
   const [activeIndex, setActiveIndex] = useState();

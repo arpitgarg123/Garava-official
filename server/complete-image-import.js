@@ -37,7 +37,7 @@ async function importProductsWithImages() {
       console.log('✅ ImageKit configuration valid');
     }
     
-    const csvPath = 'c:\\Users\\Samsu\\Downloads\\wc-product-export-9-10-2025-1759992782628.csv';
+    const csvPath = 'c:\\Users\\Samsu\\Downloads\\wc-product-export-9-10-2025-1759992637579.csv';
     
     console.log('📁 Reading CSV file...');
     
