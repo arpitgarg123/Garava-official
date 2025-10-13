@@ -60,13 +60,12 @@ export const generatePasswordResetToken = (user) =>
 
 export const setAuthCookies = (res, accessToken, refreshToken) => {
   const isProduction = process.env.NODE_ENV === 'production';
-  const isDevelopment = process.env.NODE_ENV === 'development';
   
   // Access token cookie (shorter lived)
   res.cookie('token', accessToken, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'none' : (isDevelopment ? 'none' : 'lax'), // 'none' for production cross-origin, 'lax' for dev
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: 24 * 60 * 60 * 1000, // 24h
     path: '/',
   });
@@ -75,16 +74,9 @@ export const setAuthCookies = (res, accessToken, refreshToken) => {
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? 'none' : 'lax', // 'none' for production cross-origin, 'lax' for dev
+    sameSite: isProduction ? 'none' : 'lax',
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30d
     path: '/',
-  });
-  
-  console.log('Auth cookies set:', {
-    secure: isProduction,
-    sameSite: isProduction ? 'none' : 'lax',
-    environment: process.env.NODE_ENV,
-    path: '/'
   });
 };
 
@@ -100,7 +92,5 @@ export const clearAuthCookies = (res) => {
   
   res.clearCookie('token', cookieOptions);
   res.clearCookie('refreshToken', cookieOptions);
-  
-  console.log('Auth cookies cleared with options:', cookieOptions);
 };
  

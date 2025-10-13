@@ -19,6 +19,7 @@ import PaymentTest from "./pages/PaymentTest.jsx";
 import EventsPage from "./pages/newsEvents/Events.jsx";
 import { MediaCoveragePage } from "./pages/newsEvents/MediaCoverage.jsx";
 import AuthCallback from "./components/auth/AuthCallback.jsx";
+import AuthCallbackPage from "./pages/AuthCallbackPage.jsx";
 import ShippingPolicy from "./pages/ShippingPolicy.jsx";
 import RefundReturn from "./pages/RefundReturn.jsx";
 import TermCondition from "./pages/TermCondition.jsx";
@@ -255,6 +256,9 @@ const App = () => {
         <Route path="/reset-password" element={<GuestRoute><ResetPassword /></GuestRoute>} />
         <Route path="/verify-email" element={<GuestRoute><VerifyEmail /></GuestRoute>} />
         <Route path="/resend-verification" element={<GuestRoute><ResendVerification /></GuestRoute>} />
+        
+        {/* Auth callback route - handles OAuth success/error */}
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
         
         {/* Payment callback routes - standalone without layout */}
         <Route path="/payment/success" element={<PaymentCallback />} />
