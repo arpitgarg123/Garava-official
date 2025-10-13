@@ -31,7 +31,6 @@ const Card = ({img, title = "Product", price = "", slug, id, isHorizontal = fals
         <div className="overlay" aria-hidden="true">
          
                          <div  className="overlay-text">
-                         Feel This Piece
                           </div>
                     
           
