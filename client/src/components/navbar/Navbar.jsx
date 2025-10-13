@@ -14,6 +14,21 @@ import { RxHamburgerMenu, RxCross2 } from "react-icons/rx";
 import lightLogo from '../../assets/images/light-logo.png';
 import darkLogo from '../../assets/images/logo-main.png';
 
+// Jewellery images
+import jewellry1 from '../../assets/images/jewellry1.jpg';
+import jewellry2 from '../../assets/images/jewellry2.jpg';
+import jewellry3 from '../../assets/images/jewellry3.jpg';
+import jewellry4 from '../../assets/images/jewellry4.png';
+
+// Fragrance images
+import silaImg from '../../assets/images/sila.jpg';
+import evaraImg from '../../assets/images/evara.jpg';
+import wayfarerImg from '../../assets/images/wayfarer.jpg';
+
+// Default images for other sections
+import essentialJ from '../../assets/images/essential-j.png';
+import essentialF from '../../assets/images/essential-f.jpg';
+
 import { selectIsAuthenticated, selectUser, selectIsAdmin } from '../../features/auth/selectors.js';
 import { doLogout } from '../../features/auth/slice.js';
 import { selectCartItemCount } from '../../features/cart/selectors.js';
@@ -22,25 +37,25 @@ const navItems = [
   { title: 'jewellery', submenu: [
     { 
         label: 'Solitaire Studs', 
-        img: './src/assets/images/jewellry1.jpg', 
+        img: jewellry1, 
         to: '/products/jewellery?category=earrings',
         category: 'earrings'
       },
       { 
         label: 'Daily Earrings', 
-        img: './src/assets/images/jewellry2.jpg', 
+        img: jewellry2, 
         to: '/products/jewellery?category=rings',
         category: 'rings'
       },
     { 
         label: 'Pendants', 
-        img: './src/assets/images/jewellry3.jpg', 
+        img: jewellry3, 
         to: '/products/jewellery?category=pendants',
         category: 'pendants'
       },
       { 
         label: 'Solitaire Rings', 
-        img: './src/assets/images/jewellry4.png', 
+        img: jewellry4, 
         to: '/products/jewellery?category=necklaces',
         category: 'necklaces'
       },
@@ -48,19 +63,19 @@ const navItems = [
   { title: 'HIGH JEWELLERY', submenu: [
     { 
         label: 'Daily Earrings', 
-        img: './src/assets/images/fragnance1.png', 
+        img: jewellry2, 
         to: '/products/high-jewellery?category=daily-earrings',
         category: 'daily-earrings'
       },
       { 
         label: 'Solitaire Rings', 
-        img: './src/assets/images/jewellry4.png', 
+        img: jewellry4, 
         to: '/products/high-jewellery?category=solitaire-rings',
         category: 'solitaire-rings'
       },
       { 
         label: 'Solitaire Studs', 
-        img: './src/assets/images/fragnance.png', 
+        img: jewellry1, 
         to: '/products/high-jewellery?category=solitaire-studs',
         category: 'solitaire-studs'
       },
@@ -69,42 +84,43 @@ const navItems = [
   { title: 'Fragrance', submenu: [
      { 
         label: 'Sila', 
-        img: './src/assets/images/sila.jpg', 
+        img: silaImg, 
         to: '/products/fragrance?category=sila',
         category: 'sila'
       },
        { 
         label: 'Evara', 
-        img: './src/assets/images/evara.jpg', 
+        img: evaraImg, 
         to: '/products/fragrance?category=evara',
         category: 'evara'
       },
        { 
         label: 'Wayfarer', 
-        img: './src/assets/images/wayfarer.jpg', 
+        img: wayfarerImg, 
         to: '/products/fragrance?category=wayfarer',
         category: 'wayfarer'
       },
   ]},
   { title: 'Services', submenu: [
-     { label: 'Book an Appointment', img: '/images/for-her.jpg', to: '/appointment' },
-     { label: 'FAQ', img: '/images/for-him.jpg', to: '/faq' },
+     { label: 'Book an Appointment', img: essentialJ, to: '/appointment' },
+     { label: 'FAQ', img: essentialF, to: '/faq' },
   ]},
   { title: 'About Us', submenu: [
-     { label: 'Our Story', img: '/images/for-her.jpg', to: '/about' },
+     { label: 'About', img: essentialJ, to: '/detailed-about' },
+     { label: 'Our Story', img: essentialF, to: '/our-story' },
   ]},
   { 
     title: 'Blogs', 
     submenu: [
       { 
         label: 'Jewellery', 
-        img: '/images/blog-jewellery.jpg', 
+        img: jewellry3, 
         to: '/blogs?category=jewellery',
         category: 'jewellery'
       },
       { 
         label: 'Fragrance', 
-        img: '/images/blog-fragrance.jpg', 
+        img: evaraImg, 
         to: '/blogs?category=fragrance',
         category: 'fragrance'
       },

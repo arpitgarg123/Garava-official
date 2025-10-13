@@ -11,54 +11,54 @@ const OurStory = () => {
           <BackButton />
         </div>
       <div className="mx-auto max-w-3xl lg:max-w-4xl px-4 sm:px-6  lg:px-8 py-12 sm:py-16 max-md:py-0">
-        {/* Headings */}
+        {/* Our Story Section */}
         <header className="mb-6 sm:mb-8 mt-20 max-md:mt-0">
           <h1
             id="our-story-heading"
-            className="text-2xl sm:text-3xl font-semibold tracking-tight"
+            className="text-2xl sm:text-3xl font-semibold tracking-tight mb-4"
           >
             OUR STORY
           </h1>
-          <h2 className="mt-3 sm:mt-4 text-lg sm:text-xl font-medium">
-            History of GARAVA
+          <h2 className="text-lg sm:text-xl font-medium italic">
+            The Making of Modern Luxury
           </h2>
         </header>
-
-        {/* Body */}
         <article className="space-y-5 sm:space-y-6 leading-relaxed text-[15px] sm:text-base">
-          <p>
-            GARAVA&apos;s ideology is straightforward: true luxury isn&apos;t about following
-            trends, it&apos;s about value. With passion as our brand for fragrances and diamonds,
-            our mission is to uphold refinement, elegance, and integrity for those who appreciate
-            the rare.
-          </p>
-
-          <p>
-            Our philosophy is simple: if you feel worthy, GARAVA is for you. We&apos;re for all who
-            want more than beauty — for all who live their lives with confidence, drive, and grace.
-          </p>
-
-          <p>
-            From luxury diamonds that shine with timeless brilliance to fragrances that define
-            character, every GARAVA creation is made to uplift and inspire. We blend heritage with
-            creativity to shape experiences that bring new meaning to fine jewelry and perfumes.
-          </p>
-
-          <p>
-            For us, luxury isn’t about excess; it’s about self-worth. That’s why every detail, from
-            design to delivery, reflects our professionalism, passion, and forward-thinking spirit.
-          </p>
-
-          <p>
-            GARAVA is more than a brand. It’s a declaration of identity, a celebration of those who
-            are worthy, and a doorway to the timeless and extraordinary.
-          </p>
-
-          <h3 className="pt-2 text-lg sm:text-xl font-medium">
-            New Age Luxury, Worn by the Worthy.
-          </h3>
-
-          <h4 className="text-xl sm:text-2xl font-semibold">This is GARAVA.</h4>
+            <p>
+              GARAVA was not founded to follow trends but to redefine luxury with purpose. Created not to echo 
+              what already exists but to reimagine what luxury could mean in a world that seeks depth over display.
+            </p>
+            
+            <div className="text-center py-4 space-y-2 italic">
+              <p>In our world, beauty is in stillness and not noise.</p>
+              <p>Luxury is in intention and not abundance.</p>
+              <p>And prestige is measured by purpose and not measured by price.</p>
+            </div>
+            
+            <p>
+              From the rarity of natural gemstones to the purity of vegan fragrances, every creation begins with 
+              conscience and ends in refinement. Each line, texture, and note is shaped to evoke emotion that is 
+              a quiet dialogue between craft and soul.
+            </p>
+            
+            <p>
+              GARAVA&apos;s essence lies in balance: Indian in philosophy, global in expression.
+            </p>
+            
+            <p>
+              We don&apos;t design for the trend. We design for the memory. Pieces that accompany lives of meaning, 
+              marking moments of grace and transformation.
+            </p>
+            
+            <p>
+              Our creation - jewellery or perfume - reflects the world we wish to build: thoughtful, enduring, 
+              and beautifully human.
+            </p>
+            
+            <p className="font-medium">
+              GARAVA is more than a name, it is a movement. A modern Maison that believes true luxury is found 
+              where purpose meets prestige.
+            </p>
         </article>
       </div>
     </section>

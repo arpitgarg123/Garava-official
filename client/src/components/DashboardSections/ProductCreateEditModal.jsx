@@ -20,6 +20,14 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
     tags: [],
     shortDescription: '',
     description: '',
+    structuredDescription: {
+      description: '',
+      productDetails: '',
+      careInstructions: '',
+      sizeGuide: '',
+      materials: '',
+      shippingInfo: ''
+    },
     fragranceNotes: {
       top: [],
       middle: [],
@@ -39,6 +47,9 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
       stock: 0,
       weight: '',
       isPriceOnDemand: false,
+      priceOnDemandText: 'Price on Demand',
+      purchaseLimit: 0,
+      leadTimeDays: 0,
       isDefault: true,
       isActive: true
     }],
@@ -46,10 +57,38 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
     isFeatured: false,
     status: 'draft',
     isActive: true,
+    isPriceOnDemand: false,
+    customizationOptions: {
+      enabled: false,
+      description: '',
+      estimatedDays: 0
+    },
+    consultationRequired: false,
+    shippingInfo: {
+      complementary: false,
+      minDeliveryDays: '',
+      maxDeliveryDays: '',
+      note: '',
+      codAvailable: true,
+      pincodeRestrictions: false
+    },
+    giftWrap: {
+      enabled: false,
+      price: 0,
+      options: []
+    },
+    expectedDeliveryText: '',
+    callToOrder: {
+      enabled: false,
+      phone: '',
+      text: 'Order by Phone'
+    },
+    askAdvisor: false,
+    bookAppointment: false,
     metaTitle: '',
     metaDescription: '',
     collections: [],
-    colorVariants: [] // Add colorVariants field
+    colorVariants: []
   });
   
   const [heroImageFile, setHeroImageFile] = useState(null);
@@ -69,6 +108,14 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         tags: product.tags || [],
         shortDescription: product.shortDescription || '',
         description: product.description || '',
+        structuredDescription: product.structuredDescription || {
+          description: '',
+          productDetails: '',
+          careInstructions: '',
+          sizeGuide: '',
+          materials: '',
+          shippingInfo: ''
+        },
         fragranceNotes: product.fragranceNotes || { top: [], middle: [], base: [] },
         ingredients: product.ingredients || '',
         caution: product.caution || '',
@@ -83,6 +130,10 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
           mrp: '',
           stock: 0,
           weight: '',
+          isPriceOnDemand: false,
+          priceOnDemandText: 'Price on Demand',
+          purchaseLimit: 0,
+          leadTimeDays: 0,
           isDefault: true,
           isActive: true
         }],
@@ -90,10 +141,38 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         isFeatured: product.isFeatured || false,
         status: product.status || 'draft',
         isActive: product.isActive !== undefined ? product.isActive : true,
+        isPriceOnDemand: product.isPriceOnDemand || false,
+        customizationOptions: product.customizationOptions || {
+          enabled: false,
+          description: '',
+          estimatedDays: 0
+        },
+        consultationRequired: product.consultationRequired || false,
+        shippingInfo: product.shippingInfo || {
+          complementary: false,
+          minDeliveryDays: '',
+          maxDeliveryDays: '',
+          note: '',
+          codAvailable: true,
+          pincodeRestrictions: false
+        },
+        giftWrap: product.giftWrap || {
+          enabled: false,
+          price: 0,
+          options: []
+        },
+        expectedDeliveryText: product.expectedDeliveryText || '',
+        callToOrder: product.callToOrder || {
+          enabled: false,
+          phone: '',
+          text: 'Order by Phone'
+        },
+        askAdvisor: product.askAdvisor || false,
+        bookAppointment: product.bookAppointment || false,
         metaTitle: product.metaTitle || '',
         metaDescription: product.metaDescription || '',
         collections: product.collections || [],
-        colorVariants: product.colorVariants || [] // Initialize colorVariants from product data
+        colorVariants: product.colorVariants || []
       });
       
       // Set existing image previews
@@ -167,6 +246,9 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         stock: 0,
         weight: '',
         isPriceOnDemand: false,
+        priceOnDemandText: 'Price on Demand',
+        purchaseLimit: 0,
+        leadTimeDays: 0,
         isDefault: false,
         isActive: true
       }]
@@ -599,6 +681,60 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Purchase Limit (0 = No Limit)
+                    </label>
+                    <input
+                      type="number"
+                      value={variant.purchaseLimit || ''}
+                      onChange={(e) => handleVariantChange(index, 'purchaseLimit', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Lead Time (Days)
+                    </label>
+                    <input
+                      type="number"
+                      value={variant.leadTimeDays || ''}
+                      onChange={(e) => handleVariantChange(index, 'leadTimeDays', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+
+                {/* Price on Demand section */}
+                <div className="mt-4 p-4 bg-gray-50 rounded-md space-y-4">
+                  <div className="flex items-center gap-4">
+                    <label className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={variant.isPriceOnDemand || false}
+                        onChange={(e) => handleVariantChange(index, 'isPriceOnDemand', e.target.checked)}
+                        className="mr-2"
+                      />
+                      <span className="text-sm font-medium text-gray-700">Price on Demand</span>
+                    </label>
+                  </div>
+                  
+                  {variant.isPriceOnDemand && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Price on Demand Text
+                      </label>
+                      <input
+                        type="text"
+                        value={variant.priceOnDemandText || 'Price on Demand'}
+                        onChange={(e) => handleVariantChange(index, 'priceOnDemandText', e.target.value)}
+                        placeholder="Price on Demand"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                  )}
                 </div>
                 
                 <div className="mt-4 flex gap-4">
@@ -775,6 +911,61 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
+
+            {/* Structured Description */}
+            <div className="bg-gray-50 p-4 rounded-md space-y-4">
+              <h4 className="text-md font-medium text-gray-800">Structured Description</h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Product Details
+                  </label>
+                  <textarea
+                    value={formData.structuredDescription.productDetails}
+                    onChange={(e) => handleNestedChange('structuredDescription.productDetails', e.target.value)}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Care Instructions
+                  </label>
+                  <textarea
+                    value={formData.structuredDescription.careInstructions}
+                    onChange={(e) => handleNestedChange('structuredDescription.careInstructions', e.target.value)}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Size Guide
+                  </label>
+                  <textarea
+                    value={formData.structuredDescription.sizeGuide}
+                    onChange={(e) => handleNestedChange('structuredDescription.sizeGuide', e.target.value)}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Materials
+                  </label>
+                  <textarea
+                    value={formData.structuredDescription.materials}
+                    onChange={(e) => handleNestedChange('structuredDescription.materials', e.target.value)}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           
           {/* Fragrance Notes (for fragrance type) */}
@@ -916,6 +1107,245 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             </div>
           )}
           
+          {/* Business Options */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium text-gray-900">Business Options</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="isPriceOnDemand"
+                  checked={formData.isPriceOnDemand}
+                  onChange={handleInputChange}
+                  className="mr-2"
+                />
+                <span className="text-sm font-medium text-gray-700">Product Level Price on Demand</span>
+              </label>
+
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="consultationRequired"
+                  checked={formData.consultationRequired}
+                  onChange={handleInputChange}
+                  className="mr-2"
+                />
+                <span className="text-sm font-medium text-gray-700">Consultation Required</span>
+              </label>
+
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="askAdvisor"
+                  checked={formData.askAdvisor}
+                  onChange={handleInputChange}
+                  className="mr-2"
+                />
+                <span className="text-sm font-medium text-gray-700">Ask Advisor</span>
+              </label>
+
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="bookAppointment"
+                  checked={formData.bookAppointment}
+                  onChange={handleInputChange}
+                  className="mr-2"
+                />
+                <span className="text-sm font-medium text-gray-700">Book Appointment</span>
+              </label>
+            </div>
+
+            {/* Customization Options */}
+            <div className="bg-gray-50 p-4 rounded-md space-y-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={formData.customizationOptions.enabled}
+                  onChange={(e) => handleNestedChange('customizationOptions.enabled', e.target.checked)}
+                  className="mr-2"
+                />
+                <span className="text-sm font-medium text-gray-700">Enable Customization</span>
+              </div>
+              
+              {formData.customizationOptions.enabled && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Customization Description
+                    </label>
+                    <textarea
+                      value={formData.customizationOptions.description}
+                      onChange={(e) => handleNestedChange('customizationOptions.description', e.target.value)}
+                      rows={3}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Estimated Days
+                    </label>
+                    <input
+                      type="number"
+                      value={formData.customizationOptions.estimatedDays}
+                      onChange={(e) => handleNestedChange('customizationOptions.estimatedDays', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Call to Order Options */}
+            <div className="bg-gray-50 p-4 rounded-md space-y-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={formData.callToOrder.enabled}
+                  onChange={(e) => handleNestedChange('callToOrder.enabled', e.target.checked)}
+                  className="mr-2"
+                />
+                <span className="text-sm font-medium text-gray-700">Enable Call to Order</span>
+              </div>
+              
+              {formData.callToOrder.enabled && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.callToOrder.phone}
+                      onChange={(e) => handleNestedChange('callToOrder.phone', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Button Text
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.callToOrder.text}
+                      onChange={(e) => handleNestedChange('callToOrder.text', e.target.value)}
+                      placeholder="Order by Phone"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Shipping Info */}
+            <div className="bg-gray-50 p-4 rounded-md space-y-4">
+              <h4 className="text-md font-medium text-gray-800">Shipping Information</h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={formData.shippingInfo.complementary}
+                    onChange={(e) => handleNestedChange('shippingInfo.complementary', e.target.checked)}
+                    className="mr-2"
+                  />
+                  <span className="text-sm font-medium text-gray-700">Complimentary Shipping</span>
+                </label>
+
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={formData.shippingInfo.codAvailable}
+                    onChange={(e) => handleNestedChange('shippingInfo.codAvailable', e.target.checked)}
+                    className="mr-2"
+                  />
+                  <span className="text-sm font-medium text-gray-700">COD Available</span>
+                </label>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Min Delivery Days
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.shippingInfo.minDeliveryDays}
+                    onChange={(e) => handleNestedChange('shippingInfo.minDeliveryDays', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Max Delivery Days
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.shippingInfo.maxDeliveryDays}
+                    onChange={(e) => handleNestedChange('shippingInfo.maxDeliveryDays', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Expected Delivery Text
+                </label>
+                <input
+                  type="text"
+                  name="expectedDeliveryText"
+                  value={formData.expectedDeliveryText}
+                  onChange={handleInputChange}
+                  placeholder="Expected delivery T+5 days"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Shipping Note
+                </label>
+                <textarea
+                  value={formData.shippingInfo.note}
+                  onChange={(e) => handleNestedChange('shippingInfo.note', e.target.value)}
+                  rows={2}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            {/* Gift Wrap Options */}
+            <div className="bg-gray-50 p-4 rounded-md space-y-4">
+              <div className="flex items-center">
+                <input
+                  type="checkbox"
+                  checked={formData.giftWrap.enabled}
+                  onChange={(e) => handleNestedChange('giftWrap.enabled', e.target.checked)}
+                  className="mr-2"
+                />
+                <span className="text-sm font-medium text-gray-700">Enable Gift Wrap</span>
+              </div>
+              
+              {formData.giftWrap.enabled && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Gift Wrap Price (₹)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={formData.giftWrap.price}
+                    onChange={(e) => handleNestedChange('giftWrap.price', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* SEO & Options */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium text-gray-900">SEO & Options</h3>

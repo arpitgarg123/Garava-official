@@ -4,6 +4,7 @@ import MainLayout from "./layouts/MainLayout.jsx";
 import Home from './pages/Home.jsx'
 import ProductDetails from "./pages/products/ProductDetails.jsx";
 import OurStory from "./pages/OurStory.jsx";
+import DetailedAbout from "./pages/DetailedAbout.jsx";
 import FAQ from "./pages/FAQ.jsx";
 import { ProtectedRoute, AdminRoute, GuestRoute } from "./shared/auth/ProtectedRoute.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
@@ -268,6 +269,8 @@ const App = () => {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="/about" element={<OurStory />} />
+          <Route path="/detailed-about" element={<DetailedAbout />} />
+          <Route path="/our-story" element={<OurStory />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/blogs" element={<Blogs />} />
