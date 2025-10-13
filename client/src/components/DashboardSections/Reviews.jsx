@@ -638,29 +638,29 @@ export default function Reviews() {
 
   // Desktop Table Component
   const DesktopTable = () => (
-    <div className="overflow-x-auto">
-      <table className="w-full min-w-[1000px]">
+    <div className="overflow-x-auto h-full">
+      <table className="w-full" style={{ tableLayout: 'fixed' }}>
         <thead className="bg-gray-50 sticky top-0 z-10">
           <tr>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{ width: '15%' }}>
               Customer
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{ width: '15%' }}>
               Product
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{ width: '8%' }}>
               Rating
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{ width: '30%' }}>
               Review
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{ width: '10%' }}>
               Date
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" style={{ width: '10%' }}>
               Status
             </th>
-            <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-3 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" style={{ width: '12%' }}>
               Actions
             </th>
           </tr>
@@ -668,101 +668,101 @@ export default function Reviews() {
         <tbody className="bg-white divide-y divide-gray-200">
           {filteredReviews.map((review) => (
             <tr key={review._id} className="hover:bg-gray-50">
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-3 py-2">
                 <div className="flex items-center">
-                  <div className="h-8 w-8 flex-shrink-0">
-                    <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
-                      <FiUser className="w-4 h-4 text-gray-500" />
+                  <div className="h-6 w-6 flex-shrink-0">
+                    <div className="h-6 w-6 rounded-full bg-gray-100 flex items-center justify-center">
+                      <FiUser className="w-3 h-3 text-gray-500" />
                     </div>
                   </div>
-                  <div className="ml-3">
-                    <div className="text-sm font-medium text-gray-900">
+                  <div className="ml-2 min-w-0 flex-1">
+                    <div className="text-xs font-medium text-gray-900 truncate">
                       {review.user?.name || 'Anonymous'}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-xs text-gray-500 truncate">
                       {review.user?.email || 'N/A'}
                     </div>
                   </div>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900 max-w-32 truncate">
+              <td className="px-2 py-2">
+                <div className="text-xs text-gray-900 truncate">
                   {review.product || 'Unknown Product'}
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
+              <td className="px-2 py-2">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
                     <AiFillStar 
                       key={i} 
-                      className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} 
+                      className={`w-3 h-3 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} 
                     />
                   ))}
-                  <span className="ml-1 text-sm text-gray-600">({review.rating})</span>
+                  <span className="ml-1 text-xs text-gray-600">({review.rating})</span>
                 </div>
               </td>
-              <td className="px-6 py-4">
-                <div className="max-w-xs">
-                  <div className="text-sm text-gray-900 line-clamp-2">
+              <td className="px-3 py-2">
+                <div className="min-w-0">
+                  <div className="text-xs text-gray-900 line-clamp-2">
                     {review.body || 'No comment provided'}
                   </div>
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
+              <td className="px-2 py-2">
+                <div className="text-xs text-gray-900">
                   {formatDate(review.createdAt)}
                 </div>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+              <td className="px-2 py-2">
+                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
                   {getStatusText(review.isApproved, review.flagged)}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div className="flex items-center justify-end gap-2">
+              <td className="px-3 py-2 text-right text-xs font-medium">
+                <div className="flex items-center justify-end gap-1">
                   <button
                     onClick={() => {
                       setSelectedReview(review);
                       setShowDetailsModal(true);
                     }}
-                    className="text-blue-600 hover:text-blue-900 p-1"
+                    className="text-blue-600 hover:text-blue-900 p-0.5"
                     title="View Details"
                   >
-                    <AiOutlineEye className="w-4 h-4" />
+                    <AiOutlineEye className="w-3 h-3" />
                   </button>
                   {!review.isApproved && !review.flagged && (
                     <button
                       onClick={() => handleApprove(review._id)}
-                      className="text-green-600 hover:text-green-900 p-1"
+                      className="text-green-600 hover:text-green-900 p-0.5"
                       title="Approve Review"
                     >
-                      <MdCheckCircle className="w-4 h-4" />
+                      <MdCheckCircle className="w-3 h-3" />
                     </button>
                   )}
                   {review.isApproved && (
                     <button
                       onClick={() => handleReject(review._id)}
-                      className="text-orange-600 hover:text-orange-900 p-1"
+                      className="text-orange-600 hover:text-orange-900 p-0.5"
                       title="Reject Review"
                     >
-                      <MdCancel className="w-4 h-4" />
+                      <MdCancel className="w-3 h-3" />
                     </button>
                   )}
                   {!review.flagged && (
                     <button
                       onClick={() => handleFlag(review._id)}
-                      className="text-red-600 hover:text-red-900 p-1"
+                      className="text-red-600 hover:text-red-900 p-0.5"
                       title="Flag Review"
                     >
-                      <MdCancel className="w-4 h-4" />
+                      <MdCancel className="w-3 h-3" />
                     </button>
                   )}
                   <button
                     onClick={() => handleDelete(review._id)}
-                    className="text-red-600 hover:text-red-900 p-1"
+                    className="text-red-600 hover:text-red-900 p-0.5"
                     title="Delete Review"
                   >
-                    <RiDeleteBin6Line className="w-4 h-4" />
+                    <RiDeleteBin6Line className="w-3 h-3" />
                   </button>
                 </div>
               </td>
@@ -1050,7 +1050,7 @@ export default function Reviews() {
       </div>
 
       {/* Reviews Content - Responsive */}
-      <div className="flex-1 overflow-hidden w-full">
+      <div className="flex-1 min-h-0 overflow-hidden w-full">
         {loading ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">

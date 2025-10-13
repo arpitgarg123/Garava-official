@@ -32,13 +32,21 @@ const Jewellry = () => {
 
         if (apiProducts && apiProducts.length > 0) {
           // Transform backend data to match UI expectations
-          const transformedProducts = apiProducts.map(product => ({
-            id: product._id || product.id,
-            img: product.heroImage?.url || product.heroImage || 'https://via.placeholder.com/300x300?text=No+Image',
-            title: product.name || "Jewellery Product",
-            price: `₹${product.defaultVariant?.price?.toLocaleString('en-IN') || product.priceRange?.min?.toLocaleString('en-IN') || '0'}.0`,
-            slug: product.slug
-          }));
+          const transformedProducts = apiProducts.map(product => {
+            // Check if product is price on demand
+            const isPriceOnDemand = product.isPriceOnDemand || product.defaultVariant?.isPriceOnDemand;
+            const price = (isPriceOnDemand  || "0")
+              ? "Price on Demand" 
+              : `₹${product.defaultVariant?.price?.toLocaleString('en-IN') || product.priceRange?.min?.toLocaleString('en-IN') || '0'}.0`;
+              
+            return {
+              id: product._id || product.id,
+              img: product.heroImage?.url || product.heroImage || 'https://via.placeholder.com/300x300?text=No+Image',
+              title: product.name || "Jewellery Product",
+              price: price,
+              slug: product.slug
+            };
+          });
           
           setProducts(transformedProducts);
         } else {

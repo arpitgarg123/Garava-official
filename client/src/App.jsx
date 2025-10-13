@@ -4,6 +4,7 @@ import MainLayout from "./layouts/MainLayout.jsx";
 import Home from './pages/Home.jsx'
 import ProductDetails from "./pages/products/ProductDetails.jsx";
 import OurStory from "./pages/OurStory.jsx";
+import DetailedAbout from "./pages/DetailedAbout.jsx";
 import FAQ from "./pages/FAQ.jsx";
 import { ProtectedRoute, AdminRoute, GuestRoute } from "./shared/auth/ProtectedRoute.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
@@ -19,6 +20,7 @@ import PaymentTest from "./pages/PaymentTest.jsx";
 import EventsPage from "./pages/newsEvents/Events.jsx";
 import { MediaCoveragePage } from "./pages/newsEvents/MediaCoverage.jsx";
 import AuthCallback from "./components/auth/AuthCallback.jsx";
+import AuthCallbackPage from "./pages/AuthCallbackPage.jsx";
 import ShippingPolicy from "./pages/ShippingPolicy.jsx";
 import RefundReturn from "./pages/RefundReturn.jsx";
 import TermCondition from "./pages/TermCondition.jsx";
@@ -256,6 +258,9 @@ const App = () => {
         <Route path="/verify-email" element={<GuestRoute><VerifyEmail /></GuestRoute>} />
         <Route path="/resend-verification" element={<GuestRoute><ResendVerification /></GuestRoute>} />
         
+        {/* Auth callback route - handles OAuth success/error */}
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
+        
         {/* Payment callback routes - standalone without layout */}
         <Route path="/payment/success" element={<PaymentCallback />} />
         <Route path="/payment/failure" element={<PaymentFailure />} />
@@ -264,6 +269,8 @@ const App = () => {
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="/about" element={<OurStory />} />
+          <Route path="/detailed-about" element={<DetailedAbout />} />
+          <Route path="/our-story" element={<OurStory />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/blogs" element={<Blogs />} />

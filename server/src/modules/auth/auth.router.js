@@ -20,7 +20,6 @@ router.get('/google/callback', googleCallback);
 // Debug route to check cookies (development only)
 if (process.env.NODE_ENV === 'development') {
   router.get('/debug/cookies', (req, res) => {
-    console.log('Debug - Request cookies:', req.cookies);
     res.json({
       cookies: req.cookies || {},
       hasRefreshToken: !!req.cookies?.refreshToken,

@@ -127,13 +127,13 @@ export default function Products() {
     const stockStatus = getStockStatus(firstVariant);
     
     return (
-      <div className="bg-white  border border-gray-200 shadow-sm overflow-hidden">
-        <div className="p-4">
+      <div className="bg-white border border-gray-200 shadow-sm rounded-lg overflow-hidden">
+        <div className="p-3">
           {/* Product Header */}
           <div className="flex items-start space-x-3 mb-3">
-            <div className="h-16 w-16 flex-shrink-0">
+            <div className="h-14 w-14 flex-shrink-0">
               <img 
-                className="h-16 w-16  object-cover" 
+                className="h-14 w-14 rounded object-cover" 
                 src={product.heroImage?.url || '/placeholder.jpg'} 
                 alt={product.name}
                 onError={(e) => {
@@ -142,17 +142,17 @@ export default function Products() {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1">
+              <h3 className="text-sm font-medium text-gray-900 line-clamp-2 mb-1" title={product.name}>
                 {product.name}
               </h3>
-              <p className="text-sm text-gray-500 mb-2">
-                SKU: {firstVariant.sku || product.sku || 'No SKU'}
+              <p className="text-xs text-gray-500 mb-2">
+                {firstVariant.sku || product.sku || 'No SKU'}
               </p>
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+              <div className="flex items-center gap-1 flex-wrap">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                   {product.category || 'Uncategorized'}
                 </span>
-                <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(product.status)}`}>
+                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(product.status)}`}>
                   {product.status}
                 </span>
               </div>
@@ -160,74 +160,73 @@ export default function Products() {
           </div>
 
           {/* Product Details */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-3 gap-3 mb-3">
             <div>
-              <p className="text-sm text-gray-500 mb-1">Price</p>
+              <p className="text-xs text-gray-500 mb-1">Price</p>
               <p className="text-sm font-medium text-gray-900">
                 {formatCurrency(firstVariant.price || 0)}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500 mb-1">Stock</p>
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(stockStatus)}`}>
-                {firstVariant.stock || 0} units
+              <p className="text-xs text-gray-500 mb-1">Stock</p>
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(stockStatus)}`}>
+                {firstVariant.stock || 0}
               </span>
             </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => handleViewProduct(product)}
-                className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50  transition-colors"
-                title="View Details"
-              >
-                <AiOutlineEye className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleEditProduct(product)}
-                className="p-2 text-green-600 hover:text-green-800 hover:bg-green-50  transition-colors"
-                title="Edit Product"
-              >
-                <FiEdit className="w-4 h-4" />
-              </button>
+            <div>
+              <p className="text-xs text-gray-500 mb-1">Actions</p>
+              <div className="flex items-center space-x-1">
+                <button
+                  onClick={() => handleViewProduct(product)}
+                  className="p-1.5 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded transition-colors"
+                  title="View Details"
+                >
+                  <AiOutlineEye className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => handleEditProduct(product)}
+                  className="p-1.5 text-green-600 hover:text-green-800 hover:bg-green-50 rounded transition-colors"
+                  title="Edit Product"
+                >
+                  <FiEdit className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  onClick={() => handleDeleteProduct(product._id)}
+                  className="p-1.5 text-red-600 hover:text-red-800 hover:bg-red-50 rounded transition-colors"
+                  title="Archive Product"
+                >
+                  <RiDeleteBin6Line className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => handleDeleteProduct(product._id)}
-              className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50  transition-colors"
-              title="Archive Product"
-            >
-              <RiDeleteBin6Line className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </div>
     );
   };
 
-  // Desktop Table Component
+  // Desktop Table Component  
   const DesktopTable = () => (
     <div className="overflow-x-auto w-full">
-      <table className="w-full ">
+      <table className="w-full table-fixed">
         <thead className="bg-gray-50 sticky w-full top-0 z-10">
           <tr>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="w-2/5 px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Product
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="w-1/6 px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Category
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="w-1/8 px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Price
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="w-1/8 px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Stock
             </th>
-            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="w-1/8 px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
-            <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
+            <th className="w-1/8 px-2 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -239,11 +238,11 @@ export default function Products() {
             
             return (
               <tr key={product._id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-3 py-3">
                   <div className="flex items-center">
-                    <div className="h-12 w-12 flex-shrink-0">
+                    <div className="h-10 w-10 flex-shrink-0">
                       <img 
-                        className="h-12 w-12  object-cover" 
+                        className="h-10 w-10 rounded object-cover" 
                         src={product.heroImage?.url || '/placeholder.jpg'} 
                         alt={product.name}
                         onError={(e) => {
@@ -251,54 +250,56 @@ export default function Products() {
                         }}
                       />
                     </div>
-                    <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">{product.name}</div>
-                      <div className="text-sm text-gray-500">
-                        SKU: {firstVariant.sku || product.sku || 'No SKU'}
+                    <div className="ml-3 flex-1 min-w-0">
+                      <div className="text-sm font-medium text-gray-900 truncate pr-2" title={product.name}>
+                        {product.name}
+                      </div>
+                      <div className="text-xs text-gray-500 truncate">
+                        {firstVariant.sku || product.sku || 'No SKU'}
                       </div>
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-50 text-gray-800">
+                <td className="px-2 py-3">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-50 text-gray-800 truncate">
                     {product.category || 'Uncategorized'}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-2 py-3 text-xs text-gray-900">
                   {formatCurrency(firstVariant.price || 0)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(stockStatus)}`}>
-                    {firstVariant.stock || 0} units
+                <td className="px-2 py-3">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(stockStatus)}`}>
+                    {firstVariant.stock || 0}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(product.status)}`}>
+                <td className="px-2 py-3">
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${getStatusColor(product.status)}`}>
                     {product.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                  <div className="flex items-center justify-end gap-2">
+                <td className="px-2 py-3 text-right">
+                  <div className="flex items-center justify-end gap-1">
                     <button
                       onClick={() => handleViewProduct(product)}
-                      className="text-blue-600 hover:text-blue-900 p-1"
+                      className="text-blue-600 hover:text-blue-900 p-1.5 hover:bg-blue-50 rounded"
                       title="View Details"
                     >
-                      <AiOutlineEye className="w-4 h-4" />
+                      <AiOutlineEye className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => handleEditProduct(product)}
-                      className="text-green-600 hover:text-green-900 p-1"
+                      className="text-green-600 hover:text-green-900 p-1.5 hover:bg-green-50 rounded"
                       title="Edit Product"
                     >
-                      <FiEdit className="w-4 h-4" />
+                      <FiEdit className="w-3.5 h-3.5" />
                     </button>
                     <button
                       onClick={() => handleDeleteProduct(product._id)}
-                      className="text-red-600 hover:text-red-900 p-1"
+                      className="text-red-600 hover:text-red-900 p-1.5 hover:bg-red-50 rounded"
                       title="Archive Product"
                     >
-                      <RiDeleteBin6Line className="w-4 h-4" />
+                      <RiDeleteBin6Line className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </td>

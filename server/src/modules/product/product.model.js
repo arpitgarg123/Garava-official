@@ -65,6 +65,14 @@ const productSchema = new mongoose.Schema(
     // descriptions
     shortDescription: { type: String },
     description: { type: String },
+    structuredDescription: {
+      description: { type: String },
+      productDetails: { type: String },
+      careInstructions: { type: String },
+      sizeGuide: { type: String },
+      materials: { type: String },
+      shippingInfo: { type: String }
+    },
 
     // perfume fields
     fragranceNotes: {

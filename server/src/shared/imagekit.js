@@ -2,11 +2,20 @@ import ImageKit from "imagekit";
 import mime from "mime-types"; // npm install mime-types
 import { logger } from "./logger.js";
 
-export const imagekit = new ImageKit({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
-});
+let imagekit = null;
+
+function getImageKit() {
+  if (!imagekit) {
+    imagekit = new ImageKit({
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+      privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+      urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
+    });
+  }
+  return imagekit;
+}
+
+export { getImageKit as imagekit };
 
 /**
  * Upload buffer to ImageKit with retries + dynamic mimetype
@@ -14,7 +23,8 @@ export const imagekit = new ImageKit({
 export const uploadToImageKit = async ({ buffer, fileName, folder = "/products", mimetype = "image/jpeg" }) => {
   const base64 = buffer.toString("base64");
   try {
-    const result = await imagekit.upload({
+    const ikInstance = getImageKit();
+    const result = await ikInstance.upload({
       file: `data:${mimetype};base64,${base64}`,
       fileName,
       folder,

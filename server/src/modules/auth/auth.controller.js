@@ -173,11 +173,14 @@ export const googleCallback = asyncHandler(async (req, res, next) => {
       // Set auth cookies
       setAuthCookies(res, accessToken, refreshToken);
 
-      // Redirect to frontend with success
-      const redirectUrl = isNewUser 
-        ? `${process.env.CLIENT_URL}/?welcome=true`
-        : `${process.env.CLIENT_URL}/`;
-        
+      // Redirect to frontend with success and tokens in URL for cross-origin compatibility
+      const params = new URLSearchParams({
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        ...(isNewUser && { welcome: 'true' })
+      });
+      
+      const redirectUrl = `${process.env.CLIENT_URL}/auth/callback?${params.toString()}`;
       res.redirect(redirectUrl);
 
     } catch (error) {
