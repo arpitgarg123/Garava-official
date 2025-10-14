@@ -278,31 +278,31 @@ const ProductAccordion = ({ product }) => {
         {product?.type === 'fragrance' ? (
           // Fragrance Products - 2 badges side by side (2x1)
           <div className="grid grid-cols-2 gap-24 text-center max-w-2xl mx-auto">
-            <div className="flex flex-col items-center">
+            
               <img 
                 src={ifraBadge} 
                 alt="IFRA Standards Compliant" 
-                className="w-64 h-64 object-contain"
+                className="w-full h-full object-contain"
                 style={{ imageRendering: 'crisp-edges' }}
               />
-            </div>
-            <div className="flex flex-col items-center">
+           
+            
               <img 
                 src={crueltyFreeBadge} 
                 alt="Cruelty Free" 
-                className="w-64 h-64 object-contain"
+                className="w-full h-full object-contain"
                 style={{ imageRendering: 'crisp-edges' }}
               />
-            </div>
+           
           </div>
         ) : (
           // Jewellery Products - 1 badge image centered
           <div className="flex justify-center">
-            <div className="flex flex-col items-center">
+            <div className="flex bg-red-200 flex-col items-center">
               <img 
                 src={jewelleryBadge} 
                 alt="Jewellery Assurance" 
-                className="w-64 h-64 object-contain"
+                className="w-full h-full object-contain"
                 style={{ imageRendering: 'crisp-edges' }}
               />
             </div>

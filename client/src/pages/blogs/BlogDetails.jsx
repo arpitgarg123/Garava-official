@@ -116,7 +116,7 @@ export default function BlogDetails() {
   }
 
   return (
-    <div className="relative min-h-[100dvh] mt-20 bg-background text-foreground">
+    <div className="relative min-h-[100dvh] mt-2 bg-background text-foreground">
       <div className="sticky top-35 z-10 mb-3">
         <BackButton />
       </div>

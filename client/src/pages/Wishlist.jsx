@@ -163,8 +163,8 @@ const Wishlist = () => {
   }
 
   return (
-  <div className=" min-h-[60vh] mt-28 max-md:mt-0">
- <div className="sticky top-35 z-50 mb-3 max-md:top-7">
+  <div className=" min-h-[60vh] mt-12 max-md:mt-0 ">
+ <div className="sticky top-20 z-50 mb-3 max-md:top-7 max-sm:top-26">
         <BackButton />
       </div>
       <div className="max-w-7xl mx-auto px-4 py-8 max-md:py-0">

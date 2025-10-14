@@ -166,9 +166,9 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen  py-8">
-      <div className="max-w-7xl mx-auto mt-16  px-4 ">
- <div className="sticky top-36 z-10 mb-3 max-md:top-5">
+    <div className="min-h-screen  py-8 max-sm:py-0">
+      <div className="max-w-7xl mx-auto mt-1  px-4 ">
+ <div className="sticky top-20 z-10 mb-3 max-md:top-5 max-sm:top-26">
     <BackButton />
   </div>
   <PageHeader title="Checkout" />        

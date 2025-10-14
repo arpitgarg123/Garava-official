@@ -21,13 +21,9 @@ import jewellry3 from '../../assets/images/jewellry3.jpg';
 import jewellry4 from '../../assets/images/jewellry4.png';
 
 // Fragrance images
-import silaImg from '../../assets/images/sila.jpg';
-import evaraImg from '../../assets/images/evara.jpg';
-import wayfarerImg from '../../assets/images/wayfarer.jpg';
-
-// Default images for other sections
-import essentialJ from '../../assets/images/essential-j.png';
-import essentialF from '../../assets/images/essential-f.jpg';
+import silaImg from '../../assets/images/sila.webp';
+import evaraImg from '../../assets/images/evara.webp';
+import wayfarerImg from '../../assets/images/mangata.webp';
 
 import { selectIsAuthenticated, selectUser, selectIsAdmin } from '../../features/auth/selectors.js';
 import { doLogout } from '../../features/auth/slice.js';
@@ -102,23 +98,22 @@ const navItems = [
       },
   ]},
   { title: 'Maison', submenu: [
-     { label: 'Book an Appointment', img: essentialJ, to: '/appointment' },
-     { label: 'FAQ', img: essentialF, to: '/faq' },
-     { label: 'About', img: essentialJ, to: '/detailed-about' },
-     { label: 'Our Story', img: essentialF, to: '/our-story' },
+     { label: 'Book an Appointment',  to: '/appointment' },
+     { label: 'FAQ',  to: '/faq' },
+     { label: 'About',  to: '/detailed-about' },
+     { label: 'Our Story',  to: '/our-story' },
   ]},
   { 
     title: 'Blogs', 
     submenu: [
       { 
         label: 'Jewellery', 
-        img: jewellry3, 
+         
         to: '/blogs?category=jewellery',
         category: 'jewellery'
       },
       { 
-        label: 'Fragrance', 
-        img: evaraImg, 
+        label: 'Fragrance',  
         to: '/blogs?category=fragrance',
         category: 'fragrance'
       },
@@ -245,25 +240,24 @@ const Navbar = () => {
 
   const navTextColor = isHeroPage && !scrolled && !isNavActive ? 'text-white' : 'text-black';
   const shouldShowNavItemsDesktop = isHeroPage && !scrolled;
-  
-  const navbarClass = `navbar hidden md:block py-3.5 overflow-x-hidde transition-transform duration-300 ease-out ${
-    isHidden ? '-translate-y-48' : 'translate-y-0'
-  } ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'} ${
+
+  const navbarClass = `navbar hidden md:block py-3.5 transition-transform duration-300 ease-in ${
+    isHidden ? '-translate-y-100' : 'translate-y-0'
+  }   ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'}  ${
+    
     isNavActive ? 'expanded' : ''
   }`;
 
   return (
     <>
-    {
-      scrolled ? null : <Header />
-    }
+ {isHeroPage && !scrolled && <Header />}
       
 
       {/* Mobile Navigation */}
       <nav
         className={`md:hidden sticky top-0 z-50 ${
           scrolled ? 'bg-white shadow-sm' : 'bg-white/80 backdrop-blur'
-        } transition`}
+        } `}
         role="navigation"
         aria-label="Mobile navigation"
       >
@@ -388,7 +382,9 @@ const Navbar = () => {
 
       {/* Desktop Navigation */}
       <nav className={navbarClass} role="navigation" aria-label="Main navigation">
-        <div className="navTop relative px-10">
+       {
+        shouldShowNavItemsDesktop && (
+           <div className="navTop relative px-10">
           <div className="flex justify-between w-89 font-light">
    
 
@@ -542,8 +538,10 @@ const Navbar = () => {
             )}
           </div>
         </div>
+        )
+       }
 
-        {shouldShowNavItemsDesktop && (
+        {/* {shouldShowNavItemsDesktop && ( */}
           <div className="flex-center ">
             {navItems.map((item, idx) => (
               <NavItem
@@ -554,7 +552,7 @@ const Navbar = () => {
               />
             ))}
           </div>
-        )}
+        {/* )} */}
       </nav>
     </>
   );

@@ -6,7 +6,7 @@
 // const BlogList = () => {
 //   return (
 //     <>
-//       <div className="sticky top-34 z-10 mb-3">
+//       <div className="sticky top-20 z-10 mb-3">
 //         <BackButton />
 //       </div>
 //           <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -24,7 +24,7 @@
 //             </button>
 //           ))}
 //         </div>
-//       <section className="max-w-7xl mx-auto mt-32">
+//       <section className="max-w-7xl mx-auto mt-4">
 //         <PageHeader title="Blogs" />
 //         <BlogListWithFilters />
 //       </section>
@@ -102,9 +102,9 @@ const BlogList = () => {
   };
 
   return (
-    <div className="min-h-screen mt-20 max-sm:mt-0 max-md:mt-0">
+    <div className="min-h-screen mt-2 max-sm:mt-0 max-md:mt-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 max-sm:py-0 max-md:py-0">
-       <div className="sticky top-34 z-10 mb-3 max-sm:top-20 max-md:top-18">
+       <div className="sticky top-20 z-10 mb-3 max-sm:top-20 max-md:top-18">
         <BackButton />
        </div>
   <PageHeader title="Blogs" />

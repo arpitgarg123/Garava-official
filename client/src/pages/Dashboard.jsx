@@ -19,10 +19,7 @@ import {
 } from "react-icons/fa";
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
-import f1 from "../assets/images/f-front.png";
-// import f2 from "../assets/images/fragnance.png";
-// import f3 from "../assets/images/fragnance1.png";
-// import f4 from "../assets/images/essential-f.png";
+
 import Appointment from '../components/DashboardSections/Appointment';
 import Reviews from './../components/DashboardSections/Reviews';
 import Newsletter from '../components/DashboardSections/Newsletter';
@@ -125,7 +122,7 @@ const Dashboard = () => {
   const topProducts = products.slice(0, 5).map(product => ({
     _id: product._id,
     name: product.name || product.title,
-    image: product.heroImage?.url || product.images?.[0]?.url || f1,
+    image: product.heroImage?.url || product.images?.[0]?.url ,
     salesINR: product.price || 0,
     units: product.stockQuantity || 0
   }));
@@ -274,7 +271,7 @@ const Dashboard = () => {
       )}
 
       {/* Clean Sidebar */}
-      <aside className={`fixed top-16 left-0 z-40 w-64 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 transform transition-transform duration-200 ${
+      <aside className={`fixed top-20 left-0 z-40 w-64 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 transform transition-transform duration-200 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       } lg:translate-x-0`}>
         <div className="h-full overflow-y-auto">

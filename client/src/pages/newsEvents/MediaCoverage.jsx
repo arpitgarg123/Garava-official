@@ -44,8 +44,8 @@ export const MediaCoveragePage = () => {
   // Show loading state
   if (loading && items.length === 0) {
     return (
-      <div className="mt-32">
-        <div className="sticky top-16 z-10 mb-3">
+      <div className="mt-4">
+        <div className="sticky top-20 z-10 mb-3">
           <BackButton />
         </div>
         <div className="flex justify-center items-center h-64">
@@ -56,8 +56,8 @@ export const MediaCoveragePage = () => {
   }
 
   return (
-    <div className="mt-32 max-md:mt-0">
-      <div className="sticky top-16 z-10 mb-3 max-md:top-7">
+    <div className="mt-4 max-md:mt-0">
+      <div className="sticky top-20 z-10 mb-3 max-md:top-7">
         <BackButton />
       </div>
       <section className="relative overflow-hidden ">
