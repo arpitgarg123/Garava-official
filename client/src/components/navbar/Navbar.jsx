@@ -101,11 +101,9 @@ const navItems = [
         category: 'wayfarer'
       },
   ]},
-  { title: 'Services', submenu: [
+  { title: 'Maison', submenu: [
      { label: 'Book an Appointment', img: essentialJ, to: '/appointment' },
      { label: 'FAQ', img: essentialF, to: '/faq' },
-  ]},
-  { title: 'About Us', submenu: [
      { label: 'About', img: essentialJ, to: '/detailed-about' },
      { label: 'Our Story', img: essentialF, to: '/our-story' },
   ]},

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { Link } from 'react-router-dom';
 
-const textOnlyMenus = ["Services", "About Us", "Blogs", "News & Events"];
+const textOnlyMenus = ["Maison", "Blogs", "News & Events"];
 
 const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} }) => {
   const isTextOnly = textOnlyMenus.includes(parentTitle);

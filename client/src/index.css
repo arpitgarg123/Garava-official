@@ -242,7 +242,7 @@ body:has(.submenu-container) {
 }
 .btn:hover {
   background-color: #0c0c0c;       
-  color: #f5e6d7;                     
+  color: #ffffff;                     
 }
 .btn-black {
   /* Base responsive padding */
@@ -255,7 +255,7 @@ body:has(.submenu-container) {
   transition: all ease-in-out 0.3s;
   cursor: pointer;
   background-color: #0c0c0c;
-  color: #f5e6d7;
+  color: #ffffff;
   
   /* Flexbox layout */
   display: flex;

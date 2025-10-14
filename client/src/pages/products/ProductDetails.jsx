@@ -9,7 +9,7 @@ import { selectIsAuthenticated } from '../../features/auth/selectors';
 import { logout } from '../../features/auth/slice';
 import { FiPhone, FiMail, FiChevronDown, FiChevronUp, FiShare2 } from 'react-icons/fi';
 import { CiShare2 } from "react-icons/ci";
-import { handleEmailContact, handleWhatsAppContact } from '../../hooks/contact';
+import { handleEmailContact, handleWhatsAppContact, handlePhoneContact } from '../../hooks/contact';
 
 import { selectIsProductInWishlist } from '../../features/wishlist/selectors';
 import { toast } from 'react-hot-toast';
@@ -419,7 +419,7 @@ const ProductDetails = () => {
 
             {/* Product Specific Information */}
             {product?.type === 'jewellery' && (
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg space-y-2">
+              <div className="mt-4 p-3 bg-gray-50  space-y-2">
                 {product?.material && (
                   <p className="text-sm text-gray-700">
                     <span className="font-medium">Material:</span> {product.material}
@@ -435,7 +435,7 @@ const ProductDetails = () => {
 
             {/* High Jewellery Customization */}
             {isHighJewellery && product?.customizationOptions?.enabled && (
-              <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+              <div className="mt-4 p-3 bg-amber-50 border border-amber-200 ">
                 <h4 className="text-sm font-semibold text-amber-900 mb-1">Customization Available</h4>
                 <p className="text-sm text-amber-800">{product.customizationOptions.description}</p>
                 {product.customizationOptions.estimatedDays && (
@@ -452,7 +452,7 @@ const ProductDetails = () => {
               </h2>
               {
                 product?.type != "fragrance" && (<Link to='/appointment'>
-              <button className="btn-black uppercase  max-sm:my-2 tracking-wider w-full sm:w-auto">
+              <button className="btn-black btn-small   max-sm:my-2  sm:w-auto">
                 Book an appointment
               </button>
               </Link>)
@@ -540,7 +540,7 @@ const ProductDetails = () => {
 
               {/* Gift Options */}
               {(product?.freeGiftWrap || product?.giftWrap?.enabled || product?.giftMessageAvailable) && (
-                <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="mt-3 p-3 bg-green-50 border border-green-200 ">
                   <h4 className="text-sm font-semibold text-green-900 mb-2">Gift Options Available</h4>
                   <div className="space-y-1">
                     {product?.freeGiftWrap && (
@@ -586,7 +586,7 @@ const ProductDetails = () => {
                 <div className="relative w-full sm:w-auto">
                   <button 
                     onClick={() => setShowContactOptions(!showContactOptions)}
-                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium rounded-lg hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium  hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                   >
                     Contact for Pricing
                   </button>
@@ -599,7 +599,7 @@ const ProductDetails = () => {
                         className="fixed inset-0 z-10"
                         onClick={() => setShowContactOptions(false)}
                       />
-                      <div className="absolute top-full left-0 right-0 sm:right-auto sm:w-80 mt-2 bg-white border border-gray-200 rounded-lg shadow-xl z-20 overflow-hidden">
+                      <div className="absolute top-full left-0 right-0 sm:right-auto sm:w-80 mt-2 bg-white border border-gray-200  shadow-xl z-20 overflow-hidden">
                         <button
                           onClick={() => handleWhatsAppContact(product, setShowContactOptions)}
                           className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-green-50 transition-colors border-b border-gray-100"
@@ -671,23 +671,47 @@ const ProductDetails = () => {
               </button>
             </div>
 
-          
-          </div>
-        </div>
-
-        {/* Bottom: Accordion + Shipping info */}
-        <div className="mt-15 grid grid-cols-1  gap-8 lg:grid-cols-12 items-start">
-          <div className="lg:col-span-8">
-            <ProductAccordion product={product} />
-          </div>
-          <div className="lg:col-span-4">
+             <div className="lg:col-span-4 mt-6">
             <div className="space-y-3 w-full">
-              {/* <h4 className="font-semibold text-gray-900">Shipping & Delivery</h4> */}
-                            <h4 className=" text-gray-900 flex bg-gray-50 p-4">-	Order by Phone +91-7738543881   |  <FaWhatsapp size={24} /><span className='font-semibold'>Message us</span>  </h4>
-             <div className='flex '>
-               <h4 className="bg-gray-50 p-4 text-gray-900">-	Contact a Client Advisor </h4><h4 className='flex bg-gray-50 p-4 font-semibold'> <CiShare2 size={24} /> Share</h4>
-
-             </div>
+              {/* Contact Options */}
+              <div className="space-y-2">
+                {/* Order by Phone Button */}
+                <button 
+                  onClick={() => handlePhoneContact(product)}
+                  className="w-full flex items-center gap-3 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
+                >
+                  <FiPhone size={18} />
+                  <span>Order by Phone +91-7738543881</span>
+                </button>
+                
+                {/* WhatsApp Message Button */}
+                <button 
+                  onClick={() => handleWhatsAppContact(product)}
+                  className="w-full flex items-center gap-3 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
+                >
+                  <FaWhatsapp size={18} className="text-green-500" />
+                  <span className='font-semibold'>Message us</span>
+                </button>
+                
+                {/* Contact Advisor and Share Row */}
+                <div className='flex gap-2'>
+                  <button 
+                    onClick={() => handleEmailContact(product)}
+                    className="flex-1 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
+                  >
+                    Contact a Client Advisor
+                  </button>
+                  <button 
+                    onClick={() => {
+                      navigator.clipboard.writeText(window.location.href);
+                      toast.success('Product link copied to clipboard!');
+                    }}
+                    className='flex items-center gap-2 bg-gray-50 p-4 font-semibold text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer'
+                  > 
+                    <CiShare2 size={24} /> Share
+                  </button>
+                </div>
+              </div>
               {product?.shippingInfo?.complementary && (
                 <p className="text-sm text-green-700 font-medium">
                   ✓ Complimentary Express Delivery
@@ -728,6 +752,15 @@ const ProductDetails = () => {
               )}
             </div>
           </div>
+          </div>
+        </div>
+
+        {/* Bottom: Accordion + Shipping info */}
+        <div className="mt-15 grid grid-cols-1  gap-8 lg:grid-cols-12 items-start">
+          <div className="lg:col-span-8">
+            <ProductAccordion product={product} />
+          </div>
+       
         </div>
      
       </div>

@@ -197,5 +197,32 @@ export const testContactMethods = () => {
   }, 3000);
 };
 
+// Phone contact handler
+export const handlePhoneContact = (product, setShowContactOptions) => {
+  const phoneNumber = "+917738543881";
+  
+  try {
+    console.log('Attempting to initiate phone call to:', phoneNumber);
+    
+    // Try to initiate phone call
+    window.location.href = `tel:${phoneNumber}`;
+    toast.success("Initiating phone call...");
+    
+  } catch (error) {
+    console.error('Phone call failed:', error);
+    
+    // Fallback - copy number to clipboard
+    navigator.clipboard.writeText(phoneNumber).then(() => {
+      toast.success("Phone number copied to clipboard!");
+      alert(`Phone call couldn't be initiated automatically.\n\nPhone number copied: ${phoneNumber}\n\nPlease dial manually.`);
+    }).catch(() => {
+      toast.error("Please call manually");
+      alert(`Please call us at: ${phoneNumber}`);
+    });
+  }
+  
+  if (setShowContactOptions) setShowContactOptions(false);
+};
+
 // Export the enhanced mobile function as default WhatsApp handler
 export { handleWhatsAppContactMobile as handleWhatsAppContactEnhanced };

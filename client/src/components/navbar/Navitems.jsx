@@ -81,7 +81,7 @@ const [submenuTop, setSubmenuTop] = useState(130);
                 className="submenu-container w-full h-[20vw] fixed  bg-white text-black left-0 -top-36 py-8 "
               >
                 <div className="max-w-7xl mx-auto flex  items-center justify-center h-full ">
-                  <div className="flex-center">
+                  <div className={`${["Maison", "Blogs", "News & Events"].includes(item.title) ? "flex-center" : "flex items-center justify-center gap-8"}`}>
                     {item.submenu.map((sub, i) => (
                       <Submenu key={i} sub={sub} parentTitle={item.title} />
                     ))}
