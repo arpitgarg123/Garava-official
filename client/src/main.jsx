@@ -7,6 +7,7 @@ import { store, persistor } from "./app/store.js";
 import App from "./App.jsx";
 import "./index.css";
 
+
 import { bindAuth } from "./shared/api/http.js";
 import { setToken, logout, initAuth } from "./features/auth/slice.js";
 import ErrorBoundary from "./app/ErrorBoundary.jsx";

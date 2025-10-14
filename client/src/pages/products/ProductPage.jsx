@@ -8,13 +8,11 @@ import BackButton from "../../components/BackButton";
 import { BiFilterAlt, BiX } from "react-icons/bi";
 import Pagination from "../../components/Pagination";
 import { buildFilterParams } from "../../shared/utils/filterUtils";
-import fBanner  from '../../assets/images/frame.png'
-import jBanner  from '../../assets/images/frame3.png'
-// import jewelleryImg from "../assets/images/essential-j.png";
-// import fragranceImg from "../assets/images/essential-f.jpg";
+import fBanner  from '../../assets/images/f-banner.webp'
+import jBanner  from '../../assets/images/j-banner.webp'
 import all  from '../../assets/images/allproduct.webp'
-import mobileFraganceBanner  from '../../assets/images/mobfbanner.webp'
-import mobileJewellryBanner  from '../../assets/images/mobjbanner.webp'
+import mobileFraganceBanner  from '../../assets/images/display-banner1.webp'
+import mobileJewellryBanner  from '../../assets/images/display-banner.webp'
 import mobileallProdsBanner  from '../../assets/images/mobAllProductsBanner.webp'
 
 import { useToastContext } from "../../layouts/Toast";
@@ -258,11 +256,11 @@ const toast = useToastContext();
 
   return (
     <div className="w-full  relative">
-      <section className="relative h-[45vh] mt-30 max-md:mt-0 lg:h-[64vh] overflow-hidden">
+      <section className="relative h-[45vh] mt-2 max-md:mt-0 lg:h-[64vh] overflow-hidden">
 
        <img
           src={banner.desktop}
-          className="w-full h-full object-cover object-center block md:block"
+          className="w-full h-full object-cover  block md:block"
           alt={`${getPageHeading()} banner`}
           onError={(e) => {
             e.target.style.display = 'none';
@@ -282,7 +280,7 @@ const toast = useToastContext();
 
 
       {/* Back Button - Positioned over banner */}
-      <div className="absolute top-12 max-md:left-0 left-4 z-20">
+      <div className="absolute top-20 max-md:left-0 left-4 z-20 max-sm:top-6">
         <BackButton className="text-white"/>
       </div>
 

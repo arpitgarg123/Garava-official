@@ -252,8 +252,8 @@ const ProductDetails = () => {
   //   "/placeholder.jpg";
 
   return (
-    <div className=" py-10 mt-26 sm:py-12 max-md:py-0 max-sm:mt-0">
-       <div className="sticky top-16 z-10 mb-3 max-md:top-5">
+    <div className=" py-10 mt-4 sm:py-12 max-md:py-0 max-sm:mt-0">
+       <div className="sticky top-20 z-10 mb-3 max-md:top-5">
     <BackButton />
   </div>
       <div className="max-w-[95%] mx-auto px-4 sm:px-6 lg:px-8 pb-10">

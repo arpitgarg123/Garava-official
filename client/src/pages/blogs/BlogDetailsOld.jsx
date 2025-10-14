@@ -73,7 +73,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
   const canonicalUrl = typeof window !== "undefined" ? window.location.href : "https://example.com/blog/post";
 
   return (
-    <div className="relative min-h-[100dvh] mt-20 bg-background text-foreground">
+    <div className="relative min-h-[100dvh] mt-2 bg-background text-foreground">
       <div className="sticky top-35 z-10 mb-3">
         <BackButton />
       </div>
