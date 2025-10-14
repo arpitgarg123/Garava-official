@@ -155,10 +155,15 @@ const ProductCard = ({
                product?.variants?.[0]?.price ?? 
                product?.priceRange?.min ?? 
                product?.price ?? 
-               "Price on Demand";
+               "Price on Request";
   
-  const displayPrice = (isHighJewelleryProduct || (price === 0 && (product.type === "high_jewellery" || product.type === "high-jewellery")))
-    ? "Price on Demand" 
+  // Don't show "Price on Request" on listing pages for jewellery
+  const shouldHidePrice = (isHighJewelleryProduct || hasVariantWithPriceOnDemand || 
+                          (price === 0 && (product.type === "high_jewellery" || product.type === "high-jewellery")) ||
+                          product.type === "jewellery");
+  
+  const displayPrice = shouldHidePrice
+    ? null  // Hide price on listing pages
     : (typeof price === 'number' ? `₹${price.toLocaleString()}` : price);
 
   const slug = product.slug || product.productSlug || product.id || product._id;
@@ -386,15 +391,11 @@ const ProductCard = ({
               {isHighJewellery ? "HIGH JEWELLERY" : (product.type || product.category || "jewellery")}
             </div>
             <h3 className="card-title">{product.name}</h3>            
-            {/* Price or Price on Demand for High Jewellery */}
+            {/* Hide price for jewellery with Price on Request - only show in product details */}
             {isHighJewelleryProduct ? (
               <div className="flex flex-col gap-3 mt-auto">
-                <div className="flex items-center gap-2">
-                  <div className="text-sm font-semibold  max-sm:my-4 tracking-wide bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                    Price on Demand
-                  </div>
-                  <div className="h-1 w-8 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full"></div>
-                </div>
+                {/* Price section hidden on listing pages for jewellery */}
+                <div className="h-6"></div> {/* Spacer to maintain card height */}
                 
                 {/* Contact Us Button */}
                 <div className="relative">
@@ -446,7 +447,8 @@ const ProductCard = ({
                 </div>
               </div>
             ) : (
-              <div className="card-rupe-tex">{displayPrice}</div>
+              // Hide price for all jewellery on listing pages
+              displayPrice && <div className="card-rupe-tex">{displayPrice}</div>
             )}
 
             {/* Color Selector - Only for non-high jewellery products */}

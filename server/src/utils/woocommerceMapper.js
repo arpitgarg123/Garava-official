@@ -314,7 +314,7 @@ class WooCommerceMapper {
       mrp: regularPrice ? toPaise(regularPrice) : null,
       salePrice: salePrice ? toPaise(salePrice) : null,
       isPriceOnDemand: isPriceOnDemand,
-      priceOnDemandText: isPriceOnDemand ? "Price on Demand" : undefined,
+      priceOnDemandText: isPriceOnDemand ? "Price on Request" : undefined,
       stock: this.parseNumber(row.stock || row.Stock || row['Stock quantity']) || 0,
       stockStatus: this.mapStockStatus(row.stockStatus || row['In stock?']),
       weight: this.parseNumber(row.weight || row.Weight || row['Weight (kg)']),

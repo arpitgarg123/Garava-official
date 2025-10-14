@@ -356,7 +356,7 @@ const ProductDetails = () => {
             {isHighJewellery ? (
               <div className="mt-3">
                 <div className="text-2xl font-playfair font-semibold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
-                  {selectedVariant?.priceOnDemandText || 'Price on Demand'}
+                  {selectedVariant?.priceOnDemandText || 'Price on Request'}
                 </div>
                 <p className="text-sm text-gray-600 mt-1">Contact us for pricing details</p>
               </div>

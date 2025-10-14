@@ -17,7 +17,7 @@ const Jewellry = () => {
         setLoading(true);
         const { data } = await listProductsApi({
           type: 'jewellery',
-          limit: 4,
+          limit: 12,
           page: 1
         });
         
@@ -33,10 +33,10 @@ const Jewellry = () => {
         if (apiProducts && apiProducts.length > 0) {
           // Transform backend data to match UI expectations
           const transformedProducts = apiProducts.map(product => {
-            // Check if product is price on demand
+            // Check if product is price on request
             const isPriceOnDemand = product.isPriceOnDemand || product.defaultVariant?.isPriceOnDemand;
             const price = (isPriceOnDemand  || "0")
-              ? "Price on Demand" 
+              ? "Price on Request" 
               : `₹${product.defaultVariant?.price?.toLocaleString('en-IN') || product.priceRange?.min?.toLocaleString('en-IN') || '0'}.0`;
               
             return {
@@ -81,15 +81,39 @@ const Jewellry = () => {
             </div>
           ) : (
           <>
-          {/* Horizontal scrollable container */}
+          {/* Horizontal scrollable container with arrows */}
           <div className="relative group">
-           
+            {/* Left Arrow */}
+            <button
+              onClick={() => {
+                if (scrollRef.current) {
+                  scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+                }
+              }}
+              className="absolute left-2 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
+              aria-label="Scroll left"
+            >
+              <IoIosArrowBack className="text-2xl text-gray-800" />
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              onClick={() => {
+                if (scrollRef.current) {
+                  scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+                }
+              }}
+              className="absolute right-2 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
+              aria-label="Scroll right"
+            >
+              <IoIosArrowForward className="text-2xl text-gray-800" />
+            </button>
             
             <div 
               ref={scrollRef}
               className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
             >
-              <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max py-4">
+              <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max px-4 py-4">
                 {products.map((p) => (
                   <div key={p.id} className="w-[250px] sm:w-[280px] md:w-[300px] flex-shrink-0">
                     <Card 
@@ -97,7 +121,8 @@ const Jewellry = () => {
                       title={p.title} 
                       price={p.price} 
                       slug={p.slug} 
-                      id={p.id} 
+                      id={p.id}
+                      type="jewellery" 
                       isHorizontal={true}
                     />
                   </div>

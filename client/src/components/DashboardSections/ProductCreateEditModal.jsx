@@ -47,7 +47,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
       stock: 0,
       weight: '',
       isPriceOnDemand: false,
-      priceOnDemandText: 'Price on Demand',
+      priceOnDemandText: 'Price on Request',
       purchaseLimit: 0,
       leadTimeDays: 0,
       isDefault: true,
@@ -131,7 +131,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
           stock: 0,
           weight: '',
           isPriceOnDemand: false,
-          priceOnDemandText: 'Price on Demand',
+          priceOnDemandText: 'Price on Request',
           purchaseLimit: 0,
           leadTimeDays: 0,
           isDefault: true,
@@ -246,7 +246,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         stock: 0,
         weight: '',
         isPriceOnDemand: false,
-        priceOnDemandText: 'Price on Demand',
+        priceOnDemandText: 'Price on Request',
         purchaseLimit: 0,
         leadTimeDays: 0,
         isDefault: false,
@@ -707,7 +707,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                 </div>
 
-                {/* Price on Demand section */}
+                {/* Price on Request section */}
                 <div className="mt-4 p-4 bg-gray-50 rounded-md space-y-4">
                   <div className="flex items-center gap-4">
                     <label className="flex items-center">
@@ -717,20 +717,20 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                         onChange={(e) => handleVariantChange(index, 'isPriceOnDemand', e.target.checked)}
                         className="mr-2"
                       />
-                      <span className="text-sm font-medium text-gray-700">Price on Demand</span>
+                      <span className="text-sm font-medium text-gray-700">Price on Request</span>
                     </label>
                   </div>
                   
                   {variant.isPriceOnDemand && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Price on Demand Text
+                        Price on Request Text
                       </label>
                       <input
                         type="text"
-                        value={variant.priceOnDemandText || 'Price on Demand'}
+                        value={variant.priceOnDemandText || 'Price on Request'}
                         onChange={(e) => handleVariantChange(index, 'priceOnDemandText', e.target.value)}
-                        placeholder="Price on Demand"
+                        placeholder="Price on Request"
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
@@ -776,7 +776,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                       onChange={(e) => handleVariantChange(index, 'isPriceOnDemand', e.target.checked)}
                       className="mr-2"
                     />
-                    Price on Demand
+                    Price on Request
                   </label>
                 </div>
               </div>
@@ -1120,7 +1120,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Product Level Price on Demand</span>
+                <span className="text-sm font-medium text-gray-700">Product Level Price on Request</span>
               </label>
 
               <label className="flex items-center">
