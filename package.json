@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Garava Official - Full Stack E-commerce Application",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "install-all": "cd server && npm install && cd ../client && npm install",
     "build": "cd server && npm run build",
@@ -10,7 +13,7 @@
     "deploy": "cd server && npm run deploy",
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
-    "render-build": "npm install && cd server && npm install && cd ../client && npm install && npm install vite @vitejs/plugin-react @tailwindcss/vite --save-dev && npm run build"
+    "render-build": "npm install --include=dev && cd server && npm install --include=dev && cd ../client && npm install --include=dev && npm run build"
   },
   "keywords": ["ecommerce", "jewelry", "react", "node.js", "express", "mongodb"],
   "author": "",
