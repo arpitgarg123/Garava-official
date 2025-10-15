@@ -1,38 +1,3 @@
-// import React from "react";
-// import BlogListWithFilters from "../../components/blogs/BlogListWithFilters";
-// import PageHeader from "../../components/header/PageHeader";
-// import BackButton from "../../components/BackButton";
-
-// const BlogList = () => {
-//   return (
-//     <>
-//       <div className="sticky top-20 z-10 mb-3">
-//         <BackButton />
-//       </div>
-//           <div className="flex flex-wrap justify-center gap-4 mb-12">
-//           {categories.map((category) => (
-//             <button
-//               key={category.id}
-//               onClick={() => handleCategoryChange(category.id)}
-//               className={`px-6 py-2 rounded-full transition-all duration-300 uppercase tracking-wider text-sm font-medium ${
-//                 activeCategory === category.id
-//                   ? 'bg-black text-white'
-//                   : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
-//               }`}
-//             >
-//               {category.label}
-//             </button>
-//           ))}
-//         </div>
-//       <section className="max-w-7xl mx-auto mt-4">
-//         <PageHeader title="Blogs" />
-//         <BlogListWithFilters />
-//       </section>
-//     </>
-//   );
-// };
-
-// export default BlogList;
 
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -102,7 +67,7 @@ const BlogList = () => {
   };
 
   return (
-    <div className="min-h-screen mt-2 max-sm:mt-0 max-md:mt-0">
+    <div className="min-h-screen mt-30 max-sm:mt-0 max-md:mt-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 max-sm:py-0 max-md:py-0">
        <div className="sticky top-20 z-10 mb-3 max-sm:top-20 max-md:top-18">
         <BackButton />

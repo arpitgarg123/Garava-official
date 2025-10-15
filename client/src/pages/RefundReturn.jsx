@@ -8,9 +8,9 @@ const RefundReturn = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 mt-36 max-md:mt-0">
       {/* Back Button */}
-      <div className="sticky top-20 z-10 max-md:top-10 mt-4 max-md:mt-2">
+      <div className="sticky top-44 z-10 max-md:top-10 ">
         <BackButton />
       </div>
 

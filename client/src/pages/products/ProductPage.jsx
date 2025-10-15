@@ -255,7 +255,7 @@ const toast = useToastContext();
   const banner = getCategoryBanner();
 
   return (
-    <div className="w-full relative pt-20 max-md:pt-14">
+    <div className="w-full relative mt-36 max-md:mt-2 max-sm:mt-2">
       <section className="relative h-[45vh] lg:h-[64vh] overflow-hidden">
 
        <img

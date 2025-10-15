@@ -69,8 +69,8 @@ const Contact = () => {
   };
 
   return (
-    <div className="mt-28">
-      <div className="sticky top-30 left-24 w-1/2 z-10">
+    <div className="mt-36 max-md:mt-0">
+      <div className="sticky top-44 left-24 w-1/2 z-10 max-md:top-0 max-md:left-0">
         <BackButton />
       </div>  
         {/* <div className="w-full text-center  mb-7">

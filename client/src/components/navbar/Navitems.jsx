@@ -54,7 +54,7 @@ const [submenuTop, setSubmenuTop] = useState(130);
     >
       {/* Trigger */}
       <button
-        className="uppercase w-full cursor-pointer text-left z-50 font-medium text-sm tracking-wide flex items-center justify-between"
+        className="uppercase w-full cursor-pointer text-left z-50 font-medium text-xs tracking-wide flex items-center justify-between"
         onClick={isMobile ? handleToggleMobile : undefined}
         aria-expanded={isMobile ? !!isOpenMobile : hovered === item.title}
         aria-controls={isMobile ? `${item.title}-submenu` : undefined}
@@ -64,7 +64,7 @@ const [submenuTop, setSubmenuTop] = useState(130);
       </button>
 
       {!isMobile && (
-        <div className="absolute bottom-2 left-0 w-full h-[2px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+        <div className="absolute bottom-2 left-0 w-full h-[1.5px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
       )}
 
       {/* Desktop submenu (hover) */}
