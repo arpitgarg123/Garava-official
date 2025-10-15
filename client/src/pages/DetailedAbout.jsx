@@ -5,12 +5,12 @@ const DetailedAbout = () => {
   return (
     <section
       aria-labelledby="about-heading"
-      className="w-full bg-white"
+      className="w-full mt-36 max-md:mt-0"
     >
-      <div className="sticky top-20 z-10 mb-3 max-md:top-10">
+      <div className="sticky top-44 z-10 mb-3 max-md:top-10">
         <BackButton />
       </div>
-      <div className="mx-auto max-w-3xl lg:max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 max-md:py-0">
+      <div className="mx-auto max-w-3xl lg:max-w-4xl px-4 sm:px-6 lg:px-8  max-md:py-0">
         {/* About GARAVA Section */}
         <header className="mb-6 sm:mb-8 mt-2 max-md:mt-0">
           <h1
