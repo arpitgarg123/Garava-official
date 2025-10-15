@@ -284,6 +284,7 @@ const FRAGRANCE_SUBCATS = [
   { id: "all-fragrance", label: "All Fragrance" },
   { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.SILA, label: "Sila" },
   { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.EVARA, label: "Evara" },
+  { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.MANGATA, label: "Mangata" },
   { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.WAYFARER, label: "Wayfarer" },
 ];
 
@@ -307,8 +308,8 @@ const SideBar = ({
   const currentFilters = useSelector(s => s.product.filters || {});
   
   const [price, setPrice] = useState({ 
-    min: initialValues.priceMin || "", 
-    max: initialValues.priceMax || "" 
+    min: initialValues.priceMin ?? "", 
+    max: initialValues.priceMax ?? "" 
   });
   const [category, setCategory] = useState(initialValues.category || "");
   const [colors, setColors] = useState(initialValues.colors || []);

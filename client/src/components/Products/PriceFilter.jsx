@@ -60,10 +60,16 @@ const PriceFilter = ({
   isMobile = false,
   heading
 }) => {
+  // Ensure value is never null or undefined
+  const safeValue = {
+    min: value?.min ?? '',
+    max: value?.max ?? ''
+  };
+
   const handleInputChange = (field, e) => {
     const val = e.target.value;
     if (val === '' || /^\d*$/.test(val)) {
-      onChange({ ...value, [field]: val });
+      onChange({ ...safeValue, [field]: val });
     }
   };
 
@@ -83,7 +89,7 @@ const PriceFilter = ({
                 id="mobile-min-price"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                value={value.min}
+                value={safeValue.min}
                 onChange={(e) => handleInputChange('min', e)}
                 className="w-full pl-8 pr-3 py-2 border "
                 placeholder="0"
@@ -101,10 +107,10 @@ const PriceFilter = ({
                 id="mobile-max-price"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                value={value.max}
+                value={safeValue.max}
                 onChange={(e) => handleInputChange('max', e)}
                 className="w-full pl-8 pr-3 py-2 border "
-                placeholder="100000"
+                placeholder="10000"
               />
             </div>
           </div>
@@ -129,7 +135,7 @@ const PriceFilter = ({
               id="min-price"
               inputMode="numeric"
               pattern="[0-9]*"
-              value={value.min}
+              value={safeValue.min}
               onChange={(e) => handleInputChange('min', e)}
               className="w-full pl-8 pr-3 py-2 border "
               placeholder="0"
@@ -147,7 +153,7 @@ const PriceFilter = ({
               id="max-price"
               inputMode="numeric"
               pattern="[0-9]*"
-              value={value.max}
+              value={safeValue.max}
               onChange={(e) => handleInputChange('max', e)}
               className="w-full pl-8 pr-3 py-2 border "
               placeholder="100000"

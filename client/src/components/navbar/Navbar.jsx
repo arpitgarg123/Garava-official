@@ -23,7 +23,8 @@ import jewellry4 from '../../assets/images/jewellry4.png';
 // Fragrance images
 import silaImg from '../../assets/images/sila.webp';
 import evaraImg from '../../assets/images/evara.webp';
-import wayfarerImg from '../../assets/images/mangata.webp';
+import mangataImg from '../../assets/images/mangata.webp';
+import wayfarerImg from '../../assets/images/wayfarer.jpg';
 
 import { selectIsAuthenticated, selectUser, selectIsAdmin } from '../../features/auth/selectors.js';
 import { doLogout } from '../../features/auth/slice.js';
@@ -89,6 +90,12 @@ const navItems = [
         img: evaraImg, 
         to: '/products/fragrance?category=evara',
         category: 'evara'
+      },
+       { 
+        label: 'Mangata', 
+        img: mangataImg, 
+        to: '/products/fragrance?category=mangata',
+        category: 'mangata'
       },
        { 
         label: 'Wayfarer', 
@@ -208,17 +215,33 @@ const Navbar = () => {
 
   // Hide on scroll (desktop)
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 10);
-      if (currentScrollY > lastScrollY && currentScrollY > 10) {
-        setIsHidden(true);
-      } else {
-        setIsHidden(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const scrollThreshold = 50; // Minimum scroll amount before hiding
+          
+          setScrolled(currentScrollY > 10);
+          
+          // Hide navbar when scrolling down past threshold
+          if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+            setIsHidden(true);
+          } 
+          // Show navbar when scrolling up or at top
+          else if (currentScrollY < lastScrollY || currentScrollY <= scrollThreshold) {
+            setIsHidden(false);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
       }
-      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
@@ -239,10 +262,10 @@ const Navbar = () => {
   }, [mobileOpen]);
 
   const navTextColor = isHeroPage && !scrolled && !isNavActive ? 'text-white' : 'text-black';
-  const shouldShowNavItemsDesktop = isHeroPage && !scrolled;
+  const shouldShowNavItemsDesktop = !scrolled;
 
-  const navbarClass = `navbar hidden md:block py-3.5 transition-transform duration-300 ease-in ${
-    isHidden ? '-translate-y-100' : 'translate-y-0'
+  const navbarClass = `navbar hidden md:block py-3.5 transition-all duration-500 ease-out ${
+    isHidden ? '-translate-y-full' : 'translate-y-0'
   }   ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'}  ${
     
     isNavActive ? 'expanded' : ''

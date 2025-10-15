@@ -8,8 +8,8 @@ import BackButton from "../../components/BackButton";
 import { BiFilterAlt, BiX } from "react-icons/bi";
 import Pagination from "../../components/Pagination";
 import { buildFilterParams } from "../../shared/utils/filterUtils";
-import fBanner  from '../../assets/images/f-banner.webp'
-import jBanner  from '../../assets/images/j-banner.webp'
+import fBanner  from '../../assets/images/new_banner_2.jpg'
+import jBanner  from '../../assets/images/new_banner_1.jpg'
 import all  from '../../assets/images/allproduct.webp'
 import mobileFraganceBanner  from '../../assets/images/display-banner1.webp'
 import mobileJewellryBanner  from '../../assets/images/display-banner.webp'
@@ -255,8 +255,8 @@ const toast = useToastContext();
   const banner = getCategoryBanner();
 
   return (
-    <div className="w-full  relative">
-      <section className="relative h-[45vh] mt-2 max-md:mt-0 lg:h-[64vh] overflow-hidden">
+    <div className="w-full relative pt-20 max-md:pt-14">
+      <section className="relative h-[45vh] lg:h-[64vh] overflow-hidden">
 
        <img
           src={banner.desktop}
@@ -280,7 +280,7 @@ const toast = useToastContext();
 
 
       {/* Back Button - Positioned over banner */}
-      <div className="absolute top-20 max-md:left-0 left-4 z-20 max-sm:top-6">
+      <div className="absolute top-24 max-md:top-16 left-4 max-md:left-2 z-20">
         <BackButton className="text-white"/>
       </div>
 
