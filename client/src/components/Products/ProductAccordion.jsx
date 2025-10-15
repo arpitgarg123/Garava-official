@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 
+// Import badge images properly for better quality
+import ifraBadge from '../../assets/images/badges/Complient-2.webp';
+import crueltyFreeBadge from '../../assets/images/badges/Complient-Copy.webp';
+import jewelleryBadge from '../../assets/images/badges/Image.png';
+
 // Helper function to render bullet points as proper HTML list
 const renderBulletList = (text) => {
   if (!text) return null;
@@ -265,40 +270,44 @@ const ProductAccordion = ({ product }) => {
     });
   }
 
-  // Responsible Sourcing section
+  // GARAVA Assurance section
   sections.push({
-    title: "Responsible Sourcing",
+    title: "GARAVA Assurance", 
     content: (
-      <div className="space-y-3 text-gray-700">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-          <div className="flex flex-col items-center space-y-1">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-              <span className="text-green-600 text-xl">🌱</span>
-            </div>
-            <span className="text-sm font-medium">Sustainable</span>
+      <div className="text-gray-700">
+        {product?.type === 'fragrance' ? (
+          // Fragrance Products - 2 badges side by side (2x1)
+          <div className="grid grid-cols-2 gap-24 text-center max-w-2xl mx-auto">
+            
+              <img 
+                src={ifraBadge} 
+                alt="IFRA Standards Compliant" 
+                className="w-full h-full object-contain"
+                style={{ imageRendering: 'crisp-edges' }}
+              />
+           
+            
+              <img 
+                src={crueltyFreeBadge} 
+                alt="Cruelty Free" 
+                className="w-full h-full object-contain"
+                style={{ imageRendering: 'crisp-edges' }}
+              />
+           
           </div>
-          <div className="flex flex-col items-center space-y-1">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-              <span className="text-blue-600 text-xl">♻️</span>
+        ) : (
+          // Jewellery Products - 1 badge image centered
+          <div className="flex justify-center">
+            <div className="flex bg-red-200 flex-col items-center">
+              <img 
+                src={jewelleryBadge} 
+                alt="Jewellery Assurance" 
+                className="w-full h-full object-contain"
+                style={{ imageRendering: 'crisp-edges' }}
+              />
             </div>
-            <span className="text-sm font-medium">Eco-Friendly</span>
           </div>
-          <div className="flex flex-col items-center space-y-1">
-            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-              <span className="text-purple-600 text-xl">🚫</span>
-            </div>
-            <span className="text-sm font-medium">Cruelty Free</span>
-          </div>
-          <div className="flex flex-col items-center space-y-1">
-            <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
-              <span className="text-amber-600 text-xl">✨</span>
-            </div>
-            <span className="text-sm font-medium">Premium</span>
-          </div>
-        </div>
-        <p className="text-sm text-center text-gray-600 mt-3">
-          We are committed to ethical sourcing and sustainable practices in all our products.
-        </p>
+        )}
       </div>
     ),
   });

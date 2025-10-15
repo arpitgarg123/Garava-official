@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { Link } from 'react-router-dom';
 
-const textOnlyMenus = ["Services", "About Us", "Blogs", "News & Events"];
+const textOnlyMenus = ["Maison", "Blogs", "News & Events"];
 
 const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} }) => {
   const isTextOnly = textOnlyMenus.includes(parentTitle);
@@ -11,7 +11,11 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
     if (isMobile || isTextOnly) return;
     const img = e.currentTarget.querySelector('img');
     if (img) {
-      gsap.to(img, { scale: 1.1, duration: 0.4, ease: 'power3.out' });
+      gsap.to(img, { 
+        scale: 1.05, 
+        duration: 0.3, 
+        ease: 'power2.out'
+      });
     }
   };
 
@@ -19,7 +23,11 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
     if (isMobile || isTextOnly) return;
     const img = e.currentTarget.querySelector('img');
     if (img) {
-      gsap.to(img, { scale: 1, duration: 0.4, ease: 'power3.out' });
+      gsap.to(img, { 
+        scale: 1, 
+        duration: 0.3, 
+        ease: 'power2.out'
+      });
     }
   };
   const Content = () => (
@@ -32,8 +40,8 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
         <img
           src={sub.img}
           alt={sub.label}
-          className="h-28 w-28 sm:h-36 sm:w-36 object-cover mb-2 transition-transform duration-300"
-          loading="lazy"
+          className="h-32 w-32 sm:h-40 sm:w-40 object-cover mb-2 transition-transform duration-300"
+          loading="eager"
         />
       )}
       {!isTextOnly && (
@@ -47,7 +55,7 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
     : { onClick: onClickItem, role: 'menuitem', tabIndex: 0, onKeyDown: (e) => (e.key === 'Enter' || e.key === ' ') && onClickItem() };
   return (
     <motion.div
-      className={`flex flex-col items-center ${isMobile ? 'w-28' : 'w-32'} cursor-pointer group`}
+      className={`flex flex-col items-center ${isMobile ? 'w-32' : 'w-40'} cursor-pointer group`}
       whileHover={isMobile ? undefined : { scale: 1.05 }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}

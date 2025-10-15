@@ -137,9 +137,10 @@ const Explore = ({ currentProduct }) => {
                   <Card 
                     img={productImage}
                     title={product.name}
-                    price={productPrice ? `₹${productPrice.toLocaleString('en-IN')}` : 'Price on demand'}
+                    price={productPrice ? `₹${productPrice.toLocaleString('en-IN')}` : 'Price on Request'}
                     slug={product.slug}
                     id={product._id}
+                    type={product.type}
                     isHorizontal={true}
                   />
                 </div>

@@ -5,27 +5,21 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-    css: {
-    // ⚡ Force PostCSS transformer instead of lightningcss (fixes render build error)
-    transformer: 'postcss'
-  },
   build: {
-    outDir: '../server/public',
-    emptyOutDir: true,
     rollupOptions: {
-      external: [],
       output: {
-        manualChunks: undefined
+        assetFileNames: (assetInfo) => {
+          // Keep original filenames for images to preserve quality
+          if (assetInfo.name?.match(/\.(png|jpe?g|svg|gif|webp)$/)) {
+            return 'assets/[name][extname]'
+          }
+          return 'assets/[name]-[hash][extname]'
+        }
       }
-    },
-    // Force using the JS version of Rollup instead of native
-    target: 'esnext',
-    minify: 'esbuild'
+    }
   },
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp'],
   optimizeDeps: {
-    include: ['rollup']
-  },
-  esbuild: {
-    target: 'esnext'
+    exclude: ['@tailwindcss/vite']
   }
 })

@@ -98,7 +98,7 @@ const Orders = () => {
   if (orderId) {
     if (isDetailsLoading) {
       return (
-        <div className="min-h-screen bg-gray-50 py-8 mt-30">
+        <div className="min-h-screen bg-gray-50 py-8 mt-2">
           <div className="max-w-4xl mx-auto px-4">
             <div className=" p-8">
               <div className="animate-pulse">
@@ -137,8 +137,8 @@ const Orders = () => {
     return (
       <>
 
-      <div className="min-h-screen py-8 mt-30">
-         <div className="sticky top-16 z-10 ">
+      <div className="min-h-screen py-8 mt-2">
+         <div className="sticky top-20 z-10 ">
                 <BackButton />
               </div>
               {/* <PageHeader title={heading} /> */}
@@ -251,7 +251,7 @@ const Orders = () => {
   // Loading state for orders list
   if (isLoading) {
     return (
-      <div className="min-h-screen  py-8 mt-30">
+      <div className="min-h-screen  py-8 mt-2">
         <div className="max-w-6xl mx-auto px-4">
        <div className="space-y-4">
             {[1, 2, 3].map((i) => (
@@ -268,7 +268,7 @@ const Orders = () => {
 
 
   return (
-   <div className=" min-h-[60vh] mt-30">
+   <div className=" min-h-[60vh] mt-12">
      <div className="sticky top-20 z-10 ">
         <BackButton />
       </div>
@@ -276,7 +276,7 @@ const Orders = () => {
       <div className="max-w-7xl mx-auto px-4 ">
 <PageHeader title="My Orders" />
         {orders.length === 0 ? (
-          <div className="flex flex-col items-center justify-center space-y-4 mt-20">
+          <div className="flex flex-col items-center justify-center space-y-4 mt-2">
             <IoBagHandleOutline size={60} className="text-gray-300" />
             <p className="text-gray-500">No orders yet</p>
             <button 

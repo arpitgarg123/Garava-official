@@ -3,8 +3,12 @@ import React from 'react'
 import './product.css'
 import { Link, useNavigate } from 'react-router-dom'
 
-const Card = ({img, title = "Product", price = "", slug, id, isHorizontal = false}) => {
+const Card = ({img, title = "Product", price = "", slug, id, isHorizontal = false, type = ""}) => {
   const navigate = useNavigate();
+  
+  // Hide price for jewellery products on listing pages
+  const isJewellery = type === "jewellery" || type === "high_jewellery" || type === "high-jewellery";
+  const shouldShowPrice = !isJewellery || (isJewellery && price && price !== "Price on Request");
   
   const handleCardClick = () => {
     if (slug) {
@@ -39,13 +43,11 @@ const Card = ({img, title = "Product", price = "", slug, id, isHorizontal = fals
 
       <div className="mt-3 sm:mt-4 text-center px-2">
         <h3 className="card-title leading-6">{title}</h3>
+        {/* Only show price for fragrances on listing pages, hide for jewellery */}
         {
-          price && price !== "Price on Demand" ? (
+          shouldShowPrice && price && price !== "Price on Request" ? (
             <p className="card-price mt-1 text-gray-700 font-medium">{price}</p>
-          ) : price === "Price on Demand" ? (
-            <p className="card-price mt-1 text-[#DE7600] font-medium italic">{price}</p>
           ) : null
-          
         }
       </div>
     </article>

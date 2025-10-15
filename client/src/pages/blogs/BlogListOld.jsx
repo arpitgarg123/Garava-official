@@ -32,11 +32,11 @@ const blogs = [
 const BlogList = () => {
   return (
     <>
-     <div className="sticky top-34 z-10 mb-3">
+     <div className="sticky top-20 z-10 mb-3">
         <BackButton />
       </div>
   
-    <section className=" max-w-7xl mx-auto mt-32">
+    <section className=" max-w-7xl mx-auto mt-4">
       
    <PageHeader title="Blogs" />
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

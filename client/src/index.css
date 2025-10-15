@@ -76,13 +76,19 @@ body, html{
   /* transform: -translateY(0); */
   left: 0;
   z-index: 50;
-  transition: all 0.3s ease;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, color 0.3s ease;
   /* color:white; */
 }
 
 .submenu-container {
   box-shadow: 0 2px 4px rgba(0,0,0,0.08);
   border-top: 1px solid #eee;
+}
+
+.submenu-container img {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .nav-items {
@@ -242,7 +248,7 @@ body:has(.submenu-container) {
 }
 .btn:hover {
   background-color: #0c0c0c;       
-  color: #f5e6d7;                     
+  color: #ffffff;                     
 }
 .btn-black {
   /* Base responsive padding */
@@ -255,7 +261,7 @@ body:has(.submenu-container) {
   transition: all ease-in-out 0.3s;
   cursor: pointer;
   background-color: #0c0c0c;
-  color: #f5e6d7;
+  color: #ffffff;
   
   /* Flexbox layout */
   display: flex;

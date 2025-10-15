@@ -120,13 +120,13 @@ const FAQ = () => {
 
   return (
     <section aria-labelledby="faq-heading" className="w-full bg-white">
-      <div className="sticky top-34 z-10 mb-3">
+      <div className="sticky top-20 z-10 mb-3">
         <BackButton />
       </div>
       
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         {/* Header */}
-        <header className="mb-8 sm:mb-12 mt-20 text-center">
+        <header className="mb-8 sm:mb-12 mt-2 text-center">
           <h1
             id="faq-heading"
             className="text-2xl sm:text-3xl font-semibold tracking-tight"

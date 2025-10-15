@@ -1,0 +1,335 @@
+[
+  {
+    "id": "68ebf731c9061bc5be4a89de",
+    "name": "Classic Round Solitaire ring with 6 prongs",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf731c9061bc5be4a89e4",
+    "name": "Classic Princess Solitaire ring with 4 prongs",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf731c9061bc5be4a89f5",
+    "name": "Classic Oval Solitaire ring with 4 prongs",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf731c9061bc5be4a89fb",
+    "name": "Classic Pear Solitaire Ring with V Shape prong",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf731c9061bc5be4a8a01",
+    "name": "Classic Emerald cut Solitaire Ring",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf731c9061bc5be4a8a07",
+    "name": "Celestial Round Solitaire Earrings",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf731c9061bc5be4a8a0d",
+    "name": "Elegant Princess cut Solitaire Earrings",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf731c9061bc5be4a8a13",
+    "name": "Opulent Emerald cut Solitaire Earrings",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a19",
+    "name": "Graceful Pear Solitaire Earrings",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a1f",
+    "name": "Charming Classic Oval Solitaire Earrings",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a25",
+    "name": "Brilliant Round Diamond Earrings with Diamond Halo",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a2b",
+    "name": "Brilliant Round Diamond Earrings with Halo",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a31",
+    "name": "Round Solitaire Ring with Diamond Band",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a37",
+    "name": "Round Solitaire Ring with V Shaped Diamond Band",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a3d",
+    "name": "Elevated Round Solitaire Ring with Diamond Band",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a43",
+    "name": "Emerald cut Solitaire Ring V Shaped Diamond Band",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a49",
+    "name": "Emerald cut Solitaire Ring Diamond Band",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a4f",
+    "name": "Round Solitaire Trinity Ring with Baguettes",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a55",
+    "name": "Cushion Solitaire Trinity Ring with Round Diamonds",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a5b",
+    "name": "Oval Solitaire Trinity Ring with Pear Diamonds",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a61",
+    "name": "Pear Solitaire Trinity Ring with Pear Diamonds",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "rings",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a67",
+    "name": "Spotlight Round Solitaire Diamond Gold Pendant",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "pendants",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a6d",
+    "name": "Spotlight Round Solitaire Diamond Gold Halo Pendant",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "pendants",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a73",
+    "name": "Spotlight Round Solitaire Diamond Pendant with 4 Prongs",
+    "type": "jewellery",
+    "currentCategory": "jewelry",
+    "suggestedCategory": "pendants",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf732c9061bc5be4a8a79",
+    "name": "GARAVA Sila 50 ml- The Essence of Strength",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "sila",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a7d",
+    "name": "GARAVA Wayfarer 50 ml- An Odyssey in a bottle",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "wayfarer",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a81",
+    "name": "GARAVA Mångata 50 ml- An Enchanting and Elusive fragrance",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "uncategorized",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a85",
+    "name": "GARAVA Evara 50 ml- A True Gift in a Bottle",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "evara",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a89",
+    "name": "GARAVA Sayonee 50 ml - A Fragrance as a Soul Mate",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "sayonee",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a8d",
+    "name": "GARAVA Sayonee 10 ml - A Fragrance as a Soul Mate",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "sayonee",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a91",
+    "name": "GARAVA Evara 10 ml - A True Gift in a Bottle",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "evara",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a95",
+    "name": "GARAVA Mångata 10 ml - An Enchanting and Elusive fragrance",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "uncategorized",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a99",
+    "name": "GARAVA Wayfarer 10 ml- An Odyssey in a bottle",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "wayfarer",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8a9d",
+    "name": "GARAVA Sila 10 ml - The Essence of Strength",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "sila",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8aa1",
+    "name": "GARAVA Travel set - Customise 3 Fragances of 10 ml each",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "uncategorized",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8aa5",
+    "name": "GARAVA Discovery Pack - 5 Fragrances - 3 ml each Combo set",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "uncategorized",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  },
+  {
+    "id": "68ebf733c9061bc5be4a8aa9",
+    "name": "GARAVA Perfumes- Gift Set Customize 1 fragrance - 50 ml  2 fragrances of 10 ml",
+    "type": "fragrance",
+    "currentCategory": "fragrance",
+    "suggestedCategory": "uncategorized",
+    "needsUpdate": true,
+    "hasColorVariants": false
+  }
+]

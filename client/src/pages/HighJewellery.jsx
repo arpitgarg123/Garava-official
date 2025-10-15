@@ -36,10 +36,10 @@ const HighJewellery = () => {
     if (productList.items && productList.items.length > 0) {
       // Transform backend data to match UI expectations
       const transformedProducts = productList.items.slice(0, 4).map(product => {
-        // Check if product is price on demand
+        // Check if product is price on request
         const isPriceOnDemand = product.isPriceOnDemand || product.defaultVariant?.isPriceOnDemand;
         const price = isPriceOnDemand 
-          ? "Price on Demand" 
+          ? "Price on Request" 
           : `₹${product.defaultVariant?.price?.toLocaleString('en-IN') || product.priceRange?.min?.toLocaleString('en-IN') || '0'}.0`;
           
         return {
@@ -75,7 +75,7 @@ const HighJewellery = () => {
       
           <div className="products-grid">
             {products.map((p) => (
-              <Card key={p.id} img={p.img} title={p.title} price={p.price} slug={p.slug} id={p.id} />
+              <Card key={p.id} img={p.img} title={p.title} price={p.price} slug={p.slug} id={p.id} type="high_jewellery" />
             ))}
           </div>
 

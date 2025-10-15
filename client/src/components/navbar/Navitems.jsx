@@ -64,7 +64,7 @@ const [submenuTop, setSubmenuTop] = useState(130);
       </button>
 
       {!isMobile && (
-        <div className="absolute bottom-2 left-0 w-full h-[2px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center" />
+        <div className="absolute bottom-2 left-0 w-full h-[2px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
       )}
 
       {/* Desktop submenu (hover) */}
@@ -72,7 +72,7 @@ const [submenuTop, setSubmenuTop] = useState(130);
         <AnimatePresence>
           {hovered === item.title && hasSubmenu && (
             <>
-              <div className="absolute left-0 h-8 w-full  -bottom-8 bg-transparent" />
+              {/* <div className="absolute left-0 h-8 w-full  -bottom-8 bg-red-500" /> */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -81,7 +81,7 @@ const [submenuTop, setSubmenuTop] = useState(130);
                 className="submenu-container w-full h-[20vw] fixed  bg-white text-black left-0 -top-36 py-8 "
               >
                 <div className="max-w-7xl mx-auto flex  items-center justify-center h-full ">
-                  <div className="flex-center">
+                  <div className={`${["Maison", "Blogs", "News & Events"].includes(item.title) ? "flex-center" : "flex items-center justify-center gap-8"}`}>
                     {item.submenu.map((sub, i) => (
                       <Submenu key={i} sub={sub} parentTitle={item.title} />
                     ))}

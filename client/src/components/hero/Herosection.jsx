@@ -1,43 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-// import TextSlider from "./TextSlider";
 import './hero.css'
 
-import jBack from "../../assets/images/j-back.jpg";
-import jFront from "../../assets/images/essential-j.png";
-// import fFront from "../../assets/images/f-front.png";
-import fFront from "../../assets/images/f-front.png";
-import fBack from '../../assets/images/f-back.png'
-// import fBack from '../../assets/images/fragnance.png'
-import model from '../../assets/images/model.png'
-import model2 from '../../assets/images/model2.png'
-import model3 from '../../assets/images/model3.png'
-import model4 from '../../assets/images/model4.png'
-import model5 from '../../assets/images/model5.png'
-import heroModel from '../../assets/images/heroModel.png'
-// import o from '../../assets/images/m.png'
 import o from '../../assets/images/o.png'
-// import o from '../../assets/images/mode2.png'
 import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const navigate = useNavigate();
-  const img1Ref = useRef(null);
-  const img2Ref = useRef(null);
-  const img3Ref = useRef(null);
-  const img4Ref = useRef(null);
-  const tlRef = useRef(null);
-  const intervalRef = useRef(null); 
-  const ctxRef = useRef(null);
+  // const img1Ref = useRef(null);
+  // const img2Ref = useRef(null);
+  // const img3Ref = useRef(null);
+  // const img4Ref = useRef(null);
+  // const tlRef = useRef(null);
+  // const intervalRef = useRef(null); 
+  // const ctxRef = useRef(null);
 
-  const [isFragrance, setIsFragrance] = useState(false);
+  // const [isFragrance, setIsFragrance] = useState(false);
 
-   useEffect(() => {
-    [jBack, jFront, fBack, fFront].forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
+  //  useEffect(() => {
+  //   [jBack, jFront, fBack, fFront].forEach((src) => {
+  //     const img = new Image();
+  //     img.src = src;
+  //   });
+  // }, []);
 
 //  useEffect(() => {
 //     ctxRef.current = gsap.context(() => {

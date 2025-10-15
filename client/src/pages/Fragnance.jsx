@@ -16,7 +16,7 @@ const Fragnance = () => {
         setLoading(true);
         const { data } = await listProductsApi({
           type: 'fragrance',
-          limit: 4,
+          limit: 12,
           page: 1
         });
         
@@ -32,10 +32,10 @@ const Fragnance = () => {
         if (apiProducts && apiProducts.length > 0) {
           // Transform backend data to match UI expectations
           const transformedProducts = apiProducts.map(product => {
-            // Check if product is price on demand
+            // Check if product is price on request
             const isPriceOnDemand = product.isPriceOnDemand || product.defaultVariant?.isPriceOnDemand;
             const price = isPriceOnDemand 
-              ? "Price on Demand" 
+              ? "Price on Request" 
               : `₹${product.defaultVariant?.price?.toLocaleString('en-IN') || product.priceRange?.min?.toLocaleString('en-IN') || '0'}.0`;
               
             return {
@@ -64,7 +64,7 @@ const Fragnance = () => {
     fetchFragranceProducts();
   }, []);
   return (
-     <div className='w-full py-6'>
+     <div className='w-full py-6 '>
        <PageHeader title="Fragnance" />
          <section className="w-[98%] mx-auto py-10">
         <div className="mx-auto w-[95%] max-w-7xl">
@@ -80,9 +80,33 @@ const Fragnance = () => {
             </div>
           ) : (
           <>
-          {/* Horizontal scrollable container */}
+          {/* Horizontal scrollable container with arrows */}
           <div className="relative group">
-           
+            {/* Left Arrow */}
+            <button
+              onClick={() => {
+                if (scrollRef.current) {
+                  scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+                }
+              }}
+              className="absolute left-2 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
+              aria-label="Scroll left"
+            >
+              <IoIosArrowBack className="text-2xl text-gray-800" />
+            </button>
+
+            {/* Right Arrow */}
+            <button
+              onClick={() => {
+                if (scrollRef.current) {
+                  scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+                }
+              }}
+              className="absolute right-2 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
+              aria-label="Scroll right"
+            >
+              <IoIosArrowForward className="text-2xl text-gray-800" />
+            </button>
             
             <div 
               ref={scrollRef}
@@ -97,6 +121,7 @@ const Fragnance = () => {
                       price={p.price} 
                       slug={p.slug} 
                       id={p.id} 
+                      type="fragrance"
                       isHorizontal={true}
                     />
                   </div>

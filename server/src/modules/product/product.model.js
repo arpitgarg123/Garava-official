@@ -4,10 +4,10 @@ const variantSchema = new mongoose.Schema(
   {
     sku: { type: String, required: true, trim: true }, // removed unique: true at schema level to allow different products with same SKU if needed; enforce uniqueness at app/admin level if required
     sizeLabel: { type: String, required: true }, // e.g., "10ml", "50ml" or "18in"
-    price: { type: Number, required: function() { return !this.isPriceOnDemand; } }, // Not required for price on demand items
+    price: { type: Number, required: function() { return !this.isPriceOnDemand; } }, // Not required for price on request items
     mrp: { type: Number },
     isPriceOnDemand: { type: Boolean, default: false }, // For high jewellery variants
-    priceOnDemandText: { type: String, default: "Price on Demand" }, // Custom text for price display
+    priceOnDemandText: { type: String, default: "Price on Request" }, // Custom text for price display
     stock: { type: Number, default: 0 },
     stockStatus: {
       type: String,

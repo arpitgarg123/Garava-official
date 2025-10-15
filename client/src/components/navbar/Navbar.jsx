@@ -21,13 +21,10 @@ import jewellry3 from '../../assets/images/jewellry3.jpg';
 import jewellry4 from '../../assets/images/jewellry4.png';
 
 // Fragrance images
-import silaImg from '../../assets/images/sila.jpg';
-import evaraImg from '../../assets/images/evara.jpg';
+import silaImg from '../../assets/images/sila.webp';
+import evaraImg from '../../assets/images/evara.webp';
+import mangataImg from '../../assets/images/mangata.webp';
 import wayfarerImg from '../../assets/images/wayfarer.jpg';
-
-// Default images for other sections
-import essentialJ from '../../assets/images/essential-j.png';
-import essentialF from '../../assets/images/essential-f.jpg';
 
 import { selectIsAuthenticated, selectUser, selectIsAdmin } from '../../features/auth/selectors.js';
 import { doLogout } from '../../features/auth/slice.js';
@@ -95,32 +92,35 @@ const navItems = [
         category: 'evara'
       },
        { 
+        label: 'Mangata', 
+        img: mangataImg, 
+        to: '/products/fragrance?category=mangata',
+        category: 'mangata'
+      },
+       { 
         label: 'Wayfarer', 
         img: wayfarerImg, 
         to: '/products/fragrance?category=wayfarer',
         category: 'wayfarer'
       },
   ]},
-  { title: 'Services', submenu: [
-     { label: 'Book an Appointment', img: essentialJ, to: '/appointment' },
-     { label: 'FAQ', img: essentialF, to: '/faq' },
-  ]},
-  { title: 'About Us', submenu: [
-     { label: 'About', img: essentialJ, to: '/detailed-about' },
-     { label: 'Our Story', img: essentialF, to: '/our-story' },
+  { title: 'Maison', submenu: [
+     { label: 'Book an Appointment',  to: '/appointment' },
+     { label: 'FAQ',  to: '/faq' },
+     { label: 'About',  to: '/detailed-about' },
+     { label: 'Our Story',  to: '/our-story' },
   ]},
   { 
     title: 'Blogs', 
     submenu: [
       { 
         label: 'Jewellery', 
-        img: jewellry3, 
+         
         to: '/blogs?category=jewellery',
         category: 'jewellery'
       },
       { 
-        label: 'Fragrance', 
-        img: evaraImg, 
+        label: 'Fragrance',  
         to: '/blogs?category=fragrance',
         category: 'fragrance'
       },
@@ -215,17 +215,33 @@ const Navbar = () => {
 
   // Hide on scroll (desktop)
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 10);
-      if (currentScrollY > lastScrollY && currentScrollY > 10) {
-        setIsHidden(true);
-      } else {
-        setIsHidden(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const scrollThreshold = 50; // Minimum scroll amount before hiding
+          
+          setScrolled(currentScrollY > 10);
+          
+          // Hide navbar when scrolling down past threshold
+          if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
+            setIsHidden(true);
+          } 
+          // Show navbar when scrolling up or at top
+          else if (currentScrollY < lastScrollY || currentScrollY <= scrollThreshold) {
+            setIsHidden(false);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        ticking = true;
       }
-      setLastScrollY(currentScrollY);
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
@@ -246,26 +262,25 @@ const Navbar = () => {
   }, [mobileOpen]);
 
   const navTextColor = isHeroPage && !scrolled && !isNavActive ? 'text-white' : 'text-black';
-  const shouldShowNavItemsDesktop = isHeroPage && !scrolled;
-  
-  const navbarClass = `navbar hidden md:block py-3.5 overflow-x-hidde transition-transform duration-300 ease-out ${
-    isHidden ? '-translate-y-48' : 'translate-y-0'
-  } ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'} ${
+  const shouldShowNavItemsDesktop = !scrolled;
+
+  const navbarClass = `navbar hidden md:block py-3.5 transition-all duration-500 ease-out ${
+    isHidden ? '-translate-y-full' : 'translate-y-0'
+  }   ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'}  ${
+    
     isNavActive ? 'expanded' : ''
   }`;
 
   return (
     <>
-    {
-      scrolled ? null : <Header />
-    }
+ {isHeroPage && !scrolled && <Header />}
       
 
       {/* Mobile Navigation */}
       <nav
         className={`md:hidden sticky top-0 z-50 ${
           scrolled ? 'bg-white shadow-sm' : 'bg-white/80 backdrop-blur'
-        } transition`}
+        } `}
         role="navigation"
         aria-label="Mobile navigation"
       >
@@ -390,7 +405,9 @@ const Navbar = () => {
 
       {/* Desktop Navigation */}
       <nav className={navbarClass} role="navigation" aria-label="Main navigation">
-        <div className="navTop relative px-10">
+       {
+        shouldShowNavItemsDesktop && (
+           <div className="navTop relative px-10">
           <div className="flex justify-between w-89 font-light">
    
 
@@ -544,8 +561,10 @@ const Navbar = () => {
             )}
           </div>
         </div>
+        )
+       }
 
-        {shouldShowNavItemsDesktop && (
+        {/* {shouldShowNavItemsDesktop && ( */}
           <div className="flex-center ">
             {navItems.map((item, idx) => (
               <NavItem
@@ -556,7 +575,7 @@ const Navbar = () => {
               />
             ))}
           </div>
-        )}
+        {/* )} */}
       </nav>
     </>
   );

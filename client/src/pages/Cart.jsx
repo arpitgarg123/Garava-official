@@ -207,15 +207,15 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-[60vh] mt-30 max-md:mt-0">
-       <div className="sticky top-30 z-50 max-md:top-7">
+    <div className="min-h-[60vh] mt-12 max-md:mt-0">
+       <div className="sticky top-20 z-50 max-md:top-7">
         <BackButton />
       </div>
       <div className="max-w-7xl mx-auto px-4">
           <PageHeader title="Shopping Cart" />
 
         {cartItems.length === 0 ? (
-          <div className="flex flex-col items-center justify-center space-y-4 mt-20">
+          <div className="flex flex-col items-center justify-center space-y-4 mt-2">
             <IoBagHandleOutline size={60} className="text-gray-300" />
             <p className="text-gray-500">Your cart is empty</p>
             <button 

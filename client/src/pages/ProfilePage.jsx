@@ -174,7 +174,7 @@ const ProfilePage = () => {
 
   if (loading) {
     return (
-     <div className="min-h-screen  py-8 mt-30">
+     <div className="min-h-screen  py-8 mt-2">
         <div className="max-w-6xl mx-auto px-4">
        <div className="space-y-4">
             {[1, 2, 3].map((i) => (
@@ -447,7 +447,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen mt-26">
+    <div className="min-h-screen mt-2">
       <div className="sticky top-26 z-10 p">
           <BackButton />
        

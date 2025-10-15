@@ -51,7 +51,7 @@ async function setJewelryToPriceOnDemand() {
                     product.variants.forEach(variant => {
                         if (!variant.isPriceOnDemand) {
                             variant.isPriceOnDemand = true;
-                            variant.priceOnDemandText = "Price on Demand";
+                            variant.priceOnDemandText = "Price on Request";
                             // Remove the price requirement by setting it to undefined/null
                             variant.price = undefined;
                             variant.mrp = undefined;
