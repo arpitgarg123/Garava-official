@@ -14,7 +14,7 @@
     "deploy": "npm run build && npm start",
     "install-all": "npm install && cd ../client && npm install",
     "build-only": "cd ../client && npm run build",
-    "render-build": "rm -rf node_modules package-lock.json && npm install && cd ../client && npm install && npm run build"
+    "render-build": "npm install --production=false && cd ../client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
