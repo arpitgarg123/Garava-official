@@ -111,7 +111,12 @@ export const updateAppointmentService = async (adminId, appointmentId, updates) 
 
  if (updates.status) {
   try {
-    await sendAppointmentStatusEmail(appt);
+    // Send specific email based on status
+    if (updates.status === 'cancelled') {
+      await sendAppointmentCancelledEmail(appt);
+    } else {
+      await sendAppointmentStatusEmail(appt);
+    }
   } catch (e) {
     console.error("❌ Appointment status email failed:", e.message);
   }
