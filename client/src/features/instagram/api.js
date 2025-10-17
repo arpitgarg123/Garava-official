@@ -9,8 +9,6 @@ export const getFeaturedPostsApi = async (limit = 4) => {
 
 // Admin API calls
 export const getAllPostsApi = async (params = {}) => {
-  console.log('getAllPostsApi called with params:', params);
-  
   // Filter out undefined values to avoid sending 'undefined' strings
   const cleanParams = Object.fromEntries(
     Object.entries(params).filter(([key, value]) => value !== undefined && value !== null && value !== '')
@@ -18,11 +16,9 @@ export const getAllPostsApi = async (params = {}) => {
   
   const queryParams = new URLSearchParams(cleanParams).toString();
   const url = queryParams ? `${API_BASE}?${queryParams}` : API_BASE;
-  console.log('Making request to:', url);
   
   try {
     const response = await http.get(url);
-    console.log('getAllPostsApi response:', response.data);
     return response;
   } catch (error) {
     console.error('getAllPostsApi error:', error);

@@ -6,6 +6,7 @@ import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
 import Navbar from '../components/navbar/Navbar';
 import NetworkStatusIndicator from '../components/ui/NetworkStatusIndicator';
+import EnhancedChatbotWidget from '../components/chatbot/EnhancedChatbotWidget';
 import { selectIsAuthenticated, selectAuthStatus, selectAuthError } from '../features/auth/selectors';
 import { fetchCart } from '../features/cart/slice';
 import { fetchWishlist } from '../features/wishlist/slice';
@@ -26,6 +27,9 @@ const MainLayout = ({children}) => {
       // Track if we've already initiated fetches for this auth session
       const hasInitiatedFetch = useRef(false);
       const hasShownAuthError = useRef(false);
+      
+      // Check if current route is dashboard (admin panel)
+      const isDashboard = location.pathname.startsWith('/dashboard');
 
         useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -149,6 +153,10 @@ const MainLayout = ({children}) => {
         {children}
       </main>
       <Footer />
+      
+      {/* Show chatbot on all pages except admin dashboard */}
+      {!isDashboard && <EnhancedChatbotWidget />}
+      
       <Toaster position="top-right" />
    </>
   )

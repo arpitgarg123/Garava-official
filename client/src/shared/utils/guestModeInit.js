@@ -54,12 +54,6 @@ export const initializeGuestMode = async (dispatch, getState) => {
 
     results.overall = results.cart.success && results.wishlist.success;
 
-    // Log initialization summary
-    console.log('Guest mode initialized:', {
-      cart: guestDataSummary.cartItems > 0 ? `${guestDataSummary.cartItems} items loaded` : 'No cart data',
-      wishlist: guestDataSummary.wishlistItems > 0 ? `${guestDataSummary.wishlistItems} items loaded` : 'No wishlist data'
-    });
-
     return {
       success: results.overall,
       results,

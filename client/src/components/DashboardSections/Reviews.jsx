@@ -122,7 +122,6 @@
     
 //     return matchesSearch && matchesStatus && matchesRating;
 //   });
-// console.log(reviews);
 
 //   return (
 //     <div className="h-full flex flex-col">

@@ -86,11 +86,6 @@ const ProductDetails = () => {
     (selectedVariant.stock === 0) ||
     (selectedVariant.stockStatus === 'out_of_stock');
 
-  // Debug logging (temporary)
-  useEffect(() => {
-    // Debug logging can be added here if needed for development
-  }, [product, selectedVariant, isVariantOutOfStock, isOutOfStock]);
-
   useEffect(() => {
     if (productSlug) {
       // Check if productSlug is actually a MongoDB ObjectId (24 hex characters)

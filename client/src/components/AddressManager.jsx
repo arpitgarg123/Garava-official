@@ -35,13 +35,11 @@ const AddressManager = () => {
   const fetchAddresses = async () => {
     // Prevent redundant fetches if already loading or have data
     if (loading || addresses.length > 0) {
-      console.log('AddressManager - Skipping fetch: already loading or have data');
       return;
     }
     
     try {
       setLoading(true);
-      console.log('AddressManager - Fetching addresses...');
       const { data } = await getAddressesApi();
       setAddresses(Array.isArray(data) ? data : data?.addresses || []);
     } catch (error) {

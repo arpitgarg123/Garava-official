@@ -25,7 +25,7 @@ const Footer = () => {
     <div className="flex items-start gap-3">
       <FiMapPin size={16} className="mt-1 flex-shrink-0" />
       <p className="text-xs sm:text-sm leading-5 sm:leading-6">
-     A -14 601 pearl  mount view,  vijay path, tilak nagar, jaipur -302004, Rajasthan
+     A -14, 601 Pearl Mount View, Vijay Path, Tilak Nagar, Jaipur -302004, Rajasthan
       </p>
     </div>
 
