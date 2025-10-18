@@ -48,3 +48,8 @@ export const refundOrder = asyncHandler(async (req, res) => {
   const result = await service.refundOrderService(orderId, amountPaise, reason, adminId);
   res.json({ success: true, result });
 });
+
+export const getDashboardStats = asyncHandler(async (req, res) => {
+  const stats = await service.getDashboardStatsService();
+  res.json({ success: true, stats });
+});

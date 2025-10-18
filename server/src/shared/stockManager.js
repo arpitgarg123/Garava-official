@@ -307,6 +307,7 @@ export const updateStockStatus = async (productId, variantId) => {
       throw new ApiError(404, 'Variant not found');
     }
 
+    const previousStock = variant.stock;
     const newStatus = variant.stock > 0 ? 'in_stock' : 'out_of_stock';
     
     if (variant.stockStatus !== newStatus) {
@@ -314,6 +315,49 @@ export const updateStockStatus = async (productId, variantId) => {
         { _id: productId, "variants._id": variantId },
         { $set: { "variants.$.stockStatus": newStatus } }
       );
+    }
+
+    // Create notifications for stock alerts
+    try {
+      const { createNotificationService } = await import('../modules/notification/notification.service.js');
+      
+      // Out of stock notification
+      if (variant.stock === 0 && previousStock > 0) {
+        await createNotificationService({
+          type: 'out_of_stock',
+          title: 'Product Out of Stock',
+          message: `${product.name} - ${variant.sizeLabel || variant.sku} is now out of stock`,
+          severity: 'high',
+          productId: product._id,
+          variantId: variant._id,
+          metadata: {
+            productName: product.name,
+            variantSku: variant.sku,
+            variantLabel: variant.sizeLabel,
+            previousStock,
+            currentStock: variant.stock
+          }
+        });
+      }
+      // Low stock notification (stock <= 10 but > 0)
+      else if (variant.stock > 0 && variant.stock <= 10 && (previousStock > 10 || previousStock === 0)) {
+        await createNotificationService({
+          type: 'low_stock',
+          title: 'Low Stock Alert',
+          message: `${product.name} - ${variant.sizeLabel || variant.sku} has only ${variant.stock} units left`,
+          severity: 'medium',
+          productId: product._id,
+          variantId: variant._id,
+          metadata: {
+            productName: product.name,
+            variantSku: variant.sku,
+            variantLabel: variant.sizeLabel,
+            currentStock: variant.stock
+          }
+        });
+      }
+    } catch (notifError) {
+      console.error("❌ Failed to create stock notification:", notifError.message || notifError);
     }
 
     return {
