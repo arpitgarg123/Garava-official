@@ -629,6 +629,7 @@ export default function Products() {
 
       {/* Modals */}
       <ProductCreateEditModal
+        key={editingProduct?._id || 'new-product'} // Force remount when switching between create/edit
         isOpen={showCreateModal}
         product={editingProduct}
         onClose={() => {

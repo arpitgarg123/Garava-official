@@ -115,7 +115,7 @@ const YouMayAlsoLike = ({ currentProduct }) => {
           onMouseMove={handleMouseMove}
         >
           <div className="flex gap-6 min-w-max px-4">
-            {filteredProducts.map((product) => {
+            {filteredProducts.map((product, index) => {
               // Get the first available image using the correct structure
               const productImage = product.heroImage?.url || 
                                  product.heroImage || 
@@ -129,7 +129,7 @@ const YouMayAlsoLike = ({ currentProduct }) => {
                                  product.price;
               
               return (
-                <div key={product._id} className="w-[300px] flex-shrink-0">
+                <div key={product._id || `product-${index}`} className="w-[300px] flex-shrink-0">
                   <Card 
                     img={productImage}
                     title={product.name}

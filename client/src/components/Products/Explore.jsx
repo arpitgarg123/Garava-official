@@ -119,7 +119,7 @@ const Explore = ({ currentProduct }) => {
           onMouseMove={handleMouseMove}
         >
           <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max px-4">
-            {randomProducts.map((product) => {
+            {randomProducts.map((product, index) => {
               // Get the first available image using the correct structure
               const productImage = product.heroImage?.url || 
                                  product.heroImage || 
@@ -133,7 +133,7 @@ const Explore = ({ currentProduct }) => {
                                  product.price;
               
               return (
-                <div key={product._id} className="w-[300px] flex-shrink-0">
+                <div key={product._id || `explore-product-${index}`} className="w-[300px] flex-shrink-0">
                   <Card 
                     img={productImage}
                     title={product.name}

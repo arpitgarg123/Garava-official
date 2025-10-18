@@ -21,12 +21,12 @@ router.use(authenticated, authorize("admin"));
 
 router.post(
   "/",
-  uploadMiddleware.fields([{ name: "heroImage", maxCount: 1 }, { name: "gallery", maxCount: 5 }]),
+  uploadMiddleware.any(), // Accept any field names including dynamic colorVariant_X_heroImage/gallery
   createProduct
 );
 router.put(
   "/:id",
-  uploadMiddleware.fields([{ name: "heroImage", maxCount: 1 }, { name: "gallery", maxCount: 5 }]),
+  uploadMiddleware.any(), // Accept any field names including dynamic colorVariant_X_heroImage/gallery
   updateProduct
 );
 

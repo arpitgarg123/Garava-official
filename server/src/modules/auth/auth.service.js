@@ -17,18 +17,27 @@ import { checkEmailRateLimit } from "../../shared/emails/emailRateLimiter.js";
 export const loginUser = async (email, password) => {
   if (!email || !password) throw new ApiError(400, "Missing required fields");
 
+  // Normalize email for consistent lookup
+  const normalizedEmail = email.toLowerCase().trim();
+
   // Optimize query - only select password field for verification
-  const user = await User.findOne({ email: email.toLowerCase().trim() })
+  const user = await User.findOne({ email: normalizedEmail })
     .select("+password")
     .lean({ virtuals: false }); // Use lean for better performance
     
-  if (!user) throw new ApiError(404, "User not found");
+  if (!user) {
+    console.log(`⚠️ Login attempt failed: No user found with email: ${normalizedEmail}`);
+    throw new ApiError(404, "Invalid email or password");
+  }
 
   // Convert back to mongoose document for method access
   const userDoc = await User.findById(user._id).select("+password +refreshTokens");
   
   const isValid = await userDoc.comparePassword(password);
-  if (!isValid) throw new ApiError(401, "Invalid credentials");
+  if (!isValid) {
+    console.log(`⚠️ Login attempt failed: Invalid password for email: ${normalizedEmail}`);
+    throw new ApiError(401, "Invalid email or password");
+  }
 
   const accessToken = generateAccessToken(userDoc);
   const refreshToken = generateRefreshToken(userDoc);
