@@ -39,24 +39,25 @@ const navItems = [
         to: '/products/jewellery?category=earrings',
         category: 'earrings'
       },
-      // { 
-      //   label: 'Daily Earrings', 
-      //   img: jewellry2, 
-      //   to: '/products/jewellery?category=rings',
-      //   category: 'rings'
-      // },
+     
     { 
         label: 'Pendants', 
         img: jewellry3, 
         to: '/products/jewellery?category=pendants',
         category: 'pendants'
       },
-      // { 
-      //   label: 'Solitaire Rings', 
-      //   img: jewellry4, 
-      //   to: '/products/jewellery?category=necklaces',
-      //   category: 'necklaces'
-      // },
+       { 
+        label: 'Daily Earrings', 
+        img: jewellry2, 
+        to: '/products/jewellery?category=rings',
+        category: 'rings'
+      },
+      { 
+        label: 'Solitaire Rings', 
+        img: jewellry4, 
+        to: '/products/jewellery?category=necklaces',
+        category: 'necklaces'
+      },
      ]},
   { title: 'HIGH JEWELLERY', submenu: [
     { 
