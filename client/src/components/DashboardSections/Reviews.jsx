@@ -122,7 +122,6 @@
     
 //     return matchesSearch && matchesStatus && matchesRating;
 //   });
-// console.log(reviews);
 
 //   return (
 //     <div className="h-full flex flex-col">
@@ -550,7 +549,7 @@ export default function Reviews() {
         <div className="mb-3">
           <p className="text-sm text-gray-500 mb-1">Product</p>
           <p className="text-sm font-medium text-gray-900 mb-2">
-            {review.product || 'Unknown Product'}
+            {review.productName || review.product?.name || 'Unknown Product'}
           </p>
           <div className="flex items-center gap-2">
             <div className="flex items-center">
@@ -687,7 +686,7 @@ export default function Reviews() {
               </td>
               <td className="px-2 py-2">
                 <div className="text-xs text-gray-900 truncate">
-                  {review.product || 'Unknown Product'}
+                  {review.productName || review.product?.name || 'Unknown Product'}
                 </div>
               </td>
               <td className="px-2 py-2">
@@ -799,7 +798,7 @@ export default function Reviews() {
               </div>
               <div>
                 <p className="text-sm font-medium text-gray-700 mb-1">Product</p>
-                <p className="text-sm text-gray-900">{review.product || 'Unknown Product'}</p>
+                <p className="text-sm text-gray-900">{review.productName || review.product?.name || 'Unknown Product'}</p>
               </div>
             </div>
             

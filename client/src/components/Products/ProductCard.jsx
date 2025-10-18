@@ -228,7 +228,7 @@ const ProductCard = ({
         <img
           src={heroSrc}
           alt={product.name || "Product image"}
-          className="ph-image w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+          className="ph-image w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
         

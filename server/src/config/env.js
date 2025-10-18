@@ -35,6 +35,14 @@ const EnvSchema = z.object({
   GOOGLE_CLIENT_SECRET: z.string().min(1, 'GOOGLE_CLIENT_SECRET is required'),
   GOOGLE_CALLBACK_URL: z.string().url('GOOGLE_CALLBACK_URL must be a valid URL').optional(),
   
+  // SMTP Email Configuration (Hostinger)
+  SMTP_HOST: z.string().default('smtp.hostinger.com'),
+  SMTP_PORT: z.coerce.number().int().positive().default(465),
+  SMTP_SECURE: z.string().default('true'),
+  SMTP_USER: z.string().email('SMTP_USER must be a valid email address'),
+  SMTP_PASSWORD: z.string().min(1, 'SMTP_PASSWORD is required'),
+  EMAIL_FROM: z.string().email('EMAIL_FROM must be a valid email address'),
+  
   CLIENT_URL: z.string().url('CLIENT_URL must be a valid URL').default('http://localhost:5173'),
 });
 

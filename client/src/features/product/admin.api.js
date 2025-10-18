@@ -74,7 +74,7 @@ export const prepareProductFormData = (productData) => {
   const formData = new FormData();
   
   // Handle files separately
-  const { heroImage, gallery, ...otherData } = productData;
+  const { heroImage, gallery, colorVariantImages, ...otherData } = productData;
   
   // Add hero image file if provided
   if (heroImage instanceof File) {
@@ -97,6 +97,27 @@ export const prepareProductFormData = (productData) => {
     if (galleryUrls.length > 0) {
       otherData.gallery = galleryUrls;
     }
+  }
+  
+  // Handle color variant images
+  if (colorVariantImages && typeof colorVariantImages === 'object') {
+    Object.keys(colorVariantImages).forEach(colorIndex => {
+      const colorImages = colorVariantImages[colorIndex];
+      
+      // Add color hero image
+      if (colorImages.heroImage instanceof File) {
+        formData.append(`colorVariant_${colorIndex}_heroImage`, colorImages.heroImage);
+      }
+      
+      // Add color gallery images
+      if (colorImages.gallery && Array.isArray(colorImages.gallery)) {
+        colorImages.gallery.forEach((file) => {
+          if (file instanceof File) {
+            formData.append(`colorVariant_${colorIndex}_gallery`, file);
+          }
+        });
+      }
+    });
   }
   
   // Add all other data as JSON strings

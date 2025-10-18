@@ -15,9 +15,10 @@ import lightLogo from '../../assets/images/light-logo.png';
 import darkLogo from '../../assets/images/logo-main.png';
 
 // Jewellery images
-import jewellry1 from '../../assets/images/jewellry1.jpg';
+import jewellry1 from '../../assets/images/earring.jpg';
 import jewellry2 from '../../assets/images/jewellry2.jpg';
-import jewellry3 from '../../assets/images/jewellry3.jpg';
+import jewellry from '../../assets/images/jewellry1.jpg';
+import jewellry3 from '../../assets/images/pendent.jpg';
 import jewellry4 from '../../assets/images/jewellry4.png';
 
 // Fragrance images
@@ -33,22 +34,23 @@ import { selectCartItemCount } from '../../features/cart/selectors.js';
 const navItems = [
   { title: 'jewellery', submenu: [
     { 
-        label: 'Solitaire Studs', 
+        label: 'Earrings', 
         img: jewellry1, 
         to: '/products/jewellery?category=earrings',
         category: 'earrings'
       },
-      { 
-        label: 'Daily Earrings', 
-        img: jewellry2, 
-        to: '/products/jewellery?category=rings',
-        category: 'rings'
-      },
+     
     { 
         label: 'Pendants', 
         img: jewellry3, 
         to: '/products/jewellery?category=pendants',
         category: 'pendants'
+      },
+       { 
+        label: 'Daily Earrings', 
+        img: jewellry2, 
+        to: '/products/jewellery?category=rings',
+        category: 'rings'
       },
       { 
         label: 'Solitaire Rings', 
@@ -59,7 +61,7 @@ const navItems = [
      ]},
   { title: 'HIGH JEWELLERY', submenu: [
     { 
-        label: 'Daily Earrings', 
+        label: 'Daily Rrings', 
         img: jewellry2, 
         to: '/products/high-jewellery?category=daily-earrings',
         category: 'daily-earrings'
@@ -72,7 +74,7 @@ const navItems = [
       },
       { 
         label: 'Solitaire Studs', 
-        img: jewellry1, 
+        img: jewellry, 
         to: '/products/high-jewellery?category=solitaire-studs',
         category: 'solitaire-studs'
       },

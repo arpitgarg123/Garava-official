@@ -35,6 +35,11 @@ export const refundOrder = (orderId, refundData) => {
   return authHttp.post(`/admin/order/${orderId}/refund`, refundData);
 };
 
+// Get dashboard statistics
+export const getDashboardStats = () => {
+  return authHttp.get('/admin/order/stats');
+};
+
 // Helper function to format order data for display
 export const formatOrderForDisplay = (order) => {
   return {

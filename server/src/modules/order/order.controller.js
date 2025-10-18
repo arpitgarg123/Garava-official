@@ -141,6 +141,28 @@ export const paymentWebhook = asyncHandler(async (req, res) => {
     });
 
     await order.save();
+    
+    // Create admin notification for failed payment
+    try {
+      const { createNotificationService } = await import('../notification/notification.service.js');
+      await createNotificationService({
+        type: 'payment_failed',
+        title: 'Payment Failed',
+        message: `Payment failed for order #${order.orderNumber}`,
+        severity: 'high',
+        userId: order.user,
+        orderId: order._id,
+        metadata: {
+          orderNumber: order.orderNumber,
+          transactionId,
+          paymentState,
+          amount: order.grandTotal
+        }
+      });
+    } catch (notifError) {
+      console.error("❌ Failed to create payment failed notification:", notifError.message || notifError);
+    }
+    
     console.log("Payment failed for order:", order.orderNumber);
     return res.json({ success: true, message: "Payment failed" });
   }

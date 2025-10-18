@@ -1,6 +1,7 @@
 
 import ApiError from "../../../shared/utils/ApiError.js";
 import Order from "../order.model.js";
+import { sendOrderStatusUpdateEmail, sendOrderCancelledEmail } from "../../../shared/emails/email.service.js";
 
 /**
  * Prepare order data for frontend display
@@ -79,15 +80,32 @@ export const getOrderByIdAdminService = async (id) => {
 };
 
 export const updateOrderStatusService = async (id, status, tracking) => {
-  const order = await Order.findById(id);
+  const order = await Order.findById(id).populate('user');
   if (!order) throw new ApiError(404, "Order not found");
 
+  const previousStatus = order.status;
   order.status = status || order.status;
   if (tracking) {
     order.tracking = { ...order.tracking, ...tracking };
   }
 
   await order.save();
+
+  // Send status update email (don't block the update if email fails)
+  try {
+    const orderLean = order.toObject ? order.toObject() : order;
+    
+    // Send specific email based on status
+    if (status === 'cancelled') {
+      await sendOrderCancelledEmail(orderLean);
+    } else if (['processing', 'shipped', 'out_for_delivery', 'delivered', 'failed'].includes(status)) {
+      await sendOrderStatusUpdateEmail(orderLean, previousStatus);
+    }
+  } catch (emailError) {
+    console.error('Failed to send order status update email:', emailError);
+    // Continue - don't fail status update due to email issues
+  }
+
   return order;
 };
 
@@ -124,4 +142,131 @@ export const refundOrderService = async (orderId, amountPaise, reason, adminId) 
   order.history.push({ status: "refunded", by: adminId, note: reason || "", at: new Date() });
   await order.save();
   return order;
+};
+
+/**
+ * Get dashboard statistics
+ * Returns aggregated stats from all orders/products/reviews
+ */
+export const getDashboardStatsService = async () => {
+  // Dynamic imports to avoid circular dependencies
+  const Product = (await import('../../product/product.model.js')).default;
+  const Review = (await import('../../review/review.model.js')).default;
+  const Appointment = (await import('../../appointment/appointment.model.js')).default;
+  const User = (await import('../../user/user.model.js')).default;
+  
+  // Get current date boundaries
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
+  const last30Days = new Date(today);
+  last30Days.setDate(last30Days.getDate() - 30);
+  
+  // Get all orders for accurate stats
+  const allOrders = await Order.find({}).select('grandTotal status createdAt').lean();
+  
+  // Calculate total revenue (sum of all completed orders)
+  const totalRevenue = allOrders
+    .filter(order => order.status !== 'cancelled' && order.status !== 'failed')
+    .reduce((sum, order) => sum + (order.grandTotal || 0), 0);
+  
+  // Calculate today's revenue
+  const todayRevenue = allOrders
+    .filter(order => 
+      order.createdAt >= today && 
+      order.createdAt < tomorrow &&
+      order.status !== 'cancelled' && 
+      order.status !== 'failed'
+    )
+    .reduce((sum, order) => sum + (order.grandTotal || 0), 0);
+  
+  // Count orders by status
+  const totalOrders = allOrders.length;
+  const pendingOrders = allOrders.filter(order => order.status === 'pending' || order.status === 'pending_payment').length;
+  const processingOrders = allOrders.filter(order => order.status === 'processing').length;
+  const shippedOrders = allOrders.filter(order => order.status === 'shipped' || order.status === 'out_for_delivery').length;
+  const deliveredOrders = allOrders.filter(order => order.status === 'delivered').length;
+  const cancelledOrders = allOrders.filter(order => order.status === 'cancelled').length;
+  
+  // Get product stats
+  const totalProducts = await Product.countDocuments({});
+  const activeProducts = await Product.countDocuments({ status: 'published', isActive: true });
+  const draftProducts = await Product.countDocuments({ status: 'draft' });
+  const outOfStockProducts = await Product.countDocuments({ stockQuantity: 0 });
+  const lowStockProducts = await Product.countDocuments({ 
+    stockQuantity: { $gt: 0, $lte: 10 }, 
+    status: 'published' 
+  });
+  
+  // Get review stats
+  const allReviews = await Review.find({}).select('rating isApproved createdAt').lean();
+  const totalReviews = allReviews.length;
+  const approvedReviews = allReviews.filter(r => r.isApproved).length;
+  const pendingReviews = allReviews.filter(r => !r.isApproved).length;
+  
+  // Calculate average rating
+  const avgRating = allReviews.length > 0
+    ? allReviews.reduce((sum, r) => sum + (r.rating || 0), 0) / allReviews.length
+    : 0;
+  
+  // Get appointment stats
+  const totalAppointments = await Appointment.countDocuments({});
+  const pendingAppointments = await Appointment.countDocuments({ status: 'pending' });
+  const confirmedAppointments = await Appointment.countDocuments({ status: 'confirmed' });
+  const upcomingAppointments = await Appointment.countDocuments({ 
+    appointmentAt: { $gte: new Date() },
+    status: { $in: ['pending', 'confirmed'] }
+  });
+  
+  // Get customer stats
+  const totalCustomers = await User.countDocuments({ role: 'user' });
+  const newCustomers = await User.countDocuments({ 
+    role: 'user',
+    createdAt: { $gte: last30Days }
+  });
+  
+  return {
+    revenue: {
+      total: totalRevenue,
+      today: todayRevenue,
+      currency: 'INR'
+    },
+    orders: {
+      total: totalOrders,
+      pending: pendingOrders,
+      processing: processingOrders,
+      shipped: shippedOrders,
+      delivered: deliveredOrders,
+      cancelled: cancelledOrders,
+      needsAttention: pendingOrders // Orders requiring immediate attention
+    },
+    products: {
+      total: totalProducts,
+      active: activeProducts,
+      draft: draftProducts,
+      outOfStock: outOfStockProducts,
+      lowStock: lowStockProducts,
+      needsAttention: outOfStockProducts + lowStockProducts
+    },
+    reviews: {
+      total: totalReviews,
+      approved: approvedReviews,
+      pending: pendingReviews,
+      avgRating: parseFloat(avgRating.toFixed(1)),
+      needsAttention: pendingReviews
+    },
+    appointments: {
+      total: totalAppointments,
+      pending: pendingAppointments,
+      confirmed: confirmedAppointments,
+      upcoming: upcomingAppointments,
+      needsAttention: pendingAppointments
+    },
+    customers: {
+      total: totalCustomers,
+      new: newCustomers // Last 30 days
+    }
+  };
 };

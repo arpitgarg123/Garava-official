@@ -54,11 +54,26 @@ export const adminListReviews = asyncHandler(async (req, res) => {
   const skip = (page - 1) * limit;
   const [reviews, total] = await Promise.all([
     // admin sees all statuses
-    Review.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).populate("user", "name email").lean(),
+    Review.find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate("user", "name email")
+      .populate("product", "name heroImage")
+      .lean(),
     Review.countDocuments(filter)
   ]);
 
-  res.json({ success: true, reviews, pagination: { total, page, limit, totalPages: Math.ceil(total / limit) }});
+  // Format reviews with user and product names
+  const formattedReviews = reviews.map(review => ({
+    ...review,
+    userName: review.user?.name || 'Anonymous',
+    userEmail: review.user?.email || '',
+    productName: review.product?.name || '',
+    productImage: review.product?.heroImage?.url || ''
+  }));
+
+  res.json({ success: true, reviews: formattedReviews, pagination: { total, page, limit, totalPages: Math.ceil(total / limit) }});
 });
 
 export const adminModerate = asyncHandler(async (req, res) => {

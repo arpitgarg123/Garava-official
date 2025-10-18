@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = (import.meta.env.VITE_API_URL || "http://localhost:8080/api").replace(/\/+$/, "");
+const baseURL = (import.meta.VITE_API_URL || "http://localhost:8080/api").replace(/\/+$/,"")
 
 // Create HTTP clients with reasonable timeouts
 const http = axios.create({ 
@@ -73,7 +73,6 @@ const retryRequest = async (requestFn, maxRetries = 1, baseDelay = 2000) => {
       // Exponential backoff delay with jitter
       const jitter = Math.random() * 1000; // Add random delay up to 1s
       const delay = baseDelay * Math.pow(1.5, attempt - 1) + jitter; // Use 1.5x instead of 2x
-      // console.log(`Request failed (attempt ${attempt}/${maxRetries + 1}), retrying in ${Math.round(delay)}ms...`);
       await new Promise(resolve => setTimeout(resolve, Math.min(delay, 8000))); // Cap at 8s
     }
   }
@@ -103,12 +102,6 @@ const flushQueue = (error, token = null) => {
 
 http.interceptors.request.use((config) => {
   const token = getToken();
-  // console.log('HTTP Request:', {
-  //   url: config.url,
-  //   method: config.method?.toUpperCase(),
-  //   hasToken: !!token,
-  //   tokenPreview: token ? `${token.substring(0, 20)}...` : 'none'
-  // });
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -116,13 +109,6 @@ http.interceptors.request.use((config) => {
 // Add similar interceptors for authHttp
 authHttp.interceptors.request.use((config) => {
   const token = getToken();
-  // console.log('AuthHttp Request:', {
-  //   url: config.url,
-  //   method: config.method?.toUpperCase(),
-  //   hasToken: !!token,
-  //   tokenPreview: token ? `${token.substring(0, 20)}...` : 'none',
-  //   body: config.data
-  // });
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -130,7 +116,7 @@ authHttp.interceptors.request.use((config) => {
 authHttp.interceptors.response.use(
   (res) => res,
   async (error) => {
-    console.log('AuthHttp Response Error:', {
+    console.error('AuthHttp Response Error:', {
       status: error.response?.status,
       message: error.response?.data?.message || error.message,
       url: error.config?.url
@@ -160,11 +146,8 @@ http.interceptors.response.use(
     if (!original || original._retry) return Promise.reject(error);
 
     if (error.response?.status === 401) {
-      console.log('HTTP Interceptor - 401 Unauthorized detected:', original.url);
-      
       // If this is already a logout or refresh request, don't try to refresh
       if (original.url?.includes('/auth/logout') || original.url?.includes('/auth/refresh')) {
-        console.log('HTTP Interceptor - Auth endpoint failed, clearing auth state');
         logoutCb();
         return Promise.reject(error);
       }
@@ -173,7 +156,6 @@ http.interceptors.response.use(
       const now = Date.now();
       if (refreshAttempts >= MAX_REFRESH_ATTEMPTS || 
           (now - lastRefreshAttempt) < REFRESH_COOLDOWN) {
-        console.log('HTTP Interceptor - Too many refresh attempts or cooldown active, logging out');
         logoutCb();
         return Promise.reject(error);
       }
@@ -196,22 +178,14 @@ http.interceptors.response.use(
       lastRefreshAttempt = now;
 
       try {
-        console.log('HTTP Interceptor - Attempting token refresh... (attempt', refreshAttempts, '/', MAX_REFRESH_ATTEMPTS, ')');
         const { data } = await authHttp.post('/auth/refresh', {});
         const newToken = data?.accessToken;
-        
-        console.log('HTTP Interceptor - Refresh response:', { 
-          success: data?.success, 
-          hasToken: !!newToken, 
-          hasUser: !!data?.user 
-        });
         
         if (!newToken) {
           console.error('HTTP Interceptor - No token received from refresh');
           throw new Error('No token received from refresh');
         }
         
-        console.log('HTTP Interceptor - Token refresh successful');
         // Reset refresh attempts on successful refresh
         refreshAttempts = 0;
         setTokenCb(newToken);

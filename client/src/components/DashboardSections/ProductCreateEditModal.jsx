@@ -96,6 +96,10 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
   const [heroImagePreview, setHeroImagePreview] = useState('');
   const [galleryPreviews, setGalleryPreviews] = useState([]);
   
+  // Color variant image states
+  const [colorVariantImages, setColorVariantImages] = useState({});
+  // Structure: { 0: { heroImage: File, heroPreview: string, gallery: [File], galleryPreviews: [string] } }
+  
   // Initialize form data when editing
   useEffect(() => {
     if (isEditing && product) {
@@ -185,9 +189,100 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
     }
   }, [isEditing, product]);
   
-  // Auto-generate slug from name
+  // Reset form when modal closes
   useEffect(() => {
-    if (!isEditing && formData.name) {
+    if (!isOpen) {
+      // Reset all state when modal is closed
+      setFormData({
+        name: '',
+        slug: '',
+        type: 'fragrance',
+        category: '',
+        subcategory: '',
+        tags: [],
+        shortDescription: '',
+        description: '',
+        structuredDescription: {
+          description: '',
+          productDetails: '',
+          careInstructions: '',
+          sizeGuide: '',
+          materials: '',
+          shippingInfo: ''
+        },
+        fragranceNotes: {
+          top: [],
+          middle: [],
+          base: []
+        },
+        ingredients: '',
+        caution: '',
+        storage: '',
+        dimensions: '',
+        material: '',
+        careInstructions: '',
+        variants: [{
+          sku: '',
+          sizeLabel: '',
+          price: '',
+          mrp: '',
+          stock: 0,
+          weight: '',
+          isPriceOnDemand: false,
+          priceOnDemandText: 'Price on Request',
+          purchaseLimit: 0,
+          leadTimeDays: 0,
+          isDefault: true,
+          isActive: true
+        }],
+        badges: [],
+        isFeatured: false,
+        status: 'draft',
+        isActive: true,
+        isPriceOnDemand: false,
+        customizationOptions: {
+          enabled: false,
+          description: '',
+          estimatedDays: 0
+        },
+        consultationRequired: false,
+        shippingInfo: {
+          complementary: false,
+          minDeliveryDays: '',
+          maxDeliveryDays: '',
+          note: '',
+          codAvailable: true,
+          pincodeRestrictions: false
+        },
+        giftWrap: {
+          enabled: false,
+          price: 0,
+          options: []
+        },
+        expectedDeliveryText: '',
+        callToOrder: {
+          enabled: false,
+          phone: '',
+          text: 'Order by Phone'
+        },
+        askAdvisor: false,
+        bookAppointment: false,
+        metaTitle: '',
+        metaDescription: '',
+        collections: [],
+        colorVariants: []
+      });
+      setHeroImageFile(null);
+      setGalleryFiles([]);
+      setHeroImagePreview('');
+      setGalleryPreviews([]);
+      setColorVariantImages({});
+    }
+  }, [isOpen]);
+  
+  // Auto-generate slug from name (only for new products with actual names)
+  useEffect(() => {
+    if (!isEditing && formData.name && formData.name.trim() !== '') {
       const slug = formData.name
         .toLowerCase()
         .replace(/[^a-z0-9\s-]/g, '')
@@ -195,6 +290,9 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         .replace(/-+/g, '-')
         .trim();
       setFormData(prev => ({ ...prev, slug }));
+    } else if (!isEditing && !formData.name) {
+      // Clear slug if name is cleared
+      setFormData(prev => ({ ...prev, slug: '' }));
     }
   }, [formData.name, isEditing]);
   
@@ -309,6 +407,25 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
       ...prev,
       colorVariants: prev.colorVariants.filter((_, i) => i !== index)
     }));
+    
+    // Also remove associated images
+    setColorVariantImages(prev => {
+      const newImages = { ...prev };
+      delete newImages[index];
+      
+      // Re-index remaining images
+      const reindexed = {};
+      Object.keys(newImages).forEach(key => {
+        const oldIndex = parseInt(key);
+        if (oldIndex > index) {
+          reindexed[oldIndex - 1] = newImages[key];
+        } else {
+          reindexed[key] = newImages[key];
+        }
+      });
+      
+      return reindexed;
+    });
   };
 
   const handleColorVariantChange = (index, field, value) => {
@@ -318,6 +435,86 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         i === index ? { ...color, [field]: value } : color
       )
     }));
+  };
+  
+  // Handle color variant hero image upload
+  const handleColorHeroImageUpload = (index, file) => {
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setColorVariantImages(prev => ({
+        ...prev,
+        [index]: {
+          ...prev[index],
+          heroImage: file,
+          heroPreview: reader.result
+        }
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+  
+  // Handle color variant gallery images upload
+  const handleColorGalleryUpload = (index, files) => {
+    if (!files || files.length === 0) return;
+    
+    const fileArray = Array.from(files);
+    const existingGallery = colorVariantImages[index]?.gallery || [];
+    const existingPreviews = colorVariantImages[index]?.galleryPreviews || [];
+    
+    let loadedCount = 0;
+    const newPreviews = [];
+    
+    fileArray.forEach((file, fileIdx) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        newPreviews.push(reader.result);
+        loadedCount++;
+        
+        if (loadedCount === fileArray.length) {
+          setColorVariantImages(prev => ({
+            ...prev,
+            [index]: {
+              ...prev[index],
+              gallery: [...existingGallery, ...fileArray],
+              galleryPreviews: [...existingPreviews, ...newPreviews]
+            }
+          }));
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  
+  // Remove color variant hero image
+  const removeColorHeroImage = (index) => {
+    setColorVariantImages(prev => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        heroImage: null,
+        heroPreview: null
+      }
+    }));
+  };
+  
+  // Remove specific gallery image from color variant
+  const removeColorGalleryImage = (colorIndex, imageIndex) => {
+    setColorVariantImages(prev => {
+      const colorImages = prev[colorIndex] || {};
+      const gallery = colorImages.gallery || [];
+      const galleryPreviews = colorImages.galleryPreviews || [];
+      
+      return {
+        ...prev,
+        [colorIndex]: {
+          ...colorImages,
+          gallery: gallery.filter((_, i) => i !== imageIndex),
+          galleryPreviews: galleryPreviews.filter((_, i) => i !== imageIndex)
+        }
+      };
+    });
   };
   
   const handleSubmit = async (e) => {
@@ -337,12 +534,15 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
       }));
       
       // Prepare FormData if files are involved
-      const hasFiles = heroImageFile || galleryFiles.length > 0;
+      const hasColorImages = Object.keys(colorVariantImages).length > 0;
+      const hasFiles = heroImageFile || galleryFiles.length > 0 || hasColorImages;
+      
       if (hasFiles) {
         submitData = prepareProductFormData({
           ...submitData,
           heroImage: heroImageFile || (isEditing ? product.heroImage : undefined),
-          gallery: galleryFiles.length > 0 ? galleryFiles : (isEditing ? product.gallery : [])
+          gallery: galleryFiles.length > 0 ? galleryFiles : (isEditing ? product.gallery : []),
+          colorVariantImages: colorVariantImages
         });
       }
       
@@ -869,6 +1069,111 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                         />
                         Available
                       </label>
+                    </div>
+                  </div>
+                  
+                  {/* Color-Specific Images Section */}
+                  <div className="mt-4 space-y-4 border-t pt-4">
+                    <h5 className="text-sm font-medium text-gray-800">Color-Specific Images</h5>
+                    
+                    {/* Hero Image for this color */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Hero Image for {color.name || `Color ${index + 1}`}
+                      </label>
+                      
+                      {colorVariantImages[index]?.heroPreview ? (
+                        <div className="relative inline-block">
+                          <img 
+                            src={colorVariantImages[index].heroPreview} 
+                            alt={`${color.name} hero`}
+                            className="w-32 h-32 object-cover rounded border border-gray-300"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeColorHeroImage(index)}
+                            className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                          >
+                            <AiOutlineClose className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : color.heroImage?.url ? (
+                        <div className="relative inline-block">
+                          <img 
+                            src={color.heroImage.url} 
+                            alt={`${color.name} hero`}
+                            className="w-32 h-32 object-cover rounded border border-gray-300"
+                          />
+                          <div className="text-xs text-gray-500 mt-1">Current image</div>
+                        </div>
+                      ) : (
+                        <label className="flex items-center justify-center w-32 h-32 border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-blue-500 transition">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleColorHeroImageUpload(index, e.target.files[0])}
+                            className="hidden"
+                          />
+                          <div className="text-center">
+                            <BiUpload className="w-8 h-8 text-gray-400 mx-auto" />
+                            <span className="text-xs text-gray-500">Upload Hero</span>
+                          </div>
+                        </label>
+                      )}
+                    </div>
+                    
+                    {/* Gallery Images for this color */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Gallery Images for {color.name || `Color ${index + 1}`}
+                      </label>
+                      
+                      <div className="flex flex-wrap gap-2">
+                        {/* Existing gallery previews */}
+                        {colorVariantImages[index]?.galleryPreviews?.map((preview, imgIdx) => (
+                          <div key={`new-${imgIdx}`} className="relative">
+                            <img 
+                              src={preview} 
+                              alt={`Gallery ${imgIdx + 1}`}
+                              className="w-24 h-24 object-cover rounded border border-gray-300"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeColorGalleryImage(index, imgIdx)}
+                              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                            >
+                              <AiOutlineClose className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ))}
+                        
+                        {/* Existing saved gallery images */}
+                        {color.gallery?.map((img, imgIdx) => (
+                          <div key={`existing-${imgIdx}`} className="relative">
+                            <img 
+                              src={img.url || img} 
+                              alt={`Gallery ${imgIdx + 1}`}
+                              className="w-24 h-24 object-cover rounded border border-gray-300"
+                            />
+                            <div className="text-xs text-gray-500 text-center">Saved</div>
+                          </div>
+                        ))}
+                        
+                        {/* Upload more button */}
+                        <label className="flex items-center justify-center w-24 h-24 border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-blue-500 transition">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={(e) => handleColorGalleryUpload(index, e.target.files)}
+                            className="hidden"
+                          />
+                          <div className="text-center">
+                            <AiOutlinePlus className="w-6 h-6 text-gray-400 mx-auto" />
+                            <span className="text-xs text-gray-500">Add Images</span>
+                          </div>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>

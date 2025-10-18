@@ -5,6 +5,7 @@ import {
   getOrderByIdAdmin,
   updateOrderStatusAdmin,
   refundOrder,
+  getDashboardStats,
 } from "./order.admin.controller.js";
 import { authorize } from "../../../middlewares/authorize.js";
 import { authenticated } from "../../../middlewares/authentication.js";
@@ -14,6 +15,7 @@ const router = express.Router();
 
 router.use(authenticated, authorize("admin"));
 
+router.get("/stats", getDashboardStats);  // GET /api/admin/orders/stats
 router.get("/", listOrdersAdmin);        // GET /api/admin/orders
 router.get("/:id", getOrderByIdAdmin);  // GET /api/admin/orders/:id
 router.patch("/:id/status", updateOrderStatusAdmin); // PATCH /api/admin/orders/:id/status

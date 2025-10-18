@@ -28,7 +28,6 @@ import FAQAdmin from '../components/DashboardSections/FAQAdmin';
 import TestimonialAdmin from '../components/DashboardSections/TestimonialAdmin';
 import Overview from '../components/DashboardSections/Overview';
 import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
-import NotificationDebug from '../components/DashboardSections/NotificationDebug';
 import NewsEventsAdmin from '../components/DashboardSections/NewsEventsAdmin';
 import InstagramAdmin from '../components/DashboardSections/InstagramAdmin';
 import { Link, useNavigate } from 'react-router-dom';
@@ -40,6 +39,7 @@ import { fetchReviewsAdmin } from '../features/reviews/reviewAdminSlice';
 import { fetchAppointmentsAdmin } from '../features/appointment/adminSlice';
 import { fetchBlogsAdmin } from '../features/blogs/blogAdminSlice';
 import { fetchTestimonials } from '../features/testimonial/slice';
+import { fetchDashboardStats } from '../features/dashboard/dashboardSlice';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -54,6 +54,10 @@ const Dashboard = () => {
   const appointments = useSelector(state => state.appointmentAdmin?.appointments || []);
   const blogs = useSelector(state => state.blogAdmin?.blogs || []);
   const testimonials = useSelector(state => state.testimonials?.testimonials || []);
+  
+  // Dashboard stats from dedicated endpoint
+  const dashboardStats = useSelector(state => state.dashboard?.stats || {});
+  const statsLoading = useSelector(state => state.dashboard?.loading || false);
 
   // Loading states
   const ordersLoading = useSelector(state => state.orderAdmin?.loading || false);
@@ -62,6 +66,10 @@ const Dashboard = () => {
 
   // Fetch real data on component mount
   useEffect(() => {
+    // Fetch accurate dashboard stats
+    dispatch(fetchDashboardStats());
+    
+    // Fetch recent data for display (limited to 10 for performance)
     dispatch(fetchOrdersAdmin({ limit: 10, sort: '-createdAt' }));
     dispatch(fetchProductsAdmin({ limit: 10 }));
     dispatch(fetchReviewsAdmin({ limit: 10, sort: '-createdAt' }));
@@ -71,46 +79,34 @@ const Dashboard = () => {
   }, [dispatch]);
 
   // Calculate real statistics  
-  // Note: Backend already converts paise to rupees for admin APIs
-  // But if conversion isn't working, apply safety check
-  const totalRevenue = orders.reduce((sum, order) => {
-    const grandTotal = order.grandTotal || 0;
-    // If grandTotal is suspiciously high (> 100,000), it might be in paise, so convert
-    const displayTotal = grandTotal > 100000 ? Math.round(grandTotal / 100) : grandTotal;
-    return sum + displayTotal;
-  }, 0);
-  const avgRating = reviews.length > 0 
-    ? reviews.reduce((sum, review) => sum + (review.rating || 0), 0) / reviews.length 
-    : 0;
-
-  // Prepare data for Overview component
+  // Use dashboard stats from dedicated endpoint for accurate totals
   const overviewStats = {
-    revenueINR: totalRevenue,
-    orders: orders.length,
-    products: products.length,
-    avgRating: parseFloat(avgRating.toFixed(1))
+    revenueINR: dashboardStats.revenue?.total || 0,
+    todayRevenueINR: dashboardStats.revenue?.today || 0,
+    orders: dashboardStats.orders?.total || 0,
+    products: dashboardStats.products?.total || 0,
+    avgRating: dashboardStats.reviews?.avgRating || 0,
+    // Action Required Stats
+    pendingOrders: dashboardStats.orders?.needsAttention || 0,
+    pendingReviews: dashboardStats.reviews?.needsAttention || 0,
+    lowStockProducts: dashboardStats.products?.needsAttention || 0,
+    pendingAppointments: dashboardStats.appointments?.needsAttention || 0,
+    newCustomers: dashboardStats.customers?.new || 0,
   };
 
   // Get recent data
   // Note: order.grandTotal is already in rupees from admin API
-  const recentOrders = orders.slice(0, 5).map(order => {
-    // Debug: Check if prices need conversion (if they're way too high, they might be in paise)
-    const grandTotal = order.grandTotal || 0;
-    
-    // If grandTotal is suspiciously high (> 100,000), it might be in paise, so convert
-    const displayTotal = grandTotal > 100000 ? Math.round(grandTotal / 100) : grandTotal;
-    
-    return {
-      ...order,
-      totalINR: displayTotal
-    };
-  });
+  const recentOrders = orders.slice(0, 5).map(order => ({
+    ...order,
+    totalINR: order.grandTotal || 0
+  }));
 
   const recentReviews = reviews.slice(0, 5).map(review => ({
     _id: review._id,
-    userName: review.userName || review.customerName || 'Anonymous',
+    userName: review.userName || review.customerName || review.user?.name || 'Anonymous',
     rating: review.rating || 0,
-    comment: review.comment || review.content || '',
+    comment: review.comment || review.content || review.description || '',
+    productName: review.productName || review.product?.name || '',
     createdAt: review.createdAt
   }));
 
@@ -119,13 +115,20 @@ const Dashboard = () => {
     .slice(0, 5);
 
   // Top products by sales or popularity
-  const topProducts = products.slice(0, 5).map(product => ({
-    _id: product._id,
-    name: product.name || product.title,
-    image: product.heroImage?.url || product.images?.[0]?.url ,
-    salesINR: product.price || 0,
-    units: product.stockQuantity || 0
-  }));
+  const topProducts = products.slice(0, 5).map(product => {
+    // Get base price (already in rupees from backend)
+    const basePrice = product.basePrice || product.price || 0;
+    const stockQty = product.stockQuantity || 0;
+    
+    return {
+      _id: product._id,
+      name: product.name || product.title,
+      image: product.heroImage?.url || product.images?.[0]?.url,
+      priceINR: basePrice, // Display product price
+      salesINR: basePrice * Math.min(stockQty, 10), // Estimated sales (price × min stock/10)
+      units: stockQty
+    };
+  });
 
   const tabs = [
     { id: "overview", label: "Overview", icon: MdDashboard },
@@ -139,7 +142,6 @@ const Dashboard = () => {
     { id: "instagram", label: "Instagram", icon: FaInstagram },
     { id: "faq", label: "FAQ", icon: FaQuestionCircle },
     { id: "notifications", label: "Notifications", icon: FaBell },
-    { id: "debug", label: "Debug", icon: FaBell },
     { id: "newsletter", label: "Newsletter", icon: FaEnvelope },
   ];
 
@@ -160,7 +162,7 @@ const Dashboard = () => {
             recentOrders={recentOrders}
             recentReviews={recentReviews}
             upcomingAppointments={upcomingAppointments}
-            loading={ordersLoading || productsLoading || reviewsLoading}
+            loading={statsLoading || ordersLoading || productsLoading || reviewsLoading}
           />
         );
       case "products":
@@ -192,8 +194,6 @@ const Dashboard = () => {
         return <FAQAdmin />;
       case "notifications":
         return <NotificationsDashboard />;
-      case "debug":
-        return <NotificationDebug />;
       case "newsletter":
         return (
           <Newsletter  

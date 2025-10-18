@@ -124,12 +124,6 @@ export const syncGuestDataWithBackend = async (dispatch, getState) => {
     results.wishlist = wishlistResults;
     results.overall = cartResults.success && wishlistResults.success;
 
-    // Log sync summary
-    console.log('Guest data sync completed:', {
-      cart: `${cartResults.synced} items synced, ${cartResults.errors.length} errors`,
-      wishlist: `${wishlistResults.synced} items synced, ${wishlistResults.errors.length} errors`
-    });
-
     return results;
   } catch (error) {
     console.error('Guest data sync failed:', error);

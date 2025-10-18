@@ -3,7 +3,7 @@ import ProductAccordion from '../../components/Products/ProductAccordion';
 import { Link, useNavigate, useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductBySlug, fetchProductById } from '../../features/product/slice';
-import { addToCart, addToGuestCart } from '../../features/cart/slice';
+import { addToCart, addToGuestCart, clearCart, clearGuestCart } from '../../features/cart/slice';
 import { toggleWishlistItem, toggleGuestWishlistItem } from '../../features/wishlist/slice';
 import { selectIsAuthenticated } from '../../features/auth/selectors';
 import { logout } from '../../features/auth/slice';
@@ -85,11 +85,6 @@ const ProductDetails = () => {
   const isOutOfStock = !selectedVariant || 
     (selectedVariant.stock === 0) ||
     (selectedVariant.stockStatus === 'out_of_stock');
-
-  // Debug logging (temporary)
-  useEffect(() => {
-    // Debug logging can be added here if needed for development
-  }, [product, selectedVariant, isVariantOutOfStock, isOutOfStock]);
 
   useEffect(() => {
     if (productSlug) {
@@ -188,6 +183,103 @@ const ProductDetails = () => {
     dispatch(cartAction(cartItem))
       .unwrap()
       .then(() => toast.success(successMessage))
+      .catch((e) => {
+        if (e.message?.includes('Insufficient stock')) {
+          toast.error(e.message);
+        } else {
+          toast.error("Failed to add item to cart");
+        }
+      });
+  };
+
+  const handleBuyNow = () => {
+    // Check if product is loaded
+    if (!product) {
+      toast.error("Product information not available");
+      return;
+    }
+
+    if (isOutOfStock) {
+      toast.error("This product is currently out of stock");
+      return;
+    }
+    
+    // Validate selected variant
+    if (!selectedVariant) {
+      toast.error("No product variant available");
+      return;
+    }
+    
+    // Check if color selection is required and validate it
+    if (isColorSelectionMissing()) {
+      toast.error("Please select a color before proceeding");
+      return;
+    }
+
+    // Handle both _id and id fields
+    const variantId = selectedVariant._id || selectedVariant.id;
+    const variantSku = selectedVariant.sku;
+    
+    if (!variantSku) {
+      toast.error("Product variant information is incomplete");
+      return;
+    }
+    
+    // Create cart item
+    const cartItem = {
+      productId: product?._id || product?.id,
+      variantSku: variantSku,
+      quantity: 1,
+    };
+    
+    if (variantId) {
+      cartItem.variantId = variantId;
+    }
+    
+    if (selectedColor) {
+      cartItem.selectedColor = {
+        name: selectedColor.name,
+        code: selectedColor.code,
+        hexColor: selectedColor.hexColor
+      };
+    }
+    
+    // For guest users, add additional product details
+    if (!isAuthenticated) {
+      cartItem.unitPrice = selectedVariant?.finalPrice || selectedVariant?.price || product?.price || 0;
+      cartItem.productDetails = {
+        _id: product._id || product.id,
+        name: product.name,
+        images: product.images,
+        heroImage: product.heroImage,
+        gallery: product.gallery,
+        type: product.type,
+        category: product.category,
+        slug: product.slug
+      };
+      
+      if (selectedColor) {
+        cartItem.productDetails.selectedColor = selectedColor;
+      }
+    }
+    
+    const cartAction = isAuthenticated ? addToCart : addToGuestCart;
+    
+    // For Buy Now: Clear cart first to ensure only this item is checked out
+    // This prevents other cart items from being included in the purchase
+    const clearAction = isAuthenticated ? clearCart : clearGuestCart;
+    
+    // Clear cart first, then add item, then navigate
+    dispatch(clearAction())
+      .unwrap()
+      .then(() => {
+        // After cart is cleared, add the new item
+        return dispatch(cartAction(cartItem)).unwrap();
+      })
+      .then(() => {
+        // After item is added, navigate to checkout
+        navigate('/checkout?buyNow=true');
+      })
       .catch((e) => {
         if (e.message?.includes('Insufficient stock')) {
           toast.error(e.message);
@@ -580,13 +672,13 @@ const ProductDetails = () => {
             )}
 
             {/* Action buttons - Different for High Jewellery */}
-            <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+            <div className="mt-4 flex flex-col sm:flex-row  justify-between  ">
               {isHighJewellery ? (
                 // High Jewellery Contact Options
-                <div className="relative w-full sm:w-auto">
+                <div className="relative w-[40%]">
                   <button 
                     onClick={() => setShowContactOptions(!showContactOptions)}
-                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium  hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    className=" sm:w-full px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium  hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                   >
                     Contact for Pricing
                   </button>
@@ -645,7 +737,7 @@ const ProductDetails = () => {
                      'ADD TO BAG'}
                   </button>
                   <button 
-                    onClick={() => navigate('/checkout')} 
+                    onClick={handleBuyNow} 
                     disabled={isOutOfStock || isColorSelectionMissing()}
                     className={`w-full sm:w-auto px-6 py-3 text-sm  font-medium transition-colors ${
                       (isOutOfStock || isColorSelectionMissing()) 
@@ -661,7 +753,7 @@ const ProductDetails = () => {
               )}
               <button
                 onClick={handleToggleWishlist}
-                className={`btn w-full sm:flex-1 ${
+                className={`btn w-[60%]  ${
                   isInWishlist
                     ? 'bg-red-700 text-white hover:bg-red-900'
                     : 'hover:bg-black hover:text-white'
@@ -672,7 +764,7 @@ const ProductDetails = () => {
             </div>
 
              <div className="lg:col-span-4 mt-6">
-            <div className="space-y-3 w-full">
+            <div className="space-y-3 w-fit ">
               {/* Contact Options */}
               <div className="space-y-2">
                 {/* Order by Phone Button */}
@@ -722,7 +814,7 @@ const ProductDetails = () => {
                 {product?.expectedDeliveryText || (
                   product?.shippingInfo?.maxDeliveryDays 
                     ? `Delivery in ${product.shippingInfo.minDeliveryDays || 3}-${product.shippingInfo.maxDeliveryDays} days`
-                    : 'Standard delivery available'
+                    : 'Free delivery available on orders above 500'
                 )}
               </p>
 

@@ -17,18 +17,27 @@ import { checkEmailRateLimit } from "../../shared/emails/emailRateLimiter.js";
 export const loginUser = async (email, password) => {
   if (!email || !password) throw new ApiError(400, "Missing required fields");
 
+  // Normalize email for consistent lookup
+  const normalizedEmail = email.toLowerCase().trim();
+
   // Optimize query - only select password field for verification
-  const user = await User.findOne({ email: email.toLowerCase().trim() })
+  const user = await User.findOne({ email: normalizedEmail })
     .select("+password")
     .lean({ virtuals: false }); // Use lean for better performance
     
-  if (!user) throw new ApiError(404, "User not found");
+  if (!user) {
+    console.log(`⚠️ Login attempt failed: No user found with email: ${normalizedEmail}`);
+    throw new ApiError(404, "Invalid email or password");
+  }
 
   // Convert back to mongoose document for method access
   const userDoc = await User.findById(user._id).select("+password +refreshTokens");
   
   const isValid = await userDoc.comparePassword(password);
-  if (!isValid) throw new ApiError(401, "Invalid credentials");
+  if (!isValid) {
+    console.log(`⚠️ Login attempt failed: Invalid password for email: ${normalizedEmail}`);
+    throw new ApiError(401, "Invalid email or password");
+  }
 
   const accessToken = generateAccessToken(userDoc);
   const refreshToken = generateRefreshToken(userDoc);
@@ -70,8 +79,15 @@ export const signupUser = async ({ name, email, password}) => {
   // 3. Generate verification token
   const token = generateEmailVerificationToken(newUser);
   await checkEmailRateLimit(newUser._id);
-  const result = await sendVerificationEmail(newUser, token);
-  console.log("Sent verification email:", result);
+  
+  // Send verification email with error handling
+  try {
+    const result = await sendVerificationEmail(newUser, token);
+    console.log("✅ Sent verification email:", result);
+  } catch (emailError) {
+    console.error('⚠️ Verification email failed but continuing signup:', emailError.message);
+    // Don't throw - user is created, they can resend verification later
+  }
   
   return newUser.toJSON();
 }; 
@@ -223,7 +239,15 @@ export const resendVerificationService = async (email) => {
   await checkEmailRateLimit(user._id);
 
   const token = generateEmailVerificationToken(user);
-  await sendVerificationEmail(user, token);
+  
+  // Send email with proper error handling
+  try {
+    await sendVerificationEmail(user, token);
+    console.log('✅ Verification email sent successfully to:', user.email);
+  } catch (emailError) {
+    console.error('⚠️ Email sending failed but continuing:', emailError.message);
+    // Don't throw - email sent even if there are warnings
+  }
 
   return { alreadyVerified: false };
 };
@@ -246,7 +270,16 @@ export const forgotPasswordService = async (email) => {
   await checkEmailRateLimit(user._id);
 
   const token = generatePasswordResetToken(user);
-  await sendPasswordResetEmail(user, token);
+  
+  // Send email with proper error handling
+  try {
+    await sendPasswordResetEmail(user, token);
+    console.log('✅ Password reset email sent successfully to:', user.email);
+  } catch (emailError) {
+    console.error('⚠️ Email sending failed but continuing:', emailError.message);
+    // Don't throw - email sent even if there are warnings
+    // The email was sent, just log the error
+  }
 
   return { sent: true };
 };

@@ -115,6 +115,26 @@ export const createProduct = asyncHandler(async (req, res) => {
   // Files from multer; your routes use field names heroImage and gallery
   const heroFile = req.files?.heroImage?.[0];
   const galleryFiles = req.files?.gallery || [];
+  
+  // Color variant image files (dynamic field names: colorVariant_0_heroImage, colorVariant_0_gallery, etc.)
+  const colorVariantFiles = {};
+  if (req.files) {
+    Object.keys(req.files).forEach(fieldName => {
+      const match = fieldName.match(/^colorVariant_(\d+)_(heroImage|gallery)$/);
+      if (match) {
+        const colorIndex = match[1];
+        const imageType = match[2];
+        if (!colorVariantFiles[colorIndex]) {
+          colorVariantFiles[colorIndex] = {};
+        }
+        if (imageType === 'heroImage') {
+          colorVariantFiles[colorIndex].heroImage = req.files[fieldName][0];
+        } else if (imageType === 'gallery') {
+          colorVariantFiles[colorIndex].gallery = req.files[fieldName];
+        }
+      }
+    });
+  }
 
   // Track uploaded fileIds for cleanup on error
   const uploadedFileIds = [];
@@ -149,11 +169,55 @@ export const createProduct = asyncHandler(async (req, res) => {
       gallery.push({ url: uploaded.url, fileId: uploaded.fileId });
       uploadedFileIds.push(uploaded.fileId);
     }
+    
+    // Process color variant images
+    const colorVariants = Array.isArray(raw.colorVariants) ? raw.colorVariants.slice() : [];
+    if (Object.keys(colorVariantFiles).length > 0 && colorVariants.length > 0) {
+      for (const colorIndex of Object.keys(colorVariantFiles)) {
+        const idx = parseInt(colorIndex);
+        if (idx >= 0 && idx < colorVariants.length) {
+          const files = colorVariantFiles[colorIndex];
+          
+          // Upload hero image for this color variant
+          if (files.heroImage) {
+            const buf = await optimizeImage(files.heroImage.buffer, { width: 1600 });
+            const fileName = `color_${idx}_hero_${Date.now()}_${files.heroImage.originalname.replace(/\s+/g, "_")}`;
+            const uploaded = await uploadToImageKitWithRetry({
+              buffer: buf,
+              fileName,
+              folder: "/products/color-variants",
+              mimetype: files.heroImage.mimetype,
+            });
+            colorVariants[idx].heroImage = { url: uploaded.url, fileId: uploaded.fileId };
+            uploadedFileIds.push(uploaded.fileId);
+          }
+          
+          // Upload gallery images for this color variant
+          if (files.gallery && files.gallery.length > 0) {
+            const colorGallery = colorVariants[idx].gallery || [];
+            for (const file of files.gallery) {
+              const buf = await optimizeImage(file.buffer, { width: 1600 });
+              const fileName = `color_${idx}_gallery_${Date.now()}_${file.originalname.replace(/\s+/g, "_")}`;
+              const uploaded = await uploadToImageKitWithRetry({
+                buffer: buf,
+                fileName,
+                folder: "/products/color-variants",
+                mimetype: file.mimetype,
+              });
+              colorGallery.push({ url: uploaded.url, fileId: uploaded.fileId });
+              uploadedFileIds.push(uploaded.fileId);
+            }
+            colorVariants[idx].gallery = colorGallery;
+          }
+        }
+      }
+    }
 
     const payload = {
       ...raw,
       heroImage: heroImage || undefined,
       gallery: gallery.length ? gallery : undefined,
+      colorVariants: colorVariants.length ? colorVariants : undefined,
     };
 
     const product = await service.createProductService(payload, adminId);
@@ -189,6 +253,26 @@ export const updateProduct = asyncHandler(async (req, res) => {
   // Files
   const heroFile = req.files?.heroImage?.[0];
   const galleryFiles = req.files?.gallery || [];
+  
+  // Color variant image files
+  const colorVariantFiles = {};
+  if (req.files) {
+    Object.keys(req.files).forEach(fieldName => {
+      const match = fieldName.match(/^colorVariant_(\d+)_(heroImage|gallery)$/);
+      if (match) {
+        const colorIndex = match[1];
+        const imageType = match[2];
+        if (!colorVariantFiles[colorIndex]) {
+          colorVariantFiles[colorIndex] = {};
+        }
+        if (imageType === 'heroImage') {
+          colorVariantFiles[colorIndex].heroImage = req.files[fieldName][0];
+        } else if (imageType === 'gallery') {
+          colorVariantFiles[colorIndex].gallery = req.files[fieldName];
+        }
+      }
+    });
+  }
 
   const uploadedFileIds = [];
   const toDeleteFileIds = []; // fileIds to delete from ImageKit (old assets)
@@ -247,9 +331,70 @@ export const updateProduct = asyncHandler(async (req, res) => {
       existing.gallery.forEach(g => { if (g && g.fileId) toDeleteFileIds.push(g.fileId); });
       gallery = [];
     }
+    
+    // Process color variant images
+    const colorVariants = Array.isArray(raw.colorVariants) ? raw.colorVariants.slice() : (existing.colorVariants || []);
+    if (Object.keys(colorVariantFiles).length > 0 && colorVariants.length > 0) {
+      for (const colorIndex of Object.keys(colorVariantFiles)) {
+        const idx = parseInt(colorIndex);
+        if (idx >= 0 && idx < colorVariants.length) {
+          const files = colorVariantFiles[colorIndex];
+          
+          // Upload hero image for this color variant
+          if (files.heroImage) {
+            const buf = await optimizeImage(files.heroImage.buffer, { width: 1600 });
+            const fileName = `color_${idx}_hero_${Date.now()}_${files.heroImage.originalname.replace(/\s+/g, "_")}`;
+            const uploaded = await uploadToImageKitWithRetry({
+              buffer: buf,
+              fileName,
+              folder: "/products/color-variants",
+              mimetype: files.heroImage.mimetype,
+            });
+            
+            // Delete old color hero image if exists
+            if (existing.colorVariants && existing.colorVariants[idx]?.heroImage?.fileId) {
+              toDeleteFileIds.push(existing.colorVariants[idx].heroImage.fileId);
+            }
+            
+            colorVariants[idx].heroImage = { url: uploaded.url, fileId: uploaded.fileId };
+            uploadedFileIds.push(uploaded.fileId);
+          }
+          
+          // Upload gallery images for this color variant
+          if (files.gallery && files.gallery.length > 0) {
+            // Delete old color gallery images
+            if (existing.colorVariants && existing.colorVariants[idx]?.gallery) {
+              existing.colorVariants[idx].gallery.forEach(g => {
+                if (g && g.fileId) toDeleteFileIds.push(g.fileId);
+              });
+            }
+            
+            const colorGallery = [];
+            for (const file of files.gallery) {
+              const buf = await optimizeImage(file.buffer, { width: 1600 });
+              const fileName = `color_${idx}_gallery_${Date.now()}_${file.originalname.replace(/\s+/g, "_")}`;
+              const uploaded = await uploadToImageKitWithRetry({
+                buffer: buf,
+                fileName,
+                folder: "/products/color-variants",
+                mimetype: file.mimetype,
+              });
+              colorGallery.push({ url: uploaded.url, fileId: uploaded.fileId });
+              uploadedFileIds.push(uploaded.fileId);
+            }
+            colorVariants[idx].gallery = colorGallery;
+          }
+        }
+      }
+    }
 
     // Build update payload
-    const updates = { ...raw, heroImage, gallery };
+    const updates = { 
+      ...raw, 
+      heroImage, 
+      gallery,
+      colorVariants: colorVariants.length ? colorVariants : undefined
+    };
 
     const product = await service.updateProductService(productId, updates, adminId);
 
