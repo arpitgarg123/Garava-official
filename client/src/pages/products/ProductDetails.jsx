@@ -580,13 +580,13 @@ const ProductDetails = () => {
             )}
 
             {/* Action buttons - Different for High Jewellery */}
-            <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap gap-3">
+            <div className="mt-4 flex flex-col sm:flex-row  justify-between  ">
               {isHighJewellery ? (
                 // High Jewellery Contact Options
-                <div className="relative w-full sm:w-auto">
+                <div className="relative w-[40%]">
                   <button 
                     onClick={() => setShowContactOptions(!showContactOptions)}
-                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium  hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    className=" sm:w-full px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium  hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                   >
                     Contact for Pricing
                   </button>
@@ -661,7 +661,7 @@ const ProductDetails = () => {
               )}
               <button
                 onClick={handleToggleWishlist}
-                className={`btn w-full sm:flex-1 ${
+                className={`btn w-[60%]  ${
                   isInWishlist
                     ? 'bg-red-700 text-white hover:bg-red-900'
                     : 'hover:bg-black hover:text-white'
@@ -672,7 +672,7 @@ const ProductDetails = () => {
             </div>
 
              <div className="lg:col-span-4 mt-6">
-            <div className="space-y-3 w-full">
+            <div className="space-y-3 w-fit ">
               {/* Contact Options */}
               <div className="space-y-2">
                 {/* Order by Phone Button */}
@@ -722,7 +722,7 @@ const ProductDetails = () => {
                 {product?.expectedDeliveryText || (
                   product?.shippingInfo?.maxDeliveryDays 
                     ? `Delivery in ${product.shippingInfo.minDeliveryDays || 3}-${product.shippingInfo.maxDeliveryDays} days`
-                    : 'Standard delivery available'
+                    : 'Free delivery available on orders above 500'
                 )}
               </p>
 
