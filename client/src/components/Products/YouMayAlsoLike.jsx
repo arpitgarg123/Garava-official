@@ -70,7 +70,6 @@ const YouMayAlsoLike = ({ currentProduct }) => {
     );
   }
 
-  // Always show the section, even if no products (for debugging)
   if (filteredProducts.length === 0) {
     return (
       <div className="w-full py-12 px-4 flex-center flex-col">

@@ -10,6 +10,7 @@ import Idempotency from "./idempotency.model.js"; // optional
 import { createPhonePeOrder } from "../payment.adapters/phonepe.adapter.js";
 import { calculateOrderPricingRupees, toRupees } from "./order.pricing.js";
 import { validateStockAvailability, reserveStock } from "../../shared/stockManager.js";
+import { sendOrderConfirmationEmail } from "../../shared/emails/email.service.js";
 
 
 /**
@@ -158,6 +159,15 @@ export const createOrderService = async ({ userId, items, addressId, paymentMeth
     // commit transaction BEFORE calling PhonePe
     await session.commitTransaction();
     session.endSession();
+
+    // Send order confirmation email (don't block order creation if email fails)
+    try {
+      const orderWithUser = await Order.findById(createdOrder._id).populate('user').lean();
+      await sendOrderConfirmationEmail(orderWithUser);
+    } catch (emailError) {
+      console.error('Failed to send order confirmation email:', emailError);
+      // Continue - don't fail order creation due to email issues
+    }
 
     // Return order as-is since everything is already in rupees
     const mapOrderForResponse = (order) => {

@@ -28,7 +28,6 @@ import FAQAdmin from '../components/DashboardSections/FAQAdmin';
 import TestimonialAdmin from '../components/DashboardSections/TestimonialAdmin';
 import Overview from '../components/DashboardSections/Overview';
 import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
-import NotificationDebug from '../components/DashboardSections/NotificationDebug';
 import NewsEventsAdmin from '../components/DashboardSections/NewsEventsAdmin';
 import InstagramAdmin from '../components/DashboardSections/InstagramAdmin';
 import { Link, useNavigate } from 'react-router-dom';
@@ -94,7 +93,6 @@ const Dashboard = () => {
   // Get recent data
   // Note: order.grandTotal is already in rupees from admin API
   const recentOrders = orders.slice(0, 5).map(order => {
-    // Debug: Check if prices need conversion (if they're way too high, they might be in paise)
     const grandTotal = order.grandTotal || 0;
     
     // If grandTotal is suspiciously high (> 100,000), it might be in paise, so convert
@@ -139,7 +137,6 @@ const Dashboard = () => {
     { id: "instagram", label: "Instagram", icon: FaInstagram },
     { id: "faq", label: "FAQ", icon: FaQuestionCircle },
     { id: "notifications", label: "Notifications", icon: FaBell },
-    { id: "debug", label: "Debug", icon: FaBell },
     { id: "newsletter", label: "Newsletter", icon: FaEnvelope },
   ];
 
@@ -192,8 +189,6 @@ const Dashboard = () => {
         return <FAQAdmin />;
       case "notifications":
         return <NotificationsDashboard />;
-      case "debug":
-        return <NotificationDebug />;
       case "newsletter":
         return (
           <Newsletter  

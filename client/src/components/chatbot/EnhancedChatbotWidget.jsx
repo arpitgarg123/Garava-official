@@ -81,11 +81,21 @@ export default function EnhancedChatbotWidget({
     }
   }, [dispatch, messages.length]);
 
-  // Auto-scroll
+  // Auto-scroll to bottom when messages change
   const listRef = useRef(null);
+  const scrollToBottom = () => {
+    if (listRef.current) {
+      requestAnimationFrame(() => {
+        listRef.current.scrollTo({
+          top: listRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
+    }
+  };
+
   useEffect(() => {
-    if (!listRef.current) return;
-    listRef.current.scrollTop = listRef.current.scrollHeight;
+    scrollToBottom();
   }, [messages, isTyping, open]);
 
   const isMobile = useIsMobile();
@@ -151,9 +161,10 @@ export default function EnhancedChatbotWidget({
         >
           <div
             className={`${isMobile ? "h-full w-full rounded-none" : "w-[400px] h-[600px] rounded-2xl"} ${COLORS.surface} shadow-2xl ring-1 ${COLORS.ring} flex flex-col overflow-hidden`}
+            style={{ maxHeight: isMobile ? '100vh' : '600px' }}
           >
             {/* Header */}
-            <div className={`relative ${COLORS.brand} px-4 py-3`}>
+            <div className={`relative ${COLORS.brand} px-4 py-3 flex-shrink-0`}>
               <div className="flex items-center gap-3">
                 <div className="h-9 w-9 rounded-full bg-white/15 flex items-center justify-center ring-1 ring-white/20">
                   <span className="text-white/90 text-sm font-semibold">GA</span>
@@ -191,7 +202,12 @@ export default function EnhancedChatbotWidget({
             {/* Messages */}
             <div
               ref={listRef}
-              className={`flex-1 overflow-auto px-3 sm:px-4 py-4 ${COLORS.surfaceMuted} scroll-smooth custom-scrollbar`}
+              className={`flex-1 overflow-y-auto px-3 sm:px-4 py-4 ${COLORS.surfaceMuted} scroll-smooth custom-scrollbar`}
+              style={{ 
+                overflowY: 'auto',
+                overflowX: 'hidden',
+                maxHeight: '100%'
+              }}
             >
               {/* Suggestions (show when only greeting) */}
               {messages.length <= 1 && suggestions?.length > 0 && (
@@ -254,7 +270,7 @@ export default function EnhancedChatbotWidget({
             </div>
 
             {/* Input */}
-            <div className="border-t border-neutral-200 bg-white p-3">
+            <div className="border-t border-neutral-200 bg-white p-3 flex-shrink-0">
               <div className="flex items-end gap-2">
                 <label className="sr-only" htmlFor="chat-input">
                   Message
@@ -263,12 +279,18 @@ export default function EnhancedChatbotWidget({
                   <textarea
                     id="chat-input"
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
+                    onChange={(e) => {
+                      setInput(e.target.value);
+                      // Auto-resize textarea
+                      e.target.style.height = 'auto';
+                      e.target.style.height = Math.min(e.target.scrollHeight, 112) + 'px';
+                    }}
                     onKeyDown={onKeyDown}
                     rows={1}
                     placeholder={placeholder}
                     disabled={isTyping}
-                    className="w-full resize-none text-sm rounded-xl border border-neutral-200 bg-white px-2 py-2 outline-none   leading-6 max-h-28 disabled:opacity-50"
+                    className="w-full resize-none text-sm rounded-xl border border-neutral-200 bg-white px-3 py-2 outline-none leading-6 max-h-28 disabled:opacity-50"
+                    style={{ minHeight: '40px', overflow: 'hidden' }}
                   />
                   
                 </div>

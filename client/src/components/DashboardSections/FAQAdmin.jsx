@@ -85,7 +85,6 @@ const FAQAdmin = () => {
       )
     };
     
-    console.log('FAQ Admin - Loading FAQs with params:', params);
     dispatch(getAllFAQs(params));
   }, [dispatch, currentPage, debouncedSearchTerm, categoryFilter, statusFilter]);
 

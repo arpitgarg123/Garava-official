@@ -81,13 +81,6 @@ const SearchPage = () => {
   const isLoading = useSelector(selectIsSearchLoading);
   const hasResults = useSelector(selectHasSearchResults);
 
-  // Debug logging
-  useEffect(() => {
-    console.log('Search Results:', searchResults);
-    console.log('Has Results:', hasResults);
-    console.log('Is Loading:', isLoading);
-  }, [searchResults, hasResults, isLoading]);
-
   // Initialize from URL params
   useEffect(() => {
     const urlQuery = searchParams.get('q') || '';

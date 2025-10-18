@@ -23,7 +23,6 @@ class TokenRefreshManager {
     
     // If same token, don't reset timer
     if (this.currentToken === accessToken && this.refreshTimer) {
-      console.log('Token Refresh Manager - Same token, keeping existing timer');
       return;
     }
     
@@ -41,12 +40,6 @@ class TokenRefreshManager {
       const refreshBuffer = 60 * 60 * 1000; // 1 hour
       const refreshTime = Math.max(0, timeUntilExpiry - refreshBuffer);
       
-      // console.log('Token Refresh Manager - Setting refresh timer:', {
-      //   expiresAt: new Date(expiresAt).toISOString(),
-      //   timeUntilExpiry: Math.round(timeUntilExpiry / 1000) + 's',
-      //   refreshIn: Math.round(refreshTime / 1000) + 's'
-      // });
-      
       this.refreshTimer = setTimeout(() => {
         this.performRefresh();
       }, refreshTime);
@@ -62,7 +55,6 @@ class TokenRefreshManager {
 
   async performRefresh() {
     if (this.isRefreshing) {
-      console.log('Token Refresh Manager - Refresh already in progress');
       return;
     }
 
@@ -72,14 +64,11 @@ class TokenRefreshManager {
     }
 
     this.isRefreshing = true;
-    console.log('Token Refresh Manager - Performing proactive token refresh...');
 
     try {
       const { data } = await refreshApi();
       
       if (data?.accessToken) {
-        console.log('Token Refresh Manager - Proactive refresh successful');
-        
         // Update store with new tokens
         this.store.dispatch(setTokens({
           accessToken: data.accessToken,
@@ -108,7 +97,6 @@ class TokenRefreshManager {
     if (this.refreshTimer) {
       clearTimeout(this.refreshTimer);
       this.refreshTimer = null;
-      // console.log('Token Refresh Manager - Refresh timer cleared');
     }
   }
 

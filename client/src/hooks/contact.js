@@ -14,15 +14,11 @@ export const handleWhatsAppContact = (product, setShowContactOptions, customMess
     `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`
   ];
   
-  console.log('Attempting to open WhatsApp with message:', defaultMessage);
-  
   let success = false;
   
   // Try each URL format
   for (let i = 0; i < whatsappUrls.length && !success; i++) {
     try {
-      console.log(`Trying WhatsApp URL ${i + 1}:`, whatsappUrls[i]);
-      
       // Use location.href for better compatibility instead of window.open
       if (i === 0) {
         // First attempt: direct navigation
@@ -46,8 +42,6 @@ export const handleWhatsAppContact = (product, setShowContactOptions, customMess
   
   // If all methods fail, provide fallback
   if (!success) {
-    console.warn('All WhatsApp methods failed, using fallback');
-    
     // Copy message to clipboard
     navigator.clipboard.writeText(defaultMessage).then(() => {
       toast.success("Message copied to clipboard!");
@@ -75,15 +69,11 @@ export const handleEmailContact = (product, setShowContactOptions, customMessage
     `mailto:info@garava.com`
   ];
   
-  console.log('Attempting to open email client');
-  
   let success = false;
   
   // Try each email method
   for (let i = 0; i < emailUrls.length && !success; i++) {
     try {
-      console.log(`Trying email method ${i + 1}:`, emailUrls[i]);
-      
       if (i === 0) {
         // First attempt: direct navigation with full content
         window.location.href = emailUrls[i];
@@ -106,8 +96,6 @@ export const handleEmailContact = (product, setShowContactOptions, customMessage
   
   // If email client doesn't open, provide fallback
   if (!success) {
-    console.warn('Email client failed to open, using fallback');
-    
     const emailContent = `To: info@garava.com\nSubject: Inquiry about High Jewellery: ${product.name}\n\nMessage:\n${defaultMessage}`;
     
     navigator.clipboard.writeText(emailContent).then(() => {
@@ -142,9 +130,6 @@ export const handleWhatsAppContactMobile = (product, setShowContactOptions, cust
     // Desktop: Use web version
     whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
   }
-  
-  console.log('Device type:', isMobile ? 'Mobile' : 'Desktop');
-  console.log('Using WhatsApp URL:', whatsappUrl);
   
   try {
     if (isMobile) {
@@ -183,16 +168,12 @@ export const handleWhatsAppContactMobile = (product, setShowContactOptions, cust
 
 // Utility function for testing different contact methods
 export const testContactMethods = () => {
-  console.log('Testing contact methods...');
-  
   // Test WhatsApp
   const testProduct = { name: 'Test Product' };
-  console.log('Testing WhatsApp...');
   handleWhatsAppContact(testProduct, () => {}, 'Test message for WhatsApp');
   
   // Test Email
   setTimeout(() => {
-    console.log('Testing Email...');
     handleEmailContact(testProduct, () => {}, 'Test message for Email');
   }, 3000);
 };
@@ -202,8 +183,6 @@ export const handlePhoneContact = (product, setShowContactOptions) => {
   const phoneNumber = "+917738543881";
   
   try {
-    console.log('Attempting to initiate phone call to:', phoneNumber);
-    
     // Try to initiate phone call
     window.location.href = `tel:${phoneNumber}`;
     toast.success("Initiating phone call...");

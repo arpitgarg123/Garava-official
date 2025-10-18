@@ -11,12 +11,10 @@ import Review from './Review';
 import Instagram from '../components/instagram/Instagram';
 import InstaPost from "./InstaPost";
 import { useLocation } from "react-router-dom";
-import EnhancedChatbotWidget from "../components/chatbot/EnhancedChatbotWidget";
 import { useLocomotiveScroll } from '../hooks/useLocomotiveScroll';
 
 export default function HomePage() {
   const { pathname } = useLocation();
-  const isHome = pathname === "/";
   
   // Use Locomotive Scroll hook
   const { scrollRef, updateScroll } = useLocomotiveScroll(true);
@@ -60,8 +58,6 @@ export default function HomePage() {
         </section>
       </div>
       
-      {isHome && <EnhancedChatbotWidget />}
-      
       <div data-scroll-section>
         <InstaPost />
       </div>
@@ -73,7 +69,7 @@ export default function HomePage() {
       </div>
       
       <div data-scroll-section>
-      <section id="newsletter">
+      <section id="newsletter" className="flex-center ">
           <NewsletterInline />
         </section>
       </div>

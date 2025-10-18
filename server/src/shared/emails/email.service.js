@@ -53,3 +53,38 @@ export const sendContactAdminNotificationEmail = async (contactData) => {
   });
   return sendEmail({ to: adminEmail, subject, html });
 };
+// ---- Order Emails ----
+
+export const sendOrderConfirmationEmail = async (order) => {
+  try {
+    const { subject, html } = emailTemplates.orderConfirmation(order);
+    await sendEmail({ to: order.user.email, subject, html });
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to send order confirmation email for order:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const sendOrderStatusUpdateEmail = async (order, previousStatus) => {
+  try {
+    const { subject, html } = emailTemplates.orderStatusUpdate(order, previousStatus);
+    await sendEmail({ to: order.user.email, subject, html });
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to send order status update email for order:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+export const sendOrderCancelledEmail = async (order, reason = '') => {
+  try {
+    const { subject, html } = emailTemplates.orderCancelled(order, reason);
+    await sendEmail({ to: order.user.email, subject, html });
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to send order cancelled email for order:", error);
+    return { success: false, error: error.message };
+  }
+};
+

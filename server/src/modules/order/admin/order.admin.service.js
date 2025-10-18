@@ -1,6 +1,7 @@
 
 import ApiError from "../../../shared/utils/ApiError.js";
 import Order from "../order.model.js";
+import { sendOrderStatusUpdateEmail, sendOrderCancelledEmail } from "../../../shared/emails/email.service.js";
 
 /**
  * Prepare order data for frontend display
@@ -79,15 +80,32 @@ export const getOrderByIdAdminService = async (id) => {
 };
 
 export const updateOrderStatusService = async (id, status, tracking) => {
-  const order = await Order.findById(id);
+  const order = await Order.findById(id).populate('user');
   if (!order) throw new ApiError(404, "Order not found");
 
+  const previousStatus = order.status;
   order.status = status || order.status;
   if (tracking) {
     order.tracking = { ...order.tracking, ...tracking };
   }
 
   await order.save();
+
+  // Send status update email (don't block the update if email fails)
+  try {
+    const orderLean = order.toObject ? order.toObject() : order;
+    
+    // Send specific email based on status
+    if (status === 'cancelled') {
+      await sendOrderCancelledEmail(orderLean);
+    } else if (['processing', 'shipped', 'out_for_delivery', 'delivered', 'failed'].includes(status)) {
+      await sendOrderStatusUpdateEmail(orderLean, previousStatus);
+    }
+  } catch (emailError) {
+    console.error('Failed to send order status update email:', emailError);
+    // Continue - don't fail status update due to email issues
+  }
+
   return order;
 };
 

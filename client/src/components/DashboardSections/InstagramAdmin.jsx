@@ -29,16 +29,6 @@ const InstagramAdmin = () => {
   const pagination = useSelector(selectInstagramPagination);
   const filters = useSelector(selectInstagramFilters);
 
-  // Debug logging
-  console.log('Instagram Admin State:', {
-    posts: posts,
-    postsLength: posts.length,
-    loading,
-    error,
-    pagination,
-    filters
-  });
-
   const [showModal, setShowModal] = useState(false);
   const [editingPost, setEditingPost] = useState(null);
   const [formData, setFormData] = useState({
@@ -58,12 +48,10 @@ const InstagramAdmin = () => {
   const [featuredFilter, setFeaturedFilter] = useState(filters.isFeatured);
 
   useEffect(() => {
-    console.log('InstagramAdmin component mounted, loading posts...');
     loadPosts();
   }, []);
 
   useEffect(() => {
-    console.log('Filters or pagination changed, reloading posts...');
     loadPosts();
   }, [filters, pagination.page]);
 
@@ -73,7 +61,6 @@ const InstagramAdmin = () => {
       limit: pagination.limit,
       ...filters
     };
-    console.log('Loading posts with params:', params);
     dispatch(fetchInstagramPostsAdmin(params));
   };
 

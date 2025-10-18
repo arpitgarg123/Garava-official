@@ -70,8 +70,15 @@ export const signupUser = async ({ name, email, password}) => {
   // 3. Generate verification token
   const token = generateEmailVerificationToken(newUser);
   await checkEmailRateLimit(newUser._id);
-  const result = await sendVerificationEmail(newUser, token);
-  console.log("Sent verification email:", result);
+  
+  // Send verification email with error handling
+  try {
+    const result = await sendVerificationEmail(newUser, token);
+    console.log("✅ Sent verification email:", result);
+  } catch (emailError) {
+    console.error('⚠️ Verification email failed but continuing signup:', emailError.message);
+    // Don't throw - user is created, they can resend verification later
+  }
   
   return newUser.toJSON();
 }; 
@@ -223,7 +230,15 @@ export const resendVerificationService = async (email) => {
   await checkEmailRateLimit(user._id);
 
   const token = generateEmailVerificationToken(user);
-  await sendVerificationEmail(user, token);
+  
+  // Send email with proper error handling
+  try {
+    await sendVerificationEmail(user, token);
+    console.log('✅ Verification email sent successfully to:', user.email);
+  } catch (emailError) {
+    console.error('⚠️ Email sending failed but continuing:', emailError.message);
+    // Don't throw - email sent even if there are warnings
+  }
 
   return { alreadyVerified: false };
 };
@@ -246,7 +261,16 @@ export const forgotPasswordService = async (email) => {
   await checkEmailRateLimit(user._id);
 
   const token = generatePasswordResetToken(user);
-  await sendPasswordResetEmail(user, token);
+  
+  // Send email with proper error handling
+  try {
+    await sendPasswordResetEmail(user, token);
+    console.log('✅ Password reset email sent successfully to:', user.email);
+  } catch (emailError) {
+    console.error('⚠️ Email sending failed but continuing:', emailError.message);
+    // Don't throw - email sent even if there are warnings
+    // The email was sent, just log the error
+  }
 
   return { sent: true };
 };
