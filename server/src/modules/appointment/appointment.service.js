@@ -1,5 +1,6 @@
 import ApiError from "../../shared/utils/ApiError.js";
 import Appointment from "./appointment.model.js";
+import { createNotificationService } from "../notification/notification.service.js";
 
 import { sendAppointmentCancelledEmail, sendAppointmentCreatedEmail, sendAppointmentStatusEmail } from "../../shared/emails/email.service.js";
 
@@ -39,6 +40,25 @@ export const createAppointmentService = async (userId, payload) => {
   });
 
   await doc.save();
+
+  // Create admin notification for new appointment request
+  try {
+    await createNotificationService({
+      type: 'system',
+      title: 'New Appointment Request',
+      message: `New appointment request from ${name} for ${serviceType}`,
+      severity: 'medium',
+      metadata: {
+        appointmentId: doc._id,
+        customerName: name,
+        customerEmail: email,
+        serviceType,
+        appointmentAt: dt
+      }
+    });
+  } catch (notifError) {
+    console.error("❌ Failed to create appointment notification:", notifError.message || notifError);
+  }
 
   // send confirmation email (best-effort)
   try {
@@ -108,6 +128,43 @@ export const updateAppointmentService = async (adminId, appointmentId, updates) 
   }
   appt.updatedBy = adminId;
   await appt.save();
+
+  // Create admin notification for status changes
+  if (updates.status) {
+    try {
+      let notificationMessage = '';
+      let severity = 'low';
+      
+      if (updates.status === 'confirmed') {
+        notificationMessage = `Appointment confirmed for ${appt.name}`;
+        severity = 'low';
+      } else if (updates.status === 'cancelled') {
+        notificationMessage = `Appointment cancelled for ${appt.name}`;
+        severity = 'medium';
+      } else if (updates.status === 'completed') {
+        notificationMessage = `Appointment completed for ${appt.name}`;
+        severity = 'low';
+      }
+
+      if (notificationMessage) {
+        await createNotificationService({
+          type: 'system',
+          title: 'Appointment Status Update',
+          message: notificationMessage,
+          severity,
+          metadata: {
+            appointmentId: appt._id,
+            customerName: appt.name,
+            previousStatus: appt.status,
+            newStatus: updates.status,
+            serviceType: appt.serviceType
+          }
+        });
+      }
+    } catch (notifError) {
+      console.error("❌ Failed to create appointment status notification:", notifError.message || notifError);
+    }
+  }
 
  if (updates.status) {
   try {

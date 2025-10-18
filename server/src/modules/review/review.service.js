@@ -3,6 +3,7 @@ import Review from "./review.model.js";
 import Product from "../product/product.model.js";
 import Order from "../order/order.model.js";
 import mongoose from "mongoose";
+import { createNotificationService } from "../notification/notification.service.js";
 
 /**
  * Recompute aggregate rating for product
@@ -60,6 +61,29 @@ export const createOrUpdateReview = async (userId, productId, { rating, title, b
     { $set: update, $setOnInsert: { createdBy: userId } },
     opts
   ).lean();
+
+  // Create admin notification for new review (only if it's a new review, not an update)
+  if (review.createdAt && new Date() - new Date(review.createdAt) < 5000) { // Created within last 5 seconds
+    try {
+      await createNotificationService({
+        type: 'system',
+        title: 'New Review Submitted',
+        message: `New ${rating}-star review for ${product.name}${verifiedPurchase ? ' (Verified Purchase)' : ''}`,
+        severity: rating <= 2 ? 'high' : 'low', // Low ratings are high priority
+        userId: userId,
+        productId: product._id,
+        metadata: {
+          productName: product.name,
+          rating,
+          verifiedPurchase,
+          reviewTitle: title || '',
+          reviewBody: body || ''
+        }
+      });
+    } catch (notifError) {
+      console.error("❌ Failed to create review notification:", notifError.message || notifError);
+    }
+  }
 
   // ✅ Always recompute rating (since reviews are instantly visible)
   await recomputeProductRating(productId);

@@ -1,16 +1,23 @@
 import React from "react";
-import { FaRupeeSign, FaStar } from "react-icons/fa";
+import { FaRupeeSign, FaStar, FaExclamationTriangle } from "react-icons/fa";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { FiPackage, FiTrendingUp, FiTrendingDown, FiUsers } from "react-icons/fi";
-import { BiCalendar } from "react-icons/bi";
+import { FiPackage, FiTrendingUp, FiTrendingDown, FiUsers, FiAlertCircle } from "react-icons/fi";
+import { BiCalendar, BiTime } from "react-icons/bi";
+import { MdPendingActions, MdOutlineInventory2 } from "react-icons/md";
 
 // Clean, simple Overview component
 export default function Overview({
   stats = {
     revenueINR: 0,
+    todayRevenueINR: 0,
     orders: 0,
     products: 0,
     avgRating: 0,
+    pendingOrders: 0,
+    pendingReviews: 0,
+    lowStockProducts: 0,
+    pendingAppointments: 0,
+    newCustomers: 0,
   },
   revenueTrend = [],
   topProducts = [],
@@ -64,36 +71,105 @@ export default function Overview({
   return (
     <div className="h-full overflow-y-auto">
       <div className="p-6 space-y-6">
-        {/* Stats Grid */}
+        {/* Main Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard
             icon={<FaRupeeSign className="w-6 h-6" />}
             title="Total Revenue"
             value={fmtINR(stats.revenueINR)}
-            subtitle="This month"
+            subtitle={`Today: ${fmtINR(stats.todayRevenueINR || 0)}`}
             color="green"
           />
           <StatCard
             icon={<HiOutlineShoppingBag className="w-6 h-6" />}
             title="Total Orders"
             value={stats.orders}
-            subtitle="Active orders"
+            subtitle={`${stats.pendingOrders || 0} pending`}
             color="blue"
           />
           <StatCard
             icon={<FiPackage className="w-6 h-6" />}
             title="Products"
             value={stats.products}
-            subtitle="Listed products"
+            subtitle={`${stats.lowStockProducts || 0} low stock`}
             color="purple"
           />
           <StatCard
             icon={<FaStar className="w-6 h-6" />}
             title="Avg Rating"
             value={`${(stats.avgRating||0).toFixed(1)}/5`}
-            subtitle="Customer satisfaction"
+            subtitle={`${stats.pendingReviews || 0} pending reviews`}
             color="orange"
           />
+        </div>
+
+        {/* Action Required Section */}
+        {(stats.pendingOrders > 0 || stats.pendingReviews > 0 || stats.lowStockProducts > 0 || stats.pendingAppointments > 0) && (
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            <div className="flex items-start">
+              <div className="flex-shrink-0">
+                <FiAlertCircle className="h-5 w-5 text-yellow-700" />
+              </div>
+              <div className="ml-3 flex-1">
+                <h3 className="text-sm font-medium text-yellow-800">Action Required</h3>
+                <div className="mt-2 text-sm text-yellow-700">
+                  <ul className="list-disc pl-5 space-y-1">
+                    {stats.pendingOrders > 0 && (
+                      <li>{stats.pendingOrders} pending order{stats.pendingOrders > 1 ? 's' : ''} need{stats.pendingOrders === 1 ? 's' : ''} processing</li>
+                    )}
+                    {stats.pendingReviews > 0 && (
+                      <li>{stats.pendingReviews} review{stats.pendingReviews > 1 ? 's' : ''} waiting for approval</li>
+                    )}
+                    {stats.lowStockProducts > 0 && (
+                      <li>{stats.lowStockProducts} product{stats.lowStockProducts > 1 ? 's' : ''} with low stock</li>
+                    )}
+                    {stats.pendingAppointments > 0 && (
+                      <li>{stats.pendingAppointments} pending appointment{stats.pendingAppointments > 1 ? 's' : ''}</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Secondary Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-4 border border-gray-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Pending Appointments</p>
+                <p className="text-2xl font-semibold text-gray-900 mt-1">{stats.pendingAppointments || 0}</p>
+              </div>
+              <div className="p-3 bg-blue-50 text-blue-600 border-blue-200">
+                <BiCalendar className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 border border-gray-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">New Customers (30d)</p>
+                <p className="text-2xl font-semibold text-gray-900 mt-1">{stats.newCustomers || 0}</p>
+              </div>
+              <div className="p-3 bg-green-50 text-green-600 border-green-200">
+                <FiUsers className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 border border-gray-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-600">Stock Alerts</p>
+                <p className="text-2xl font-semibold text-gray-900 mt-1">{stats.lowStockProducts || 0}</p>
+              </div>
+              <div className="p-3 bg-orange-50 text-orange-600 border-orange-200">
+                <MdOutlineInventory2 className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Content Grid */}
@@ -155,7 +231,7 @@ export default function Overview({
                   {topProducts.slice(0, 5).map((product, index) => (
                     <div 
                       key={product._id} 
-                      className="flex items-center gap-4 p-3 bg-gray-50  cursor-pointer hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-4 p-3 bg-gray-50  cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => onOpenProduct(product)}
                     >
                       <div className="w-12 h-12 bg-gray-200  overflow-hidden flex-shrink-0">
@@ -165,11 +241,11 @@ export default function Overview({
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-900 truncate">{product.name}</p>
-                        <p className="text-sm text-gray-600">{product.units} units sold</p>
+                        <p className="text-sm text-gray-600">#{index + 1}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-gray-900">{fmtINR(product.salesINR)}</p>
-                        <p className="text-sm text-gray-600">#{index + 1}</p>
+                        <p className="font-semibold text-gray-900">{product.units || 0} units</p>
+                        <p className="text-sm text-gray-600">Stock</p>
                       </div>
                     </div>
                   ))}
@@ -194,22 +270,27 @@ export default function Overview({
                   {recentReviews.slice(0, 5).map((review) => (
                     <div 
                       key={review._id} 
-                      className="p-3 bg-gray-50  cursor-pointer hover:bg-gray-50 transition-colors"
+                      className="p-3 bg-gray-50  cursor-pointer hover:bg-gray-100 transition-colors"
                       onClick={() => onOpenReview(review)}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <p className="font-medium text-gray-900">{review.userName}</p>
+                        <p className="font-medium text-gray-900">{review.userName || 'Anonymous'}</p>
                         <div className="flex items-center gap-1">
                           {[...Array(5)].map((_, i) => (
                             <FaStar 
                               key={i} 
-                              className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} 
+                              className={`w-4 h-4 ${i < (review.rating || 0) ? 'text-yellow-400' : 'text-gray-300'}`} 
                             />
                           ))}
                         </div>
                       </div>
-                      <p className="text-sm text-gray-600 line-clamp-2">{review.comment}</p>
-                      <p className="text-sm text-gray-500 mt-2">{fmtDate(review.createdAt)}</p>
+                      {review.comment && (
+                        <p className="text-sm text-gray-600 line-clamp-2 mb-2">{review.comment}</p>
+                      )}
+                      {review.productName && (
+                        <p className="text-xs text-gray-500 mb-1">Product: {review.productName}</p>
+                      )}
+                      <p className="text-xs text-gray-500">{fmtDate(review.createdAt)}</p>
                     </div>
                   ))}
                 </div>
