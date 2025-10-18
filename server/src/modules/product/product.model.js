@@ -20,6 +20,8 @@ const variantSchema = new mongoose.Schema(
     isDefault: { type: Boolean, default: false }, // default variant on product page
     purchaseLimit: { type: Number, default: 0 }, // 0 = no limit, >0 = max per order
     leadTimeDays: { type: Number, default: 0 }, // when preorder/backorder
+    colorCode: { type: String }, // For jewelry: 'YG' (Yellow Gold), 'WG' (White Gold), 'RG' (Rose Gold)
+    colorName: { type: String }, // For jewelry: 'Yellow Gold', 'White Gold', 'Rose Gold'
   },
   { timestamps: false}
 );
