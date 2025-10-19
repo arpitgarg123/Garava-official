@@ -381,7 +381,7 @@ const ProductCard = ({
         {(product.type === "fragrance" || product.category === "fragrance") ? (
           <>
             <div className="text-[0.6875rem] uppercase tracking-wider text-gray-500 leading-0  max-sm:my-4  font-medium">{product.type || "Fragrance"}</div>
-            <h3 className="card-title">{product.name}</h3>
+            <h3 className="card-title max-sm:mt-2">{product.name}</h3>
 
             <div className="card-rupe-tex">{displayPrice}</div>
           </>
@@ -390,7 +390,7 @@ const ProductCard = ({
             <div className="text-sm uppercase leading-0 tracking-wider text-gray-500 font-medium">
               {isHighJewellery ? "HIGH JEWELLERY" : (product.type || product.category || "jewellery")}
             </div>
-            <h3 className="card-title">{product.name}</h3>            
+            <h3 className="card-title max-sm:mt-2">{product.name}</h3>            
             {/* Hide price for jewellery with Price on Request - only show in product details */}
             {isHighJewelleryProduct ? (
               <div className="flex flex-col gap-3 mt-auto">

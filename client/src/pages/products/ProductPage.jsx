@@ -299,10 +299,8 @@ const toast = useToastContext();
       <div className="w-full py-4 sm:py-6 md:py-8">
         <div className="w-full max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 xl:px-4 2xl:px-0">
           {/* Mobile Filter Button */}
-          <div className="md:hidden mb-4 flex justify-between items-center">
-            <h1 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
-              {getPageHeading()}
-            </h1>
+          <div className="md:hidden mb-4 flex justify-end items-center">
+           
             <button 
               onClick={() => setShowMobileFilters(true)}
               className="flex items-center gap-2 px-3 py-2 text-sm border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow"
@@ -380,7 +378,7 @@ const toast = useToastContext();
             <main className="w-full min-w-0">
               {/* Desktop Page Header */}
               <div className="hidden md:block mb-6">
-                <h1 className="text-xl lg:text-2xl xl:text-3xl font-bold text-gray-900 mb-2">
+                <h1 className="head-text flex ">
                   {getPageHeading()}
                 </h1>
               </div>
