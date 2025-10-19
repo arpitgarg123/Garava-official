@@ -27,9 +27,14 @@ npm install --omit=dev
 # Step 3: Build client
 echo "🏗️ Building client..."
 cd "$CLIENT_DIR"
-rm -rf node_modules dist package-lock.json
-npm cache clean --force
-npm install
+echo "📦 Installing client dependencies..."
+npm install || {
+  echo "❌ Client npm install failed. Trying with cache clean..."
+  rm -rf node_modules dist package-lock.json
+  npm cache clean --force
+  npm install
+}
+echo "🔨 Running Vite build..."
 npm run build
 
 # Step 4: Restart the backend
