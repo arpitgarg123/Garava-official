@@ -29,17 +29,15 @@ echo "🏗️ Building client..."
 cd "$CLIENT_DIR"
 echo "📦 Installing client dependencies..."
 
-# Ensure clean install
-if [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; then
-  echo "🧹 Clean install required..."
-  rm -rf node_modules dist package-lock.json
-  npm cache clean --force
-fi
+# Always do a clean install to ensure platform-specific dependencies
+echo "🧹 Removing old node_modules..."
+rm -rf node_modules dist
 
-# Install with error checking
-npm install --loglevel=error || {
+# Install with platform-specific optional dependencies
+echo "📦 Installing with optional dependencies..."
+npm install --include=optional --loglevel=error || {
   echo "❌ npm install failed. Retrying with verbose logging..."
-  npm install --verbose
+  npm install --include=optional --verbose
   exit 1
 }
 
