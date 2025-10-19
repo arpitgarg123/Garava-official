@@ -1,73 +1,33 @@
 import axios from "axios";
+import crypto from "crypto";
 import { simulatePhonePeOrder, simulatePaymentStatus } from "./phonepe.simulator.js";
 
 // PhonePe PG Configuration - Load dynamically to ensure env vars are available
 const getPhonePeConfig = () => ({
-  clientId: process.env.PHONEPE_CLIENT_ID,
-  clientSecret: process.env.PHONEPE_CLIENT_SECRET,
-  clientVersion: process.env.PHONEPE_CLIENT_VERSION || "1.0",
-  apiUrl: process.env.PHONEPE_API_URL || "https://api.phonepe.com/apis/pg",
-  authUrl: process.env.PHONEPE_AUTH_URL || "https://api.phonepe.com/apis/identity-manager",
+  merchantId: process.env.PHONEPE_CLIENT_ID, // Merchant ID (e.g., GRAVAONLINE)
+  saltKey: process.env.PHONEPE_CLIENT_SECRET, // Salt Key from API Keys section
+  saltIndex: process.env.PHONEPE_KEY_INDEX || "1", // Key Index from API Keys section
+  apiUrl: process.env.PHONEPE_API_URL || "https://api.phonepe.com/apis/hermes",
   redirectUrl: process.env.PHONEPE_REDIRECT_URL || "http://localhost:5173/payment/callback",
   callbackUrl: process.env.PHONEPE_CALLBACK_URL || "http://localhost:8080/webhooks/payments/phonepe"
 });
 
-// Token cache to avoid frequent token generation
-let tokenCache = {
-  token: null,
-  expiresAt: 0
-}; 
- 
 /**
- * Generate PhonePe OAuth access token
- * @returns {string} - Access token
+ * Generate X-VERIFY checksum for PhonePe v1 API
+ * @param {string} base64Payload - Base64 encoded payload
+ * @param {string} endpoint - API endpoint path
+ * @returns {string} - Checksum
  */
-const getAccessToken = async () => {
+const generateChecksum = (base64Payload, endpoint) => {
   const config = getPhonePeConfig();
-  
-  // Debug logging
-  console.log('🔐 PhonePe Auth Config:', {
-    authUrl: config.authUrl,
-    clientId: config.clientId,
-    fullUrl: `${config.authUrl}/v1/oauth/token`
-  });
-  
-  // Check if cached token is still valid (with 5 minutes buffer)
-  if (tokenCache.token && Date.now() < (tokenCache.expiresAt - 5 * 60 * 1000)) {
-    return tokenCache.token;
-  }
-
-  try {
-    const authResponse = await axios.post(
-      `${config.authUrl}/v1/oauth/token`,
-      new URLSearchParams({
-        client_id: config.clientId,
-        client_version: config.clientVersion,
-        client_secret: config.clientSecret,
-        grant_type: 'client_credentials'
-      }),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }
-    );
-
-    const { access_token, expires_at } = authResponse.data;
-    
-    // Cache the token
-    tokenCache.token = access_token;
-    tokenCache.expiresAt = expires_at * 1000; // Convert to milliseconds
-
-    return access_token;
-  } catch (error) {
-    console.error('PhonePe token generation failed:', error.response?.data || error.message);
-    throw new Error(`PhonePe authentication failed: ${error.response?.data?.message || error.message}`);
-  }
+  const stringToHash = base64Payload + endpoint + config.saltKey;
+  const sha256Hash = crypto.createHash('sha256').update(stringToHash).digest('hex');
+  return `${sha256Hash}###${config.saltIndex}`;
 };
 
+
 /**
- * Create PhonePe payment order using v2 API
+ * Create PhonePe payment order using v1 API (Standard Checkout)
  * @param {Object} params - Order parameters
  * @param {number} params.amountPaise - Amount in paise
  * @param {string} params.orderId - Unique order ID
@@ -79,55 +39,64 @@ export const createPhonePeOrder = async ({ amountPaise, orderId, userId, userPho
   const PHONEPE_CONFIG = getPhonePeConfig();
   
   // Check if PhonePe is properly configured
-  if (!PHONEPE_CONFIG.clientId || !PHONEPE_CONFIG.clientSecret) {
+  if (!PHONEPE_CONFIG.merchantId || !PHONEPE_CONFIG.saltKey) {
     throw new Error("PhonePe payment gateway is not configured. Please set PHONEPE_CLIENT_ID and PHONEPE_CLIENT_SECRET environment variables.");
   }
 
   try {
-    // Get access token
-    const accessToken = await getAccessToken();
-    
-    // Generate merchant order ID (max 63 chars, no special chars except _ and -)
+    // Generate merchant transaction ID (max 34 chars for v1 API)
     const timestamp = Date.now().toString().slice(-8);
     const shortOrderId = orderId.replace(/[^a-zA-Z0-9_-]/g, '').slice(-10);
-    const merchantOrderId = `TXN_${shortOrderId}_${timestamp}`;
+    const merchantTransactionId = `MT${shortOrderId}${timestamp}`;
     
-    // Create payment request payload for v2 API
+    // Create payment request payload for v1 API (Standard Checkout)
     const paymentPayload = {
-      merchantOrderId: merchantOrderId,
+      merchantId: PHONEPE_CONFIG.merchantId,
+      merchantTransactionId: merchantTransactionId,
+      merchantUserId: userId.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 36), // Max 36 chars
       amount: amountPaise, // Amount in paisa
-      expireAfter: 1200, // 20 minutes expiry
-      metaInfo: {
-        udf1: orderId,
-        udf2: userId,
-        udf3: userPhone
-      },
-      paymentFlow: {
-        type: "PG_CHECKOUT",
-        message: "Payment for your order",
-        merchantUrls: {
-          redirectUrl: `${PHONEPE_CONFIG.redirectUrl}?orderId=${orderId}`
-        }
+      redirectUrl: `${PHONEPE_CONFIG.redirectUrl}?orderId=${orderId}`,
+      redirectMode: "REDIRECT",
+      callbackUrl: PHONEPE_CONFIG.callbackUrl,
+      mobileNumber: userPhone,
+      paymentInstrument: {
+        type: "PAY_PAGE"
       }
     };
 
+    // Encode payload to base64
+    const base64Payload = Buffer.from(JSON.stringify(paymentPayload)).toString('base64');
+    
+    // Generate X-VERIFY checksum
+    const endpoint = '/pg/v1/pay';
+    const checksum = generateChecksum(base64Payload, endpoint);
+
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `O-Bearer ${accessToken}`,
+      'X-VERIFY': checksum,
       'Accept': 'application/json'
     };
 
+    console.log('🔐 PhonePe v1 API Request:', {
+      merchantId: PHONEPE_CONFIG.merchantId,
+      merchantTransactionId,
+      amount: amountPaise,
+      endpoint: `${PHONEPE_CONFIG.apiUrl}${endpoint}`
+    });
+
     const response = await axios.post(
-      `${PHONEPE_CONFIG.apiUrl}/checkout/v2/pay`,
-      paymentPayload,
+      `${PHONEPE_CONFIG.apiUrl}${endpoint}`,
+      { request: base64Payload },
       { headers }
     );
 
+    console.log('✅ PhonePe Order Created:', response.data);
+
     return {
-      success: true,
-      transactionId: merchantOrderId,
-      paymentUrl: response.data.redirectUrl,
-      gatewayOrderId: response.data.orderId,
+      success: response.data.success,
+      transactionId: merchantTransactionId,
+      paymentUrl: response.data.data.instrumentResponse.redirectInfo.url,
+      gatewayOrderId: merchantTransactionId,
       rawResponse: response.data
     };
 
@@ -135,8 +104,8 @@ export const createPhonePeOrder = async ({ amountPaise, orderId, userId, userPho
     console.error('PhonePe order creation failed:', error.response?.data || error.message);
     
     // Only use simulator for placeholder credentials in development
-    const isPlaceholderCredentials = PHONEPE_CONFIG.clientId.includes('your_client_id') || 
-                                   PHONEPE_CONFIG.clientId.includes('CLIENT_ID');
+    const isPlaceholderCredentials = PHONEPE_CONFIG.merchantId.includes('your_client_id') || 
+                                   PHONEPE_CONFIG.merchantId.includes('CLIENT_ID');
     
     if ((error.response?.data?.code === 'UNAUTHORIZED' || error.response?.status === 401) && 
         process.env.NODE_ENV === 'development' && 
@@ -150,44 +119,57 @@ export const createPhonePeOrder = async ({ amountPaise, orderId, userId, userPho
   }
 };
 
+
 /**
- * Check PhonePe payment status using v2 API
- * @param {string} merchantOrderId - Merchant Order ID
+ * Check PhonePe payment status using v1 API
+ * @param {string} merchantTransactionId - Merchant Transaction ID
  * @returns {Object} - Payment status
  */
-export const checkPhonePePaymentStatus = async (merchantOrderId) => {
+export const checkPhonePePaymentStatus = async (merchantTransactionId) => {
   const PHONEPE_CONFIG = getPhonePeConfig();
   
   // Check if this is a simulator transaction - handle directly
-  const isSimulatorTransaction = merchantOrderId.startsWith('SIM_');
+  const isSimulatorTransaction = merchantTransactionId.startsWith('SIM_');
   if (isSimulatorTransaction) {
-    console.log('🎭 Simulator transaction detected, using simulator directly:', merchantOrderId);
-    const simulatorResponse = await simulatePaymentStatus(merchantOrderId);
+    console.log('🎭 Simulator transaction detected, using simulator directly:', merchantTransactionId);
+    const simulatorResponse = await simulatePaymentStatus(merchantTransactionId);
     console.log('📄 Simulator response:', simulatorResponse);
     return simulatorResponse;
   }
   
   try {
-    // Get access token
-    const accessToken = await getAccessToken();
+    // Generate X-VERIFY checksum for status check
+    const endpoint = `/pg/v1/status/${PHONEPE_CONFIG.merchantId}/${merchantTransactionId}`;
+    const checksum = generateChecksum('', endpoint);
 
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `O-Bearer ${accessToken}`,
+      'X-VERIFY': checksum,
       'Accept': 'application/json'
     };
 
+    console.log('🔍 Checking PhonePe status:', {
+      merchantId: PHONEPE_CONFIG.merchantId,
+      merchantTransactionId,
+      endpoint: `${PHONEPE_CONFIG.apiUrl}${endpoint}`
+    });
+
     const response = await axios.get(
-      `${PHONEPE_CONFIG.apiUrl}/checkout/v2/order/${merchantOrderId}/status`,
+      `${PHONEPE_CONFIG.apiUrl}${endpoint}`,
       { headers }
     );
 
+    console.log('📊 PhonePe Status Response:', response.data);
+
+    const paymentData = response.data.data;
+    const isSuccess = response.data.success && paymentData.state === 'COMPLETED';
+
     return {
-      success: response.data.state === 'COMPLETED',
-      transactionId: merchantOrderId,
-      paymentStatus: response.data.state,
-      amount: response.data.amount,
-      gatewayOrderId: response.data.orderId,
+      success: isSuccess,
+      transactionId: merchantTransactionId,
+      paymentStatus: paymentData.state,
+      amount: paymentData.amount,
+      gatewayOrderId: merchantTransactionId,
       rawResponse: response.data
     };
 
@@ -199,7 +181,7 @@ export const checkPhonePePaymentStatus = async (merchantOrderId) => {
       console.warn('PhonePe API rate limit reached, returning pending status');
       return {
         success: false,
-        transactionId: merchantOrderId,
+        transactionId: merchantTransactionId,
         paymentStatus: 'PENDING', // Indicate payment is still pending
         amount: null,
         gatewayOrderId: null,
@@ -208,15 +190,15 @@ export const checkPhonePePaymentStatus = async (merchantOrderId) => {
     }
     
     // Use simulator for development or if transaction ID indicates simulator was used
-    const isPlaceholderCredentials = getPhonePeConfig().clientId.includes('your_client_id') || 
-                                   getPhonePeConfig().clientId.includes('CLIENT_ID');
-    const isSimulatorTransaction = merchantOrderId.startsWith('SIM_');
+    const isPlaceholderCredentials = getPhonePeConfig().merchantId.includes('your_client_id') || 
+                                   getPhonePeConfig().merchantId.includes('CLIENT_ID');
+    const isSimulatorTransaction = merchantTransactionId.startsWith('SIM_');
     
     if (((error.response?.data?.code === 'UNAUTHORIZED' || error.response?.status === 401) && 
         process.env.NODE_ENV === 'development' && 
         isPlaceholderCredentials) || isSimulatorTransaction) {
-      console.log('🔧 Using PhonePe simulator for status check:', merchantOrderId);
-      const simulatorResponse = await simulatePaymentStatus(merchantOrderId);
+      console.log('🔧 Using PhonePe simulator for status check:', merchantTransactionId);
+      const simulatorResponse = await simulatePaymentStatus(merchantTransactionId);
       console.log('📄 Simulator response:', simulatorResponse);
       return simulatorResponse;
     }
@@ -225,35 +207,49 @@ export const checkPhonePePaymentStatus = async (merchantOrderId) => {
   }
 };
 
+
 /**
- * Verify PhonePe webhook callback (v2 API uses different verification)
- * @param {Object} payload - Webhook payload
- * @param {Object} headers - Request headers
+ * Verify PhonePe webhook callback (v1 API)
+ * @param {Object} payload - Webhook payload (base64 encoded in request body)
+ * @param {Object} headers - Request headers containing X-VERIFY
  * @returns {boolean} - Verification result
  */
-export const verifyPhonePeCallback = (payload, headers) => {
+export const verifyPhonePeCallback = (base64Payload, xVerifyHeader) => {
   try {
-    // For v2 API, PhonePe webhook verification is different
-    // The webhook payload contains order details that can be verified
-    // by checking the order status via API
+    const config = getPhonePeConfig();
     
-    if (!payload || !payload.merchantOrderId) {
-      console.error('PhonePe callback verification failed: Invalid payload');
+    if (!base64Payload || !xVerifyHeader) {
+      console.error('PhonePe callback verification failed: Missing payload or X-VERIFY header');
       return false;
     }
 
-    // Basic payload validation
-    const requiredFields = ['merchantOrderId', 'orderId', 'state'];
-    for (const field of requiredFields) {
-      if (!payload[field]) {
-        console.error(`PhonePe callback verification failed: Missing ${field}`);
-        return false;
-      }
+    // Extract checksum from X-VERIFY header (format: checksum###keyIndex)
+    const [receivedChecksum, keyIndex] = xVerifyHeader.split('###');
+    
+    if (keyIndex !== config.saltIndex) {
+      console.error('PhonePe callback verification failed: Invalid key index');
+      return false;
     }
 
-    // For additional security, you should verify the webhook by calling
-    // the order status API to confirm the payment status
-    console.log('PhonePe webhook received for order:', payload.merchantOrderId);
+    // Generate expected checksum
+    const endpoint = '/pg/v1/pay';
+    const expectedChecksum = generateChecksum(base64Payload, endpoint).split('###')[0];
+    
+    if (receivedChecksum !== expectedChecksum) {
+      console.error('PhonePe callback verification failed: Checksum mismatch');
+      return false;
+    }
+
+    // Decode and validate payload
+    const payloadStr = Buffer.from(base64Payload, 'base64').toString('utf-8');
+    const payload = JSON.parse(payloadStr);
+    
+    if (!payload || !payload.merchantTransactionId) {
+      console.error('PhonePe callback verification failed: Invalid payload structure');
+      return false;
+    }
+
+    console.log('✅ PhonePe webhook verified for transaction:', payload.merchantTransactionId);
     
     return true;
      
@@ -263,10 +259,11 @@ export const verifyPhonePeCallback = (payload, headers) => {
   }
 };
 
+
 /**
- * Process PhonePe refund using v2 API
+ * Process PhonePe refund using v1 API
  * @param {Object} params - Refund parameters
- * @param {string} params.originalTransactionId - Original merchant order ID
+ * @param {string} params.originalTransactionId - Original merchant transaction ID
  * @param {number} params.amountPaise - Refund amount in paise
  * @param {string} params.orderId - Order ID for reference
  * @returns {Object} - Refund response
@@ -275,42 +272,57 @@ export const createPhonePeRefund = async ({ originalTransactionId, amountPaise, 
   const PHONEPE_CONFIG = getPhonePeConfig();
   
   // Check if PhonePe is properly configured
-  if (!PHONEPE_CONFIG.clientId || !PHONEPE_CONFIG.clientSecret) {
+  if (!PHONEPE_CONFIG.merchantId || !PHONEPE_CONFIG.saltKey) {
     throw new Error("PhonePe refund failed: Payment gateway is not configured. Please set PHONEPE_CLIENT_ID and PHONEPE_CLIENT_SECRET environment variables.");
   }
 
   try {
-    // Get access token
-    const accessToken = await getAccessToken();
-    
-    // Generate refund ID
+    // Generate refund ID (max 34 chars)
     const timestamp = Date.now().toString().slice(-8);
-    const merchantRefundId = `REFUND_${orderId.replace(/[^a-zA-Z0-9_-]/g, '').slice(-10)}_${timestamp}`;
+    const merchantRefundId = `RF${orderId.replace(/[^a-zA-Z0-9_-]/g, '').slice(-10)}${timestamp}`;
     
     const refundPayload = {
-      merchantRefundId: merchantRefundId,
-      originalMerchantOrderId: originalTransactionId,
+      merchantId: PHONEPE_CONFIG.merchantId,
+      merchantUserId: `USER_${orderId.slice(-10)}`,
+      originalTransactionId: originalTransactionId,
+      merchantTransactionId: merchantRefundId,
       amount: amountPaise,
-      reason: "Customer requested refund"
+      callbackUrl: PHONEPE_CONFIG.callbackUrl
     };
+
+    // Encode payload to base64
+    const base64Payload = Buffer.from(JSON.stringify(refundPayload)).toString('base64');
+    
+    // Generate X-VERIFY checksum
+    const endpoint = '/pg/v1/refund';
+    const checksum = generateChecksum(base64Payload, endpoint);
 
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `O-Bearer ${accessToken}`,
+      'X-VERIFY': checksum,
       'Accept': 'application/json'
     };
 
+    console.log('🔁 PhonePe Refund Request:', {
+      merchantId: PHONEPE_CONFIG.merchantId,
+      merchantRefundId,
+      amount: amountPaise,
+      originalTransactionId
+    });
+
     const response = await axios.post(
-      `${PHONEPE_CONFIG.apiUrl}/payments/v2/refund`,
-      refundPayload,
+      `${PHONEPE_CONFIG.apiUrl}${endpoint}`,
+      { request: base64Payload },
       { headers }
     );
 
+    console.log('✅ PhonePe Refund Initiated:', response.data);
+
     return {
-      success: true,
+      success: response.data.success,
       refundTransactionId: merchantRefundId,
-      status: response.data.state,
-      refundId: response.data.refundId,
+      status: response.data.data?.state || 'PENDING',
+      refundId: merchantRefundId,
       rawResponse: response.data
     };
 
