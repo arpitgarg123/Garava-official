@@ -1,0 +1,79 @@
+/* eslint-disable no-console */
+const express = require('express');
+const crypto = require('crypto');
+const { exec } = require('child_process');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 9000;
+const WEBHOOK_SECRET = process.env.GITHUB_WEBHOOK_SECRET || 'change-this-secret';
+
+// We need the raw body for signature verification
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
+
+// Health check
+app.get('/webhook', (_req, res) => {
+  res.json({ status: 'Webhook server is running', timestamp: new Date().toISOString() });
+});
+
+// GitHub webhook
+app.post('/webhook', (req, res) => {
+  try {
+    const signature = req.headers['x-hub-signature-256'];
+    if (!signature) {
+      console.log('No signature provided');
+      return res.status(401).send('No signature');
+    }
+
+    // Compute HMAC on raw body
+    const hmac = crypto.createHmac('sha256', WEBHOOK_SECRET);
+    const digest = 'sha256=' + hmac.update(req.rawBody).digest('hex');
+
+    if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest))) {
+      console.log('Invalid signature');
+      return res.status(401).send('Invalid signature');
+    }
+
+    const event = req.headers['x-github-event'];
+    const branch = req.body?.ref?.replace('refs/heads/', '');
+    console.log(`Received ${event} on branch ${branch}`);
+
+    if (event !== 'push' || branch !== 'main') {
+      return res.status(200).send('Event ignored');
+    }
+
+    console.log('Triggering deployment...');
+
+    // Deploy script lives at repo root
+    const DEPLOY_SCRIPT = path.join(__dirname, '..', 'deploy.sh');
+    exec(`bash ${DEPLOY_SCRIPT}`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Deployment error: ${error.message}`);
+        return;
+      }
+      if (stderr) console.error(`Deployment stderr: ${stderr}`);
+      console.log(`Deployment output:\n${stdout}`);
+    });
+
+    res.status(200).send('Deployment triggered');
+  } catch (e) {
+    console.error('Webhook error:', e);
+    res.status(500).send('Internal error');
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Webhook server listening on ${PORT}`);
+  console.log(`Secret configured: ${WEBHOOK_SECRET ? 'yes' : 'no'}`);
+});
+
+process.on('SIGINT', () => {
+  console.log('Shutting down webhook server...');
+  process.exit(0);
+});

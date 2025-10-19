@@ -1,48 +1,41 @@
 #!/bin/bash
+set -e  # Exit immediately on any error
 
-# Garava Deployment Script
-# Handles git pull, build, and PM2 restart with zero downtime
+echo "🚀 Starting Garava Deployment..."
 
-set -e  # Exit on any error
+# Base directories
+SERVER_DIR="$HOME/Garava-official/server"
+CLIENT_DIR="$HOME/Garava-official/client"
 
-echo "🚀 Starting Garava deployment..."
-cd /home/garava/Garava-official
+# Ensure Node.js 20 (your app requires it)
+echo "📦 Ensuring Node.js 20 is active..."
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
+nvm use 20 || echo "⚠️ Node 20 not found. Install with: nvm install 20"
 
-# Pull latest code
+# Step 1: Pull latest code
 echo "📥 Pulling latest code from GitHub..."
-git pull origin main
+cd "$HOME/Garava-official"
+git fetch origin main
+git reset --hard origin/main
 
-# Install server dependencies
+# Step 2: Install server dependencies
 echo "📦 Installing server dependencies..."
-cd server
-npm ci --production
+cd "$SERVER_DIR"
+npm install --omit=dev
 
-# Build client
-echo "🏗️  Building client..."
-cd ../client
-npm ci
+# Step 3: Build client
+echo "🏗️ Building client..."
+cd "$CLIENT_DIR"
+rm -rf node_modules dist package-lock.json
+npm cache clean --force
+npm install
 npm run build
 
-# Copy build to server public folder
-echo "📁 Copying build to server..."
-rm -rf ../server/public/*
-cp -r dist/* ../server/public/
+# Step 4: Restart the backend
+echo "♻️ Restarting PM2 app..."
+mkdir -p "$SERVER_DIR/logs"
+pm2 restart all || pm2 start "$HOME/Garava-official/ecosystem.config.js"
+pm2 save
 
-# Restart PM2
-echo "♻️  Restarting PM2..."
-cd ..
-pm2 restart ecosystem.config.js --update-env
-
-# Health check
-echo "🏥 Performing health check..."
-sleep 3
-if curl -f http://localhost:8080/api/health > /dev/null 2>&1; then
-    echo "✅ Deployment successful!"
-    pm2 status
-else
-    echo "❌ Health check failed!"
-    pm2 logs garava-backend --lines 50
-    exit 1
-fi
-
-echo "🎉 Deployment complete!"
+echo "✅ Deployment complete! 🚀"

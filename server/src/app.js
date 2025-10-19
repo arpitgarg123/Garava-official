@@ -193,6 +193,14 @@ import instagramRouter from "./modules/instagram/instagram.router.js";
     })
   );
 
+  // Backward-compatible health endpoint used by deployment docs
+  app.get('/api/health', (_, res) =>
+    res.json({
+      status: 'healthy',
+      uptime: process.uptime(),
+    })
+  );
+
   
   // routes
 

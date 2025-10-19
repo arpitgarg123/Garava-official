@@ -20,7 +20,7 @@ module.exports = {
     },
     {
       name: 'garava-webhook',
-      script: './server/webhook-server.js',
+      script: './server/webhook-server.cjs',
       instances: 1,
       exec_mode: 'fork',
       env: {

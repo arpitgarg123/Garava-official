@@ -13,7 +13,7 @@ This is a simplified quick-start guide. For complete details, see `HOSTINGER_VPS
    - PhonePe merchant credentials
    - Email (SMTP) credentials
 
-## 🚀 Quick Deployment (30 minutes)
+## 🚀 Quick Deployment (30 minutes)8+
 
 ### Step 1: SSH into VPS
 
