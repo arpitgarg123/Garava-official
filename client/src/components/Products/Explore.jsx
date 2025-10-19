@@ -1,16 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { fetchProducts } from '../../features/product/slice';
+import { listProductsApi } from '../../features/product/api';
 import Card from './Card';
 
 const Explore = ({ currentProduct }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [randomProducts, setRandomProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const scrollRef = useRef(null);
-  const dispatch = useDispatch();
-  
-  const { items: products, status } = useSelector(state => state.product.list);
   
   const handleMouseDown = () => setIsDragging(true);
   const handleMouseUp = () => setIsDragging(false);
@@ -33,48 +30,65 @@ const Explore = ({ currentProduct }) => {
   };
 
   useEffect(() => {
-    // Fetch products for explore section - prefer jewellery but fallback to all
-    dispatch(fetchProducts({
-      limit: 20,
-      page: 1
-    }));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (products && products.length > 0) {
-      // Determine the alternate product type to show
-      const currentType = currentProduct?.type?.toLowerCase();
-      let alternateType;
+    const fetchExploreProducts = async () => {
+      if (!currentProduct?.type) return;
       
-      // Show opposite category products
-      if (currentType === 'jewellery') {
-        alternateType = 'fragrance';
-      } else if (currentType === 'fragrance') {
-        alternateType = 'jewellery';
-      } else if (currentType === 'high-jewellery' || currentType === 'high_jewellery') {
-        alternateType = 'fragrance'; // High jewellery also shows fragrance
-      } else {
-        alternateType = null; // For unknown types, show any
+      setLoading(true);
+      try {
+        // Determine the alternate product type to show
+        const currentType = currentProduct.type.toLowerCase();
+        let alternateType;
+        
+        // Show opposite category products
+        if (currentType === 'jewellery') {
+          alternateType = 'fragrance';
+        } else if (currentType === 'fragrance') {
+          alternateType = 'jewellery';
+        } else if (currentType === 'high-jewellery' || currentType === 'high_jewellery') {
+          alternateType = 'fragrance'; // High jewellery also shows fragrance
+        } else {
+          alternateType = 'jewellery'; // Default to jewellery for unknown types
+        }
+        
+        // Fetch products of the alternate type directly from API
+        const response = await listProductsApi({
+          type: alternateType,
+          limit: 20,
+          page: 1
+        });
+        
+        const products = response.data?.products || response.data?.data || [];
+        
+        // Filter out the current product
+        let filtered = products.filter(product => product._id !== currentProduct._id);
+        
+        // If we got products, shuffle and take 6
+        if (filtered.length > 0) {
+          const shuffled = shuffleArray(filtered);
+          setRandomProducts(shuffled.slice(0, 6));
+        } else {
+          // Fallback: fetch any products if alternate type returned nothing
+          const fallbackResponse = await listProductsApi({
+            limit: 20,
+            page: 1
+          });
+          const fallbackProducts = fallbackResponse.data?.products || fallbackResponse.data?.data || [];
+          const fallbackFiltered = fallbackProducts.filter(product => product._id !== currentProduct._id);
+          const shuffled = shuffleArray(fallbackFiltered);
+          setRandomProducts(shuffled.slice(0, 6));
+        }
+      } catch (error) {
+        console.error('Failed to fetch explore products:', error);
+        setRandomProducts([]);
+      } finally {
+        setLoading(false);
       }
-      
-      // Filter products: exclude current product and prefer alternate type
-      let filtered = products.filter(product => 
-        product._id !== currentProduct?._id && 
-        (alternateType ? product.type?.toLowerCase() === alternateType : true)
-      );
-      
-      // If no alternate type products found, show any products except current
-      if (filtered.length === 0) {
-        filtered = products.filter(product => product._id !== currentProduct?._id);
-      }
-      
-      const shuffled = shuffleArray(filtered);
-      // Take only 6 random products
-      setRandomProducts(shuffled.slice(0, 6));
-    }
-  }, [products, currentProduct?._id, currentProduct?.type]);
+    };
 
-  if (status === 'loading') {
+    fetchExploreProducts();
+  }, [currentProduct?._id, currentProduct?.type]);
+
+  if (loading) {
     return (
       <div className="w-full py-12 px-4 flex-center flex-col">
         <header className="w-fit">
@@ -89,7 +103,7 @@ const Explore = ({ currentProduct }) => {
   }
 
   // Always show the section, even if no products
-  if (randomProducts.length === 0) {
+  if (randomProducts.length === 0 && !loading) {
     return (
       <div className="w-full py-12 px-4 flex-center flex-col">
         <header className="w-fit">

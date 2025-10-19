@@ -1,15 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { fetchProducts } from '../../features/product/slice';
+import { listProductsApi } from '../../features/product/api';
 import Card from './Card';
 
 const YouMayAlsoLike = ({ currentProduct }) => {
   const [isDragging, setIsDragging] = useState(false);
+  const [similarProducts, setSimilarProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
   const scrollRef = useRef(null);
-  const dispatch = useDispatch();
-  
-  const { items: products, status } = useSelector(state => state.product.list);
   
   const handleMouseDown = () => setIsDragging(true);
   const handleMouseUp = () => setIsDragging(false);
@@ -22,41 +20,38 @@ const YouMayAlsoLike = ({ currentProduct }) => {
   };
 
   useEffect(() => {
-    // Always fetch products when component mounts or currentProduct changes
-    if (currentProduct) {
-      if (currentProduct.type) {
-        // Fetch products from the same type (fragrance/jewellery)
-        dispatch(fetchProducts({
+    const fetchSimilarProducts = async () => {
+      if (!currentProduct?.type) return;
+      
+      setLoading(true);
+      try {
+        // Fetch products of the SAME type for "You May Also Like"
+        const response = await listProductsApi({
           type: currentProduct.type,
           limit: 12,
           page: 1
-        }));
-      } else {
-        // Fallback: fetch any products if type is not available
-        dispatch(fetchProducts({
-          limit: 12,
-          page: 1
-        }));
+        });
+        
+        const products = response.data?.products || response.data?.data || [];
+        
+        // Filter out the current product and take first 6
+        const filtered = products
+          .filter(product => product._id !== currentProduct._id)
+          .slice(0, 6);
+        
+        setSimilarProducts(filtered);
+      } catch (error) {
+        console.error('Failed to fetch similar products:', error);
+        setSimilarProducts([]);
+      } finally {
+        setLoading(false);
       }
-    }
-  }, [dispatch, currentProduct?.type, currentProduct?._id]);
+    };
 
-  // Filter out the current product, prefer same type, fallback to any product
-  let filteredProducts = products
-    ?.filter(product => 
-      product._id !== currentProduct?._id && 
-      product.type === currentProduct?.type
-    )
-    ?.slice(0, 6) || [];
+    fetchSimilarProducts();
+  }, [currentProduct?._id, currentProduct?.type]);
 
-  // If no products of same type found, show any products except current
-  if (filteredProducts.length === 0) {
-    filteredProducts = products
-      ?.filter(product => product._id !== currentProduct?._id)
-      ?.slice(0, 6) || [];
-  }
-
-  if (status === 'loading') {
+  if (loading) {
     return (
       <div className="w-full py-12 px-4 flex-center flex-col">
         <header className="w-fit">
@@ -70,7 +65,7 @@ const YouMayAlsoLike = ({ currentProduct }) => {
     );
   }
 
-  if (filteredProducts.length === 0) {
+  if (similarProducts.length === 0 && !loading) {
     return (
       <div className="w-full py-12 px-4 flex-center flex-col">
         <header className="w-fit">
@@ -115,7 +110,7 @@ const YouMayAlsoLike = ({ currentProduct }) => {
           onMouseMove={handleMouseMove}
         >
           <div className="flex gap-6 min-w-max px-4">
-            {filteredProducts.map((product, index) => {
+            {similarProducts.map((product, index) => {
               // Get the first available image using the correct structure
               const productImage = product.heroImage?.url || 
                                  product.heroImage || 
