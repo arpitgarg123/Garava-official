@@ -36,6 +36,12 @@ app.post('/webhook', (req, res) => {
     const hmac = crypto.createHmac('sha256', WEBHOOK_SECRET);
     const digest = 'sha256=' + hmac.update(req.rawBody).digest('hex');
 
+    // Debug logging
+    console.log('GitHub signature:', signature);
+    console.log('Computed digest:', digest);
+    console.log('Secret length:', WEBHOOK_SECRET.length);
+    console.log('Body length:', req.rawBody ? req.rawBody.length : 'undefined');
+
     if (!crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(digest))) {
       console.log('Invalid signature');
       return res.status(401).send('Invalid signature');
