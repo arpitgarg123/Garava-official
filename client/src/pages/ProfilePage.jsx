@@ -69,30 +69,24 @@ const ProfilePage = () => {
     return () => { mounted = false; };
   }, [dispatch]);
 
-  // Fetch orders and addresses when component mounts - with debouncing
-  const fetchTimeoutRef = useRef(null);
+  // Fetch orders and addresses only when the respective tabs are opened
+  const hasFetchedOrders = useRef(false);
+  const hasFetchedAddresses = useRef(false);
   
   useEffect(() => {
+    // Only fetch when the tab is active and data hasn't been fetched yet
     if (authUser) {
-      // Clear any existing timeout
-      if (fetchTimeoutRef.current) {
-        clearTimeout(fetchTimeoutRef.current);
+      if (activeTab === 'orders' && !hasFetchedOrders.current && userOrders.length === 0 && !isOrdersLoading) {
+        hasFetchedOrders.current = true;
+        dispatch(fetchUserOrders());
       }
       
-      // Debounce the fetch calls
-      fetchTimeoutRef.current = setTimeout(() => {
-        // Fetching user data
-        dispatch(fetchUserOrders());
+      if (activeTab === 'addresses' && !hasFetchedAddresses.current && addresses.length === 0 && !isAddressLoading) {
+        hasFetchedAddresses.current = true;
         dispatch(fetchAddresses());
-      }, 100); // Small delay to prevent rapid calls
-    }
-    
-    return () => {
-      if (fetchTimeoutRef.current) {
-        clearTimeout(fetchTimeoutRef.current);
       }
-    };
-  }, [dispatch, authUser?.id]); // Only depend on user ID, not entire user object
+    }
+  }, [dispatch, authUser, activeTab, userOrders.length, isOrdersLoading, addresses.length, isAddressLoading]); // Fetch only when tab changes and data is needed
 
   // Stable callback functions to prevent unnecessary re-renders
   const handleAddressSelect = useCallback(() => {}, []);
