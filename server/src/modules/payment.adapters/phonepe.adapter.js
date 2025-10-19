@@ -25,6 +25,13 @@ let tokenCache = {
 const getAccessToken = async () => {
   const config = getPhonePeConfig();
   
+  // Debug logging
+  console.log('🔐 PhonePe Auth Config:', {
+    authUrl: config.authUrl,
+    clientId: config.clientId,
+    fullUrl: `${config.authUrl}/v1/oauth/token`
+  });
+  
   // Check if cached token is still valid (with 5 minutes buffer)
   if (tokenCache.token && Date.now() < (tokenCache.expiresAt - 5 * 60 * 1000)) {
     return tokenCache.token;
