@@ -26,6 +26,7 @@ import silaImg from '../../assets/images/sila.webp';
 import evaraImg from '../../assets/images/evara.webp';
 import mangataImg from '../../assets/images/mangata.webp';
 import wayfarerImg from '../../assets/images/wayfarer.jpg';
+import sayoneeImg from '../../assets/images/Sayonnee.jpg';
 
 import { selectIsAuthenticated, selectUser, selectIsAdmin } from '../../features/auth/selectors.js';
 import { doLogout } from '../../features/auth/slice.js';
@@ -104,6 +105,12 @@ const navItems = [
         img: wayfarerImg, 
         to: '/products/fragrance?category=wayfarer',
         category: 'wayfarer'
+      },
+       { 
+        label: 'Sayonee', 
+        img: sayoneeImg,
+        to: '/products/fragrance?category=sayonee',
+        category: 'sayonee'
       },
   ]},
   { title: 'Maison', submenu: [

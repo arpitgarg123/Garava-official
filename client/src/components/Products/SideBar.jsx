@@ -284,6 +284,7 @@ const FRAGRANCE_SUBCATS = [
   { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.EVARA, label: "Evara" },
   { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.MANGATA, label: "Mangata" },
   { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.WAYFARER, label: "Wayfarer" },
+  { id: CATEGORY_MAPPINGS.FRAGRANCE_CATEGORIES.SAYONEE, label: "Sayonee" },
 ];
 
 // For "all products" view - main categories
