@@ -6,8 +6,8 @@ const getPhonePeConfig = () => ({
   clientId: process.env.PHONEPE_CLIENT_ID,
   clientSecret: process.env.PHONEPE_CLIENT_SECRET,
   clientVersion: process.env.PHONEPE_CLIENT_VERSION || "1.0",
-  apiUrl: process.env.PHONEPE_API_URL || "https://api-preprod.phonepe.com/apis/pg-sandbox",
-  authUrl: process.env.PHONEPE_AUTH_URL || "https://api-preprod.phonepe.com/apis/pg-sandbox",
+  apiUrl: process.env.PHONEPE_API_URL || "https://api.phonepe.com/apis/pg",
+  authUrl: process.env.PHONEPE_AUTH_URL || "https://api.phonepe.com/apis/pg",
   redirectUrl: process.env.PHONEPE_REDIRECT_URL || "http://localhost:5173/payment/callback",
   callbackUrl: process.env.PHONEPE_CALLBACK_URL || "http://localhost:8080/webhooks/payments/phonepe"
 });
