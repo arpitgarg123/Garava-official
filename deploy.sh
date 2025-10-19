@@ -55,9 +55,10 @@ cd "$CLIENT_DIR"
 echo "🧹 Cleaning client directory..."
 rm -rf node_modules dist package-lock.json .vite
 
-# Install with platform-specific optional dependencies
-echo "📦 Installing client dependencies (this may take a minute)..."
-npm install --include=optional 2>&1 | tee /tmp/npm-install.log
+# Install with platform-specific optional dependencies and include devDependencies
+echo "📦 Installing client dependencies (including devDependencies and optional binaries)..."
+# Ensure devDependencies are installed even if NODE_ENV=production
+npm_config_production=false npm install --include=optional 2>&1 | tee /tmp/npm-install.log
 
 # Check if npm install succeeded
 if [ ${PIPESTATUS[0]} -ne 0 ]; then
