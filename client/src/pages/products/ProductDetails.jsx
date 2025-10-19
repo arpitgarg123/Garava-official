@@ -344,7 +344,7 @@ const ProductDetails = () => {
   //   "/placeholder.jpg";
 
   return (
-    <div className="headTop mt-38 max-md:mt-20 pb-10 max-2xl:mt-40">
+    <div className="headTop mt-38 max-md:mt-20 pb-10 max-2xl:mt-40 max-sm:mt-0">
        <div className="sticky top-36  max-md:top-20 z-50  px-4">
     <BackButton />
   </div>
