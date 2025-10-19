@@ -274,8 +274,8 @@ const Navbar = () => {
   const shouldShowNavItemsDesktop = !scrolled;
 
   const navbarClass = `navbar hidden md:block py-3.5 transition-all duration-500 ease-out ${
-    isHidden ? '-translate-y-full' : 'translate-y-0'
-  }   ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'}  ${
+    isHidden ? '-translate-y-96' : 'translate-y-0'
+  }   ${navTextColor} ${scrolled || !isHeroPage || isNavActive ? 'bg-white'  : 'bg-transparent'}    ${
     
     isNavActive ? 'expanded' : ''
   }`;
@@ -574,7 +574,7 @@ const Navbar = () => {
        }
 
         {/* {shouldShowNavItemsDesktop && ( */}
-          <div className="flex-center ">
+          <div className="flex-center  ">
             {navItems.map((item, idx) => (
               <NavItem
                 key={idx}

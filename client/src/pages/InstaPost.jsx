@@ -57,7 +57,7 @@ const InstaPost = () => {
   return (
     <div className='w-full py-6'>
       <PageHeader title="#Posts" />
-      <p className='text-center w-full'>
+      <p className='text-center text-[0.875rem] w-full'>
         Check how GARAVA shares beauty — from sparkling diamonds to signature perfumes — <br /> 
         in our latest Instagram posts.
       </p>
@@ -75,7 +75,7 @@ const InstaPost = () => {
       ) : null}
 
       <section className="w-[98%] mx-auto py-10">
-        <div className="mx-auto w-[95%] max-w-7xl">
+        <div className="mx-auto w-[95%] max-w-8xl">
           {/* Horizontal scrollable container */}
           <div className="relative group">
             {/* Left Arrow */}

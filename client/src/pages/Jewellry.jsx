@@ -65,10 +65,10 @@ const Jewellry = () => {
     fetchJewelleryProducts();
   }, []);
   return (
-    <div className='w-full py-6 '>
+    <div className='w-full  py-6 '>
         <PageHeader title="Jewellery" />
        <section className="w-[98%] mx-auto py-10">
-        <div className="mx-auto w-[95%] max-w-7xl">
+        <div className="mx-auto w-[95%] max-w-8xl">
           
           {loading ? (
             <div className="flex justify-center items-center py-20">
@@ -82,7 +82,7 @@ const Jewellry = () => {
           ) : (
           <>
           {/* Horizontal scrollable container with arrows */}
-          <div className="relative group">
+          <div className="relative group w-full">
             {/* Left Arrow */}
             <button
               onClick={() => {
@@ -111,9 +111,9 @@ const Jewellry = () => {
             
             <div 
               ref={scrollRef}
-              className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+              className="overflow-x-auto w-full scrollbar-hide cursor-grab active:cursor-grabbing"
             >
-              <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max px-4 py-4">
+              <div className="flex gap-6 sm:gap-8 md:gap-10  px-4 py-4">
                 {products.map((p) => (
                   <div key={p.id} className="w-[250px] sm:w-[280px] md:w-[300px] flex-shrink-0">
                     <Card 

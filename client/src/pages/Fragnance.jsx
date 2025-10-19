@@ -65,9 +65,9 @@ const Fragnance = () => {
   }, []);
   return (
      <div className='w-full py-6 '>
-       <PageHeader title="Fragnance" />
+       <PageHeader title="Fragrance" />
          <section className="w-[98%] mx-auto py-10">
-        <div className="mx-auto w-[95%] max-w-7xl">
+        <div className="mx-auto w-[95%] max-w-8xl">
           
           {loading ? (
             <div className="flex justify-center items-center py-20">
@@ -81,7 +81,7 @@ const Fragnance = () => {
           ) : (
           <>
           {/* Horizontal scrollable container with arrows */}
-          <div className="relative group">
+          <div className="relative group w-full">
             {/* Left Arrow */}
             <button
               onClick={() => {
