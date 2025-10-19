@@ -1,34 +1,42 @@
 import React, { useState } from "react";
 import './newsLetter.css'
+import { subscribeToNewsletter } from '../../features/newsletter/api';
 
 const NewsletterForm = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    firstName: "",
-    country: "",
-    phone: "",
-  });
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ type: '', text: '' });
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setEmail(e.target.value);
+    // Clear message when user starts typing
+    if (message.text) setMessage({ type: '', text: '' });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: integrate with backend / API
-    // Newsletter subscription submission
+    setLoading(true);
+    setMessage({ type: '', text: '' });
+
+    try {
+      await subscribeToNewsletter(email);
+      setMessage({ type: 'success', text: 'Successfully subscribed to our newsletter!' });
+      setEmail(''); // Clear the form
+    } catch (error) {
+      const errorMsg = error.response?.data?.message || 'Failed to subscribe. Please try again.';
+      setMessage({ type: 'error', text: errorMsg });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <>
     <div className="w-[38%] mr-[16rem]">
     <div className="h-28">
-        <h1 className="font-[bion] text-2xl  ">UNSAID PARIS NEWSLETTER</h1>
-        <p className="  ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse cumque ex rerum atque unde laborum!
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique!
+        <h1 className="font-[bion] text-2xl  ">GARAVA NEWSLETTER</h1>
+        <p className="  ">Subscribe to receive updates on new products, exclusive offers, and special events.
+            Stay connected with the latest in luxury jewelry and fragrances!
         </p>
     </div>
     <form onSubmit={handleSubmit} className="mt-6 space-y-6 ">
@@ -39,46 +47,27 @@ const NewsletterForm = () => {
           name="email"
           required
           placeholder="Email address"
-          value={formData.email}
+          value={email}
           onChange={handleChange}
+          disabled={loading}
           className="input-field"
         />
         <span className="text-sm text-red-500">*Required</span>
       </div>
 
-      <div className="flex gap-4">
-        <div className="w-1/2">
-          <input
-            type="text"
-            name="firstName"
-            required
-            placeholder="First name"
-            value={formData.firstName}
-            onChange={handleChange}
-            className="input-field"
-          />
-          <span className="text-sm text-red-500">*Required</span>
+      {/* Success/Error Message */}
+      {message.text && (
+        <div className={`p-3 rounded ${
+          message.type === 'success' 
+            ? 'bg-green-50 text-green-800 border border-green-200' 
+            : 'bg-red-50 text-red-800 border border-red-200'
+        }`}>
+          {message.text}
         </div>
-
-        <div className="w-1/2">
-          <input
-            type="text"
-            name="country"
-            required
-            placeholder="Country"
-            value={formData.country}
-            onChange={handleChange}
-            className="input-field"
-          />
-          <span className="text-sm text-red-500">*Required</span>
-        </div>
-      </div>
-
-
-   
+      )}
 
       <p className="text-sm text-gray-500 leading-5">
-        (*) mandatory fields <br />
+        (*) mandatory field <br />
         You can unsubscribe from the link provided in our newsletter at any
         time. Your personal information will be stored & used in accordance with
         our <a href="/privacy" className="underline">privacy policy</a>.
@@ -86,10 +75,10 @@ const NewsletterForm = () => {
 
       <button
         type="submit"
-        // className= "py-2 bg-[#686868] text-white transition-colors duration-300  hover:bg-[#0c0c0c] hover:text-[#f5e6d7] w-62 "
-        className= "btn w-62"
+        disabled={loading}
+        className= "btn w-62 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        SUBSCRIBE
+        {loading ? 'SUBSCRIBING...' : 'SUBSCRIBE'}
       </button>
     </form>
     </div>

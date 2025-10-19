@@ -40,6 +40,7 @@ import { fetchAppointmentsAdmin } from '../features/appointment/adminSlice';
 import { fetchBlogsAdmin } from '../features/blogs/blogAdminSlice';
 import { fetchTestimonials } from '../features/testimonial/slice';
 import { fetchDashboardStats } from '../features/dashboard/dashboardSlice';
+import { fetchNewsletterSubscribers, setFilters as setNewsletterFilters, setPage as setNewsletterPage } from '../features/newsletter/slice';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -54,6 +55,9 @@ const Dashboard = () => {
   const appointments = useSelector(state => state.appointmentAdmin?.appointments || []);
   const blogs = useSelector(state => state.blogAdmin?.blogs || []);
   const testimonials = useSelector(state => state.testimonials?.testimonials || []);
+  const newsletterSubscribers = useSelector(state => state.newsletter?.subscribers || []);
+  const newsletterPagination = useSelector(state => state.newsletter?.pagination || { page: 1, limit: 20, total: 0, totalPages: 1 });
+  const newsletterLoading = useSelector(state => state.newsletter?.loading || false);
   
   // Dashboard stats from dedicated endpoint
   const dashboardStats = useSelector(state => state.dashboard?.stats || {});
@@ -76,6 +80,7 @@ const Dashboard = () => {
     dispatch(fetchAppointmentsAdmin({ limit: 10, sort: 'appointmentAt' }));
     dispatch(fetchBlogsAdmin({ limit: 5, sort: '-createdAt' }));
     dispatch(fetchTestimonials({ limit: 5, sort: '-createdAt' }));
+    dispatch(fetchNewsletterSubscribers({ page: 1, limit: 20 }));
   }, [dispatch]);
 
   // Calculate real statistics  
@@ -145,12 +150,6 @@ const Dashboard = () => {
     { id: "newsletter", label: "Newsletter", icon: FaEnvelope },
   ];
 
-  // Newsletter dummy data (keeping this as it might not have a Redux slice yet)
-  const items = [
-    { _id:"1", email:"a@x.com", status:"subscribed", createdAt:"2025-09-01T09:00:00Z" },
-    { _id:"2", email:"b@x.com", status:"unsubscribed", createdAt:"2025-09-05T12:00:00Z" }
-  ];
-
   const renderContent = () => {
     switch (activeTab) {
       case "overview":
@@ -197,10 +196,24 @@ const Dashboard = () => {
       case "newsletter":
         return (
           <Newsletter  
-            subscribers={items}
-            pagination={{ page:1, limit:20, total:items.length, totalPages:Math.ceil(items.length/20) }}
-            onFilterChange={(f) => {/* TODO: Implement order filters */}}
-            onPageChange={(p) => {/* TODO: Implement order pagination */}} 
+            subscribers={newsletterSubscribers}
+            pagination={newsletterPagination}
+            loading={newsletterLoading}
+            onFilterChange={(filters) => {
+              dispatch(setNewsletterFilters(filters));
+              dispatch(fetchNewsletterSubscribers({ 
+                page: 1, 
+                limit: newsletterPagination.limit, 
+                status: filters.status || '' 
+              }));
+            }}
+            onPageChange={(newPage) => {
+              dispatch(setNewsletterPage(newPage));
+              dispatch(fetchNewsletterSubscribers({ 
+                page: newPage, 
+                limit: newsletterPagination.limit 
+              }));
+            }} 
           />
         );
       default:

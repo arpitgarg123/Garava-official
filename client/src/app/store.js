@@ -23,6 +23,7 @@ import testimonialReducer from "../features/testimonial/slice.js";
 import newsEventsReducer from "../features/newsevents/slice.js";
 import instagramReducer from "../features/instagram/slice.js";
 import dashboardReducer from "../features/dashboard/dashboardSlice.js";
+import newsletterReducer from "../features/newsletter/slice.js";
 
 // Persist configuration
 const persistConfig = {
@@ -53,6 +54,7 @@ const rootReducer = combineReducers({
   newsevents: newsEventsReducer,
   instagram: instagramReducer,
   dashboard: dashboardReducer,
+  newsletter: newsletterReducer,
 });
 
 // Create persisted reducer
