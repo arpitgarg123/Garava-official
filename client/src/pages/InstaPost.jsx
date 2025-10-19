@@ -75,7 +75,7 @@ const InstaPost = () => {
       ) : null}
 
       <section className="w-[98%] mx-auto py-10">
-        <div className="mx-auto w-[95%] max-w-8xl">
+        <div className="mx-auto w-[95%] max-w-8xl ">
           {/* Horizontal scrollable container */}
           <div className="relative group">
             {/* Left Arrow */}
@@ -98,7 +98,7 @@ const InstaPost = () => {
               ref={scrollRef}
               className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
             >
-              <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max px-4 py-4">
+              <div className="flex gap-6 sm:gap-8 md:gap-10  items-center justify-center px-4 py-4">
                 {products.map((p) => (
                   <div key={p.id} className="w-[250px] sm:w-[280px] md:w-[300px] flex-shrink-0">
                     <article 
