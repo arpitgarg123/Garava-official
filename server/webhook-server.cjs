@@ -3,12 +3,29 @@ const express = require('express');
 const crypto = require('crypto');
 const { exec } = require('child_process');
 const path = require('path');
+
 // Load from repo root where symlink exists
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+const envPath = path.join(__dirname, '..', '.env');
+console.log('[DEBUG] Loading .env from:', envPath);
+const dotenvResult = require('dotenv').config({ path: envPath });
+
+if (dotenvResult.error) {
+  console.error('[ERROR] Failed to load .env:', dotenvResult.error);
+  process.exit(1);
+}
+
+console.log('[DEBUG] .env loaded successfully');
+console.log('[DEBUG] GITHUB_WEBHOOK_SECRET exists:', !!process.env.GITHUB_WEBHOOK_SECRET);
+console.log('[DEBUG] GITHUB_WEBHOOK_SECRET length:', process.env.GITHUB_WEBHOOK_SECRET?.length || 0);
 
 const app = express();
 const PORT = process.env.PORT || 9000;
-const WEBHOOK_SECRET = process.env.GITHUB_WEBHOOK_SECRET || 'change-this-secret';
+const WEBHOOK_SECRET = process.env.GITHUB_WEBHOOK_SECRET;
+
+if (!WEBHOOK_SECRET || WEBHOOK_SECRET === 'change-this-secret') {
+  console.error('[ERROR] GITHUB_WEBHOOK_SECRET not configured properly!');
+  process.exit(1);
+}
 
 // We need the raw body for signature verification
 app.use(
