@@ -3,6 +3,7 @@ module.exports = {
     {
       name: 'garava-backend',
       script: './server/src/app.js',
+      cwd: './',
       instances: 2,
       exec_mode: 'cluster',
       env: {
@@ -21,6 +22,7 @@ module.exports = {
     {
       name: 'garava-webhook',
       script: './server/webhook-server.cjs',
+      cwd: './',
       instances: 1,
       exec_mode: 'fork',
       env: {
