@@ -1,6 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
-dotenv.config();
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Load env from server/.env explicitly
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 import connectDb from './shared/db.js';
 import cors from 'cors';
@@ -12,11 +19,7 @@ import { env } from './config/env.js';
 import { logger } from './shared/logger.js'; 
 import { errorHandler } from './shared/utils/errorHandler.js';
 import passport from './config/passport.js'; // Import passport configuration
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// path and __dirname already defined above
 
 // router imports
 import authRouter from './modules/auth/auth.router.js';
