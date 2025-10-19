@@ -192,7 +192,7 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-26 md:pt-32">
+    <div className="min-h-screen bg-gray-50 mt-38 max-md:mt-2 md:pt-3">
       {/* Header */}
       <div className=" border-b border-gray-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

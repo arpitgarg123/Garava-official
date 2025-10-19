@@ -198,7 +198,7 @@ const TestimonialSection = () => {
       <div className="w-full py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 font-playfair">
+            <h2 className="text-xl sm:text-xl lg:text-xl font-bold text-gray-900 mb-6 font-playfair">
               What Our Customers Say
             </h2>
             <div className="bg-red-50 border border-red-200 rounded-2xl p-8 max-w-md mx-auto">
@@ -227,12 +227,12 @@ const TestimonialSection = () => {
       <div className="w-full py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-6 font-playfair">
+            <h2 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 mb-6 font-playfair">
               What Our Customers Say
             </h2>
             <div className="bg-gray-50  p-12 max-w-2xl mx-auto">
               <div className="text-6xl mb-6">💎</div>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <p className="text-gray-600 text-sm leading-relaxed">
                 We're gathering precious testimonials from our valued customers. 
                 Check back soon to read their experiences.
               </p>
@@ -248,10 +248,10 @@ const TestimonialSection = () => {
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header - Fixed responsive typography */}
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 lg:mb-6 font-playfair leading-tight">
+          <h2 className="text-xl sm:text-xl lg:text-3xl font-bold text-gray-900 mb-2 lg:mb-2 font-playfair leading-tight">
             What Our Customers Say
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Discover why thousands of customers trust Garava for their most precious moments
           </p>
         </div>
@@ -288,7 +288,7 @@ const TestimonialSection = () => {
           {/* Testimonials Slider - Fixed responsive layout */}
           <div 
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto cursor-grab select-none scroll-smooth px-4 xl:px-16"
+            className=" gap-6 overflow-x-auto w-full flex  items-center justify-center cursor-grab select-none scroll-smooth px-4 xl:px-16"
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',

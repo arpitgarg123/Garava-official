@@ -68,7 +68,7 @@ body, html{
 }
 
 .navbar {
-  height: auto;
+  height: fit;
   /* background: white; */
   position: fixed;
   width: 100%;
@@ -151,13 +151,22 @@ body:has(.submenu-container) {
   font-size: 0.8vw;
   z-index: 10000;
 }
+/* @media (min-width: 600px) {
+  .header {
+    font-size: 2rem;
+    height: 4rem;
+  }
+} */
 .navTop{
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 6vw;
-  /* background-color: cadetblue; */
+  /* background-col
+  
+  
+  or: cadetblue; */
 }
 .flex{
   display: flex;
@@ -193,7 +202,7 @@ body:has(.submenu-container) {
 .head {
   display: flex;
   justify-content: center;
-  margin-bottom: 5vh;
+  margin-bottom: 0vh;
   padding: 0 1rem; 
  
 }
@@ -207,11 +216,9 @@ body:has(.submenu-container) {
 
 .head-text {
   text-transform: uppercase;
-  /* line-height: 1.2; */
   text-align: center;
-  
   font-family: 'playfair';
-  font-size: clamp(1.5rem, 5vw, 2.5rem); 
+  font-size: 1.875rem; 
 }
 
 .head-line {
@@ -349,8 +356,18 @@ body:has(.submenu-container) {
   }
 }
 
+@media (min-width: 1920px) {
+  .headTop {
+   margin-top: 10vw;
+  }
+}
 /* Button variants for different contexts */
 .btn-black.btn-small {
+  padding: clamp(0.375rem, 1.5vw, 0.5rem) clamp(1rem, 3vw, 1.5rem);
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  min-height: 36px;
+}
+.btn.btn-small {
   padding: clamp(0.375rem, 1.5vw, 0.5rem) clamp(1rem, 3vw, 1.5rem);
   font-size: clamp(0.75rem, 2vw, 0.875rem);
   min-height: 36px;

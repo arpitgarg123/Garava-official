@@ -380,7 +380,7 @@ const ProductCard = ({
       <div className="p-2 flex flex-col flex-grow">
         {(product.type === "fragrance" || product.category === "fragrance") ? (
           <>
-            <div className="text-sm uppercase tracking-wider text-gray-500 leading-0  max-sm:my-4  font-medium">{product.type || "Fragrance"}</div>
+            <div className="text-[0.6875rem] uppercase tracking-wider text-gray-500 leading-0  max-sm:my-4  font-medium">{product.type || "Fragrance"}</div>
             <h3 className="card-title">{product.name}</h3>
 
             <div className="card-rupe-tex">{displayPrice}</div>

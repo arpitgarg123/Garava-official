@@ -344,7 +344,7 @@ const ProductDetails = () => {
   //   "/placeholder.jpg";
 
   return (
-    <div className="mt-38 max-md:mt-20 pb-10">
+    <div className="headTop mt-38 max-md:mt-20 pb-10 max-2xl:mt-40">
        <div className="sticky top-36  max-md:top-20 z-50  px-4">
     <BackButton />
   </div>
@@ -485,7 +485,7 @@ const ProductDetails = () => {
 
             </div>
 
-            <p className="mt-2 text-sm text-gray-700">
+            <p className="mt-1 text-xs text-gray-700">
               <span className="font-medium">SKU:</span>{" "}
               {selectedVariant?.sku || 'SKU not available'}
             </p>
@@ -538,20 +538,7 @@ const ProductDetails = () => {
               </div>
             )}
 
-            <div className=" flex flex-col gap-3 max-sm:mt-3 h-16 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-sm sm:text-lg font-regular">
-                {isHighJewellery || product?.type == "jewellery" || product?.bookAppointment ? 'Customize your jewellery Design' : ""}
-              </h2>
-              {
-                product?.type != "fragrance" && (<Link to='/appointment'>
-              <button className="btn-black btn-small   max-sm:my-2  sm:w-auto">
-                Book an appointment
-              </button>
-              </Link>)
-              }
-             
-            </div>
-
+     
             
 
             {/* Description */}
@@ -675,10 +662,10 @@ const ProductDetails = () => {
             <div className="mt-4 flex flex-col sm:flex-row  justify-between  ">
               {isHighJewellery ? (
                 // High Jewellery Contact Options
-                <div className="relative w-[40%]">
+                <div className="relative w-[40%] ">
                   <button 
                     onClick={() => setShowContactOptions(!showContactOptions)}
-                    className=" sm:w-full px-6 py-3 bg-gradient-to-r from-gray-900 to-black text-white text-sm font-medium  hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    className="btn-black btn-small  uppercase "
                   >
                     Contact for Pricing
                   </button>
@@ -726,10 +713,10 @@ const ProductDetails = () => {
                   <button 
                     onClick={handleAddToCart} 
                     disabled={isOutOfStock || isColorSelectionMissing()}
-                    className={`w-full sm:w-auto px-6 py-3 text-xs  ${
+                    className={`w-auto px-6 py-3 text-xs  ${
                       (isOutOfStock || isColorSelectionMissing())
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                        : 'btn-black'
+                        : 'btn-black btn-small'
                     }`}
                   >
                     {isOutOfStock ? 'OUT OF STOCK' : 
@@ -739,10 +726,10 @@ const ProductDetails = () => {
                   <button 
                     onClick={handleBuyNow} 
                     disabled={isOutOfStock || isColorSelectionMissing()}
-                    className={`w-full sm:w-auto px-6 py-3 text-sm  font-medium transition-colors ${
+                    className={`w-1/2  px-6 py-3 text-sm  font-medium transition-colors ${
                       (isOutOfStock || isColorSelectionMissing()) 
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                        : 'btn'
+                        : 'btn btn-small'
                     }`}
                   >
                     {isOutOfStock ? 'OUT OF STOCK' : 
@@ -753,7 +740,7 @@ const ProductDetails = () => {
               )}
               <button
                 onClick={handleToggleWishlist}
-                className={`btn w-[60%]  ${
+                className={`btn btn-small w-1/2  ${
                   isInWishlist
                     ? 'bg-red-700 text-white hover:bg-red-900'
                     : 'hover:bg-black hover:text-white'
@@ -773,23 +760,23 @@ const ProductDetails = () => {
                   className="w-full flex items-center gap-3 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
                 >
                   <FiPhone size={18} />
-                  <span>Order by Phone +91-7738543881</span>
+                  <span className='text-sm'>Order by Phone +91-7738543881</span>
                 </button>
                 
                 {/* WhatsApp Message Button */}
                 <button 
                   onClick={() => handleWhatsAppContact(product)}
-                  className="w-full flex items-center gap-3 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
+                  className="w-full flex items-center gap-0 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
                 >
                   <FaWhatsapp size={18} className="text-green-500" />
-                  <span className='font-semibold'>Message us</span>
+                  <span className='font-semibold text-sm'>Message us</span>
                 </button>
                 
                 {/* Contact Advisor and Share Row */}
                 <div className='flex gap-2'>
                   <button 
                     onClick={() => handleEmailContact(product)}
-                    className="flex-1 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
+                    className="flex-1 text-sm bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
                   >
                     Contact a Client Advisor
                   </button>
@@ -798,9 +785,9 @@ const ProductDetails = () => {
                       navigator.clipboard.writeText(window.location.href);
                       toast.success('Product link copied to clipboard!');
                     }}
-                    className='flex items-center gap-2 bg-gray-50 p-4 font-semibold text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer'
+                    className='flex text-sm items-center gap-2 bg-gray-50 p-4 font-semibold text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer'
                   > 
-                    <CiShare2 size={24} /> Share
+                    <CiShare2 size={18} /> Share
                   </button>
                 </div>
               </div>

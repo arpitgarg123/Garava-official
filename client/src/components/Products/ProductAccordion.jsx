@@ -433,7 +433,7 @@ const ProductAccordion = ({ product }) => {
   const toggleSection = (idx) => setActiveIndex(activeIndex === idx ? null : idx);
 
   return (
-    <div className="w-[80%] lg:max-w-none divide-y divide-gray-200">
+    <div className="w-[80%] lg:max-w-none max-md:w-full divide-y divide-gray-200">
       {sections.map((section, idx) => (
         <div key={idx} className="py-4">
           <button
