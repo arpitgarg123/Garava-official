@@ -68,10 +68,10 @@ echo "✅ All critical dependencies verified"
 echo "🔨 Running Vite build..."
 npm run build
 
-# Step 4: Restart the backend
-echo "♻️ Restarting PM2 app..."
+# Step 4: Restart the backend only (not webhook!)
+echo "♻️ Restarting backend..."
 mkdir -p "$SERVER_DIR/logs"
-pm2 restart all || pm2 start "$HOME/Garava-official/ecosystem.config.js"
+pm2 restart garava-backend || pm2 start "$HOME/Garava-official/ecosystem.config.js" --only garava-backend
 pm2 save
 
 echo "✅ Deployment complete! 🚀"
