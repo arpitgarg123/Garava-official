@@ -3,7 +3,7 @@ const express = require('express');
 const crypto = require('crypto');
 const { exec } = require('child_process');
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '.env') });
+require('dotenv').config({ path: path.join(__dirname, 'server', '.env') });
 
 const app = express();
 const PORT = process.env.PORT || 9000;
