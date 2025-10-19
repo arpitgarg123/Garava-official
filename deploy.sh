@@ -27,26 +27,43 @@ npm install --omit=dev
 # Step 3: Build client
 echo "🏗️ Building client..."
 cd "$CLIENT_DIR"
-echo "📦 Installing client dependencies..."
 
 # Always do a clean install to ensure platform-specific dependencies
-echo "🧹 Removing old node_modules..."
-rm -rf node_modules dist
+echo "🧹 Cleaning client directory..."
+rm -rf node_modules dist package-lock.json .vite
 
 # Install with platform-specific optional dependencies
-echo "📦 Installing with optional dependencies..."
-npm install --include=optional --loglevel=error || {
-  echo "❌ npm install failed. Retrying with verbose logging..."
-  npm install --include=optional --verbose
-  exit 1
-}
+echo "📦 Installing client dependencies (this may take a minute)..."
+npm install --include=optional 2>&1 | tee /tmp/npm-install.log
 
-# Verify critical dependencies
-if [ ! -d "node_modules/@vitejs/plugin-react" ]; then
-  echo "❌ Critical dependency @vitejs/plugin-react not found!"
-  echo "📦 Installing @vitejs/plugin-react explicitly..."
-  npm install @vitejs/plugin-react --save-dev
+# Check if npm install succeeded
+if [ ${PIPESTATUS[0]} -ne 0 ]; then
+  echo "❌ npm install failed! Log:"
+  cat /tmp/npm-install.log
+  exit 1
 fi
+
+# Verify critical dependencies exist
+echo "🔍 Verifying critical dependencies..."
+MISSING_DEPS=()
+if [ ! -d "node_modules/@vitejs/plugin-react" ]; then
+  MISSING_DEPS+=("@vitejs/plugin-react")
+fi
+if [ ! -d "node_modules/vite" ]; then
+  MISSING_DEPS+=("vite")
+fi
+if [ ! -d "node_modules/react" ]; then
+  MISSING_DEPS+=("react")
+fi
+
+if [ ${#MISSING_DEPS[@]} -gt 0 ]; then
+  echo "❌ Missing dependencies: ${MISSING_DEPS[*]}"
+  echo "📦 Package count in node_modules:"
+  ls -1 node_modules | wc -l
+  exit 1
+fi
+
+echo "✅ All critical dependencies verified"
 
 echo "🔨 Running Vite build..."
 npm run build
