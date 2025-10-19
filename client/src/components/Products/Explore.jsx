@@ -42,13 +42,28 @@ const Explore = ({ currentProduct }) => {
 
   useEffect(() => {
     if (products && products.length > 0) {
-      // Filter out the current product, prefer jewellery, fallback to any product
+      // Determine the alternate product type to show
+      const currentType = currentProduct?.type?.toLowerCase();
+      let alternateType;
+      
+      // Show opposite category products
+      if (currentType === 'jewellery') {
+        alternateType = 'fragrance';
+      } else if (currentType === 'fragrance') {
+        alternateType = 'jewellery';
+      } else if (currentType === 'high-jewellery' || currentType === 'high_jewellery') {
+        alternateType = 'fragrance'; // High jewellery also shows fragrance
+      } else {
+        alternateType = null; // For unknown types, show any
+      }
+      
+      // Filter products: exclude current product and prefer alternate type
       let filtered = products.filter(product => 
         product._id !== currentProduct?._id && 
-        product.type === 'jewellery'
+        (alternateType ? product.type?.toLowerCase() === alternateType : true)
       );
       
-      // If no jewellery found, show any products except current
+      // If no alternate type products found, show any products except current
       if (filtered.length === 0) {
         filtered = products.filter(product => product._id !== currentProduct?._id);
       }
@@ -57,7 +72,7 @@ const Explore = ({ currentProduct }) => {
       // Take only 6 random products
       setRandomProducts(shuffled.slice(0, 6));
     }
-  }, [products, currentProduct?._id]);
+  }, [products, currentProduct?._id, currentProduct?.type]);
 
   if (status === 'loading') {
     return (
