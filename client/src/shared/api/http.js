@@ -1,7 +1,8 @@
 import axios from "axios";
 
-// Use Vite runtime env: import.meta.env.VITE_API_URL. Fallback to localhost for dev.
-const baseURL = (import.meta.env?.VITE_API_URL || "http://localhost:8080/api").replace(/\/+$/,
+// Use Vite runtime env: import.meta.env.VITE_API_URL. Fallback to relative '/api' so
+// production bundle uses same origin and doesn't hardcode localhost.
+const baseURL = (import.meta.env?.VITE_API_URL || "/api").replace(/\/+$/,
   "")
 
 // Create HTTP clients with reasonable timeouts
