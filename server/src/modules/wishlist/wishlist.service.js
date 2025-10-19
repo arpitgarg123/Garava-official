@@ -2,6 +2,26 @@ import ApiError from "../../shared/utils/ApiError.js";
 import Wishlist from "./wishlist.model.js";
 import Product from "../product/product.model.js";
 import mongoose from "mongoose";
+import { toRupees } from "../order/order.pricing.js";
+
+/**
+ * Convert wishlist product prices from paise to rupees
+ */
+const convertWishlistProductPrices = (product) => {
+  if (!product) return null;
+  
+  // Convert variant prices to rupees
+  if (product.variants && Array.isArray(product.variants)) {
+    product.variants = product.variants.map(variant => ({
+      ...variant,
+      price: variant.price ? toRupees(variant.price) : variant.price,
+      mrp: variant.mrp ? toRupees(variant.mrp) : variant.mrp,
+      salePrice: variant.salePrice ? toRupees(variant.salePrice) : variant.salePrice
+    }));
+  }
+  
+  return product;
+};
 
 /**
  * Get wishlist for user (paginated)
@@ -39,7 +59,7 @@ export const getWishlistService = async (userId, { page = 1, limit = 50 } = {}) 
       return {
         productId: p.product?._id || null,
         addedAt: p.addedAt,
-        product: p.product || null,
+        product: convertWishlistProductPrices(p.product) || null,
       };
     });
 
