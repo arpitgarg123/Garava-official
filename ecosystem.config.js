@@ -27,8 +27,7 @@ module.exports = {
       exec_mode: 'fork',
       env: {
         NODE_ENV: 'production',
-        PORT: 9000,
-        GITHUB_WEBHOOK_SECRET: process.env.GITHUB_WEBHOOK_SECRET || 'change-this-secret'
+        PORT: 9000
       },
       error_file: './server/logs/webhook-err.log',
       out_file: './server/logs/webhook-out.log',
