@@ -6,7 +6,7 @@ import {
   deleteProduct,
   listProductsAdmin,
   addVariant,
-  updateVariant,
+  updateVariant, 
   patchStock,
 } from "./product.admin.controller.js";
 import { authenticated } from "../../../middlewares/authentication.js";
