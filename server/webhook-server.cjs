@@ -3,11 +3,32 @@ const express = require('express');
 const crypto = require('crypto');
 const { exec } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 
-// Load from repo root where symlink exists
-const envPath = path.join(__dirname, '..', '.env');
-console.log('[DEBUG] Loading .env from:', envPath);
-const dotenvResult = require('dotenv').config({ path: envPath });
+// Try multiple .env locations
+const envPaths = [
+  path.join(__dirname, '.env'),           // server/.env
+  path.join(__dirname, '..', '.env'),     // repo root (symlink)
+];
+
+let dotenvResult;
+let loadedPath;
+
+for (const envPath of envPaths) {
+  if (fs.existsSync(envPath)) {
+    console.log('[DEBUG] Found .env at:', envPath);
+    loadedPath = envPath;
+    dotenvResult = require('dotenv').config({ path: envPath });
+    break;
+  }
+}
+
+if (!loadedPath) {
+  console.error('[ERROR] No .env file found in any of these locations:', envPaths);
+  process.exit(1);
+}
+
+console.log('[DEBUG] Loading .env from:', loadedPath);
 
 if (dotenvResult.error) {
   console.error('[ERROR] Failed to load .env:', dotenvResult.error);
