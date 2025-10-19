@@ -85,7 +85,8 @@ const newsletterSlice = createSlice({
       })
       .addCase(fetchNewsletterSubscribers.fulfilled, (state, action) => {
         state.loading = false;
-        state.subscribers = action.payload.subscribers || [];
+        // Backend returns 'items', not 'subscribers'
+        state.subscribers = action.payload.items || action.payload.subscribers || [];
         state.pagination = {
           page: action.payload.pagination?.page || 1,
           limit: action.payload.pagination?.limit || 20,
