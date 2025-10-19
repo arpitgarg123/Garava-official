@@ -28,12 +28,28 @@ npm install --omit=dev
 echo "🏗️ Building client..."
 cd "$CLIENT_DIR"
 echo "📦 Installing client dependencies..."
-npm install || {
-  echo "❌ Client npm install failed. Trying with cache clean..."
+
+# Ensure clean install
+if [ ! -d "node_modules" ] || [ ! -f "node_modules/.package-lock.json" ]; then
+  echo "🧹 Clean install required..."
   rm -rf node_modules dist package-lock.json
   npm cache clean --force
-  npm install
+fi
+
+# Install with error checking
+npm install --loglevel=error || {
+  echo "❌ npm install failed. Retrying with verbose logging..."
+  npm install --verbose
+  exit 1
 }
+
+# Verify critical dependencies
+if [ ! -d "node_modules/@vitejs/plugin-react" ]; then
+  echo "❌ Critical dependency @vitejs/plugin-react not found!"
+  echo "📦 Installing @vitejs/plugin-react explicitly..."
+  npm install @vitejs/plugin-react --save-dev
+fi
+
 echo "🔨 Running Vite build..."
 npm run build
 
