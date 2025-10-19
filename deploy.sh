@@ -13,11 +13,34 @@ export NVM_DIR="$HOME/.nvm"
 source "$NVM_DIR/nvm.sh"
 nvm use 20 || echo "⚠️ Node 20 not found. Install with: nvm install 20"
 
-# Step 1: Pull latest code
+# Step 1: Pull latest code (preserve .env files)
 echo "📥 Pulling latest code from GitHub..."
 cd "$HOME/Garava-official"
+
+# Backup .env files before git reset
+echo "💾 Backing up .env files..."
+if [ -f "server/.env" ]; then
+  cp server/.env /tmp/server.env.backup
+  echo "✓ Backed up server/.env"
+fi
+if [ -f "client/.env" ]; then
+  cp client/.env /tmp/client.env.backup
+  echo "✓ Backed up client/.env"
+fi
+
 git fetch origin main
 git reset --hard origin/main
+
+# Restore .env files after git reset
+echo "♻️ Restoring .env files..."
+if [ -f "/tmp/server.env.backup" ]; then
+  cp /tmp/server.env.backup server/.env
+  echo "✓ Restored server/.env"
+fi
+if [ -f "/tmp/client.env.backup" ]; then
+  cp /tmp/client.env.backup client/.env
+  echo "✓ Restored client/.env"
+fi
 
 # Step 2: Install server dependencies
 echo "📦 Installing server dependencies..."
