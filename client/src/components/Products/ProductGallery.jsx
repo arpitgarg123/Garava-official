@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { IoIosArrowBack, IoIosArrowForward, IoIosExpand } from 'react-icons/io';
 import { IoClose } from 'react-icons/io5';
 
@@ -67,12 +68,24 @@ const ProductGallery = ({ product, selectedColor }) => {
   const openModal = (index) => {
     setModalImageIndex(index);
     setIsModalOpen(true);
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${window.innerWidth - document.documentElement.clientWidth}px`; // Prevent layout shift
+    
+    // Add history state to handle browser back button
+    window.history.pushState({ modalOpen: true }, '');
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = 'unset'; // Restore scrolling
+    // Restore scrolling immediately
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    
+    // Remove history state if it exists
+    if (window.history.state?.modalOpen) {
+      window.history.back();
+    }
   };
 
   const handleModalPrevious = () => {
@@ -100,6 +113,29 @@ const ProductGallery = ({ product, selectedColor }) => {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [isModalOpen, images.length]);
+
+  // Handle browser back button when modal is open
+  useEffect(() => {
+    const handlePopState = (e) => {
+      if (isModalOpen) {
+        e.preventDefault();
+        setIsModalOpen(false);
+        document.body.style.overflow = '';
+        document.body.style.paddingRight = '';
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isModalOpen]);
+
+  // Cleanup: Always restore scroll on component unmount
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, []);
 
   if (!images.length) return null;
 
@@ -208,11 +244,18 @@ const ProductGallery = ({ product, selectedColor }) => {
         </div>
       )}
 
-      {/* Full Screen Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center">
+      {/* Full Screen Modal - Using Portal to render outside root */}
+      {isModalOpen && createPortal(
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center"
+          style={{ zIndex: 99999 }}
+          onClick={closeModal}
+        >
           {/* Modal Content */}
-          <div className="relative w-full h-full flex items-center justify-center p-4">
+          <div 
+            className="relative w-full h-full flex items-center justify-center p-4"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Close Button */}
             <button
               onClick={closeModal}
@@ -278,13 +321,8 @@ const ProductGallery = ({ product, selectedColor }) => {
               ))}
             </div>
           </div>
-
-          {/* Click outside to close */}
-          <div
-            className="absolute inset-0 -z-10"
-            onClick={closeModal}
-          ></div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
