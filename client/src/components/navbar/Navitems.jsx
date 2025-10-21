@@ -78,7 +78,7 @@ const [submenuTop, setSubmenuTop] = useState(130);
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="submenu-container w-full h-[15vw] fixed  bg-white text-black left-0 -top-36 py-8 "
+                className="submenu-container w-full h-[15vw] fixed  bg-white  max-xl:h-[24vw] text-black left-0 -top-36 py-8 "
               >
                 <div className="max-w-7xl mx-auto flex  items-center justify-center h-full ">
                   <div className={`${["Maison", "Blogs", "News & Events"].includes(item.title) ? "flex-center" : "flex items-center justify-center gap-8"}`}>

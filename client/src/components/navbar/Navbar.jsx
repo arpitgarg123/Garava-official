@@ -410,19 +410,19 @@ const Navbar = () => {
        {
         shouldShowNavItemsDesktop && (
            <div className="navTop relative px-10">
-          <div className="flex justify-between w-89 font-light">
+          <div className="flex justify-between w-89  max-xl:w-72 max-lg:w-64 font-light">
    
 
 <div className='flex items-center justify-center'>
   <PiPhoneIncomingThin size={23} className="" />
-  <Link to="/contact" className="tracking-wide text-sm "> 
+  <Link to="/contact" className="tracking-wide text-xs "> 
     Contact us
   </Link>
 </div>
 <div className='flex items-center '>
   <CiCalendarDate className='' size={20} />
   <h4
-    className=" tracking-wide text-sm  cursor-pointer"
+    className=" tracking-wide text-xs  cursor-pointer"
     onClick={() => navigate('/appointment')}
   >
     Book an Appointment
@@ -555,7 +555,7 @@ const Navbar = () => {
             </div>
                 <button
                   onClick={() => navigate('/login')}
-                  className="tracking-wide  cursor-pointer  "
+                  className="tracking-wide  text-xs  cursor-pointer  "
                 >
                   Login
                 </button>
