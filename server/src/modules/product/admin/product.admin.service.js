@@ -1,6 +1,27 @@
 // src/modules/admin/product/product.admin.service.js
 import ApiError from "../../../shared/utils/ApiError.js";
 import Product from "../../product/product.model.js";
+import { toRupees } from "../../order/order.pricing.js";
+
+/**
+ * Convert product prices from paise to rupees for admin display
+ */
+const convertProductPricesToRupees = (product) => {
+  if (!product) return product;
+  
+  const converted = { ...product };
+  
+  if (converted.variants && Array.isArray(converted.variants)) {
+    converted.variants = converted.variants.map(variant => ({
+      ...variant,
+      price: variant.price ? toRupees(variant.price) : variant.price,
+      mrp: variant.mrp ? toRupees(variant.mrp) : variant.mrp,
+      salePrice: variant.salePrice ? toRupees(variant.salePrice) : variant.salePrice
+    }));
+  }
+  
+  return converted;
+};
 
 export const createProductService = async (data, userId) => {
   if (await Product.findOne({ slug: data.slug })) {
@@ -64,7 +85,10 @@ export const listProductsAdminService = async ({ page = 1, limit = 20, q, status
     Product.countDocuments(filter)
   ]);
 
-  return { products, pagination: { total, page, limit, totalPages: Math.ceil(total/limit) } };
+  // Convert prices from paise to rupees for frontend display
+  const productsWithRupees = products.map(convertProductPricesToRupees);
+
+  return { products: productsWithRupees, pagination: { total, page, limit, totalPages: Math.ceil(total/limit) } };
 };
 
 /**
