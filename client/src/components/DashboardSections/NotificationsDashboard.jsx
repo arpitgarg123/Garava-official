@@ -208,7 +208,7 @@ const NotificationsDashboard = () => {
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between mb-2">
-            <h3 className="font-medium text-gray-900 text-sm line-clamp-2 flex-1">
+            <h3 className="font-medium text-gray-900 text-[1.0625rem] line-clamp-2 flex-1">
               {notification.title}
             </h3>
             {!notification.isRead && (
@@ -216,25 +216,25 @@ const NotificationsDashboard = () => {
             )}
           </div>
           
-          <p className="text-gray-600 text-sm line-clamp-2 mb-3">
+          <p className="text-gray-600 text-[1.0625rem] line-clamp-2 mb-3">
             {notification.message}
           </p>
           
           {/* Tags */}
           <div className="flex flex-wrap items-center gap-2 mb-3">
-            <span className={`px-2 py-1 rounded-full text-sm font-medium border border-gray-300
+            <span className={`px-2 py-1 rounded-full text-[1.0625rem] font-medium border border-gray-300
                ${getSeverityColor(notification.severity)}`}>
               {notification.severity.toUpperCase()}
             </span>
             {notification.actionTaken && (
-              <span className="px-2 py-1 text-sm bg-green-100 text-green-800 rounded-full">
+              <span className="px-2 py-1 text-[1.0625rem] bg-green-100 text-green-800 rounded-full">
                 ✓ Resolved
               </span>
             )}
           </div>
           
           {/* Meta Info */}
-          <div className="text-sm text-gray-500 mb-3">
+          <div className="text-[1.0625rem] text-gray-500 mb-3">
             <div>{formatDate(notification.createdAt)}</div>
             {notification.productId && (
               <div className="truncate">Product: {notification.productId.name || 'Unknown'}</div>
@@ -248,7 +248,7 @@ const NotificationsDashboard = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={() => viewNotification(notification._id)}
-              className="flex-1 px-3 py-2 bg-blue-50 text-blue-600  text-sm font-medium hover:bg-blue-100 transition-colors"
+              className="flex-1 px-3 py-2 bg-blue-50 text-blue-600  text-[1.0625rem] font-medium hover:bg-blue-100 transition-colors"
             >
               View Details
             </button>
@@ -290,7 +290,7 @@ const NotificationsDashboard = () => {
     return (
       <div className="h-full flex flex-col overflow-hidden">
         <div className="p-4 sm:p-6">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Notifications</h2>
+          <h2 className="text-xl sm:text-3xl font-bold mb-4 sm:mb-6">Notifications</h2>
           <div className="animate-pulse">
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
               {[...Array(4)].map((_, i) => (
@@ -314,11 +314,11 @@ const NotificationsDashboard = () => {
       <div className="flex-shrink-0 p-4 sm:p-6 border-b border-gray-200 bg-white">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
           <div className="min-w-5xl flex-1">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <h2 className="text-xl sm:text-3xl font-bold text-gray-900 flex items-center gap-2">
               <FaBell className="text-blue-600" />
               Notifications
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-[1.0625rem] text-gray-600 mt-1">
               Monitor system alerts and important updates
             </p>
           </div>
@@ -341,8 +341,8 @@ const NotificationsDashboard = () => {
                 <FaBell className="text-blue-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-sm sm:text-sm font-medium text-gray-600 truncate">Total</p>
-                <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.total || 0}</p>
+                <p className="text-[1.0625rem] sm:text-[1.0625rem] font-medium text-gray-600 truncate">Total</p>
+                <p className="text-lg sm:text-3xl font-semibold text-gray-900">{stats.total || 0}</p>
               </div>
             </div>
           </div>
@@ -353,8 +353,8 @@ const NotificationsDashboard = () => {
                 <FaEye className="text-yellow-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-sm sm:text-sm font-medium text-gray-600 truncate">Unread</p>
-                <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.unread || 0}</p>
+                <p className="text-[1.0625rem] sm:text-[1.0625rem] font-medium text-gray-600 truncate">Unread</p>
+                <p className="text-lg sm:text-3xl font-semibold text-gray-900">{stats.unread || 0}</p>
               </div>
             </div>
           </div>
@@ -365,8 +365,8 @@ const NotificationsDashboard = () => {
                 <FaBox className="text-red-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-sm sm:text-sm font-medium text-gray-600 truncate">Out of Stock</p>
-                <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.outOfStock || 0}</p>
+                <p className="text-[1.0625rem] sm:text-[1.0625rem] font-medium text-gray-600 truncate">Out of Stock</p>
+                <p className="text-lg sm:text-3xl font-semibold text-gray-900">{stats.outOfStock || 0}</p>
               </div>
             </div>
           </div>
@@ -377,8 +377,8 @@ const NotificationsDashboard = () => {
                 <FaExclamationTriangle className="text-orange-600 text-lg sm:text-xl" />
               </div>
               <div className="ml-3 min-w-0">
-                <p className="text-sm sm:text-sm font-medium text-gray-600 truncate">Low Stock</p>
-                <p className="text-lg sm:text-2xl font-semibold text-gray-900">{stats.lowStock || 0}</p>
+                <p className="text-[1.0625rem] sm:text-[1.0625rem] font-medium text-gray-600 truncate">Low Stock</p>
+                <p className="text-lg sm:text-3xl font-semibold text-gray-900">{stats.lowStock || 0}</p>
               </div>
             </div>
           </div>
@@ -386,12 +386,12 @@ const NotificationsDashboard = () => {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4 max-sm:mb-0">
-          <p className="text-sm text-gray-600">
+          <p className="text-[1.0625rem] text-gray-600">
             {notifications.length} notifications
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300  hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-[1.0625rem] border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <FiFilter className="w-4 h-4" />
             Filters
@@ -402,15 +402,15 @@ const NotificationsDashboard = () => {
         <div className="hidden lg:block">
           <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center gap-2 mr-4">
-              <FaFilter className="text-gray-500 text-sm" />
-              <span className="text-sm font-medium text-gray-700">Filter:</span>
+              <FaFilter className="text-gray-500 text-[1.0625rem]" />
+              <span className="text-[1.0625rem] font-medium text-gray-700">Filter:</span>
             </div>
             
             {['all', 'out_of_stock', 'low_stock', 'order_placed', 'payment_failed'].map((filterType) => (
               <button
                 key={filterType}
                 onClick={() => setFilter(filterType)}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+                className={`px-3 py-1 rounded-full text-[1.0625rem] font-medium transition-colors ${
                   filter === filterType
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
@@ -422,7 +422,7 @@ const NotificationsDashboard = () => {
             
             <button
               onClick={() => setUnreadOnly(!unreadOnly)}
-              className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
+              className={`px-3 py-1 rounded-full text-[1.0625rem] font-medium transition-colors ${
                 unreadOnly
                   ? 'bg-yellow-600 text-white'
                   : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
@@ -460,13 +460,13 @@ const NotificationsDashboard = () => {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Type Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">Type</label>
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-3">Type</label>
               <div className="space-y-2">
                 {['all', 'out_of_stock', 'low_stock', 'order_placed', 'payment_failed'].map((filterType) => (
                   <button
                     key={filterType}
                     onClick={() => setFilter(filterType)}
-                    className={`w-full text-left px-3 py-2  text-sm font-medium transition-colors ${
+                    className={`w-full text-left px-3 py-2  text-[1.0625rem] font-medium transition-colors ${
                       filter === filterType
                         ? 'bg-blue-100 text-blue-800 border border-blue-300'
                         : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
@@ -480,10 +480,10 @@ const NotificationsDashboard = () => {
 
             {/* Mobile Unread Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">Status</label>
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-3">Status</label>
               <button
                 onClick={() => setUnreadOnly(!unreadOnly)}
-                className={`w-full text-left px-3 py-2  text-sm font-medium transition-colors ${
+                className={`w-full text-left px-3 py-2  text-[1.0625rem] font-medium transition-colors ${
                   unreadOnly
                     ? 'bg-yellow-100 text-yellow-800 border border-yellow-300'
                     : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
@@ -513,7 +513,7 @@ const NotificationsDashboard = () => {
               <div className="text-center max-w-md mx-auto">
                 <FaBell className="mx-auto text-4xl sm:text-6xl text-gray-300 mb-4" />
                 <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">No notifications</h3>
-                <p className="text-sm sm:text-base text-gray-600">
+                <p className="text-[1.0625rem] sm:text-base text-gray-600">
                   All caught up! No notifications match your current filters.
                 </p>
               </div>
@@ -546,15 +546,15 @@ const NotificationsDashboard = () => {
                             <h3 className="font-semibold text-gray-900 truncate">
                               {notification.title}
                             </h3>
-                            <span className={`px-2 py-1 rounded-full text-sm font-medium border ${getSeverityColor(notification.severity)}`}>
+                            <span className={`px-2 py-1 rounded-full text-[1.0625rem] font-medium border ${getSeverityColor(notification.severity)}`}>
                               {notification.severity.toUpperCase()}
                             </span>
                             {!notification.isRead && (
                               <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
                             )}
                           </div>
-                          <p className="text-gray-700 mb-2 text-sm">{notification.message}</p>
-                          <div className="flex items-center space-x-4 text-sm text-gray-500">
+                          <p className="text-gray-700 mb-2 text-[1.0625rem]">{notification.message}</p>
+                          <div className="flex items-center space-x-4 text-[1.0625rem] text-gray-500">
                             <span>{formatDate(notification.createdAt)}</span>
                             {notification.productId && (
                               <span>Product: {notification.productId.name || 'Unknown'}</span>
@@ -607,7 +607,7 @@ const NotificationsDashboard = () => {
                         </button>
                         
                         {notification.actionTaken && (
-                          <span className="px-2 py-1 text-sm bg-green-100 text-green-800 ">
+                          <span className="px-2 py-1 text-[1.0625rem] bg-green-100 text-green-800 ">
                             ✓ Resolved
                           </span>
                         )}
@@ -639,17 +639,17 @@ const NotificationsDashboard = () => {
             
             <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[calc(95vh-140px)] sm:max-h-[calc(90vh-180px)] overflow-y-auto">
               <div className="flex items-center space-x-3">
-                <div className="text-xl sm:text-2xl">
+                <div className="text-xl sm:text-3xl">
                   {getTypeIcon(selectedNotification.type)}
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-semibold text-base sm:text-lg break-words">{selectedNotification.title}</h3>
                   <div className="flex flex-wrap items-center gap-2 mt-1">
-                    <span className={`px-2 py-1 rounded-full text-sm font-medium border ${getSeverityColor(selectedNotification.severity)}`}>
+                    <span className={`px-2 py-1 rounded-full text-[1.0625rem] font-medium border ${getSeverityColor(selectedNotification.severity)}`}>
                       {selectedNotification.severity.toUpperCase()}
                     </span>
                     {selectedNotification.actionRequired && (
-                      <span className="px-2 py-1 text-sm bg-orange-100 text-orange-800 ">
+                      <span className="px-2 py-1 text-[1.0625rem] bg-orange-100 text-orange-800 ">
                         Action Required
                       </span>
                     )}
@@ -658,14 +658,14 @@ const NotificationsDashboard = () => {
               </div>
               
               <div className="border-t pt-4">
-                <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Message</h4>
-                <p className="text-gray-700 text-sm sm:text-base break-words">{selectedNotification.message}</p>
+                <h4 className="font-medium text-gray-900 mb-2 text-[1.0625rem] sm:text-base">Message</h4>
+                <p className="text-gray-700 text-[1.0625rem] sm:text-base break-words">{selectedNotification.message}</p>
               </div>
               
               {selectedNotification.productId && (
                 <div className="border-t pt-4">
-                  <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Product Information</h4>
-                  <div className="bg-gray-50 p-3  text-sm">
+                  <h4 className="font-medium text-gray-900 mb-2 text-[1.0625rem] sm:text-base">Product Information</h4>
+                  <div className="bg-gray-50 p-3  text-[1.0625rem]">
                     <p><strong>Product:</strong> {selectedNotification.productId.name || 'Unknown'}</p>
                     {selectedNotification.metadata?.variantSizeLabel && (
                       <p><strong>Variant:</strong> {selectedNotification.metadata.variantSizeLabel}</p>
@@ -681,8 +681,8 @@ const NotificationsDashboard = () => {
               )}
               
               <div className="border-t pt-4">
-                <h4 className="font-medium text-gray-900 mb-2 text-sm sm:text-base">Notification Details</h4>
-                <div className="text-sm sm:text-sm text-gray-600 space-y-1">
+                <h4 className="font-medium text-gray-900 mb-2 text-[1.0625rem] sm:text-base">Notification Details</h4>
+                <div className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600 space-y-1">
                   <p><strong>Created:</strong> {formatDate(selectedNotification.createdAt)}</p>
                   <p><strong>Type:</strong> {selectedNotification.type.replace('_', ' ').toUpperCase()}</p>
                   <p><strong>Status:</strong> {selectedNotification.isRead ? 'Read' : 'Unread'}</p>
@@ -690,10 +690,10 @@ const NotificationsDashboard = () => {
                     <div className="mt-2 p-2 bg-green-50 ">
                       <p className="text-green-800"><strong>✓ Action Taken</strong></p>
                       {selectedNotification.actionNotes && (
-                        <p className="text-green-700 text-sm mt-1">{selectedNotification.actionNotes}</p>
+                        <p className="text-green-700 text-[1.0625rem] mt-1">{selectedNotification.actionNotes}</p>
                       )}
                       {selectedNotification.actionAt && (
-                        <p className="text-green-600 text-sm mt-1">Resolved: {formatDate(selectedNotification.actionAt)}</p>
+                        <p className="text-green-600 text-[1.0625rem] mt-1">Resolved: {formatDate(selectedNotification.actionAt)}</p>
                       )}
                     </div>
                   )}
@@ -709,7 +709,7 @@ const NotificationsDashboard = () => {
                       markAsRead(selectedNotification._id);
                       setSelectedNotification(prev => ({ ...prev, isRead: true }));
                     }}
-                    className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors text-sm"
+                    className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors text-[1.0625rem]"
                   >
                     Mark as Read
                   </button>
@@ -721,7 +721,7 @@ const NotificationsDashboard = () => {
                       markActionTaken(selectedNotification._id);
                       setSelectedNotification(prev => ({ ...prev, actionTaken: true, isRead: true }));
                     }}
-                    className="px-4 py-2 bg-green-600 text-white  hover:bg-green-700 transition-colors text-sm"
+                    className="px-4 py-2 bg-green-600 text-white  hover:bg-green-700 transition-colors text-[1.0625rem]"
                   >
                     Mark as Resolved
                   </button>
@@ -732,14 +732,14 @@ const NotificationsDashboard = () => {
                     deleteNotification(selectedNotification._id);
                     setShowDetailModal(false);
                   }}
-                  className="px-4 py-2 bg-red-600 text-white  hover:bg-red-700 transition-colors text-sm"
+                  className="px-4 py-2 bg-red-600 text-white  hover:bg-red-700 transition-colors text-[1.0625rem]"
                 >
                   Delete
                 </button>
                 
                 <button
                   onClick={() => setShowDetailModal(false)}
-                  className="px-4 py-2 bg-gray-300 text-gray-700  hover:bg-gray-400 transition-colors text-sm sm:ml-auto"
+                  className="px-4 py-2 bg-gray-300 text-gray-700  hover:bg-gray-400 transition-colors text-[1.0625rem] sm:ml-auto"
                 >
                   Close
                 </button>

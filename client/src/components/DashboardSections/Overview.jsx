@@ -56,9 +56,9 @@ export default function Overview({
       <div className="bg-white p-6  border border-gray-200">
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-medium text-gray-600">{title}</p>
-            <p className="text-2xl font-semibold text-gray-900 mt-1">{value}</p>
-            {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
+            <p className="text-[1.0625rem] font-medium text-gray-600">{title}</p>
+            <p className="text-3xl font-semibold text-gray-900 mt-1">{value}</p>
+            {subtitle && <p className="text-[1.0625rem] text-gray-500 mt-1">{subtitle}</p>}
           </div>
           <div className={`p-3  ${colorClasses[color]}`}>
             {icon}
@@ -111,8 +111,8 @@ export default function Overview({
                 <FiAlertCircle className="h-5 w-5 text-yellow-700" />
               </div>
               <div className="ml-3 flex-1">
-                <h3 className="text-sm font-medium text-yellow-800">Action Required</h3>
-                <div className="mt-2 text-sm text-yellow-700">
+                <h3 className="text-[1.0625rem] font-medium text-yellow-800">Action Required</h3>
+                <div className="mt-2 text-[1.0625rem] text-yellow-700">
                   <ul className="list-disc pl-5 space-y-1">
                     {stats.pendingOrders > 0 && (
                       <li>{stats.pendingOrders} pending order{stats.pendingOrders > 1 ? 's' : ''} need{stats.pendingOrders === 1 ? 's' : ''} processing</li>
@@ -138,8 +138,8 @@ export default function Overview({
           <div className="bg-white p-4 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Pending Appointments</p>
-                <p className="text-2xl font-semibold text-gray-900 mt-1">{stats.pendingAppointments || 0}</p>
+                <p className="text-[1.0625rem] font-medium text-gray-600">Pending Appointments</p>
+                <p className="text-3xl font-semibold text-gray-900 mt-1">{stats.pendingAppointments || 0}</p>
               </div>
               <div className="p-3 bg-blue-50 text-blue-600 border-blue-200">
                 <BiCalendar className="w-5 h-5" />
@@ -150,8 +150,8 @@ export default function Overview({
           <div className="bg-white p-4 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">New Customers (30d)</p>
-                <p className="text-2xl font-semibold text-gray-900 mt-1">{stats.newCustomers || 0}</p>
+                <p className="text-[1.0625rem] font-medium text-gray-600">New Customers (30d)</p>
+                <p className="text-3xl font-semibold text-gray-900 mt-1">{stats.newCustomers || 0}</p>
               </div>
               <div className="p-3 bg-green-50 text-green-600 border-green-200">
                 <FiUsers className="w-5 h-5" />
@@ -162,8 +162,8 @@ export default function Overview({
           <div className="bg-white p-4 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Stock Alerts</p>
-                <p className="text-2xl font-semibold text-gray-900 mt-1">{stats.lowStockProducts || 0}</p>
+                <p className="text-[1.0625rem] font-medium text-gray-600">Stock Alerts</p>
+                <p className="text-3xl font-semibold text-gray-900 mt-1">{stats.lowStockProducts || 0}</p>
               </div>
               <div className="p-3 bg-orange-50 text-orange-600 border-orange-200">
                 <MdOutlineInventory2 className="w-5 h-5" />
@@ -195,11 +195,11 @@ export default function Overview({
                     >
                       <div>
                         <p className="font-medium text-gray-900">#{order.orderNumber}</p>
-                        <p className="text-sm text-gray-600">{fmtDate(order.createdAt)}</p>
+                        <p className="text-[1.0625rem] text-gray-600">{fmtDate(order.createdAt)}</p>
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">{fmtINR(order.totalINR)}</p>
-                        <span className={`inline-block px-2 py-1 text-sm rounded-full font-medium ${
+                        <span className={`inline-block px-2 py-1 text-[1.0625rem] rounded-full font-medium ${
                           order.status === 'delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'processing' ? 'bg-blue-100 text-blue-800' :
                           order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
@@ -241,11 +241,11 @@ export default function Overview({
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-900 truncate">{product.name}</p>
-                        <p className="text-sm text-gray-600">#{index + 1}</p>
+                        <p className="text-[1.0625rem] text-gray-600">#{index + 1}</p>
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900">{product.units || 0} units</p>
-                        <p className="text-sm text-gray-600">Stock</p>
+                        <p className="text-[1.0625rem] text-gray-600">Stock</p>
                       </div>
                     </div>
                   ))}
@@ -285,12 +285,12 @@ export default function Overview({
                         </div>
                       </div>
                       {review.comment && (
-                        <p className="text-sm text-gray-600 line-clamp-2 mb-2">{review.comment}</p>
+                        <p className="text-[1.0625rem] text-gray-600 line-clamp-2 mb-2">{review.comment}</p>
                       )}
                       {review.productName && (
-                        <p className="text-xs text-gray-500 mb-1">Product: {review.productName}</p>
+                        <p className="text-[1.0625rem] text-gray-500 mb-1">Product: {review.productName}</p>
                       )}
-                      <p className="text-xs text-gray-500">{fmtDate(review.createdAt)}</p>
+                      <p className="text-[1.0625rem] text-gray-500">{fmtDate(review.createdAt)}</p>
                     </div>
                   ))}
                 </div>
@@ -320,11 +320,11 @@ export default function Overview({
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="font-medium text-gray-900">{appointment.customerName}</p>
-                          <p className="text-sm text-gray-600">{appointment.serviceType}</p>
+                          <p className="text-[1.0625rem] text-gray-600">{appointment.serviceType}</p>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm font-medium text-gray-900">{fmtDateTime(appointment.appointmentAt)}</p>
-                          <span className={`inline-block px-2 py-1 text-sm rounded-full font-medium ${
+                          <p className="text-[1.0625rem] font-medium text-gray-900">{fmtDateTime(appointment.appointmentAt)}</p>
+                          <span className={`inline-block px-2 py-1 text-[1.0625rem] rounded-full font-medium ${
                             appointment.status === 'confirmed' ? 'bg-green-100 text-green-800' :
                             appointment.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                             'bg-gray-50 text-gray-800'

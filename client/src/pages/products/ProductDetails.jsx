@@ -411,7 +411,7 @@ const ProductDetails = () => {
         return (
           <span 
             key={index} 
-            className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-amber-100 text-amber-800 border border-amber-200"
+            className="inline-flex items-center px-2 py-1 rounded-full text-[1.0625rem] font-medium bg-amber-100 text-amber-800 border border-amber-200"
           >
             {badgeText}
           </span>
@@ -422,13 +422,13 @@ const ProductDetails = () => {
   </div>
 )}
 
-            <h1 className="text-xl sm:text-2xl font-semibold">
+            <h1 className="text-xl sm:text-3xl font-semibold">
               {product?.name || 'Untitled Product'}
             </h1>
 
             {/* Category and Short Description */}
             <div className="mt-2 space-y-1">
-              <div className="flex items-center gap-2 text-sm text-gray-600">
+              <div className="flex items-center gap-2 text-[1.0625rem] text-gray-600">
                 <span className="capitalize">{product?.category}</span>
                 {product?.subcategory && (
                   <>
@@ -438,7 +438,7 @@ const ProductDetails = () => {
                 )}
               </div>
               {product?.shortDescription && (
-                <p className="text-gray-700 text-sm my-2 leading-relaxed font-medium">
+                <p className="text-gray-700 text-[1.0625rem] my-2 leading-relaxed font-medium">
                   {product.shortDescription}
                 </p>
               )}
@@ -447,15 +447,15 @@ const ProductDetails = () => {
             {/* Price Display - Different for High Jewellery */}
             {isHighJewellery ? (
               <div className="mt-3">
-                <div className="text-2xl font-playfair font-semibold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
+                <div className="text-3xl font-playfair font-semibold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent">
                   {selectedVariant?.priceOnDemandText || 'Price on Request'}
                 </div>
-                <p className="text-sm text-gray-600 mt-1">Contact us for pricing details</p>
+                <p className="text-[1.0625rem] text-gray-600 mt-1">Contact us for pricing details</p>
               </div>
             ) : (
               <div className="mt-3">
                 <div className="flex items-baseline gap-3">
-                  <div className="text-2xl  font-semibold">
+                  <div className="text-3xl  font-semibold">
                     ₹{selectedVariant?.price ?? 'Price not available'}
                   </div>
                   {selectedVariant?.mrp && selectedVariant.mrp > selectedVariant.price && (
@@ -464,9 +464,9 @@ const ProductDetails = () => {
                     </div>
                   )}
                 </div>
-                <p className="text-sm text-gray-600 mt-1">(inclusive of GST)</p>
+                <p className="text-[1.0625rem] text-gray-600 mt-1">(inclusive of GST)</p>
                 {selectedVariant?.sizeLabel && (
-                  <p className="text-sm my-1 text-gray-600">Size: {selectedVariant.sizeLabel}</p>
+                  <p className="text-[1.0625rem] my-1 text-gray-600">Size: {selectedVariant.sizeLabel}</p>
                 )}
               </div>
             )}
@@ -474,18 +474,18 @@ const ProductDetails = () => {
             {/* Stock status indicator */}
             <div className="my-3 flex items-center gap-3 ">
               {isOutOfStock ? (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium bg-red-100 text-red-800">
                   Out of Stock
                 </span>
               ) : (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium bg-green-100 text-green-800">
                   In Stock
                 </span>
               )}
 
             </div>
 
-            <p className="mt-1 text-xs text-gray-700">
+            <p className="mt-1 text-[1.0625rem] text-gray-700">
               <span className="font-medium">SKU:</span>{" "}
               {selectedVariant?.sku || 'SKU not available'}
             </p>
@@ -495,12 +495,12 @@ const ProductDetails = () => {
               <div className="mt-2 flex items-center gap-2">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
-                    <span key={i} className={`text-sm ${i < Math.floor(product.avgRating || 0) ? 'text-yellow-400' : 'text-gray-300'}`}>
+                    <span key={i} className={`text-[1.0625rem] ${i < Math.floor(product.avgRating || 0) ? 'text-yellow-400' : 'text-gray-300'}`}>
                       ★
                     </span>
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">
+                <span className="text-[1.0625rem] text-gray-600">
                   {product.avgRating && `${product.avgRating.toFixed(1)} `}
                   ({product.reviewCount || 0} reviews)
                 </span>
@@ -513,12 +513,12 @@ const ProductDetails = () => {
             {product?.type === 'jewellery' && (
               <div className="mt-4 p-3 bg-gray-50  space-y-2">
                 {product?.material && (
-                  <p className="text-sm text-gray-700">
+                  <p className="text-[1.0625rem] text-gray-700">
                     <span className="font-medium">Material:</span> {product.material}
                   </p>
                 )}
                 {product?.dimensions && (
-                  <p className="text-sm text-gray-700">
+                  <p className="text-[1.0625rem] text-gray-700">
                     <span className="font-medium">Dimensions:</span> {product.dimensions}
                   </p>
                 )}
@@ -528,10 +528,10 @@ const ProductDetails = () => {
             {/* High Jewellery Customization */}
             {isHighJewellery && product?.customizationOptions?.enabled && (
               <div className="mt-4 p-3 bg-amber-50 border border-amber-200 ">
-                <h4 className="text-sm font-semibold text-amber-900 mb-1">Customization Available</h4>
-                <p className="text-sm text-amber-800">{product.customizationOptions.description}</p>
+                <h4 className="text-[1.0625rem] font-semibold text-amber-900 mb-1">Customization Available</h4>
+                <p className="text-[1.0625rem] text-amber-800">{product.customizationOptions.description}</p>
                 {product.customizationOptions.estimatedDays && (
-                  <p className="text-sm text-amber-700 mt-1">
+                  <p className="text-[1.0625rem] text-amber-700 mt-1">
                     Estimated time: {product.customizationOptions.estimatedDays} days
                   </p>
                 )}
@@ -596,7 +596,7 @@ const ProductDetails = () => {
                       return (
                         <span 
                           key={`tag-${index}`} 
-                          className="inline-flex items-center px-2 py-1 rounded-md text-sm bg-gray-100 text-gray-700"
+                          className="inline-flex items-center px-2 py-1 rounded-md text-[1.0625rem] bg-gray-100 text-gray-700"
                         >
                           #{tagText}
                         </span>
@@ -610,7 +610,7 @@ const ProductDetails = () => {
               {/* Collections */}
               {product?.collections && product.collections.length > 0 && (
                 <div className="mt-3">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-[1.0625rem] text-gray-600">
                     <span className="font-medium">Collections:</span>
                     <span className="ml-2">{product.collections.join(', ')}</span>
                   </p>
@@ -620,18 +620,18 @@ const ProductDetails = () => {
               {/* Gift Options */}
               {(product?.freeGiftWrap || product?.giftWrap?.enabled || product?.giftMessageAvailable) && (
                 <div className="mt-3 p-3 bg-green-50 border border-green-200 ">
-                  <h4 className="text-sm font-semibold text-green-900 mb-2">Gift Options Available</h4>
+                  <h4 className="text-[1.0625rem] font-semibold text-green-900 mb-2">Gift Options Available</h4>
                   <div className="space-y-1">
                     {product?.freeGiftWrap && (
-                      <p className="text-sm text-green-800">✓ Complimentary gift wrapping</p>
+                      <p className="text-[1.0625rem] text-green-800">✓ Complimentary gift wrapping</p>
                     )}
                     {product?.giftWrap?.enabled && !product?.freeGiftWrap && (
-                      <p className="text-sm text-green-800">
+                      <p className="text-[1.0625rem] text-green-800">
                         ✓ Gift wrapping {product.giftWrap.price > 0 ? `(₹${product.giftWrap.price})` : 'available'}
                       </p>
                     )}
                     {product?.giftMessageAvailable && (
-                      <p className="text-sm text-green-800">✓ Personal message card</p>
+                      <p className="text-[1.0625rem] text-green-800">✓ Personal message card</p>
                     )}
                   </div>
                 </div>
@@ -681,26 +681,26 @@ const ProductDetails = () => {
                       <div className="absolute top-full left-0 right-0 sm:right-auto sm:w-80 mt-2 bg-white border border-gray-200  shadow-xl z-20 overflow-hidden">
                         <button
                           onClick={() => handleWhatsAppContact(product, setShowContactOptions)}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-green-50 transition-colors border-b border-gray-100"
+                          className="w-full flex items-center gap-3 px-4 py-3 text-[1.0625rem] text-left hover:bg-green-50 transition-colors border-b border-gray-100"
                         >
                           <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                            <FiPhone className="text-white text-sm" />
+                            <FiPhone className="text-white text-[1.0625rem]" />
                           </div>
                           <div>
                             <div className="font-medium text-gray-900">WhatsApp</div>
-                            <div className="text-sm text-gray-500">Instant messaging for quick response</div>
+                            <div className="text-[1.0625rem] text-gray-500">Instant messaging for quick response</div>
                           </div>
                         </button>
                         <button
                           onClick={() => handleEmailContact(product, setShowContactOptions)}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-blue-50 transition-colors"
+                          className="w-full flex items-center gap-3 px-4 py-3 text-[1.0625rem] text-left hover:bg-blue-50 transition-colors"
                         >
                           <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                            <FiMail className="text-white text-sm" />
+                            <FiMail className="text-white text-[1.0625rem]" />
                           </div>
                           <div>
                             <div className="font-medium text-gray-900">Email</div>
-                            <div className="text-sm text-gray-500">Detailed inquiry with specifications</div>
+                            <div className="text-[1.0625rem] text-gray-500">Detailed inquiry with specifications</div>
                           </div>
                         </button>
                       </div>
@@ -713,7 +713,7 @@ const ProductDetails = () => {
                   <button 
                     onClick={handleAddToCart} 
                     disabled={isOutOfStock || isColorSelectionMissing()}
-                    className={`w-auto px-6 py-3 text-xs  ${
+                    className={`w-auto px-6 py-3 text-[1.0625rem]  ${
                       (isOutOfStock || isColorSelectionMissing())
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                         : 'btn-black btn-small'
@@ -726,7 +726,7 @@ const ProductDetails = () => {
                   <button 
                     onClick={handleBuyNow} 
                     disabled={isOutOfStock || isColorSelectionMissing()}
-                    className={`w-1/2  px-6 py-3 text-sm  font-medium transition-colors ${
+                    className={`w-1/2  px-6 py-3 text-[1.0625rem]  font-medium transition-colors ${
                       (isOutOfStock || isColorSelectionMissing()) 
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                         : 'btn btn-small'
@@ -760,7 +760,7 @@ const ProductDetails = () => {
                   className="w-full flex items-center gap-3 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
                 >
                   <FiPhone size={18} />
-                  <span className='text-sm'>Order by Phone +91-7738543881</span>
+                  <span className='text-[1.0625rem]'>Order by Phone +91-7738543881</span>
                 </button>
                 
                 {/* WhatsApp Message Button */}
@@ -769,14 +769,14 @@ const ProductDetails = () => {
                   className="w-full flex items-center gap-0 bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
                 >
                   <FaWhatsapp size={18} className="text-green-500" />
-                  <span className='font-semibold text-sm'>Message us</span>
+                  <span className='font-semibold text-[1.0625rem]'>Message us</span>
                 </button>
                 
                 {/* Contact Advisor and Share Row */}
                 <div className='flex gap-2'>
                   <button 
                     onClick={() => handleEmailContact(product)}
-                    className="flex-1 text-sm bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
+                    className="flex-1 text-[1.0625rem] bg-gray-50 p-4 text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer"
                   >
                     Contact a Client Advisor
                   </button>
@@ -785,19 +785,19 @@ const ProductDetails = () => {
                       navigator.clipboard.writeText(window.location.href);
                       toast.success('Product link copied to clipboard!');
                     }}
-                    className='flex text-sm items-center gap-2 bg-gray-50 p-4 font-semibold text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer'
+                    className='flex text-[1.0625rem] items-center gap-2 bg-gray-50 p-4 font-semibold text-gray-900 hover:bg-gray-100 transition-colors duration-200  cursor-pointer'
                   > 
                     <CiShare2 size={18} /> Share
                   </button>
                 </div>
               </div>
               {product?.shippingInfo?.complementary && (
-                <p className="text-sm text-green-700 font-medium">
+                <p className="text-[1.0625rem] text-green-700 font-medium">
                   ✓ Complimentary Express Delivery
                 </p>
               )}
               
-              <p className="text-sm text-gray-700">
+              <p className="text-[1.0625rem] text-gray-700">
                 {product?.expectedDeliveryText || (
                   product?.shippingInfo?.maxDeliveryDays 
                     ? `Delivery in ${product.shippingInfo.minDeliveryDays || 3}-${product.shippingInfo.maxDeliveryDays} days`
@@ -806,26 +806,26 @@ const ProductDetails = () => {
               </p>
 
               {product?.shippingInfo?.codAvailable && (
-                <p className="text-sm text-gray-600">
+                <p className="text-[1.0625rem] text-gray-600">
                   ✓ Cash on Delivery available
                 </p>
               )}
 
               {product?.shippingInfo?.note && (
-                <p className="text-sm text-gray-500 italic">
+                <p className="text-[1.0625rem] text-gray-500 italic">
                   {product.shippingInfo.note}
                 </p>
               )}
 
               {/* Purchase limits */}
               {product?.purchaseLimitPerOrder > 0 && (
-                <p className="text-sm text-orange-600">
+                <p className="text-[1.0625rem] text-orange-600">
                   Max {product.purchaseLimitPerOrder} per order
                 </p>
               )}
 
               {product?.minOrderQty > 1 && (
-                <p className="text-sm text-gray-600">
+                <p className="text-[1.0625rem] text-gray-600">
                   Minimum order: {product.minOrderQty} pieces
                 </p>
               )}
@@ -1024,17 +1024,17 @@ export default ProductDetails;
 //       </div>
 //       <div className='w-[50vw] ml-5'>
         
-//             <h3 className="text-2xl ">
+//             <h3 className="text-3xl ">
 //               {product?.name || 'Untitled Product'}
 //             </h3>
-//              <div className="text-2xl font-semibold my-2">₹{product?.variants[0]?.price || 'Price not available'}
+//              <div className="text-3xl font-semibold my-2">₹{product?.variants[0]?.price || 'Price not available'}
 // </div>
 //             <p>(inclusive of GST)</p>
 
 //             <h3>SKU: {product?.variants[0]?.sku || 'SKU not available'}</h3>
       
 //       <div className='flex items-center justify-between '>
-//         <h2 className='text-2xl font-medium   self-end '>Customize your jewellery Design</h2>
+//         <h2 className='text-3xl font-medium   self-end '>Customize your jewellery Design</h2>
         
 //                     <button className='btn-black uppercase'>Book an appointment</button>
 //       </div>
@@ -1053,7 +1053,7 @@ export default ProductDetails;
 //             </button>
 //       </div>
 //       <div className='mt-5'>
-//         <h1 className='text-2xl font-semibold'>Product Description</h1>
+//         <h1 className='text-3xl font-semibold'>Product Description</h1>
 //         <p className=''>
 //         {product?.description || 'Description not available'}
 //         </p>

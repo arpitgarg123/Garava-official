@@ -42,7 +42,7 @@ export default class ErrorBoundary extends React.Component {
       return (
         <div className="flex h-screen items-center justify-center bg-secondary text-primary">
           <div className="text-center max-w-md mx-auto p-6">
-            <h1 className="text-2xl font-bold">
+            <h1 className="text-3xl font-bold">
               {isAuthError ? 'Authentication Error 🔐' : 'Something went wrong 😢'}
             </h1>
             <p className="mt-2">
@@ -67,11 +67,11 @@ export default class ErrorBoundary extends React.Component {
             </div>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <details className="mt-4 text-left text-sm">
+              <details className="mt-4 text-left text-[1.0625rem]">
                 <summary className="cursor-pointer text-gray-600">
                   Error Details (Dev)
                 </summary>
-                <pre className="mt-2 bg-gray-100 p-2 rounded text-sm overflow-auto max-h-32">
+                <pre className="mt-2 bg-gray-100 p-2 rounded text-[1.0625rem] overflow-auto max-h-32">
                   {this.state.error.toString()}
                 </pre>
               </details>

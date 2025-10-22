@@ -4,7 +4,7 @@ const Field = ({ id, label, name, value, onChange, onBlur, required, placeholder
      const Comp = as === "textarea" ? "textarea" : "input";
   return (
      <div>
-      <label htmlFor={id} className="text-sm font-medium">
+      <label htmlFor={id} className="text-[1.0625rem] font-medium">
         {label} {required && <span className="text-red-600">*</span>}
       </label>
       <Comp
@@ -21,7 +21,7 @@ const Field = ({ id, label, name, value, onChange, onBlur, required, placeholder
           error ? "border-red-300" : "border-muted"
         }`}
       />
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-1 text-[1.0625rem] text-red-600">{error}</p>}
     </div>
   )
 }

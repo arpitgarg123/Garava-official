@@ -24,7 +24,7 @@ const BlogCard = ({ blog }) => {
           className="w-full h-56 object-cover"
         />
         {blog.category && (
-          <div className="absolute bottom-3 left-3 bg-black/60 text-white text-sm px-3 py-1 rounded-full">
+          <div className="absolute bottom-3 left-3 bg-black/60 text-white text-[1.0625rem] px-3 py-1 rounded-full">
             {blog.category}
           </div>
         )}
@@ -32,7 +32,7 @@ const BlogCard = ({ blog }) => {
 
       {/* Content */}
       <div className="p-5">
-        <div className="flex items-center justify-between text-gray-500 text-sm mb-2">
+        <div className="flex items-center justify-between text-gray-500 text-[1.0625rem] mb-2">
           <span>{blog.author?.name || 'Garava'}</span>
           <span>{formatDate(blog.publishAt || blog.createdAt)}</span>
         </div>
@@ -40,7 +40,7 @@ const BlogCard = ({ blog }) => {
         <h3 className="blog-title text-lg font-semibold text-gray-800 mb-2">
           {blog.title}
         </h3>
-        <p className="blog-desc text-gray-600 text-sm mb-4">
+        <p className="blog-desc text-gray-600 text-[1.0625rem] mb-4">
           {blog.excerpt || blog.description || 'No description available'}
         </p>
 

@@ -135,12 +135,12 @@ export default function BlogDetails() {
           <header className="p-5 sm:p-8">
             <div className="mb-3 flex flex-wrap items-center gap-3">
               {blog.category && (
-                <span className="rounded-xl bg-black text-white px-3 py-1 text-sm font-medium">
+                <span className="rounded-xl bg-black text-white px-3 py-1 text-[1.0625rem] font-medium">
                   {blog.category}
                 </span>
               )}
               {blog.readingTime && (
-                <span className="text-sm flex-center"> ● {blog.readingTime} min read</span>
+                <span className="text-[1.0625rem] flex-center"> ● {blog.readingTime} min read</span>
               )}
             </div>
             <h1 className="text-balance text-3xl font-semibold leading-tight sm:text-4xl">
@@ -155,8 +155,8 @@ export default function BlogDetails() {
                 loading="lazy"
               />
               <div>
-                <div className="text-sm font-medium">Posted by {blog.author?.name || 'Garava'}</div>
-                <div className="text-sm text-gray-600">Updated {formatDate(blog.publishAt || blog.createdAt)}</div>
+                <div className="text-[1.0625rem] font-medium">Posted by {blog.author?.name || 'Garava'}</div>
+                <div className="text-[1.0625rem] text-gray-600">Updated {formatDate(blog.publishAt || blog.createdAt)}</div>
               </div>
             </div>
           </header>
@@ -176,7 +176,7 @@ export default function BlogDetails() {
           </section>
 
           <div className="border-t px-5 py-6 sm:px-8">
-            <h3 className="mb-3 text-sm font-semibold">Share this article</h3>
+            <h3 className="mb-3 text-[1.0625rem] font-semibold">Share this article</h3>
             <ShareButton title={blog.title} url={canonicalUrl} />
           </div>
 
@@ -184,7 +184,7 @@ export default function BlogDetails() {
           {blog.tags?.length > 0 && (
             <div className="flex flex-wrap items-center gap-2 border-t px-5 py-6 sm:px-8">
               {blog.tags.map((tag, index) => (
-                <span key={index} className="rounded-full border px-3 py-1 text-sm text-gray-600">
+                <span key={index} className="rounded-full border px-3 py-1 text-[1.0625rem] text-gray-600">
                   #{tag}
                 </span>
               ))}

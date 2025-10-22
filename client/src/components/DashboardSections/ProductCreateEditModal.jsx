@@ -591,7 +591,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Product Name *
                 </label>
                 <input
@@ -605,7 +605,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Slug *
                 </label>
                 <input
@@ -619,7 +619,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Type *
                 </label>
                 <select
@@ -636,7 +636,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Category *
                 </label>
                 <input
@@ -651,7 +651,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Subcategory
                 </label>
                 <input
@@ -664,7 +664,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Status
                 </label>
                 <select
@@ -681,7 +681,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                 Tags (comma-separated)
               </label>
               <input
@@ -700,7 +700,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Hero Image
                 </label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
@@ -725,7 +725,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   ) : (
                     <label className="cursor-pointer flex flex-col items-center">
                       <BiUpload className="h-8 w-8 text-gray-400" />
-                      <span className="text-sm text-gray-500">Upload hero image</span>
+                      <span className="text-[1.0625rem] text-gray-500">Upload hero image</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -738,7 +738,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Gallery Images
                 </label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
@@ -756,7 +756,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   ) : (
                     <label className="cursor-pointer flex flex-col items-center">
                       <BiImage className="h-8 w-8 text-gray-400" />
-                      <span className="text-sm text-gray-500">Upload gallery images</span>
+                      <span className="text-[1.0625rem] text-gray-500">Upload gallery images</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -802,7 +802,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       SKU *
                     </label>
                     <input
@@ -815,7 +815,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Size Label *
                     </label>
                     <input
@@ -829,7 +829,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Price (₹) {!variant.isPriceOnDemand && '*'}
                     </label>
                     <input
@@ -845,7 +845,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       MRP (₹)
                     </label>
                     <input
@@ -858,7 +858,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Stock
                     </label>
                     <input
@@ -870,7 +870,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Weight (grams)
                     </label>
                     <input
@@ -883,7 +883,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Purchase Limit (0 = No Limit)
                     </label>
                     <input
@@ -895,7 +895,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Lead Time (Days)
                     </label>
                     <input
@@ -917,13 +917,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                         onChange={(e) => handleVariantChange(index, 'isPriceOnDemand', e.target.checked)}
                         className="mr-2"
                       />
-                      <span className="text-sm font-medium text-gray-700">Price on Request</span>
+                      <span className="text-[1.0625rem] font-medium text-gray-700">Price on Request</span>
                     </label>
                   </div>
                   
                   {variant.isPriceOnDemand && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                         Price on Request Text
                       </label>
                       <input
@@ -991,7 +991,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 <button
                   type="button"
                   onClick={addColorVariant}
-                  className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+                  className="px-3 py-1 bg-blue-600 text-white text-[1.0625rem] rounded hover:bg-blue-700"
                 >
                   Add Color
                 </button>
@@ -1014,7 +1014,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                         Color Name
                       </label>
                       <input
@@ -1027,7 +1027,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                         Color Code
                       </label>
                       <input
@@ -1040,7 +1040,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                         Hex Color
                       </label>
                       <div className="flex items-center gap-2">
@@ -1074,11 +1074,11 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   
                   {/* Color-Specific Images Section */}
                   <div className="mt-4 space-y-4 border-t pt-4">
-                    <h5 className="text-sm font-medium text-gray-800">Color-Specific Images</h5>
+                    <h5 className="text-[1.0625rem] font-medium text-gray-800">Color-Specific Images</h5>
                     
                     {/* Hero Image for this color */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                         Hero Image for {color.name || `Color ${index + 1}`}
                       </label>
                       
@@ -1104,7 +1104,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                             alt={`${color.name} hero`}
                             className="w-32 h-32 object-cover rounded border border-gray-300"
                           />
-                          <div className="text-xs text-gray-500 mt-1">Current image</div>
+                          <div className="text-[1.0625rem] text-gray-500 mt-1">Current image</div>
                         </div>
                       ) : (
                         <label className="flex items-center justify-center w-32 h-32 border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-blue-500 transition">
@@ -1116,7 +1116,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                           />
                           <div className="text-center">
                             <BiUpload className="w-8 h-8 text-gray-400 mx-auto" />
-                            <span className="text-xs text-gray-500">Upload Hero</span>
+                            <span className="text-[1.0625rem] text-gray-500">Upload Hero</span>
                           </div>
                         </label>
                       )}
@@ -1124,7 +1124,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     
                     {/* Gallery Images for this color */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                         Gallery Images for {color.name || `Color ${index + 1}`}
                       </label>
                       
@@ -1155,7 +1155,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                               alt={`Gallery ${imgIdx + 1}`}
                               className="w-24 h-24 object-cover rounded border border-gray-300"
                             />
-                            <div className="text-xs text-gray-500 text-center">Saved</div>
+                            <div className="text-[1.0625rem] text-gray-500 text-center">Saved</div>
                           </div>
                         ))}
                         
@@ -1170,7 +1170,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                           />
                           <div className="text-center">
                             <AiOutlinePlus className="w-6 h-6 text-gray-400 mx-auto" />
-                            <span className="text-xs text-gray-500">Add Images</span>
+                            <span className="text-[1.0625rem] text-gray-500">Add Images</span>
                           </div>
                         </label>
                       </div>
@@ -1192,7 +1192,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             <h3 className="text-lg font-medium text-gray-900">Descriptions</h3>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                 Short Description
               </label>
               <textarea
@@ -1205,7 +1205,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                 Full Description
               </label>
               <textarea
@@ -1223,7 +1223,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Product Details
                   </label>
                   <textarea
@@ -1235,7 +1235,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Care Instructions
                   </label>
                   <textarea
@@ -1247,7 +1247,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Size Guide
                   </label>
                   <textarea
@@ -1259,7 +1259,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Materials
                   </label>
                   <textarea
@@ -1280,7 +1280,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Top Notes (comma-separated)
                   </label>
                   <input
@@ -1293,7 +1293,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Middle Notes (comma-separated)
                   </label>
                   <input
@@ -1306,7 +1306,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Base Notes (comma-separated)
                   </label>
                   <input
@@ -1321,7 +1321,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Ingredients
                   </label>
                   <textarea
@@ -1334,7 +1334,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Caution
                   </label>
                   <textarea
@@ -1347,7 +1347,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Storage Instructions
                   </label>
                   <textarea
@@ -1369,7 +1369,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Dimensions
                   </label>
                   <input
@@ -1383,7 +1383,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Material
                   </label>
                   <input
@@ -1397,7 +1397,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Care Instructions
                   </label>
                   <textarea
@@ -1425,7 +1425,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Product Level Price on Request</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Product Level Price on Request</span>
               </label>
 
               <label className="flex items-center">
@@ -1436,7 +1436,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Consultation Required</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Consultation Required</span>
               </label>
 
               <label className="flex items-center">
@@ -1447,7 +1447,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Ask Advisor</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Ask Advisor</span>
               </label>
 
               <label className="flex items-center">
@@ -1458,7 +1458,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Book Appointment</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Book Appointment</span>
               </label>
             </div>
 
@@ -1471,13 +1471,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={(e) => handleNestedChange('customizationOptions.enabled', e.target.checked)}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Enable Customization</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Enable Customization</span>
               </div>
               
               {formData.customizationOptions.enabled && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Customization Description
                     </label>
                     <textarea
@@ -1489,7 +1489,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Estimated Days
                     </label>
                     <input
@@ -1512,13 +1512,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={(e) => handleNestedChange('callToOrder.enabled', e.target.checked)}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Enable Call to Order</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Enable Call to Order</span>
               </div>
               
               {formData.callToOrder.enabled && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Phone Number
                     </label>
                     <input
@@ -1530,7 +1530,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Button Text
                     </label>
                     <input
@@ -1557,7 +1557,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     onChange={(e) => handleNestedChange('shippingInfo.complementary', e.target.checked)}
                     className="mr-2"
                   />
-                  <span className="text-sm font-medium text-gray-700">Complimentary Shipping</span>
+                  <span className="text-[1.0625rem] font-medium text-gray-700">Complimentary Shipping</span>
                 </label>
 
                 <label className="flex items-center">
@@ -1567,11 +1567,11 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     onChange={(e) => handleNestedChange('shippingInfo.codAvailable', e.target.checked)}
                     className="mr-2"
                   />
-                  <span className="text-sm font-medium text-gray-700">COD Available</span>
+                  <span className="text-[1.0625rem] font-medium text-gray-700">COD Available</span>
                 </label>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Min Delivery Days
                   </label>
                   <input
@@ -1583,7 +1583,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Max Delivery Days
                   </label>
                   <input
@@ -1596,7 +1596,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Expected Delivery Text
                 </label>
                 <input
@@ -1610,7 +1610,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Shipping Note
                 </label>
                 <textarea
@@ -1631,12 +1631,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={(e) => handleNestedChange('giftWrap.enabled', e.target.checked)}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Enable Gift Wrap</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Enable Gift Wrap</span>
               </div>
               
               {formData.giftWrap.enabled && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Gift Wrap Price (₹)
                   </label>
                   <input
@@ -1657,7 +1657,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Meta Title
                 </label>
                 <input
@@ -1670,7 +1670,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Collections (comma-separated)
                 </label>
                 <input
@@ -1684,7 +1684,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                 Meta Description
               </label>
               <textarea

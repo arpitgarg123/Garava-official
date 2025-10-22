@@ -71,7 +71,7 @@ export default function Appointment() {
       <div className="h-full flex items-center justify-center">
         <div className="text-center">
           <p className="text-red-600 font-medium">Error loading appointments</p>
-          <p className="text-gray-500 text-sm mt-1">{error}</p>
+          <p className="text-gray-500 text-[1.0625rem] mt-1">{error}</p>
           <button 
             onClick={() => dispatch(fetchAppointmentsAdmin({}))}
             className="mt-4 px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
@@ -90,7 +90,7 @@ export default function Appointment() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Appointments Management</h2>
-            <p className="text-sm text-gray-600">Manage customer appointments and bookings</p>
+            <p className="text-[1.0625rem] text-gray-600">Manage customer appointments and bookings</p>
           </div>
           
         </div>
@@ -150,7 +150,7 @@ export default function Appointment() {
             <div className="text-center">
               <BiCalendar className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 font-medium">No appointments found</p>
-              <p className="text-gray-400 text-sm mt-1">Customer appointments will appear here</p>
+              <p className="text-gray-400 text-[1.0625rem] mt-1">Customer appointments will appear here</p>
             </div>
           </div>
         ) : (
@@ -158,22 +158,22 @@ export default function Appointment() {
             <table className="w-full">
               <thead className="bg-gray-50 sticky top-0 z-10">
                 <tr>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                     Customer
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                     Service
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                     Appointment Date
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                     Notes
                   </th>
-                  <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-right text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -189,13 +189,13 @@ export default function Appointment() {
                           </div>
                         </div>
                         <div className="ml-3">
-                          <div className="text-sm font-medium text-gray-900">
+                          <div className="text-[1.0625rem] font-medium text-gray-900">
                             {appointment.customerName}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-[1.0625rem] text-gray-500">
                             {appointment.customerEmail}
                           </div>
-                          <div className="text-sm text-gray-400 flex items-center gap-1">
+                          <div className="text-[1.0625rem] text-gray-400 flex items-center gap-1">
                             <BiPhone className="w-3 h-3" />
                             {appointment.customerPhone}
                           </div>
@@ -203,26 +203,26 @@ export default function Appointment() {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[1.0625rem] font-medium bg-blue-100 text-blue-800">
                         {appointment.serviceType}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-[1.0625rem] text-gray-900">
                         {formatDateTime(appointment.appointmentAt)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(appointment.status)}`}>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[1.0625rem] font-medium ${getStatusColor(appointment.status)}`}>
                         {appointment.status}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900 max-w-xs truncate">
+                      <div className="text-[1.0625rem] text-gray-900 max-w-xs truncate">
                         {appointment.adminNotes || 'No notes'}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-[1.0625rem] font-medium">
                       <div className="flex items-center justify-end gap-2">
                         <button 
                           onClick={() => handleViewDetails(appointment)}

@@ -26,9 +26,9 @@
 //                 }`}
 //                 aria-pressed={isActive}
 //               >
-//                 <span className="text-sm">{c.label}</span>
+//                 <span className="text-[1.0625rem]">{c.label}</span>
 //                 <span
-//                   className={`text-sm px-2 py-0.5 rounded-full ${
+//                   className={`text-[1.0625rem] px-2 py-0.5 rounded-full ${
 //                     isActive ? "bg-white text-black" : "bg-gray-50 text-gray-600"
 //                   }`}
 //                 >
@@ -77,11 +77,11 @@ const CategoryFilter = ({ selected, onChange, categories, counts = {}, isMobile 
                     checked={isActive}
                     onChange={() => handleCategoryChange(cat.id)}
                   />
-                  <label htmlFor={`mobile-cat-${cat.id}`} className="ml-2 text-sm font-medium">
+                  <label htmlFor={`mobile-cat-${cat.id}`} className="ml-2 text-[1.0625rem] font-medium">
                     {cat.label}
                   </label>
                 </div>
-                <span className="text-sm text-gray-500">
+                <span className="text-[1.0625rem] text-gray-500">
                   {displayCount}
                 </span>
               </div>
@@ -117,9 +117,9 @@ const CategoryFilter = ({ selected, onChange, categories, counts = {}, isMobile 
                 }`}
                 aria-pressed={isActive}
               >
-                <span className="text-sm">{c.label}</span>
+                <span className="text-[1.0625rem]">{c.label}</span>
                 <span
-                  className={`text-sm px-2 py-0.5 rounded-full ${
+                  className={`text-[1.0625rem] px-2 py-0.5 rounded-full ${
                     isActive ? "bg-white text-black" : "bg-gray-50 text-gray-600"
                   }`}
                 >

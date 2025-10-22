@@ -93,7 +93,7 @@ const Jewellry = () => {
               className="absolute left-2 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
               aria-label="Scroll left"
             >
-              <IoIosArrowBack className="text-2xl text-gray-800" />
+              <IoIosArrowBack className="text-3xl text-gray-800" />
             </button>
 
             {/* Right Arrow */}
@@ -106,7 +106,7 @@ const Jewellry = () => {
               className="absolute right-2 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
               aria-label="Scroll right"
             >
-              <IoIosArrowForward className="text-2xl text-gray-800" />
+              <IoIosArrowForward className="text-3xl text-gray-800" />
             </button>
             
             <div 

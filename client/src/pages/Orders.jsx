@@ -49,7 +49,7 @@ const OrderStatus = ({ status }) => {
   };
 
   return (
-    <span className={`px-3 py-1 rounded-full text-sm ${getColor()}`}>
+    <span className={`px-3 py-1 rounded-full text-[1.0625rem] ${getColor()}`}>
       {getDisplayText()}
     </span>
   );
@@ -148,7 +148,7 @@ const Orders = () => {
             <div className="border-b px-6 py-4">
               <div className="flex justify-between items-start">
                 <div>
-                  <h1 className="text-2xl font-bold">Order #{orderDetails.orderNumber}</h1>
+                  <h1 className="text-3xl font-bold">Order #{orderDetails.orderNumber}</h1>
                   <p className="text-gray-500 mt-1">
                     Placed on {format(new Date(orderDetails.createdAt), 'PPP')}
                   </p>
@@ -175,16 +175,16 @@ const Orders = () => {
                     />
                     <div className="flex-1">
                       <h4 className="font-medium">{item.productSnapshot?.name}</h4>
-                      <p className="text-gray-500 text-sm my-1">
+                      <p className="text-gray-500 text-[1.0625rem] my-1">
                         SKU: {item.variantSnapshot?.sku}
                       </p>
-                      <p className="text-gray-500 text-sm">Quantity: {item.quantity}</p>
+                      <p className="text-gray-500 text-[1.0625rem]">Quantity: {item.quantity}</p>
                     </div>
                     <div className="text-right">
                       <p className="font-semibold">
                         {formatCurrency(item.lineTotal)}
                       </p>
-                      <p className="text-gray-500 text-sm">
+                      <p className="text-gray-500 text-[1.0625rem]">
                         {formatCurrency(item.unitPrice)} each
                       </p>
                     </div>
@@ -214,10 +214,10 @@ const Orders = () => {
               <h3 className="font-semibold mb-2">Payment Information</h3>
               <div className="flex justify-between">
                 <div>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 text-[1.0625rem]">
                     Method: {orderDetails.payment?.method === 'phonepe' ? 'PhonePe Payment Gateway' : 'Cash on Delivery'}
                   </p>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 text-[1.0625rem]">
                     Status: <span className={`font-medium ${
                       orderDetails.payment?.status === 'paid' ? 'text-green-600' : 
                       orderDetails.payment?.status === 'failed' ? 'text-red-600' : 
@@ -296,8 +296,8 @@ const Orders = () => {
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-sm text-gray-500">Order #{order.orderNumber}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-[1.0625rem] text-gray-500">Order #{order.orderNumber}</p>
+                    <p className="text-[1.0625rem] text-gray-500">
                       Placed on {format(new Date(order.createdAt), 'PP')}
                     </p>
                   </div>
@@ -314,13 +314,13 @@ const Orders = () => {
                       />
                       <div>
                         <h3 className="font-medium">{item.productSnapshot?.name}</h3>
-                        <p className="text-sm text-gray-500 my-2">Qty: {item.quantity}</p>
-                        <p className="text-sm">{formatCurrency(item.unitPrice)}</p>
+                        <p className="text-[1.0625rem] text-gray-500 my-2">Qty: {item.quantity}</p>
+                        <p className="text-[1.0625rem]">{formatCurrency(item.unitPrice)}</p>
                       </div>
                     </div>
                   ))}
                   {order.items?.length > 2 && (
-                    <p className="text-sm text-gray-500 pl-24">
+                    <p className="text-[1.0625rem] text-gray-500 pl-24">
                       +{order.items.length - 2} more items
                     </p>
                   )}

@@ -7,17 +7,17 @@ const Pagination = ({ page, totalPages, onChange })=> {
       <button
         onClick={() => canPrev && onChange(page - 1)}
         disabled={!canPrev}
-        className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50"
+        className="rounded-xl border px-3 py-2 text-[1.0625rem] disabled:opacity-50"
       >
         ← Prev
       </button>
-      <span className="text-sm text-muted-foreground">
+      <span className="text-[1.0625rem] text-muted-foreground">
         Page {page} of {totalPages}
       </span>
       <button
         onClick={() => canNext && onChange(page + 1)}
         disabled={!canNext}
-        className="rounded-xl border px-3 py-2 text-sm disabled:opacity-50"
+        className="rounded-xl border px-3 py-2 text-[1.0625rem] disabled:opacity-50"
       >
         Next →
       </button>

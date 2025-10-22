@@ -10,8 +10,8 @@ const Infotile = ({ title, value, href }) => {
       className="group flex items-center justify-between  border border-gray-400 bg-background px-4 py-3 hover:bg-muted/50"
     >
       <div>
-        <div className="text-sm text-muted-foreground">{title}</div>
-        <div className="text-sm font-medium">{value}</div>
+        <div className="text-[1.0625rem] text-muted-foreground">{title}</div>
+        <div className="text-[1.0625rem] font-medium">{value}</div>
       </div>
       <span className="opacity-40 group-hover:opacity-100">↗</span>
     </Comp>

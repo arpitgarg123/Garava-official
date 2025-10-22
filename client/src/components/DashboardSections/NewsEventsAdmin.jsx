@@ -177,24 +177,24 @@ export default function NewsEventsAdmin() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2 mb-2">
-              <h3 className="text-sm sm:text-base font-medium text-gray-900 line-clamp-2 flex-1">
+              <h3 className="text-[1.0625rem] sm:text-base font-medium text-gray-900 line-clamp-2 flex-1">
                 {item.title}
               </h3>
               <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(item.status)}`}>
+                <span className={`inline-flex items-center px-2 py-1 rounded-full text-[1.0625rem] font-medium ${getStatusColor(item.status)}`}>
                   {item.status}
                 </span>
-                <div className="flex items-center text-sm text-gray-500">
+                <div className="flex items-center text-[1.0625rem] text-gray-500">
                   {getTypeIcon(item.type)}
                   <span className="ml-1">{item.type === 'media-coverage' ? 'Media' : 'Event'}</span>
                 </div>
               </div>
             </div>
-            <p className="text-sm sm:text-sm text-gray-600 line-clamp-2 mb-3">
+            <p className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600 line-clamp-2 mb-3">
               {item.excerpt || 'No excerpt available'}
             </p>
 
-            <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
+            <div className="flex items-center justify-between text-[1.0625rem] text-gray-500 mb-3">
               <span>{formatDate(item.date)}</span>
               <div className="flex items-center">
                 <AiOutlineEye className="w-3 h-3 mr-1" />
@@ -206,7 +206,7 @@ export default function NewsEventsAdmin() {
 <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100">
           <button 
             onClick={() => openModal('details', item)}
-            className="flex-1 px-3 py-2 bg-blue-50 text-blue-600  text-sm font-medium hover:bg-blue-100 transition-colors"
+            className="flex-1 px-3 py-2 bg-blue-50 text-blue-600  text-[1.0625rem] font-medium hover:bg-blue-100 transition-colors"
           >
             View Details
           </button>
@@ -220,7 +220,7 @@ export default function NewsEventsAdmin() {
           <select
             value={item.status}
             onChange={(e) => handleStatusUpdate(item._id, e.target.value)}
-            className="text-sm border border-gray-300  px-2 py-1 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="text-[1.0625rem] border border-gray-300  px-2 py-1 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             title="Update Status"
           >
             <option value="draft">Draft</option>
@@ -245,22 +245,22 @@ export default function NewsEventsAdmin() {
         <table className="w-full min-w-[1000px]">
           <thead className="bg-gray-50 sticky top-0 z-10">
             <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                 Title
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                 Type
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                 Date
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                 Views
               </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
@@ -278,10 +278,10 @@ export default function NewsEventsAdmin() {
                       />
                     )}
                     <div className="min-w-0">
-                      <div className="text-sm font-medium text-gray-900 truncate max-w-xs">
+                      <div className="text-[1.0625rem] font-medium text-gray-900 truncate max-w-xs">
                         {item.title}
                       </div>
-                      <div className="text-sm text-gray-500 truncate max-w-xs">
+                      <div className="text-[1.0625rem] text-gray-500 truncate max-w-xs">
                         {item.excerpt}
                       </div>
                     </div>
@@ -290,20 +290,20 @@ export default function NewsEventsAdmin() {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-1">
                     {getTypeIcon(item.type)}
-                    <span className="text-sm text-gray-900 capitalize">
+                    <span className="text-[1.0625rem] text-gray-900 capitalize">
                       {item.type === 'media-coverage' ? 'Media' : 'Event'}
                     </span>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`inline-flex px-2 py-1 text-sm font-semibold rounded-full ${getStatusColor(item.status)}`}>
+                  <span className={`inline-flex px-2 py-1 text-[1.0625rem] font-semibold rounded-full ${getStatusColor(item.status)}`}>
                     {item.status}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap text-[1.0625rem] text-gray-900">
                   {formatDate(item.date)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap text-[1.0625rem] text-gray-900">
                   <div className="flex items-center">
                     <AiOutlineEye className="w-4 h-4 mr-1 text-gray-400" />
                     {item.views || 0}
@@ -328,7 +328,7 @@ export default function NewsEventsAdmin() {
                     <select
                       value={item.status}
                       onChange={(e) => handleStatusUpdate(item._id, e.target.value)}
-                      className="text-sm border border-gray-300 px-2 py-1 outline-none"
+                      className="text-[1.0625rem] border border-gray-300 px-2 py-1 outline-none"
                       title="Update Status"
                     >
                       <option value="draft">Draft</option>
@@ -357,7 +357,7 @@ export default function NewsEventsAdmin() {
       <div className="h-full flex items-center justify-center p-4">
         <div className="text-center max-w-md mx-auto">
           <p className="text-red-600 font-medium mb-2">Error loading news & events</p>
-          <p className="text-gray-500 text-sm mb-4">{error}</p>
+          <p className="text-gray-500 text-[1.0625rem] mb-4">{error}</p>
           <button 
             onClick={() => fetchNewsEvents()}
             className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
@@ -375,16 +375,16 @@ export default function NewsEventsAdmin() {
       <div className="flex-shrink-0 p-4 sm:p-6 border-b border-gray-200 bg-white">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
           <div className="min-w-0 flex-1">
-            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 truncate">
+            <h2 className="text-lg sm:text-xl lg:text-3xl font-bold text-gray-900 truncate">
               News & Events
             </h2>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-[1.0625rem] text-gray-600 mt-1">
               Manage events and media coverage • {pagination.total || newsEvents.length} total items
             </p>
           </div>
           <button
             onClick={() => openModal('createEdit')}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-gray-900 text-white  hover:bg-gray-800 transition-colors text-sm"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-gray-900 text-white  hover:bg-gray-800 transition-colors text-[1.0625rem]"
           >
             <AiOutlinePlus className="w-4 h-4" />
             <span>Add New</span>
@@ -395,27 +395,27 @@ export default function NewsEventsAdmin() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-4 sm:mb-6">
             <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-gray-900">{stats.total}</div>
-              <div className="text-sm sm:text-sm text-gray-600 truncate">Total Items</div>
+              <div className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600 truncate">Total Items</div>
             </div>
             <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-green-600">{stats.published}</div>
-              <div className="text-sm sm:text-sm text-gray-600 truncate">Published</div>
+              <div className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600 truncate">Published</div>
             </div>
             <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-yellow-600">{stats.draft}</div>
-              <div className="text-sm sm:text-sm text-gray-600 truncate">Drafts</div>
+              <div className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600 truncate">Drafts</div>
             </div>
             <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-red-600">{stats.archived}</div>
-              <div className="text-sm sm:text-sm text-gray-600 truncate">Archived</div>
+              <div className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600 truncate">Archived</div>
             </div>
             <div className="bg-white p-3 sm:p-4  shadow border border-gray-300">
               <div className="text-base sm:text-lg lg:text-xl font-bold text-blue-600">{stats.events}</div>
-              <div className="text-sm sm:text-sm text-gray-600 truncate">Events</div>
+              <div className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600 truncate">Events</div>
             </div>
             <div className="bg-white p-3 sm:p-4  border border-gray-300">
-              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-purple-600">{stats.mediaCoverage}</div>
-              <div className="text-sm sm:text-sm text-gray-600">Media Coverage</div>
+              <div className="text-lg sm:text-xl lg:text-3xl font-bold text-purple-600">{stats.mediaCoverage}</div>
+              <div className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600">Media Coverage</div>
             </div>
           </div>
           
@@ -423,12 +423,12 @@ export default function NewsEventsAdmin() {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4 max-sm:mb-0">
-          <p className="text-sm text-gray-600">
+          <p className="text-[1.0625rem] text-gray-600">
             {newsEvents.length} items
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm border border-gray-300  hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-[1.0625rem] border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -514,7 +514,7 @@ export default function NewsEventsAdmin() {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Search */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Search</label>
               <div className="relative">
                 <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -529,7 +529,7 @@ export default function NewsEventsAdmin() {
 
             {/* Mobile Type Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Type</label>
               <select
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
@@ -543,7 +543,7 @@ export default function NewsEventsAdmin() {
 
             {/* Mobile Status Filter */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -588,7 +588,7 @@ export default function NewsEventsAdmin() {
             <div className="text-center max-w-md mx-auto">
               <FiFileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 font-medium mb-2">No news & events found</p>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="text-gray-400 text-[1.0625rem] mb-4">
                 {searchTerm || typeFilter || statusFilter 
                   ? "Try adjusting your filters or search terms"
                   : "Create your first news item or event to get started"
@@ -625,7 +625,7 @@ export default function NewsEventsAdmin() {
       {pagination.totalPages > 1 && (
         <div className="flex-shrink-0 px-4 sm:px-6 py-4 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-gray-600 text-center sm:text-left">
+            <div className="text-[1.0625rem] text-gray-600 text-center sm:text-left">
               Page {pagination.page} of {pagination.totalPages} — {pagination.total || newsEvents.length} items
             </div>
             
@@ -634,17 +634,17 @@ export default function NewsEventsAdmin() {
               <button
                 onClick={() => fetchNewsEvents(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-[1.0625rem]"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-blue-600 text-white  font-medium text-sm min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-blue-600 text-white  font-medium text-[1.0625rem] min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => fetchNewsEvents(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-[1.0625rem]"
               >
                 Next →
               </button>
@@ -658,7 +658,7 @@ export default function NewsEventsAdmin() {
                   <button
                     key={pageNum}
                     onClick={() => fetchNewsEvents(pageNum)}
-                    className={`px-3 py-2 text-sm border  transition-colors ${
+                    className={`px-3 py-2 text-[1.0625rem] border  transition-colors ${
                       pageNum === pagination.page
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'bg-white text-gray-700 hover:bg-gray-50 border-gray-300'

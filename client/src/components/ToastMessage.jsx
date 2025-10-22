@@ -122,14 +122,14 @@ const Toast = ({
             <div className="flex-1 min-w-0">
               {title && (
                 <h4 className={`
-                  font-semibold text-sm font-playfair ${config.titleColor} 
+                  font-semibold text-[1.0625rem] font-playfair ${config.titleColor} 
                   mb-1 leading-tight
                 `}>
                   {title}
                 </h4>
               )}
               <p className={`
-                text-sm ${config.messageColor} leading-relaxed
+                text-[1.0625rem] ${config.messageColor} leading-relaxed
                 ${!title ? 'font-medium' : ''}
               `}>
                 {message}
