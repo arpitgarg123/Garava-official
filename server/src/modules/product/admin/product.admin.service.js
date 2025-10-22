@@ -1,7 +1,7 @@
 // src/modules/admin/product/product.admin.service.js
 import ApiError from "../../../shared/utils/ApiError.js";
 import Product from "../../product/product.model.js";
-import { toRupees } from "../../order/order.pricing.js";
+import { toRupees, toPaise } from "../../order/order.pricing.js";
 
 /**
  * Convert product prices from paise to rupees for admin display
@@ -23,23 +23,49 @@ const convertProductPricesToRupees = (product) => {
   return converted;
 };
 
+/**
+ * Convert product prices from rupees to paise for storage
+ * Admin enters prices in rupees, but backend stores in paise
+ */
+const convertProductPricesToPaise = (data) => {
+  if (!data) return data;
+  
+  const converted = { ...data };
+  
+  if (converted.variants && Array.isArray(converted.variants)) {
+    converted.variants = converted.variants.map(variant => ({
+      ...variant,
+      price: variant.price ? toPaise(variant.price) : variant.price,
+      mrp: variant.mrp ? toPaise(variant.mrp) : variant.mrp,
+      salePrice: variant.salePrice ? toPaise(variant.salePrice) : variant.salePrice
+    }));
+  }
+  
+  return converted;
+};
+
 export const createProductService = async (data, userId) => {
   if (await Product.findOne({ slug: data.slug })) {
     throw new ApiError(409, "Slug already in use");
   }
 
-  data.createdBy = userId;
-  data.updatedBy = userId;
+  // Convert prices from rupees (admin input) to paise (storage)
+  const dataWithPaise = convertProductPricesToPaise(data);
+
+  dataWithPaise.createdBy = userId;
+  dataWithPaise.updatedBy = userId;
 
   // ensure variants default
-  if (data.variants && data.variants.length) {
-    if (!data.variants.some(v => v.isDefault)) {
-      data.variants[0].isDefault = true;
+  if (dataWithPaise.variants && dataWithPaise.variants.length) {
+    if (!dataWithPaise.variants.some(v => v.isDefault)) {
+      dataWithPaise.variants[0].isDefault = true;
     }
   }
 
-  const product = await Product.create(data);
-  return product;
+  const product = await Product.create(dataWithPaise);
+  
+  // Convert prices back to rupees for admin display
+  return convertProductPricesToRupees(product.toObject());
 };
 
 export const updateProductService = async (productId, updates, userId) => {
@@ -51,10 +77,15 @@ export const updateProductService = async (productId, updates, userId) => {
     if (dup) throw new ApiError(409, "Slug already in use");
   }
 
-  Object.assign(product, updates);
+  // Convert prices from rupees (admin input) to paise (storage)
+  const updatesWithPaise = convertProductPricesToPaise(updates);
+
+  Object.assign(product, updatesWithPaise);
   product.updatedBy = userId;
   await product.save();
-  return product;
+  
+  // Convert prices back to rupees for admin display
+  return convertProductPricesToRupees(product.toObject());
 };
 
 /**
@@ -103,13 +134,23 @@ export const addVariantService = async (productId, variantPayload) => {
     throw new ApiError(409, "Variant SKU already exists for this product");
   }
 
+  // Convert prices from rupees (admin input) to paise (storage)
+  const variantWithPaise = {
+    ...variantPayload,
+    price: variantPayload.price ? toPaise(variantPayload.price) : variantPayload.price,
+    mrp: variantPayload.mrp ? toPaise(variantPayload.mrp) : variantPayload.mrp,
+    salePrice: variantPayload.salePrice ? toPaise(variantPayload.salePrice) : variantPayload.salePrice
+  };
+
   // if isDefault true, unset previous
-  if (variantPayload.isDefault) {
+  if (variantWithPaise.isDefault) {
     product.variants.forEach(v => (v.isDefault = false));
   }
-  product.variants.push(variantPayload);
+  product.variants.push(variantWithPaise);
   await product.save();
-  return product;
+  
+  // Convert prices back to rupees for admin display
+  return convertProductPricesToRupees(product.toObject());
 };
 
 /**
@@ -124,10 +165,22 @@ export const updateVariantService = async (productId, variantId, updates) => {
   const variant = product.variants.id(variantId);
   if (!variant) throw new ApiError(404, "Variant not found");
 
-  Object.assign(variant, updates);
+  // Convert prices from rupees (admin input) to paise (storage)
+  const updatesWithPaise = { ...updates };
+  if (updatesWithPaise.price !== undefined) {
+    updatesWithPaise.price = updatesWithPaise.price ? toPaise(updatesWithPaise.price) : updatesWithPaise.price;
+  }
+  if (updatesWithPaise.mrp !== undefined) {
+    updatesWithPaise.mrp = updatesWithPaise.mrp ? toPaise(updatesWithPaise.mrp) : updatesWithPaise.mrp;
+  }
+  if (updatesWithPaise.salePrice !== undefined) {
+    updatesWithPaise.salePrice = updatesWithPaise.salePrice ? toPaise(updatesWithPaise.salePrice) : updatesWithPaise.salePrice;
+  }
+
+  Object.assign(variant, updatesWithPaise);
 
   // Handle default variant logic
-  if (updates.isDefault === true) {
+  if (updatesWithPaise.isDefault === true) {
     product.variants.forEach(v => {
       if (String(v._id) !== String(variantId)) {
         v.isDefault = false;
@@ -137,7 +190,9 @@ export const updateVariantService = async (productId, variantId, updates) => {
   }
 
   await product.save();
-  return product;
+  
+  // Convert prices back to rupees for admin display
+  return convertProductPricesToRupees(product.toObject());
 };
 
 /**
