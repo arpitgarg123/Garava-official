@@ -104,7 +104,7 @@ export default function ChatbotWidget({
         >
           {/* <FiMessageCircle className="text-lg" /> */}
           <div className="hidden sm:inline text-[1.0625rem] font-medium">
-            <img className="h-10 cursor-pointer object-cover" src={iconlogo} alt="" />
+            <img className="h-10 cursor-pointer object-contain" src={iconlogo} alt="" />
           </div>
         </button>
       )}

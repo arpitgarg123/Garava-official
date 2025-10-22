@@ -35,7 +35,7 @@ const InstaPost = () => {
   }, [dispatch])
 
   // Transform dynamic posts to match the expected format
-  const products = featuredPosts.length > 0 
+  const products = featuredPosts?.length > 0 
     ? featuredPosts.map((post, index) => ({
         id: post._id || index + 1,
         img: post.image.url,
