@@ -4,21 +4,30 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { selectWishlistProducts, selectWishlistLoading } from '../features/wishlist/selectors';
-import { removeFromWishlist } from '../features/wishlist/slice';
+import { removeFromWishlist, removeFromGuestWishlist } from '../features/wishlist/slice';
 import { addToCart } from '../features/cart/slice';
 import { selectIsAuthenticated } from '../features/auth/selectors';
+import { guestWishlist } from '../shared/utils/guestStorage.js';
 
 const WishlistContent = ({ compact = false, maxItems = null }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const products = useSelector(selectWishlistProducts);
+  const reduxProducts = useSelector(selectWishlistProducts);
   const loading = useSelector(selectWishlistLoading);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  
+  // Get products from Redux for authenticated users or from localStorage for guests
+  const products = isAuthenticated ? reduxProducts : (guestWishlist.get().products || []);
 
   const handleRemoveItem = async (productId) => {
     if (!isAuthenticated) {
-      toast.error("Please login to manage wishlist");
-      navigate("/login");
+      // For guest users, remove from localStorage
+      try {
+        await dispatch(removeFromGuestWishlist(productId)).unwrap();
+        toast.success("Item removed from wishlist");
+      } catch (error) {
+        toast.error("Failed to remove item from wishlist");
+      }
       return;
     }
 
@@ -32,12 +41,6 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
   };
 
   const handleMoveToCart = async (productId) => {
-    if (!isAuthenticated) {
-      toast.error("Please login to manage cart");
-      navigate("/login");
-      return;
-    }
-
     // Find the product in wishlist
     const wishlistItem = products.find(item => item.productId === productId);
     if (!wishlistItem || !wishlistItem.product) {
@@ -75,10 +78,15 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
       }
 
       // Add to cart
-      await dispatch(addToCart(cartItem)).unwrap();
-      
-      // Remove from wishlist after successful cart addition
-      await dispatch(removeFromWishlist(productId)).unwrap();
+      if (isAuthenticated) {
+        await dispatch(addToCart(cartItem)).unwrap();
+        // Remove from wishlist after successful cart addition
+        await dispatch(removeFromWishlist(productId)).unwrap();
+      } else {
+        // For guest users, use guest cart and wishlist
+        await dispatch(addToCart(cartItem)).unwrap();
+        await dispatch(removeFromGuestWishlist(productId)).unwrap();
+      }
       
       toast.success("Item moved to cart!");
     } catch (error) {
