@@ -157,7 +157,7 @@ const Contact = () => {
 
               {/* Honeypot */}
               <div className="hidden">
-                <label htmlFor={`${formId}-website`} className="text-sm">Website</label>
+                <label htmlFor={`${formId}-website`} className="text-[1.0625rem]">Website</label>
                 <input 
                   id={`${formId}-website`} 
                   name="website" 
@@ -170,7 +170,7 @@ const Contact = () => {
 
             {status.type !== "idle" && status.message && (
               <p
-                className={`mt-4 text-sm ${
+                className={`mt-4 text-[1.0625rem] ${
                   status.type === "success" ? "text-green-600" : 
                   status.type === "error" ? "text-red-600" : "text-muted-foreground"
                 }`}
@@ -207,8 +207,8 @@ const Contact = () => {
 
           {/* FAQ Section */}
           <div>
-            <h3 className="text-sm font-semibold">FAQ</h3>
-            <ul className="mt-3 space-y-3 text-sm">
+            <h3 className="text-[1.0625rem] font-semibold">FAQ</h3>
+            <ul className="mt-3 space-y-3 text-[1.0625rem]">
               <li>
                 <Summary title="Do you work with natural gemstones? ">
 Yes, we use only natural and ethically sourced gemstones.                </Summary>

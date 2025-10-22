@@ -33,7 +33,7 @@ import { doLogout } from '../../features/auth/slice.js';
 import { selectCartItemCount } from '../../features/cart/selectors.js';
 
 const navItems = [
-  { title: 'jewellery', submenu: [
+  { title: 'jewellery', to: '/products/jewellery', submenu: [
     { 
         label: 'Earrings', 
         img: jewellry1, 
@@ -47,20 +47,9 @@ const navItems = [
         to: '/products/jewellery?category=pendants',
         category: 'pendants'
       },
-       { 
-        label: 'Daily Earrings', 
-        img: jewellry2, 
-        to: '/products/jewellery?category=rings',
-        category: 'rings'
-      },
-      { 
-        label: 'Solitaire Rings', 
-        img: jewellry4, 
-        to: '/products/jewellery?category=necklaces',
-        category: 'necklaces'
-      },
+       
      ]},
-  { title: 'HIGH JEWELLERY', submenu: [
+  { title: 'HIGH JEWELLERY', to: '/products/high-jewellery', submenu: [
     { 
         label: 'Daily Rrings', 
         img: jewellry2, 
@@ -81,7 +70,7 @@ const navItems = [
       },
      
     ]},
-  { title: 'Fragrance', submenu: [
+  { title: 'Fragrance', to: '/products/fragrance', submenu: [
      { 
         label: 'Sila', 
         img: silaImg, 
@@ -113,14 +102,14 @@ const navItems = [
         category: 'sayonee'
       },
   ]},
-  { title: 'Maison', submenu: [
+  { title: 'Maison', to: '/about', submenu: [
      { label: 'Book an Appointment',  to: '/appointment' },
      { label: 'FAQ',  to: '/faq' },
      { label: 'About',  to: '/detailed-about' },
      { label: 'Our Story',  to: '/our-story' },
   ]},
   { 
-    title: 'Blogs', 
+    title: 'Blogs',  to: '/blogs',
     submenu: [
       { 
         label: 'Jewellery', 
@@ -142,7 +131,7 @@ const navItems = [
      
     ]
   },
-  { title: 'News & Events', submenu: [
+  { title: 'News & Events', to: '/events', submenu: [
      { label: 'Media Coverage', img: '/images/for-her.jpg', to: '/media' },
      { label: 'Events', img: '/images/for-him.jpg', to: '/events' },
   ]},
@@ -187,7 +176,7 @@ const MobileNavItem = ({ item, onNavigate }) => {
             <button
               key={idx}
               onClick={() => handleSubItemClick(subItem)}
-              className="block w-full text-left text-sm text-gray-600 hover:text-black transition-colors py-1"
+              className="block w-full text-left text-[1.0625rem] text-gray-600 hover:text-black transition-colors py-1"
             >
               {subItem.label}
             </button>
@@ -337,7 +326,7 @@ const Navbar = () => {
               transition={{ duration: 0.22, ease: 'easeOut' }}
               className="border-t "
             >
-              <div className="flex items-center  justify-between px-4 py-2 text-sm">
+              <div className="flex items-center  justify-between px-4 py-2 text-[1.0625rem]">
                 <Link to="/contact" onClick={() => setMobileOpen(false)} className="font-medium">
                   Contact us
                 </Link>
@@ -372,27 +361,27 @@ const Navbar = () => {
                     <div className="flex items-start gap-9 text-start self-start py-6 justify-between w-full ">
                       <button
                         onClick={() => { setMobileOpen(false); navigate('/profile'); }}
-                        className="text-sm underline underline-offset-4"
+                        className="text-[1.0625rem] underline underline-offset-4"
                       >
                         Profile
                       </button>
                       <button
                         onClick={() => { setMobileOpen(false); navigate('/orders'); }}
-                        className="text-sm underline  underline-offset-4"
+                        className="text-[1.0625rem] underline  underline-offset-4"
                       >
                         Orders
                       </button>
                       {isAdmin && (
                         <button
                           onClick={() => { setMobileOpen(false); navigate('/dashboard'); }}
-                          className="text-sm underline underline-offset-4 text-blue-600"
+                          className="text-[1.0625rem] underline underline-offset-4 text-blue-600"
                         >
                           Admin
                         </button>
                       )}
                       <button
                         onClick={() => { setMobileOpen(false); dispatch(doLogout()); navigate('/'); }}
-                        className="flex items-center  text-sm text-red-600"
+                        className="flex items-center  text-[1.0625rem] text-red-600"
                       >
                         <FiLogOut className="mr-1" /> Logout
                       </button>
@@ -417,19 +406,19 @@ const Navbar = () => {
        {
         shouldShowNavItemsDesktop && (
            <div className="navTop relative px-10">
-          <div className="flex justify-between w-89 font-light">
+          <div className="flex justify-between w-89  max-xl:w-72 max-lg:w-64 font-light">
    
 
 <div className='flex items-center justify-center'>
   <PiPhoneIncomingThin size={23} className="" />
-  <Link to="/contact" className="tracking-wide text-sm "> 
+  <Link to="/contact" className="tracking-wide text-[1.0625rem] "> 
     Contact us
   </Link>
 </div>
 <div className='flex items-center '>
   <CiCalendarDate className='' size={20} />
   <h4
-    className=" tracking-wide text-sm  cursor-pointer"
+    className=" tracking-wide text-[1.0625rem]  cursor-pointer"
     onClick={() => navigate('/appointment')}
   >
     Book an Appointment
@@ -458,7 +447,7 @@ const Navbar = () => {
                 <div className="relative cursor-pointer hover:opacity-70 transition-opacity" onClick={() => navigate('/cart')}>
                   <PiBagLight size={22} aria-hidden="true" />
                   {cartItemCount > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-sm rounded-full h-5 w-5 flex items-center justify-center">
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[1.0625rem] rounded-full h-5 w-5 flex items-center justify-center">
                       {cartItemCount > 99 ? '99+' : cartItemCount}
                     </span>
                   )}
@@ -495,22 +484,22 @@ const Navbar = () => {
 
                         <div className="overflow-hidden rounded-xl border border-gray-200/80 bg-white shadow-xl ring-1 ring-black/5 backdrop-blur-[2px]">
                           <div className="py-1">
-                            <div className="px-4 py-2 text-sm text-gray-700 border-b bg-gradient-to-b from-white to-gray-50">
+                            <div className="px-4 py-2 text-[1.0625rem] text-gray-700 border-b bg-gradient-to-b from-white to-gray-50">
                               <div className="font-medium">{user?.name}</div>
-                              <div className="text-sm text-gray-500">{user?.email}</div>
-                              {isAdmin && <div className="text-sm text-black font-medium">Admin</div>}
+                              <div className="text-[1.0625rem] text-gray-500">{user?.email}</div>
+                              {isAdmin && <div className="text-[1.0625rem] text-black font-medium">Admin</div>}
                             </div>
 
                             <button
                               onClick={() => { setShowUserMenu(false); navigate('/profile'); }}
-                              className="block w-full text-left  cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                              className="block w-full text-left  cursor-pointer px-4 py-2 text-[1.0625rem] text-gray-700 hover:bg-gray-50"
                               role="menuitem"
                             >
                               Profile
                             </button>
                             <button
                               onClick={() => { setShowUserMenu(false); navigate('/orders'); }}
-                              className="block w-full text-left cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                              className="block w-full text-left cursor-pointer px-4 py-2 text-[1.0625rem] text-gray-700 hover:bg-gray-50"
                               role="menuitem"
                             >
                               Orders
@@ -519,7 +508,7 @@ const Navbar = () => {
                             {isAdmin && (
                               <button
                                 onClick={() => { setShowUserMenu(false); navigate('/dashboard'); }}
-                                className="block w-full cursor-pointer text-left px-4 py-2 text-sm text-black hover:bg-blue-50 font-medium"
+                                className="block w-full cursor-pointer text-left px-4 py-2 text-[1.0625rem] text-black hover:bg-blue-50 font-medium"
                                 role="menuitem"
                               >
                                 Admin Dashboard
@@ -529,7 +518,7 @@ const Navbar = () => {
                             <div className="border-t">
                               <button
                                 onClick={() => { setShowUserMenu(false); dispatch(doLogout()); navigate('/'); }}
-                                className="flex items-center cursor-pointer w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                                className="flex items-center cursor-pointer w-full text-left px-4 py-2 text-[1.0625rem] text-red-600 hover:bg-red-50"
                                 role="menuitem"
                               >
                                 <FiLogOut className="mr-2" size={16} />
@@ -562,7 +551,7 @@ const Navbar = () => {
             </div>
                 <button
                   onClick={() => navigate('/login')}
-                  className="tracking-wide  cursor-pointer  "
+                  className="tracking-wide  text-[1.0625rem]  cursor-pointer  "
                 >
                   Login
                 </button>

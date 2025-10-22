@@ -21,12 +21,13 @@ export const listProductsAdmin = (params = {}) => {
 
 // Create a new product
 export const createProduct = (productData) => {
-  // If productData contains files, use FormData
+  // If productData contains files, use FormData with extended timeout
   if (productData instanceof FormData) {
     return authHttp.post('/admin/product', productData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      timeout: 60000, // 60 seconds for file uploads
     });
   }
   
@@ -36,12 +37,13 @@ export const createProduct = (productData) => {
 
 // Update an existing product
 export const updateProduct = (productId, productData) => {
-  // If productData contains files, use FormData
+  // If productData contains files, use FormData with extended timeout
   if (productData instanceof FormData) {
     return authHttp.put(`/admin/product/${productId}`, productData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      timeout: 60000, // 60 seconds for file uploads
     });
   }
   
@@ -74,7 +76,7 @@ export const prepareProductFormData = (productData) => {
   const formData = new FormData();
   
   // Handle files separately
-  const { heroImage, gallery, colorVariantImages, ...otherData } = productData;
+  const { heroImage, gallery, newGalleryFiles, galleryToDelete, colorVariantImages, ...otherData } = productData;
   
   // Add hero image file if provided
   if (heroImage instanceof File) {
@@ -84,19 +86,24 @@ export const prepareProductFormData = (productData) => {
     otherData.heroImage = heroImage;
   }
   
-  // Add gallery files if provided
+  // Handle gallery - existing images to keep (add to otherData, not formData)
   if (gallery && Array.isArray(gallery)) {
-    gallery.forEach((item) => {
-      if (item instanceof File) {
-        formData.append('gallery', item);
-      }
-    });
-    
-    // Filter out File objects and keep only URL objects for JSON
-    const galleryUrls = gallery.filter(item => !(item instanceof File));
+    // Filter out File objects and keep only URL objects for JSON (existing images)
+    const galleryUrls = gallery.filter(item => item && typeof item === 'object' && item.url);
     if (galleryUrls.length > 0) {
       otherData.gallery = galleryUrls;
+    } else {
+      // Explicitly set empty array if no existing images to keep
+      otherData.gallery = [];
     }
+  } else if (gallery !== undefined) {
+    // If gallery is explicitly undefined or null, set empty array
+    otherData.gallery = [];
+  }
+  
+  // Add gallery fileIds to delete (add to otherData)
+  if (galleryToDelete && Array.isArray(galleryToDelete) && galleryToDelete.length > 0) {
+    otherData.galleryToDelete = galleryToDelete;
   }
   
   // Handle color variant images
@@ -120,7 +127,7 @@ export const prepareProductFormData = (productData) => {
     });
   }
   
-  // Add all other data as JSON strings
+  // Add all other data as JSON strings FIRST
   Object.keys(otherData).forEach(key => {
     const value = otherData[key];
     if (value !== undefined && value !== null) {
@@ -131,6 +138,16 @@ export const prepareProductFormData = (productData) => {
       }
     }
   });
+  
+  // Add new gallery files to upload AFTER other data (important!)
+  // Use a different field name than 'gallery' to avoid conflict with existing gallery JSON
+  if (newGalleryFiles && Array.isArray(newGalleryFiles)) {
+    newGalleryFiles.forEach((file) => {
+      if (file instanceof File) {
+        formData.append('newGalleryImages', file);  // Different field name to avoid conflict
+      }
+    });
+  }
   
   return formData;
 };

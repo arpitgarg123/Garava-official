@@ -34,7 +34,7 @@ const NewsletterForm = () => {
     <>
     <div className="w-[38%] mr-[16rem]">
     <div className="h-28">
-        <h1 className="font-[bion] text-2xl  ">GARAVA NEWSLETTER</h1>
+        <h1 className="font-[bion] text-3xl  ">GARAVA NEWSLETTER</h1>
         <p className="  ">Subscribe to receive updates on new products, exclusive offers, and special events.
             Stay connected with the latest in luxury jewelry and fragrances!
         </p>
@@ -52,21 +52,41 @@ const NewsletterForm = () => {
           disabled={loading}
           className="input-field"
         />
-        <span className="text-sm text-red-500">*Required</span>
+        <span className="text-[1.0625rem] text-red-500">*Required</span>
       </div>
 
-      {/* Success/Error Message */}
-      {message.text && (
-        <div className={`p-3 rounded ${
-          message.type === 'success' 
-            ? 'bg-green-50 text-green-800 border border-green-200' 
-            : 'bg-red-50 text-red-800 border border-red-200'
-        }`}>
-          {message.text}
+      <div className="flex gap-4">
+        <div className="w-1/2">
+          <input
+            type="text"
+            name="firstName"
+            required
+            placeholder="First name"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="input-field"
+          />
+          <span className="text-[1.0625rem] text-red-500">*Required</span>
         </div>
-      )}
 
-      <p className="text-sm text-gray-500 leading-5">
+        <div className="w-1/2">
+          <input
+            type="text"
+            name="country"
+            required
+            placeholder="Country"
+            value={formData.country}
+            onChange={handleChange}
+            className="input-field"
+          />
+          <span className="text-[1.0625rem] text-red-500">*Required</span>
+        </div>
+      </div>
+
+
+   
+
+      <p className="text-[1.0625rem] text-gray-500 leading-5">
         (*) mandatory field <br />
         You can unsubscribe from the link provided in our newsletter at any
         time. Your personal information will be stored & used in accordance with

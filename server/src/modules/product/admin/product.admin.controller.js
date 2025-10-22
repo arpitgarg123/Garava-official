@@ -61,6 +61,7 @@ function normalizeMultipartBody(raw) {
     "shippingInfo",
     "giftWrap",
     "gallery",
+    "galleryToDelete",
     "heroImage",
     "relatedProducts",
     "upsellProducts",
@@ -112,29 +113,31 @@ export const createProduct = asyncHandler(async (req, res) => {
     throw new ApiError(400, "variants must be a non-empty array");
   }
 
-  // Files from multer; your routes use field names heroImage and gallery
-  const heroFile = req.files?.heroImage?.[0];
-  const galleryFiles = req.files?.gallery || [];
+  // Files - when using upload.any(), req.files is an array, not an object
+  const allFiles = req.files || [];
+  const heroFile = allFiles.find(f => f.fieldname === 'heroImage');
+  const galleryFiles = allFiles.filter(f => f.fieldname === 'gallery' || f.fieldname === 'newGalleryImages');
   
   // Color variant image files (dynamic field names: colorVariant_0_heroImage, colorVariant_0_gallery, etc.)
   const colorVariantFiles = {};
-  if (req.files) {
-    Object.keys(req.files).forEach(fieldName => {
-      const match = fieldName.match(/^colorVariant_(\d+)_(heroImage|gallery)$/);
-      if (match) {
-        const colorIndex = match[1];
-        const imageType = match[2];
-        if (!colorVariantFiles[colorIndex]) {
-          colorVariantFiles[colorIndex] = {};
-        }
-        if (imageType === 'heroImage') {
-          colorVariantFiles[colorIndex].heroImage = req.files[fieldName][0];
-        } else if (imageType === 'gallery') {
-          colorVariantFiles[colorIndex].gallery = req.files[fieldName];
-        }
+  allFiles.forEach(file => {
+    const match = file.fieldname.match(/^colorVariant_(\d+)_(heroImage|gallery)$/);
+    if (match) {
+      const colorIndex = match[1];
+      const imageType = match[2];
+      if (!colorVariantFiles[colorIndex]) {
+        colorVariantFiles[colorIndex] = {};
       }
-    });
-  }
+      if (imageType === 'heroImage') {
+        colorVariantFiles[colorIndex].heroImage = file;
+      } else if (imageType === 'gallery') {
+        if (!colorVariantFiles[colorIndex].gallery) {
+          colorVariantFiles[colorIndex].gallery = [];
+        }
+        colorVariantFiles[colorIndex].gallery.push(file);
+      }
+    }
+  });
 
   // Track uploaded fileIds for cleanup on error
   const uploadedFileIds = [];
@@ -250,29 +253,32 @@ export const updateProduct = asyncHandler(async (req, res) => {
   const existing = await Product.findById(productId).lean();
   if (!existing) throw new ApiError(404, "Product not found");
 
-  // Files
-  const heroFile = req.files?.heroImage?.[0];
-  const galleryFiles = req.files?.gallery || [];
+  // Files - when using upload.any(), req.files is an array, not an object
+  // We need to filter by fieldname
+  const allFiles = req.files || [];
+  const heroFile = allFiles.find(f => f.fieldname === 'heroImage');
+  const galleryFiles = allFiles.filter(f => f.fieldname === 'newGalleryImages');
   
-  // Color variant image files
+  // Color variant image files - filter from allFiles array
   const colorVariantFiles = {};
-  if (req.files) {
-    Object.keys(req.files).forEach(fieldName => {
-      const match = fieldName.match(/^colorVariant_(\d+)_(heroImage|gallery)$/);
-      if (match) {
-        const colorIndex = match[1];
-        const imageType = match[2];
-        if (!colorVariantFiles[colorIndex]) {
-          colorVariantFiles[colorIndex] = {};
-        }
-        if (imageType === 'heroImage') {
-          colorVariantFiles[colorIndex].heroImage = req.files[fieldName][0];
-        } else if (imageType === 'gallery') {
-          colorVariantFiles[colorIndex].gallery = req.files[fieldName];
-        }
+  allFiles.forEach(file => {
+    const match = file.fieldname.match(/^colorVariant_(\d+)_(heroImage|gallery)$/);
+    if (match) {
+      const colorIndex = match[1];
+      const imageType = match[2];
+      if (!colorVariantFiles[colorIndex]) {
+        colorVariantFiles[colorIndex] = {};
       }
-    });
-  }
+      if (imageType === 'heroImage') {
+        colorVariantFiles[colorIndex].heroImage = file;
+      } else if (imageType === 'gallery') {
+        if (!colorVariantFiles[colorIndex].gallery) {
+          colorVariantFiles[colorIndex].gallery = [];
+        }
+        colorVariantFiles[colorIndex].gallery.push(file);
+      }
+    }
+  });
 
   const uploadedFileIds = [];
   const toDeleteFileIds = []; // fileIds to delete from ImageKit (old assets)
@@ -303,14 +309,18 @@ export const updateProduct = asyncHandler(async (req, res) => {
     // If none provided and no new files, keep existing gallery unchanged.
     let gallery = Array.isArray(raw.gallery) ? raw.gallery.slice() : (existing.gallery ? existing.gallery.slice() : []);
 
-    // If user intentionally sends empty string or explicit null for gallery we treat it as replace with [] only when they provided something.
-    // Append newly uploaded files to gallery
+    // Parse galleryToDelete field (array of fileIds to delete)
+    const galleryToDelete = parseJsonField(raw.galleryToDelete, 'galleryToDelete');
+    if (Array.isArray(galleryToDelete) && galleryToDelete.length > 0) {
+      galleryToDelete.forEach(fileId => {
+        if (fileId) toDeleteFileIds.push(fileId);
+      });
+      // Remove deleted images from gallery array
+      gallery = gallery.filter(img => !galleryToDelete.includes(img.fileId));
+    }
+
+    // Append newly uploaded gallery files (don't replace, just add)
     if (galleryFiles.length) {
-      // If gallery was from existing and user provided new files, we will replace existing gallery entirely (delete old ones).
-      if (existing.gallery && existing.gallery.length) {
-        existing.gallery.forEach(g => { if (g && g.fileId) toDeleteFileIds.push(g.fileId); });
-        gallery = []; // start fresh
-      }
       for (const file of galleryFiles) {
         const buf = await optimizeImage(file.buffer, { width: 1600 });
         const fileName = `gallery_${Date.now()}_${file.originalname.replace(/\s+/g, "_")}`;
@@ -323,13 +333,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
         gallery.push({ url: uploaded.url, fileId: uploaded.fileId });
         uploadedFileIds.push(uploaded.fileId);
       }
-    }
-
-    // If raw.gallery was explicitly provided as an empty array (client wants to remove gallery),
-    // we should delete old gallery fileIds
-    if (Array.isArray(raw.gallery) && raw.gallery.length === 0 && existing.gallery && existing.gallery.length) {
-      existing.gallery.forEach(g => { if (g && g.fileId) toDeleteFileIds.push(g.fileId); });
-      gallery = [];
     }
     
     // Process color variant images

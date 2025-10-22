@@ -129,7 +129,7 @@ const FAQ = () => {
         <header className="mb-8 sm:mb-12 mt-2 text-center">
           <h1
             id="faq-heading"
-            className="text-2xl sm:text-3xl font-semibold tracking-tight"
+            className="text-3xl sm:text-3xl font-semibold tracking-tight"
           >
             Frequently Asked Questions
           </h1>

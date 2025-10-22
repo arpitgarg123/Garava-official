@@ -43,12 +43,12 @@ const Card = forwardRef(({ title, subtitle, img, hotspotSize = "40%", link }, re
       </article>
 
       <div className="text-start w-full flex flex-col items-center">
-        <h2 className="text-sm sm:text-lg lg:text-xl xl:text-2xl  uppercase m-0 text-gray-900 leading-tight ">
+        <h2 className="text-[1.0625rem] sm:text-lg lg:text-xl xl:text-3xl  uppercase m-0 text-gray-900 leading-tight ">
           {title}
         </h2>
         <button
           onClick={handleShopNow}
-          className="btn sm:mt-0 w-full sm:w-auto text-sm sm:text-base"
+          className="btn sm:mt-0 w-full sm:w-auto text-[1.0625rem] sm:text-base"
           aria-label={`Shop ${title}`}
         >
           Shop Now

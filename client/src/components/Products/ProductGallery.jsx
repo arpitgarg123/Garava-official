@@ -266,7 +266,7 @@ const ProductGallery = ({ product, selectedColor }) => {
             </button>
 
             {/* Image Counter */}
-            <div className="absolute top-6 left-6 px-4 py-2 bg-black/50 text-white text-sm rounded-full z-10">
+            <div className="absolute top-6 left-6 px-4 py-2 bg-black/50 text-white text-[1.0625rem] rounded-full z-10">
               {modalImageIndex + 1} / {images.length}
             </div>
 

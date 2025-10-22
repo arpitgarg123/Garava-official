@@ -26,7 +26,7 @@ export default function HomePage() {
     <div 
       ref={scrollRef} 
       id="scroll-container" 
-      className="min-h-screen overflow-x-hidden"
+      className="h-fit overflow-x-hidden"
       data-scroll-container
     >
       <div data-scroll-section>

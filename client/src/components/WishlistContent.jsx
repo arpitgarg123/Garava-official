@@ -4,21 +4,30 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-hot-toast';
 import { selectWishlistProducts, selectWishlistLoading } from '../features/wishlist/selectors';
-import { removeFromWishlist } from '../features/wishlist/slice';
+import { removeFromWishlist, removeFromGuestWishlist } from '../features/wishlist/slice';
 import { addToCart } from '../features/cart/slice';
 import { selectIsAuthenticated } from '../features/auth/selectors';
+import { guestWishlist } from '../shared/utils/guestStorage.js';
 
 const WishlistContent = ({ compact = false, maxItems = null }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const products = useSelector(selectWishlistProducts);
+  const reduxProducts = useSelector(selectWishlistProducts);
   const loading = useSelector(selectWishlistLoading);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  
+  // Get products from Redux for authenticated users or from localStorage for guests
+  const products = isAuthenticated ? reduxProducts : (guestWishlist.get().products || []);
 
   const handleRemoveItem = async (productId) => {
     if (!isAuthenticated) {
-      toast.error("Please login to manage wishlist");
-      navigate("/login");
+      // For guest users, remove from localStorage
+      try {
+        await dispatch(removeFromGuestWishlist(productId)).unwrap();
+        toast.success("Item removed from wishlist");
+      } catch (error) {
+        toast.error("Failed to remove item from wishlist");
+      }
       return;
     }
 
@@ -32,12 +41,6 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
   };
 
   const handleMoveToCart = async (productId) => {
-    if (!isAuthenticated) {
-      toast.error("Please login to manage cart");
-      navigate("/login");
-      return;
-    }
-
     // Find the product in wishlist
     const wishlistItem = products.find(item => item.productId === productId);
     if (!wishlistItem || !wishlistItem.product) {
@@ -75,10 +78,15 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
       }
 
       // Add to cart
-      await dispatch(addToCart(cartItem)).unwrap();
-      
-      // Remove from wishlist after successful cart addition
-      await dispatch(removeFromWishlist(productId)).unwrap();
+      if (isAuthenticated) {
+        await dispatch(addToCart(cartItem)).unwrap();
+        // Remove from wishlist after successful cart addition
+        await dispatch(removeFromWishlist(productId)).unwrap();
+      } else {
+        // For guest users, use guest cart and wishlist
+        await dispatch(addToCart(cartItem)).unwrap();
+        await dispatch(removeFromGuestWishlist(productId)).unwrap();
+      }
       
       toast.success("Item moved to cart!");
     } catch (error) {
@@ -107,11 +115,11 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
     return (
       <div className="text-center py-8 text-gray-500">
         <CiHeart size={40} className="mx-auto mb-3 text-gray-300" />
-        <p className="text-sm">Your wishlist is empty</p>
+        <p className="text-[1.0625rem]">Your wishlist is empty</p>
         {!compact && (
           <button 
             onClick={() => navigate('/jewellery')}
-            className="mt-3 bg-black text-white px-4 py-2 text-sm rounded hover:bg-gray-800"
+            className="mt-3 bg-black text-white px-4 py-2 text-[1.0625rem] rounded hover:bg-gray-800"
           >
             Start Shopping
           </button>
@@ -159,7 +167,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                   {/* Out of Stock Overlay */}
                   {isOutOfStock && (
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                      <span className="bg-red-600 text-white px-2 py-1 rounded text-sm font-medium">
+                      <span className="bg-red-600 text-white px-2 py-1 rounded text-[1.0625rem] font-medium">
                         Out of Stock
                       </span>
                     </div>
@@ -179,18 +187,18 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
               </div>
               
               <div className={`${compact ? 'p-2' : 'p-3'} space-y-1`}>
-                <h3 className={`font-medium text-gray-900 ${compact ? 'text-sm' : 'text-base'} line-clamp-1`}>
+                <h3 className={`font-medium text-gray-900 ${compact ? 'text-[1.0625rem]' : 'text-base'} line-clamp-1`}>
                   {product?.name || 'Product Name'}
                 </h3>
-                <p className={`text-gray-500 my-2 uppercase tracking-wide ${compact ? 'text-sm' : 'text-sm'}`}>
+                <p className={`text-gray-500 my-2 uppercase tracking-wide ${compact ? 'text-[1.0625rem]' : 'text-[1.0625rem]'}`}>
                   {product?.type || product?.category || 'Product'}
                 </p>
                 <div className="flex items-center gap-2">
-                  <p className={`font-semibold text-gray-900 ${compact ? 'text-sm' : 'text-base'}`}>
+                  <p className={`font-semibold text-gray-900 ${compact ? 'text-[1.0625rem]' : 'text-base'}`}>
                     ₹{price.toLocaleString()}
                   </p>
                   {isOutOfStock && (
-                    <span className="text-red-600 text-sm font-medium">Out of Stock</span>
+                    <span className="text-red-600 text-[1.0625rem] font-medium">Out of Stock</span>
                   )}
                 </div>
                 
@@ -199,7 +207,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                     <button 
                       onClick={() => handleMoveToCart(productId)}
                       disabled={isOutOfStock}
-                      className={`flex-1 py-1.5 px-2 text-sm rounded transition ${
+                      className={`flex-1 py-1.5 px-2 text-[1.0625rem] rounded transition ${
                         isOutOfStock 
                           ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
                           : 'bg-black text-white hover:bg-gray-800'
@@ -209,7 +217,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
                     </button>
                     <button 
                       onClick={() => handleRemoveItem(productId)}
-                      className="px-2 py-1.5 border text-sm rounded hover:bg-gray-50"
+                      className="px-2 py-1.5 border text-[1.0625rem] rounded hover:bg-gray-50"
                       title="Remove from wishlist"
                     >
                       ✕
@@ -226,7 +234,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
         <div className="text-center mt-4">
           <button 
             onClick={() => navigate("/wishlist")} 
-            className="text-sm text-black hover:underline"
+            className="text-[1.0625rem] text-black hover:underline"
           >
             View all {products.length} items →
           </button>

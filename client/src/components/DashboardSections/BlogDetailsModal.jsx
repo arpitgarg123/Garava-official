@@ -49,23 +49,23 @@ export default function BlogDetailsModal() {
           {/* Header Info */}
           <div className="mb-6">
             <div className="flex items-center gap-3 mb-4">
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(blog.status)}`}>
+              <span className={`px-3 py-1 rounded-full text-[1.0625rem] font-medium ${getStatusColor(blog.status)}`}>
                 {blog.status}
               </span>
               {blog.category && (
-                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-[1.0625rem] font-medium">
                   {blog.category}
                 </span>
               )}
             </div>
 
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">{blog.title}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{blog.title}</h1>
             
             {blog.excerpt && (
               <p className="text-gray-600 text-lg mb-4">{blog.excerpt}</p>
             )}
 
-            <div className="flex items-center gap-6 text-sm text-gray-500">
+            <div className="flex items-center gap-6 text-[1.0625rem] text-gray-500">
               <div className="flex items-center gap-2">
                 <AiOutlineUser />
                 <span>By {blog.author?.name || 'Unknown'}</span>
@@ -102,7 +102,7 @@ export default function BlogDetailsModal() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
               <h3 className="font-semibold text-gray-900 mb-2">Metadata</h3>
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-[1.0625rem]">
                 <div>
                   <span className="text-gray-500">Slug:</span>
                   <span className="ml-2 font-mono text-gray-800">{blog.slug}</span>
@@ -135,14 +135,14 @@ export default function BlogDetailsModal() {
                   {blog.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-gray-50 text-gray-700 rounded text-sm"
+                      className="px-2 py-1 bg-gray-50 text-gray-700 rounded text-[1.0625rem]"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
               ) : (
-                <p className="text-gray-500 text-sm">No tags assigned</p>
+                <p className="text-gray-500 text-[1.0625rem]">No tags assigned</p>
               )}
             </div>
           </div>

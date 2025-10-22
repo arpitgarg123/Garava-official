@@ -5,7 +5,7 @@ const StatsCard = ({ title, value, Icon, className = "" }) => {
      <div className={`bg-white p-6 rounded-lg shadow-sm border ${className}`}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
+          <p className="text-[1.0625rem] font-medium text-gray-600">{title}</p>
           <p className="text-3xl font-bold text-gray-900">{value}</p>
         </div>
         {Icon && <Icon className="h-12 w-12 text-blue-600" />}

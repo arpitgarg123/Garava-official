@@ -1,18 +1,22 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Submenu from "./Submenu";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const NavItem = ({ item, hovered, setHovered, isMobile = false, onNavigate = () => {} }) => {
   const hasSubmenu = item.submenu && item.submenu.length > 0;
-const [submenuTop, setSubmenuTop] = useState(130);
+  const [submenuTop, setSubmenuTop] = useState(130);
+  const navigate = useNavigate();
 
+  const isOpenMobile = isMobile && hovered === item.title;
+   const handleEnter = () => !isMobile && setHovered(item.title);
+  const handleLeave = () => !isMobile && setHovered(null);
   // Calculate dynamic submenu position
   useEffect(() => {
     const calculateSubmenuPosition = () => {
       const navbar = document.querySelector('.navbar');
       const header = document.querySelector('.header');
-      
       if (navbar && header) {
         const navbarHeight = navbar.offsetHeight;
         const headerHeight = header.offsetHeight;
@@ -22,28 +26,26 @@ const [submenuTop, setSubmenuTop] = useState(130);
         const vwHeight = window.innerWidth * 0.06; // 6vw
         const headerVwHeight = window.innerWidth * 0.023; // 2.3vw
         const calculatedTop = vwHeight + headerVwHeight + 20;
-        
         // Cap the maximum top position for ultra-wide screens
         const maxTop = window.innerWidth >= 2400 ? 180 : 200;
         setSubmenuTop(Math.min(calculatedTop, maxTop));
       }
     };
-
     calculateSubmenuPosition();
     window.addEventListener('resize', calculateSubmenuPosition);
-    
     return () => window.removeEventListener('resize', calculateSubmenuPosition);
   }, []);
-
-  // Mobile local state for expand/collapse
-  const isOpenMobile = isMobile && hovered === item.title;
-
-  const handleEnter = () => !isMobile && setHovered(item.title);
-  const handleLeave = () => !isMobile && setHovered(null);
-
-  const handleToggleMobile = () => {
+const handleToggleMobile = () => {
     if (!isMobile) return;
     setHovered(isOpenMobile ? null : item.title);
+  };
+
+  // ✅ New: Desktop click handler
+  const handleDesktopClick = () => {
+    if (!isMobile && item.to) {
+      navigate(item.to);
+      onNavigate(); // in case you use drawer close function etc.
+    }
   };
 
   return (
@@ -54,8 +56,8 @@ const [submenuTop, setSubmenuTop] = useState(130);
     >
       {/* Trigger */}
       <button
-        className="uppercase w-full cursor-pointer  text-left z-50 font-medium text-xs tracking-wide flex items-center justify-between"
-        onClick={isMobile ? handleToggleMobile : undefined}
+        className="uppercase w-full cursor-pointer  text-left z-50 font-medium text-[1.0625rem] tracking-wide flex items-center justify-between"
+        onClick={isMobile ? handleToggleMobile : handleDesktopClick}
         aria-expanded={isMobile ? !!isOpenMobile : hovered === item.title}
         aria-controls={isMobile ? `${item.title}-submenu` : undefined}
       >
@@ -78,14 +80,27 @@ const [submenuTop, setSubmenuTop] = useState(130);
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
-                className="submenu-container w-full h-[15vw] fixed  bg-white text-black left-0 -top-36 py-8 "
+                className="submenu-container w-full h-[19vw] fixed  bg-white  max-xl:h-[24vw] text-black left-0 -top-36 py-8 "
               >
-                <div className="max-w-7xl mx-auto flex  items-center justify-center h-full ">
-                  <div className={`${["Maison", "Blogs", "News & Events"].includes(item.title) ? "flex-center" : "flex items-center justify-center gap-8"}`}>
+                <div className="max-w-7xl mx-auto flex flex-col  items-center justify-center h-full ">
+                  <div className={`${["Maison", "Blogs", "News & Events",'jewellery', 'HIGH JEWELLERY' ].includes(item.title) ? "flex-center" : "flex items-center justify-center gap-12"}`}>
                     {item.submenu.map((sub, i) => (
                       <Submenu key={i} sub={sub} parentTitle={item.title} />
                     ))}
                   </div>
+                  {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && (
+                    <Link
+                      className="mt-2   underline tracking-wider text-[1.0625rem]"
+                      to={
+                        item.title === 'jewellery' ? '/products/jewellery'
+                        : item.title === 'Fragrance' ? '/products/fragrance'
+                        : item.title === 'HIGH JEWELLERY' ? '/products/high-jewellery'
+                        : '/products'
+                      }
+                    >
+                      View All Products
+                    </Link>
+                  )}
                 </div>
               </motion.div>
             </>
@@ -119,6 +134,6 @@ const [submenuTop, setSubmenuTop] = useState(130);
       )}
     </div>
   );
-};
+}
 
 export default NavItem;

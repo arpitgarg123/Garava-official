@@ -22,10 +22,14 @@ const EnvSchema = z.object({
   IMAGEKIT_PUBLIC_KEY: z.string().min(1, 'IMAGEKIT_PUBLIC_KEY is required'),
   IMAGEKIT_PRIVATE_KEY: z.string().min(1, 'IMAGEKIT_PRIVATE_KEY is required'),
   IMAGEKIT_URL_ENDPOINT: z.string().url('IMAGEKIT_URL_ENDPOINT must be a valid URL'),
+
   // Google OAuth
   GOOGLE_CLIENT_ID: z.string().min(1, 'GOOGLE_CLIENT_ID is required'),
   GOOGLE_CLIENT_SECRET: z.string().min(1, 'GOOGLE_CLIENT_SECRET is required'),
   GOOGLE_CALLBACK_URL: z.string().url('GOOGLE_CALLBACK_URL must be a valid URL').optional(),
+  // Google Places API for Testimonials
+  GOOGLE_API_KEY: z.string().min(1, 'GOOGLE_API_KEY is required'),
+  GOOGLE_PLACE_ID: z.string().min(1, 'GOOGLE_PLACE_ID is required'),
   
   // SMTP Email Configuration (Hostinger)
   SMTP_HOST: z.string().default('smtp.hostinger.com'),

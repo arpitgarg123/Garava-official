@@ -66,7 +66,7 @@ const AvailabilityChecker = ({ product, selectedVariant, className = "" }) => {
   return (
     <div className={`availability-checker ${className}`}>
       <div className="mb-3">
-        <h4 className="text-sm font-medium text-gray-900 mb-2">Check Availability:</h4>
+        <h4 className="text-[1.0625rem] font-medium text-gray-900 mb-2">Check Availability:</h4>
         
         <div className="flex gap-2 max-w-sm">
           <div className="flex-1">
@@ -76,14 +76,14 @@ const AvailabilityChecker = ({ product, selectedVariant, className = "" }) => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder="Enter pincode (e.g. 400001)"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-900 focus:border-gray-900 text-sm"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-900 focus:border-gray-900 text-[1.0625rem]"
               maxLength={6}
             />
           </div>
           <button
             onClick={handleCheckAvailability}
             disabled={isChecking || !pincode || pincode.length < 5}
-            className={`px-4 py-2 text-sm font-medium  transition-colors ${
+            className={`px-4 py-2 text-[1.0625rem] font-medium  transition-colors ${
               isChecking || !pincode || pincode.length < 5
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-gray-900 text-white hover:bg-gray-800'
@@ -105,12 +105,12 @@ const AvailabilityChecker = ({ product, selectedVariant, className = "" }) => {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-sm">✓ Available for delivery to {pincode}</p>
-                    <p className="text-sm mt-1">
+                    <p className="font-medium text-[1.0625rem]">✓ Available for delivery to {pincode}</p>
+                    <p className="text-[1.0625rem] mt-1">
                       {availabilityResult.note || `Estimated delivery in ${availabilityResult.minDeliveryDays || 2}-${availabilityResult.maxDeliveryDays || 7} days`}
                     </p>
                     {availabilityResult.codAvailable && (
-                      <p className="text-sm mt-1">💳 Cash on Delivery available</p>
+                      <p className="text-[1.0625rem] mt-1">💳 Cash on Delivery available</p>
                     )}
                   </div>
                 </div>
@@ -124,8 +124,8 @@ const AvailabilityChecker = ({ product, selectedVariant, className = "" }) => {
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-sm">✗ Not available for delivery to {pincode}</p>
-                    <p className="text-sm mt-1">
+                    <p className="font-medium text-[1.0625rem]">✗ Not available for delivery to {pincode}</p>
+                    <p className="text-[1.0625rem] mt-1">
                       {availabilityResult.note || 'This product cannot be delivered to your location'}
                     </p>
                   </div>
@@ -135,7 +135,7 @@ const AvailabilityChecker = ({ product, selectedVariant, className = "" }) => {
             
             <button
               onClick={resetCheck}
-              className="text-sm text-gray-600 hover:text-gray-800 mt-2 underline"
+              className="text-[1.0625rem] text-gray-600 hover:text-gray-800 mt-2 underline"
             >
               Check different pincode
             </button>
@@ -144,7 +144,7 @@ const AvailabilityChecker = ({ product, selectedVariant, className = "" }) => {
 
         {/* Helper text */}
         {!availabilityResult && (
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-[1.0625rem] text-gray-500 mt-1">
             Enter your pincode to check delivery availability and estimated delivery time
           </p>
         )}

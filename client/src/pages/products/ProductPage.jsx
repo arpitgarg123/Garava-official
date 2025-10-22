@@ -303,7 +303,7 @@ const toast = useToastContext();
            
             <button 
               onClick={() => setShowMobileFilters(true)}
-              className="flex items-center gap-2 px-3 py-2 text-sm border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow"
+              className="flex items-center gap-2 px-3 py-2 text-[1.0625rem] border rounded-lg bg-white shadow-sm hover:shadow-md transition-shadow"
             >
               <BiFilterAlt size={16} />
               <span>Filters</span>
@@ -348,13 +348,13 @@ const toast = useToastContext();
               <div className="border-t p-3 sm:p-4 flex gap-3 bg-gray-50">
                 <button 
                   onClick={handleCancelFilters}
-                  className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-4 py-2.5 text-[1.0625rem] font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
                 <button 
                   onClick={handleApplyFilters}
-                  className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
+                  className="flex-1 px-4 py-2.5 text-[1.0625rem] font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
                 >
                   Apply Filters
                 </button>
@@ -385,16 +385,16 @@ const toast = useToastContext();
 
               {/* Responsive Sort Controls */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
-                <div className="text-xs sm:text-sm text-gray-600 order-2 sm:order-1">
+                <div className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-600 order-2 sm:order-1">
                   {status === "loading" ? "Loading products..." : `Showing ${items.length} of ${total} products`}
                 </div>
                 
                 <div className="flex items-center gap-2 order-1 sm:order-2">
-                  <label className="text-xs sm:text-sm text-gray-700 font-medium whitespace-nowrap">
+                  <label className="text-[1.0625rem] sm:text-[1.0625rem] text-gray-700 font-medium whitespace-nowrap">
                     Sort by:
                   </label>
                   <select
-                    className="flex-1 sm:flex-none border border-gray-300 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm bg-white focus:ring-2 focus:ring-black focus:border-black transition-colors"
+                    className="flex-1 sm:flex-none border border-gray-300 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-[1.0625rem] sm:text-[1.0625rem] bg-white focus:ring-2 focus:ring-black focus:border-black transition-colors"
                     value={filters.sort || "newest"}
                     onChange={(e) => dispatch(setFilters({ sort: e.target.value, page: 1 }))}
                   >
@@ -408,7 +408,7 @@ const toast = useToastContext();
               </div>
 
               {status === "failed" && (
-                <div className="text-red-500 text-sm mb-4">
+                <div className="text-red-500 text-[1.0625rem] mb-4">
                   Error: {error}
                   <button 
                     onClick={() => dispatch(fetchProducts({ page: 1, limit: 20 }))}
@@ -442,7 +442,7 @@ const toast = useToastContext();
                       : "No products found"
                     }
                   </h3>
-                  <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6 max-w-md mx-auto leading-relaxed">
+                  <p className="text-[1.0625rem] sm:text-base text-gray-600 mb-4 sm:mb-6 max-w-md mx-auto leading-relaxed">
                     {routeCategory?.toLowerCase() === "all" 
                       ? "Browse through our carefully curated selection of jewellery and fragrances"
                       : "No products match your current filters. Try adjusting your criteria or search terms."
@@ -460,7 +460,7 @@ const toast = useToastContext();
                           limit: PRODUCTS_PER_PAGE
                         }));
                       }}
-                      className="bg-black text-white px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-gray-800 transition-colors font-medium"
+                      className="bg-black text-white px-4 sm:px-6 py-2 sm:py-3 text-[1.0625rem] sm:text-base rounded-lg hover:bg-gray-800 transition-colors font-medium"
                     >
                       Clear All Filters
                     </button>

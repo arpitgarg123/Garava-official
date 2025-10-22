@@ -214,7 +214,7 @@ const ProductCard = ({
       {/* High Jewellery Badge */}
       {isHighJewellery && (
         <div className="absolute top-3 left-3 z-10">
-          <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black text-sm font-bold px-3 py-1 rounded-full shadow-md">
+          <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-black text-[1.0625rem] font-bold px-3 py-1 rounded-full shadow-md">
             HIGH JEWELLERY
           </span>
         </div>
@@ -235,7 +235,7 @@ const ProductCard = ({
         {/* Out of Stock Overlay */}
         {isOutOfStock && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <span className="bg-red-600 text-white px-3 py-1 rounded-md font-medium text-sm">
+            <span className="bg-red-600 text-white px-3 py-1 rounded-md font-medium text-[1.0625rem]">
               Out of Stock
             </span>
           </div>
@@ -387,7 +387,7 @@ const ProductCard = ({
           </>
         ) : (
           <>
-            <div className="text-sm uppercase leading-0 tracking-wider text-gray-500 font-medium">
+            <div className="text-[1.0625rem] uppercase leading-0 tracking-wider text-gray-500 font-medium">
               {isHighJewellery ? "HIGH JEWELLERY" : (product.type || product.category || "jewellery")}
             </div>
             <h3 className="card-title max-sm:mt-2">{product.name}</h3>            
@@ -404,7 +404,7 @@ const ProductCard = ({
                       e.stopPropagation();
                       setShowContactOptions(!showContactOptions);
                     }}
-                    className="w-full bg-gradient-to-r from-gray-900 to-black text-white px-4 py-2.5 text-sm font-medium rounded-lg hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    className="w-full bg-gradient-to-r from-gray-900 to-black text-white px-4 py-2.5 text-[1.0625rem] font-medium rounded-lg hover:from-black hover:to-gray-800 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                   >
                     Contact for Details
                   </button>
@@ -417,14 +417,14 @@ const ProductCard = ({
                           e.stopPropagation();
                           handleWhatsAppContact(product, setShowContactOptions);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-green-50 transition-colors border-b border-gray-100"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-[1.0625rem] text-left hover:bg-green-50 transition-colors border-b border-gray-100"
                       >
                         <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                          <FiPhone className="text-white text-sm" />
+                          <FiPhone className="text-white text-[1.0625rem]" />
                         </div>
                         <div>
                           <div className="font-medium text-gray-900">WhatsApp</div>
-                          <div className="text-sm text-gray-500">Instant messaging</div>
+                          <div className="text-[1.0625rem] text-gray-500">Instant messaging</div>
                         </div>
                       </button>
                       <button
@@ -432,14 +432,14 @@ const ProductCard = ({
                           e.stopPropagation();
                           handleEmailContact(product, setShowContactOptions);
                         }}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left hover:bg-blue-50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-[1.0625rem] text-left hover:bg-blue-50 transition-colors"
                       >
                         <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                          <FiMail className="text-white text-sm" />
+                          <FiMail className="text-white text-[1.0625rem]" />
                         </div>
                         <div>
                           <div className="font-medium text-gray-900">Email</div>
-                          <div className="text-sm text-gray-500">Detailed inquiry</div>
+                          <div className="text-[1.0625rem] text-gray-500">Detailed inquiry</div>
                         </div>
                       </button>
                     </div>

@@ -92,9 +92,14 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
   });
   
   const [heroImageFile, setHeroImageFile] = useState(null);
-  const [galleryFiles, setGalleryFiles] = useState([]);
   const [heroImagePreview, setHeroImagePreview] = useState('');
-  const [galleryPreviews, setGalleryPreviews] = useState([]);
+  
+  // Enhanced gallery state to track existing, new, and to-delete images
+  const [galleryState, setGalleryState] = useState({
+    existing: [],   // Array of {url, fileId} from product.gallery
+    new: [],        // Array of File objects to upload
+    toDelete: []    // Array of fileIds to delete
+  });
   
   // Color variant image states
   const [colorVariantImages, setColorVariantImages] = useState({});
@@ -183,8 +188,14 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
       if (product.heroImage?.url) {
         setHeroImagePreview(product.heroImage.url);
       }
+      
+      // Initialize gallery state with existing images
       if (product.gallery && product.gallery.length > 0) {
-        setGalleryPreviews(product.gallery.map(img => img.url));
+        setGalleryState({
+          existing: product.gallery.map(img => ({ url: img.url, fileId: img.fileId })),
+          new: [],
+          toDelete: []
+        });
       }
     }
   }, [isEditing, product]);
@@ -273,9 +284,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         colorVariants: []
       });
       setHeroImageFile(null);
-      setGalleryFiles([]);
       setHeroImagePreview('');
-      setGalleryPreviews([]);
+      setGalleryState({
+        existing: [],
+        new: [],
+        toDelete: []
+      });
       setColorVariantImages({});
     }
   }, [isOpen]);
@@ -372,21 +386,37 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
     }
   };
   
+  // Updated gallery change handler to append instead of replace
   const handleGalleryChange = (e) => {
     const files = Array.from(e.target.files);
-    setGalleryFiles(files);
+    if (files.length === 0) return;
     
-    const previews = [];
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        previews.push(e.target.result);
-        if (previews.length === files.length) {
-          setGalleryPreviews(previews);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
+    // Append new files to existing new files
+    setGalleryState(prev => ({
+      ...prev,
+      new: [...prev.new, ...files]
+    }));
+    
+    // Reset file input
+    e.target.value = '';
+  };
+  
+  // Remove an existing gallery image (mark for deletion)
+  const removeExistingGalleryImage = (index) => {
+    const imageToRemove = galleryState.existing[index];
+    setGalleryState(prev => ({
+      ...prev,
+      existing: prev.existing.filter((_, i) => i !== index),
+      toDelete: imageToRemove.fileId ? [...prev.toDelete, imageToRemove.fileId] : prev.toDelete
+    }));
+  };
+  
+  // Remove a newly added gallery image (before upload)
+  const removeNewGalleryImage = (index) => {
+    setGalleryState(prev => ({
+      ...prev,
+      new: prev.new.filter((_, i) => i !== index)
+    }));
   };
   
   // Color variant management functions
@@ -533,15 +563,22 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
         weight: variant.weight ? parseFloat(variant.weight) : undefined
       }));
       
-      // Prepare FormData if files are involved
+      // Check if we have any file operations
       const hasColorImages = Object.keys(colorVariantImages).length > 0;
-      const hasFiles = heroImageFile || galleryFiles.length > 0 || hasColorImages;
+      const hasNewGalleryFiles = galleryState.new.length > 0;
+      const hasGalleryToDelete = galleryState.toDelete.length > 0;
+      const hasNewHeroImage = heroImageFile !== null;
       
-      if (hasFiles) {
+      // Always use FormData when editing (for gallery management) or when files are involved
+      const needsFormData = isEditing || hasNewHeroImage || hasNewGalleryFiles || hasColorImages;
+      
+      if (needsFormData) {
         submitData = prepareProductFormData({
           ...submitData,
-          heroImage: heroImageFile || (isEditing ? product.heroImage : undefined),
-          gallery: galleryFiles.length > 0 ? galleryFiles : (isEditing ? product.gallery : []),
+          heroImage: heroImageFile || (isEditing && product?.heroImage ? product.heroImage : undefined),
+          gallery: galleryState.existing,  // Existing images to keep
+          newGalleryFiles: galleryState.new,  // New images to upload
+          galleryToDelete: galleryState.toDelete,  // Images to delete
           colorVariantImages: colorVariantImages
         });
       }
@@ -591,13 +628,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Product Name *
                 </label>
                 <input
                   type="text"
                   name="name"
-                  value={formData.name}
+                  value={formData.name || ''}
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -605,13 +642,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Slug *
                 </label>
                 <input
                   type="text"
                   name="slug"
-                  value={formData.slug}
+                  value={formData.slug || ''}
                   onChange={handleInputChange}
                   required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -619,12 +656,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Type *
                 </label>
                 <select
                   name="type"
-                  value={formData.type}
+                  value={formData.type || 'fragrance'}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
@@ -636,13 +673,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Category *
                 </label>
                 <input
                   type="text"
                   name="category"
-                  value={formData.category}
+                  value={formData.category || ''}
                   onChange={handleInputChange}
                   required
                   placeholder="e.g., Perfume, Ring, etc."
@@ -651,25 +688,25 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Subcategory
                 </label>
                 <input
                   type="text"
                   name="subcategory"
-                  value={formData.subcategory}
+                  value={formData.subcategory || ''}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Status
                 </label>
                 <select
                   name="status"
-                  value={formData.status}
+                  value={formData.status || 'draft'}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
@@ -681,12 +718,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                 Tags (comma-separated)
               </label>
               <input
                 type="text"
-                value={formData.tags.join(', ')}
+                value={(formData.tags || []).join(', ')}
                 onChange={(e) => handleArrayChange('tags', e.target.value)}
                 placeholder="luxury, premium, limited edition"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -700,7 +737,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Hero Image
                 </label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
@@ -725,7 +762,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   ) : (
                     <label className="cursor-pointer flex flex-col items-center">
                       <BiUpload className="h-8 w-8 text-gray-400" />
-                      <span className="text-sm text-gray-500">Upload hero image</span>
+                      <span className="text-[1.0625rem] text-gray-500">Upload hero image</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -738,25 +775,72 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Gallery Images
                 </label>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
-                  {galleryPreviews.length > 0 ? (
-                    <div className="grid grid-cols-2 gap-2">
-                      {galleryPreviews.map((preview, index) => (
-                        <img 
-                          key={index}
-                          src={preview} 
-                          alt={`Gallery ${index}`}
-                          className="w-full h-20 object-cover rounded"
+                  {(galleryState.existing.length > 0 || galleryState.new.length > 0) ? (
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-2 gap-2">
+                        {/* Existing images from database */}
+                        {galleryState.existing.map((image, index) => (
+                          <div key={`existing-${index}`} className="relative group">
+                            <img 
+                              src={image.url} 
+                              alt={`Gallery ${index}`}
+                              className="w-full h-20 object-cover rounded"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeExistingGalleryImage(index)}
+                              className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                              title="Remove image"
+                            >
+                              <AiOutlineDelete className="h-3 w-3" />
+                            </button>
+                          </div>
+                        ))}
+                        
+                        {/* New images to be uploaded */}
+                        {galleryState.new.map((file, index) => (
+                          <div key={`new-${index}`} className="relative group">
+                            <img 
+                              src={URL.createObjectURL(file)} 
+                              alt={`New ${index}`}
+                              className="w-full h-20 object-cover rounded border-2 border-blue-400"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeNewGalleryImage(index)}
+                              className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:bg-red-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                              title="Remove image"
+                            >
+                              <AiOutlineDelete className="h-3 w-3" />
+                            </button>
+                            <span className="absolute bottom-1 left-1 bg-blue-500 text-white text-xs px-1 rounded">
+                              New
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      
+                      {/* Add More Images Button */}
+                      <label className="cursor-pointer flex items-center justify-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors">
+                        <AiOutlinePlus className="h-4 w-4" />
+                        <span className="text-sm font-medium">Add More Images</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handleGalleryChange}
+                          className="hidden"
                         />
-                      ))}
+                      </label>
                     </div>
                   ) : (
                     <label className="cursor-pointer flex flex-col items-center">
                       <BiImage className="h-8 w-8 text-gray-400" />
-                      <span className="text-sm text-gray-500">Upload gallery images</span>
+                      <span className="text-[1.0625rem] text-gray-500">Upload gallery images</span>
                       <input
                         type="file"
                         accept="image/*"
@@ -802,12 +886,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       SKU *
                     </label>
                     <input
                       type="text"
-                      value={variant.sku}
+                      value={variant.sku || ''}
                       onChange={(e) => handleVariantChange(index, 'sku', e.target.value)}
                       required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -815,12 +899,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Size Label *
                     </label>
                     <input
                       type="text"
-                      value={variant.sizeLabel}
+                      value={variant.sizeLabel || ''}
                       onChange={(e) => handleVariantChange(index, 'sizeLabel', e.target.value)}
                       required
                       placeholder="e.g., 50ml, Large"
@@ -829,13 +913,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Price (₹) {!variant.isPriceOnDemand && '*'}
                     </label>
                     <input
                       type="number"
                       step="0.01"
-                      value={variant.price}
+                      value={variant.price || ''}
                       onChange={(e) => handleVariantChange(index, 'price', e.target.value)}
                       required={!variant.isPriceOnDemand}
                       disabled={variant.isPriceOnDemand}
@@ -845,45 +929,45 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       MRP (₹)
                     </label>
                     <input
                       type="number"
                       step="0.01"
-                      value={variant.mrp}
+                      value={variant.mrp || ''}
                       onChange={(e) => handleVariantChange(index, 'mrp', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Stock
                     </label>
                     <input
                       type="number"
-                      value={variant.stock}
+                      value={variant.stock ?? ''}
                       onChange={(e) => handleVariantChange(index, 'stock', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Weight (grams)
                     </label>
                     <input
                       type="number"
                       step="0.1"
-                      value={variant.weight}
+                      value={variant.weight || ''}
                       onChange={(e) => handleVariantChange(index, 'weight', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Purchase Limit (0 = No Limit)
                     </label>
                     <input
@@ -895,7 +979,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Lead Time (Days)
                     </label>
                     <input
@@ -917,13 +1001,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                         onChange={(e) => handleVariantChange(index, 'isPriceOnDemand', e.target.checked)}
                         className="mr-2"
                       />
-                      <span className="text-sm font-medium text-gray-700">Price on Request</span>
+                      <span className="text-[1.0625rem] font-medium text-gray-700">Price on Request</span>
                     </label>
                   </div>
                   
                   {variant.isPriceOnDemand && (
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                         Price on Request Text
                       </label>
                       <input
@@ -991,7 +1075,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 <button
                   type="button"
                   onClick={addColorVariant}
-                  className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700"
+                  className="px-3 py-1 bg-blue-600 text-white text-[1.0625rem] rounded hover:bg-blue-700"
                 >
                   Add Color
                 </button>
@@ -1014,12 +1098,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                         Color Name
                       </label>
                       <input
                         type="text"
-                        value={color.name}
+                        value={color.name || ''}
                         onChange={(e) => handleColorVariantChange(index, 'name', e.target.value)}
                         placeholder="Rose Gold"
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1027,12 +1111,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                         Color Code
                       </label>
                       <input
                         type="text"
-                        value={color.code}
+                        value={color.code || ''}
                         onChange={(e) => handleColorVariantChange(index, 'code', e.target.value)}
                         placeholder="rose"
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1040,19 +1124,19 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                         Hex Color
                       </label>
                       <div className="flex items-center gap-2">
                         <input
                           type="color"
-                          value={color.hexColor}
+                          value={color.hexColor || '#000000'}
                           onChange={(e) => handleColorVariantChange(index, 'hexColor', e.target.value)}
                           className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
                         />
                         <input
                           type="text"
-                          value={color.hexColor}
+                          value={color.hexColor || '#000000'}
                           onChange={(e) => handleColorVariantChange(index, 'hexColor', e.target.value)}
                           className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
@@ -1063,7 +1147,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                       <label className="flex items-center">
                         <input
                           type="checkbox"
-                          checked={color.isAvailable}
+                          checked={color.isAvailable !== false}
                           onChange={(e) => handleColorVariantChange(index, 'isAvailable', e.target.checked)}
                           className="mr-2"
                         />
@@ -1074,11 +1158,11 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   
                   {/* Color-Specific Images Section */}
                   <div className="mt-4 space-y-4 border-t pt-4">
-                    <h5 className="text-sm font-medium text-gray-800">Color-Specific Images</h5>
+                    <h5 className="text-[1.0625rem] font-medium text-gray-800">Color-Specific Images</h5>
                     
                     {/* Hero Image for this color */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                         Hero Image for {color.name || `Color ${index + 1}`}
                       </label>
                       
@@ -1104,7 +1188,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                             alt={`${color.name} hero`}
                             className="w-32 h-32 object-cover rounded border border-gray-300"
                           />
-                          <div className="text-xs text-gray-500 mt-1">Current image</div>
+                          <div className="text-[1.0625rem] text-gray-500 mt-1">Current image</div>
                         </div>
                       ) : (
                         <label className="flex items-center justify-center w-32 h-32 border-2 border-dashed border-gray-300 rounded cursor-pointer hover:border-blue-500 transition">
@@ -1116,7 +1200,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                           />
                           <div className="text-center">
                             <BiUpload className="w-8 h-8 text-gray-400 mx-auto" />
-                            <span className="text-xs text-gray-500">Upload Hero</span>
+                            <span className="text-[1.0625rem] text-gray-500">Upload Hero</span>
                           </div>
                         </label>
                       )}
@@ -1124,7 +1208,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     
                     {/* Gallery Images for this color */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                         Gallery Images for {color.name || `Color ${index + 1}`}
                       </label>
                       
@@ -1155,7 +1239,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                               alt={`Gallery ${imgIdx + 1}`}
                               className="w-24 h-24 object-cover rounded border border-gray-300"
                             />
-                            <div className="text-xs text-gray-500 text-center">Saved</div>
+                            <div className="text-[1.0625rem] text-gray-500 text-center">Saved</div>
                           </div>
                         ))}
                         
@@ -1170,7 +1254,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                           />
                           <div className="text-center">
                             <AiOutlinePlus className="w-6 h-6 text-gray-400 mx-auto" />
-                            <span className="text-xs text-gray-500">Add Images</span>
+                            <span className="text-[1.0625rem] text-gray-500">Add Images</span>
                           </div>
                         </label>
                       </div>
@@ -1192,12 +1276,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             <h3 className="text-lg font-medium text-gray-900">Descriptions</h3>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                 Short Description
               </label>
               <textarea
                 name="shortDescription"
-                value={formData.shortDescription}
+                value={formData.shortDescription || ''}
                 onChange={handleInputChange}
                 rows={3}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1205,12 +1289,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                 Full Description
               </label>
               <textarea
                 name="description"
-                value={formData.description}
+                value={formData.description || ''}
                 onChange={handleInputChange}
                 rows={5}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1223,11 +1307,11 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Product Details
                   </label>
                   <textarea
-                    value={formData.structuredDescription.productDetails}
+                    value={formData.structuredDescription?.productDetails || ''}
                     onChange={(e) => handleNestedChange('structuredDescription.productDetails', e.target.value)}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1235,11 +1319,11 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Care Instructions
                   </label>
                   <textarea
-                    value={formData.structuredDescription.careInstructions}
+                    value={formData.structuredDescription?.careInstructions || ''}
                     onChange={(e) => handleNestedChange('structuredDescription.careInstructions', e.target.value)}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1247,11 +1331,11 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Size Guide
                   </label>
                   <textarea
-                    value={formData.structuredDescription.sizeGuide}
+                    value={formData.structuredDescription?.sizeGuide || ''}
                     onChange={(e) => handleNestedChange('structuredDescription.sizeGuide', e.target.value)}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1259,11 +1343,11 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Materials
                   </label>
                   <textarea
-                    value={formData.structuredDescription.materials}
+                    value={formData.structuredDescription?.materials || ''}
                     onChange={(e) => handleNestedChange('structuredDescription.materials', e.target.value)}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1280,12 +1364,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Top Notes (comma-separated)
                   </label>
                   <input
                     type="text"
-                    value={formData.fragranceNotes.top.join(', ')}
+                    value={(formData.fragranceNotes?.top || []).join(', ')}
                     onChange={(e) => handleNestedChange('fragranceNotes.top', e.target.value.split(',').map(n => n.trim()).filter(Boolean))}
                     placeholder="Bergamot, Lemon, Orange"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1293,12 +1377,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Middle Notes (comma-separated)
                   </label>
                   <input
                     type="text"
-                    value={formData.fragranceNotes.middle.join(', ')}
+                    value={(formData.fragranceNotes?.middle || []).join(', ')}
                     onChange={(e) => handleNestedChange('fragranceNotes.middle', e.target.value.split(',').map(n => n.trim()).filter(Boolean))}
                     placeholder="Rose, Jasmine, Lavender"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1306,12 +1390,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Base Notes (comma-separated)
                   </label>
                   <input
                     type="text"
-                    value={formData.fragranceNotes.base.join(', ')}
+                    value={(formData.fragranceNotes?.base || []).join(', ')}
                     onChange={(e) => handleNestedChange('fragranceNotes.base', e.target.value.split(',').map(n => n.trim()).filter(Boolean))}
                     placeholder="Sandalwood, Musk, Vanilla"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1321,12 +1405,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Ingredients
                   </label>
                   <textarea
                     name="ingredients"
-                    value={formData.ingredients}
+                    value={formData.ingredients || ''}
                     onChange={handleInputChange}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1334,12 +1418,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Caution
                   </label>
                   <textarea
                     name="caution"
-                    value={formData.caution}
+                    value={formData.caution || ''}
                     onChange={handleInputChange}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1347,12 +1431,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Storage Instructions
                   </label>
                   <textarea
                     name="storage"
-                    value={formData.storage}
+                    value={formData.storage || ''}
                     onChange={handleInputChange}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1369,13 +1453,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Dimensions
                   </label>
                   <input
                     type="text"
                     name="dimensions"
-                    value={formData.dimensions}
+                    value={formData.dimensions || ''}
                     onChange={handleInputChange}
                     placeholder="18 x 12 mm"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1383,13 +1467,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Material
                   </label>
                   <input
                     type="text"
                     name="material"
-                    value={formData.material}
+                    value={formData.material || ''}
                     onChange={handleInputChange}
                     placeholder="925 Sterling Silver"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1397,12 +1481,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Care Instructions
                   </label>
                   <textarea
                     name="careInstructions"
-                    value={formData.careInstructions}
+                    value={formData.careInstructions || ''}
                     onChange={handleInputChange}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1425,7 +1509,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Product Level Price on Request</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Product Level Price on Request</span>
               </label>
 
               <label className="flex items-center">
@@ -1436,7 +1520,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Consultation Required</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Consultation Required</span>
               </label>
 
               <label className="flex items-center">
@@ -1447,7 +1531,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Ask Advisor</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Ask Advisor</span>
               </label>
 
               <label className="flex items-center">
@@ -1458,7 +1542,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={handleInputChange}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Book Appointment</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Book Appointment</span>
               </label>
             </div>
 
@@ -1471,17 +1555,17 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={(e) => handleNestedChange('customizationOptions.enabled', e.target.checked)}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Enable Customization</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Enable Customization</span>
               </div>
               
-              {formData.customizationOptions.enabled && (
+              {formData.customizationOptions?.enabled && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Customization Description
                     </label>
                     <textarea
-                      value={formData.customizationOptions.description}
+                      value={formData.customizationOptions?.description || ''}
                       onChange={(e) => handleNestedChange('customizationOptions.description', e.target.value)}
                       rows={3}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1489,12 +1573,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Estimated Days
                     </label>
                     <input
                       type="number"
-                      value={formData.customizationOptions.estimatedDays}
+                      value={formData.customizationOptions?.estimatedDays ?? ''}
                       onChange={(e) => handleNestedChange('customizationOptions.estimatedDays', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
@@ -1512,30 +1596,30 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={(e) => handleNestedChange('callToOrder.enabled', e.target.checked)}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Enable Call to Order</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Enable Call to Order</span>
               </div>
               
-              {formData.callToOrder.enabled && (
+              {formData.callToOrder?.enabled && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Phone Number
                     </label>
                     <input
                       type="text"
-                      value={formData.callToOrder.phone}
+                      value={formData.callToOrder?.phone || ''}
                       onChange={(e) => handleNestedChange('callToOrder.phone', e.target.value)}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     />
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                       Button Text
                     </label>
                     <input
                       type="text"
-                      value={formData.callToOrder.text}
+                      value={formData.callToOrder?.text || ''}
                       onChange={(e) => handleNestedChange('callToOrder.text', e.target.value)}
                       placeholder="Order by Phone"
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1557,7 +1641,7 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     onChange={(e) => handleNestedChange('shippingInfo.complementary', e.target.checked)}
                     className="mr-2"
                   />
-                  <span className="text-sm font-medium text-gray-700">Complimentary Shipping</span>
+                  <span className="text-[1.0625rem] font-medium text-gray-700">Complimentary Shipping</span>
                 </label>
 
                 <label className="flex items-center">
@@ -1567,28 +1651,28 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                     onChange={(e) => handleNestedChange('shippingInfo.codAvailable', e.target.checked)}
                     className="mr-2"
                   />
-                  <span className="text-sm font-medium text-gray-700">COD Available</span>
+                  <span className="text-[1.0625rem] font-medium text-gray-700">COD Available</span>
                 </label>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Min Delivery Days
                   </label>
                   <input
                     type="number"
-                    value={formData.shippingInfo.minDeliveryDays}
+                    value={formData.shippingInfo?.minDeliveryDays ?? ''}
                     onChange={(e) => handleNestedChange('shippingInfo.minDeliveryDays', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Max Delivery Days
                   </label>
                   <input
                     type="number"
-                    value={formData.shippingInfo.maxDeliveryDays}
+                    value={formData.shippingInfo?.maxDeliveryDays ?? ''}
                     onChange={(e) => handleNestedChange('shippingInfo.maxDeliveryDays', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
@@ -1596,13 +1680,13 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Expected Delivery Text
                 </label>
                 <input
                   type="text"
                   name="expectedDeliveryText"
-                  value={formData.expectedDeliveryText}
+                  value={formData.expectedDeliveryText || ''}
                   onChange={handleInputChange}
                   placeholder="Expected delivery T+5 days"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1610,11 +1694,11 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Shipping Note
                 </label>
                 <textarea
-                  value={formData.shippingInfo.note}
+                  value={formData.shippingInfo?.note || ''}
                   onChange={(e) => handleNestedChange('shippingInfo.note', e.target.value)}
                   rows={2}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1631,18 +1715,18 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
                   onChange={(e) => handleNestedChange('giftWrap.enabled', e.target.checked)}
                   className="mr-2"
                 />
-                <span className="text-sm font-medium text-gray-700">Enable Gift Wrap</span>
+                <span className="text-[1.0625rem] font-medium text-gray-700">Enable Gift Wrap</span>
               </div>
               
-              {formData.giftWrap.enabled && (
+              {formData.giftWrap?.enabled && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                     Gift Wrap Price (₹)
                   </label>
                   <input
                     type="number"
                     step="0.01"
-                    value={formData.giftWrap.price}
+                    value={formData.giftWrap?.price ?? ''}
                     onChange={(e) => handleNestedChange('giftWrap.price', e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
@@ -1657,25 +1741,25 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Meta Title
                 </label>
                 <input
                   type="text"
                   name="metaTitle"
-                  value={formData.metaTitle}
+                  value={formData.metaTitle || ''}
                   onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                   Collections (comma-separated)
                 </label>
                 <input
                   type="text"
-                  value={formData.collections.join(', ')}
+                  value={(formData.collections || []).join(', ')}
                   onChange={(e) => handleArrayChange('collections', e.target.value)}
                   placeholder="Summer Collection, Premium Line"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -1684,12 +1768,12 @@ const ProductCreateEditModal = ({ isOpen, onClose, product = null }) => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">
                 Meta Description
               </label>
               <textarea
                 name="metaDescription"
-                value={formData.metaDescription}
+                value={formData.metaDescription || ''}
                 onChange={handleInputChange}
                 rows={3}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"

@@ -21,13 +21,13 @@ const ShippingPolicy = () => {
           {/* Header Section */}
           <div className="bg-gray-50 border-b border-gray-100 p-6 sm:p-8">
             <div className="text-center">
-              <h1 className="text-2xl sm:text-3xl font-playfair font-bold text-gray-900 mb-4">
+              <h1 className="text-3xl sm:text-3xl font-playfair font-bold text-gray-900 mb-4">
                 Shipping Policy
               </h1>
-              <p className="text-gray-600 text-sm  max-w-2xl mx-auto">
+              <p className="text-gray-600 text-[1.0625rem]  max-w-2xl mx-auto">
                 For our customers in India we provide free shipping at in all major Indian cities. For our international customer the orders will be shipped via FedEx/DHL to the shipping address given at the time of order.
               </p>
-              <div className="mt-4 text-sm text-gray-700 font-medium">
+              <div className="mt-4 text-[1.0625rem] text-gray-700 font-medium">
                 Last updated: October 2, 2025
               </div>
             </div>
@@ -39,7 +39,7 @@ const ShippingPolicy = () => {
               
               {/* Shipping Overview */}
               <section className="border-b border-gray-100 pb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                <h2 className="text-xl sm:text-3xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Shipping Information
                 </h2>
@@ -53,7 +53,7 @@ const ShippingPolicy = () => {
                     </div>
                     <div className="ml-3">
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Delivery Commitment</h3>
-                      <p className="text-gray-800 text-sm  leading-relaxed">
+                      <p className="text-gray-800 text-[1.0625rem]  leading-relaxed">
                         A tracking number for the courier will be shared to the customer to track the parcel. All purchased items are insured for their full value before shipment, insurance lapses immediately after delivery of an item and as soon as the customer signs for a package. Our team will contact you via email or text to schedule the delivery, once your order is ready to ship. Setting up a delivery schedule is important. No order can be shipped without customer's consent delivery schedule.
                       </p>
                     </div>
@@ -63,7 +63,7 @@ const ShippingPolicy = () => {
 
               {/* Processing Time */}
               <section className="border-b border-gray-100 pb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                <h2 className="text-xl sm:text-3xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Order Processing Time
                 </h2>
@@ -75,10 +75,10 @@ const ShippingPolicy = () => {
                       </svg>
                     </div>
                     <h3 className="font-semibold text-gray-900 mb-3">Jewelry & Fragrance</h3>
-                    <p className="text-sm text-gray-800 mb-3">
+                    <p className="text-[1.0625rem] text-gray-800 mb-3">
                       Once the order is ready it will be delivered within 3-5 working days. A tracking number will be shared.
                     </p>
-                    <ul className="space-y-1 text-sm text-gray-800">
+                    <ul className="space-y-1 text-[1.0625rem] text-gray-800">
                       <li>• An adult signature is required for all deliveries</li>
                       <li>• Quality check before dispatch</li>
                       <li>• Tracking information provided via SMS & Email</li>
@@ -92,10 +92,10 @@ const ShippingPolicy = () => {
                       </svg>
                     </div>
                     <h3 className="font-semibold text-gray-900 mb-3">Custom & Bespoke Orders</h3>
-                    <p className="text-sm text-gray-800 mb-3">
+                    <p className="text-[1.0625rem] text-gray-800 mb-3">
                       Made-to-order and customized items require additional processing time.
                     </p>
-                    <ul className="space-y-1 text-sm text-gray-800">
+                    <ul className="space-y-1 text-[1.0625rem] text-gray-800">
                       <li>• 7-14 business days for custom sizing</li>
                       <li>• 14-21 days for personalized engraving</li>
                       <li>• High jewellery: 21-45 days (consultation requigray)</li>
@@ -106,7 +106,7 @@ const ShippingPolicy = () => {
 
               {/* Delivery Timeline */}
               <section className="border-b border-gray-100 pb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                <h2 className="text-xl sm:text-3xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Delivery Timeline
                 </h2>
@@ -114,42 +114,42 @@ const ShippingPolicy = () => {
                   <table className="min-w-full bg-white border border-gray-200  overflow-hidden">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                        <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Delivery Time</th>
-                        <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Shipping Cost</th>
-                        <th className="px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">COD Available</th>
+                        <th className="px-6 py-4 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                        <th className="px-6 py-4 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">Delivery Time</th>
+                        <th className="px-6 py-4 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">Shipping Cost</th>
+                        <th className="px-6 py-4 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">COD Available</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
                       <tr>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900">Mumbai Metropolitan Area</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">1-2 business days</td>
-                        <td className="px-6 py-4 text-sm text-gray-700 font-semibold">Free</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">✓ Yes</td>
+                        <td className="px-6 py-4 text-[1.0625rem] font-medium text-gray-900">Mumbai Metropolitan Area</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">1-2 business days</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700 font-semibold">Free</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">✓ Yes</td>
                       </tr>
                       <tr className="bg-gray-50">
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900">Major Cities (Delhi, Bangalore, etc.)</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">2-4 business days</td>
-                        <td className="px-6 py-4 text-sm text-gray-700 font-semibold">Free</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">✓ Yes</td>
+                        <td className="px-6 py-4 text-[1.0625rem] font-medium text-gray-900">Major Cities (Delhi, Bangalore, etc.)</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">2-4 business days</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700 font-semibold">Free</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">✓ Yes</td>
                       </tr>
                       <tr>
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900">Other Cities & Towns</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">3-7 business days</td>
-                        <td className="px-6 py-4 text-sm text-gray-700 font-semibold">Free</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">Select locations</td>
+                        <td className="px-6 py-4 text-[1.0625rem] font-medium text-gray-900">Other Cities & Towns</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">3-7 business days</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700 font-semibold">Free</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">Select locations</td>
                       </tr>
                       <tr className="bg-gray-50">
-                        <td className="px-6 py-4 text-sm font-medium text-gray-900">Remote Areas</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">5-10 business days</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">₹100-200</td>
-                        <td className="px-6 py-4 text-sm text-gray-700">✗ No</td>
+                        <td className="px-6 py-4 text-[1.0625rem] font-medium text-gray-900">Remote Areas</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">5-10 business days</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">₹100-200</td>
+                        <td className="px-6 py-4 text-[1.0625rem] text-gray-700">✗ No</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div className="mt-4 bg-gray-50 border border-gray-200  p-4">
-                  <p className="text-sm text-gray-800">
+                  <p className="text-[1.0625rem] text-gray-800">
                     <strong>Note:</strong> Delivery timelines are estimates and may vary during festivals, monsoons, 
                     or unforeseen circumstances. Free shipping applies to all orders above ₹1,999.
                   </p>
@@ -158,7 +158,7 @@ const ShippingPolicy = () => {
 
               {/* Packaging & Security */}
               <section className="border-b border-gray-100 pb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                <h2 className="text-xl sm:text-3xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Packaging & Security
                 </h2>
@@ -171,7 +171,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Premium Packaging
                       </h3>
-                      <ul className="space-y-2 text-sm text-gray-800">
+                      <ul className="space-y-2 text-[1.0625rem] text-gray-800">
                         <li className="flex items-start">
                           <span className="w-2 h-2 bg-gray-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                           Signature Garava luxury boxes
@@ -200,7 +200,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Security Features
                       </h3>
-                      <ul className="space-y-2 text-sm text-gray-800">
+                      <ul className="space-y-2 text-[1.0625rem] text-gray-800">
                         <li className="flex items-start">
                           <span className="w-2 h-2 bg-gray-400 rounded-full mt-2 mr-3 flex-shrink-0"></span>
                           Tamper-evident packaging seals
@@ -225,7 +225,7 @@ const ShippingPolicy = () => {
 
               {/* Delivery Instructions */}
               <section className="border-b border-gray-100 pb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                <h2 className="text-xl sm:text-3xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Important Delivery Guidelines
                 </h2>
@@ -238,7 +238,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Before Delivery
                       </h3>
-                      <ul className="space-y-1 text-sm text-gray-800">
+                      <ul className="space-y-1 text-[1.0625rem] text-gray-800">
                         <li>• Ensure accurate delivery address</li>
                         <li>• Provide working contact number</li>
                         <li>• Specify delivery preferences</li>
@@ -253,7 +253,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Delivery Attempts
                       </h3>
-                      <ul className="space-y-1 text-sm text-gray-800">
+                      <ul className="space-y-1 text-[1.0625rem] text-gray-800">
                         <li>• 3 delivery attempts will be made</li>
                         <li>• Customer notification before each attempt</li>
                         <li>• Package return after failed delivery</li>
@@ -270,7 +270,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Upon Delivery
                       </h3>
-                      <ul className="space-y-1 text-sm text-gray-800">
+                      <ul className="space-y-1 text-[1.0625rem] text-gray-800">
                         <li>• Check package condition before signing</li>
                         <li>• Verify order contents immediately</li>
                         <li>• Keep packaging for potential returns</li>
@@ -285,7 +285,7 @@ const ShippingPolicy = () => {
                         </svg>
                         Special Requirements
                       </h3>
-                      <ul className="space-y-1 text-sm text-gray-800">
+                      <ul className="space-y-1 text-[1.0625rem] text-gray-800">
                         <li>• Valid ID requigray for high-value orders</li>
                         <li>• Apartment access coordination needed</li>
                         <li>• Office deliveries during business hours</li>
@@ -298,12 +298,12 @@ const ShippingPolicy = () => {
 
               {/* Contact Support */}
               <section>
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-6 flex items-center">
+                <h2 className="text-xl sm:text-3xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
                   Shipping Support & Tracking
                 </h2>
                 <div className="bg-gradient-to-br from-gray-50 to-gray-50  p-6 border border-gray-200">
-                  <p className="text-gray-700 text-sm  mb-6 leading-relaxed">
+                  <p className="text-gray-700 text-[1.0625rem]  mb-6 leading-relaxed">
                     Need assistance with your shipment? Our customer service team is available to help you track your order, 
                     modify delivery details, or answer any shipping-related questions.
                   </p>
@@ -316,9 +316,9 @@ const ShippingPolicy = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-sm">Customer Support</h4>
-                        <p className="text-gray-600 text-sm">+91-7738543881</p>
-                        <p className="text-sm text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
+                        <h4 className="font-semibold text-gray-900 text-[1.0625rem]">Customer Support</h4>
+                        <p className="text-gray-600 text-[1.0625rem]">+91-7738543881</p>
+                        <p className="text-[1.0625rem] text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
                       </div>
                     </div>
                     
@@ -330,9 +330,9 @@ const ShippingPolicy = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-sm">Email Support</h4>
-                        <p className="text-gray-600 text-sm">info@garava.in</p>
-                        <p className="text-sm text-gray-500">Response within 24 hours</p>
+                        <h4 className="font-semibold text-gray-900 text-[1.0625rem]">Email Support</h4>
+                        <p className="text-gray-600 text-[1.0625rem]">info@garava.in</p>
+                        <p className="text-[1.0625rem] text-gray-500">Response within 24 hours</p>
                       </div>
                     </div>
                     
@@ -343,22 +343,22 @@ const ShippingPolicy = () => {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-sm">Order Tracking</h4>
-                        <p className="text-gray-600 text-sm">Track your shipment</p>
-                        <p className="text-sm text-gray-500">Real-time updates via SMS</p>
+                        <h4 className="font-semibold text-gray-900 text-[1.0625rem]">Order Tracking</h4>
+                        <p className="text-gray-600 text-[1.0625rem]">Track your shipment</p>
+                        <p className="text-[1.0625rem] text-gray-500">Real-time updates via SMS</p>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-6 pt-6 border-t border-gray-200">
                     <div className="text-center">
-                      <p className="text-sm text-gray-600 mb-2">
+                      <p className="text-[1.0625rem] text-gray-600 mb-2">
                         <strong>Flagship Store Address:</strong>
                       </p>
-                      <p className="text-sm text-gray-700">
+                      <p className="text-[1.0625rem] text-gray-700">
                         Garava Luxury Jewellery, Bandra West, Mumbai - 400050
                       </p>
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="text-[1.0625rem] text-gray-500 mt-1">
                         Visit us: Tuesday to Sunday, 11:00 AM - 8:00 PM
                       </p>
                     </div>
@@ -370,10 +370,10 @@ const ShippingPolicy = () => {
 
           {/* Footer */}
           <div className="bg-gray-50 border-t border-gray-200 p-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-[1.0625rem] text-gray-600">
               © 2025 Garava. All rights reserved. This shipping policy is effective as of October 2, 2025.
             </p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-[1.0625rem] text-gray-500 mt-2">
               Shipping terms are subject to change based on location and product availability. 
               Delivery timelines are estimates and may vary during peak seasons or unforeseen circumstances.
             </p>

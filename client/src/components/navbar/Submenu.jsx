@@ -33,7 +33,7 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
   const Content = () => (
     <>
       {isTextOnly ? (
-        <div className="bg-gray-200  rounded-full text-black flex items-center justify-center h-28 w-28 sm:h-42 sm:w-42 mb-2 text-center font-semibold text-sm">
+        <div className="bg-gray-200  rounded-full text-black flex items-center px-4 justify-center h-28 w-28 sm:h-42 sm:w-44 text-center font-semibold text-[1.0625rem]">
           {sub.label}
         </div>
       ) : (
@@ -45,7 +45,7 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
         />
       )}
       {!isTextOnly && (
-        <span className="text-sm  font-playfair text-center">{sub.label}</span>
+        <span className="text-[1.0625rem]  font-playfair text-center">{sub.label}</span>
       )}
     </>
   );

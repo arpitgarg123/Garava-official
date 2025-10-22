@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Products from './../components/DashboardSections/Products';
-import Orders from './../components/DashboardSections/Orders';
 import { 
   FaUser, 
   FaBoxOpen, 
@@ -19,18 +17,21 @@ import {
 } from "react-icons/fa";
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
-
-import Appointment from '../components/DashboardSections/Appointment';
-import Reviews from './../components/DashboardSections/Reviews';
-import Newsletter from '../components/DashboardSections/Newsletter';
-import Blogs from '../components/DashboardSections/BlogsAdmin';
-import FAQAdmin from '../components/DashboardSections/FAQAdmin';
-import TestimonialAdmin from '../components/DashboardSections/TestimonialAdmin';
-import Overview from '../components/DashboardSections/Overview';
-import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
-import NewsEventsAdmin from '../components/DashboardSections/NewsEventsAdmin';
-import InstagramAdmin from '../components/DashboardSections/InstagramAdmin';
 import { Link, useNavigate } from 'react-router-dom';
+
+// Lazy load all admin dashboard sections - only load when tab is accessed
+const Products = lazy(() => import('./../components/DashboardSections/Products'));
+const Orders = lazy(() => import('./../components/DashboardSections/Orders'));
+const Appointment = lazy(() => import('../components/DashboardSections/Appointment'));
+const Reviews = lazy(() => import('./../components/DashboardSections/Reviews'));
+const Newsletter = lazy(() => import('../components/DashboardSections/Newsletter'));
+const Blogs = lazy(() => import('../components/DashboardSections/BlogsAdmin'));
+const FAQAdmin = lazy(() => import('../components/DashboardSections/FAQAdmin'));
+const TestimonialAdmin = lazy(() => import('../components/DashboardSections/TestimonialAdmin'));
+const Overview = lazy(() => import('../components/DashboardSections/Overview'));
+const NotificationsDashboard = lazy(() => import('../components/DashboardSections/NotificationsDashboard'));
+const NewsEventsAdmin = lazy(() => import('../components/DashboardSections/NewsEventsAdmin'));
+const InstagramAdmin = lazy(() => import('../components/DashboardSections/InstagramAdmin'));
 
 // Redux imports for real data
 import { fetchOrdersAdmin } from '../features/order/adminSlice';
@@ -150,56 +151,114 @@ const Dashboard = () => {
     { id: "newsletter", label: "Newsletter", icon: FaEnvelope },
   ];
 
+  // Newsletter dummy data (keeping this as it might not have a Redux slice yet)
+  const items = [
+    { _id:"1", email:"a@x.com", status:"subscribed", createdAt:"2025-09-01T09:00:00Z" },
+    { _id:"2", email:"b@x.com", status:"unsubscribed", createdAt:"2025-09-05T12:00:00Z" }
+  ];
+
+  // Loading fallback component for lazy-loaded sections
+  const SectionLoader = () => (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-600 font-medium">Loading section...</p>
+      </div>
+    </div>
+  );
+
   const renderContent = () => {
+    // Wrap each lazy-loaded component with Suspense
     switch (activeTab) {
       case "overview":
         return (
-          <Overview
-            stats={overviewStats}
-            revenueTrend={[12000, 18000, 26000, 31000, 29000, 34000, 36000]} // Keep trend data as is
-            topProducts={topProducts}
-            recentOrders={recentOrders}
-            recentReviews={recentReviews}
-            upcomingAppointments={upcomingAppointments}
-            loading={statsLoading || ordersLoading || productsLoading || reviewsLoading}
-          />
+          <Suspense fallback={<SectionLoader />}>
+            <Overview
+              stats={overviewStats}
+              revenueTrend={[12000, 18000, 26000, 31000, 29000, 34000, 36000]} // Keep trend data as is
+              topProducts={topProducts}
+              recentOrders={recentOrders}
+              recentReviews={recentReviews}
+              upcomingAppointments={upcomingAppointments}
+              loading={statsLoading || ordersLoading || productsLoading || reviewsLoading}
+            />
+          </Suspense>
         );
       case "products":
-        return <Products />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Products />
+          </Suspense>
+        );
       case "orders":
-        return <Orders />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Orders />
+          </Suspense>
+        );
       case "bookings":
-        return <Appointment />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Appointment />
+          </Suspense>
+        );
       case "reviews":
         return (
-          <Reviews   
-            reviews={reviews}
-            pagination={{ page: 1, limit: 20, total: reviews.length, totalPages: Math.ceil(reviews.length / 20) }}
-            onAction={(action, review) => {/* TODO: Implement review actions */}}
-            onPageChange={(newPage) => {/* TODO: Implement pagination */}}
-            onFilterChange={(filters) => {/* TODO: Implement filters */}}
-            onClearFilters={() => {/* TODO: Implement clear filters */}} 
-          />
+          <Suspense fallback={<SectionLoader />}>
+            <Reviews   
+              reviews={reviews}
+              pagination={{ page: 1, limit: 20, total: reviews.length, totalPages: Math.ceil(reviews.length / 20) }}
+              onAction={(action, review) => {/* TODO: Implement review actions */}}
+              onPageChange={(newPage) => {/* TODO: Implement pagination */}}
+              onFilterChange={(filters) => {/* TODO: Implement filters */}}
+              onClearFilters={() => {/* TODO: Implement clear filters */}} 
+            />
+          </Suspense>
         );
       case "testimonials":
-        return <TestimonialAdmin />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <TestimonialAdmin />
+          </Suspense>
+        );
       case "blogs":
-        return <Blogs />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Blogs />
+          </Suspense>
+        );
       case "newsevents":
-        return <NewsEventsAdmin />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <NewsEventsAdmin />
+          </Suspense>
+        );
       case "instagram":
-        return <InstagramAdmin />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <InstagramAdmin />
+          </Suspense>
+        );
       case "faq":
-        return <FAQAdmin />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <FAQAdmin />
+          </Suspense>
+        );
       case "notifications":
-        return <NotificationsDashboard />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <NotificationsDashboard />
+          </Suspense>
+        );
       case "newsletter":
         return (
-          <Newsletter  
-            subscribers={newsletterSubscribers}
-            pagination={newsletterPagination}
+          <Suspense fallback={<SectionLoader />}>
+            <Newsletter  
+              subscribers={newsletterSubscribers}
+              pagination={newsletterPagination}
             loading={newsletterLoading}
-            onFilterChange={(filters) => {
+              onFilterChange={(filters) => {
               dispatch(setNewsletterFilters(filters));
               dispatch(fetchNewsletterSubscribers({ 
                 page: 1, 
@@ -207,14 +266,15 @@ const Dashboard = () => {
                 status: filters.status || '' 
               }));
             }}
-            onPageChange={(newPage) => {
+              onPageChange={(newPage) => {
               dispatch(setNewsletterPage(newPage));
               dispatch(fetchNewsletterSubscribers({ 
                 page: newPage, 
                 limit: newsletterPagination.limit 
               }));
             }} 
-          />
+            />
+          </Suspense>
         );
       default:
         return null;
@@ -247,7 +307,7 @@ const Dashboard = () => {
 
           {/* Center: Current Page */}
           <div className="hidden md:block">
-            <h2 className="text-sm font-medium uppercase tracking-wider 
+            <h2 className="text-[1.0625rem] font-medium uppercase tracking-wider 
              text-gray-600">
               {tabs.find(t => t.id === activeTab)?.label}
             </h2>
@@ -261,7 +321,7 @@ const Dashboard = () => {
               <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
                 <FaUser className="w-3 h-3 text-white" />
               </div>
-              <span className="text-sm font-medium text-gray-700">Admin</span>
+              <span className="text-[1.0625rem] font-medium text-gray-700">Admin</span>
             </div>
 
             <Link 
@@ -314,10 +374,10 @@ const Dashboard = () => {
           {/* Sidebar Footer */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
             <div className="text-center">
-              <p className="text-sm text-gray-500">Garava Admin v2.0</p>
+              <p className="text-[1.0625rem] text-gray-500">Garava Admin v2.0</p>
               <div className="flex items-center justify-center gap-1 mt-1">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                <span className="text-sm text-gray-400">Online</span>
+                <span className="text-[1.0625rem] text-gray-400">Online</span>
               </div>
             </div>
           </div>
@@ -331,10 +391,10 @@ const Dashboard = () => {
           <div className="bg-white border-b border-gray-200 px-6 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900">
+                <h1 className="text-3xl font-semibold text-gray-900">
                   {tabs.find(t => t.id === activeTab)?.label}
                 </h1>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-[1.0625rem] text-gray-600 mt-1">
                   Manage your {tabs.find(t => t.id === activeTab)?.label.toLowerCase()}
                 </p>
               </div>
@@ -342,9 +402,9 @@ const Dashboard = () => {
               {/* <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 ">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-green-700">Live</span>
+                  <span className="text-[1.0625rem] font-medium text-green-700">Live</span>
                 </div>
-                <button className="px-4 py-2 bg-blue-600 text-white  text-sm font-medium hover:bg-blue-700 transition-colors">
+                <button className="px-4 py-2 bg-blue-600 text-white  text-[1.0625rem] font-medium hover:bg-blue-700 transition-colors">
                   Export
                 </button>
               </div> */}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react' 
 import  './newsLetter.css'
 import { subscribeToNewsletter } from '../../features/newsletter/api'
+import PageHeader from '../header/PageHeader'
 
 const NewsletterInline = () => {
   const [email, setEmail] = useState('');
@@ -38,11 +39,11 @@ const NewsletterInline = () => {
 
   return (
      <section className='container' aria-labelledby="newsletter-heading">
-      <h3 id="newsletter-heading" className='heading'>
-        Subscribe to our newsletter
-      </h3>
+      <h1 className='head-text mb-6'>
+                Subscribe to our newsletter
 
-      <form className='form' onSubmit={handleSubmit} noValidate aria-describedby="newsletter-status">
+      </h1>
+      <form className='form'  noValidate aria-describedby="newsletter-status">
         <label htmlFor="ni-email" className="sr-only">Email address</label>
 
         <input
