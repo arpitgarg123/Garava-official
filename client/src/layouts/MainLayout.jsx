@@ -148,7 +148,7 @@ const MainLayout = ({children}) => {
    <>
    <NetworkStatusIndicator />
    <Navbar />
-    <main id="main-content" className="min-h-screen">
+    <main id="main-content" className="h-fit">
         <Outlet />
         {children}
       </main>

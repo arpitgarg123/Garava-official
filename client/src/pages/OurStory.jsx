@@ -15,7 +15,7 @@ const OurStory = () => {
         <header className="mb-6 sm:mb-8 mt-2 max-md:mt-0">
           <h1
             id="our-story-heading"
-            className="text-2xl sm:text-3xl font-semibold tracking-tight mb-4"
+            className="text-3xl sm:text-3xl font-semibold tracking-tight mb-4"
           >
             OUR STORY
           </h1>

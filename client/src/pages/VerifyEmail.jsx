@@ -32,7 +32,7 @@ export default function VerifyEmail() {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-4">Verify your email</h1>
+      <h1 className="text-3xl font-semibold mb-4">Verify your email</h1>
       <p className="mb-4">
         {status === "loading" ? "Verifying…" : message}
       </p>

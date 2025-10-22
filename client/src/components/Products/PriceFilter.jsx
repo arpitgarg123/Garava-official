@@ -14,7 +14,7 @@
 //           placeholder="Min"
 //           value={value.min}
 //           onChange={(e) => onChange({ ...value, min: e.target.value })}
-//           className="w-1/2 px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-gray-300"
+//           className="w-1/2 px-3 py-2 border border-gray-200 rounded text-[1.0625rem] focus:outline-none focus:ring-1 focus:ring-gray-300"
 //           aria-label="Minimum price"
 //           min={0}
 //         />
@@ -26,7 +26,7 @@
 //           placeholder="Max"
 //           value={value.max}
 //           onChange={(e) => onChange({ ...value, max: e.target.value })}
-//           className="w-1/2 px-3 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-gray-300"
+//           className="w-1/2 px-3 py-2 border border-gray-200 rounded text-[1.0625rem] focus:outline-none focus:ring-1 focus:ring-gray-300"
 //           aria-label="Maximum price"
 //           min={0}
 //         />
@@ -35,14 +35,14 @@
 //       <div className="mt-3">
 //         <button
 //           onClick={onApply}
-//           className="inline-block px-4 py-2 bg-gray-50 text-gray-900 rounded-full text-sm font-medium hover:bg-gray-200 transition"
+//           className="inline-block px-4 py-2 bg-gray-50 text-gray-900 rounded-full text-[1.0625rem] font-medium hover:bg-gray-200 transition"
 //           aria-label="Apply price filter"
 //         >
 //           Filter
 //         </button>
 //       </div>
 
-//       <p className="mt-3 text-sm text-gray-500">
+//       <p className="mt-3 text-[1.0625rem] text-gray-500">
 //         Price shown is in INR. Leave blank to ignore.
 //       </p>
 //     </div>
@@ -79,7 +79,7 @@ const PriceFilter = ({
         <h3 className="text-base font-medium mb-3">{heading || "Price Range"}</h3>
         <div className="flex items-center gap-4">
           <div className="flex-1">
-            <label htmlFor="mobile-min-price" className="block text-sm text-gray-600 mb-1">
+            <label htmlFor="mobile-min-price" className="block text-[1.0625rem] text-gray-600 mb-1">
               Min Price
             </label>
             <div className="relative">
@@ -97,7 +97,7 @@ const PriceFilter = ({
             </div>
           </div>
           <div className="flex-1">
-            <label htmlFor="mobile-max-price" className="block text-sm text-gray-600 mb-1">
+            <label htmlFor="mobile-max-price" className="block text-[1.0625rem] text-gray-600 mb-1">
               Max Price
             </label>
             <div className="relative">
@@ -125,7 +125,7 @@ const PriceFilter = ({
       <h3 className="text-lg font-medium text-gray-900 mb-3">Price Range</h3>
       <div className="space-y-3">
         <div>
-          <label htmlFor="min-price" className="block text-sm text-gray-600 mb-1">
+          <label htmlFor="min-price" className="block text-[1.0625rem] text-gray-600 mb-1">
             Min Price
           </label>
           <div className="relative">
@@ -143,7 +143,7 @@ const PriceFilter = ({
           </div>
         </div>
         <div>
-          <label htmlFor="max-price" className="block text-sm text-gray-600 mb-1">
+          <label htmlFor="max-price" className="block text-[1.0625rem] text-gray-600 mb-1">
             Max Price
           </label>
           <div className="relative">

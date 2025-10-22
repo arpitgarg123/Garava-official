@@ -238,7 +238,7 @@ const InstagramAdmin = () => {
         <div className="  shadow-sm p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                 Search
               </label>
               <div className="relative">
@@ -254,7 +254,7 @@ const InstagramAdmin = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                 Status
               </label>
               <select
@@ -269,7 +269,7 @@ const InstagramAdmin = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                 Featured
               </label>
               <select
@@ -332,7 +332,7 @@ const InstagramAdmin = () => {
                   
                   {/* Status Badge */}
                   <div className="absolute top-2 left-2">
-                    <span className={`px-2 py-1 text-sm font-medium rounded-full ${
+                    <span className={`px-2 py-1 text-[1.0625rem] font-medium rounded-full ${
                       post.isActive 
                         ? 'bg-green-100 text-green-800' 
                         : 'bg-red-100 text-red-800'
@@ -344,7 +344,7 @@ const InstagramAdmin = () => {
                   {/* Featured Badge */}
                   {post.isFeatured && (
                     <div className="absolute top-2 right-2">
-                      <span className="px-2 py-1 text-sm font-medium rounded-full bg-yellow-100 text-yellow-800">
+                      <span className="px-2 py-1 text-[1.0625rem] font-medium rounded-full bg-yellow-100 text-yellow-800">
                         Featured
                       </span>
                     </div>
@@ -362,7 +362,7 @@ const InstagramAdmin = () => {
                       href={post.instagramUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-pink-500 hover:text-pink-600 flex items-center gap-1 text-sm"
+                      className="text-pink-500 hover:text-pink-600 flex items-center gap-1 text-[1.0625rem]"
                     >
                       <FiInstagram className="w-4 h-4" />
                       View on Instagram
@@ -405,7 +405,7 @@ const InstagramAdmin = () => {
                       </button>
                     </div>
 
-                    <span className="text-sm text-gray-500">
+                    <span className="text-[1.0625rem] text-gray-500">
                       Order: {post.sortOrder}
                     </span>
                   </div>
@@ -448,7 +448,7 @@ const InstagramAdmin = () => {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                     Title *
                   </label>
                   <input
@@ -461,7 +461,7 @@ const InstagramAdmin = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                     Image Upload *
                   </label>
                   <div className="space-y-3">
@@ -476,7 +476,7 @@ const InstagramAdmin = () => {
                     {/* Image Preview */}
                     {imagePreview && (
                       <div className="mt-3">
-                        <label className="block text-sm text-gray-500 mb-1">Preview</label>
+                        <label className="block text-[1.0625rem] text-gray-500 mb-1">Preview</label>
                         <img
                           src={imagePreview}
                           alt="Preview"
@@ -488,7 +488,7 @@ const InstagramAdmin = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                     Image Alt Text
                   </label>
                   <input
@@ -501,7 +501,7 @@ const InstagramAdmin = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                     Instagram URL *
                   </label>
                   <input
@@ -512,13 +512,13 @@ const InstagramAdmin = () => {
                     className="w-full px-3 py-2 border border-gray-300  outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   />
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-[1.0625rem] text-gray-500 mt-1">
                     Examples: instagram.com/garavaofficial, www.instagram.com/p/ABC123/, https://instagram.com/reel/XYZ456/
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                     Sort Order
                   </label>
                   <input

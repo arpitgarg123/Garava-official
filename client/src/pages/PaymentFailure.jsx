@@ -65,7 +65,7 @@ const PaymentFailure = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="text-center max-w-md mx-auto p-6">
         <XCircleIcon className="mx-auto h-16 w-16 text-red-500" />
-        <h1 className="mt-4 text-2xl font-bold text-gray-900">
+        <h1 className="mt-4 text-3xl font-bold text-gray-900">
           Payment Failed
         </h1>
         <p className="mt-2 text-gray-600">
@@ -73,14 +73,14 @@ const PaymentFailure = () => {
         </p>
         
         <div className="mt-4 p-4 bg-red-50 rounded-lg border border-red-200">
-          <p className="text-sm text-red-800 font-medium">
+          <p className="text-[1.0625rem] text-red-800 font-medium">
             Reason: {reason}
           </p>
         </div>
 
         {txnId && (
           <div className="mt-3 p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">
+            <p className="text-[1.0625rem] text-gray-600">
               Transaction ID: <span className="font-mono font-semibold">{txnId}</span>
             </p>
           </div>
@@ -88,7 +88,7 @@ const PaymentFailure = () => {
 
         {orderId && (
           <div className="mt-2 p-3 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600">
+            <p className="text-[1.0625rem] text-gray-600">
               Order ID: <span className="font-mono font-semibold">{orderId}</span>
             </p>
           </div>
@@ -117,15 +117,15 @@ const PaymentFailure = () => {
           </button>
         </div>
 
-        <div className="mt-6 text-sm text-gray-500">
+        <div className="mt-6 text-[1.0625rem] text-gray-500">
           <p>Need help? Contact our support team</p>
           <p>We're here to assist you with your order</p>
         </div>
 
         {/* Common payment failure reasons and solutions */}
         <div className="mt-6 text-left bg-gray-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-sm text-gray-900 mb-2">Common issues:</h3>
-          <ul className="text-sm text-gray-600 space-y-1">
+          <h3 className="font-semibold text-[1.0625rem] text-gray-900 mb-2">Common issues:</h3>
+          <ul className="text-[1.0625rem] text-gray-600 space-y-1">
             <li>• Insufficient balance in your account</li>
             <li>• Card limit exceeded</li>
             <li>• Network connectivity issues</li>

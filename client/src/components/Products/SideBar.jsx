@@ -441,7 +441,7 @@ const SideBar = ({
   // Custom category filter for "all products" view
   const AllProductsCategoryFilter = () => (
     <div className="mb-6">
-      <h3 className="text-sm font-medium text-gray-900 mb-3">Product Categories</h3>
+      <h3 className="text-[1.0625rem] font-medium text-gray-900 mb-3">Product Categories</h3>
       <div className="space-y-2">
         {ALL_PRODUCTS_CATS.map((cat) => (
           <button
@@ -450,7 +450,7 @@ const SideBar = ({
               setSelectedType(cat.id);
               setCategory(""); // Reset subcategory when changing main type
             }}
-            className={`w-full text-left px-3 py-2  text-sm transition-colors ${
+            className={`w-full text-left px-3 py-2  text-[1.0625rem] transition-colors ${
               selectedType === cat.id
                 ? "bg-black text-white"
                 : "text-gray-700 hover:bg-gray-50"
@@ -478,7 +478,7 @@ const SideBar = ({
             <>
               <hr className="my-4" />
               <div className="mb-6">
-                <h3 className="text-sm font-medium text-gray-900 mb-3">
+                <h3 className="text-[1.0625rem] font-medium text-gray-900 mb-3">
                   {selectedType === "jewellery" ? "Jewellery Types" : "Fragrance Types"}
                 </h3>
                 <div className="space-y-2">
@@ -486,7 +486,7 @@ const SideBar = ({
                     <button
                       key={cat.id}
                       onClick={() => setCategory(cat.id)}
-                      className={`w-full text-left px-3 py-2  text-sm transition-colors ${
+                      className={`w-full text-left px-3 py-2  text-[1.0625rem] transition-colors ${
                         category === cat.id
                           ? "bg-black text-white"
                           : "text-gray-700 hover:bg-gray-50"

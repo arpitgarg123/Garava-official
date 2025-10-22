@@ -23,19 +23,19 @@ const ColorSelector = ({
   const sizeConfig = {
     small: {
       swatch: "w-4 h-4",
-      text: "text-xs",
+      text: "text-[1.0625rem]",
       gap: "gap-1.5",
       padding: "px-2 py-1"
     },
     normal: {
       swatch: "w-5 h-5", 
-      text: "text-sm",
+      text: "text-[1.0625rem]",
       gap: "gap-2",
       padding: "px-2.5 py-1.5"
     },
     large: {
       swatch: "w-6 h-6",
-      text: "text-sm",
+      text: "text-[1.0625rem]",
       gap: "gap-2.5",
       padding: "px-3 py-2"
     }
@@ -46,7 +46,7 @@ const ColorSelector = ({
   return (
     <div className={`color-selector ${className}`}>
       {showLabels && (
-        <h4 className="text-sm font-normal text-gray-600 mb-2">Choose Color:</h4>
+        <h4 className="text-[1.0625rem] font-normal text-gray-600 mb-2">Choose Color:</h4>
       )}
       
       <div className={`flex flex-wrap ${config.gap} ${layout === 'vertical' ? 'flex-col' : ''}`}>
@@ -92,7 +92,7 @@ const ColorSelector = ({
       
       {/* Selected Color Display - Minimal */}
       {selectedColor && showLabels && (
-        <div className="mt-2 text-xs text-gray-500">
+        <div className="mt-2 text-[1.0625rem] text-gray-500">
           Selected: <span className="font-medium text-gray-700">{selectedColor.name}</span>
         </div>
       )}

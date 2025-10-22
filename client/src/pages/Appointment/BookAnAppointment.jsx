@@ -88,14 +88,15 @@ const BookAnAppointment = () => {
 
   return (
     <>
-     <div className="sticky top-44 z-10 mb-3 max-md:mb-0 max-md:top-10">
+    
+  <div className="sticky top-52 lg:40 sm:40 xl:20 md:20  z-10 mb-3 max-md:mb-0 max-md:top-10">
         <BackButton />
       </div>
-   
-    <div className="max-w-xl mx-auto mt-36 max-md:mt-0 max-md:px-4 p-6">
-      
-      <h1 className="text-2xl font-semibold mb-4">Book an appointment</h1>
+    <div className="max-w-xl mx-auto mt-30 max-md:mt-0 max-md:px-4 p-6 px-4 sm:px-6  py-12 sm:py-16 max-md:py-0">
 
+  <h1 className='head-text mb-6'>
+        Book an Appointment
+      </h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
@@ -149,7 +150,7 @@ const BookAnAppointment = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-4">
-          <label className="text-sm text-gray-700">Preferred date & time</label>
+          <label className="text-[1.0625rem] text-gray-700">Preferred date & time</label>
           <input
             name="appointmentAtLocal"
             type="datetime-local"
@@ -169,7 +170,7 @@ const BookAnAppointment = () => {
             className="w-full border p-2 resize-none a min-h-[120px]"
             placeholder="Describe what you’re looking for (optional)"
           />
-          <p className="mt-1 text-sm text-gray-500">Note: This will be sent as “notes” to our team.</p>
+          <p className="mt-1 text-[1.0625rem] text-gray-500">Note: This will be sent as “notes” to our team.</p>
         </div>
 
         <button
@@ -182,7 +183,7 @@ const BookAnAppointment = () => {
       </form>
 
       {message && (
-        <p className={`mt-3 text-sm ${status === "failed" ? "text-red-600" : "text-green-700"}`}>
+        <p className={`mt-3 text-[1.0625rem] ${status === "failed" ? "text-red-600" : "text-green-700"}`}>
           {message}
         </p>
       )}

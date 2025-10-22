@@ -75,7 +75,7 @@ const LuxuryLoader = ({
         <div className="luxury-branding mt-8 text-center">
           {/* Brand Logo/Text */}
           <div className="brand-text mb-4">
-            <h2 className="text-2xl font-playfair font-bold text-gray-900 tracking-wider">
+            <h2 className="text-3xl font-playfair font-bold text-gray-900 tracking-wider">
               GARAVA
             </h2>
             <div className="brand-underline h-px w-16 mx-auto bg-gradient-to-r from-transparent via-amber-400 to-transparent mt-1"></div>
@@ -90,7 +90,7 @@ const LuxuryLoader = ({
 
           {/* Loading Message */}
           {showMessage && (
-            <p className="loading-message text-gray-700 font-light text-sm tracking-wide animate-fade-in-out">
+            <p className="loading-message text-gray-700 font-light text-[1.0625rem] tracking-wide animate-fade-in-out">
               {message}
             </p>
           )}

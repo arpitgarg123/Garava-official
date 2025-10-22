@@ -234,7 +234,7 @@ const Dashboard = () => {
 
           {/* Center: Current Page */}
           <div className="hidden md:block">
-            <h2 className="text-sm font-medium uppercase tracking-wider 
+            <h2 className="text-[1.0625rem] font-medium uppercase tracking-wider 
              text-gray-600">
               {tabs.find(t => t.id === activeTab)?.label}
             </h2>
@@ -248,7 +248,7 @@ const Dashboard = () => {
               <div className="w-6 h-6 bg-gray-400 rounded-full flex items-center justify-center">
                 <FaUser className="w-3 h-3 text-white" />
               </div>
-              <span className="text-sm font-medium text-gray-700">Admin</span>
+              <span className="text-[1.0625rem] font-medium text-gray-700">Admin</span>
             </div>
 
             <Link 
@@ -301,10 +301,10 @@ const Dashboard = () => {
           {/* Sidebar Footer */}
           <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
             <div className="text-center">
-              <p className="text-sm text-gray-500">Garava Admin v2.0</p>
+              <p className="text-[1.0625rem] text-gray-500">Garava Admin v2.0</p>
               <div className="flex items-center justify-center gap-1 mt-1">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                <span className="text-sm text-gray-400">Online</span>
+                <span className="text-[1.0625rem] text-gray-400">Online</span>
               </div>
             </div>
           </div>
@@ -318,10 +318,10 @@ const Dashboard = () => {
           <div className="bg-white border-b border-gray-200 px-6 py-4">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-2xl font-semibold text-gray-900">
+                <h1 className="text-3xl font-semibold text-gray-900">
                   {tabs.find(t => t.id === activeTab)?.label}
                 </h1>
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-[1.0625rem] text-gray-600 mt-1">
                   Manage your {tabs.find(t => t.id === activeTab)?.label.toLowerCase()}
                 </p>
               </div>
@@ -329,9 +329,9 @@ const Dashboard = () => {
               {/* <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 ">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-sm font-medium text-green-700">Live</span>
+                  <span className="text-[1.0625rem] font-medium text-green-700">Live</span>
                 </div>
-                <button className="px-4 py-2 bg-blue-600 text-white  text-sm font-medium hover:bg-blue-700 transition-colors">
+                <button className="px-4 py-2 bg-blue-600 text-white  text-[1.0625rem] font-medium hover:bg-blue-700 transition-colors">
                   Export
                 </button>
               </div> */}

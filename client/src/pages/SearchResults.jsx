@@ -249,7 +249,7 @@ const SearchPage = () => {
                     {/* Suggestions */}
                     {inputQuery.length > 0 && suggestions.items.length > 0 && (
                       <div className="p-2">
-                        <div className="text-sm font-medium text-gray-500 px-3 py-2 flex items-center gap-2">
+                        <div className="text-[1.0625rem] font-medium text-gray-500 px-3 py-2 flex items-center gap-2">
                           <CiSearch className="h-3 w-3" />
                           Suggestions
                         </div>
@@ -269,14 +269,14 @@ const SearchPage = () => {
                     {/* Recent Searches */}
                     {inputQuery.length === 0 && recentSearches.length > 0 && (
                       <div className="p-2 border-t border-gray-100">
-                        <div className="text-sm font-medium text-gray-500 px-3 py-2 flex items-center gap-2 justify-between">
+                        <div className="text-[1.0625rem] font-medium text-gray-500 px-3 py-2 flex items-center gap-2 justify-between">
                           <span className="flex items-center gap-2">
                             <RiHistoryLine className="h-3 w-3" />
                             Recent Searches
                           </span>
                           <button
                             onClick={() => dispatch(clearRecentSearches())}
-                            className="text-sm text-red-500 hover:text-red-700"
+                            className="text-[1.0625rem] text-red-500 hover:text-red-700"
                           >
                             Clear All
                           </button>
@@ -304,7 +304,7 @@ const SearchPage = () => {
                     {/* Popular Searches */}
                     {inputQuery.length === 0 && (
                       <div className="p-2 border-t border-gray-100">
-                        <div className="text-sm font-medium text-gray-500 px-3 py-2 flex items-center gap-2">
+                        <div className="text-[1.0625rem] font-medium text-gray-500 px-3 py-2 flex items-center gap-2">
                           <RiFireLine className="h-3 w-3" />
                           Popular Searches
                         </div>
@@ -360,7 +360,7 @@ const SearchPage = () => {
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`px-6 py-2 rounded-lg text-[1.0625rem] font-medium transition-all duration-200 ${
                   activeTab === tab.id
                     ? 'bg-black text-white shadow-sm'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
@@ -386,7 +386,7 @@ const SearchPage = () => {
                 <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
                 <button
                   onClick={() => dispatch(clearFilters())}
-                  className="text-sm text-red-500 hover:text-red-700 font-medium"
+                  className="text-[1.0625rem] text-red-500 hover:text-red-700 font-medium"
                 >
                   Clear All
                 </button>
@@ -395,7 +395,7 @@ const SearchPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Price Range */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                     Price Range
                   </label>
                   <div className="flex gap-2">
@@ -418,7 +418,7 @@ const SearchPage = () => {
 
                 {/* Sort By */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                     Sort By
                   </label>
                   <select
@@ -436,7 +436,7 @@ const SearchPage = () => {
                 {/* Category (if jewellery is selected) */}
                 {activeTab === 'jewellery' && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                       Category
                     </label>
                     <select
@@ -463,7 +463,7 @@ const SearchPage = () => {
           <div className="mb-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-3xl font-bold text-gray-900">
                   Search Results
                 </h2>
                 <p className="text-gray-600 mt-1">
@@ -495,7 +495,7 @@ const SearchPage = () => {
         {process.env.NODE_ENV === 'development' && currentQuery && (
           <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <h4 className="font-semibold text-yellow-800 mb-2">Debug Info:</h4>
-            <div className="text-sm text-yellow-700">
+            <div className="text-[1.0625rem] text-yellow-700">
               <div>Status: {searchResults.status}</div>
               <div>Products Count: {searchResults.products?.length || 0}</div>
               <div>Total: {searchResults.total}</div>
@@ -556,13 +556,13 @@ const SearchPage = () => {
                 We couldn't find any products matching "{currentQuery}". Try different keywords or browse our categories.
               </p>
               <div className="space-y-2">
-                <p className="text-sm font-medium text-gray-700">Try searching for:</p>
+                <p className="text-[1.0625rem] font-medium text-gray-700">Try searching for:</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {popularSearches.slice(0, 4).map((term, index) => (
                     <button
                       key={index}
                       onClick={() => handleSuggestionClick(term)}
-                      className="px-3 py-1 bg-gray-50 text-gray-700 text-sm rounded-full hover:bg-gray-200 transition-colors"
+                      className="px-3 py-1 bg-gray-50 text-gray-700 text-[1.0625rem] rounded-full hover:bg-gray-200 transition-colors"
                     >
                       {term}
                     </button>
@@ -583,7 +583,7 @@ const SearchPage = () => {
           >
             <div className="max-w-lg mx-auto">
               <CiSearch className="h-20 w-20 text-gray-300 mx-auto mb-6" />
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Discover Amazing Products
               </h2>
               <p className="text-gray-600 mb-8">
@@ -612,18 +612,18 @@ const SearchPage = () => {
                   onClick={() => handleTabChange('jewellery')}
                   className="p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl border border-yellow-200 hover:shadow-md transition-all duration-200 group"
                 >
-                  <div className="text-2xl mb-2">💎</div>
+                  <div className="text-3xl mb-2">💎</div>
                   <h4 className="font-semibold text-gray-900 group-hover:text-yellow-800">Jewellery</h4>
-                  <p className="text-sm text-gray-600">Rings, Earrings, Pendants</p>
+                  <p className="text-[1.0625rem] text-gray-600">Rings, Earrings, Pendants</p>
                 </button>
                 
                 <button
                   onClick={() => handleTabChange('fragrance')}
                   className="p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200 hover:shadow-md transition-all duration-200 group"
                 >
-                  <div className="text-2xl mb-2">🌸</div>
+                  <div className="text-3xl mb-2">🌸</div>
                   <h4 className="font-semibold text-gray-900 group-hover:text-purple-800">Fragrance</h4>
-                  <p className="text-sm text-gray-600">Premium Perfumes</p>
+                  <p className="text-[1.0625rem] text-gray-600">Premium Perfumes</p>
                 </button>
               </div>
             </div>

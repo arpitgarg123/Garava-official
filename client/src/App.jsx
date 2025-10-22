@@ -241,7 +241,7 @@ const App = () => {
   return (
    <ToastProvider >
      <Suspense fallback={
-      <div className="flex items-center justify-center min-h-screen bg-white">
+      <div className="flex items-center justify-center h-fit bg-white">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#022348] mx-auto mb-4"></div>
           <p className="text-gray-600 font-medium">Loading...</p>

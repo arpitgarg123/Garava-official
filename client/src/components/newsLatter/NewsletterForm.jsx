@@ -26,7 +26,7 @@ const NewsletterForm = () => {
     <>
     <div className="w-[38%] mr-[16rem]">
     <div className="h-28">
-        <h1 className="font-[bion] text-2xl  ">UNSAID PARIS NEWSLETTER</h1>
+        <h1 className="font-[bion] text-3xl  ">UNSAID PARIS NEWSLETTER</h1>
         <p className="  ">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse cumque ex rerum atque unde laborum!
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique!
         </p>
@@ -43,7 +43,7 @@ const NewsletterForm = () => {
           onChange={handleChange}
           className="input-field"
         />
-        <span className="text-sm text-red-500">*Required</span>
+        <span className="text-[1.0625rem] text-red-500">*Required</span>
       </div>
 
       <div className="flex gap-4">
@@ -57,7 +57,7 @@ const NewsletterForm = () => {
             onChange={handleChange}
             className="input-field"
           />
-          <span className="text-sm text-red-500">*Required</span>
+          <span className="text-[1.0625rem] text-red-500">*Required</span>
         </div>
 
         <div className="w-1/2">
@@ -70,14 +70,14 @@ const NewsletterForm = () => {
             onChange={handleChange}
             className="input-field"
           />
-          <span className="text-sm text-red-500">*Required</span>
+          <span className="text-[1.0625rem] text-red-500">*Required</span>
         </div>
       </div>
 
 
    
 
-      <p className="text-sm text-gray-500 leading-5">
+      <p className="text-[1.0625rem] text-gray-500 leading-5">
         (*) mandatory fields <br />
         You can unsubscribe from the link provided in our newsletter at any
         time. Your personal information will be stored & used in accordance with

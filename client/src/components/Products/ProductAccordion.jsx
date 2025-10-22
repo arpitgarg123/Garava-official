@@ -43,7 +43,7 @@ const renderBulletList = (text) => {
   return (
     <ul className="list-disc pl-6 space-y-2">
       {bulletPoints.map((point, index) => (
-        <li key={index} className="text-sm leading-relaxed">
+        <li key={index} className="text-[1.0625rem] leading-relaxed">
           {point}
         </li>
       ))}
@@ -199,7 +199,7 @@ const ProductAccordion = ({ product }) => {
       careContent.push(
         <div key="caution" className="p-3 bg-yellow-50 border border-yellow-200 ">
           <h5 className="font-semibold text-yellow-900 mb-1">Important Safety Information</h5>
-          <p className="text-yellow-800 text-sm">{product.caution}</p>
+          <p className="text-yellow-800 text-[1.0625rem]">{product.caution}</p>
         </div>
       );
     }
@@ -222,12 +222,12 @@ const ProductAccordion = ({ product }) => {
           {product?.ingredients && (
             <div>
               <h5 className="font-semibold text-gray-900 mb-1">Ingredients</h5>
-              <p className="text-sm">{product.ingredients}</p>
+              <p className="text-[1.0625rem]">{product.ingredients}</p>
             </div>
           )}
           
           {/* Static company information - same for all products */}
-          <div className="space-y-2 text-sm">
+          <div className="space-y-2 text-[1.0625rem]">
             <div>
               <h5 className="font-semibold text-gray-900 mb-1">Designed and Marketed by</h5>
               <p>Advir & Co., A-14 601 Pearl Mount view, Vijay path, Tilak Nagar, Jaipur -302004, Rajasthan</p>
@@ -236,7 +236,7 @@ const ProductAccordion = ({ product }) => {
             <div>
               <h5 className="font-semibold text-gray-900 mb-1">Manufactured by</h5>
               <p>Next Care Inc., Plot no. 155, DIC Industrial Area Baddi, Distt. Solan, HP -173205</p>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-[1.0625rem] text-gray-600 mt-1">
                 Mfg. Lic. No. HIM/COS/18/267, St.Ex.Lic.No. BBN-07/2018-19
               </p>
             </div>
@@ -246,13 +246,13 @@ const ProductAccordion = ({ product }) => {
           {product?.caution ? (
             <div className="p-3 bg-red-50 border border-red-200 ">
               <h5 className="font-semibold text-red-900 mb-1">Caution</h5>
-              <p className="text-red-800 text-sm">{product.caution}</p>
+              <p className="text-red-800 text-[1.0625rem]">{product.caution}</p>
             </div>
           ) : (
             /* Fallback static caution for all perfumes */
             <div className="p-3 bg-red-50 border border-red-200 ">
               <h5 className="font-semibold text-red-900 mb-1">Caution</h5>
-              <p className="text-red-800 text-sm">
+              <p className="text-red-800 text-[1.0625rem]">
                 Inflammable. Store at temperature below 50° C. Keep out of reach of children. 
                 Do not spray near eyes. Stop use if irritation develops. Harmful if swallowed. For external use only.
               </p>
@@ -261,7 +261,7 @@ const ProductAccordion = ({ product }) => {
 
           {/* Static Made in India badge */}
           <div className="text-center py-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium bg-green-100 text-green-800 border border-green-200">
               🇮🇳 MADE IN INDIA
             </span>
           </div>
@@ -320,7 +320,7 @@ const ProductAccordion = ({ product }) => {
         {/* Shipping */}
         <div>
           <h5 className="font-semibold text-gray-900 mb-2">Shipping</h5>
-          <ul className="space-y-1 text-sm list-disc pl-5">
+          <ul className="space-y-1 text-[1.0625rem] list-disc pl-5">
             <li>All orders shipped are free in India</li>
             <li>Order delivery usually takes 7 working days of placing an order with us</li>
             <li>Tracking number will be shared with the customer</li>
@@ -334,7 +334,7 @@ const ProductAccordion = ({ product }) => {
         {/* Returns */}
         <div>
           <h5 className="font-semibold text-gray-900 mb-2">Returns</h5>
-          <ul className="space-y-1 text-sm list-disc pl-5">
+          <ul className="space-y-1 text-[1.0625rem] list-disc pl-5">
             <li>All sales are final; products are non-returnable and non-exchangeable</li>
             <li>For errors like damage during transit, incorrect or missing items, replacements accepted after inspection</li>
             <li>No payment refund is acceptable</li>
@@ -345,7 +345,7 @@ const ProductAccordion = ({ product }) => {
           {product?.returnPolicy && (
             <div className="mt-3 p-3 bg-blue-50 border border-blue-200 ">
               <h6 className="font-medium text-blue-900 mb-1">Product Specific Policy</h6>
-              <p className="text-blue-800 text-sm">{product.returnPolicy}</p>
+              <p className="text-blue-800 text-[1.0625rem]">{product.returnPolicy}</p>
             </div>
           )}
         </div>
@@ -361,17 +361,17 @@ const ProductAccordion = ({ product }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <h5 className="font-semibold text-gray-900 mb-1">Payment Gateway</h5>
-            <p className="text-sm">PhonePe</p>
+            <p className="text-[1.0625rem]">PhonePe</p>
           </div>
           <div>
             <h5 className="font-semibold text-gray-900 mb-1">Accepted Currency</h5>
-            <p className="text-sm">Indian Rupee (₹) only</p>
+            <p className="text-[1.0625rem]">Indian Rupee (₹) only</p>
           </div>
         </div>
 
         <div>
           <h5 className="font-semibold text-gray-900 mb-2">Payment Methods</h5>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[1.0625rem]">
             <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">💳 Credit Cards</span>
             <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">💳 Debit Cards</span>
             <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">🌐 Net Banking</span>
@@ -383,7 +383,7 @@ const ProductAccordion = ({ product }) => {
 
         <div className="p-3 bg-yellow-50 border border-yellow-200 ">
           <h6 className="font-medium text-yellow-900 mb-1">International Payments</h6>
-          <ul className="text-yellow-800 text-sm space-y-1 list-disc pl-4">
+          <ul className="text-yellow-800 text-[1.0625rem] space-y-1 list-disc pl-4">
             <li>Currency conversion charges may apply based on your credit card policy</li>
             <li>Transaction amount will be converted to INR as per the applicable exchange rate</li>
           </ul>
@@ -459,7 +459,7 @@ const ProductAccordion = ({ product }) => {
             }`}
           >
             <div className="overflow-hidden">
-              <div className="mt-3 text-sm sm:text-base">{section.content}</div>
+              <div className="mt-3 text-[1.0625rem] sm:text-base">{section.content}</div>
             </div>
           </div>
         </div>

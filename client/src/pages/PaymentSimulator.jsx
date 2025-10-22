@@ -37,22 +37,22 @@ const PaymentSimulator = () => {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">
             PhonePe Payment Simulator
           </h1>
           <div className="mb-6">
-            <p className="text-sm text-gray-600">Transaction ID: {txnId}</p>
-            <p className="text-sm text-gray-600">Order ID: {orderId}</p>
+            <p className="text-[1.0625rem] text-gray-600">Transaction ID: {txnId}</p>
+            <p className="text-[1.0625rem] text-gray-600">Order ID: {orderId}</p>
             <p className="text-lg font-semibold text-gray-800">
               Amount: ₹{amount ? parseInt(amount).toFixed(2) : '0.00'}
             </p>
           </div>
           
           <div className="bg-blue-50 p-4 rounded-lg mb-6">
-            <p className="text-sm text-blue-700 mb-2">
+            <p className="text-[1.0625rem] text-blue-700 mb-2">
               🔧 <strong>Development Mode</strong>
             </p>
-            <p className="text-sm text-blue-600">
+            <p className="text-[1.0625rem] text-blue-600">
               This is a payment simulator for testing. Auto-completing in {countdown} seconds...
             </p>
           </div>
@@ -80,7 +80,7 @@ const PaymentSimulator = () => {
             </button>
           </div>
 
-          <div className="mt-6 text-sm text-gray-500">
+          <div className="mt-6 text-[1.0625rem] text-gray-500">
             <p>⚠️ This simulator will be removed once PhonePe credentials are activated</p>
           </div>
         </div>

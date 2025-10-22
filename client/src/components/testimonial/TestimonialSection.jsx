@@ -227,12 +227,12 @@ const TestimonialSection = () => {
       <div className="w-full py-12 sm:py-16 lg:py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-sm sm:text-lg lg:text-xl font-bold text-gray-900 mb-6 font-playfair">
+            <h2 className="text-[1.0625rem] sm:text-lg lg:text-3xl font-bold text-gray-900 mb-6 font-playfair">
               What Our Customers Say
             </h2>
             <div className="bg-gray-50  p-12 max-w-2xl mx-auto">
               <div className="text-6xl mb-6">💎</div>
-              <p className="text-gray-600 text-sm leading-relaxed">
+              <p className="text-gray-600 text-[1.0625rem] leading-relaxed">
                 We're gathering precious testimonials from our valued customers. 
                 Check back soon to read their experiences.
               </p>
@@ -251,7 +251,7 @@ const TestimonialSection = () => {
           <h2 className="text-xl sm:text-xl lg:text-3xl font-bold text-gray-900 mb-2 lg:mb-2 font-playfair leading-tight">
             What Our Customers Say
           </h2>
-          <p className="text-sm text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-[1.0625rem] text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Discover why thousands of customers trust Garava for their most precious moments
           </p>
         </div>
@@ -377,7 +377,7 @@ const TestimonialCard = ({ testimonial, renderStars, getAlphabetAvatar }) => {
       {/* Quote Icon - Fixed positioning */}
       <div className="flex justify-center mb-4">
         <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-          <FaQuoteLeft className="text-amber-600 text-sm" />
+          <FaQuoteLeft className="text-amber-600 text-[1.0625rem]" />
         </div>
       </div>
 
@@ -409,7 +409,7 @@ const TestimonialCard = ({ testimonial, renderStars, getAlphabetAvatar }) => {
         <h4 className="font-semibold text-gray-900 text-lg mb-1">
           {testimonial.name}
         </h4>
-        <p className="text-gray-500 text-sm font-medium">
+        <p className="text-gray-500 text-[1.0625rem] font-medium">
           {testimonial.location || 'Verified Customer'}
         </p>
       </div>

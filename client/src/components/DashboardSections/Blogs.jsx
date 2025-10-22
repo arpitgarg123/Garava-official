@@ -49,13 +49,13 @@ export default function Blogs(props) {
           <div className="flex flex-col sm:flex-row justify-between w-full  items-start sm:items-center gap-4">
             <div>
               <h3 className="text-lg font-semibold text-gray-900">Blog Management</h3>
-              <p className="text-sm text-gray-500 mt-1">{pagination.total || 0} total posts</p>
+              <p className="text-[1.0625rem] text-gray-500 mt-1">{pagination.total || 0} total posts</p>
             </div>
             <button
               onClick={function () {
                 onAction("create");
               }}
-              className="px-4 py-2 bg-blue-600 text-white  text-sm hover:bg-blue-700 transition-colors duration-200"
+              className="px-4 py-2 bg-blue-600 text-white  text-[1.0625rem] hover:bg-blue-700 transition-colors duration-200"
             >
               New Post
             </button>
@@ -98,7 +98,7 @@ export default function Blogs(props) {
               </select>
               <button
                 onClick={applyFilters}
-                className="px-4 py-2 bg-blue-600 text-white  text-sm hover:bg-blue-700 transition-colors duration-200"
+                className="px-4 py-2 bg-blue-600 text-white  text-[1.0625rem] hover:bg-blue-700 transition-colors duration-200"
               >
                 Apply
               </button>
@@ -140,7 +140,7 @@ export default function Blogs(props) {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
+                        <div className="w-full h-full flex items-center justify-center text-gray-400 text-[1.0625rem]">
                           No Image
                         </div>
                       )}
@@ -152,7 +152,7 @@ export default function Blogs(props) {
                         </h3>
                         <span
                           className={
-                            "ml-2 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium " +
+                            "ml-2 inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium " +
                             (p.status === "published"
                               ? "bg-green-100 text-green-800"
                               : "bg-yellow-100 text-yellow-800")
@@ -161,10 +161,10 @@ export default function Blogs(props) {
                           {p.status || "draft"}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-600 line-clamp-2 mb-3">
+                      <p className="text-[1.0625rem] text-gray-600 line-clamp-2 mb-3">
                         {p.description || "No description available"}
                       </p>
-                      <div className="text-sm text-gray-500 mb-4">
+                      <div className="text-[1.0625rem] text-gray-500 mb-4">
                         {formatDate(p.createdAt)}
                       </div>
 
@@ -231,7 +231,7 @@ export default function Blogs(props) {
       {pagination.totalPages > 1 && (
         <div className="bg-white  border border-gray-200 shadow-sm p-6">
           <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-600">
+            <div className="text-[1.0625rem] text-gray-600">
               Showing page {pagination.page} of {pagination.totalPages || 1} — {pagination.total || 0} posts
             </div>
             <div className="flex items-center gap-2">

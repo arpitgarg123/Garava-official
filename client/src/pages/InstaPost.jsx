@@ -57,7 +57,7 @@ const InstaPost = () => {
   return (
     <div className='w-full py-6'>
       <PageHeader title="#Posts" />
-      <p className='text-center text-[0.875rem] w-full'>
+      <p className='text-center text-[1.0625rem] w-full'>
         Check how GARAVA shares beauty — from sparkling diamonds to signature perfumes — <br /> 
         in our latest Instagram posts.
       </p>

@@ -23,7 +23,7 @@ export default function ForgotPassword() {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-4">Forgot password</h1>
+      <h1 className="text-3xl font-semibold mb-4">Forgot password</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <input
           type="email"
@@ -41,9 +41,9 @@ export default function ForgotPassword() {
           {status === "loading" ? "Sending..." : "Send reset link"}
         </button>
       </form>
-      {message && <p className="mt-3 text-sm">{message}</p>}
+      {message && <p className="mt-3 text-[1.0625rem]">{message}</p>}
 
-      <div className="mt-4 text-sm flex items-center justify-between">
+      <div className="mt-4 text-[1.0625rem] flex items-center justify-between">
         <Link to="/login" className="underline">Back to login</Link>
       </div>
     </div>

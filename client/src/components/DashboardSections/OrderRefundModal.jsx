@@ -99,7 +99,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
               <AiOutlineDollar className="h-6 w-6 mr-2" />
               Process Refund
             </h3>
-            <p className="text-sm text-gray-500 mt-1">Order #{order.orderNumber}</p>
+            <p className="text-[1.0625rem] text-gray-500 mt-1">Order #{order.orderNumber}</p>
           </div>
           <button
             onClick={onClose}
@@ -113,7 +113,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
         {/* Order Summary */}
         <div className="mb-6 p-4 bg-gray-50 rounded-lg">
           <h4 className="font-medium text-gray-900 mb-3">Order Summary</h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-2 gap-4 text-[1.0625rem]">
             <div className="flex items-center gap-2">
               <BiUser className="h-4 w-4 text-gray-400" />
               <span>{formattedOrder.customerName}</span>
@@ -134,7 +134,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
         <form onSubmit={handleSubmit}>
           {/* Refund Type */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-[1.0625rem] font-medium text-gray-700 mb-3">
               Refund Type *
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -153,7 +153,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
                     : 'border-gray-300 hover:border-gray-400'
                 }`}>
                   <div className="font-medium text-gray-900">Full Refund</div>
-                  <div className="text-sm text-gray-500">Refund entire order amount</div>
+                  <div className="text-[1.0625rem] text-gray-500">Refund entire order amount</div>
                   <div className="text-lg font-semibold text-blue-600 mt-2">
                     {formatCurrency(maxRefundAmount)}
                   </div>
@@ -175,8 +175,8 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
                     : 'border-gray-300 hover:border-gray-400'
                 }`}>
                   <div className="font-medium text-gray-900">Partial Refund</div>
-                  <div className="text-sm text-gray-500">Refund specific amount</div>
-                  <div className="text-sm text-gray-600 mt-2">
+                  <div className="text-[1.0625rem] text-gray-500">Refund specific amount</div>
+                  <div className="text-[1.0625rem] text-gray-600 mt-2">
                     Custom amount
                   </div>
                 </div>
@@ -186,7 +186,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
 
           {/* Refund Amount */}
           <div className="mb-6">
-            <label htmlFor="refundAmount" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="refundAmount" className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
               Refund Amount * 
               {isPartialRefund && refundAmount && (
                 <span className="text-gray-500 ml-2">({refundPercentage}% of total)</span>
@@ -208,14 +208,14 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
                 placeholder="0.00"
               />
             </div>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-[1.0625rem] text-gray-500 mt-1">
               Maximum refundable amount: {formatCurrency(maxRefundAmount)}
             </p>
           </div>
 
           {/* Refund Reason */}
           <div className="mb-6">
-            <label htmlFor="refundReason" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="refundReason" className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
               Refund Reason *
             </label>
             <select
@@ -236,7 +236,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
           {/* Custom Reason */}
           {refundReason === 'Other' && (
             <div className="mb-6">
-              <label htmlFor="customReason" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="customReason" className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
                 Custom Reason *
               </label>
               <input
@@ -254,7 +254,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
 
           {/* Additional Notes */}
           <div className="mb-6">
-            <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="notes" className="block text-[1.0625rem] font-medium text-gray-700 mb-2">
               Additional Notes (Optional)
             </label>
             <textarea
@@ -271,7 +271,7 @@ export default function OrderRefundModal({ isOpen, onClose, order }) {
           {/* Warning */}
           <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
             <h4 className="font-medium text-yellow-800 mb-1">⚠️ Refund Processing</h4>
-            <p className="text-sm text-yellow-700">
+            <p className="text-[1.0625rem] text-yellow-700">
               This action will initiate the refund process. The actual refund will be processed through your payment provider and may take 3-7 business days to appear in the customer's account.
             </p>
           </div>

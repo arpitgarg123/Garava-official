@@ -144,7 +144,7 @@ const AddressManager = () => {
         <h2 className="text-xl font-semibold">Saved Addresses</h2>
         <button
           onClick={() => setShowForm(true)}
-          className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition text-sm"
+          className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition text-[1.0625rem]"
         >
           + Add Address
         </button>
@@ -152,7 +152,7 @@ const AddressManager = () => {
 
       {/* Message */}
       {message && (
-        <div className={`p-3 rounded-lg text-sm ${
+        <div className={`p-3 rounded-lg text-[1.0625rem] ${
           message.includes('Failed') 
             ? 'bg-red-50 text-red-800 border border-red-200'
             : 'bg-green-50 text-green-800 border border-green-200'
@@ -168,12 +168,12 @@ const AddressManager = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Address Type</label>
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">Address Type</label>
                 <select
                   name="label" // Changed from 'type' to 'label'
                   value={form.label}
                   onChange={onChange}
-                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                   required
                 >
                   {addressTypes.map(type => (
@@ -182,13 +182,13 @@ const AddressManager = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">Full Name</label>
                 <input
                   name="fullName"
                   type="text"
                   value={form.fullName}
                   onChange={onChange}
-                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                   placeholder="Enter full name"
                   required
                 />
@@ -197,25 +197,25 @@ const AddressManager = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">Phone Number</label>
                 <input
                   name="phone"
                   type="tel"
                   value={form.phone}
                   onChange={onChange}
-                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                   placeholder="Enter phone number"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Postal Code</label>
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">Postal Code</label>
                 <input
                   name="postalCode"
                   type="text"
                   value={form.postalCode}
                   onChange={onChange}
-                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                   placeholder="Enter postal code"
                   pattern="[0-9]{6}"
                   required
@@ -224,63 +224,63 @@ const AddressManager = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Address Line 1</label>
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">Address Line 1</label>
               <input
                 name="addressLine1"
                 type="text"
                 value={form.addressLine1}
                 onChange={onChange}
-                className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                 placeholder="House/Flat No., Building Name"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
+              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">Address Line 2 (Optional)</label>
               <input
                 name="addressLine2"
                 type="text"
                 value={form.addressLine2}
                 onChange={onChange}
-                className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                 placeholder="Street, Area, Landmark"
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">City</label>
                 <input
                   name="city"
                   type="text"
                   value={form.city}
                   onChange={onChange}
-                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                   placeholder="Enter city"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">State</label>
                 <input
                   name="state"
                   type="text"
                   value={form.state}
                   onChange={onChange}
-                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                   placeholder="Enter state"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                <label className="block text-[1.0625rem] font-medium text-gray-700 mb-1">Country</label>
                 <input
                   name="country"
                   type="text"
                   value={form.country}
                   onChange={onChange}
-                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-sm"
+                  className="w-full border border-gray-300 p-2 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-[1.0625rem]"
                   placeholder="Enter country"
                   required
                 />
@@ -295,21 +295,21 @@ const AddressManager = () => {
                 onChange={onChange}
                 className="w-4 h-4 text-black border-gray-300 rounded focus:ring-black"
               />
-              <label className="ml-2 text-sm text-gray-700">Set as default address</label>
+              <label className="ml-2 text-[1.0625rem] text-gray-700">Set as default address</label>
             </div>
 
             <div className="flex gap-3 pt-2">
               <button
                 type="submit"
                 disabled={submitting}
-                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition disabled:opacity-50 text-sm"
+                className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition disabled:opacity-50 text-[1.0625rem]"
               >
                 {submitting ? 'Saving...' : (editingId ? 'Update Address' : 'Save Address')}
               </button>
               <button
                 type="button"
                 onClick={resetForm}
-                className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition text-sm"
+                className="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition text-[1.0625rem]"
               >
                 Cancel
               </button>
@@ -326,7 +326,7 @@ const AddressManager = () => {
             <p>No addresses saved yet</p>
             <button
               onClick={() => setShowForm(true)}
-              className="mt-3 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition text-sm"
+              className="mt-3 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition text-[1.0625rem]"
             >
               Add Your First Address
             </button>
@@ -337,7 +337,7 @@ const AddressManager = () => {
               <div className="flex justify-between items-start">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className={`inline-flex items-center px-2 py-1 rounded text-sm font-medium ${
+                    <span className={`inline-flex items-center px-2 py-1 rounded text-[1.0625rem] font-medium ${
                       address.label === 'home' || address.type === 'home' ? 'bg-blue-100 text-blue-800' :
                       address.label === 'work' || address.type === 'work' ? 'bg-green-100 text-green-800' :
                       'bg-gray-50 text-gray-800'
@@ -345,32 +345,32 @@ const AddressManager = () => {
                       {(address.label || address.type)?.toUpperCase() || 'OTHER'}
                     </span>
                     {address.isDefault && (
-                      <span className="inline-flex items-center px-2 py-1 rounded text-sm font-medium bg-black text-white">
+                      <span className="inline-flex items-center px-2 py-1 rounded text-[1.0625rem] font-medium bg-black text-white">
                         DEFAULT
                       </span>
                     )}
                   </div>
                   <h4 className="font-medium text-gray-900">{address.fullName || address.name}</h4>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-[1.0625rem] text-gray-600 mt-1">
                     {address.addressLine1}
                     {address.addressLine2 && `, ${address.addressLine2}`}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-[1.0625rem] text-gray-600">
                     {address.city}, {address.state} - {address.postalCode || address.pincode}
                   </p>
-                  <p className="text-sm text-gray-600">{address.country}</p>
-                  <p className="text-sm text-gray-600">Phone: {address.phone}</p>
+                  <p className="text-[1.0625rem] text-gray-600">{address.country}</p>
+                  <p className="text-[1.0625rem] text-gray-600">Phone: {address.phone}</p>
                 </div>
                 <div className="flex gap-2 ml-4">
                   <button
                     onClick={() => handleEdit(address)}
-                    className="text-sm text-blue-600 hover:text-blue-800"
+                    className="text-[1.0625rem] text-blue-600 hover:text-blue-800"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(address._id || address.id)}
-                    className="text-sm text-red-600 hover:text-red-800"
+                    className="text-[1.0625rem] text-red-600 hover:text-red-800"
                   >
                     Delete
                   </button>

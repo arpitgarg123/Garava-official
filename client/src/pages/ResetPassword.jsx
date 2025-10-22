@@ -36,7 +36,7 @@ export default function ResetPassword() {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-4">Reset password</h1>
+      <h1 className="text-3xl font-semibold mb-4">Reset password</h1>
       <form onSubmit={onSubmit} className="space-y-4">
         <input
           type="password"
@@ -64,7 +64,7 @@ export default function ResetPassword() {
           {status === "loading" ? "Resetting..." : "Reset password"}
         </button>
       </form>
-      {message && <p className="mt-3 text-sm">{message}</p>}
+      {message && <p className="mt-3 text-[1.0625rem]">{message}</p>}
     </div>
   );
 }

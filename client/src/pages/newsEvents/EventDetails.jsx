@@ -67,7 +67,7 @@ const EventDetailPage = () => {
               <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">{event.title}</h1>
               
               {/* Event meta information */}
-              <div className="mt-4 space-y-2 text-sm text-muted-foreground">
+              <div className="mt-4 space-y-2 text-[1.0625rem] text-muted-foreground">
                 <div className="flex items-center gap-2">
                   <span>📅</span>
                   <span>{formatDate(event.date)}</span>
@@ -94,7 +94,7 @@ const EventDetailPage = () => {
                     href={event.rsvpUrl} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90"
+                    className="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-[1.0625rem] font-medium text-primary-foreground hover:opacity-90"
                   >
                     RSVP ↗
                   </a>
@@ -154,7 +154,7 @@ const EventDetailPage = () => {
             </section>
 
             <div className="py-8">
-              <h3 className="mb-3 text-sm font-semibold">Share this event</h3>
+              <h3 className="mb-3 text-[1.0625rem] font-semibold">Share this event</h3>
               <ShareButton title={event.title} url={canonicalUrl} />
             </div>
           </article>
@@ -163,8 +163,8 @@ const EventDetailPage = () => {
           {/* <aside className="lg:col-span-4 space-y-6">
             {event.ctaNote && (
               <div className="rounded-2xl border bg-card p-5 shadow-sm">
-                <h3 className="text-sm font-semibold">Good to know</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{event.ctaNote}</p>
+                <h3 className="text-[1.0625rem] font-semibold">Good to know</h3>
+                <p className="mt-2 text-[1.0625rem] text-muted-foreground">{event.ctaNote}</p>
               </div>
             )} */}
 

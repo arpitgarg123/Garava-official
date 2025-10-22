@@ -93,10 +93,10 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
     
           <header className="p-5 sm:p-8">
             <div className="mb-3 flex flex-wrap items-center gap-3">
-              <span className="rounded-xl bg-black text-white px-3 py-1 text-sm font-medium text-primary">
+              <span className="rounded-xl bg-black text-white px-3 py-1 text-[1.0625rem] font-medium text-primary">
                 {post.category}
               </span>
-              <span className="text-sm  flex-center "> ● {post.readTimeMinutes} min read</span>
+              <span className="text-[1.0625rem]  flex-center "> ● {post.readTimeMinutes} min read</span>
             </div>
             <h1 className="text-balance text-3xl font-semibold leading-tight sm:text-4xl">
               {post.title}
@@ -110,8 +110,8 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
                 loading="lazy"
               />
               <div>
-                <div className="text-sm font-medium">Posted by {post.postedBy?.name}</div>
-                <div className="text-sm text-muted-foreground">Updated {formatDate(post.publishedAt)}</div>
+                <div className="text-[1.0625rem] font-medium">Posted by {post.postedBy?.name}</div>
+                <div className="text-[1.0625rem] text-muted-foreground">Updated {formatDate(post.publishedAt)}</div>
               </div>
             </div>
           </header>
@@ -134,7 +134,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
           </section>
 
           <div className="border-t px-5 py-6 sm:px-8">
-            <h3 className="mb-3 text-sm font-semibold">Share this article</h3>
+            <h3 className="mb-3 text-[1.0625rem] font-semibold">Share this article</h3>
             <ShareButton title={post.title} url={canonicalUrl} />
           </div>
 
@@ -142,7 +142,7 @@ export default function BlogDetails({ post = DEFAULT_POST }) {
           {/* {post.tags?.length > 0 && (
             <div className="flex flex-wrap items-center gap-2 border-t px-5 py-6 sm:px-8">
               {post.tags.map((t) => (
-                <span key={t} className="rounded-full border px-3 py-1 text-sm text-muted-foreground">
+                <span key={t} className="rounded-full border px-3 py-1 text-[1.0625rem] text-muted-foreground">
                   #{t}
                 </span>
               ))}

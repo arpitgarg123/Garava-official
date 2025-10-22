@@ -198,7 +198,7 @@ const Checkout = () => {
                   />
                   <span className="flex items-center space-x-2">
                     <span>PhonePe Payment Gateway</span>
-                    <span className="text-sm text-gray-500">(Cards, UPI, Wallets)</span>
+                    <span className="text-[1.0625rem] text-gray-500">(Cards, UPI, Wallets)</span>
                   </span>
                 </label>
                 <label className="flex items-center space-x-3 cursor-pointer">
@@ -235,7 +235,7 @@ const Checkout = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
+                      <div className="w-full h-full flex items-center justify-center text-gray-400 text-[1.0625rem]">
                         No Image
                       </div>
                     )}
@@ -243,31 +243,31 @@ const Checkout = () => {
                   
                   {/* Product Details */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-medium text-gray-900 truncate">
+                    <h3 className="text-[1.0625rem] font-medium text-gray-900 truncate">
                       {item.product?.name || 'Product'}
                     </h3>
                     <div className="flex items-center space-x-2 mt-1">
                       {item.variantSku && (
-                        <span className="text-sm text-gray-500 px-2 py-1 ">
+                        <span className="text-[1.0625rem] text-gray-500 px-2 py-1 ">
                           SKU: {item.variantSku}
                         </span>
                       )}
                       {item.variant?.sizeLabel && (
-                        <span className="text-sm text-gray-500 px-2 py-1 ">
+                        <span className="text-[1.0625rem] text-gray-500 px-2 py-1 ">
                           Size: {item.variant.sizeLabel}
                         </span>
                       )}
                     </div>
                     <div className="flex items-center justify-between mt-2">
-                      <span className="text-sm text-gray-600">
+                      <span className="text-[1.0625rem] text-gray-600">
                         Qty: {item.quantity}
                       </span>
                       <div className="text-right">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-[1.0625rem] font-medium text-gray-900">
                           {formatCurrency((item.unitPrice || 0) * item.quantity)}
                         </div>
                         {item.quantity > 1 && (
-                          <div className="text-sm text-gray-500">
+                          <div className="text-[1.0625rem] text-gray-500">
                             {formatCurrency(item.unitPrice || 0)} each
                           </div>
                         )}
@@ -282,23 +282,23 @@ const Checkout = () => {
             <div className="border-t pt-4 space-y-2">
               {currentOrder ? (
                 <>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>Subtotal</span>
                     <span>{formatCurrency(currentOrder.subtotal)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>Delivery</span>
                     <span>{currentOrder.shippingTotal === 0 ? "Free" : formatCurrency(currentOrder.shippingTotal)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>COD Charge</span>
                     <span>{currentOrder.codCharge > 0 ? formatCurrency(currentOrder.codCharge) : "—"}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>Discount</span>
                     <span>{currentOrder.discountTotal > 0 ? `- ${formatCurrency(currentOrder.discountTotal)}` : "—"}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>Tax</span>
                     <span>{currentOrder.taxTotal > 0 ? formatCurrency(currentOrder.taxTotal) : "—"}</span>
                   </div>
@@ -309,25 +309,25 @@ const Checkout = () => {
                 </>
               ) : (
                 <>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>Subtotal</span>
                     <span>{formatCurrency(cartTotal)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>Delivery</span>
                     <span>{cartTotal >= CHARGES.FREE_DELIVERY_THRESHOLD ? "Free" : formatCurrency(CHARGES.DELIVERY_CHARGE)}</span>
                   </div>
                   {paymentMethod === 'cod' && (
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-[1.0625rem]">
                       <span>COD Charge</span>
                       <span>{formatCurrency(CHARGES.COD_HANDLING_FEE)}</span>
                     </div>
                   )}
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>Discount</span>
                     <span>—</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-[1.0625rem]">
                     <span>Tax</span>
                     <span>—</span>
                   </div>
@@ -342,7 +342,7 @@ const Checkout = () => {
             {/* Error Message */}
             {paymentError && (
               <div className="mt-4 p-3 bg-red-50 border border-red-200 ">
-                <p className="text-red-800 text-sm">{paymentError}</p>
+                <p className="text-red-800 text-[1.0625rem]">{paymentError}</p>
               </div>
             )}
 

@@ -144,7 +144,7 @@ const OutOfStockNotifications = () => {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Stock Notifications Dashboard
         </h1>
         <p className="text-gray-600">
@@ -160,8 +160,8 @@ const OutOfStockNotifications = () => {
               <span className="text-blue-600 text-xl">📊</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Total</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.total || 0}</p>
+              <p className="text-[1.0625rem] font-medium text-gray-600">Total</p>
+              <p className="text-3xl font-semibold text-gray-900">{stats.total || 0}</p>
             </div>
           </div>
         </div>
@@ -172,8 +172,8 @@ const OutOfStockNotifications = () => {
               <span className="text-yellow-600 text-xl">👁️</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Unread</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.unread || 0}</p>
+              <p className="text-[1.0625rem] font-medium text-gray-600">Unread</p>
+              <p className="text-3xl font-semibold text-gray-900">{stats.unread || 0}</p>
             </div>
           </div>
         </div>
@@ -184,8 +184,8 @@ const OutOfStockNotifications = () => {
               <span className="text-red-600 text-xl">📦</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Out of Stock</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.outOfStock || 0}</p>
+              <p className="text-[1.0625rem] font-medium text-gray-600">Out of Stock</p>
+              <p className="text-3xl font-semibold text-gray-900">{stats.outOfStock || 0}</p>
             </div>
           </div>
         </div>
@@ -196,8 +196,8 @@ const OutOfStockNotifications = () => {
               <span className="text-orange-600 text-xl">⚠️</span>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-gray-600">Low Stock</p>
-              <p className="text-2xl font-semibold text-gray-900">{stats.lowStock || 0}</p>
+              <p className="text-[1.0625rem] font-medium text-gray-600">Low Stock</p>
+              <p className="text-3xl font-semibold text-gray-900">{stats.lowStock || 0}</p>
             </div>
           </div>
         </div>
@@ -210,7 +210,7 @@ const OutOfStockNotifications = () => {
             <button
               key={filterType}
               onClick={() => setFilter(filterType)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-[1.0625rem] font-medium transition-colors ${
                 filter === filterType
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-50 text-gray-700 hover:bg-gray-200'
@@ -240,7 +240,7 @@ const OutOfStockNotifications = () => {
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-start space-x-3">
-                  <div className="text-2xl">
+                  <div className="text-3xl">
                     {getTypeIcon(notification.type)}
                   </div>
                   <div className="flex-1">
@@ -248,7 +248,7 @@ const OutOfStockNotifications = () => {
                       <h3 className="font-semibold text-gray-900">
                         {notification.title}
                       </h3>
-                      <span className={`px-2 py-1 rounded-full text-sm font-medium border ${getSeverityColor(notification.severity)}`}>
+                      <span className={`px-2 py-1 rounded-full text-[1.0625rem] font-medium border ${getSeverityColor(notification.severity)}`}>
                         {notification.severity.toUpperCase()}
                       </span>
                       {!notification.isRead && (
@@ -256,7 +256,7 @@ const OutOfStockNotifications = () => {
                       )}
                     </div>
                     <p className="text-gray-700 mb-2">{notification.message}</p>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <div className="flex items-center space-x-4 text-[1.0625rem] text-gray-500">
                       <span>
                         {new Date(notification.createdAt).toLocaleDateString('en-US', {
                           year: 'numeric',
@@ -283,7 +283,7 @@ const OutOfStockNotifications = () => {
                   {!notification.isRead && (
                     <button
                       onClick={() => markAsRead(notification._id)}
-                      className="px-3 py-1 text-sm bg-gray-50 text-gray-700 rounded hover:bg-gray-200 transition-colors"
+                      className="px-3 py-1 text-[1.0625rem] bg-gray-50 text-gray-700 rounded hover:bg-gray-200 transition-colors"
                     >
                       Mark Read
                     </button>
@@ -291,13 +291,13 @@ const OutOfStockNotifications = () => {
                   {notification.actionRequired && !notification.actionTaken && (
                     <button
                       onClick={() => markActionTaken(notification._id, 'Stock restocked')}
-                      className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                      className="px-3 py-1 text-[1.0625rem] bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
                     >
                       Mark Resolved
                     </button>
                   )}
                   {notification.actionTaken && (
-                    <span className="px-3 py-1 text-sm bg-green-100 text-green-800 rounded">
+                    <span className="px-3 py-1 text-[1.0625rem] bg-green-100 text-green-800 rounded">
                       ✓ Resolved
                     </span>
                   )}

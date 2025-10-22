@@ -167,20 +167,20 @@ export default function EnhancedChatbotWidget({
             <div className={`relative ${COLORS.brand} px-4 py-3 flex-shrink-0`}>
               <div className="flex items-center gap-3">
                 <div className="h-9 w-9 rounded-full bg-white/15 flex items-center justify-center ring-1 ring-white/20">
-                  <span className="text-white/90 text-sm font-semibold">GA</span>
+                  <span className="text-white/90 text-[1.0625rem] font-semibold">GA</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-white text-sm font-semibold tracking-wide">
+                  <h3 className="text-white text-[1.0625rem] font-semibold tracking-wide">
                     {title}
                   </h3>
-                  <p className="text-white/70 text-sm">{subtitle}</p>
+                  <p className="text-white/70 text-[1.0625rem]">{subtitle}</p>
                 </div>
 
                 <div className="flex items-center gap-1">
                   <button
                     onClick={handleClearChat}
                     aria-label="Clear conversation"
-                    className="p-2 rounded-md hover:bg-white/10 text-white transition text-sm"
+                    className="p-2 rounded-md hover:bg-white/10 text-white transition text-[1.0625rem]"
                     title="Clear chat"
                   >
                     🗑️
@@ -212,14 +212,14 @@ export default function EnhancedChatbotWidget({
               {/* Suggestions (show when only greeting) */}
               {messages.length <= 1 && suggestions?.length > 0 && (
                 <div className="mb-4">
-                  <p className="text-sm text-gray-500 mb-2">Try asking about:</p>
+                  <p className="text-[1.0625rem] text-gray-500 mb-2">Try asking about:</p>
                   <div className="flex flex-wrap gap-2">
                     {suggestions.map((s, i) => (
                       <button
                         key={i}
                         onClick={() => sendMessage(s)}
                         disabled={isTyping}
-                        className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm font-medium hover:bg-neutral-50 active:scale-[0.98] transition disabled:opacity-50"
+                        className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[1.0625rem] font-medium hover:bg-neutral-50 active:scale-[0.98] transition disabled:opacity-50"
                       >
                         {s}
                       </button>
@@ -240,7 +240,7 @@ export default function EnhancedChatbotWidget({
                       {/* FAQ feedback buttons */}
                       {/* {msg.role === 'bot' && msg.faqId && (
                         <div className="flex items-center gap-2 mt-2 ml-2">
-                          <span className="text-sm text-gray-500">Was this helpful?</span>
+                          <span className="text-[1.0625rem] text-gray-500">Was this helpful?</span>
                           <button
                             onClick={() => handleFeedback(msg.id, msg.faqId, true)}
                             className="p-1 rounded text-green-600 hover:bg-green-50 transition"
@@ -289,7 +289,7 @@ export default function EnhancedChatbotWidget({
                     rows={1}
                     placeholder={placeholder}
                     disabled={isTyping}
-                    className="w-full resize-none text-sm rounded-xl border border-neutral-200 bg-white px-3 py-2 outline-none leading-6 max-h-28 disabled:opacity-50"
+                    className="w-full resize-none text-[1.0625rem] rounded-xl border border-neutral-200 bg-white px-3 py-2 outline-none leading-6 max-h-28 disabled:opacity-50"
                     style={{ minHeight: '40px', overflow: 'hidden' }}
                   />
                   
@@ -298,7 +298,7 @@ export default function EnhancedChatbotWidget({
                 <button
                   onClick={() => sendMessage(input)}
                   disabled={isTyping || !input.trim()}
-                  className="inline-flex h-10 items-center justify-center rounded-xl bg-amber-500 px-4 text-white text-sm font-medium shadow hover:brightness-105 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex h-10 items-center justify-center rounded-xl bg-amber-500 px-4 text-white text-[1.0625rem] font-medium shadow hover:brightness-105 active:scale-[0.98] transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <FiSend className="mr-1" />
                   Send
