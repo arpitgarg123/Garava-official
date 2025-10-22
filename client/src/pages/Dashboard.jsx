@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Products from './../components/DashboardSections/Products';
-import Orders from './../components/DashboardSections/Orders';
 import { 
   FaUser, 
   FaBoxOpen, 
@@ -19,18 +17,21 @@ import {
 } from "react-icons/fa";
 import { MdDashboard, MdEventAvailable } from "react-icons/md";
 import { IoIosArrowBack } from "react-icons/io";
-
-import Appointment from '../components/DashboardSections/Appointment';
-import Reviews from './../components/DashboardSections/Reviews';
-import Newsletter from '../components/DashboardSections/Newsletter';
-import Blogs from '../components/DashboardSections/BlogsAdmin';
-import FAQAdmin from '../components/DashboardSections/FAQAdmin';
-import TestimonialAdmin from '../components/DashboardSections/TestimonialAdmin';
-import Overview from '../components/DashboardSections/Overview';
-import NotificationsDashboard from '../components/DashboardSections/NotificationsDashboard';
-import NewsEventsAdmin from '../components/DashboardSections/NewsEventsAdmin';
-import InstagramAdmin from '../components/DashboardSections/InstagramAdmin';
 import { Link, useNavigate } from 'react-router-dom';
+
+// Lazy load all admin dashboard sections - only load when tab is accessed
+const Products = lazy(() => import('./../components/DashboardSections/Products'));
+const Orders = lazy(() => import('./../components/DashboardSections/Orders'));
+const Appointment = lazy(() => import('../components/DashboardSections/Appointment'));
+const Reviews = lazy(() => import('./../components/DashboardSections/Reviews'));
+const Newsletter = lazy(() => import('../components/DashboardSections/Newsletter'));
+const Blogs = lazy(() => import('../components/DashboardSections/BlogsAdmin'));
+const FAQAdmin = lazy(() => import('../components/DashboardSections/FAQAdmin'));
+const TestimonialAdmin = lazy(() => import('../components/DashboardSections/TestimonialAdmin'));
+const Overview = lazy(() => import('../components/DashboardSections/Overview'));
+const NotificationsDashboard = lazy(() => import('../components/DashboardSections/NotificationsDashboard'));
+const NewsEventsAdmin = lazy(() => import('../components/DashboardSections/NewsEventsAdmin'));
+const InstagramAdmin = lazy(() => import('../components/DashboardSections/InstagramAdmin'));
 
 // Redux imports for real data
 import { fetchOrdersAdmin } from '../features/order/adminSlice';
@@ -151,57 +152,110 @@ const Dashboard = () => {
     { _id:"2", email:"b@x.com", status:"unsubscribed", createdAt:"2025-09-05T12:00:00Z" }
   ];
 
+  // Loading fallback component for lazy-loaded sections
+  const SectionLoader = () => (
+    <div className="flex items-center justify-center h-full">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-600 font-medium">Loading section...</p>
+      </div>
+    </div>
+  );
+
   const renderContent = () => {
+    // Wrap each lazy-loaded component with Suspense
     switch (activeTab) {
       case "overview":
         return (
-          <Overview
-            stats={overviewStats}
-            revenueTrend={[12000, 18000, 26000, 31000, 29000, 34000, 36000]} // Keep trend data as is
-            topProducts={topProducts}
-            recentOrders={recentOrders}
-            recentReviews={recentReviews}
-            upcomingAppointments={upcomingAppointments}
-            loading={statsLoading || ordersLoading || productsLoading || reviewsLoading}
-          />
+          <Suspense fallback={<SectionLoader />}>
+            <Overview
+              stats={overviewStats}
+              revenueTrend={[12000, 18000, 26000, 31000, 29000, 34000, 36000]} // Keep trend data as is
+              topProducts={topProducts}
+              recentOrders={recentOrders}
+              recentReviews={recentReviews}
+              upcomingAppointments={upcomingAppointments}
+              loading={statsLoading || ordersLoading || productsLoading || reviewsLoading}
+            />
+          </Suspense>
         );
       case "products":
-        return <Products />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Products />
+          </Suspense>
+        );
       case "orders":
-        return <Orders />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Orders />
+          </Suspense>
+        );
       case "bookings":
-        return <Appointment />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Appointment />
+          </Suspense>
+        );
       case "reviews":
         return (
-          <Reviews   
-            reviews={reviews}
-            pagination={{ page: 1, limit: 20, total: reviews.length, totalPages: Math.ceil(reviews.length / 20) }}
-            onAction={(action, review) => {/* TODO: Implement review actions */}}
-            onPageChange={(newPage) => {/* TODO: Implement pagination */}}
-            onFilterChange={(filters) => {/* TODO: Implement filters */}}
-            onClearFilters={() => {/* TODO: Implement clear filters */}} 
-          />
+          <Suspense fallback={<SectionLoader />}>
+            <Reviews   
+              reviews={reviews}
+              pagination={{ page: 1, limit: 20, total: reviews.length, totalPages: Math.ceil(reviews.length / 20) }}
+              onAction={(action, review) => {/* TODO: Implement review actions */}}
+              onPageChange={(newPage) => {/* TODO: Implement pagination */}}
+              onFilterChange={(filters) => {/* TODO: Implement filters */}}
+              onClearFilters={() => {/* TODO: Implement clear filters */}} 
+            />
+          </Suspense>
         );
       case "testimonials":
-        return <TestimonialAdmin />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <TestimonialAdmin />
+          </Suspense>
+        );
       case "blogs":
-        return <Blogs />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Blogs />
+          </Suspense>
+        );
       case "newsevents":
-        return <NewsEventsAdmin />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <NewsEventsAdmin />
+          </Suspense>
+        );
       case "instagram":
-        return <InstagramAdmin />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <InstagramAdmin />
+          </Suspense>
+        );
       case "faq":
-        return <FAQAdmin />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <FAQAdmin />
+          </Suspense>
+        );
       case "notifications":
-        return <NotificationsDashboard />;
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <NotificationsDashboard />
+          </Suspense>
+        );
       case "newsletter":
         return (
-          <Newsletter  
-            subscribers={items}
-            pagination={{ page:1, limit:20, total:items.length, totalPages:Math.ceil(items.length/20) }}
-            onFilterChange={(f) => {/* TODO: Implement order filters */}}
-            onPageChange={(p) => {/* TODO: Implement order pagination */}} 
-          />
+          <Suspense fallback={<SectionLoader />}>
+            <Newsletter  
+              subscribers={items}
+              pagination={{ page:1, limit:20, total:items.length, totalPages:Math.ceil(items.length/20) }}
+              onFilterChange={(f) => {/* TODO: Implement order filters */}}
+              onPageChange={(p) => {/* TODO: Implement order pagination */}} 
+            />
+          </Suspense>
         );
       default:
         return null;

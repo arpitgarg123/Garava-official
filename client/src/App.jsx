@@ -28,6 +28,7 @@ import WebsiteLoader from "./layouts/WebsiteLoader.jsx";
 import { ToastProvider } from "./layouts/Toast.jsx";
 // import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 
+// Lazy load non-critical pages
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
 const Login = lazy(() => import("./features/auth/Login.jsx"));
 const Signup = lazy(() => import("./pages/Signup.jsx"));
@@ -35,12 +36,14 @@ const Cart = lazy(() => import("./pages/Cart.jsx"));
 const Wishlist = lazy(() => import("./pages/Wishlist.jsx"));
 const Orders = lazy(() => import("./pages/Orders.jsx"));
 const Checkout = lazy(() => import("./pages/Checkout.jsx"));
-const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 const Blogs = lazy(()=> import("./pages/blogs/BlogList.jsx"))
 const BlogDetails = lazy(()=> import("./pages/blogs/BlogDetails.jsx"))
 const EventDetails = lazy(()=> import("./pages/newsEvents/EventDetails.jsx"))
 const Contact = lazy(()=> import("./pages/Contact.jsx"))
 const SearchResults = lazy(() => import("./pages/SearchResults.jsx"))
+
+// Lazy load admin dashboard - only loads when admin accesses /dashboard
+const Dashboard = lazy(() => import("./pages/Dashboard.jsx"))
 
 
 const App = () => {
