@@ -211,7 +211,7 @@ const RefundReturn = () => {
 
                   <div className="mt-6 pt-6 border-t border-gray-200 text-center">
                     <p className="text-[1.0625rem] text-gray-600">
-                      <strong>Return Address:</strong> Garava, Bandra West, Mumbai - 400050
+                      <strong>Return Address:</strong> A -14, 601 Pearl Mount View, Vijay Path, Tilak Nagar, Jaipur -302004, Rajasthan
                     </p>
                   </div>
                 </div>

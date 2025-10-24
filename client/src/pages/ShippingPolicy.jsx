@@ -356,7 +356,7 @@ const ShippingPolicy = () => {
                         <strong>Flagship Store Address:</strong>
                       </p>
                       <p className="text-[1.0625rem] text-gray-700">
-                        Garava Luxury Jewellery, Bandra West, Mumbai - 400050
+                        A -14, 601 Pearl Mount View, Vijay Path, Tilak Nagar, Jaipur -302004, Rajasthan
                       </p>
                       <p className="text-[1.0625rem] text-gray-500 mt-1">
                         Visit us: Tuesday to Sunday, 11:00 AM - 8:00 PM
