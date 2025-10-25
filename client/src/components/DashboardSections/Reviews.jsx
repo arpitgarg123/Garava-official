@@ -130,9 +130,9 @@
 //         <div className="flex items-center justify-between mb-4">
 //           <div>
 //             <h2 className="text-lg font-semibold text-gray-900">Reviews Management</h2>
-//             <p className="text-[1.0625rem] text-gray-600">Moderate and manage customer reviews</p>
+//             <p className="text-sm text-gray-600">Moderate and manage customer reviews</p>
 //           </div>
-//           <div className="text-[1.0625rem] text-gray-600">
+//           <div className="text-sm text-gray-600">
 //             {pagination.total} total reviews
 //           </div>
 //         </div>
@@ -207,7 +207,7 @@
 //             <div className="text-center">
 //               <FiMessageSquare className="w-16 h-16 text-gray-300 mx-auto mb-4" />
 //               <p className="text-gray-500 font-medium">No reviews found</p>
-//               <p className="text-gray-400 text-[1.0625rem] mt-1">Customer reviews will appear here</p>
+//               <p className="text-gray-400 text-sm mt-1">Customer reviews will appear here</p>
 //             </div>
 //           </div>
 //         ) : (
@@ -215,25 +215,25 @@
 //             <table className="w-full ">
 //               <thead className="bg-gray-50 sticky top-0 z-10 ">
 //                 <tr>
-//                   <th className="pl-14 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-14 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Customer
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Product
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Rating
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Review
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Date
 //                   </th>
-//                   <th className="pl-1 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pl-1 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Status
 //                   </th>
-//                   <th className="pr-20 py-3 text-right text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+//                   <th className="pr-20 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
 //                     Actions
 //                   </th>
 //                 </tr>
@@ -243,16 +243,16 @@
 //                   <tr key={review._id} className="hover:bg-gray-50 ">
 //                     <td className="px-6 py-4 whitespace-nowrap">
 //                       <div className="">
-//                         <div className="text-[1.0625rem] font-medium text-gray-900 pl-8">
+//                         <div className="text-sm font-medium text-gray-900 pl-8">
 //                           {review.user?.name || 'Anonymous'}
 //                         </div>
-//                         <div className="text-[1.0625rem] text-gray-500 pl-8">
+//                         <div className="text-sm text-gray-500 pl-8">
 //                           {review.user?.email || 'N/A'}
 //                         </div>
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <div className="text-[1.0625rem] text-gray-900">
+//                       <div className="text-sm text-gray-900">
 //                         {review.product || 'Unknown Product'}
 //                       </div>
 //                     </td>
@@ -264,27 +264,27 @@
 //                             className={`w-4 h-4 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} 
 //                           />
 //                         ))}
-//                         <span className=" text-[1.0625rem] text-gray-600">({review.rating})</span>
+//                         <span className=" text-sm text-gray-600">({review.rating})</span>
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4">
 //                       <div className="max-w-xs">
-//                         <div className="text-[1.0625rem] text-gray-900 line-clamp-2">
+//                         <div className="text-sm text-gray-900 line-clamp-2">
 //                           {review.body || 'No comment provided'}
 //                         </div>
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <div className="text-[1.0625rem] text-gray-900">
+//                       <div className="text-sm text-gray-900">
 //                         {formatDate(review.createdAt)}
 //                       </div>
 //                     </td>
 //                     <td className="px-6 py-4 whitespace-nowrap">
-//                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[1.0625rem] font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+//                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
 //                         {getStatusText(review.isApproved, review.flagged)}
 //                       </span>
 //                     </td>
-//                     <td className="px-6 py-4 whitespace-nowrap text-right text-[1.0625rem] font-medium">
+//                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 //                       <div className="flex items-center justify-end gap-2">
 //                         {!review.isApproved && !review.flagged && (
 //                           <button
@@ -334,14 +334,14 @@
 //       {pagination.totalPages > 1 && (
 //         <div className="flex-shrink-0 px-6 py-4 border-t border-gray-200">
 //           <div className="flex items-center justify-between">
-//             <div className="text-[1.0625rem] text-gray-700">
+//             <div className="text-sm text-gray-700">
 //               Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
 //             </div>
 //             <div className="flex items-center gap-2">
 //               <button
 //                 onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: pagination.page - 1 }))}
 //                 disabled={pagination.page <= 1}
-//                 className="px-3 py-1 border border-gray-300 rounded text-[1.0625rem] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+//                 className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
 //               >
 //                 Previous
 //               </button>
@@ -349,7 +349,7 @@
 //                 <button
 //                   key={i + 1}
 //                   onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: i + 1 }))}
-//                   className={`px-3 py-1 border rounded text-[1.0625rem] ${
+//                   className={`px-3 py-1 border rounded text-sm ${
 //                     pagination.page === i + 1
 //                       ? 'bg-blue-600 text-white border-blue-600'
 //                       : 'border-gray-300 hover:bg-gray-50'
@@ -361,7 +361,7 @@
 //               <button
 //                 onClick={() => dispatch(fetchReviewsAdmin({ ...filters, page: pagination.page + 1 }))}
 //                 disabled={pagination.page >= pagination.totalPages}
-//                 className="px-3 py-1 border border-gray-300 rounded text-[1.0625rem] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+//                 className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
 //               >
 //                 Next
 //               </button>
@@ -530,16 +530,16 @@ export default function Reviews() {
               </div>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-[1.0625rem] font-medium text-gray-900 truncate">
+              <h3 className="text-sm font-medium text-gray-900 truncate">
                 {review.user?.name || 'Anonymous'}
               </h3>
-              <p className="text-[1.0625rem] text-gray-500 truncate">
+              <p className="text-sm text-gray-500 truncate">
                 {review.user?.email || 'N/A'}
               </p>
             </div>
           </div>
           <div className="flex flex-col items-end gap-1 ml-3">
-            <span className={`inline-flex items-center px-2 py-1 rounded-full text-[1.0625rem] font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+            <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
               {getStatusText(review.isApproved, review.flagged)}
             </span>
           </div>
@@ -547,8 +547,8 @@ export default function Reviews() {
 
         {/* Product & Rating */}
         <div className="mb-3">
-          <p className="text-[1.0625rem] text-gray-500 mb-1">Product</p>
-          <p className="text-[1.0625rem] font-medium text-gray-900 mb-2">
+          <p className="text-sm text-gray-500 mb-1">Product</p>
+          <p className="text-sm font-medium text-gray-900 mb-2">
             {review.productName || review.product?.name || 'Unknown Product'}
           </p>
           <div className="flex items-center gap-2">
@@ -560,21 +560,21 @@ export default function Reviews() {
                 />
               ))}
             </div>
-            <span className="text-[1.0625rem] text-gray-600">({review.rating}/5)</span>
+            <span className="text-sm text-gray-600">({review.rating}/5)</span>
           </div>
         </div>
 
         {/* Review Content */}
         <div className="mb-3">
-          <p className="text-[1.0625rem] text-gray-500 mb-1">Review</p>
-          <p className="text-[1.0625rem] text-gray-900 line-clamp-3">
+          <p className="text-sm text-gray-500 mb-1">Review</p>
+          <p className="text-sm text-gray-900 line-clamp-3">
             {review.body || 'No comment provided'}
           </p>
         </div>
 
         {/* Date */}
         <div className="mb-4">
-          <p className="text-[1.0625rem] text-gray-500">
+          <p className="text-sm text-gray-500">
             {formatDate(review.createdAt)}
           </p>
         </div>
@@ -641,25 +641,25 @@ export default function Reviews() {
       <table className="w-full" style={{ tableLayout: 'fixed' }}>
         <thead className="bg-gray-50 sticky top-0 z-10">
           <tr>
-            <th className="px-3 py-2 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider" style={{ width: '15%' }}>
+            <th className="px-3 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider" style={{ width: '15%' }}>
               Customer
             </th>
-            <th className="px-2 py-2 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider" style={{ width: '15%' }}>
+            <th className="px-2 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider" style={{ width: '15%' }}>
               Product
             </th>
-            <th className="px-2 py-2 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider" style={{ width: '8%' }}>
+            <th className="px-2 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider" style={{ width: '8%' }}>
               Rating
             </th>
-            <th className="px-3 py-2 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider" style={{ width: '30%' }}>
+            <th className="px-3 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider" style={{ width: '30%' }}>
               Review
             </th>
-            <th className="px-2 py-2 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider" style={{ width: '10%' }}>
+            <th className="px-2 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider" style={{ width: '10%' }}>
               Date
             </th>
-            <th className="px-2 py-2 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider" style={{ width: '10%' }}>
+            <th className="px-2 py-2 text-left text-sm font-medium text-gray-500 uppercase tracking-wider" style={{ width: '10%' }}>
               Status
             </th>
-            <th className="px-3 py-2 text-right text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider" style={{ width: '12%' }}>
+            <th className="px-3 py-2 text-right text-sm font-medium text-gray-500 uppercase tracking-wider" style={{ width: '12%' }}>
               Actions
             </th>
           </tr>
@@ -675,17 +675,17 @@ export default function Reviews() {
                     </div>
                   </div>
                   <div className="ml-2 min-w-0 flex-1">
-                    <div className="text-[1.0625rem] font-medium text-gray-900 truncate">
+                    <div className="text-sm font-medium text-gray-900 truncate">
                       {review.user?.name || 'Anonymous'}
                     </div>
-                    <div className="text-[1.0625rem] text-gray-500 truncate">
+                    <div className="text-sm text-gray-500 truncate">
                       {review.user?.email || 'N/A'}
                     </div>
                   </div>
                 </div>
               </td>
               <td className="px-2 py-2">
-                <div className="text-[1.0625rem] text-gray-900 truncate">
+                <div className="text-sm text-gray-900 truncate">
                   {review.productName || review.product?.name || 'Unknown Product'}
                 </div>
               </td>
@@ -697,27 +697,27 @@ export default function Reviews() {
                       className={`w-3 h-3 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`} 
                     />
                   ))}
-                  <span className="ml-1 text-[1.0625rem] text-gray-600">({review.rating})</span>
+                  <span className="ml-1 text-sm text-gray-600">({review.rating})</span>
                 </div>
               </td>
               <td className="px-3 py-2">
                 <div className="min-w-0">
-                  <div className="text-[1.0625rem] text-gray-900 line-clamp-2">
+                  <div className="text-sm text-gray-900 line-clamp-2">
                     {review.body || 'No comment provided'}
                   </div>
                 </div>
               </td>
               <td className="px-2 py-2">
-                <div className="text-[1.0625rem] text-gray-900">
+                <div className="text-sm text-gray-900">
                   {formatDate(review.createdAt)}
                 </div>
               </td>
               <td className="px-2 py-2">
-                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[1.0625rem] font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
                   {getStatusText(review.isApproved, review.flagged)}
                 </span>
               </td>
-              <td className="px-3 py-2 text-right text-[1.0625rem] font-medium">
+              <td className="px-3 py-2 text-right text-sm font-medium">
                 <div className="flex items-center justify-end gap-1">
                   <button
                     onClick={() => {
@@ -792,18 +792,18 @@ export default function Reviews() {
           <div className="p-6 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-[1.0625rem] font-medium text-gray-700 mb-1">Customer</p>
-                <p className="text-[1.0625rem] text-gray-900">{review.user?.name || 'Anonymous'}</p>
-                <p className="text-[1.0625rem] text-gray-500">{review.user?.email || 'N/A'}</p>
+                <p className="text-sm font-medium text-gray-700 mb-1">Customer</p>
+                <p className="text-sm text-gray-900">{review.user?.name || 'Anonymous'}</p>
+                <p className="text-sm text-gray-500">{review.user?.email || 'N/A'}</p>
               </div>
               <div>
-                <p className="text-[1.0625rem] font-medium text-gray-700 mb-1">Product</p>
-                <p className="text-[1.0625rem] text-gray-900">{review.productName || review.product?.name || 'Unknown Product'}</p>
+                <p className="text-sm font-medium text-gray-700 mb-1">Product</p>
+                <p className="text-sm text-gray-900">{review.productName || review.product?.name || 'Unknown Product'}</p>
               </div>
             </div>
             
             <div>
-              <p className="text-[1.0625rem] font-medium text-gray-700 mb-2">Rating</p>
+              <p className="text-sm font-medium text-gray-700 mb-2">Rating</p>
               <div className="flex items-center gap-2">
                 <div className="flex items-center">
                   {[...Array(5)].map((_, i) => (
@@ -813,25 +813,25 @@ export default function Reviews() {
                     />
                   ))}
                 </div>
-                <span className="text-[1.0625rem] text-gray-600">({review.rating}/5)</span>
+                <span className="text-sm text-gray-600">({review.rating}/5)</span>
               </div>
             </div>
             
             <div>
-              <p className="text-[1.0625rem] font-medium text-gray-700 mb-2">Review</p>
-              <p className="text-[1.0625rem] text-gray-900 leading-relaxed">
+              <p className="text-sm font-medium text-gray-700 mb-2">Review</p>
+              <p className="text-sm text-gray-900 leading-relaxed">
                 {review.body || 'No comment provided'}
               </p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-[1.0625rem] font-medium text-gray-700 mb-1">Date</p>
-                <p className="text-[1.0625rem] text-gray-900">{formatDate(review.createdAt)}</p>
+                <p className="text-sm font-medium text-gray-700 mb-1">Date</p>
+                <p className="text-sm text-gray-900">{formatDate(review.createdAt)}</p>
               </div>
               <div>
-                <p className="text-[1.0625rem] font-medium text-gray-700 mb-1">Status</p>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[1.0625rem] font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
+                <p className="text-sm font-medium text-gray-700 mb-1">Status</p>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusColor(review.isApproved, review.flagged)}`}>
                   {getStatusText(review.isApproved, review.flagged)}
                 </span>
               </div>
@@ -856,7 +856,7 @@ export default function Reviews() {
       <div className="h-full flex items-center justify-center p-4">
         <div className="text-center max-w-md mx-auto">
           <p className="text-red-600 font-medium mb-2">Error loading reviews</p>
-          <p className="text-gray-500 text-[1.0625rem] mb-4">{error}</p>
+          <p className="text-gray-500 text-sm mb-4">{error}</p>
           <button 
             onClick={() => dispatch(fetchReviewsAdmin({ page: 1, limit: 20 }))}
             className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
@@ -877,7 +877,7 @@ export default function Reviews() {
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
               Reviews Management
             </h2>
-            <p className="text-[1.0625rem] text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               Moderate and manage customer reviews • {pagination.total || 0} total reviews
             </p>
           </div>
@@ -885,12 +885,12 @@ export default function Reviews() {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4">
-          <p className="text-[1.0625rem] text-gray-600">
+          <p className="text-sm text-gray-600">
             {filteredReviews.length} reviews
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="flex items-center gap-2 px-3 py-2 text-[1.0625rem] border border-gray-300  hover:bg-gray-50 transition-colors"
+            className="flex items-center gap-2 px-3 py-2 text-sm border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -979,7 +979,7 @@ export default function Reviews() {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Search */}
             <div>
-              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Search</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
               <div className="relative">
                 <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -994,7 +994,7 @@ export default function Reviews() {
 
             {/* Mobile Status Filter */}
             <div>
-              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -1009,7 +1009,7 @@ export default function Reviews() {
 
             {/* Mobile Rating Filter */}
             <div>
-              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Rating</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Rating</label>
               <select
                 value={ratingFilter}
                 onChange={(e) => setRatingFilter(e.target.value)}
@@ -1062,7 +1062,7 @@ export default function Reviews() {
             <div className="text-center max-w-md mx-auto">
               <FiMessageSquare className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 font-medium mb-2">No reviews found</p>
-              <p className="text-gray-400 text-[1.0625rem] mb-4">
+              <p className="text-gray-400 text-sm mb-4">
                 {searchTerm || statusFilter || ratingFilter 
                   ? "Try adjusting your filters or search terms"
                   : "Customer reviews will appear here"
@@ -1099,7 +1099,7 @@ export default function Reviews() {
       {pagination.totalPages > 1 && (
         <div className="flex-shrink-0 px-4 sm:px-6 py-4 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-[1.0625rem] text-gray-700 text-center sm:text-left">
+            <div className="text-sm text-gray-700 text-center sm:text-left">
               Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
             </div>
             
@@ -1108,17 +1108,17 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-[1.0625rem]"
+                className="px-3 py-2 text-gray-600 border border-gray-300 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-blue-600 text-white font-medium text-[1.0625rem] min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-blue-600 text-white font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-[1.0625rem]"
+                className="px-3 py-2 text-gray-600 border border-gray-300 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>
@@ -1129,7 +1129,7 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-1 border border-gray-300  text-[1.0625rem] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300  text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Previous
               </button>
@@ -1139,7 +1139,7 @@ export default function Reviews() {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 border  text-[1.0625rem] ${
+                    className={`px-3 py-1 border  text-sm ${
                       pagination.page === pageNum
                         ? 'bg-blue-600 text-white border-blue-600'
                         : 'border-gray-300 hover:bg-gray-50'
@@ -1152,7 +1152,7 @@ export default function Reviews() {
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-1 border border-gray-300  text-[1.0625rem] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300  text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Next
               </button>

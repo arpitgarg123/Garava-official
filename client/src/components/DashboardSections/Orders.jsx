@@ -120,44 +120,44 @@ export default function Orders() {
     const customerEmail = order.user?.email || order.customer?.email || order.shippingAddress?.email || 'No email provided';
     
     return (
-      <div className="bg-white  border border-gray-200 shadow-sm overflow-hidden">
-        <div className="p-4">
+      <div className="bg-white w-full  border border-gray-200 shadow-sm overflow-hidden">
+        <div className="p-4 w-full">
           {/* Mobile Card Header */}
           <div className="flex justify-between items-start mb-3 ">
             <div className="flex-1 ">
-              <h3 className="text-[1.0625rem] font-medium text-gray-900 truncate pl-2">
+              <h3 className="text-sm font-medium text-gray-900 truncate pl-2">
                 #{order.orderNumber}
               </h3>
-              <p className="text-[1.0625rem] text-gray-500 mt-1 pl-2">
+              <p className="text-sm text-gray-500 mt-1 pl-2">
                 {order.items?.length || 0} items • {formatDateTime(order.createdAt)}
               </p>
             </div>
             <div className="flex flex-col items-end gap-1 ">
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-[1.0625rem] font-medium ${getStatusBgColor(order.status)}`}>
+              <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getStatusBgColor(order.status)}`}>
                 {order.status || 'pending'}
               </span>
-              <span className={`inline-flex items-center px-2 py-1 rounded-full text-[1.0625rem] font-medium ${getPaymentBgColor(order.paymentStatus)}`}>
+              <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getPaymentBgColor(order.paymentStatus)}`}>
                 {order.paymentStatus || 'pending'}
               </span>
             </div>
           </div>
 
           {/* Customer Info */}
-          <div className="flex items-center mb-3 ml-3">
+          <div className="flex  w-full items-center mb-3 ml-">
             <div className="h-10 w-10 flex-shrink-0">
               <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center">
                 <BiUser className="w-5 h-5 text-gray-500" />
               </div>
             </div>
             <div className="ml-3 flex-1 min-w-0">
-              <p className="text-[1.0625rem] font-medium text-gray-900 truncate">{customerName}</p>
-              <p className="text-[1.0625rem] text-gray-500 truncate">{customerEmail}</p>
+              <p className="text-sm font-medium text-gray-900 truncate">{customerName}</p>
+              <p className="text-sm text-gray-500 truncate">{customerEmail}</p>
             </div>
           </div>
 
           {/* Amount */}
           <div className="mb-4">
-            <p className="text-[1.0625rem] text-gray-500 mb-1">Total Amount</p>
+            <p className="text-sm text-gray-500 mb-1">Total Amount</p>
             <p className="text-lg font-semibold text-gray-900">
               {formatCurrency(order.grandTotal || 0)}
             </p>
@@ -199,28 +199,28 @@ export default function Orders() {
   // Desktop Table Component
   const DesktopTable = () => (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[1000px]">
+      <table className="w-full ">
         <thead className="bg-gray-50 sticky top-0 z-10">
           <tr>
-            <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Order
             </th>
-            <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Customer
             </th>
-            <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Date
             </th>
-            <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Amount
             </th>
-            <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
-            <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">
               Payment
             </th>
-            <th className="px-6 py-3 text-right text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-right text-sm font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
           </tr>
@@ -230,8 +230,8 @@ export default function Orders() {
             <tr key={order._id} className="hover:bg-gray-50">
               <td className="px-6 py-4 whitespace-nowrap">
                 <div>
-                  <div className="text-[1.0625rem] font-medium text-gray-900">#{order.orderNumber}</div>
-                  <div className="text-[1.0625rem] text-gray-500">{order.items?.length || 0} items</div>
+                  <div className="text-sm font-medium text-gray-900">#{order.orderNumber}</div>
+                  <div className="text-sm text-gray-500">{order.items?.length || 0} items</div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -242,34 +242,34 @@ export default function Orders() {
                     </div>
                   </div>
                   <div className="ml-3">
-                    <div className="text-[1.0625rem] font-medium text-gray-900">
+                    <div className="text-sm font-medium text-gray-900">
                       {order.user?.name || order.customer?.name || order.shippingAddress?.name || 'Guest Customer'}
                     </div>
-                    <div className="text-[1.0625rem] text-gray-500">
+                    <div className="text-sm text-gray-500">
                       {order.user?.email || order.customer?.email || order.shippingAddress?.email || 'No email provided'}
                     </div>
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-[1.0625rem] text-gray-900">{formatDateTime(order.createdAt)}</div>
+                <div className="text-sm text-gray-900">{formatDateTime(order.createdAt)}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-[1.0625rem] font-medium text-gray-900">
+                <div className="text-sm font-medium text-gray-900">
                   {formatCurrency(order.grandTotal || 0)}
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[1.0625rem] font-medium ${getStatusBgColor(order.status)}`}>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getStatusBgColor(order.status)}`}>
                   {order.status || 'pending'}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[1.0625rem] font-medium ${getPaymentBgColor(order.paymentStatus)}`}>
+                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium ${getPaymentBgColor(order.paymentStatus)}`}>
                   {order.paymentStatus || 'pending'}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-right text-[1.0625rem] font-medium">
+              <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div className="flex items-center justify-end gap-2">
                   <button
                     onClick={() => handleViewOrder(order)}
@@ -308,7 +308,7 @@ export default function Orders() {
       <div className="h-full flex items-center justify-center p-4">
         <div className="text-center max-w-md mx-auto">
           <p className="text-red-600 font-medium mb-2">Error loading orders</p>
-          <p className="text-gray-500 text-[1.0625rem] mb-4">{error}</p>
+          <p className="text-gray-500 text-sm mb-4">{error}</p>
           <button 
             onClick={() => dispatch(fetchOrdersAdmin({ ...filters, page: pagination.page }))}
             className="px-4 py-2 bg-blue-600 text-white  hover:bg-blue-700 transition-colors"
@@ -329,7 +329,7 @@ export default function Orders() {
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900 truncate">
               Orders Management
             </h2>
-            <p className="text-[1.0625rem] text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-1">
               {pagination.total || 0} total orders
             </p>
           </div>
@@ -345,12 +345,12 @@ export default function Orders() {
 
         {/* Mobile Filter Toggle */}
         <div className="flex items-center justify-between lg:hidden mb-4">
-          <p className="text-[1.0625rem] text-gray-600">
+          <p className="text-sm text-gray-600">
             {orders.length} orders
           </p>
           <button
             onClick={() => setShowMobileFilters(true)}
-            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-[1.0625rem]  border border-gray-300  hover:bg-gray-50 transition-colors"
+            className="hidden max-md:flex items-center gap-2 px-3 py-2 text-sm  border border-gray-300  hover:bg-gray-50 transition-colors"
           >
             <AiOutlineFilter className="w-4 h-4" />
             Filters
@@ -358,7 +358,7 @@ export default function Orders() {
         </div>
 
         {/* Desktop Filters */}
-        <div className="hidden lg:flex flex-wrap items-center gap-4">
+        <div className="hidden  lg:flex flex-wrap items-center gap-4">
           <div className="flex-1 min-w-64">
             <div className="relative">
               <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -442,7 +442,7 @@ export default function Orders() {
           <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
             {/* Mobile Search */}
             <div>
-              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Search</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
               <div className="relative">
                 <AiOutlineSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
@@ -457,7 +457,7 @@ export default function Orders() {
 
             {/* Mobile Order Status Filter */}
             <div>
-              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Order Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Order Status</label>
               <select
                 value={localFilters.status || ''}
                 onChange={(e) => handleFilterChange({ status: e.target.value })}
@@ -476,7 +476,7 @@ export default function Orders() {
 
             {/* Mobile Payment Status Filter */}
             <div>
-              <label className="block text-[1.0625rem] font-medium text-gray-700 mb-2">Payment Status</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Payment Status</label>
               <select
                 value={localFilters.paymentStatus || ''}
                 onChange={(e) => handleFilterChange({ paymentStatus: e.target.value })}
@@ -515,7 +515,7 @@ export default function Orders() {
       </div>
 
       {/* Orders Content - Responsive */}
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 w-full overflow-hidden ">
         {loading ? (
           <div className="h-full flex items-center justify-center">
             <div className="text-center">
@@ -524,11 +524,11 @@ export default function Orders() {
             </div>
           </div>
         ) : orders.length === 0 ? (
-          <div className="h-full flex items-center justify-center ">
+          <div className="h-full w-full flex items-center justify-center ">
             <div className="text-center max-w-md mx-auto">
               <BiPackage className="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <p className="text-gray-500 font-medium mb-2">No orders found</p>
-              <p className="text-gray-400 text-[1.0625rem] mb-4">
+              <p className="text-gray-400 text-sm mb-4">
                 {Object.values(localFilters).some(val => val) 
                   ? "Try adjusting your filters or search terms"
                   : "Orders will appear here when customers place them"
@@ -565,7 +565,7 @@ export default function Orders() {
       {pagination.totalPages > 1 && (
         <div className="flex-shrink-0 px-4 sm:px-6 py-4 border-t border-gray-200 bg-white">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-[1.0625rem] text-gray-700 text-center sm:text-left">
+            <div className="text-sm text-gray-700 text-center sm:text-left">
               Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
             </div>
             
@@ -574,17 +574,17 @@ export default function Orders() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-[1.0625rem]"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 ← Prev
               </button>
-              <span className="px-3 py-2 bg-black text-white  font-medium text-[1.0625rem] min-w-[40px] text-center">
+              <span className="px-3 py-2 bg-black text-white  font-medium text-sm min-w-[40px] text-center">
                 {pagination.page}
               </span>
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-[1.0625rem]"
+                className="px-3 py-2 text-gray-600 border border-gray-300  hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 Next →
               </button>
@@ -595,7 +595,7 @@ export default function Orders() {
               <button
                 onClick={() => handlePageChange(pagination.page - 1)}
                 disabled={pagination.page <= 1}
-                className="px-3 py-1 border border-gray-300 rounded text-[1.0625rem] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Previous
               </button>
@@ -605,7 +605,7 @@ export default function Orders() {
                   <button
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    className={`px-3 py-1 border rounded text-[1.0625rem] ${
+                    className={`px-3 py-1 border rounded text-sm ${
                       pagination.page === pageNum
                         ? 'bg-black text-white border-black'
                         : 'border-white text-black hover:bg-gray-50'
@@ -618,7 +618,7 @@ export default function Orders() {
               <button
                 onClick={() => handlePageChange(pagination.page + 1)}
                 disabled={pagination.page >= pagination.totalPages}
-                className="px-3 py-1 border border-gray-300 rounded text-[1.0625rem] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+                className="px-3 py-1 border border-gray-300 rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
                 Next
               </button>
