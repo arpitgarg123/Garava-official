@@ -103,10 +103,12 @@ import instagramRouter from "./modules/instagram/instagram.router.js";
       req.rawBody = buf.toString("utf8");
     }
   },
-  limit: "1mb"
+  limit: "10mb"
 }));
 
- app.use(express.urlencoded({ extended: true, verify: (req, res, buf) => { req.rawBody = buf.toString("utf8"); } }));
+ app.use(express.urlencoded({ extended: true,
+  limit : "10mb",
+   verify: (req, res, buf) => { req.rawBody = buf.toString("utf8"); } }));
   app.use(cookieParser());
   
   // Add session configuration for better cookie handling
