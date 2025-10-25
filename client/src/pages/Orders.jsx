@@ -137,8 +137,8 @@ const Orders = () => {
     return (
       <>
 
-      <div className="min-h-screen py-8 mt-2">
-         <div className="sticky top-20 z-10 ">
+      <div className="min-h-screen py-8 mt-30">
+         <div className="sticky top-44 z-10 ">
                 <BackButton />
               </div>
               {/* <PageHeader title={heading} /> */}
@@ -268,7 +268,7 @@ const Orders = () => {
 
 
   return (
-   <div className=" min-h-[60vh] mt-30 max-md:mt-0">
+   <div className=" min-h-[60vh] mt-32 max-md:mt-0">
      <div className="sticky top-44 max-md:top-0 z-10 ">
         <BackButton />
       </div>

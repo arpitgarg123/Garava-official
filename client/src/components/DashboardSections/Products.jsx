@@ -497,7 +497,7 @@ export default function Products() {
                 handleClearFilters();
                 setShowMobileFilters(false);
               }}
-              className="btn"
+              className="btn btn-small"
             >
               Clear All
             </button>
