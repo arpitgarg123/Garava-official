@@ -125,21 +125,7 @@ import instagramRouter from "./modules/instagram/instagram.router.js";
     } else {
       next();
     }
-  }); 
-  app.use((req, res, next) => {
-    // Set security headers for cookies
-    res.header('Access-Control-Allow-Credentials', 'true');
-    
-    // Handle preflight requests
-    if (req.method === 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-      res.sendStatus(200);
-    } else {
-      next();
-    }
-  });
-  
+  });   
   // Initialize Passport
   app.use(passport.initialize());
 
