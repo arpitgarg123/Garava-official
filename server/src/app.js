@@ -48,7 +48,8 @@ import instagramRouter from "./modules/instagram/instagram.router.js";
   // routers
   const app = express();
   const port = env.PORT || 10000;
-
+  
+  app.set('trust proxy', 1);  // Trust first proxy (Nginx)
   app.use(helmet({
     contentSecurityPolicy: {
       directives: {
