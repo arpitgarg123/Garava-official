@@ -262,7 +262,7 @@ const ProductAccordion = ({ product }) => {
           {/* Static Made in India badge */}
           <div className="text-center py-2">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium bg-green-100 text-green-800 border border-green-200">
-              🇮🇳 MADE IN INDIA
+               MADE IN INDIA
             </span>
           </div>
         </div>

@@ -28,6 +28,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const productSlug = slug || searchParams.get('slug');
   
@@ -437,11 +438,28 @@ const ProductDetails = () => {
                   </>
                 )}
               </div>
-              {product?.shortDescription && (
-                <p className="text-gray-700 text-[1.0625rem] my-2 leading-relaxed font-medium">
-                  {product.shortDescription}
-                </p>
-              )}
+              {
+                product?.shortDescription && (
+      <div>
+        <p
+          className={`text-[1.0625rem] my-1 leading-relaxed  
+          ${!isExpanded ? "line-clamp-2" : ""}`}
+        >
+          {product.shortDescription}
+        </p>
+
+        {/* Read More / Less Button */}
+        {product.shortDescription.length > 50 && (
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="text-gray-900 font-semibold text-sm tracking-wide hover:underline"
+          >
+            {isExpanded ? "Read Less" : "Read More"}
+          </button>
+        )}
+      </div>
+    )
+              }
             </div>
 
             {/* Price Display - Different for High Jewellery */}
