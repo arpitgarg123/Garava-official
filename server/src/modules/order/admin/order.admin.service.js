@@ -15,7 +15,20 @@ const convertOrderPricing = (order) => {
   // - Order creation uses calculateOrderPricingRupees() 
   // - Database stores: grandTotal: 13018 (meaning ₹13,018)
   // - Frontend expects: 13018 to display as ₹13,018
-  return { ...order };
+  
+  // Map payment status for frontend compatibility
+  const paymentStatus = order.payment?.status || 'pending';
+  
+  // Use shippingAddressSnapshot if shippingAddress is not populated (just ObjectId)
+  const shippingAddress = (order.shippingAddress && typeof order.shippingAddress === 'object' && order.shippingAddress.fullName) 
+    ? order.shippingAddress 
+    : order.shippingAddressSnapshot;
+  
+  return { 
+    ...order,
+    paymentStatus,
+    shippingAddress
+  };
 };
 
 export const listOrdersAdminService = async ({ page = 1, limit = 20, status, user, paymentStatus, q }) => {
@@ -46,6 +59,7 @@ export const listOrdersAdminService = async ({ page = 1, limit = 20, status, use
     Order.find(filter)
       .populate("user", "name email")
       .populate("items.product", "name slug heroImage")
+      .populate("shippingAddress")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
@@ -71,6 +85,7 @@ export const getOrderByIdAdminService = async (id) => {
   const order = await Order.findById(id)
     .populate("user", "name email")
     .populate("items.product", "name slug heroImage")
+    .populate("shippingAddress")
     .lean();
 
   if (!order) throw new ApiError(404, "Order not found");
