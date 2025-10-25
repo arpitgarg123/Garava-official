@@ -52,12 +52,15 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                 Payment Details
               </h4>
               <div className="space-y-2">
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium border ${getPaymentStatusColor(order.payment?.status)}`}>
-                  {order.payment?.status || 'unpaid'}
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium border ${getPaymentStatusColor(order.paymentStatus || order.payment?.status)}`}>
+                  {order.paymentStatus || order.payment?.status || 'unpaid'}
                 </span>
                 <div className="text-[1.0625rem] text-gray-600">
                   <div>Method: {order.payment?.method || 'N/A'}</div>
-                  {order.payment?.transactionId && (
+                  {order.payment?.gatewayTransactionId && (
+                    <div>Transaction: {order.payment.gatewayTransactionId}</div>
+                  )}
+                  {order.payment?.transactionId && !order.payment?.gatewayTransactionId && (
                     <div>Transaction: {order.payment.transactionId}</div>
                   )}
                 </div>
@@ -90,12 +93,14 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                     Shipping Address
                   </h5>
                   <div className="text-[1.0625rem] space-y-1">
-                    <div>{order.shippingAddress.fullName}</div>
-                    <div>{order.shippingAddress.street}</div>
+                    <div>{order.shippingAddress.fullName || order.shippingAddress.name}</div>
+                    {order.shippingAddress.addressLine1 && <div>{order.shippingAddress.addressLine1}</div>}
+                    {order.shippingAddress.addressLine2 && <div>{order.shippingAddress.addressLine2}</div>}
+                    {order.shippingAddress.street && <div>{order.shippingAddress.street}</div>}
                     <div>
                       {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.postalCode}
                     </div>
-                    <div>{order.shippingAddress.country}</div>
+                    <div>{order.shippingAddress.country || 'India'}</div>
                     {order.shippingAddress.phone && (
                       <div>Phone: {order.shippingAddress.phone}</div>
                     )}

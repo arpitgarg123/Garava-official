@@ -557,12 +557,7 @@ html.has-scroll-dragging {
   top: 100%;
 }
 
-@media (min-width: 1920px) {
-  .submenu-container {
-    top: calc(7vw + 2.3vw + 20px) !important;
-    max-top: 180px;
-  }
-}
+
 
 @media (min-width: 2500px) {
   .submenu-container {
@@ -602,7 +597,13 @@ html.has-scroll-dragging {
 }
 @media (min-width: 1920px) {
   .submenu-container {
-    top: 60% !important; /* Fixed position for ultra-wide */
+    top: 100% !important; /* Fixed position for ultra-wide */
+    /* bottom: 0; */
+  }
+}
+@media (min-width: 1960px) {
+  .submenu-container {
+    top: 95% !important; /* Fixed position for ultra-wide */
     /* bottom: 0; */
   }
 }
