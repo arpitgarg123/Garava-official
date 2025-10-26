@@ -367,7 +367,7 @@ const Dashboard = () => {
 
       {/* Clean Main Content */}
       <main className="lg:ml-64 pt-16">
-        <div className="h-[calc(100vh-4rem)]">
+        <div className="min-h-[calc(100vh-4rem)]">
           {/* Content Header */}
           <div className="bg-white border-b border-gray-200 px-6 py-4">
             <div className="flex items-center justify-between">
@@ -393,11 +393,9 @@ const Dashboard = () => {
           </div>
 
           {/* Content Area */}
-          <div className="h-[calc(100%-5rem)] bg-gray-50">
-            <div className="h-full p-6">
-              <div className="h-full bg-white  border border-gray-200 overflow-hidden">
-                {renderContent()}
-              </div>
+          <div className="bg-gray-50 p-6">
+            <div className="bg-white rounded-lg border border-gray-200">
+              {renderContent()}
             </div>
           </div>
         </div>

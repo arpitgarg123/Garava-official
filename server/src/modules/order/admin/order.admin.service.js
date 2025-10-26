@@ -32,6 +32,10 @@ const convertOrderPricing = (order) => {
 };
 
 export const listOrdersAdminService = async ({ page = 1, limit = 20, status, user, paymentStatus, q }) => {
+  // Parse page and limit to integers
+  const pageNum = parseInt(page) || 1;
+  const limitNum = parseInt(limit) || 20;
+  
   const filter = {};
   
   // Status filter
@@ -53,7 +57,7 @@ export const listOrdersAdminService = async ({ page = 1, limit = 20, status, use
     ];
   }
 
-  const skip = (page - 1) * limit;
+  const skip = (pageNum - 1) * limitNum;
 
   const [orders, total] = await Promise.all([
     Order.find(filter)
@@ -62,7 +66,7 @@ export const listOrdersAdminService = async ({ page = 1, limit = 20, status, use
       .populate("shippingAddress")
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit)
+      .limit(limitNum)
       .lean(),
     Order.countDocuments(filter),
   ]);
@@ -74,9 +78,9 @@ export const listOrdersAdminService = async ({ page = 1, limit = 20, status, use
     orders: convertedOrders,
     pagination: {   
       total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
+      page: pageNum,
+      limit: limitNum,
+      totalPages: Math.ceil(total / limitNum),
     },
   };
 };

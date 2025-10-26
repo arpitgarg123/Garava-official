@@ -66,6 +66,7 @@ function normalizeMultipartBody(raw) {
     "relatedProducts",
     "upsellProducts",
     "collections",
+    "badges",
     "colorVariants",
     "structuredDescription",
     "customizationOptions",
@@ -85,6 +86,20 @@ function normalizeMultipartBody(raw) {
     // parse or leave alone if already object/array
     try {
       result[k] = parseJsonField(result[k], k);
+      
+      // Special handling for array fields to ensure they're clean
+      if (k === "badges" || k === "tags" || k === "collections") {
+        if (Array.isArray(result[k])) {
+          // Filter out any invalid entries (empty strings, nested arrays, etc.)
+          result[k] = result[k].filter(item => 
+            typeof item === 'string' && item.trim() !== ''
+          );
+          // If array is empty after filtering, set to undefined
+          if (result[k].length === 0) {
+            result[k] = undefined;
+          }
+        }
+      }
     } catch (err) {
       // rethrow with field context
       throw new ApiError(400, `Invalid JSON format for ${k}: ${err.message}`);
