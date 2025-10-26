@@ -262,7 +262,7 @@ const ProductAccordion = ({ product }) => {
           {/* Static Made in India badge */}
           <div className="text-center py-2">
             <span className="inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium bg-green-100 text-green-800 border border-green-200">
-              🇮🇳 MADE IN INDIA
+               MADE IN INDIA
             </span>
           </div>
         </div>
@@ -374,7 +374,6 @@ const ProductAccordion = ({ product }) => {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[1.0625rem]">
             <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">💳 Credit Cards</span>
             <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">💳 Debit Cards</span>
-            <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">🌐 Net Banking</span>
             <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">📱 Digital Wallets</span>
             <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">🚚 Cash on Delivery</span>
             <span className="inline-flex items-center px-2 py-1  bg-gray-100 text-gray-700">🌍 International Cards</span>

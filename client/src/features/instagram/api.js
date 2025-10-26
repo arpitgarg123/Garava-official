@@ -1,10 +1,10 @@
-import  http  from '../../shared/api/http.js';
+import { authHttp } from '../../shared/api/http.js';
 
 const API_BASE = '/instagram';
 
 // Public API calls
 export const getFeaturedPostsApi = async (limit = 4) => {
-  return http.get(`${API_BASE}/featured?limit=${limit}`);
+  return authHttp.get(`${API_BASE}/featured?limit=${limit}`);
 };
 
 // Admin API calls
@@ -18,7 +18,7 @@ export const getAllPostsApi = async (params = {}) => {
   const url = queryParams ? `${API_BASE}?${queryParams}` : API_BASE;
   
   try {
-    const response = await http.get(url);
+    const response = await authHttp.get(url);
     return response;
   } catch (error) {
     console.error('getAllPostsApi error:', error);
@@ -33,7 +33,7 @@ export const createPostApi = async (postData) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  return http.post(API_BASE, postData, config);
+  return authHttp.post(API_BASE, postData, config);
 };
 
 export const updatePostApi = async (id, postData) => {
@@ -43,13 +43,13 @@ export const updatePostApi = async (id, postData) => {
       'Content-Type': 'multipart/form-data',
     },
   };
-  return http.put(`${API_BASE}/${id}`, postData, config);
+  return authHttp.put(`${API_BASE}/${id}`, postData, config);
 };
 
 export const deletePostApi = async (id) => {
-  return http.delete(`${API_BASE}/${id}`);
+  return authHttp.delete(`${API_BASE}/${id}`);
 };
 
 export const togglePostStatusApi = async (id) => {
-  return http.patch(`${API_BASE}/${id}/toggle`);
+  return authHttp.patch(`${API_BASE}/${id}/toggle`);
 };

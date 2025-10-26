@@ -64,8 +64,8 @@ export default function Products() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   
   useEffect(() => {
-    dispatch(fetchProductsAdmin({ ...filters, page: pagination.page }));
-  }, [dispatch, filters, pagination.page]);
+    dispatch(fetchProductsAdmin(filters));
+  }, [dispatch, filters]);
   
   useEffect(() => {
     setLocalFilters(filters);
@@ -497,7 +497,7 @@ export default function Products() {
                 handleClearFilters();
                 setShowMobileFilters(false);
               }}
-              className="btn"
+              className="btn btn-small"
             >
               Clear All
             </button>

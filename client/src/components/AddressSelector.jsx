@@ -239,7 +239,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
         </h2>
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="text-blue-600 hover:text-blue-700 text-[1.0625rem] font-medium"
+          className=" text-[1.0625rem] font-medium"
         >
           {showAddForm ? 'Cancel' : '+ Add New Address'}
         </button>
@@ -251,11 +251,11 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
           {addresses.map((address) => (
             <div
               key={address._id}
-              className={`block p-4 border  transition-colors ${
+              className={`block p-4 border border-gray-300  transition-colors ${
                 showAsManagement 
                   ? 'border-gray-200 hover:border-gray-300'
                   : selectedAddressId === address._id
-                    ? 'border-gray-400 bg-gray-50 cursor-pointer'
+                    ? 'border-gray-300 bg-gray-50 cursor-pointer'
                     : 'border-gray-200 hover:border-gray-300 cursor-pointer'
               }`}
               onClick={!showAsManagement ? () => handleAddressSelect(address._id) : undefined}
@@ -276,7 +276,7 @@ const AddressSelector = React.memo(({ selectedAddressId, onAddressSelect, onAddr
                     <span className="font-medium">{address.fullName}</span>
                     <span className="text-[1.0625rem] text-gray-600">({address.phone})</span>
                     {address.isDefault && (
-                      <span className="px-2 py-1 bg-green-100 text-green-800 text-[1.0625rem] ">
+                      <span className="px-2 py-1 rounded-md bg-green-100 text-green-800 text-[1.0625rem] ">
                         Default
                       </span>
                     )}

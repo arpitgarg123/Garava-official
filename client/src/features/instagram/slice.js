@@ -113,7 +113,9 @@ const initialState = {
   filters: {
     search: '',
     isActive: undefined,
-    isFeatured: undefined
+    isFeatured: undefined,
+    page: 1,
+    limit: 10
   }
 };
 

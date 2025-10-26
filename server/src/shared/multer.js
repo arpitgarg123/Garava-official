@@ -10,7 +10,7 @@ export const uploadMiddleware = multer({
   limits: {
     fileSize: 5 * MB, 
     files: 10,
-    fieldSize: 2 * MB,  // Increase field value size limit (default is too small for large JSON strings)
+    fieldSize: 10 * MB,  // Increase field value size limit for large JSON strings (variants, gallery, etc.)
     fields: 100,        // Allow many fields for complex product data
   },
   fileFilter: (req, file, cb) => {

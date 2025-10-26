@@ -17,7 +17,7 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
         <div className="flex justify-between items-center mb-6">
           <div>
             <h3 className="text-3xl font-bold text-gray-900">Order Details</h3>
-            <p className="text-[1.0625rem] text-gray-500 mt-1">Order #{order.orderNumber}</p>
+            <p className="text-sm text-gray-500 mt-1">Order #{order.orderNumber}</p>
           </div>
           <button
             onClick={onClose}
@@ -35,10 +35,10 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                 <MdLocalShipping className="h-5 w-5 mr-2" />
                 Order Status
               </h4>
-              <span className={`inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium border ${getOrderStatusColor(order.status)}`}>
+              <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getOrderStatusColor(order.status)}`}>
                 {order.status.replace('_', ' ')}
               </span>
-              <div className="mt-3 text-[1.0625rem] text-gray-600">
+              <div className="mt-3 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
                   <BiCalendar className="h-4 w-4" />
                   <span>Ordered: {formattedOrder.formattedDate} at {formattedOrder.formattedTime}</span>
@@ -52,10 +52,10 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                 Payment Details
               </h4>
               <div className="space-y-2">
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-[1.0625rem] font-medium border ${getPaymentStatusColor(order.paymentStatus || order.payment?.status)}`}>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getPaymentStatusColor(order.paymentStatus || order.payment?.status)}`}>
                   {order.paymentStatus || order.payment?.status || 'unpaid'}
                 </span>
-                <div className="text-[1.0625rem] text-gray-600">
+                <div className="text-sm text-gray-600">
                   <div>Method: {order.payment?.method || 'N/A'}</div>
                   {order.payment?.gatewayTransactionId && (
                     <div>Transaction: {order.payment.gatewayTransactionId}</div>
@@ -77,7 +77,7 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <h5 className="font-medium text-gray-700 mb-2">Contact Details</h5>
-                <div className="space-y-1 text-[1.0625rem]">
+                <div className="space-y-1 text-sm">
                   <div><strong>Name:</strong> {formattedOrder.customerName}</div>
                   <div><strong>Email:</strong> {formattedOrder.customerEmail}</div>
                   {order.userSnapshot?.phone && (
@@ -92,7 +92,7 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                     <BiMapPin className="h-4 w-4 mr-1" />
                     Shipping Address
                   </h5>
-                  <div className="text-[1.0625rem] space-y-1">
+                  <div className="text-sm space-y-1">
                     <div>{order.shippingAddress.fullName || order.shippingAddress.name}</div>
                     {order.shippingAddress.addressLine1 && <div>{order.shippingAddress.addressLine1}</div>}
                     {order.shippingAddress.addressLine2 && <div>{order.shippingAddress.addressLine2}</div>}
@@ -116,15 +116,15 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
               <BiPackage className="h-5 w-5 mr-2" />
               Order Items ({formattedOrder.itemsCount} item{formattedOrder.itemsCount !== 1 ? 's' : ''})
             </h4>
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden max-md:overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                    <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">Variant</th>
-                    <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                    <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">Qty</th>
-                    <th className="px-6 py-3 text-left text-[1.0625rem] font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Variant</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Qty</th>
+                    <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider">Total</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -140,26 +140,26 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                             />
                           )}
                           <div>
-                            <div className="text-[1.0625rem] font-medium text-gray-900">
+                            <div className="text-sm font-medium text-gray-900">
                               {item.productSnapshot?.name || 'Unknown Product'}
                             </div>
-                            <div className="text-[1.0625rem] text-gray-500">
+                            <div className="text-sm text-gray-500">
                               SKU: {item.productSnapshot?.sku || 'N/A'}
                             </div>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-[1.0625rem] text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {item.variantSnapshot ? (
                           <div>
                             {item.variantSnapshot.sizeLabel && (
                               <div className="font-medium">{item.variantSnapshot.sizeLabel}</div>
                             )}
                             {item.variantSnapshot.color && (
-                              <div className="text-[1.0625rem] text-gray-500">{item.variantSnapshot.color}</div>
+                              <div className="text-sm text-gray-500">{item.variantSnapshot.color}</div>
                             )}
                             {item.variantSnapshot.sku && (
-                              <div className="text-[1.0625rem] text-gray-400">SKU: {item.variantSnapshot.sku}</div>
+                              <div className="text-sm text-gray-400">SKU: {item.variantSnapshot.sku}</div>
                             )}
                             {!item.variantSnapshot.sizeLabel && !item.variantSnapshot.color && !item.variantSnapshot.sku && (
                               <span className="text-gray-500">Standard</span>
@@ -171,13 +171,13 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
                           <span className="text-gray-500">No variant info</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-[1.0625rem] text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {formatCurrency(item.unitPrice || item.priceAtTime || 0)}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-[1.0625rem] text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {item.quantity || 0}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-[1.0625rem] font-medium text-gray-900">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                         {formatCurrency((item.unitPrice || item.priceAtTime || 0) * (item.quantity || 0))}
                       </td>
                     </tr>
@@ -194,7 +194,7 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
               Price Breakdown
             </h4>
             <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="space-y-2 text-[1.0625rem]">
+              <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span>Subtotal:</span>
                                     <span>{formatCurrency(order.subtotal || 0)}</span>
@@ -238,7 +238,7 @@ export default function OrderDetailsModal({ isOpen, onClose, order }) {
             <div className="mb-6">
               <h4 className="font-semibold text-gray-900 mb-2">Order Notes</h4>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-[1.0625rem] text-gray-700">{order.notes}</p>
+                <p className="text-sm text-gray-700">{order.notes}</p>
               </div>
             </div>
           )}

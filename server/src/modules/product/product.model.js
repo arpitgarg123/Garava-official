@@ -126,7 +126,10 @@ const productSchema = new mongoose.Schema(
     gstIncluded: { type: Boolean, default: true },
 
     // promotions & UI
-    badges: [{ type: String }], // e.g., ["Exclusive", "New", "Limited"]
+    badges: [{ 
+      type: String,
+      enum: ["New", "Exclusive", "Limited Edition", "Best Seller", "Trending", "Sale"]
+    }], // Predefined badge options
     isFeatured: { type: Boolean, default: false },
     status: { type: String, enum: ["draft", "published", "archived"], default: "draft" },
     isActive: { type: Boolean, default: true },
