@@ -15,11 +15,20 @@ export const uploadMiddleware = multer({
   },
   fileFilter: (req, file, cb) => {
     // accept images only
-    const allowed = ["image/jpeg", "image/png", "image/webp"];
-    if (allowed.includes(file.mimetype)) {
+    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/heic", "image/heif"];
+    const allowedExtensions = [".jpg", ".jpeg", ".png", ".webp", ".heic", ".heif"];
+    
+    // Check mimetype or file extension (some systems don't detect HEIC mimetype correctly)
+    const hasValidMimetype = allowed.includes(file.mimetype);
+    const hasValidExtension = allowedExtensions.some(ext => 
+      file.originalname.toLowerCase().endsWith(ext)
+    );
+    
+    if (hasValidMimetype || hasValidExtension) {
       cb(null, true);
     } else {
-      cb(new Error("Only jpg, png and webp images are allowed"));
+      console.error(`❌ File rejected - Mimetype: ${file.mimetype}, Original name: ${file.originalname}`);
+      cb(new Error(`Only jpg, png, webp, and heic images are allowed. Received: ${file.mimetype}`));
     }
   },
 });

@@ -139,7 +139,7 @@ export const createPost = async (req, res) => {
     if (typeof postData.isFeatured === 'string') {
       postData.isFeatured = postData.isFeatured === 'true';
     }
-    if (postData.sortOrder) {
+    if (postData.sortOrder !== undefined && postData.sortOrder !== null) {
       postData.sortOrder = parseInt(postData.sortOrder) || 0;
     }
 
@@ -207,7 +207,7 @@ export const updatePost = async (req, res) => {
     if (typeof updateData.isFeatured === 'string') {
       updateData.isFeatured = updateData.isFeatured === 'true';
     }
-    if (updateData.sortOrder) {
+    if (updateData.sortOrder !== undefined && updateData.sortOrder !== null) {
       updateData.sortOrder = parseInt(updateData.sortOrder) || 0;
     }
 
