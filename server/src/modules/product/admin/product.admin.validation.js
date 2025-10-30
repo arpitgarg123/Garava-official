@@ -1,6 +1,9 @@
 // src/modules/admin/product/product.admin.validation.js
 import { z } from "zod";
 
+// Predefined badge options (must match Product model enum)
+const BADGE_OPTIONS = ["New", "Exclusive", "Limited Edition", "Best Seller", "Trending", "Sale"];
+
 export const variantSchema = z.object({
   sku: z.string().min(1),
   sizeLabel: z.string().min(1),
@@ -28,7 +31,7 @@ export const createProductSchema = z.object({
   heroImage: z.string().url().optional(),
   gallery: z.array(z.string().url()).optional(),
   gstIncluded: z.boolean().optional(),
-  badges: z.array(z.string()).optional(),
+  badges: z.array(z.enum(["New", "Exclusive", "Limited Edition", "Best Seller", "Trending", "Sale"])).optional(),
   isFeatured: z.boolean().optional(),
   status: z.enum(["draft","published","archived"]).optional(),
   isActive: z.boolean().optional(),

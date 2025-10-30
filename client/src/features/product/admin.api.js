@@ -131,6 +131,16 @@ export const prepareProductFormData = (productData) => {
   Object.keys(otherData).forEach(key => {
     const value = otherData[key];
     if (value !== undefined && value !== null) {
+      // Special handling for array fields to prevent stringification loops
+      if (key === 'badges' || key === 'tags' || key === 'collections') {
+        if (Array.isArray(value)) {
+          // Filter to ensure only valid strings
+          const cleanArray = value.filter(item => typeof item === 'string' && item.trim() !== '');
+          formData.append(key, JSON.stringify(cleanArray));
+        }
+        return;
+      }
+      
       if (typeof value === 'object') {
         formData.append(key, JSON.stringify(value));
       } else {

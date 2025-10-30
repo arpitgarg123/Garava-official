@@ -49,19 +49,10 @@ const InstagramAdmin = () => {
 
   useEffect(() => {
     loadPosts();
-  }, []);
-
-  useEffect(() => {
-    loadPosts();
-  }, [filters, pagination.page]);
+  }, [filters]);
 
   const loadPosts = () => {
-    const params = {
-      page: pagination.page,
-      limit: pagination.limit,
-      ...filters
-    };
-    dispatch(fetchInstagramPostsAdmin(params));
+    dispatch(fetchInstagramPostsAdmin(filters));
   };
 
   const handleSearch = () => {
@@ -440,7 +431,7 @@ const InstagramAdmin = () => {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="  max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
               <h2 className="text-xl font-bold mb-4">
                 {editingPost ? 'Edit Instagram Post' : 'Add New Instagram Post'}
@@ -455,7 +446,7 @@ const InstagramAdmin = () => {
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300  outline-none "
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   />
                 </div>
@@ -469,7 +460,7 @@ const InstagramAdmin = () => {
                       type="file"
                       accept="image/*"
                       onChange={handleImageFileChange}
-                      className="w-full px-3 py-2 border border-gray-300  outline-none "
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       required={!editingPost}
                     />
 
@@ -495,7 +486,7 @@ const InstagramAdmin = () => {
                     type="text"
                     value={formData.imageAlt}
                     onChange={(e) => setFormData({ ...formData, imageAlt: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300  outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Describe the image for accessibility"
                   />
                 </div>
@@ -509,7 +500,7 @@ const InstagramAdmin = () => {
                     value={formData.instagramUrl}
                     onChange={(e) => setFormData({ ...formData, instagramUrl: e.target.value })}
                     placeholder="https://www.instagram.com/p/ABC123/ or instagram.com/username"
-                    className="w-full px-3 py-2 border border-gray-300  outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     required
                   />
                   <p className="text-[1.0625rem] text-gray-500 mt-1">
@@ -525,7 +516,7 @@ const InstagramAdmin = () => {
                     type="number"
                     value={formData.sortOrder}
                     onChange={(e) => setFormData({ ...formData, sortOrder: parseInt(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 border border-gray-300  outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
 

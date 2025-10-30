@@ -24,21 +24,13 @@ const Instagram = ({
     dispatch(fetchFeaturedPosts(4))
   }, [dispatch])
 
-  // Use dynamic posts or fallback to default images
-  const displayImages = featuredPosts.length > 0 
-    ? featuredPosts.map(post => post.image.url)
-    : []
-
-  // Ensure we always have 4 images
-  const imgs = [...displayImages].slice(0, 4)
-  // while (imgs.length < 4) {
-  //   imgs.push(defaultImages[imgs.length] || "/assets/placeholder-1x1.png")
-  // }
+  // Only show real posts, don't fill with dummy images
+  const displayPosts = featuredPosts.length > 0 ? featuredPosts : []
 
   // Handle image click to navigate to Instagram URL
   const handleImageClick = (index) => {
-    if (featuredPosts[index]?.instagramUrl) {
-      window.open(featuredPosts[index].instagramUrl, '_blank', 'noopener,noreferrer')
+    if (displayPosts[index]?.instagramUrl) {
+      window.open(displayPosts[index].instagramUrl, '_blank', 'noopener,noreferrer')
     } else {
       // Default Instagram URL if no specific post URL
       window.open("https://www.instagram.com/garavaofficial?igsh=MTE2MWZrMzU1aGMx", '_blank', 'noopener,noreferrer')
@@ -77,58 +69,80 @@ const Instagram = ({
           </a>
         </div>
 
-        <div className="w-[95%] h-full flex  items-center justify-center">
-         <div className='flex flex-col items-end justify-end h-full w-[50%] '>
-          <div 
-            className="h-[40%] w-[13vw] self-end cursor-pointer transform transition-transform hover:scale-105"
-            onClick={() => handleImageClick(0)}
-          >
-            <img 
-              src={imgs[0]} 
-              alt={featuredPosts[0]?.image.alt || featuredPosts[0]?.title || "Instagram 1"} 
-              loading="lazy" 
-              className="w-full h-full object-cover" 
-            />
-          </div>
+        {/* Dynamic Instagram grid - shows only real posts */}
+        {displayPosts.length > 0 && (
+          <div className="w-[95%] h-full flex items-center justify-center">
+            <div className='flex flex-col items-end justify-end h-full w-[50%]'>
+              {displayPosts[0] && (
+                <div 
+                  className="h-[40%] w-[13vw] self-end cursor-pointer transform transition-transform hover:scale-105"
+                  onClick={() => handleImageClick(0)}
+                >
+                  <img 
+                    src={displayPosts[0].image.url} 
+                    alt={displayPosts[0].image.alt || displayPosts[0].title} 
+                    loading="lazy" 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+              )}
 
-          <div 
-            className={`h-[70%] w-[16vw] self-end cursor-pointer transform transition-transform hover:scale-105`}
-            onClick={() => handleImageClick(1)}
-          >
-            <img 
-              src={imgs[1]} 
-              alt={featuredPosts[1]?.image.alt || featuredPosts[1]?.title || "Instagram 2"} 
-              loading="lazy" 
-              className="w-full h-full object-cover" 
-            />
-          </div>
-        </div>
-        <div className='flex flex-col items-end justify-end h-full w-[50%]'>
-          <div 
-            className="h-[70%] w-[16vw] self-start cursor-pointer transform transition-transform hover:scale-105"
-            onClick={() => handleImageClick(2)}
-          >
-            <img 
-              src={imgs[2]} 
-              alt={featuredPosts[2]?.image.alt || featuredPosts[2]?.title || "Instagram 3"} 
-              loading="lazy" 
-              className="w-full h-full object-cover" 
-            />
-          </div>
+              {displayPosts[1] && (
+                <div 
+                  className="h-[70%] w-[16vw] self-end cursor-pointer transform transition-transform hover:scale-105"
+                  onClick={() => handleImageClick(1)}
+                >
+                  <img 
+                    src={displayPosts[1].image.url} 
+                    alt={displayPosts[1].image.alt || displayPosts[1].title} 
+                    loading="lazy" 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+              )}
+            </div>
+            
+            <div className='flex flex-col items-end justify-end h-full w-[50%]'>
+              {displayPosts[2] && (
+                <div 
+                  className="h-[70%] w-[16vw] self-start cursor-pointer transform transition-transform hover:scale-105"
+                  onClick={() => handleImageClick(2)}
+                >
+                  <img 
+                    src={displayPosts[2].image.url} 
+                    alt={displayPosts[2].image.alt || displayPosts[2].title} 
+                    loading="lazy" 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+              )}
 
-          <div 
-            className="h-[40%] w-[13vw] self-start cursor-pointer transform transition-transform hover:scale-105"
-            onClick={() => handleImageClick(3)}
-          >
-            <img 
-              src={imgs[3]} 
-              alt={featuredPosts[3]?.image.alt || featuredPosts[3]?.title || "Instagram 4"} 
-              loading="lazy" 
-              className="w-full h-full object-cover" 
-            />
+              {displayPosts[3] && (
+                <div 
+                  className="h-[40%] w-[13vw] self-start cursor-pointer transform transition-transform hover:scale-105"
+                  onClick={() => handleImageClick(3)}
+                >
+                  <img 
+                    src={displayPosts[3].image.url} 
+                    alt={displayPosts[3].image.alt || displayPosts[3].title} 
+                    loading="lazy" 
+                    className="w-full h-full object-cover" 
+                  />
+                </div>
+              )}
+            </div>
           </div>
+        )}
+
+        {/* Show message if no posts available */}
+        {displayPosts.length === 0 && !loading && (
+          <div className="w-[95%] h-full flex items-center justify-center">
+            <div className="text-center py-20">
+              <p className="text-gray-600 text-lg">No Instagram posts available yet.</p>
+              <p className="text-gray-500 text-sm mt-2">Check back soon for our latest updates!</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   )

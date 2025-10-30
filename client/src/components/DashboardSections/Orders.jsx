@@ -67,8 +67,8 @@ export default function Orders() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   
   useEffect(() => {
-    dispatch(fetchOrdersAdmin({ ...filters, page: pagination.page }));
-  }, [dispatch, filters, pagination.page]);
+    dispatch(fetchOrdersAdmin(filters));
+  }, [dispatch, filters]);
   
   useEffect(() => {
     setLocalFilters(filters);
