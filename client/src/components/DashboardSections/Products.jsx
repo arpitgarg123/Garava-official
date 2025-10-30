@@ -134,10 +134,10 @@ export default function Products() {
             <div className="h-14 w-14 flex-shrink-0">
               <img 
                 className="h-14 w-14 rounded object-cover" 
-                src={product.heroImage?.url || '/placeholder.jpg'} 
+                src={product.heroImage?.url || '/placeholder.webp'} 
                 alt={product.name}
                 onError={(e) => {
-                  e.target.src = '/placeholder.jpg';
+                  e.target.src = '/placeholder.webp';
                 }}
               />
             </div>
@@ -243,10 +243,10 @@ export default function Products() {
                     <div className="h-10 w-10 flex-shrink-0">
                       <img 
                         className="h-10 w-10 rounded object-cover" 
-                        src={product.heroImage?.url || '/placeholder.jpg'} 
+                        src={product.heroImage?.url || '/placeholder.webp'} 
                         alt={product.name}
                         onError={(e) => {
-                          e.target.src = '/placeholder.jpg';
+                          e.target.src = '/placeholder.webp';
                         }}
                       />
                     </div>

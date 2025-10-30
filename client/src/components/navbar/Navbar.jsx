@@ -15,17 +15,17 @@ import lightLogo from '../../assets/images/light-logo.png';
 import darkLogo from '../../assets/images/logo-main.png';
 
 // Jewellery images
-import jewellry1 from '../../assets/images/earring.jpg';
-import jewellry2 from '../../assets/images/jewellry2.jpg';
-import jewellry from '../../assets/images/jewellry1.jpg';
-import jewellry3 from '../../assets/images/pendent.jpg';
+import jewellry1 from '../../assets/images/earring.webp';
+import jewellry2 from '../../assets/images/jewellry2.webp';
+import jewellry from '../../assets/images/jewellry1.webp';
+import jewellry3 from '../../assets/images/pendent.webp';
 import jewellry4 from '../../assets/images/jewellry4.png';
 
 // Fragrance images
 import silaImg from '../../assets/images/sila.webp';
 import evaraImg from '../../assets/images/evara.webp';
 import mangataImg from '../../assets/images/mangata.webp';
-import wayfarerImg from '../../assets/images/wayfarer.jpg';
+import wayfarerImg from '../../assets/images/wayfarer.webp';
 
 import { selectIsAuthenticated, selectUser, selectIsAdmin } from '../../features/auth/selectors.js';
 import { doLogout } from '../../features/auth/slice.js';
@@ -117,7 +117,7 @@ const navItems = [
       },
       { 
         label: 'GARAVA', 
-        img: '/images/blog-garava.jpg', 
+        img: '/images/blog-garava.webp', 
         to: '/blogs?category=garava',
         category: 'garava'
       },
@@ -125,8 +125,8 @@ const navItems = [
     ]
   },
   { title: 'News & Events', to: '/events', submenu: [
-     { label: 'Media Coverage', img: '/images/for-her.jpg', to: '/media' },
-     { label: 'Events', img: '/images/for-him.jpg', to: '/events' },
+     { label: 'Media Coverage', img: '/images/for-her.webp', to: '/media' },
+     { label: 'Events', img: '/images/for-him.webp', to: '/events' },
   ]},
 ];
 

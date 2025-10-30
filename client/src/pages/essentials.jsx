@@ -1,6 +1,6 @@
 import Card from "../components/essentials/Card";
-import jewelleryImg from "../assets/images/display-banner.jpg";
-import fragranceImg from "../assets/images/essential-f.jpg";
+import jewelleryImg from "../assets/images/display-banner.webp";
+import fragranceImg from "../assets/images/essential-f.webp";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -93,9 +93,9 @@ const Essentials = () => {
         </div>
 
         {/* Cards Container - Responsive Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2  items-center justify-center mx-auto gap-6 sm:gap-2 lg:gap-10 xl:gap-10">
           {essentialItems.map((item, index) => (
-            <div key={item.id} className="w-full">
+            <div key={item.id} className="w-full flex items-center justify-center">
               <Card
                 ref={(el) => setCardRef(el, index)}
                 title={item.title}

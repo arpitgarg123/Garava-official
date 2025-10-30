@@ -19,7 +19,7 @@ export const uploadMiddleware = multer({
     if (allowed.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error("Only jpg, png and webp images are allowed"));
+      cb(new Error("Only webp, png and webp images are allowed"));
     }
   },
 });

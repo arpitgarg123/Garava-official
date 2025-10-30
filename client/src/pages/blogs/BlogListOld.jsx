@@ -1,6 +1,6 @@
 import BlogCard from "../../components/blogs/BlogCard";
-import blogImage from '../../assets/images/insta2.jpg'
-import blogImage1 from '../../assets/images/insta3.jpg'
+import blogImage from '../../assets/images/insta2.webp'
+import blogImage1 from '../../assets/images/insta3.webp'
 import PageHeader from "../../components/header/PageHeader";
 import BackButton from "../../components/BackButton";
 

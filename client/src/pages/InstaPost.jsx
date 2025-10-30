@@ -8,11 +8,7 @@ import {
   selectFeaturedError 
 } from '../features/instagram/slice.js'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-// Default fallback images
-import insta1 from '../assets/images/insta.jpg'
-import insta2 from '../assets/images/insta1.jpg'
-import insta3 from '../assets/images/insta2.jpg'
-import insta4 from '../assets/images/insta3.jpg'
+
 
 
 const InstaPost = () => {
@@ -22,13 +18,6 @@ const InstaPost = () => {
   const loading = useSelector(selectFeaturedLoading)
   const error = useSelector(selectFeaturedError)
 
-  // Default fallback data
-  const defaultProducts = [
-    { id: 1, img: insta1 },
-    { id: 2, img: insta2 },
-    { id: 3, img: insta3 },
-    { id: 4, img: insta4 },
-  ]
 
   useEffect(() => {
     dispatch(fetchFeaturedPosts(4))
@@ -42,7 +31,7 @@ const InstaPost = () => {
         title: post.title,
         instagramUrl: post.instagramUrl
       }))
-    : defaultProducts
+    : []
 
   // Handle click to open Instagram URL
   const handlePostClick = (product) => {

@@ -231,7 +231,7 @@ const Cart = () => {
               {cartItems.map((item, index) => {
                 // Handle image URL for both authenticated and guest users
                 // Backend structure: heroImage: {url, fileId}, gallery: [{url, fileId}]
-                let imageUrl = '/placeholder.jpg';
+                let imageUrl = '/placeholder.webp';
                 
                 // For authenticated users (backend structure)
                 if (item.heroImage?.url) {

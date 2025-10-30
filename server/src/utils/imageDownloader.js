@@ -38,7 +38,7 @@ class ImageDownloader {
   generateFilename(imageUrl, productSku, index = 0) {
     try {
       const urlObj = new URL(imageUrl);
-      const originalExtension = path.extname(urlObj.pathname) || '.jpg';
+      const originalExtension = path.extname(urlObj.pathname) || '.webp';
       const hash = crypto.createHash('md5').update(imageUrl).digest('hex').substring(0, 8);
       const sanitizedSku = productSku.replace(/[^a-zA-Z0-9]/g, '_');
       
@@ -46,7 +46,7 @@ class ImageDownloader {
     } catch (error) {
       // Fallback filename
       const hash = crypto.createHash('md5').update(imageUrl).digest('hex').substring(0, 8);
-      return `image_${hash}.jpg`;
+      return `image_${hash}.webp`;
     }
   }
 

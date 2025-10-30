@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Products/Card'
 import hj1 from "../assets/images/jewellry4.png";
-import hj2 from "../assets/images/j-front.jpg";
-import hj3 from "../assets/images/j-back.jpg";
-import hj4 from "../assets/images/j.jpg";
+import hj2 from "../assets/images/j-front.webp";
+import hj3 from "../assets/images/j-back.webp";
+import hj4 from "../assets/images/j.webp";
 import { Link } from 'react-router-dom';
 import PageHeader from '../components/header/PageHeader';
 import { useDispatch, useSelector } from 'react-redux';

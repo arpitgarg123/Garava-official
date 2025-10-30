@@ -1,9 +1,9 @@
 import React from 'react'
 import PageHeader from '../components/header/PageHeader'
-import insta1 from '../assets/images/insta.jpg'
-import insta2 from '../assets/images/insta1.jpg'
-import insta3 from '../assets/images/insta2.jpg'
-import insta4 from '../assets/images/insta3.jpg'
+import insta1 from '../assets/images/insta.webp'
+import insta2 from '../assets/images/insta1.webp'
+import insta3 from '../assets/images/insta2.webp'
+import insta4 from '../assets/images/insta3.webp'
 import Card from '../components/Products/Card'
 import { Link } from 'react-router-dom'
 
