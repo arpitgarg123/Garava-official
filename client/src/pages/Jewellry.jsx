@@ -10,7 +10,6 @@ const Jewellry = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const scrollRef = useRef(null);
-
   useEffect(() => {
     const fetchJewelleryProducts = async () => {
       try {

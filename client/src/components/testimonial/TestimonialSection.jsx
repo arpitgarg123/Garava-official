@@ -367,7 +367,7 @@ const TestimonialSection = () => {
         }
       `}</style>
       <div className='w-full text-center mt-7'>
-      <a href='https://share.google/UbXg5fl22O68sTacY'
+      <a href='https://www.google.com/search?sca_esv=08a87188ee7c8cf0&hl=en-GB&authuser=0&sxsrf=AE3TifPTvkkY8nIxqkftWecAo6isZu9WjQ:1762323505416&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-ExUBMOKMUCA6eMaLKOXQYBcCQ3QpB55QUay1eFpB2avIW91Rtm_VOvnr-fEo2bjisuZ2LdzbytmGE-rhiYJc1-h6zGMA&q=GARAVA+Reviews&sa=X&ved=2ahUKEwio75PUrtqQAxWK2gIHHTaJHFUQ0bkNegQIIBAD&biw=1920&bih=912&dpr=1'
        className='btn max-md:btn.btn-small'>Leave a Review
               
 
