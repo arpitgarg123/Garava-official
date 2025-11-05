@@ -159,7 +159,7 @@ const Explore = ({ currentProduct }) => {
           <div className="flex gap-[17px] min-w-max">
             {randomProducts.filter(product => product && product._id).map((product, index) => {
               // Skip products with missing critical data
-              if (!product || !product.slug) return null;
+              if (!product) return null;
               
               // Get the first available image using the correct structure
               const productImage = product.heroImage?.url || 

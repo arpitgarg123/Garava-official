@@ -32,7 +32,7 @@ const Jewellry = () => {
         if (apiProducts && apiProducts.length > 0) {
           // Transform backend data to match UI expectations
           const transformedProducts = apiProducts
-            .filter(product => product && product._id && product.slug) // Filter out invalid products
+            .filter(product => product && product._id) // Filter out only completely invalid products
             .map(product => {
             // Check if product is price on request
             const isPriceOnDemand = product.isPriceOnDemand || product.defaultVariant?.isPriceOnDemand;
