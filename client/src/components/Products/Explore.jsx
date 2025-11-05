@@ -157,10 +157,7 @@ const Explore = ({ currentProduct }) => {
         >
           {/* Gap-[17px] provides exact spacing for 5 cards */}
           <div className="flex gap-[17px] min-w-max">
-            {randomProducts.filter(product => product && product._id).map((product, index) => {
-              // Skip products with missing critical data
-              if (!product) return null;
-              
+            {randomProducts.map((product, index) => {
               // Get the first available image using the correct structure
               const productImage = product.heroImage?.url || 
                                  product.heroImage || 
