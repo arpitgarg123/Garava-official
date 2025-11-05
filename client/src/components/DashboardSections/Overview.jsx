@@ -13,6 +13,8 @@ export default function Overview({
     orders: 0,
     products: 0,
     avgRating: 0,
+    newOrders: 0,
+    completedOrders: 0,
     pendingOrders: 0,
     pendingReviews: 0,
     lowStockProducts: 0,
@@ -82,9 +84,9 @@ export default function Overview({
           />
           <StatCard
             icon={<HiOutlineShoppingBag className="w-6 h-6" />}
-            title="Total Orders"
-            value={stats.orders}
-            subtitle={`${stats.pendingOrders || 0} pending`}
+            title="New Orders"
+            value={stats.newOrders}
+            subtitle={`${stats.completedOrders || 0} completed`}
             color="blue"
           />
           <StatCard
@@ -114,8 +116,8 @@ export default function Overview({
                 <h3 className="text-[1.0625rem] font-medium text-yellow-800">Action Required</h3>
                 <div className="mt-2 text-[1.0625rem] text-yellow-700">
                   <ul className="list-disc pl-5 space-y-1">
-                    {stats.pendingOrders > 0 && (
-                      <li>{stats.pendingOrders} pending order{stats.pendingOrders > 1 ? 's' : ''} need{stats.pendingOrders === 1 ? 's' : ''} processing</li>
+                    {stats.newOrders > 0 && (
+                      <li>{stats.newOrders} new order{stats.newOrders > 1 ? 's' : ''} need{stats.newOrders === 1 ? 's' : ''} processing</li>
                     )}
                     {stats.pendingReviews > 0 && (
                       <li>{stats.pendingReviews} review{stats.pendingReviews > 1 ? 's' : ''} waiting for approval</li>
@@ -138,11 +140,11 @@ export default function Overview({
           <div className="bg-white p-4 border border-gray-200">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[1.0625rem] font-medium text-gray-600">Pending Appointments</p>
-                <p className="text-3xl font-semibold text-gray-900 mt-1">{stats.pendingAppointments || 0}</p>
+                <p className="text-[1.0625rem] font-medium text-gray-600">Completed Orders</p>
+                <p className="text-3xl font-semibold text-gray-900 mt-1">{stats.completedOrders || 0}</p>
               </div>
-              <div className="p-3 bg-blue-50 text-blue-600 border-blue-200">
-                <BiCalendar className="w-5 h-5" />
+              <div className="p-3 bg-green-50 text-green-600 border-green-200">
+                <HiOutlineShoppingBag className="w-5 h-5" />
               </div>
             </div>
           </div>
