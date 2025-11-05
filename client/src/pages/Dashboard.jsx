@@ -87,6 +87,9 @@ const Dashboard = () => {
     orders: dashboardStats.orders?.total || 0,
     products: dashboardStats.products?.total || 0,
     avgRating: dashboardStats.reviews?.avgRating || 0,
+    // New Orders and Completed Orders
+    newOrders: dashboardStats.orders?.pending || 0,
+    completedOrders: dashboardStats.orders?.delivered || 0,
     // Action Required Stats
     pendingOrders: dashboardStats.orders?.needsAttention || 0,
     pendingReviews: dashboardStats.reviews?.needsAttention || 0,

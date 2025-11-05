@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import PageHeader from '../components/header/PageHeader'
 import { 
@@ -14,13 +14,24 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 const InstaPost = () => {
   const dispatch = useDispatch()
   const scrollRef = useRef(null)
+  const [isDragging, setIsDragging] = useState(false)
   const featuredPosts = useSelector(selectFeaturedPosts)
   const loading = useSelector(selectFeaturedLoading)
   const error = useSelector(selectFeaturedError)
 
+  // Drag-to-scroll handlers
+  const handleMouseDown = () => setIsDragging(true)
+  const handleMouseUp = () => setIsDragging(false)
+  const handleMouseLeave = () => setIsDragging(false)
+  
+  const handleMouseMove = (e) => {
+    if (!isDragging) return
+    const slider = scrollRef.current
+    slider.scrollLeft -= e.movementX
+  }
 
   useEffect(() => {
-    dispatch(fetchFeaturedPosts(4))
+    dispatch(fetchFeaturedPosts(10)) // Fetch more posts for carousel
   }, [dispatch])
 
   // Transform dynamic posts to match the expected format
@@ -63,35 +74,48 @@ const InstaPost = () => {
         </div>
       ) : null}
 
-      <section className="w-[98%] mx-auto py-10">
-        <div className="mx-auto w-[95%] max-w-8xl ">
+      <section className="w-full mx-auto py-10">
+        {/* 
+          Optimized for exactly 5 cards:
+          - Container: max-w-[1408px] fits viewport
+          - Card width: 260px × 5 = 1,300px
+          - Gap: 17px × 4 = 68px
+          - Total: 1,368px (fits perfectly)
+        */}
+        <div className="mx-auto w-full max-w-[1408px] px-4">
           {/* Horizontal scrollable container */}
           <div className="relative group">
             {/* Left Arrow */}
             <button 
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
-              onClick={() => scrollRef.current?.scrollBy({ left: -300, behavior: 'smooth' })}
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center"
+              onClick={() => scrollRef.current?.scrollBy({ left: -554, behavior: 'smooth' })}
+              aria-label="Scroll left"
             >
-              <IoIosArrowBack size={20} />
+              <IoIosArrowBack className="text-2xl text-gray-800" />
             </button>
             
             {/* Right Arrow */}
             <button 
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
-              onClick={() => scrollRef.current?.scrollBy({ left: 300, behavior: 'smooth' })}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center"
+              onClick={() => scrollRef.current?.scrollBy({ left: 554, behavior: 'smooth' })}
+              aria-label="Scroll right"
             >
-              <IoIosArrowForward size={20} />
+              <IoIosArrowForward className="text-2xl text-gray-800" />
             </button>
             
             <div 
               ref={scrollRef}
-              className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+              className={`overflow-x-auto scrollbar-hide ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseLeave}
+              onMouseMove={handleMouseMove}
             >
-              <div className="flex gap-6 sm:gap-8 md:gap-10  items-center justify-center px-4 py-4">
+              <div className="flex gap-[17px] min-w-max py-4">
                 {products.map((p) => (
-                  <div key={p.id} className="w-[250px] sm:w-[280px] md:w-[300px] flex-shrink-0">
+                  <div key={p.id} className="w-[260px] flex-shrink-0">
                     <article 
-                      className="card cursor-pointer transform transition-transform hover:scale-105 w-full h-full" 
+                      className="card cursor-pointer transform transition-transform hover:scale-105 w-full" 
                       tabIndex="0"
                       onClick={() => handlePostClick(p)}
                       onKeyDown={(e) => {
@@ -101,7 +125,7 @@ const InstaPost = () => {
                         }
                       }}
                     >
-                      <div className="card-img-wrapper">
+                      <div className="card-img-wrapper aspect-square">
                         <img
                           className="card-img"
                           src={p.img}
@@ -113,8 +137,8 @@ const InstaPost = () => {
                       </div>
 
                       {p.title && (
-                        <div className="mt-2 sm:mt-3 text-center px-1">
-                          <h3 className="card-title line-clamp-2">{p.title}</h3>
+                        <div className="mt-3 text-center px-2 min-h-[60px] flex flex-col justify-start">
+                          <h3 className="card-title leading-5 line-clamp-2">{p.title}</h3>
                         </div>
                       )}
                     </article>
@@ -124,10 +148,12 @@ const InstaPost = () => {
             </div>
           </div>
 
-          <div className="flex-center mt-12 text-center cursor-pointer">
+          <div className="flex-center mt-12 text-center">
             <a
-              className="btn"
+              className="btn cursor-pointer"
               href="https://www.instagram.com/garavaofficial?igsh=MTE2MWZrMzU1aGMx"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Explore Our Instagram"
             >
               Explore Our Instagram
