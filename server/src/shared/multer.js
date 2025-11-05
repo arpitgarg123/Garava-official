@@ -27,8 +27,7 @@ export const uploadMiddleware = multer({
     if (hasValidMimetype || hasValidExtension) {
       cb(null, true);
     } else {
-      console.error(`❌ File rejected - Mimetype: ${file.mimetype}, Original name: ${file.originalname}`);
-      cb(new Error(`Only jpg, png, webp, and heic images are allowed. Received: ${file.mimetype}`));
+      cb(new Error("Only webp, png and webp images are allowed"));
     }
   },
 });

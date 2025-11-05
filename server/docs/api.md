@@ -198,7 +198,7 @@
             }
         ],
         "heroImage": {
-            "url": "https://ik.imagekit.io/arpit321/products/hero/hero_1757790481915_WhatsApp_Image_2025-08-18_at_21.51.13_8a71bb95__WFX5b5iWI.jpg",
+            "url": "https://ik.imagekit.io/arpit321/products/hero/hero_1757790481915_WhatsApp_Image_2025-08-18_at_21.51.13_8a71bb95__WFX5b5iWI.webp",
             "fileId": "68c5c1135c7cd75eb8ab10aa"
         },
         "gallery": [
@@ -208,22 +208,22 @@
                 "_id": "68c5c1241df3f38491de83d1"
             },
             {
-                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790488583_IMG-20250803-WA0056_X3hsFGJ5MU.jpg",
+                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790488583_IMG-20250803-WA0056_X3hsFGJ5MU.webp",
                 "fileId": "68c5c11a5c7cd75eb8ab27de",
                 "_id": "68c5c1241df3f38491de83d2"
             },
             {
-                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790491682_IMG-20250803-WA0057_F6GgGv4Cr.jpg",
+                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790491682_IMG-20250803-WA0057_F6GgGv4Cr.webp",
                 "fileId": "68c5c11d5c7cd75eb8ab602a",
                 "_id": "68c5c1241df3f38491de83d3"
             },
             {
-                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790494754_IMG-20250803-WA0058_n5nDczVAd.jpg",
+                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790494754_IMG-20250803-WA0058_n5nDczVAd.webp",
                 "fileId": "68c5c1205c7cd75eb8ab98bb",
                 "_id": "68c5c1241df3f38491de83d4"
             },
             {
-                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790497848_IMG-20250803-WA0059_D-jM9svvf.jpg",
+                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790497848_IMG-20250803-WA0059_D-jM9svvf.webp",
                 "fileId": "68c5c1235c7cd75eb8abca03",
                 "_id": "68c5c1241df3f38491de83d5"
             }
@@ -295,7 +295,7 @@
             ]
         },
         "heroImage": {
-            "url": "https://ik.imagekit.io/arpit321/products/hero/hero_1757790481915_WhatsApp_Image_2025-08-18_at_21.51.13_8a71bb95__WFX5b5iWI.jpg",
+            "url": "https://ik.imagekit.io/arpit321/products/hero/hero_1757790481915_WhatsApp_Image_2025-08-18_at_21.51.13_8a71bb95__WFX5b5iWI.webp",
             "fileId": "68c5c1135c7cd75eb8ab10aa"
         },
         "callToOrder": {
@@ -347,22 +347,22 @@
                 "_id": "68c5c1241df3f38491de83d1"
             },
             {
-                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790488583_IMG-20250803-WA0056_X3hsFGJ5MU.jpg",
+                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790488583_IMG-20250803-WA0056_X3hsFGJ5MU.webp",
                 "fileId": "68c5c11a5c7cd75eb8ab27de",
                 "_id": "68c5c1241df3f38491de83d2"
             },
             {
-                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790491682_IMG-20250803-WA0057_F6GgGv4Cr.jpg",
+                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790491682_IMG-20250803-WA0057_F6GgGv4Cr.webp",
                 "fileId": "68c5c11d5c7cd75eb8ab602a",
                 "_id": "68c5c1241df3f38491de83d3"
             },
             {
-                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790494754_IMG-20250803-WA0058_n5nDczVAd.jpg",
+                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790494754_IMG-20250803-WA0058_n5nDczVAd.webp",
                 "fileId": "68c5c1205c7cd75eb8ab98bb",
                 "_id": "68c5c1241df3f38491de83d4"
             },
             {
-                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790497848_IMG-20250803-WA0059_D-jM9svvf.jpg",
+                "url": "https://ik.imagekit.io/arpit321/products/gallery/gallery_1757790497848_IMG-20250803-WA0059_D-jM9svvf.webp",
                 "fileId": "68c5c1235c7cd75eb8abca03",
                 "_id": "68c5c1241df3f38491de83d5"
             }
@@ -765,7 +765,7 @@
         "slug": "how-to-layer-fragrances",
         "content": "<p>Fragrance layering is an <strong>art</strong> of mixing perfumes.</p>",
         "coverImage": {
-            "url": "https://ik.imagekit.io/arpit321/blogs/cover/blog_1759147235648_WhatsApp_Image_2025-09-27_at_00.59.39_412b2595__G3209gjfW.jpg",
+            "url": "https://ik.imagekit.io/arpit321/blogs/cover/blog_1759147235648_WhatsApp_Image_2025-09-27_at_00.59.39_412b2595__G3209gjfW.webp",
             "fileId": "68da74e55c7cd75eb8ace86e",
             "alt": "How to Layer Fragrances"
         },
@@ -804,7 +804,7 @@
         "slug": "how-to-layer-fragrances",
         "content": "<p>Fragrance layering is an <strong>art</strong> of mixing perfumes.</p>",
         "coverImage": {
-            "url": "https://ik.imagekit.io/arpit321/blogs/cover/blog_1759147235648_WhatsApp_Image_2025-09-27_at_00.59.39_412b2595__G3209gjfW.jpg",
+            "url": "https://ik.imagekit.io/arpit321/blogs/cover/blog_1759147235648_WhatsApp_Image_2025-09-27_at_00.59.39_412b2595__G3209gjfW.webp",
             "fileId": "68da74e55c7cd75eb8ace86e",
             "alt": "How to Layer Fragrances"
         },

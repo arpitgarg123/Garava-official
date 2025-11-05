@@ -118,23 +118,31 @@ const Explore = ({ currentProduct }) => {
   }
 
   return (
-    <div className="w-full py-12 px-4 flex-center flex-col">
+    <div className="w-full py-12 flex-center flex-col">
       <header className="w-fit">
         <h2 className="head-text text-3xl md:text-4xl">Explore</h2>
         <div className="h-[0.5px] mt-2 bg-black w-full"></div>
       </header>
       
-      <div className="max-w-[95%] mx-auto relative group">
+      {/* 
+        Calculation for exactly 5 cards:
+        - Available viewport: ~1440px (desktop)
+        - Card width: 260px × 5 = 1300px
+        - Gaps: 17px × 4 = 68px
+        - Total: 1368px
+        - Max container: 1408px (fits viewport with margins)
+      */}
+      <div className="w-full max-w-[1408px] mx-auto relative group px-4 mt-8">
         <button 
           className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 cursor-pointer p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hover:bg-white"
-          onClick={() => scrollRef.current.scrollBy({ left: -400, behavior: 'smooth' })}
+          onClick={() => scrollRef.current.scrollBy({ left: -554, behavior: 'smooth' })}
         >
           <IoIosArrowBack size={24} />
         </button>
         
         <button 
           className="absolute right-0 top-1/2 -translate-y-1/2 cursor-pointer bg-white/80 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hover:bg-white"
-          onClick={() => scrollRef.current.scrollBy({ left: 400, behavior: 'smooth' })}
+          onClick={() => scrollRef.current.scrollBy({ left: 554, behavior: 'smooth' })}
         >
           <IoIosArrowForward size={24} />
         </button>
@@ -147,7 +155,8 @@ const Explore = ({ currentProduct }) => {
           onMouseLeave={handleMouseLeave}
           onMouseMove={handleMouseMove}
         >
-          <div className="flex gap-6 sm:gap-8 md:gap-10 min-w-max px-4">
+          {/* Gap-[17px] provides exact spacing for 5 cards */}
+          <div className="flex gap-[17px] min-w-max">
             {randomProducts.map((product, index) => {
               // Get the first available image using the correct structure
               const productImage = product.heroImage?.url || 
@@ -161,8 +170,12 @@ const Explore = ({ currentProduct }) => {
                                  product.defaultVariant?.price || 
                                  product.price;
               
+              // Get variant data for cart operations
+              const variantId = product.defaultVariant?._id || product.variants?.[0]?._id || null;
+              const variantSku = product.defaultVariant?.sku || product.variants?.[0]?.sku || null;
+              
               return (
-                <div key={product._id || `explore-product-${index}`} className="w-[300px] flex-shrink-0">
+                <div key={product._id || `explore-product-${index}`} className="w-[260px] flex-shrink-0">
                   <Card 
                     img={productImage}
                     title={product.name}
@@ -171,6 +184,8 @@ const Explore = ({ currentProduct }) => {
                     id={product._id}
                     type={product.type}
                     isHorizontal={true}
+                    variantId={variantId}
+                    variantSku={variantSku}
                   />
                 </div>
               );

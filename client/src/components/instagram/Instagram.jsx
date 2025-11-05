@@ -7,11 +7,6 @@ import {
   selectFeaturedLoading, 
   selectFeaturedError 
 } from '../../features/instagram/slice.js'
-// Default fallback images
-import insta1 from '../../assets/images/insta.jpg'
-import insta2 from '../../assets/images/insta1.jpg'
-import insta3 from '../../assets/images/insta2.jpg'
-import insta4 from '../../assets/images/insta3.jpg'
 
 const Instagram = ({ 
   title = " on Instagram",
@@ -24,7 +19,6 @@ const Instagram = ({
   const error = useSelector(selectFeaturedError)
 
   // Default fallback images
-  const defaultImages = [insta1, insta2, insta3, insta4]
 
   useEffect(() => {
     dispatch(fetchFeaturedPosts(4))

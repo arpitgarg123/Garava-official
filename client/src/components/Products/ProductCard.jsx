@@ -192,7 +192,7 @@ const ProductCard = ({
            product?.heroImage ||
            product?.gallery?.[0]?.url ||
            product?.gallery?.[0] ||
-           "/placeholder.jpg";
+           "/placeholder.webp";
   };
   
   const heroSrc = getImageForSelectedColor();

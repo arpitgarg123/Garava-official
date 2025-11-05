@@ -1,5 +1,5 @@
 import React from 'react'
-import model from "../../assets/images/model.jpg";
+import model from "../../assets/images/model.webp";
 
 const NewsletterModal = () => {
   return (

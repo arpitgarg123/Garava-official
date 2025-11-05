@@ -43,7 +43,7 @@ const ProductGallery = ({ product, selectedColor }) => {
     
     if (allImages.length === 0) {
       // Fallback image if no images available
-      allImages.push('/placeholder.jpg');
+      allImages.push('/placeholder.webp');
     }
     
     setImages(allImages);

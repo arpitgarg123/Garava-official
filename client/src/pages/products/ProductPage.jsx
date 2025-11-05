@@ -8,11 +8,11 @@ import BackButton from "../../components/BackButton";
 import { BiFilterAlt, BiX } from "react-icons/bi";
 import Pagination from "../../components/Pagination";
 import { buildFilterParams } from "../../shared/utils/filterUtils";
-import fBanner  from '../../assets/images/f-banner.jpg'
-import jBanner  from '../../assets/images/j-banner.jpg'
+import fBanner  from '../../assets/images/f-banner.webp'
+import jBanner  from '../../assets/images/j-banner.webp'
 import all  from '../../assets/images/allproduct.webp'
-import mobileFraganceBanner  from '../../assets/images/display-banner1.jpg'
-import mobileJewellryBanner  from '../../assets/images/display-banner.jpg'
+import mobileFraganceBanner  from '../../assets/images/display-banner1.webp'
+import mobileJewellryBanner  from '../../assets/images/display-banner.webp'
 import mobileallProdsBanner  from '../../assets/images/mobAllProductsBanner.webp'
 
 import { useToastContext } from "../../layouts/Toast";

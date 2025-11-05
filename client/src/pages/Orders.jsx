@@ -169,7 +169,7 @@ const Orders = () => {
                 {orderDetails.items?.map((item, index) => (
                   <div key={index} className="flex space-x-4 border-b pb-4 last:border-b-0">
                     <img
-                      src={item.productSnapshot?.heroImage?.url || '/placeholder.jpg'}
+                      src={item.productSnapshot?.heroImage?.url || '/placeholder.webp'}
                       alt={item.productSnapshot?.name}
                       className="w-16 h-16 object-cover "
                     />
@@ -308,7 +308,7 @@ const Orders = () => {
                   {order.items?.slice(0, 2).map((item, idx) => (
                     <div key={idx} className="flex space-x-4 hover:bg-gray-50 p-2 ">
                       <img 
-                        src={item.productSnapshot?.heroImage?.url || '/placeholder.jpg'} 
+                        src={item.productSnapshot?.heroImage?.url || '/placeholder.webp'} 
                         alt={item.productSnapshot?.name}
                         className="w-20 h-20 object-cover "
                       />

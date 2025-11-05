@@ -167,7 +167,7 @@ const TestimonialSection = () => {
           <div className="h-8 sm:h-10 lg:h-12 bg-gray-200  w-80 mx-auto mb-4 animate-pulse"></div>
           <div className="h-5 bg-gray-200  w-96 mx-auto animate-pulse"></div>
         </div>
-        <div className="flex gap-6 overflow-hidden">
+        <div className="flex gap-6 overflow-hidden items-center justify-center">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="min-w-[320px] bg-gray-50 rounded-2xl p-8 animate-pulse">
               <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-6"></div>
@@ -366,6 +366,13 @@ const TestimonialSection = () => {
           display: none;
         }
       `}</style>
+      <div className='w-full text-center mt-7'>
+      <a href='https://share.google/UbXg5fl22O68sTacY'
+       className='btn max-md:btn.btn-small'>Leave a Review
+              
+
+      </a>
+      </div>
     </section>
   );
 };

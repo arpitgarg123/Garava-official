@@ -44,7 +44,9 @@ const Jewellry = () => {
               img: product.heroImage?.url || product.heroImage || 'https://via.placeholder.com/300x300?text=No+Image',
               title: product.name || "Jewellery Product",
               price: price,
-              slug: product.slug
+              slug: product.slug,
+              variantId: product.defaultVariant?._id || product.variants?.[0]?._id || null,
+              variantSku: product.defaultVariant?.sku || product.variants?.[0]?.sku || null
             };
           });
           
@@ -65,10 +67,17 @@ const Jewellry = () => {
     fetchJewelleryProducts();
   }, []);
   return (
-    <div className='w-full  py-6 '>
+    <div className='w-full py-6'>
         <PageHeader title="Jewellery" />
-       <section className="w-[98%] mx-auto py-10">
-        <div className="mx-auto w-[95%] max-w-8xl">
+       <section className="w-full mx-auto py-10">
+        {/* 
+          Optimized for exactly 5 cards:
+          - Container: max-w-[1408px] fits viewport
+          - Card width: 260px × 5 = 1,300px
+          - Gap: 17px × 4 = 68px
+          - Total: 1,368px (fits perfectly)
+        */}
+        <div className="mx-auto w-full max-w-[1408px] px-4">
           
           {loading ? (
             <div className="flex justify-center items-center py-20">
@@ -87,35 +96,35 @@ const Jewellry = () => {
             <button
               onClick={() => {
                 if (scrollRef.current) {
-                  scrollRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+                  scrollRef.current.scrollBy({ left: -554, behavior: 'smooth' });
                 }
               }}
-              className="absolute left-2 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
+              className="absolute left-0 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
               aria-label="Scroll left"
             >
-              <IoIosArrowBack className="text-3xl text-gray-800" />
+              <IoIosArrowBack className="text-2xl text-gray-800" />
             </button>
 
             {/* Right Arrow */}
             <button
               onClick={() => {
                 if (scrollRef.current) {
-                  scrollRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+                  scrollRef.current.scrollBy({ left: 554, behavior: 'smooth' });
                 }
               }}
-              className="absolute right-2 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
+              className="absolute right-0 top-[45%] -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden md:flex items-center justify-center"
               aria-label="Scroll right"
             >
-              <IoIosArrowForward className="text-3xl text-gray-800" />
+              <IoIosArrowForward className="text-2xl text-gray-800" />
             </button>
             
             <div 
               ref={scrollRef}
               className="overflow-x-auto w-full scrollbar-hide cursor-grab active:cursor-grabbing"
             >
-              <div className="flex gap-6 sm:gap-8 md:gap-10  px-4 py-4">
+              <div className="flex gap-[17px] min-w-max py-4">
                 {products.map((p) => (
-                  <div key={p.id} className="w-[250px] sm:w-[280px] md:w-[300px] flex-shrink-0">
+                  <div key={p.id} className="w-[260px] flex-shrink-0">
                     <Card 
                       img={p.img} 
                       title={p.title} 
@@ -124,6 +133,8 @@ const Jewellry = () => {
                       id={p.id}
                       type="jewellery" 
                       isHorizontal={true}
+                      variantId={p.variantId}
+                      variantSku={p.variantSku}
                     />
                   </div>
                 ))}

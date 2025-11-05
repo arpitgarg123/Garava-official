@@ -156,7 +156,7 @@ const WishlistContent = ({ compact = false, maxItems = null }) => {
               >
                 <div className={`${compact ? 'aspect-[4/3]' : 'aspect-square'} bg-gray-50 overflow-hidden`}>
                   <img 
-                    src={product?.heroImage?.url || product?.heroImage || '/placeholder.jpg'} 
+                    src={product?.heroImage?.url || product?.heroImage || '/placeholder.webp'} 
                     alt={product?.name || 'Product'}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                     onError={(e) => {

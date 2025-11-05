@@ -342,7 +342,7 @@ const ProductDetails = () => {
   //   product?.heroImage?.url ||
   //   product?.heroImage ||
   //   product?.gallery?.[0]?.url ||
-  //   "/placeholder.jpg";
+  //   "/placeholder.webp";
 
   return (
     <div className="headTop mt-38 max-md:mt-20 pb-10 max-2xl:mt-40 max-sm:mt-0">
@@ -452,7 +452,7 @@ const ProductDetails = () => {
         {product.shortDescription.length > 50 && (
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="text-gray-900 font-semibold text-sm tracking-wide hover:underline"
+            className="text-gray-900 font-semibold italic text-sm tracking-wide hover:underline"
           >
             {isExpanded ? "Read Less" : "Read More"}
           </button>
@@ -918,7 +918,7 @@ export default ProductDetails;
 
 // import React, { useEffect } from 'react'
 // import ProductAccordion from '../../components/Products/ProductAccordion'
-// import j2 from "../../assets/images/j.jpg";
+// import j2 from "../../assets/images/j.webp";
 // import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { fetchProductBySlug } from '../../features/product/slice';
