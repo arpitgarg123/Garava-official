@@ -70,6 +70,7 @@ const ProductDetails = () => {
   const isColorSelectionMissing = () => {
     return isColorSelectionRequired() && !selectedColor;
   };
+console.log(product.images);
 
   const selectedVariant = product?.variants?.find(v => v.stock > 0 && v.stockStatus !== 'out_of_stock') ||
                           product?.defaultVariant || 

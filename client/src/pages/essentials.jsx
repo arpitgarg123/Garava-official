@@ -1,5 +1,5 @@
 import Card from "../components/essentials/Card";
-import jewelleryImg from "../assets/images/essential-j.jpg";
+import jewelleryImg from "../assets/images/essential-j.png";
 import fragranceImg from "../assets/images/essential-f.webp";
 
 import gsap from "gsap";
