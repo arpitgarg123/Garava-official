@@ -1,0 +1,201 @@
+/**
+ * Quill Image Resize Styles
+ * Production-ready styles for image resizing functionality
+ */
+
+/* Resize box container */
+.quill-image-resize-box {
+  position: absolute;
+  border: 2px solid #4f46e5;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 10;
+  transition: none;
+}
+
+/* Resize handles */
+.quill-resize-handle {
+  position: absolute;
+  background: white;
+  border: 2px solid #4f46e5;
+  border-radius: 50%;
+  pointer-events: auto;
+  z-index: 11;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.quill-resize-handle:hover {
+  transform: scale(1.2);
+  background: #4f46e5;
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.3);
+}
+
+.quill-resize-handle:active {
+  transform: scale(1.1);
+  background: #4338ca;
+  border-color: #4338ca;
+}
+
+/* Individual handle positioning */
+.quill-resize-handle-nw {
+  cursor: nwse-resize;
+}
+
+.quill-resize-handle-ne {
+  cursor: nesw-resize;
+}
+
+.quill-resize-handle-sw {
+  cursor: nesw-resize;
+}
+
+.quill-resize-handle-se {
+  cursor: nwse-resize;
+}
+
+/* Size display tooltip */
+.quill-image-size-display {
+  position: absolute;
+  background: #4f46e5;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.quill-image-size-display::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #4f46e5;
+}
+
+/* Image hover state in editor */
+.ql-editor img {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: 100%;
+  height: auto;
+}
+
+.ql-editor img:hover {
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.3);
+  outline: none;
+}
+
+/* Prevent image dragging interference */
+.ql-editor img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+/* Active/selected image state */
+.ql-editor img.selected {
+  box-shadow: 0 0 0 2px #4f46e5;
+}
+
+/* Ensure images don't break layout */
+.ql-editor img {
+  display: inline-block;
+  vertical-align: bottom;
+  max-width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .quill-resize-handle {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .quill-image-size-display {
+    font-size: 11px;
+    padding: 3px 10px;
+  }
+}
+
+/* Print styles - ensure images are visible */
+@media print {
+  .quill-image-resize-box,
+  .quill-resize-handle,
+  .quill-image-size-display {
+    display: none !important;
+  }
+  
+  .ql-editor img {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  .quill-resize-handle {
+    background: #1f2937;
+    border-color: #6366f1;
+  }
+  
+  .quill-resize-handle:hover {
+    background: #6366f1;
+  }
+  
+  .quill-image-resize-box {
+    border-color: #6366f1;
+  }
+  
+  .quill-image-size-display {
+    background: #6366f1;
+  }
+  
+  .quill-image-size-display::after {
+    border-top-color: #6366f1;
+  }
+}
+
+/* Animation for smooth transitions */
+@keyframes pulse-resize {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(79, 70, 229, 0);
+  }
+}
+
+.quill-resize-handle:active {
+  animation: pulse-resize 0.5s ease-out;
+}
+
+/* Loading state for images */
+.ql-editor img[src=""],
+.ql-editor img:not([src]) {
+  display: inline-block;
+  min-width: 100px;
+  min-height: 100px;
+  background: #f3f4f6;
+  position: relative;
+}
+
+.ql-editor img[src=""]::after,
+.ql-editor img:not([src])::after {
+  content: 'Loading...';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #9ca3af;
+  font-size: 12px;
+}

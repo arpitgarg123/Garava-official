@@ -82,13 +82,26 @@ export default function Overview({
             subtitle={`Today: ${fmtINR(stats.todayRevenueINR || 0)}`}
             color="green"
           />
-          <StatCard
-            icon={<HiOutlineShoppingBag className="w-6 h-6" />}
-            title="New Orders"
-            value={stats.newOrders}
-            subtitle={`${stats.completedOrders || 0} completed`}
-            color="blue"
-          />
+          
+          {/* Orders Card with Completed and Pending */}
+          <div className="bg-white p-6 border border-gray-200">
+            <div className="flex items-center justify-between mb-4">
+              <p className="text-[1.0625rem] font-medium text-gray-600">New Orders</p>
+              <div className="p-3 bg-blue-50 text-blue-600 border-blue-200">
+                <HiOutlineShoppingBag className="w-6 h-6" />
+              </div>
+            </div>
+            <p className="text-3xl font-semibold text-gray-900">{stats.newOrders}</p>
+            <div className="flex items-center gap-4 mt-3">
+              <div className="flex items-center gap-2">
+                <span className="text-[1.0625rem] text-green-600 font-medium">{stats.completedOrders || 0} completed</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[1.0625rem] text-yellow-600 font-medium">{stats.pendingOrders || 0} pending</span>
+              </div>
+            </div>
+          </div>
+
           <StatCard
             icon={<FiPackage className="w-6 h-6" />}
             title="Products"

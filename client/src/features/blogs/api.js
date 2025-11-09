@@ -124,4 +124,16 @@ export const blogAdminAPI = {
 
   // Delete blog
   deleteBlog: (id) => http.delete(`/admin/blog/${id}`),
+
+  // Analyze document for auto-fill
+  analyzeDocument: (file) => {
+    const formData = new FormData();
+    formData.append('document', file);
+    
+    return http.post('/admin/blog/analyze-document', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
 };

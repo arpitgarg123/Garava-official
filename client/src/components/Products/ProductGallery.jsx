@@ -6,49 +6,107 @@ import { IoClose } from 'react-icons/io5';
 const ProductGallery = ({ product, selectedColor }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [images, setImages] = useState([]);
+  const [validImages, setValidImages] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
-  useEffect(() => {
-    // Get images for selected color variant, or fallback to default product images
-    let heroImage = null;
-    let galleryImages = [];
+  // Validate image URL
+  const isValidImageUrl = (url) => {
+    if (!url || typeof url !== 'string') return false;
     
-    if (selectedColor) {
-      // Use color-specific images if available
-      if (selectedColor.heroImage && selectedColor.heroImage.url) {
-        heroImage = selectedColor.heroImage.url;
+    // Check if it's a valid URL format
+    try {
+      const urlObj = new URL(url, window.location.origin);
+      const pathname = urlObj.pathname.toLowerCase();
+      
+      // Check if it has a valid image extension or is from known CDN
+      const validExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg'];
+      const isValidExtension = validExtensions.some(ext => pathname.endsWith(ext));
+      const isFromCDN = url.includes('imagekit.io') || url.includes('unsplash.com') || url.includes('cloudinary.com');
+      
+      return isValidExtension || isFromCDN;
+    } catch {
+      return false;
+    }
+  };
+
+  // Load and validate images
+  const validateImage = (url) => {
+    return new Promise((resolve) => {
+      if (!isValidImageUrl(url)) {
+        resolve(false);
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = url;
+      
+      // Timeout after 5 seconds
+      setTimeout(() => resolve(false), 5000);
+    });
+  };
+
+  useEffect(() => {
+    const loadValidImages = async () => {
+      // Get images for selected color variant, or fallback to default product images
+      let heroImage = null;
+      let galleryImages = [];
+      
+      if (selectedColor) {
+        // Use color-specific images if available
+        if (selectedColor.heroImage && selectedColor.heroImage.url) {
+          heroImage = selectedColor.heroImage.url;
+        }
+        
+        if (selectedColor.gallery && Array.isArray(selectedColor.gallery)) {
+          galleryImages = selectedColor.gallery.map(img => img?.url || img).filter(Boolean);
+        }
       }
       
-      if (selectedColor.gallery && Array.isArray(selectedColor.gallery)) {
-        galleryImages = selectedColor.gallery.map(img => img?.url || img).filter(Boolean);
+      // Fallback to default product images if no color-specific images
+      if (!heroImage) {
+        heroImage = product?.heroImage?.url || product?.heroImage || null;
       }
-    }
-    
-    // Fallback to default product images if no color-specific images
-    if (!heroImage) {
-      heroImage = product?.heroImage?.url || product?.heroImage || null;
-    }
-    
-    if (galleryImages.length === 0) {
-      galleryImages = Array.isArray(product?.gallery) 
-        ? product.gallery.map(img => img?.url || img)
-        : [];
-    }
-    
-    // Combine hero and gallery images, removing duplicates and nulls
-    const allImages = [heroImage, ...galleryImages]
-      .filter(Boolean)
-      .filter((img, index, self) => self.indexOf(img) === index);
-    
-    if (allImages.length === 0) {
-      // Fallback image if no images available
-      allImages.push('/placeholder.webp');
-    }
-    
-    setImages(allImages);
-    // Keep current active image index if it's valid, otherwise reset to 0
-    setActiveImageIndex(prev => prev < allImages.length ? prev : 0);
+      
+      if (galleryImages.length === 0) {
+        galleryImages = Array.isArray(product?.gallery) 
+          ? product.gallery.map(img => img?.url || img)
+          : [];
+      }
+      
+      // Combine hero and gallery images, removing duplicates and nulls
+      const allImages = [heroImage, ...galleryImages]
+        .filter(Boolean)
+        .filter((img, index, self) => self.indexOf(img) === index);
+      
+      setImages(allImages);
+
+      // Validate all images
+      if (allImages.length > 0) {
+        const validationResults = await Promise.all(
+          allImages.map(url => validateImage(url))
+        );
+        
+        const validImageUrls = allImages.filter((_, index) => validationResults[index]);
+        
+        if (validImageUrls.length === 0) {
+          // Fallback image if no valid images
+          setValidImages(['/placeholder.webp']);
+        } else {
+          setValidImages(validImageUrls);
+        }
+      } else {
+        // Fallback image if no images available
+        setValidImages(['/placeholder.webp']);
+      }
+      
+      // Reset active index if current is invalid
+      setActiveImageIndex(0);
+    };
+
+    loadValidImages();
   }, [product, selectedColor]);
 
   const handleThumbnailClick = (index) => {
@@ -57,11 +115,11 @@ const ProductGallery = ({ product, selectedColor }) => {
   };
 
   const handlePrevious = () => {
-    setActiveImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setActiveImageIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setActiveImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setActiveImageIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1));
   };
 
   // Modal functions
@@ -89,11 +147,11 @@ const ProductGallery = ({ product, selectedColor }) => {
   };
 
   const handleModalPrevious = () => {
-    setModalImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setModalImageIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1));
   };
 
   const handleModalNext = () => {
-    setModalImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    setModalImageIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1));
   };
 
   // Handle keyboard navigation in modal
@@ -112,7 +170,7 @@ const ProductGallery = ({ product, selectedColor }) => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isModalOpen, images.length]);
+  }, [isModalOpen, validImages.length]);
 
   // Handle browser back button when modal is open
   useEffect(() => {
@@ -137,7 +195,7 @@ const ProductGallery = ({ product, selectedColor }) => {
     };
   }, []);
 
-  if (!images.length) return null;
+  if (!validImages.length) return null;
 
   return (
     <div className="sticky top-20 z-20">
@@ -147,9 +205,12 @@ const ProductGallery = ({ product, selectedColor }) => {
           onClick={() => openModal(activeImageIndex)}
         >
           <img 
-            src={images[activeImageIndex]} 
+            src={validImages[activeImageIndex]} 
             alt={`Product view ${activeImageIndex + 1}`}
             className="w-full h-full object-contain transition-opacity duration-300"
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
           />
           
           {/* Expand icon in top-right corner */}
@@ -188,11 +249,11 @@ const ProductGallery = ({ product, selectedColor }) => {
         </div>
       </div>
 
-      {images.length > 1 && (
+      {validImages.length > 1 && (
         <div className="mt-3 relative">
           {/* Fashion Gallery Layout - 2x2 Grid */}
           <div className="grid grid-cols-2 gap-2 h-auto">
-            {images.slice(1, 5).map((image, index) => {
+            {validImages.slice(1, 5).map((image, index) => {
               const actualIndex = index + 1; // Since we're starting from index 1
               return (
                 <button
@@ -215,9 +276,9 @@ const ProductGallery = ({ product, selectedColor }) => {
             })}
             
             {/* Add more images if available */}
-            {images.length > 5 && (
+            {validImages.length > 5 && (
               <>
-                {images.slice(5, 7).map((image, index) => {
+                {validImages.slice(5, 7).map((image, index) => {
                   const actualIndex = index + 5;
                   return (
                     <button
@@ -231,7 +292,7 @@ const ProductGallery = ({ product, selectedColor }) => {
                           alt={`Product view ${actualIndex + 1}`}
                           className="w-full h-full object-cover transition-opacity duration-200 opacity-90 hover:opacity-100"
                           onError={(e) => {
-                            e.target.display = 'none';
+                            e.target.style.display = 'none';
                           }}
                         />
                       </div>
@@ -267,21 +328,24 @@ const ProductGallery = ({ product, selectedColor }) => {
 
             {/* Image Counter */}
             <div className="absolute top-6 left-6 px-4 py-2 bg-black/50 text-white text-[1.0625rem] rounded-full z-10">
-              {modalImageIndex + 1} / {images.length}
+              {modalImageIndex + 1} / {validImages.length}
             </div>
 
             {/* Main Modal Image */}
             <div className="relative max-w-full max-h-full">
               <img
-                src={images[modalImageIndex]}
+                src={validImages[modalImageIndex]}
                 alt={`Product view ${modalImageIndex + 1}`}
                 className="max-w-full max-h-full object-contain"
                 style={{ maxHeight: '90vh', maxWidth: '90vw' }}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
               />
             </div>
 
             {/* Navigation Arrows */}
-            {images.length > 1 && (
+            {validImages.length > 1 && (
               <>
                 <button
                   onClick={handleModalPrevious}
@@ -302,7 +366,7 @@ const ProductGallery = ({ product, selectedColor }) => {
 
             {/* Thumbnail Strip */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 bg-black/50 p-3 rounded-lg max-w-[90vw] overflow-x-auto">
-              {images.map((image, index) => (
+              {validImages.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setModalImageIndex(index)}
@@ -316,6 +380,9 @@ const ProductGallery = ({ product, selectedColor }) => {
                     src={image}
                     alt={`Thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
                   />
                 </button>
               ))}

@@ -108,6 +108,7 @@ import { CartSkeleton } from '../components/ui/LoadingSkeleton';
 import formatCurrency from '../utils/pricing';
 import BackButton from '../components/BackButton';
 import PageHeader from '../components/header/PageHeader';
+import { getProductImage } from '../utils/imageValidation';
 
 
 const Cart = () => {
@@ -229,32 +230,8 @@ const Cart = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               {cartItems.map((item, index) => {
-                // Handle image URL for both authenticated and guest users
-                // Backend structure: heroImage: {url, fileId}, gallery: [{url, fileId}]
-                let imageUrl = '/placeholder.webp';
-                
-                // For authenticated users (backend structure)
-                if (item.heroImage?.url) {
-                  imageUrl = item.heroImage.url;
-                } else if (typeof item.heroImage === 'string') {
-                  imageUrl = item.heroImage;
-                } 
-                // For guest users (productDetails structure)
-                else if (item.productDetails?.heroImage?.url) {
-                  imageUrl = item.productDetails.heroImage.url;
-                } else if (typeof item.productDetails?.heroImage === 'string') {
-                  imageUrl = item.productDetails.heroImage;
-                } else if (item.productDetails?.gallery?.[0]?.url) {
-                  imageUrl = item.productDetails.gallery[0].url;
-                } else if (typeof item.productDetails?.gallery?.[0] === 'string') {
-                  imageUrl = item.productDetails.gallery[0];
-                } else if (item.productDetails?.images?.[0]?.url) {
-                  imageUrl = item.productDetails.images[0].url;
-                } else if (typeof item.productDetails?.images?.[0] === 'string') {
-                  imageUrl = item.productDetails.images[0];
-                } else if (item.image) {
-                  imageUrl = item.image;
-                }
+                // Use utility function for image - handles both authenticated and guest users
+                const imageUrl = getProductImage(item.productDetails || item, '/placeholder.webp');
                 
                 // Handle product name for both authenticated and guest users  
                 const productName = item.name || item.productDetails?.name || 'Product';
@@ -267,7 +244,9 @@ const Cart = () => {
                     className="w-24 h-24 object-cover relative z-0 bg-gray-200"
                     style={{ display: 'block', minWidth: '96px', minHeight: '96px' }}
                     onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/96x96?text=No+Image';
+                      if (e.target.src !== '/placeholder.webp') {
+                        e.target.src = '/placeholder.webp';
+                      }
                     }}
                   />
                   <div className="flex-1 space-y-2">

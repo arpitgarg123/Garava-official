@@ -15,6 +15,7 @@ import { guestWishlist } from "../../shared/utils/guestStorage.js";
 import { toast } from "react-hot-toast";
 import { handleEmailContact, handleWhatsAppContact } from "../../hooks/contact";
 import ColorSelector from "./ColorSelector";
+import { getProductImage } from "../../utils/imageValidation";
 
 // Helper function to truncate text to a specific word limit
 const truncateText = (text, wordLimit = 15) => {
@@ -187,12 +188,8 @@ const ProductCard = ({
       }
     }
     
-    // Fallback to default product images
-    return product?.heroImage?.url ||
-           product?.heroImage ||
-           product?.gallery?.[0]?.url ||
-           product?.gallery?.[0] ||
-           "/placeholder.webp";
+    // Fallback to default product images using utility
+    return getProductImage(product, "/placeholder.webp");
   };
   
   const heroSrc = getImageForSelectedColor();
@@ -230,6 +227,11 @@ const ProductCard = ({
           alt={product.name || "Product image"}
           className="ph-image w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
+          onError={(e) => {
+            if (e.target.src !== '/placeholder.webp') {
+              e.target.src = '/placeholder.webp';
+            }
+          }}
         />
         
         {/* Out of Stock Overlay */}
