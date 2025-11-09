@@ -111,7 +111,7 @@ const YouMayAlsoLike = ({ currentProduct }) => {
           onMouseMove={handleMouseMove}
         >
           <div className="flex gap-6 min-w-max px-4">
-            {filteredProducts.map((product, index) => {
+            {similarProducts.map((product, index) => {
               // Get the first available image using utility function
               const productImage = getProductImage(product, '/placeholder.webp');
               
