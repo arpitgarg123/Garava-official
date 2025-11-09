@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { FaFacebookF, FaTwitter, FaLinkedinIn,FaPinterestP,FaWhatsapp  } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn,FaPinterestP,FaWhatsapp  } from "react-icons/fa";
 
 
 const ShareButton = ({ title, url })=> {
@@ -9,11 +9,6 @@ const ShareButton = ({ title, url })=> {
   const encodedTitle = encodeURIComponent(title);
 
   const buttons = [
-    {
-      label: <FaTwitter />,
-      href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
-      color: "bg-black text-white",
-    },
     {
       label: <FaFacebookF />,
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,

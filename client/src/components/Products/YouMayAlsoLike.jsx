@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { listProductsApi } from '../../features/product/api';
 import Card from './Card';
+import { getProductImage } from '../../utils/imageValidation';
 
 const YouMayAlsoLike = ({ currentProduct }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -110,28 +111,31 @@ const YouMayAlsoLike = ({ currentProduct }) => {
           onMouseMove={handleMouseMove}
         >
           <div className="flex gap-6 min-w-max px-4">
-            {similarProducts.map((product, index) => {
-              // Get the first available image using the correct structure
-              const productImage = product.heroImage?.url || 
-                                 product.heroImage || 
-                                 product.gallery?.[0]?.url || 
-                                 product.gallery?.[0] || 
-                                 'https://via.placeholder.com/300x300?text=No+Image';
+            {filteredProducts.map((product, index) => {
+              // Get the first available image using utility function
+              const productImage = getProductImage(product, '/placeholder.webp');
               
               // Get the price - prefer variant price over base price
               const productPrice = product.variants?.[0]?.price || 
                                  product.defaultVariant?.price || 
                                  product.price;
               
+              // Get variant data for cart operations
+              const variantId = product.defaultVariant?._id || product.variants?.[0]?._id || null;
+              const variantSku = product.defaultVariant?.sku || product.variants?.[0]?.sku || null;
+              
               return (
                 <div key={product._id || `product-${index}`} className="w-[300px] flex-shrink-0">
                   <Card 
+                    product={product}
                     img={productImage}
                     title={product.name}
                     price={productPrice ? `₹${productPrice.toLocaleString('en-IN')}` : 'Price on Request'}
                     slug={product.slug}
                     id={product._id}
                     type={product.type}
+                    variantId={variantId}
+                    variantSku={variantSku}
                   />
                 </div>
               );

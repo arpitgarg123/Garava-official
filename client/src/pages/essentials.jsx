@@ -93,9 +93,9 @@ const Essentials = () => {
         </div>
 
         {/* Cards Container - Responsive Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2  items-center justify-center mx-auto gap-6 sm:gap-2 lg:gap-10 xl:gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-items-center mx-auto gap-8 sm:gap-10 lg:gap-10 xl:gap-10">
           {essentialItems.map((item, index) => (
-            <div key={item.id} className="w-full flex items-center justify-center">
+            <div key={item.id} className="w-full max-w-[450px]">
               <Card
                 ref={(el) => setCardRef(el, index)}
                 title={item.title}

@@ -16,13 +16,13 @@ const Card = forwardRef(({ title, subtitle, img, hotspotSize = "40%", link }, re
   };
 
   return (
-    <div ref={ref} className="flex flex-col  w-fit">
+    <div ref={ref} className="flex flex-col w-full max-w-[450px] mx-auto">
       <article   
         aria-label={`${title} card`}
-        className=" overflow-hidden relative group cursor-pointer"
+        className="overflow-hidden relative group cursor-pointer w-full"
         onClick={handleShopNow}
       >
-  <div className="h-[300px]  sm:h-[400px] xl:w-[450px] lg:h-[500px] xl:h-[500px] relative">
+  <div className="w-full h-[300px] sm:h-[400px] sm:w-full lg:w-[450px] lg:h-[500px] xl:w-[450px] xl:h-[500px] relative">
          <motion.div
           initial={{ scale: 1.1, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
@@ -33,7 +33,7 @@ const Card = forwardRef(({ title, subtitle, img, hotspotSize = "40%", link }, re
           <img
             src={img}
             alt={`${title} - ${subtitle}`}
-            className="absolute h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             draggable="false"
             loading="lazy"
           />

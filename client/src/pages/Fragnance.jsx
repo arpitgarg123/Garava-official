@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PageHeader from '../components/header/PageHeader';
 import { listProductsApi } from '../features/product/api';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { getProductImage } from '../utils/imageValidation';
 
 const Fragnance = () => {
   const [products, setProducts] = useState([]);
@@ -39,13 +40,14 @@ const Fragnance = () => {
               : `₹${product.defaultVariant?.price?.toLocaleString('en-IN') || product.priceRange?.min?.toLocaleString('en-IN') || '0'}.0`;
               
             return {
-              id: product._id || product.id,
-              img: product.heroImage?.url || product.heroImage || 'https://via.placeholder.com/300x300?text=No+Image',
+              id: product.id || product._id,
+              img: getProductImage(product, '/placeholder.webp'),
               title: product.name || "Fragrance Product",
               price: price,
               slug: product.slug,
-              variantId: product.defaultVariant?._id || product.variants?.[0]?._id || null,
-              variantSku: product.defaultVariant?.sku || product.variants?.[0]?.sku || null
+              variantId: product.defaultVariant?.id || product.defaultVariant?._id || product.variants?.[0]?._id || null,
+              variantSku: product.defaultVariant?.sku || product.variants?.[0]?.sku || null,
+              product: product // Pass full product object for image fallback
             };
           });
           
@@ -125,6 +127,7 @@ const Fragnance = () => {
                 {products.map((p) => (
                   <div key={p.id} className="w-[260px] flex-shrink-0">
                     <Card 
+                      product={p.product}
                       img={p.img} 
                       title={p.title} 
                       price={p.price} 

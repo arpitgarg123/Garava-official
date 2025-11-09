@@ -4,6 +4,97 @@ import Product from "../../product/product.model.js";
 import { toRupees, toPaise } from "../../order/order.pricing.js";
 
 /**
+ * Aggregate images from color variants into hero and gallery
+ */
+const aggregateProductImages = (product) => {
+  if (!product) return product;
+  
+  const aggregated = { ...product };
+  
+  // Initialize gallery array
+  let gallery = Array.isArray(aggregated.gallery) ? [...aggregated.gallery] : [];
+  
+  // Create a Set of existing fileIds and URLs for deduplication
+  const existingIdentifiers = new Set();
+  gallery.forEach(g => {
+    if (g && g.fileId) existingIdentifiers.add(g.fileId);
+    if (g && g.url) existingIdentifiers.add(g.url);
+  });
+
+  // Auto-assign hero image with fallback logic:
+  // 1. Use existing heroImage if valid
+  // 2. If no heroImage, use first gallery image
+  // 3. If no gallery, use first color variant hero image
+  const hasValidHeroImage = aggregated.heroImage && 
+                            (aggregated.heroImage.url || typeof aggregated.heroImage === 'string');
+  
+  // If no hero image, use first gallery image
+  if (!hasValidHeroImage && gallery.length > 0) {
+    aggregated.heroImage = gallery[0];
+  }
+  
+  // If still no hero image, try color variants
+  if (!hasValidHeroImage && !aggregated.heroImage && aggregated.colorVariants && aggregated.colorVariants.length > 0) {
+    const firstVariantWithHero = aggregated.colorVariants.find(cv => cv.heroImage && cv.heroImage.url);
+    if (firstVariantWithHero) {
+      aggregated.heroImage = firstVariantWithHero.heroImage;
+    }
+  }
+
+  // Add the hero image to gallery (if it exists and not already there)
+  if (aggregated.heroImage) {
+    const heroImageObj = typeof aggregated.heroImage === 'string' 
+      ? { url: aggregated.heroImage } 
+      : aggregated.heroImage;
+    
+    if (heroImageObj.url) {
+      const isDuplicate = (heroImageObj.fileId && existingIdentifiers.has(heroImageObj.fileId)) ||
+                         existingIdentifiers.has(heroImageObj.url);
+      
+      if (!isDuplicate) {
+        gallery.unshift(heroImageObj);
+        if (heroImageObj.fileId) existingIdentifiers.add(heroImageObj.fileId);
+        existingIdentifiers.add(heroImageObj.url);
+      }
+    }
+  }
+
+  // Add all color variant images to gallery
+  if (aggregated.colorVariants && aggregated.colorVariants.length > 0) {
+    aggregated.colorVariants.forEach(cv => {
+      if (cv.heroImage && cv.heroImage.url) {
+        const isDuplicate = (cv.heroImage.fileId && existingIdentifiers.has(cv.heroImage.fileId)) ||
+                           existingIdentifiers.has(cv.heroImage.url);
+        
+        if (!isDuplicate) {
+          gallery.push(cv.heroImage);
+          if (cv.heroImage.fileId) existingIdentifiers.add(cv.heroImage.fileId);
+          existingIdentifiers.add(cv.heroImage.url);
+        }
+      }
+      
+      if (cv.gallery && Array.isArray(cv.gallery) && cv.gallery.length > 0) {
+        cv.gallery.forEach(gImg => {
+          if (gImg && gImg.url) {
+            const isDuplicate = (gImg.fileId && existingIdentifiers.has(gImg.fileId)) ||
+                               existingIdentifiers.has(gImg.url);
+            
+            if (!isDuplicate) {
+              gallery.push(gImg);
+              if (gImg.fileId) existingIdentifiers.add(gImg.fileId);
+              existingIdentifiers.add(gImg.url);
+            }
+          }
+        });
+      }
+    });
+  }
+  
+  aggregated.gallery = gallery;
+  return aggregated;
+};
+
+/**
  * Convert product prices from paise to rupees for admin display
  */
 const convertProductPricesToRupees = (product) => {
@@ -62,6 +153,82 @@ export const createProductService = async (data, userId) => {
     }
   }
 
+  // Initialize gallery array
+  let gallery = Array.isArray(dataWithPaise.gallery) ? [...dataWithPaise.gallery] : [];
+  
+  // Create a Set of existing fileIds and URLs for deduplication
+  const existingIdentifiers = new Set();
+  gallery.forEach(g => {
+    if (g && g.fileId) existingIdentifiers.add(g.fileId);
+    if (g && g.url) existingIdentifiers.add(g.url);
+  });
+
+  // Auto-assign hero image from color variants if not provided
+  const hasValidHeroImage = dataWithPaise.heroImage && 
+                            (dataWithPaise.heroImage.url || typeof dataWithPaise.heroImage === 'string');
+  
+  if (!hasValidHeroImage && dataWithPaise.colorVariants && dataWithPaise.colorVariants.length > 0) {
+    // Find first color variant with hero image
+    const firstVariantWithHero = dataWithPaise.colorVariants.find(cv => cv.heroImage && cv.heroImage.url);
+    if (firstVariantWithHero) {
+      dataWithPaise.heroImage = firstVariantWithHero.heroImage;
+    }
+  }
+
+  // Add the hero image to gallery (if it exists and not already there)
+  if (dataWithPaise.heroImage) {
+    const heroImageObj = typeof dataWithPaise.heroImage === 'string' 
+      ? { url: dataWithPaise.heroImage } 
+      : dataWithPaise.heroImage;
+    
+    if (heroImageObj.url) {
+      const isDuplicate = (heroImageObj.fileId && existingIdentifiers.has(heroImageObj.fileId)) ||
+                         existingIdentifiers.has(heroImageObj.url);
+      
+      if (!isDuplicate) {
+        gallery.unshift(heroImageObj); // Add hero image at the beginning
+        if (heroImageObj.fileId) existingIdentifiers.add(heroImageObj.fileId);
+        existingIdentifiers.add(heroImageObj.url);
+      }
+    }
+  }
+
+  // Add all color variant images to gallery
+  if (dataWithPaise.colorVariants && dataWithPaise.colorVariants.length > 0) {
+    dataWithPaise.colorVariants.forEach(cv => {
+      // Add color variant hero images
+      if (cv.heroImage && cv.heroImage.url) {
+        const isDuplicate = (cv.heroImage.fileId && existingIdentifiers.has(cv.heroImage.fileId)) ||
+                           existingIdentifiers.has(cv.heroImage.url);
+        
+        if (!isDuplicate) {
+          gallery.push(cv.heroImage);
+          if (cv.heroImage.fileId) existingIdentifiers.add(cv.heroImage.fileId);
+          existingIdentifiers.add(cv.heroImage.url);
+        }
+      }
+      
+      // Add all color variant gallery images
+      if (cv.gallery && Array.isArray(cv.gallery) && cv.gallery.length > 0) {
+        cv.gallery.forEach(gImg => {
+          if (gImg && gImg.url) {
+            const isDuplicate = (gImg.fileId && existingIdentifiers.has(gImg.fileId)) ||
+                               existingIdentifiers.has(gImg.url);
+            
+            if (!isDuplicate) {
+              gallery.push(gImg);
+              if (gImg.fileId) existingIdentifiers.add(gImg.fileId);
+              existingIdentifiers.add(gImg.url);
+            }
+          }
+        });
+      }
+    });
+  }
+  
+  // Set the final gallery
+  dataWithPaise.gallery = gallery;
+
   const product = await Product.create(dataWithPaise);
   
   // Convert prices back to rupees for admin display
@@ -82,6 +249,82 @@ export const updateProductService = async (productId, updates, userId) => {
 
   Object.assign(product, updatesWithPaise);
   product.updatedBy = userId;
+
+  // Initialize gallery array
+  let gallery = Array.isArray(product.gallery) ? [...product.gallery] : [];
+  
+  // Create a Set of existing fileIds and URLs for deduplication
+  const existingIdentifiers = new Set();
+  gallery.forEach(g => {
+    if (g && g.fileId) existingIdentifiers.add(g.fileId);
+    if (g && g.url) existingIdentifiers.add(g.url);
+  });
+
+  // Auto-assign hero image from color variants if not provided
+  const hasValidHeroImage = product.heroImage && 
+                            (product.heroImage.url || typeof product.heroImage === 'string');
+  
+  if (!hasValidHeroImage && product.colorVariants && product.colorVariants.length > 0) {
+    const firstVariantWithHero = product.colorVariants.find(cv => cv.heroImage && cv.heroImage.url);
+    if (firstVariantWithHero) {
+      product.heroImage = firstVariantWithHero.heroImage;
+    }
+  }
+
+  // Add the hero image to gallery (if it exists and not already there)
+  if (product.heroImage) {
+    const heroImageObj = typeof product.heroImage === 'string' 
+      ? { url: product.heroImage } 
+      : product.heroImage;
+    
+    if (heroImageObj.url) {
+      const isDuplicate = (heroImageObj.fileId && existingIdentifiers.has(heroImageObj.fileId)) ||
+                         existingIdentifiers.has(heroImageObj.url);
+      
+      if (!isDuplicate) {
+        gallery.unshift(heroImageObj); // Add hero image at the beginning
+        if (heroImageObj.fileId) existingIdentifiers.add(heroImageObj.fileId);
+        existingIdentifiers.add(heroImageObj.url);
+      }
+    }
+  }
+
+  // Add all color variant images to gallery
+  if (product.colorVariants && product.colorVariants.length > 0) {
+    product.colorVariants.forEach(cv => {
+      // Add color variant hero images
+      if (cv.heroImage && cv.heroImage.url) {
+        const isDuplicate = (cv.heroImage.fileId && existingIdentifiers.has(cv.heroImage.fileId)) ||
+                           existingIdentifiers.has(cv.heroImage.url);
+        
+        if (!isDuplicate) {
+          gallery.push(cv.heroImage);
+          if (cv.heroImage.fileId) existingIdentifiers.add(cv.heroImage.fileId);
+          existingIdentifiers.add(cv.heroImage.url);
+        }
+      }
+      
+      // Add all color variant gallery images
+      if (cv.gallery && Array.isArray(cv.gallery) && cv.gallery.length > 0) {
+        cv.gallery.forEach(gImg => {
+          if (gImg && gImg.url) {
+            const isDuplicate = (gImg.fileId && existingIdentifiers.has(gImg.fileId)) ||
+                               existingIdentifiers.has(gImg.url);
+            
+            if (!isDuplicate) {
+              gallery.push(gImg);
+              if (gImg.fileId) existingIdentifiers.add(gImg.fileId);
+              existingIdentifiers.add(gImg.url);
+            }
+          }
+        });
+      }
+    });
+  }
+  
+  // Set the final gallery
+  product.gallery = gallery;
+
   await product.save();
   
   // Convert prices back to rupees for admin display
@@ -116,10 +359,13 @@ export const listProductsAdminService = async ({ page = 1, limit = 20, q, status
     Product.countDocuments(filter)
   ]);
 
-  // Convert prices from paise to rupees for frontend display
-  const productsWithRupees = products.map(convertProductPricesToRupees);
+  // Convert prices from paise to rupees AND aggregate images for frontend display
+  const productsWithRupeesAndImages = products.map(p => {
+    const withImages = aggregateProductImages(p);
+    return convertProductPricesToRupees(withImages);
+  });
 
-  return { products: productsWithRupees, pagination: { total, page, limit, totalPages: Math.ceil(total/limit) } };
+  return { products: productsWithRupeesAndImages, pagination: { total, page, limit, totalPages: Math.ceil(total/limit) } };
 };
 
 /**

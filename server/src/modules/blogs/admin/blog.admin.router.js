@@ -1,7 +1,7 @@
 import express from "express";
 import { authenticated } from "../../../middlewares/authentication.js";
 import { authorize } from "../../../middlewares/authorize.js";
-import { uploadMiddleware } from "../../../shared/multer.js";
+import { uploadMiddleware, documentUploadMiddleware } from "../../../shared/multer.js";
 
 import {
   createBlog,
@@ -10,6 +10,7 @@ import {
   listBlogsAdmin,
   getBlogByIdAdmin,
   setStatus,
+  analyzeDocument,
 } from "./blog.admin.controller.js";
 
 const router = express.Router();
@@ -35,5 +36,12 @@ router.delete("/:id", deleteBlog);
 
 // status / schedule
 router.patch("/:id/status", setStatus);
+
+// document analysis for auto-fill
+router.post(
+  "/analyze-document",
+  documentUploadMiddleware.single("document"),
+  analyzeDocument
+);
 
 export default router;

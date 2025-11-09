@@ -3,7 +3,6 @@ import {
   FaInstagram,
   FaFacebookF,
   FaPinterestP,
-  FaTwitter,
   FaLinkedin 
 } from "react-icons/fa";
 import { FiMapPin, FiMail, FiPhone } from "react-icons/fi"; 
@@ -19,25 +18,34 @@ const Footer = () => {
   {/* Left: contact details */}
   <div className="space-y-4 sm:space-y-5 w-full sm:w-auto text-left flex-1">
     <h3 className="text-[1.0625rem] sm:text-[1.0625rem] uppercase tracking-widest font-medium">
-      Contact Detail
+      Contact Details
     </h3>
 
-    <div className="flex items-start gap-3">
-      <FiMapPin size={16} className="mt-1 flex-shrink-0" />
+    <div className="space-y-1">
+      <div className="flex items-center">
+        <FiMapPin size={16} />
+        <span className="text-[0.9375rem] font-semibold text-gray-700">Address:</span>
+      </div>
       <p className="text-[1.0625rem] sm:text-[1.0625rem] leading-5 sm:leading-6">
-     A -14, 601 Pearl Mount View, Vijay Path, Tilak Nagar, Jaipur -302004, Rajasthan
+     A -14, 601 Pearl Mount View, Vijay Path, Tilak Nagar, Jaipur -302004, Rajasthan
       </p>
     </div>
 
-    <div className="flex items-center gap-3">
-      <FiMail size={16} className="flex-shrink-0" />
+    <div className="space-y-1">
+      <div className="flex items-center">
+        <FiMail size={16} />
+        <span className="text-[0.9375rem] font-semibold text-gray-700">Email:</span>
+      </div>
       <a href="mailto:info@garava.in" className="text-[1.0625rem] sm:text-[1.0625rem] hover:underline break-all">
         info@garava.in
       </a>
     </div>
 
-    <div className="flex items-center gap-3">
-      <FiPhone size={16} className="flex-shrink-0" />
+    <div className="space-y-1">
+      <div className="flex items-center">
+        <FiPhone size={16} />
+        <span className="text-[0.9375rem] font-semibold text-gray-700">Phone:</span>
+      </div>
       <a href="tel:+917738543881" className="text-[1.0625rem] sm:text-[1.0625rem] hover:underline">
         +91-7738543881
       </a>
@@ -57,9 +65,6 @@ const Footer = () => {
       </a>
       <a href="https://in.pinterest.com/garaaaaofficial/" aria-label="Pinterest" className="hover:text-gray-500 transition-colors">
         <FaPinterestP />
-      </a>
-      <a href="#" aria-label="Twitter" className="hover:text-gray-500 transition-colors">
-        <FaTwitter />
       </a>
       <a href="https://in.linkedin.com/company/garavaofficial" aria-label="LinkedIn" className="hover:text-gray-500 transition-colors">
         <FaLinkedin />

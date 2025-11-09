@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineClose, AiOutlineUpload, AiOutlineEye } from "react-icons/ai";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import './BlogEditor.css';
+import '../../utils/quillImageResize';
 import {
   createBlogAdmin,
   updateBlogAdmin,
@@ -14,6 +16,7 @@ import {
   selectBlogAdminActionLoading,
   selectBlogAdminError
 } from "../../features/blogs/blogAdminSlice";
+import { blogAdminAPI } from "../../features/blogs/api";
 
 export default function BlogCreateEditModal() {
   const dispatch = useDispatch();
@@ -25,6 +28,9 @@ export default function BlogCreateEditModal() {
 
   const isOpen = modals.create || modals.edit;
   const isEditMode = modals.edit && selectedBlogId;
+
+  // Ref for ReactQuill instance
+  const quillRef = useRef(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -42,6 +48,11 @@ export default function BlogCreateEditModal() {
 
   const [imagePreview, setImagePreview] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
+  
+  // Document upload state
+  const [documentFile, setDocumentFile] = useState(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [documentUploadStatus, setDocumentUploadStatus] = useState('');
 
   // Load blog data for editing
   useEffect(() => {
@@ -66,7 +77,13 @@ export default function BlogCreateEditModal() {
         publishAt: currentBlog.publishAt ? new Date(currentBlog.publishAt).toISOString().slice(0, 16) : '',
         coverImage: null,
       });
-      setImagePreview(currentBlog.coverImage?.url || null);
+      // Set image preview with validation
+      const coverImageUrl = currentBlog.coverImage?.url || currentBlog.coverImageUrl;
+      if (coverImageUrl && !coverImageUrl.includes('?text=') && coverImageUrl.startsWith('http')) {
+        setImagePreview(coverImageUrl);
+      } else {
+        setImagePreview(null);
+      }
     } else if (!isEditMode) {
       // Reset form for create mode
       setFormData({
@@ -90,6 +107,20 @@ export default function BlogCreateEditModal() {
   useEffect(() => {
     setValidationErrors({});
   }, [formData]);
+
+  // Cleanup effect for Quill instance
+  useEffect(() => {
+    return () => {
+      // Cleanup any resize handlers when component unmounts
+      if (quillRef.current) {
+        const editor = quillRef.current.getEditor();
+        const imageResize = editor.getModule('imageResize');
+        if (imageResize && typeof imageResize.destroy === 'function') {
+          imageResize.destroy();
+        }
+      }
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -134,6 +165,58 @@ export default function BlogCreateEditModal() {
         setImagePreview(e.target.result);
       };
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDocumentUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setDocumentFile(file);
+    setIsAnalyzing(true);
+    setDocumentUploadStatus('Analyzing document...');
+
+    try {
+      // Use the existing API infrastructure
+      const response = await blogAdminAPI.analyzeDocument(file);
+      const analyzed = response.data.data;
+
+      // Auto-fill form fields
+      setFormData(prev => ({
+        ...prev,
+        title: analyzed.title || prev.title,
+        slug: analyzed.slug || prev.slug,
+        excerpt: analyzed.excerpt || prev.excerpt,
+        content: analyzed.content || prev.content,
+        tags: Array.isArray(analyzed.tags) ? analyzed.tags.join(', ') : (analyzed.tags || prev.tags),
+        metaDescription: analyzed.metaDescription || prev.metaDescription,
+      }));
+
+      // Set cover image if available
+      if (analyzed.coverImage) {
+        setImagePreview(analyzed.coverImage.url);
+      }
+
+      setDocumentUploadStatus(`✓ Document analyzed successfully! ${analyzed.imagesUploaded || 0} images uploaded.`);
+      
+      // Clear status after 5 seconds
+      setTimeout(() => {
+        setDocumentUploadStatus('');
+        setDocumentFile(null);
+      }, 5000);
+
+    } catch (error) {
+      console.error('Error analyzing document:', error);
+      const errorMessage = error.message || 'Failed to analyze document';
+      setDocumentUploadStatus(`✗ ${errorMessage}. Please try again.`);
+      
+      // Clear error after 8 seconds
+      setTimeout(() => {
+        setDocumentUploadStatus('');
+        setDocumentFile(null);
+      }, 8000);
+    } finally {
+      setIsAnalyzing(false);
     }
   };
 
@@ -262,6 +345,49 @@ export default function BlogCreateEditModal() {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {/* Document Upload - Only show in create mode */}
+                {!isEditMode && (
+                  <div className="sm:col-span-2 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-[1.0625rem] font-medium text-gray-700">
+                        Quick Fill from Document (Optional)
+                      </label>
+                      {isAnalyzing && (
+                        <div className="flex items-center">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-600"></div>
+                          <span className="ml-2 text-sm text-gray-600">Analyzing...</span>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-600 mb-3">
+                      Upload a Word document (.docx) to automatically fill the form fields below. Images will be extracted and uploaded.
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <label className="cursor-pointer inline-flex items-center px-4 py-2 border border-blue-300 rounded-md shadow-sm text-sm font-medium text-blue-700 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <AiOutlineUpload className="w-5 h-5 mr-2" />
+                        Choose Document
+                        <input
+                          type="file"
+                          accept=".docx,.doc"
+                          onChange={handleDocumentUpload}
+                          disabled={isAnalyzing}
+                          className="hidden"
+                        />
+                      </label>
+                      {documentFile && (
+                        <span className="text-sm text-gray-600">
+                          {documentFile.name}
+                        </span>
+                      )}
+                    </div>
+                    {documentUploadStatus && (
+                      <p className={`mt-2 text-sm ${documentUploadStatus.includes('✓') ? 'text-green-600' : documentUploadStatus.includes('✗') ? 'text-red-600' : 'text-gray-600'}`}>
+                        {documentUploadStatus}
+                      </p>
+                    )}
+                  </div>
+                )}
+
                 {/* Title */}
                 <div className="sm:col-span-2">
                   <label htmlFor="title" className="block text-[1.0625rem] font-medium text-gray-700">
@@ -445,6 +571,7 @@ export default function BlogCreateEditModal() {
   validationErrors.content ? 'border-red-300' : 'border-gray-300'
 }`}>
   <ReactQuill
+    ref={quillRef}
     theme="snow"
     value={formData.content}
     onChange={handleContentChange}
@@ -459,7 +586,14 @@ export default function BlogCreateEditModal() {
         [{ 'align': [] }],
         ['link', 'image'],
         ['clean']
-      ]
+      ],
+      imageResize: {
+        minWidth: 50,
+        maxWidth: 800,
+        showSize: true,
+        maintainAspectRatio: true,
+        handleSize: 12
+      }
     }}
     formats={[
       'header', 'bold', 'italic', 'underline', 'strike',

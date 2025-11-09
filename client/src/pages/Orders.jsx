@@ -15,6 +15,7 @@ import { fetchUserOrders, fetchOrderById } from '../features/order/slice';
 import { toast } from 'react-hot-toast';
 import BackButton from '../components/BackButton';
 import PageHeader from '../components/header/PageHeader';
+import { extractImageUrl } from '../utils/imageValidation';
 
 const OrderStatus = ({ status }) => {
 
@@ -169,9 +170,14 @@ const Orders = () => {
                 {orderDetails.items?.map((item, index) => (
                   <div key={index} className="flex space-x-4 border-b pb-4 last:border-b-0">
                     <img
-                      src={item.productSnapshot?.heroImage?.url || '/placeholder.webp'}
+                      src={extractImageUrl(item.productSnapshot?.heroImage) || '/placeholder.webp'}
                       alt={item.productSnapshot?.name}
                       className="w-16 h-16 object-cover "
+                      onError={(e) => {
+                        if (e.target.src !== '/placeholder.webp') {
+                          e.target.src = '/placeholder.webp';
+                        }
+                      }}
                     />
                     <div className="flex-1">
                       <h4 className="font-medium">{item.productSnapshot?.name}</h4>
@@ -308,9 +314,14 @@ const Orders = () => {
                   {order.items?.slice(0, 2).map((item, idx) => (
                     <div key={idx} className="flex space-x-4 hover:bg-gray-50 p-2 ">
                       <img 
-                        src={item.productSnapshot?.heroImage?.url || '/placeholder.webp'} 
+                        src={extractImageUrl(item.productSnapshot?.heroImage) || '/placeholder.webp'} 
                         alt={item.productSnapshot?.name}
                         className="w-20 h-20 object-cover "
+                        onError={(e) => {
+                          if (e.target.src !== '/placeholder.webp') {
+                            e.target.src = '/placeholder.webp';
+                          }
+                        }}
                       />
                       <div>
                         <h3 className="font-medium">{item.productSnapshot?.name}</h3>

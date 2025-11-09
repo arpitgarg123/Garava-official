@@ -389,17 +389,20 @@ export default function BlogsAdmin() {
       <div className="flex p-4">
         {/* Blog Image */}
         <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20">
-          {blog.coverImageUrl ? (
+          {blog.coverImageUrl && !blog.coverImageUrl.includes('?text=') && blog.coverImageUrl.startsWith('http') ? (
             <img 
               className="w-full h-full rounded-lg object-cover" 
               src={blog.coverImageUrl} 
               alt={blog.title}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
             />
-          ) : (
-            <div className="w-full h-full rounded-lg bg-gray-200 flex items-center justify-center">
-              <FiFileText className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
-            </div>
-          )}
+          ) : null}
+          <div className="w-full h-full rounded-lg bg-gray-200 flex items-center justify-center" style={{display: (blog.coverImageUrl && !blog.coverImageUrl.includes('?text=') && blog.coverImageUrl.startsWith('http')) ? 'none' : 'flex'}}>
+            <FiFileText className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
+          </div>
         </div>
 
         {/* Blog Content */}
@@ -504,17 +507,20 @@ export default function BlogsAdmin() {
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div className="h-12 w-12 flex-shrink-0">
-                    {blog.coverImageUrl ? (
+                    {blog.coverImageUrl && !blog.coverImageUrl.includes('?text=') && blog.coverImageUrl.startsWith('http') ? (
                       <img 
                         className="h-12 w-12 rounded-lg object-cover" 
                         src={blog.coverImageUrl} 
                         alt={blog.title}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.parentElement.querySelector('.fallback-icon').style.display = 'flex';
+                        }}
                       />
-                    ) : (
-                      <div className="h-12 w-12 rounded-lg bg-gray-200 flex items-center justify-center">
-                        <FiFileText className="w-6 h-6 text-gray-400" />
-                      </div>
-                    )}
+                    ) : null}
+                    <div className="fallback-icon h-12 w-12 rounded-lg bg-gray-200 flex items-center justify-center" style={{display: (blog.coverImageUrl && !blog.coverImageUrl.includes('?text=') && blog.coverImageUrl.startsWith('http')) ? 'none' : 'flex'}}>
+                      <FiFileText className="w-6 h-6 text-gray-400" />
+                    </div>
                   </div>
                   <div className="ml-4">
                     <div className="text-[1.0625rem] font-medium text-gray-900 max-w-xs truncate">

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { listProductsApi } from '../../features/product/api';
 import Card from './Card';
+import { getProductImage } from '../../utils/imageValidation';
 
 const Explore = ({ currentProduct }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -158,12 +159,8 @@ const Explore = ({ currentProduct }) => {
           {/* Gap-[17px] provides exact spacing for 5 cards */}
           <div className="flex gap-[17px] min-w-max">
             {randomProducts.map((product, index) => {
-              // Get the first available image using the correct structure
-              const productImage = product.heroImage?.url || 
-                                 product.heroImage || 
-                                 product.gallery?.[0]?.url || 
-                                 product.gallery?.[0] || 
-                                 'https://via.placeholder.com/300x300?text=No+Image';
+              // Get the first available image using utility function
+              const productImage = getProductImage(product, '/placeholder.webp');
               
               // Get the price - prefer variant price over base price
               const productPrice = product.variants?.[0]?.price || 
@@ -177,6 +174,7 @@ const Explore = ({ currentProduct }) => {
               return (
                 <div key={product._id || `explore-product-${index}`} className="w-[260px] flex-shrink-0">
                   <Card 
+                    product={product}
                     img={productImage}
                     title={product.name}
                     price={productPrice ? `₹${productPrice.toLocaleString('en-IN')}` : 'Price on Request'}

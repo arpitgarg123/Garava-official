@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { CiHeart } from 'react-icons/ci';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { getProductImage } from '../utils/imageValidation';
 import { 
   selectWishlistProducts, 
   selectIsWishlistLoading, 
@@ -196,26 +197,8 @@ const Wishlist = () => {
                 variant.stockStatus !== 'out_of_stock'
               );
               
-              // Better image URL handling for both authenticated and guest users
-              // Backend structure: heroImage: {url, fileId}, gallery: [{url, fileId}]
-              let imageUrl = 'https://via.placeholder.com/300x300?text=No+Image';
-              
-              // Try multiple image sources in order of priority (backend structure)
-              if (product?.heroImage?.url) {
-                imageUrl = product.heroImage.url;
-              } else if (typeof product?.heroImage === 'string') {
-                imageUrl = product.heroImage;
-              } else if (product?.gallery?.[0]?.url) {
-                imageUrl = product.gallery[0].url;
-              } else if (typeof product?.gallery?.[0] === 'string') {
-                imageUrl = product.gallery[0];
-              } 
-              // Guest storage fallback (different structure)
-              else if (product?.images?.[0]?.url) {
-                imageUrl = product.images[0].url;
-              } else if (typeof product?.images?.[0] === 'string') {
-                imageUrl = product.images[0];
-              }
+              // Use utility function for image with fallback
+              const imageUrl = getProductImage(product, '/placeholder.webp');
               
               // Product image handling with fallback
               return (
@@ -230,7 +213,9 @@ const Wishlist = () => {
                       className="w-full aspect-square object-cover hover:scale-105 transition duration-300 bg-gray-200 relative z-0"
                       style={{ display: 'block', minHeight: '200px' }}
                       onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/300x300?text=No+Image';
+                        if (e.target.src !== '/placeholder.webp') {
+                          e.target.src = '/placeholder.webp';
+                        }
                       }}
                     />
                     {/* Out of Stock Overlay */}

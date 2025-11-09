@@ -318,7 +318,7 @@ const ShippingPolicy = () => {
                       <div>
                         <h4 className="font-semibold text-gray-900 text-[1.0625rem]">Customer Support</h4>
                         <p className="text-gray-600 text-[1.0625rem]">+91-7738543881</p>
-                        <p className="text-[1.0625rem] text-gray-500">Mon-Sat: 10 AM - 7 PM</p>
+                        <p className="text-[1.0625rem] text-gray-500">Mon-Sat: 10 AM - 8 PM</p>
                       </div>
                     </div>
                     

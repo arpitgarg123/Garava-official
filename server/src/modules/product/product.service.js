@@ -91,6 +91,10 @@ export const listProductsService = async ({
     // Check if product is out of stock based on variants
     const isOutOfStock = productWithRupees.variants.every(v => v.stockStatus === 'out_of_stock' || v.stock === 0);
 
+    // Use the shared image aggregation function to get all images from all sources
+    // This ensures consistency between list and detail views
+    const { heroImage, gallery } = aggregateProductImages(productWithRupees);
+
     return {
       id: productWithRupees._id,
       name: productWithRupees.name,
@@ -98,7 +102,8 @@ export const listProductsService = async ({
       type: productWithRupees.type,
       category: productWithRupees.category,
       shortDescription: productWithRupees.shortDescription,
-      heroImage: productWithRupees.heroImage,
+      heroImage: heroImage,
+      gallery: gallery, // Now includes aggregated images from all sources
       colorVariants: productWithRupees.colorVariants || [], // Add colorVariants to response
       priceRange: {
         min: Math.min(...productWithRupees.variants.map((v) => v.price)),
@@ -161,6 +166,92 @@ export const getProductByIdService = async (id) => {
   return convertProductPricesToRupees(processedProduct);
 };
 
+// Helper function to aggregate all product images from multiple sources
+const aggregateProductImages = (product) => {
+  // Initialize gallery array
+  let gallery = Array.isArray(product.gallery) ? [...product.gallery] : [];
+  
+  // Create a Set of existing fileIds and URLs for deduplication
+  const existingIdentifiers = new Set();
+  gallery.forEach(g => {
+    if (g && g.fileId) existingIdentifiers.add(g.fileId);
+    if (g && g.url) existingIdentifiers.add(g.url);
+  });
+
+  // Auto-assign hero image with fallback logic:
+  // 1. Use existing heroImage if valid
+  // 2. If no heroImage, use first gallery image
+  // 3. If no gallery, use first color variant hero image
+  let heroImage = product.heroImage;
+  const hasValidHeroImage = heroImage && (heroImage.url || typeof heroImage === 'string');
+  
+  // If no hero image, use first gallery image
+  if (!hasValidHeroImage && gallery.length > 0) {
+    heroImage = gallery[0];
+  }
+  
+  // If still no hero image, try color variants
+  if (!hasValidHeroImage && !heroImage && product.colorVariants && product.colorVariants.length > 0) {
+    const firstVariantWithHero = product.colorVariants.find(cv => cv.heroImage && cv.heroImage.url);
+    if (firstVariantWithHero) {
+      heroImage = firstVariantWithHero.heroImage;
+    }
+  }
+
+  // Add the hero image to gallery (if it exists and not already there)
+  if (heroImage) {
+    const heroImageObj = typeof heroImage === 'string' 
+      ? { url: heroImage } 
+      : heroImage;
+    
+    if (heroImageObj.url) {
+      const isDuplicate = (heroImageObj.fileId && existingIdentifiers.has(heroImageObj.fileId)) ||
+                         existingIdentifiers.has(heroImageObj.url);
+      
+      if (!isDuplicate) {
+        gallery.unshift(heroImageObj); // Add hero image at the beginning
+        if (heroImageObj.fileId) existingIdentifiers.add(heroImageObj.fileId);
+        existingIdentifiers.add(heroImageObj.url);
+      }
+    }
+  }
+
+  // Add all color variant images to gallery
+  if (product.colorVariants && product.colorVariants.length > 0) {
+    product.colorVariants.forEach(cv => {
+      // Add color variant hero images
+      if (cv.heroImage && cv.heroImage.url) {
+        const isDuplicate = (cv.heroImage.fileId && existingIdentifiers.has(cv.heroImage.fileId)) ||
+                           existingIdentifiers.has(cv.heroImage.url);
+        
+        if (!isDuplicate) {
+          gallery.push(cv.heroImage);
+          if (cv.heroImage.fileId) existingIdentifiers.add(cv.heroImage.fileId);
+          existingIdentifiers.add(cv.heroImage.url);
+        }
+      }
+      
+      // Add all color variant gallery images
+      if (cv.gallery && Array.isArray(cv.gallery) && cv.gallery.length > 0) {
+        cv.gallery.forEach(gImg => {
+          if (gImg && gImg.url) {
+            const isDuplicate = (gImg.fileId && existingIdentifiers.has(gImg.fileId)) ||
+                               existingIdentifiers.has(gImg.url);
+            
+            if (!isDuplicate) {
+              gallery.push(gImg);
+              if (gImg.fileId) existingIdentifiers.add(gImg.fileId);
+              existingIdentifiers.add(gImg.url);
+            }
+          }
+        });
+      }
+    });
+  }
+
+  return { heroImage, gallery };
+};
+
 // Helper function to process product details
 const processProductDetails = (product) => {
 
@@ -175,8 +266,13 @@ const processProductDetails = (product) => {
     id: variant._id?.toString() || variant._id // Add id as alias
   }));
 
+  // Use the shared image aggregation function
+  const { heroImage, gallery } = aggregateProductImages(product);
+
   return {
     ...product,
+    heroImage,
+    gallery,
     variants: processedVariants,
     totalStock,
     isOutOfStock,
