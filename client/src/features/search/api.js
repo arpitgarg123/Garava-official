@@ -51,7 +51,7 @@ export const getPopularSearchesApi = () => {
   return Promise.resolve([
     'Diamond Rings',
     'Gold Earrings',
-    'Wedding Jewelry',
+    'Wedding Jewellery',
     'Fragrance Collection',
     'Silver Pendants',
     'Bracelets',
@@ -79,8 +79,8 @@ export const getSearchSuggestionsApi = (query) => {
     'Fragrance Collection',
     'Perfumes for Women',
     'Perfumes for Men',
-    'Daily Wear Jewelry',
-    'Party Wear Jewelry',
+    'Daily Wear Jewellery',
+    'Party Wear Jewellery',
     'Bracelets',
     'Bangles',
     'Necklaces'

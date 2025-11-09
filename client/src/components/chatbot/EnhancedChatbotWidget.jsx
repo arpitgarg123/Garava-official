@@ -38,7 +38,7 @@ export default function EnhancedChatbotWidget({
     "How do I track my order?",
     "What materials do you use?", 
     "What's your return policy?",
-    "How do I care for jewelry?",
+    "How do I care for Jewellery?",
     "Do you ship internationally?",
     "How to book an appointment?"
   ],
@@ -75,7 +75,7 @@ export default function EnhancedChatbotWidget({
     if (messages.length === 0) {
       dispatch(addMessage({
         role: 'bot',
-        text: "Hi! I'm your Garava assistant. I can help you with questions about our jewelry, fragrances, orders, shipping, and more. What would you like to know? ✨",
+        text: "Hi! I'm your Garava assistant. I can help you with questions about our Jewellery, fragrances, orders, shipping, and more. What would you like to know? ✨",
         timestamp: Date.now()
       }));
     }
@@ -130,7 +130,7 @@ export default function EnhancedChatbotWidget({
     setTimeout(() => {
       dispatch(addMessage({
         role: 'bot',
-        text: "Hi! I'm your Garava assistant. I can help you with questions about our jewelry, fragrances, orders, shipping, and more. What would you like to know? ✨",
+        text: "Hi! I'm your Garava assistant. I can help you with questions about our Jewellery, fragrances, orders, shipping, and more. What would you like to know? ✨",
         timestamp: Date.now()
       }));
     }, 100);

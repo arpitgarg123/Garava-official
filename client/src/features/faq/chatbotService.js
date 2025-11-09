@@ -117,9 +117,9 @@ export class FAQChatbotService {
    */
   handleGreeting() {
     const greetings = [
-      "Hello! 👋 I'm your Garava assistant. I'm here to help you with questions about our jewelry, fragrances, shipping, and more. What would you like to know?",
+      "Hello! 👋 I'm your Garava assistant. I'm here to help you with questions about our Jewellery, fragrances, shipping, and more. What would you like to know?",
       "Hi there! ✨ Welcome to Garava. I can help you find information about our products, orders, shipping, and policies. How can I assist you today?",
-      "Hey! 💎 Great to see you at Garava. I'm here to answer your questions about our luxury jewelry and fragrances. What can I help you with?"
+      "Hey! 💎 Great to see you at Garava. I'm here to answer your questions about our luxury Jewellery and fragrances. What can I help you with?"
     ];
     
     return {
@@ -149,11 +149,11 @@ export class FAQChatbotService {
     return {
       text: `I can help you with information about:
 
-🔹 **Products**: Jewelry collections, fragrances, materials, sizing
+🔹 **Products**: Jewellery collections, fragrances, materials, sizing
 🔹 **Orders**: Order status, tracking, modifications
 🔹 **Shipping**: Delivery times, costs, locations
 🔹 **Returns**: Return policy, exchanges, refunds
-🔹 **Care**: How to care for your jewelry and fragrances
+🔹 **Care**: How to care for your Jewellery and fragrances
 🔹 **General**: Store information, appointments, contact details
 
 Just ask me anything! For example: "How do I track my order?" or "What materials do you use?"`

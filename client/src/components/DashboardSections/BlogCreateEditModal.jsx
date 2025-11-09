@@ -445,7 +445,7 @@ export default function BlogCreateEditModal() {
                     }`}
                   >
                     <option value="">Select Category</option>
-                    <option value="jewelry">Jewelry</option>
+                    <option value="Jewellery">Jewellery</option>
                     <option value="fragrance">Fragrance</option>
                     <option value="lifestyle">Lifestyle</option>
                     <option value="guide">Guide</option>

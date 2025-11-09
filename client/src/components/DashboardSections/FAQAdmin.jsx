@@ -745,7 +745,7 @@ const FAQCreateModal = () => {
               type="text"
               value={formData.keywords}
               onChange={(e) => setFormData({...formData, keywords: e.target.value})}
-              placeholder="jewelry, ring, gold, price..."
+              placeholder="Jewellery, ring, gold, price..."
               className="w-full px-3 py-2 border border-gray-300  outline-none"
             />
           </div>
@@ -953,7 +953,7 @@ const CSVUploadPanel = ({ onClose }) => {
     const template = `question,answer,category,priority,keywords
 "How do I track my order?","You can track your order using the tracking number sent to your email.","orders",8,"track,order,shipping,status"
 "What is your return policy?","We offer 30-day returns for unworn items in original condition.","returns",9,"return,refund,policy,exchange"
-"How do I care for gold jewelry?","Clean with mild soap and soft brush. Store in a dry place.","care",7,"care,gold,cleaning,maintenance"`;
+"How do I care for gold Jewellery?","Clean with mild soap and soft brush. Store in a dry place.","care",7,"care,gold,cleaning,maintenance"`;
 
     const blob = new Blob([template], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);

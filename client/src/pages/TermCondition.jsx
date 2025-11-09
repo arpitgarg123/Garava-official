@@ -162,7 +162,7 @@ const TermsAndConditions = () => {
                       <li>Product images are for illustration purposes</li>
                       <li>Natural materials may have slight variations</li>
                       <li>Gemstone characteristics are as described</li>
-                      <li>All jewelry comes with authenticity certificates</li>
+                      <li>All Jewellery comes with authenticity certificates</li>
                     </ul>
                   </div>
                 </div>

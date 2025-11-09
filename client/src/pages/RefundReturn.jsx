@@ -26,7 +26,7 @@ const RefundReturn = () => {
                 Refund & Returns
               </h1>
               <p className="text-gray-600 text-[1.0625rem]  max-w-2xl mx-auto">
-                Learn about our return and refund policy for fragrances and jewelry. Please read carefully as different terms apply to different product categories.
+                Learn about our return and refund policy for fragrances and Jewellery. Please read carefully as different terms apply to different product categories.
               </p>
             </div>
           </div>
@@ -48,15 +48,15 @@ const RefundReturn = () => {
                 </div>
               </section>
 
-              {/* Jewelry Policy */}
+              {/* Jewellery Policy */}
               <section className="border-b border-gray-100 pb-8">
                 <h2 className="text-xl sm:text-3xl font-semibold text-gray-900 mb-6 flex items-center">
                   <span className="w-2 h-8 bg-gradient-to-b from-gray-400 to-gray-500 rounded-full mr-3"></span>
-                  Jewelry
+                  Jewellery
                 </h2>
                 <div className="prose max-w-none text-gray-700">
                   <p className="mb-4 text-[1.0625rem]  leading-relaxed">
-                    Returns and refunds are only applicable for orders of jewelry already in stock. Customized orders are not applicable for return or refund.
+                    Returns and refunds are only applicable for orders of Jewellery already in stock. Customized orders are not applicable for return or refund.
                   </p>
                   
                   <div className="bg-gray-50 border border-gray-200  p-6 mb-6">
@@ -68,7 +68,7 @@ const RefundReturn = () => {
 
                   <h3 className="font-semibold text-gray-900 mb-3 text-lg">To be eligible for a return:</h3>
                   <ul className="list-disc list-inside space-y-2 text-[1.0625rem]  mb-6">
-                    <li>You should mail your query to: info@garava.in. Once your return is approved, you will be informed on how to ship the jewelry back to us. Please do not send your purchase back to Garava without informing us beforehand.</li>
+                    <li>You should mail your query to: info@garava.in. Once your return is approved, you will be informed on how to ship the Jewellery back to us. Please do not send your purchase back to Garava without informing us beforehand.</li>
                     <li>You will be responsible for paying for your own shipping costs for returning your item and the cost of insurance. The cost of return shipping will be deducted from your refund amount and shipping costs are non-refundable.</li>
                     <li>Your item must be unused and in the same condition that you received it. It must also be in the original packaging.</li>
                   </ul>
@@ -83,7 +83,7 @@ const RefundReturn = () => {
                 </h2>
                 <div className="prose max-w-none text-gray-700">
                   <p className="mb-4 text-[1.0625rem]  leading-relaxed">
-                    Follow these steps to return eligible jewelry items:
+                    Follow these steps to return eligible Jewellery items:
                   </p>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
