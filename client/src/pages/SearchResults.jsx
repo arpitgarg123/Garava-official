@@ -219,7 +219,7 @@ const SearchPage = () => {
                       setShowSuggestions(false);
                     }
                   }}
-                  placeholder="Search for jewelry, fragrance..."
+                  placeholder="Search for Jewellery, fragrance..."
                   className="block w-full pl-10 pr-12 py-3 outline-none border border-gray-300 rounded-xl  focus:border-transparent bg-white text-gray-900 placeholder-gray-500 transition-all duration-200"
                 />
                 {inputQuery && (
@@ -587,7 +587,7 @@ const SearchPage = () => {
                 Discover Amazing Products
               </h2>
               <p className="text-gray-600 mb-8">
-                Search through our collection of premium jewelry and fragrances
+                Search through our collection of premium Jewellery and fragrances
               </p>
               
               {/* Popular Searches */}

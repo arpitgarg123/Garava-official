@@ -1,7 +1,7 @@
 # Image Display Issue - Root Cause Analysis & Solutions
 
 ## Issue Summary
-Products show images correctly on detail pages but display "No Image" placeholder or broken images on listing pages (home, jewelry, fragrance sections).
+Products show images correctly on detail pages but display "No Image" placeholder or broken images on listing pages (home, Jewellery, fragrance sections).
 
 ---
 

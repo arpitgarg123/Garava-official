@@ -2,7 +2,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { forwardRef, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -23,13 +22,7 @@ const Card = forwardRef(({ title, subtitle, img, hotspotSize = "40%", link }, re
         onClick={handleShopNow}
       >
   <div className="w-full h-[300px] sm:h-[400px] sm:w-full lg:w-[450px] lg:h-[500px] xl:w-[450px] xl:h-[500px] relative">
-         <motion.div
-          initial={{ scale: 1.1, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          viewport={{ once: true }}
-          className="relative w-full h-full"
-        >
+         <div className="relative w-full h-full">
           <img
             src={img}
             alt={`${title} - ${subtitle}`}
@@ -37,7 +30,7 @@ const Card = forwardRef(({ title, subtitle, img, hotspotSize = "40%", link }, re
             draggable="false"
             loading="lazy"
           />
-          </motion.div>
+          </div>
           
         </div>
       </article>

@@ -12,7 +12,7 @@
     "dev:client": "cd client && npm run dev",
     "render-build": "cd server && npm run render-build"
   },
-  "keywords": ["ecommerce", "jewelry", "react", "node.js", "express", "mongodb"],
+  "keywords": ["ecommerce", "Jewellery", "react", "node.js", "express", "mongodb"],
   "author": "",
   "license": "ISC"
 }

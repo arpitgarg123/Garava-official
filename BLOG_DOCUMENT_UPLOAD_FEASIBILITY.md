@@ -264,7 +264,7 @@ export async function analyzeContentWithAI(text) {
 1. A concise title (max 10 words)
 2. A brief excerpt/summary (max 200 chars)
 3. 5-7 relevant tags
-4. The most suitable category (choose from: Technology, Fashion, Jewelry, Lifestyle, News, Tutorial, Review)
+4. The most suitable category (choose from: Technology, Fashion, Jewellery, Lifestyle, News, Tutorial, Review)
 5. SEO meta title (max 60 chars)
 6. SEO meta description (max 160 chars)
 

@@ -120,7 +120,7 @@ const BlogList = ({ showHeader = true, limit = 12 }) => {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="">All Categories</option>
-                      <option value="Jewelry">Jewelry</option>
+                      <option value="Jewellery">Jewellery</option>
                       <option value="Fragrance">Fragrance</option>
                       <option value="Lifestyle">Lifestyle</option>
                       <option value="Tips">Tips</option>

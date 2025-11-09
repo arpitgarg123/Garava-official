@@ -113,7 +113,7 @@ const ProductCard = ({
       }
     }
     
-    // Default jewelry colors
+    // Default Jewellery colors
     if (colors.length === 0 && (
       product.category?.toLowerCase() === "jewellery" || 
       product.type?.toLowerCase() === "jewellery"

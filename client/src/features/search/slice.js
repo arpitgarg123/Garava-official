@@ -20,7 +20,7 @@ export const getSearchSuggestions = createAsyncThunk(
       'Gold Earrings',
       'Silver Pendants',
       'Fragrance Collection',
-      'Wedding Jewelry',
+      'Wedding Jewellery',
       'Daily Wear'
     ].filter(item => 
       item.toLowerCase().includes(query.toLowerCase())
@@ -66,7 +66,7 @@ const searchSlice = createSlice({
     popularSearches: [
       'Diamond Rings',
       'Gold Earrings',
-      'Wedding Jewelry',
+      'Wedding Jewellery',
       'Fragrance Collection',
       'Silver Pendants',
       'Bracelets'

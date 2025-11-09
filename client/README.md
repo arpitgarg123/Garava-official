@@ -41,7 +41,7 @@ nav fix✅
 create chatbot ✅
 product details product gallery ✅
 navbar responsive links are not active✅
-create high jewelry page ✅
+create high Jewellery page ✅
 
 
 

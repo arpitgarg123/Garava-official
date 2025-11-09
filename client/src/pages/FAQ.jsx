@@ -48,8 +48,8 @@ const FAQ = () => {
       questions: [
        
         {
-          question: "What metals do you use for jewelry?",
-          answer: "Our jewelry is crafted from premium materials including 925 Sterling Silver, 14K and 18K Gold (Yellow, White, and Rose), and Platinum. All metals are clearly specified in each product description."
+          question: "What metals do you use for Jewellery?",
+          answer: "Our Jewellery is crafted from premium materials including 925 Sterling Silver, 14K and 18K Gold (Yellow, White, and Rose), and Platinum. All metals are clearly specified in each product description."
         },
         {
           question: "How do I determine my ring size?",
@@ -94,8 +94,8 @@ const FAQ = () => {
           answer: "Our customer support team is available via email, phone, or live chat. Visit our Contact page for all support options. We typically respond to inquiries within one business day."
         },
         {
-          question: "Do you offer appointments for jewelry consultation?",
-          answer: "Yes! We offer virtual and in-person consultations for jewelry selection, custom pieces, and sizing assistance. Book an appointment through your account or contact us directly to schedule."
+          question: "Do you offer appointments for Jewellery consultation?",
+          answer: "Yes! We offer virtual and in-person consultations for Jewellery selection, custom pieces, and sizing assistance. Book an appointment through your account or contact us directly to schedule."
         }
       ]
     },
@@ -103,16 +103,16 @@ const FAQ = () => {
       category: "Care & Maintenance",
       questions: [
         {
-          question: "How do I care for my jewelry?",
-          answer: "Store jewelry in individual pouches to prevent scratching. Clean with a soft cloth and mild soap solution. Avoid exposure to chemicals, perfumes, and extreme temperatures. Professional cleaning is recommended annually."
+          question: "How do I care for my Jewellery?",
+          answer: "Store Jewellery in individual pouches to prevent scratching. Clean with a soft cloth and mild soap solution. Avoid exposure to chemicals, perfumes, and extreme temperatures. Professional cleaning is recommended annually."
         },
         {
           question: "How should I store my fragrances?",
           answer: "Keep fragrances in a cool, dry place away from direct sunlight and heat. Store bottles upright and avoid temperature fluctuations. Properly stored fragrances maintain their quality for 3-5 years."
         },
         {
-          question: "Is my jewelry covered under warranty?",
-          answer: "All GARAVA jewelry comes with a 1-year warranty covering manufacturing defects. This includes stone settings, clasps, and structural integrity. Normal wear and tear, damage from misuse, or accidents are not covered."
+          question: "Is my Jewellery covered under warranty?",
+          answer: "All GARAVA Jewellery comes with a 1-year warranty covering manufacturing defects. This includes stone settings, clasps, and structural integrity. Normal wear and tear, damage from misuse, or accidents are not covered."
         }
       ]
     }

@@ -4,7 +4,7 @@ import BackButton from "../../components/BackButton";
 import { formatDate } from "../../utils/FormatDate";
 
 const DEFAULT_POST = {
-  category: "Jewelry",
+  category: "Jewellery",
   title: "How to Secretly Find Out Your Partner’s Ring Size for a Surprise Proposal",
   postedBy: { name: "Garava", avatar: "https://ui-avatars.com/api/?name=G&background=random" },
   publishedAt: "2025-07-12T00:00:00.000Z",

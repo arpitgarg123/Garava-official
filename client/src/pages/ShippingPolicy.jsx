@@ -74,7 +74,7 @@ const ShippingPolicy = () => {
                         <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414-1.414L9 5.586 7.707 4.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4a1 1 0 00-1.414-1.414L11 3.586l-1.293 1.293z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <h3 className="font-semibold text-gray-900 mb-3">Jewelry & Fragrance</h3>
+                    <h3 className="font-semibold text-gray-900 mb-3">Jewellery & Fragrance</h3>
                     <p className="text-[1.0625rem] text-gray-800 mb-3">
                       Once the order is ready it will be delivered within 3-5 working days. A tracking number will be shared.
                     </p>

@@ -8,7 +8,7 @@ const blogs = [
   {
     id: 1,
     image: blogImage,
-    category: "Jewelry",
+    category: "Jewellery",
     date: "29 Jun 2025",
     author: "Garava",
     title: "How to Secretly Find Out Your Partner’s Ring ",

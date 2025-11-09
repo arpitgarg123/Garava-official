@@ -87,7 +87,7 @@ const ProductAccordion = ({ product }) => {
       });
     }
     
-    // Size Guide section (for jewelry)
+    // Size Guide section (for Jewellery)
     if (structured.sizeGuide) {
       sections.push({
         title: "Size Guide",

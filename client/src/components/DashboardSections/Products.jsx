@@ -401,7 +401,7 @@ export default function Products() {
           >
             <option value="">All Categories</option>
             <option value="fragrance">Fragrance</option>
-            <option value="jewelry">Jewelry</option>
+            <option value="Jewellery">Jewellery</option>
             <option value="essentials">Essentials</option>
           </select>
           
@@ -485,7 +485,7 @@ export default function Products() {
               >
                 <option value="">All Categories</option>
                 <option value="fragrance">Fragrance</option>
-                <option value="jewelry">Jewelry</option>
+                <option value="Jewellery">Jewellery</option>
                 <option value="essentials">Essentials</option>
               </select>
             </div>
