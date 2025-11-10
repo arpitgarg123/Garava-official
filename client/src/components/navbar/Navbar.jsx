@@ -15,10 +15,10 @@ import lightLogo from '../../assets/images/light-logo.png';
 import darkLogo from '../../assets/images/logo-main.png';
 
 // Jewellery images
-import jewellry1 from '../../assets/images/earring.webp';
+import jewellry1 from '../../assets/images/earring.jpg';
 import jewellry2 from '../../assets/images/jewellry2.webp';
 import jewellry from '../../assets/images/jewellry1.webp';
-import jewellry3 from '../../assets/images/pendent.webp';
+import jewellry3 from '../../assets/images/pendant.jpg';
 import jewellry4 from '../../assets/images/jewellry4.png';
 import jewellry5 from '../../assets/images/ring.jpg';
 import jewellry6 from '../../assets/images/bracelet.jpg';
