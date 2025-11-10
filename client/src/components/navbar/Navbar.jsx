@@ -20,6 +20,8 @@ import jewellry2 from '../../assets/images/jewellry2.webp';
 import jewellry from '../../assets/images/jewellry1.webp';
 import jewellry3 from '../../assets/images/pendent.webp';
 import jewellry4 from '../../assets/images/jewellry4.png';
+import jewellry5 from '../../assets/images/ring.jpg';
+import jewellry6 from '../../assets/images/bracelet.jpg';
 
 // Fragrance images
 import silaImg from '../../assets/images/sila.webp';
@@ -33,6 +35,18 @@ import { selectCartItemCount } from '../../features/cart/selectors.js';
 
 const navItems = [
   { title: 'jewellery', to: '/products/jewellery', submenu: [
+    { 
+        label: 'Rings', 
+        img: jewellry5, 
+        to: '/products/jewellery?category=rings',
+        category: 'rings'
+      },
+      { 
+        label: 'Bracelets', 
+        img: jewellry6, 
+        to: '/products/jewellery?category=bracelets',
+        category: 'bracelets'
+      },
     { 
         label: 'Earrings', 
         img: jewellry1, 
@@ -169,7 +183,7 @@ const MobileNavItem = ({ item, onNavigate }) => {
             <button
               key={idx}
               onClick={() => handleSubItemClick(subItem)}
-              className="block w-full text-left text-[1.0625rem] text-gray-600 hover:text-black transition-colors py-1"
+              className="block w-full  text-left text-[1.0625rem] text-gray-600 hover:text-black transition-colors py-1"
             >
               {subItem.label}
             </button>
@@ -556,7 +570,17 @@ const Navbar = () => {
        }
 
         {/* {shouldShowNavItemsDesktop && ( */}
-          <div className="flex-center  ">
+          <div className="flex-center">
+            <div 
+              className='w-fit flex'
+              onMouseEnter={() => {
+                // Show submenu container when hovering over entire nav area
+                if (!hovered && navItems.length > 0) {
+                  setHovered(navItems[0].title);
+                }
+              }}
+              onMouseLeave={() => setHovered(null)}
+            >
             {navItems.map((item, idx) => (
               <NavItem
                 key={idx}
@@ -565,6 +589,7 @@ const Navbar = () => {
                 setHovered={setHovered}
               />
             ))}
+          </div>
           </div>
         {/* )} */}
       </nav>
