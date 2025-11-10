@@ -41,12 +41,7 @@ const navItems = [
         to: '/products/jewellery?category=rings',
         category: 'rings'
       },
-      { 
-        label: 'Bracelets', 
-        img: jewellry6, 
-        to: '/products/jewellery?category=bracelets',
-        category: 'bracelets'
-      },
+     
     { 
         label: 'Earrings', 
         img: jewellry1, 
@@ -60,7 +55,12 @@ const navItems = [
         to: '/products/jewellery?category=pendants',
         category: 'pendants'
       },
-       
+        { 
+        label: 'Bracelets', 
+        img: jewellry6, 
+        to: '/products/jewellery?category=bracelets',
+        category: 'bracelets'
+      },
      ]},
   { title: 'HIGH JEWELLERY', to: '/products/high-jewellery', submenu: [
     { 
@@ -413,7 +413,7 @@ const Navbar = () => {
        {
         shouldShowNavItemsDesktop && (
            <div className="navTop relative px-10">
-          <div className="flex justify-between w-89  max-xl:w-72 max-lg:w-64 font-light">
+          <div className="flex justify-between w-89   max-xl:w-89 max-lg:w-89 font-light">
    
 
 <div className='flex items-center justify-center'>
