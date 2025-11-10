@@ -572,13 +572,7 @@ const Navbar = () => {
         {/* {shouldShowNavItemsDesktop && ( */}
           <div className="flex-center">
             <div 
-              className='w-fit flex'
-              onMouseEnter={() => {
-                // Show submenu container when hovering over entire nav area
-                if (!hovered && navItems.length > 0) {
-                  setHovered(navItems[0].title);
-                }
-              }}
+              className='flex items-center justify-center gap-8'
               onMouseLeave={() => setHovered(null)}
             >
             {navItems.map((item, idx) => (

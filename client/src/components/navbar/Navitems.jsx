@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 const NavItem = ({ item, hovered, setHovered, isMobile = false, onNavigate = () => {} }) => {
   const hasSubmenu = item.submenu && item.submenu.length > 0;
   const [submenuTop, setSubmenuTop] = useState(130);
+  const [selectedCategory, setSelectedCategory] = useState('ALL COLLECTIONS');
   const navigate = useNavigate();
 
   const isOpenMobile = isMobile && hovered === item.title;
@@ -49,12 +50,12 @@ const handleToggleMobile = () => {
 
   return (
     <div
-      className={`relative nav-items ${isMobile ? 'py-0' : 'py-3'} group`}
+      className={`relative nav-items ${isMobile ? 'py-0' : 'py-2'} group`}
       onMouseEnter={handleEnter}
     >
       {/* Trigger */}
       <button
-        className="uppercase w-full cursor-pointer text-left z-50 font-medium text-[1.0625rem] tracking-wide flex items-center justify-between px-3"
+        className="uppercase cursor-pointer text-left z-50 font-normal text-sm tracking-[0.1em] flex items-center justify-center px-4 py-2 hover:opacity-70 transition-opacity duration-200"
         onClick={isMobile ? handleToggleMobile : handleDesktopClick}
         aria-expanded={isMobile ? !!isOpenMobile : hovered === item.title}
         aria-controls={isMobile ? `${item.title}-submenu` : undefined}
@@ -62,7 +63,7 @@ const handleToggleMobile = () => {
         <span className="whitespace-nowrap">{item.title}</span>
       </button>
 
-      {!isMobile && (
+      {!isMobile  && (
         <div className="absolute bottom-2 left-0 w-full h-[1.5px] bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
       )}
 
@@ -73,30 +74,73 @@ const handleToggleMobile = () => {
             <>
               {/* <div className="absolute left-0 h-8 w-full  -bottom-8 bg-red-500" /> */}
               <motion.div
-                initial={{ opacity: 0 }}
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="submenu-container w-full h-[19vw] fixed  bg-white  max-xl:h-[24vw] text-black left-0 -top-36 py-8 "
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="submenu-container w-full fixed bg-white  text-black left-0 top-full py-8 z-50 border-t border-gray-200"
               >
-                <div className="max-w-7xl mx-auto flex flex-col  items-center justify-center h-full  ">
-                  <div className={`${["Maison", "Blogs", "News & Events",'jewellery', 'HIGH JEWELLERY' ].includes(item.title) ? "flex-center" : "flex items-center justify-center gap-12"}`}>
-                    {item.submenu.map((sub, i) => (
+                <div className="max-w-4xl mx-auto  px-8">
+                  {/* Category Tabs */}
+                  {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && (
+                    <div className="flex items-center  justify-around mb-6 pb-4 border-b border-gray-200 overflow-x-auto">
+                      <button
+                        onMouseEnter={() => setSelectedCategory('ALL COLLECTIONS')}
+                        className={`text-sm font-semibold tracking-[0.2em] uppercase whitespace-nowrap pb-2 transition-all ${
+                          selectedCategory === 'ALL COLLECTIONS' 
+                            ? 'border-b-2 border-black' 
+                            : 'hover:opacity-70'
+                        }`}
+                      >
+                        ALL COLLECTIONS
+                      </button>
+                      {item.submenu.map((sub, idx) => (
+                        <button
+                          key={idx}
+                          onMouseEnter={() => setSelectedCategory(sub.label)}
+                          className={`text-sm font-normal tracking-[0.15em] uppercase whitespace-nowrap pb-2 transition-all ${
+                            selectedCategory === sub.label 
+                              ? 'border-b-2 border-black font-semibold' 
+                              : 'hover:opacity-70'
+                          }`}
+                        >
+                          {sub.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  
+                  {/* Submenu items grid - filtered by selected category */}
+                  <div className={`flex-center ${
+                    ['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) 
+                      ? 'grid-cols-6 gap-8' 
+                      : ["Maison", "Blogs", "News & Events"].includes(item.title)
+                      ? 'grid-cols-2 gap-4'
+                      : 'grid-cols-6 gap-8'
+                  }`}>
+                    {(selectedCategory === 'ALL COLLECTIONS' 
+                      ? item.submenu 
+                      : item.submenu.filter(sub => sub.label === selectedCategory)
+                    ).map((sub, i) => (
                       <Submenu key={i} sub={sub} parentTitle={item.title} />
                     ))}
                   </div>
+                  
+                  {/* View All link */}
                   {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && (
-                    <Link
-                      className="mt-2   underline tracking-wider text-[1.0625rem]"
-                      to={
-                        item.title === 'jewellery' ? '/products/jewellery'
-                        : item.title === 'Fragrance' ? '/products/fragrance'
-                        : item.title === 'HIGH JEWELLERY' ? '/products/high-jewellery'
-                        : '/products'
-                      }
-                    >
-                      View All Products
-                    </Link>
+                    <div className="mt-6 text-center">
+                      <Link
+                        className="text-xs font-medium tracking-[0.15em] uppercase underline hover:opacity-70 transition-opacity"
+                        to={
+                          item.title === 'jewellery' ? '/products/jewellery'
+                          : item.title === 'Fragrance' ? '/products/fragrance'
+                          : item.title === 'HIGH JEWELLERY' ? '/products/high-jewellery'
+                          : '/products'
+                        }
+                      >
+                        View all
+                      </Link>
+                    </div>
                   )}
                 </div>
               </motion.div>
@@ -112,10 +156,10 @@ const handleToggleMobile = () => {
     initial={false}
     animate={isOpenMobile ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
     transition={{ duration: 0.24, ease: "easeOut" }}
-    className="overflow-hidden"
+    className="overflow-hidden "
         >
-          <div className="py-3">
-            <div className="flex flex-wrap gap-4 px-2">
+          <div className="py-3 ">
+            <div className="flex flex-wrap  gap-4 px-2">
               {item.submenu.map((sub, i) => (
                 <Submenu
                   key={i}
