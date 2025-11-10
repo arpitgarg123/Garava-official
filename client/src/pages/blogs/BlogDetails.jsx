@@ -49,7 +49,9 @@ export default function BlogDetails() {
 
   useEffect(() => {
     if (slug) {
-      dispatch(fetchBlogBySlug(slug));
+      // Sanitize slug before calling API (remove leading/trailing hyphens)
+      const cleanSlug = slug.replace(/^-+|-+$/g, '');
+      dispatch(fetchBlogBySlug(cleanSlug));
     }
 
     return () => {

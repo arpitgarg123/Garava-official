@@ -156,3 +156,40 @@ export const analyzeDocument = asyncHandler(async (req, res) => {
     }
   });
 });
+
+/**
+ * Upload image for blog content (Quill editor inline images)
+ */
+export const uploadBlogImage = asyncHandler(async (req, res) => {
+  const file = req.file;
+  
+  if (!file) {
+    throw new ApiError(400, "No image file uploaded");
+  }
+
+  // Validate file type
+  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+  if (!allowedTypes.includes(file.mimetype)) {
+    throw new ApiError(400, "Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed");
+  }
+
+  // Validate file size (max 5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    throw new ApiError(400, "File size must be less than 5MB");
+  }
+
+  // Optimize and upload to ImageKit
+  const buffer = await optimizeImage(file.buffer, { width: 1200 });
+  const uploaded = await uploadToImageKitWithRetry({
+    buffer,
+    fileName: `blog_content_${Date.now()}_${file.originalname}`,
+    folder: "/blogs/content",
+  });
+
+  res.json({
+    success: true,
+    url: uploaded.url,
+    fileId: uploaded.fileId,
+    alt: file.originalname
+  });
+});
