@@ -10,8 +10,7 @@ const NavItem = ({ item, hovered, setHovered, isMobile = false, onNavigate = () 
   const navigate = useNavigate();
 
   const isOpenMobile = isMobile && hovered === item.title;
-   const handleEnter = () => !isMobile && setHovered(item.title);
-  const handleLeave = () => !isMobile && setHovered(null);
+  const handleEnter = () => !isMobile && setHovered(item.title);
   // Calculate dynamic submenu position
   useEffect(() => {
     const calculateSubmenuPosition = () => {
@@ -50,19 +49,17 @@ const handleToggleMobile = () => {
 
   return (
     <div
-      className={`relative nav-items  ${isMobile ? 'py-0' : 'py-3'} group`}
+      className={`relative nav-items ${isMobile ? 'py-0' : 'py-3'} group`}
       onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
     >
       {/* Trigger */}
       <button
-        className="uppercase w-full cursor-pointer  text-left z-50 font-medium text-[1.0625rem] tracking-wide flex items-center justify-between"
+        className="uppercase w-full cursor-pointer text-left z-50 font-medium text-[1.0625rem] tracking-wide flex items-center justify-between px-3"
         onClick={isMobile ? handleToggleMobile : handleDesktopClick}
         aria-expanded={isMobile ? !!isOpenMobile : hovered === item.title}
         aria-controls={isMobile ? `${item.title}-submenu` : undefined}
       >
         <span className="whitespace-nowrap">{item.title}</span>
-      
       </button>
 
       {!isMobile && (
@@ -82,7 +79,7 @@ const handleToggleMobile = () => {
                 transition={{ duration: 0.2 }}
                 className="submenu-container w-full h-[19vw] fixed  bg-white  max-xl:h-[24vw] text-black left-0 -top-36 py-8 "
               >
-                <div className="max-w-7xl mx-auto flex flex-col  items-center justify-center h-full ">
+                <div className="max-w-7xl mx-auto flex flex-col  items-center justify-center h-full  ">
                   <div className={`${["Maison", "Blogs", "News & Events",'jewellery', 'HIGH JEWELLERY' ].includes(item.title) ? "flex-center" : "flex items-center justify-center gap-12"}`}>
                     {item.submenu.map((sub, i) => (
                       <Submenu key={i} sub={sub} parentTitle={item.title} />

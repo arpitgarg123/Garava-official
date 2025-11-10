@@ -233,5 +233,6 @@ export function generateSlug(title) {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .slice(0, 100)
-    .trim();
+    .trim()
+    .replace(/^-+|-+$/g, ''); // Remove leading and trailing hyphens
 }

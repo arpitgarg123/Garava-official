@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineClose, AiOutlineUpload, AiOutlineEye } from "react-icons/ai";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './BlogEditor.css';
 import '../../utils/quillImageResize';
+import { createImageHandler } from '../../utils/quillImageUploadHandler';
 import {
   createBlogAdmin,
   updateBlogAdmin,
@@ -219,6 +220,9 @@ export default function BlogCreateEditModal() {
       setIsAnalyzing(false);
     }
   };
+
+  // Custom image handler for Quill editor
+  const imageHandler = useMemo(() => createImageHandler(quillRef), []);
 
   const validateForm = () => {
     const errors = {};
@@ -577,16 +581,21 @@ export default function BlogCreateEditModal() {
     onChange={handleContentChange}
     placeholder="Write your blog content here..."
     modules={{
-      toolbar: [
-        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        [{ 'indent': '-1'}, { 'indent': '+1' }],
-        [{ 'color': [] }, { 'background': [] }],
-        [{ 'align': [] }],
-        ['link', 'image'],
-        ['clean']
-      ],
+      toolbar: {
+        container: [
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          [{ 'indent': '-1'}, { 'indent': '+1' }],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'align': [] }],
+          ['link', 'image'],
+          ['clean']
+        ],
+        handlers: {
+          image: imageHandler
+        }
+      },
       imageResize: {
         minWidth: 50,
         maxWidth: 800,

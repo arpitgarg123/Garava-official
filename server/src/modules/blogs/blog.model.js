@@ -52,4 +52,13 @@ blogSchema.index({ status: 1, publishAt: 1 }); // Published blogs by date
 blogSchema.index({ category: 1, status: 1 }); // Blogs by category and status  
 blogSchema.index({ author: 1, status: 1 }); // Author's blogs by status
 
+// Pre-save hook to sanitize slug
+blogSchema.pre('save', function(next) {
+  if (this.isModified('slug') && this.slug) {
+    // Remove leading and trailing hyphens from slug
+    this.slug = this.slug.replace(/^-+|-+$/g, '');
+  }
+  next();
+});
+
 export default mongoose.model("Blog", blogSchema);
