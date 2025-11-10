@@ -11,6 +11,7 @@ import {
   getBlogByIdAdmin,
   setStatus,
   analyzeDocument,
+  uploadBlogImage,
 } from "./blog.admin.controller.js";
 
 const router = express.Router();
@@ -42,6 +43,13 @@ router.post(
   "/analyze-document",
   documentUploadMiddleware.single("document"),
   analyzeDocument
+);
+
+// upload image for blog content (inline images in Quill editor)
+router.post(
+  "/upload-image",
+  uploadMiddleware.single("image"),
+  uploadBlogImage
 );
 
 export default router;

@@ -136,4 +136,13 @@ export const blogAdminAPI = {
       },
     });
   },
+
+  // Upload image for blog content (Quill editor)
+  uploadImage: (formData) => {
+    return http.post('/admin/blog/upload-image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
 };
