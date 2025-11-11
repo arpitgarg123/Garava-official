@@ -55,7 +55,7 @@ const handleToggleMobile = () => {
     >
       {/* Trigger */}
       <button
-        className="uppercase cursor-pointer text-left z-50 font-normal text-sm tracking-[0.1em] flex items-center justify-center px-4 py-2 hover:opacity-70 transition-opacity duration-200"
+        className="uppercase cursor-pointer text-left z-50 font-normal text-[17px] tracking-[0.1em] flex items-center justify-center px-4 py-2 hover:opacity-70 transition-opacity duration-200"
         onClick={isMobile ? handleToggleMobile : handleDesktopClick}
         aria-expanded={isMobile ? !!isOpenMobile : hovered === item.title}
         aria-controls={isMobile ? `${item.title}-submenu` : undefined}
@@ -83,7 +83,7 @@ const handleToggleMobile = () => {
                 <div className="max-w-4xl mx-auto  px-8">
                   {/* Category Tabs */}
                   {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && (
-                    <div className="flex items-center  justify-around mb-6 pb-4 border-b border-gray-200 overflow-x-auto">
+                    <div className="flex items-center justify-start  mb-6 pb-4 border-b border-gray-200 overflow-x-auto">
                       <button
                         onMouseEnter={() => setSelectedCategory('ALL COLLECTIONS')}
                         className={`text-sm font-semibold tracking-[0.2em] uppercase whitespace-nowrap pb-2 transition-all ${
@@ -94,19 +94,22 @@ const handleToggleMobile = () => {
                       >
                         ALL COLLECTIONS
                       </button>
-                      {item.submenu.map((sub, idx) => (
-                        <button
-                          key={idx}
-                          onMouseEnter={() => setSelectedCategory(sub.label)}
-                          className={`text-sm font-normal tracking-[0.15em] uppercase whitespace-nowrap pb-2 transition-all ${
-                            selectedCategory === sub.label 
-                              ? 'border-b-2 border-black font-semibold' 
-                              : 'hover:opacity-70'
-                          }`}
-                        >
-                          {sub.label}
-                        </button>
-                      ))}
+                      {item.submenu
+                        .filter(sub => !sub.isAllCollection) // Skip ALL COLLECTIONS items from tabs
+                        .map((sub, idx) => (
+                          <button
+                            key={idx}
+                            onMouseEnter={() => setSelectedCategory(sub.label)}
+                            className={`text-sm font-normal mx-6 tracking-[0.15em] uppercase whitespace-nowrap pb-2 transition-all ${
+                              selectedCategory === sub.label 
+                                ? 'border-b-2 border-black font-semibold' 
+                                : 'hover:opacity-70'
+                            }`}
+                          >
+                            {sub.label}
+                          </button>
+                        ))
+                      }
                     </div>
                   )}
                   
@@ -118,16 +121,74 @@ const handleToggleMobile = () => {
                       ? 'grid-cols-2 gap-4'
                       : 'grid-cols-6 gap-8'
                   }`}>
-                    {(selectedCategory === 'ALL COLLECTIONS' 
-                      ? item.submenu 
-                      : item.submenu.filter(sub => sub.label === selectedCategory)
-                    ).map((sub, i) => (
-                      <Submenu key={i} sub={sub} parentTitle={item.title} />
-                    ))}
+                    {(() => {
+                      // For jewellery ALL COLLECTIONS - show only isAllCollection items
+                      if (item.title === 'jewellery' && selectedCategory === 'ALL COLLECTIONS') {
+                        return item.submenu
+                          .filter(sub => sub.isAllCollection)
+                          .map((sub, i) => (
+                            <Submenu key={i} sub={sub} parentTitle={item.title} />
+                          ));
+                      }
+                      
+                      // For ALL COLLECTIONS (other sections) - show all items
+                      if (selectedCategory === 'ALL COLLECTIONS') {
+                        return item.submenu.flatMap((sub, i) => {
+                          // Skip isAllCollection items for non-jewellery sections
+                          if (sub.isAllCollection) return [];
+                          
+                          // If item has subcategories (like FLAME SERIES), render those
+                          if (sub.subcategories) {
+                            return sub.subcategories.map((subcat, j) => (
+                              <Submenu key={`${i}-${j}`} sub={subcat} parentTitle={item.title} />
+                            ));
+                          }
+                          // Otherwise render the item itself
+                          return <Submenu key={i} sub={sub} parentTitle={item.title} />;
+                        });
+                      }
+                      
+                      // For specific category selection (FLAME SERIES, etc.)
+                      const selectedItem = item.submenu.find(sub => sub.label === selectedCategory);
+                      
+                      // ✅ FLAME SERIES - Show "UPCOMING SERIES" message
+                      if (selectedItem?.label === 'FLAME SERIES') {
+                        return (
+                          <div className="col-span-4 text-center py-12">
+                            <h3 className="text-2xl font-semibold tracking-[0.2em] uppercase text-gray-800 mb-2">
+                              UPCOMING SERIES
+                            </h3>
+                            <p className="text-sm text-gray-600 tracking-wide">
+                              Coming Soon
+                            </p>
+                          </div>
+                        );
+                      }
+                      
+                      // ❌ COMMENTED: Original FLAME SERIES logic (will be enabled after launch)
+                      // if (selectedItem?.subcategories) {
+                      //   // Show subcategories if exists (like FLAME SERIES -> Rings, Earrings, etc.)
+                      //   return selectedItem.subcategories.map((subcat, i) => (
+                      //     <Submenu key={i} sub={subcat} parentTitle={item.title} />
+                      //   ));
+                      // }
+                      
+                      // For other categories with subcategories
+                      if (selectedItem?.subcategories) {
+                        return selectedItem.subcategories.map((subcat, i) => (
+                          <Submenu key={i} sub={subcat} parentTitle={item.title} />
+                        ));
+                      } else if (selectedItem) {
+                        // Show single selected item
+                        return <Submenu sub={selectedItem} parentTitle={item.title} />;
+                      }
+                      return null;
+                    })()}
                   </div>
                   
-                  {/* View All link */}
-                  {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && (
+                  {/* View All link - hide for FLAME SERIES */}
+                  {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && 
+                   selectedCategory !== 'FLAME SERIES' && (
                     <div className="mt-6 text-center">
                       <Link
                         className="text-xs font-medium tracking-[0.15em] uppercase underline hover:opacity-70 transition-opacity"

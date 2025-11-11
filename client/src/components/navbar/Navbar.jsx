@@ -22,6 +22,9 @@ import jewellry3 from '../../assets/images/pendant.jpg';
 import jewellry4 from '../../assets/images/jewellry4.png';
 import jewellry5 from '../../assets/images/ring.jpg';
 import jewellry6 from '../../assets/images/bracelet.jpg';
+import jewellry7 from '../../assets/images/jewellry-7.png';
+import jewellry8 from '../../assets/images/jewellry-8.png';
+import jewellry9 from '../../assets/images/jewellry-9.png';
 
 // Fragrance images
 import silaImg from '../../assets/images/sila.webp';
@@ -36,53 +39,90 @@ import { selectCartItemCount } from '../../features/cart/selectors.js';
 const navItems = [
   { title: 'jewellery', to: '/products/jewellery', submenu: [
     { 
-        label: 'Rings', 
-        img: jewellry5, 
-        to: '/products/jewellery?category=rings',
-        category: 'rings'
-      },
-     
-    { 
-        label: 'Earrings', 
-        img: jewellry1, 
-        to: '/products/jewellery?category=earrings',
-        category: 'earrings'
-      },
-     
-    { 
-        label: 'Pendants', 
-        img: jewellry3, 
-        to: '/products/jewellery?category=pendants',
-        category: 'pendants'
-      },
+      label: 'FLAME SERIES',
+      subcategories: [
         { 
-        label: 'Bracelets', 
-        img: jewellry6, 
-        to: '/products/jewellery?category=bracelets',
-        category: 'bracelets'
-      },
-     ]},
+          label: 'Rings', 
+          img: jewellry5, 
+          to: '/products/jewellery?category=rings',
+          category: 'rings'
+        },
+        { 
+          label: 'Earrings', 
+          img: jewellry1, 
+          to: '/products/jewellery?category=earrings',
+          category: 'earrings'
+        },
+        { 
+          label: 'Pendants', 
+          img: jewellry3, 
+          to: '/products/jewellery?category=pendants',
+          category: 'pendants'
+        },
+        { 
+          label: 'Bracelets', 
+          img: jewellry6, 
+          to: '/products/jewellery?category=bracelets',
+          category: 'bracelets'
+        },
+      ]
+    },
+    // ALL COLLECTIONS items (shown when ALL COLLECTIONS is selected)
+    { 
+      label: 'Classic Gold Ring', 
+      img: jewellry7, 
+      to: '/products/jewellery',
+      category: 'all-collections',
+      isAllCollection: true
+    },
+    { 
+      label: 'Diamond Necklace', 
+      img: jewellry8, 
+      to: '/products/jewellery',
+      category: 'all-collections',
+      isAllCollection: true
+    },
+    { 
+      label: 'Pearl Bracelet', 
+      img: jewellry9, 
+      to: '/products/jewellery',
+      category: 'all-collections',
+      isAllCollection: true
+    },
+    { 
+      label: 'Elegant Earrings', 
+      img: jewellry2, 
+      to: '/products/jewellery',
+      category: 'all-collections',
+      isAllCollection: true
+    },
+  ]},
   { title: 'HIGH JEWELLERY', to: '/products/high-jewellery', submenu: [
     { 
-        label: 'Daily Rrings', 
-        img: jewellry2, 
-        to: '/products/high-jewellery?category=daily-earrings',
-        category: 'daily-earrings'
-      },
-      { 
-        label: 'Solitaire Rings', 
-        img: jewellry4, 
-        to: '/products/high-jewellery?category=solitaire-rings',
-        category: 'solitaire-rings'
-      },
-      { 
-        label: 'Solitaire Studs', 
-        img: jewellry, 
-        to: '/products/high-jewellery?category=solitaire-studs',
-        category: 'solitaire-studs'
-      },
-     
-    ]},
+      label: 'Rings', 
+      img: jewellry2, 
+      to: '/products/high-jewellery?category=rings',
+      category: 'rings'
+    },
+    { 
+      label: 'Earrings', 
+      img: jewellry4, 
+      to: '/products/high-jewellery?category=earrings',
+      category: 'earrings'
+    },
+    { 
+      label: 'Bracelets', 
+      img: jewellry, 
+      to: '/products/high-jewellery?category=bracelets',
+      category: 'bracelets'
+    },
+    { 
+      label: 'Pendants', 
+      img: jewellry6, 
+      to: '/products/high-jewellery?category=pendants',
+      category: 'pendants'
+    },
+  ]},
   { title: 'Fragrance', to: '/products/fragrance', submenu: [
      { 
         label: 'Sila', 
