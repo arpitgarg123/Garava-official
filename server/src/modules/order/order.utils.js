@@ -61,11 +61,12 @@ export const generateOrderNumber = async (prefix = "GAR") => {
 };
 
 /**
- * Money helper (unchanged)
+ * Money helper - Convert rupees to paise for payment gateways
+ * Orders store amounts in RUPEES, but PhonePe requires PAISE
  */
 export const toPaise = (amount) => {
   if (amount == null) return 0;
-  // if integer already likely paise
-  if (Number.isInteger(amount) && amount > 1000) return amount;
+  // Always convert rupees to paise (multiply by 100)
+  // Orders are stored in rupees as per architecture
   return Math.round(Number(amount) * 100);
 };

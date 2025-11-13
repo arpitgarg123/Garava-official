@@ -28,7 +28,7 @@ const EventDetailPage = () => {
 
   if (loading) {
     return (
-      <div className="mt-2">
+      <div className="mt-30 max-md:mt-0 ">
         <div className="sticky top-36 z-10 mb-3">
           <BackButton />
         </div>
@@ -41,7 +41,7 @@ const EventDetailPage = () => {
 
   if (error || !event) {
     return (
-      <div className="mt-2">
+      <div className="mt-30 max-md:mt-0 ">
         <div className="sticky top-36 z-10 mb-3">
           <BackButton />
         </div>
@@ -55,8 +55,8 @@ const EventDetailPage = () => {
   }
 
   return (
-    <div className="mt-2 max-md:mt-0">
-      <div className="sticky top-36 max-md:top-7 z-10 mb-3 max-md:mb-0">
+    <div className="mt-30 max-md:mt-0 ">
+      <div className="sticky top-48 z-10 mb-3 max-md:top-10">
         <BackButton />
       </div>
       <section className="relative overflow-hidden ">
