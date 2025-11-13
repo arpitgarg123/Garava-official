@@ -68,7 +68,7 @@ export default function BlogDetails() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 mt-30 max-md:mt-0 ">
         <div className="sticky top-0 z-10 mb-3 pt-20">
           <BackButton />
         </div>
@@ -81,7 +81,7 @@ export default function BlogDetails() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 mt-30 max-md:mt-0 ">
         <div className="sticky top-0 z-10 mb-3 pt-20">
           <BackButton />
         </div>
@@ -100,7 +100,7 @@ export default function BlogDetails() {
 
   if (!blog) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 mt-30 max-md:mt-0 ">
         <div className="sticky top-0 z-10 mb-3 pt-20">
           <BackButton />
         </div>
@@ -118,12 +118,12 @@ export default function BlogDetails() {
   }
 
   return (
-    <div className="relative min-h-[100dvh] mt-2 bg-background text-foreground">
-      <div className="sticky top-35 z-10 mb-3">
+    <div className="relative min-h-[100dvh] mt-30 max-md:mt-0 bg-background text-foreground">
+      <div className="sticky top-48 z-10 mb-3 max-md:top-10">
         <BackButton />
       </div>
       <div
-        className="sticky top-0 z-30 h-1 w-full bg-gray-200"
+        className="sticky top-0 z-30 h-1 w-full "
         role="progressbar"
         aria-valuemin={0}
         aria-valuemax={100}
