@@ -115,13 +115,13 @@ const navItems = [
     },
     { 
       label: 'Earrings', 
-      img: jewellry4, 
+      img: jewellry, 
       to: '/products/high-jewellery?category=earrings',
       category: 'earrings'
     },
     { 
       label: 'Bracelets', 
-      img: jewellry, 
+      img: jewellry4, 
       to: '/products/high-jewellery?category=bracelets',
       category: 'bracelets'
     },
@@ -619,9 +619,13 @@ const Navbar = () => {
        }
 
         {/* {shouldShowNavItemsDesktop && ( */}
-          <div className="flex-center">
+          <div className="flex-center " 
+          // style={{
+          //   borderBottom: '1px solid #787878'
+          // }}
+          >
             <div 
-              className='flex items-center justify-center gap-8'
+              className='flex items-center  justify-center gap-8'
               onMouseLeave={() => setHovered(null)}
             >
             {navItems.map((item, idx) => (
