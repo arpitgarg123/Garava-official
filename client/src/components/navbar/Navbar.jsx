@@ -25,6 +25,8 @@ import jewellry6 from '../../assets/images/bracelet.jpg';
 import jewellry7 from '../../assets/images/jewellry-7.png';
 import jewellry8 from '../../assets/images/jewellry-8.png';
 import jewellry9 from '../../assets/images/jewellry-9.png';
+import jewellry10 from '../../assets/images/flame-earring.png';
+
 
 // Fragrance images
 import silaImg from '../../assets/images/sila.webp';
@@ -68,34 +70,41 @@ const navItems = [
       ]
     },
     // ALL COLLECTIONS items (shown when ALL COLLECTIONS is selected)
-    { 
-      label: 'Classic Gold Ring', 
-      img: jewellry7, 
+    {
+     label: 'Flame Series', 
+      img: jewellry10, 
       to: '/products/jewellery',
       category: 'all-collections',
-      isAllCollection: true
-    },
-    { 
-      label: 'Diamond Necklace', 
-      img: jewellry8, 
-      to: '/products/jewellery',
-      category: 'all-collections',
-      isAllCollection: true
-    },
-    { 
-      label: 'Pearl Bracelet', 
-      img: jewellry9, 
-      to: '/products/jewellery',
-      category: 'all-collections',
-      isAllCollection: true
-    },
-    { 
-      label: 'Elegant Earrings', 
-      img: jewellry2, 
-      to: '/products/jewellery',
-      category: 'all-collections',
-      isAllCollection: true
-    },
+      isAllCollection: true 
+    }
+    // { 
+    //   label: 'Classic Gold Ring', 
+    //   img: jewellry7, 
+    //   to: '/products/jewellery',
+    //   category: 'all-collections',
+    //   isAllCollection: true
+    // },
+    // { 
+    //   label: 'Diamond Earrings', 
+    //   img: jewellry8, 
+    //   to: '/products/jewellery',
+    //   category: 'all-collections',
+    //   isAllCollection: true
+    // },
+    // { 
+    // label: 'Pearl Necklace', 
+    //   img: jewellry9, 
+    //   to: '/products/jewellery',
+    //   category: 'all-collections',
+    //   isAllCollection: true
+    // },
+    // { 
+    //   label: 'Elegant Earrings', 
+    //   img: jewellry2, 
+    //   to: '/products/jewellery',
+    //   category: 'all-collections',
+    //   isAllCollection: true
+    // },
   ]},
   { title: 'HIGH JEWELLERY', to: '/products/high-jewellery', submenu: [
     { 

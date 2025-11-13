@@ -80,7 +80,7 @@ const handleToggleMobile = () => {
                 transition={{ duration: 0.3, ease: "easeOut" }}
                 className="submenu-container w-full fixed bg-white  text-black left-0 top-full py-8 z-50 border-t border-gray-200"
               >
-                <div className="max-w-4xl mx-auto  px-8">
+                <div className="max-w-5xl mx-auto  ">
                   {/* Category Tabs */}
                   {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && (
                     <div className="flex items-center justify-start  mb-6 pb-4 border-b border-gray-200 overflow-x-auto">
@@ -114,9 +114,11 @@ const handleToggleMobile = () => {
                   )}
                   
                   {/* Submenu items grid - filtered by selected category */}
-                  <div className={`flex-center ${
+                  <div style={{
+                    gap:'2.8rem'
+                  }} className={`flex-center   w-full ${
                     ['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) 
-                      ? 'grid-cols-6 gap-8' 
+                      ? 'grid-cols-6 gap-6' 
                       : ["Maison", "Blogs", "News & Events"].includes(item.title)
                       ? 'grid-cols-2 gap-4'
                       : 'grid-cols-6 gap-8'

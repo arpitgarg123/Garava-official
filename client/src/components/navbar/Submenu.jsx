@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const textOnlyMenus = ["Maison", "Blogs", "News & Events"];
@@ -15,11 +14,11 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
         </div>
       ) : (
         <div className="flex flex-col  items-center group/item">
-          <div className="relative overflow-hidde  mb-2 w-full aspect-square">
+          <div className="relative  mb-2 w-full aspect-square">
             <img
               src={sub.img}
               alt={sub.label}
-              className="h-32 w-32 sm:w-48 sm:h-48 object-cover transition-transform duration-700 ease-out group-hover/item:scale-105"
+              className="h-44 w-48  object-cover transition-transform duration-700 ease-out group-hover/item:scale-105"
               loading="lazy"
             />
           </div>
