@@ -125,7 +125,7 @@ const Jewellry = () => {
             >
               <div className="flex gap-[17px] min-w-max py-4">
                 {products.map((p) => (
-                  <div key={p.id} className="w-[260px] flex-shrink-0">
+                  <div key={p.id} className="w-[260px]   h-[380px] flex-shrink-0">
                     <Card 
                       product={p.product}
                       img={p.img} 

@@ -40,7 +40,6 @@ const handleToggleMobile = () => {
     setHovered(isOpenMobile ? null : item.title);
   };
 
-  // ✅ New: Desktop click handler
   const handleDesktopClick = () => {
     if (!isMobile && item.to) {
       navigate(item.to);
@@ -74,16 +73,16 @@ const handleToggleMobile = () => {
             <>
               {/* <div className="absolute left-0 h-8 w-full  -bottom-8 bg-red-500" /> */}
               <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="submenu-container w-full fixed bg-white  text-black left-0 top-full py-8 z-50 border-t border-gray-200"
+                initial={{  y: -1 }}
+                animate={{  y: 0 }}
+                exit={{  y: -1 }}
+                transition={{ duration: 0.3 }}
+                className="submenu-container w-full fixed bg-white  text-black left-0 top-full py-8 z-50 "
               >
                 <div className="max-w-5xl mx-auto  ">
                   {/* Category Tabs */}
                   {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && (
-                    <div className="flex items-center justify-start  mb-6 pb-4 border-b border-gray-200 overflow-x-auto">
+                    <div className="flex items-center justify-start  mb-6 pb-4 overflow-x-auto">
                       <button
                         onMouseEnter={() => setSelectedCategory('ALL COLLECTIONS')}
                         className={`text-sm font-semibold tracking-[0.2em] uppercase whitespace-nowrap pb-2 transition-all ${

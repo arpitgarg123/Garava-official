@@ -26,6 +26,7 @@ import jewellry7 from '../../assets/images/jewellry-7.png';
 import jewellry8 from '../../assets/images/jewellry-8.png';
 import jewellry9 from '../../assets/images/jewellry-9.png';
 import jewellry10 from '../../assets/images/flame-earring.png';
+import jewellry11 from '../../assets/images/pen.jpg';
 
 
 // Fragrance images
@@ -41,7 +42,7 @@ import { selectCartItemCount } from '../../features/cart/selectors.js';
 const navItems = [
   { title: 'jewellery', to: '/products/jewellery', submenu: [
     { 
-      label: 'FLAME SERIES',
+      label: 'Flame Series',
       subcategories: [
         { 
           label: 'Rings', 
@@ -121,13 +122,13 @@ const navItems = [
     },
     { 
       label: 'Bracelets', 
-      img: jewellry4, 
+      img: jewellry6, 
       to: '/products/high-jewellery?category=bracelets',
       category: 'bracelets'
     },
     { 
       label: 'Pendants', 
-      img: jewellry6, 
+      img: jewellry11, 
       to: '/products/high-jewellery?category=pendants',
       category: 'pendants'
     },
@@ -146,10 +147,10 @@ const navItems = [
         category: 'evara'
       },
        { 
-        label: 'Mangata', 
+        label: 'Mångata', 
         img: mangataImg, 
         to: '/products/fragrance?category=mangata',
-        category: 'mangata'
+        category: 'Mångata'
       },
        { 
         label: 'Wayfarer', 
@@ -234,7 +235,11 @@ const MobileNavItem = ({ item, onNavigate }) => {
               onClick={() => handleSubItemClick(subItem)}
               className="block w-full  text-left text-[1.0625rem] text-gray-600 hover:text-black transition-colors py-1"
             >
-              {subItem.label}
+              {
+                !subItem.isAllCollection == true && (
+                  subItem.label
+                )
+              }
             </button>
           ))}
         </div>
@@ -538,9 +543,9 @@ const Navbar = () => {
                           <div className="absolute right-6 -top-2 h-3 w-3 rotate-45 rounded-sm bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_6px_16px_-2px_rgba(0,0,0,0.15)]" />
                         </div>
 
-                        <div className="overflow-hidden rounded-xl border border-gray-200/80 bg-white shadow-xl ring-1 ring-black/5 backdrop-blur-[2px]">
+                        <div className="overflow-hidden rounded-xl bg-white shadow-xl ring-1 ring-black/5 backdrop-blur-[2px]">
                           <div className="py-1">
-                            <div className="px-4 py-2 text-[1.0625rem] text-gray-700 border-b bg-gradient-to-b from-white to-gray-50">
+                            <div className="px-4 py-2 text-[1.0625rem] text-gray-700  bg-gradient-to-b from-white to-gray-50">
                               <div className="font-medium">{user?.name}</div>
                               <div className="text-[1.0625rem] text-gray-500">{user?.email}</div>
                               {isAdmin && <div className="text-[1.0625rem] text-black font-medium">Admin</div>}
