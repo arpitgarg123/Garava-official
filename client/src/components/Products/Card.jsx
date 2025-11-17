@@ -110,15 +110,15 @@ const Card = ({img, title = "Product", price = "", slug, id, isHorizontal = fals
        aria-label={`${title} - ${price}`}
        onClick={handleCardClick}
      >
-      <div className="card-img-wrapper aspect-square">
+      <div className="card-img-wrapper">
         {validImages.length > 0 && currentImageIndex < validImages.length ? (
           <img
             className="card-img"
             src={validImages[currentImageIndex]}
             alt={title}
             loading="lazy"
-            width="800"
-            height="800"
+            // width="800"
+            // height="800"
             onError={(e) => {
               const currentUrl = validImages[currentImageIndex];
               

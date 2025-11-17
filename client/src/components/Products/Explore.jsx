@@ -104,7 +104,7 @@ const Explore = ({ currentProduct }) => {
         - Total: 1368px
         - Max container: 1408px (fits viewport with margins)
       */}
-      <div className="w-full max-w-[1408px] mx-auto relative group px-4 mt-8">
+      <div className="max-w-[95%] mx-auto relative group">
         <button 
           className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 cursor-pointer p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 hover:bg-white"
           onClick={() => scrollRef.current.scrollBy({ left: -554, behavior: 'smooth' })}
@@ -143,7 +143,7 @@ const Explore = ({ currentProduct }) => {
               const variantSku = product.defaultVariant?.sku || product.variants?.[0]?.sku || null;
               
               return (
-                <div key={product._id || `explore-product-${index}`} className="w-[260px] flex-shrink-0">
+                <div key={product._id || `explore-product-${index}`} className="w-[260px]  flex-shrink-0">
                   <Card 
                     product={product}
                     img={productImage}
