@@ -130,7 +130,7 @@ const YouMayAlsoLike = ({ currentProduct }) => {
               const variantSku = product.defaultVariant?.sku || product.variants?.[0]?.sku || null;
               
               return (
-                <div key={product._id || `product-${index}`} className="w-[300px] flex-shrink-0">
+                <div key={product._id || `product-${index}`} className="w-[260px] flex-shrink-0">
                   <Card 
                     product={product}
                     img={productImage}

@@ -73,9 +73,9 @@ const handleToggleMobile = () => {
             <>
               {/* <div className="absolute left-0 h-8 w-full  -bottom-8 bg-red-500" /> */}
               <motion.div
-                initial={{  y: -1 }}
-                animate={{  y: 0 }}
-                exit={{  y: -1 }}
+                initial={{ opacity:0, y: -1 }}
+                animate={{ opacity:1, y: 0 }}
+                exit={{opacity:0,  y: -1 }}
                 transition={{ duration: 0.3 }}
                 className="submenu-container w-full fixed bg-white  text-black left-0 top-full py-8 z-50 "
               >
