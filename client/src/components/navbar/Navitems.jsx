@@ -153,7 +153,7 @@ const handleToggleMobile = () => {
                       const selectedItem = item.submenu.find(sub => sub.label === selectedCategory);
                       
                       // ✅ FLAME SERIES - Show "UPCOMING SERIES" message
-                      if (selectedItem?.label === 'FLAME SERIES') {
+                      if (selectedItem?.label === 'Flame Series') {
                         return (
                           <div className="col-span-4 text-center py-12">
                             <h3 className="text-2xl font-semibold tracking-[0.2em] uppercase text-gray-800 mb-2">
@@ -189,7 +189,7 @@ const handleToggleMobile = () => {
                   
                   {/* View All link - hide for FLAME SERIES */}
                   {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && 
-                   selectedCategory !== 'FLAME SERIES' && (
+                   selectedCategory !== 'Flame Series' && (
                     <div className="mt-6 text-center">
                       <Link
                         className="text-xs font-medium tracking-[0.15em] uppercase underline hover:opacity-70 transition-opacity"
