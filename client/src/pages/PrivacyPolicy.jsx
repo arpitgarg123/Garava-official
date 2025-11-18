@@ -8,9 +8,9 @@ const PrivacyPolicy = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 mt-36 max-md:mt-2">
       {/* Back Button */}
-      <div className="sticky top-20 max-md:top-10 z-10 mt-4 max-md:mt-2">
+      <div className="sticky top-44 max-md:top-10">
         <BackButton />
       </div>
 
@@ -21,7 +21,7 @@ const PrivacyPolicy = () => {
           {/* Header Section */}
           <div className="bg-gradient-to-r from-gray-50 to-gray-50 border-b border-gray-100 p-6 sm:p-8">
             <div className="text-center">
-              <h1 className="text-3xl sm:text-3xl font-playfair font-bold text-gray-900 mb-4">
+              <h1 className="text-3xl sm:text-3xl  font-bold text-gray-900 mb-4">
                 Privacy Policy
               </h1>
               <p className="text-gray-600 text-[1.0625rem]  max-w-2xl mx-auto">

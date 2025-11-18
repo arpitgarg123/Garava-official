@@ -81,7 +81,7 @@ body, html{
 }
 
 .submenu-container {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.08); */
   border-top: 1px solid #eee;
 }
 
@@ -542,8 +542,8 @@ html.has-scroll-dragging {
 
 /* Fix submenu positioning for ultra-wide screens */
 .submenu-container {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  border-top: 1px solid #eee;
+  /* box-shadow: 0 2px 4px rgba(0,0,0,0.08); */
+  /* border-top: 1px solid #eee; */
   /* Dynamic top positioning based on navbar height */
   /* top: calc(6vw + 2.3vw + 20px) !important; */
   top: 100%;

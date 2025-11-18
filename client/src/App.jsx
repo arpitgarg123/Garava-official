@@ -27,6 +27,7 @@ import TermCondition from "./pages/TermCondition.jsx";
 import WebsiteLoader from "./layouts/WebsiteLoader.jsx";
 import { ToastProvider } from "./layouts/Toast.jsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 
 // Lazy load non-critical pages
 const ProductPage = lazy(() => import("./pages/products/ProductPage.jsx"));
