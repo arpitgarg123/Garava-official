@@ -20,6 +20,7 @@ const Submenu = ({ sub, parentTitle, isMobile = false, onClickItem = () => {} })
               alt={sub.label}
               className="h-44 w-48  object-cover transition-transform duration-700 ease-out group-hover/item:scale-105"
               loading="lazy"
+             
             />
           </div>
           <span className="text-sm  tracking-[0.1em] uppercase text-center hover:opacity-70 transition-opacity">
