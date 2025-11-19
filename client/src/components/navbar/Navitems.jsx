@@ -128,7 +128,15 @@ const handleToggleMobile = () => {
                         return item.submenu
                           .filter(sub => sub.isAllCollection)
                           .map((sub, i) => (
-                            <Submenu key={i} sub={sub} parentTitle={item.title} />
+                            // <Submenu key={i} sub={sub} parentTitle={item.title} />
+                            <div className="col-span-4 text-center py-12">
+                            <h3 className="text-2xl font-semibold tracking-[0.2em] uppercase text-gray-800 mb-2">
+                              FLAME SERIES
+                            </h3>
+                            <p className="text-sm text-gray-600 tracking-wide">
+                              Coming Soon
+                            </p>
+                          </div>
                           ));
                       }
                       
@@ -187,9 +195,10 @@ const handleToggleMobile = () => {
                     })()}
                   </div>
                   
-                  {/* View All link - hide for FLAME SERIES */}
+                  {/* View All link - hide for FLAME SERIES and jewellery ALL COLLECTIONS */}
                   {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && 
-                   selectedCategory !== 'Flame Series' && (
+                   selectedCategory !== 'Flame Series' && 
+                   !(item.title === 'jewellery' && selectedCategory === 'ALL COLLECTIONS') && (
                     <div className="mt-6 text-center">
                       <Link
                         className="text-xs font-medium tracking-[0.15em] uppercase underline hover:opacity-70 transition-opacity"
