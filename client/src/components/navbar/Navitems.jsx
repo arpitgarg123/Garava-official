@@ -11,7 +11,12 @@ const NavItem = ({ item, hovered, setHovered, isMobile = false, onNavigate = () 
   const navigate = useNavigate();
 
   const isOpenMobile = isMobile && hovered === item.title;
-  const handleEnter = () => !isMobile && setHovered(item.title);
+  const handleEnter = () => {
+    if (!isMobile) {
+      setHovered(item.title);
+      setSelectedCategory('ALL COLLECTIONS'); // Reset to default when entering nav item
+    }
+  };
   // Calculate dynamic submenu position
   useEffect(() => {
     const calculateSubmenuPosition = () => {
@@ -81,7 +86,7 @@ const handleToggleMobile = () => {
               >
                 <div className="max-w-5xl mx-auto  ">
                   {/* Category Tabs */}
-                  {['jewellery', 'Fragrance', 'HIGH JEWELLERY'].includes(item.title) && (
+                  {['jewellery',  'HIGH JEWELLERY'].includes(item.title) && (
                     <div className="flex items-center justify-start  mb-6 pb-4 overflow-x-auto">
                       <button
                         onMouseEnter={() => setSelectedCategory('ALL COLLECTIONS')}
