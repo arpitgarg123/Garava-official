@@ -192,12 +192,12 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-38 max-md:mt-2 md:pt-3">
+    <div className="min-h-screen ">
       {/* Header */}
-      <div className=" border-b border-gray-300">
+      <div className=" border-b border-gray-300 mt-58 max-md:mt-2 md:pt-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 py-4">
-           <div className="sticky top-56 z-10 mb-3">
+           <div className="sticky top-58 z-10 mb-3 max-md:top-10">
                  <BackButton />
                </div>
             

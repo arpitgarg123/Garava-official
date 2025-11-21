@@ -8,9 +8,9 @@ const ShippingPolicy = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-36 max-md:mt-2">
+    <div className="min-h-screen bg-gray-50 mt-38 max-md:mt-2">
       {/* Back Button */}
-      <div className="sticky top-44 max-md:top-10 z-10 ">
+      <div className="sticky top-58 max-md:top-10 z-10 ">
         <BackButton />
       </div>
 

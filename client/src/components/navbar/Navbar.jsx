@@ -467,7 +467,7 @@ const Navbar = () => {
        {
         shouldShowNavItemsDesktop && (
            <div className="navTop relative px-10">
-          <div className="flex justify-between w-89   max-xl:w-89 max-lg:w-89 font-light">
+          <div className="flex justify-between  font-light">
    
 
 <div className='flex items-center justify-center'>

@@ -57,7 +57,7 @@ export const MediaCoveragePage = () => {
 
   return (
     <div className="mt-30 max-md:mt-0">
-      <div className="sticky top-44 z-10 mb-3 max-md:top-7">
+      <div className="sticky top-58 z-10 mb-3 max-md:top-7">
         <BackButton />
       </div>
       <section className="relative overflow-hidden ">

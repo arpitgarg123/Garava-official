@@ -8,9 +8,9 @@ const TermsAndConditions = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-36 max-md:mt-0">
+    <div className="min-h-screen bg-gray-50 mt-38 max-md:mt-0">
       {/* Back Button */}
-      <div className="sticky top-44 max-md:top-10 z-10r ">
+      <div className="sticky top-58 max-md:top-10 z-10 ">
         <BackButton />
       </div>
 

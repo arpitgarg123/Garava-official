@@ -120,7 +120,7 @@ const FAQ = () => {
 
   return (
     <section aria-labelledby="faq-heading" className="w-full mt-30 max-md:mt-0  ">
-      <div className="sticky top-44 z-10 mb-3 max-md:top-18">
+      <div className="sticky top-58 z-10 mb-3 max-md:top-18">
         <BackButton />
       </div>
       
