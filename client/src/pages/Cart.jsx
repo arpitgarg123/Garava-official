@@ -208,8 +208,8 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-[60vh] mt-36 max-md:mt-0">
-       <div className="sticky top-26 z-50 max-md:top-7">
+    <div className="min-h-[60vh] mt-44 max-md:mt-0">
+       <div className="sticky top-58 z-10 mb-3 max-md:top-10">
         <BackButton />
       </div>
       <div className="max-w-7xl mx-auto px-4">

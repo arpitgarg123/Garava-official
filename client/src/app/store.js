@@ -16,6 +16,7 @@ import blogReducer from "../features/blogs/slice.js";
 import blogAdminReducer from "../features/blogs/blogAdminSlice.js";
 import reviewReducer from "../features/reviews/reviewSlice.js";
 import reviewAdminReducer from "../features/reviews/reviewAdminSlice.js";
+import customerAdminReducer from "../features/customers/adminSlice.js";
 import searchReducer from "../features/search/slice.js";
 import faqReducer from "../features/faq/slice.js";
 import faqAdminReducer from "../features/faq/adminSlice.js";
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   blogAdmin: blogAdminReducer,
   review: reviewReducer,
   reviewAdmin: reviewAdminReducer,
+  customerAdmin: customerAdminReducer,
   search: searchReducer,
   faq: faqReducer,
   faqAdmin: faqAdminReducer,

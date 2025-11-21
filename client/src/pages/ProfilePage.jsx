@@ -442,7 +442,7 @@ const ProfilePage = () => {
 
   return (
     <div className="min-h-screen mt-30 max-md:mt-0">
-      <div className="sticky top-44 z-10 max-md:top-0 max-lg:top-0">
+      <div className="sticky top-58 z-10 max-md:top-0 max-lg:top-0">
           <BackButton />
        
       </div>

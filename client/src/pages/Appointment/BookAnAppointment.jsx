@@ -89,7 +89,7 @@ const BookAnAppointment = () => {
   return (
     <>
     
-  <div className="sticky top-52 lg:40 sm:40 xl:20 md:20  z-10 mb-3 max-md:mb-0 max-md:top-10">
+  <div className="sticky top-58 z-10 mb-3 max-md:top-10">
         <BackButton />
       </div>
     <div className="max-w-xl mx-auto mt-30 max-md:mt-0 max-md:px-4 p-6 px-4 sm:px-6  py-12 sm:py-16 max-md:py-0">
