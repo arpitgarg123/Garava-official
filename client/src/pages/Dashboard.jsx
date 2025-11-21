@@ -289,7 +289,7 @@ const Dashboard = () => {
             <Newsletter  
               subscribers={newsletterSubscribers}
               pagination={newsletterPagination}
-            loading={newsletterLoading}
+              loading={newsletterLoading}
               onFilterChange={(filters) => {
               dispatch(setNewsletterFilters(filters));
               dispatch(fetchNewsletterSubscribers({ 
