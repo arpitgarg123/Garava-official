@@ -2,6 +2,7 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { 
   FaUser, 
+  FaUsers,
   FaBoxOpen, 
   FaStar, 
   FaBlog, 
@@ -25,6 +26,7 @@ const Orders = lazy(() => import('./../components/DashboardSections/Orders'));
 const Appointment = lazy(() => import('../components/DashboardSections/Appointment'));
 const Reviews = lazy(() => import('./../components/DashboardSections/Reviews'));
 const Newsletter = lazy(() => import('../components/DashboardSections/Newsletter'));
+const Customers = lazy(() => import('../components/DashboardSections/Customers'));
 const Blogs = lazy(() => import('../components/DashboardSections/BlogsAdmin'));
 const FAQAdmin = lazy(() => import('../components/DashboardSections/FAQAdmin'));
 const TestimonialAdmin = lazy(() => import('../components/DashboardSections/TestimonialAdmin'));
@@ -41,6 +43,7 @@ import { fetchAppointmentsAdmin } from '../features/appointment/adminSlice';
 import { fetchBlogsAdmin } from '../features/blogs/blogAdminSlice';
 import { fetchTestimonials } from '../features/testimonial/slice';
 import { fetchDashboardStats } from '../features/dashboard/dashboardSlice';
+import { fetchCustomersAdmin, fetchCustomerStats } from '../features/customers/adminSlice';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -55,6 +58,9 @@ const Dashboard = () => {
   const appointments = useSelector(state => state.appointmentAdmin?.appointments || []);
   const blogs = useSelector(state => state.blogAdmin?.blogs || []);
   const testimonials = useSelector(state => state.testimonials?.testimonials || []);
+  const customers = useSelector(state => state.customerAdmin?.customers || []);
+  const customerStats = useSelector(state => state.customerAdmin?.stats || {});
+  const customerPagination = useSelector(state => state.customerAdmin?.pagination || {});
   
   // Dashboard stats from dedicated endpoint
   const dashboardStats = useSelector(state => state.dashboard?.stats || {});
@@ -64,6 +70,7 @@ const Dashboard = () => {
   const ordersLoading = useSelector(state => state.orderAdmin?.loading || false);
   const productsLoading = useSelector(state => state.productAdmin?.loading || false);
   const reviewsLoading = useSelector(state => state.reviewAdmin?.loading || false);
+  const customersLoading = useSelector(state => state.customerAdmin?.loading || false);
 
   // Fetch real data on component mount
   useEffect(() => {
@@ -77,6 +84,10 @@ const Dashboard = () => {
     dispatch(fetchAppointmentsAdmin({ limit: 10, sort: 'appointmentAt' }));
     dispatch(fetchBlogsAdmin({ limit: 5, sort: '-createdAt' }));
     dispatch(fetchTestimonials({ limit: 5, sort: '-createdAt' }));
+    
+    // Fetch customer data and stats
+    dispatch(fetchCustomersAdmin({ limit: 20, page: 1 }));
+    dispatch(fetchCustomerStats());
   }, [dispatch]);
 
   // Calculate real statistics  
@@ -139,6 +150,7 @@ const Dashboard = () => {
     { id: "products", label: "Products", icon: FaBoxOpen },
     { id: "orders", label: "Orders", icon: FaBoxOpen },
     { id: "bookings", label: "Bookings", icon: MdEventAvailable },
+    { id: "customers", label: "Customers", icon: FaUsers },
     { id: "reviews", label: "Reviews", icon: FaStar },
     { id: "testimonials", label: "Testimonials", icon: FaComments },
     { id: "blogs", label: "Blogs", icon: FaBlog },
@@ -210,6 +222,23 @@ const Dashboard = () => {
               onPageChange={(newPage) => {/* TODO: Implement pagination */}}
               onFilterChange={(filters) => {/* TODO: Implement filters */}}
               onClearFilters={() => {/* TODO: Implement clear filters */}} 
+            />
+          </Suspense>
+        );
+      case "customers":
+        return (
+          <Suspense fallback={<SectionLoader />}>
+            <Customers 
+              customers={customers}
+              stats={customerStats}
+              pagination={customerPagination}
+              loading={customersLoading}
+              onFilterChange={(filters) => {
+                dispatch(fetchCustomersAdmin({ ...filters, page: 1 }));
+              }}
+              onPageChange={(page) => {
+                dispatch(fetchCustomersAdmin({ page }));
+              }}
             />
           </Suspense>
         );
@@ -328,11 +357,11 @@ const Dashboard = () => {
       )}
 
       {/* Clean Sidebar */}
-      <aside className={`fixed top-20 left-0 z-40 w-64 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 transform transition-transform duration-200 ${
+      <aside className={`fixed top-20 left-0 z-40 w-64 h-[calc(100vh-5rem)] bg-white border-r border-gray-200 transform transition-transform duration-200 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       } lg:translate-x-0`}>
-        <div className="h-full overflow-y-auto">
-          <nav className="p-4 space-y-1">
+        <div className="h-full flex flex-col">
+          <nav className="flex-1 overflow-y-auto p-4 space-y-1">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
@@ -356,7 +385,7 @@ const Dashboard = () => {
           </nav>
           
           {/* Sidebar Footer */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
+          <div className="flex-shrink-0 p-4 border-t border-gray-200 bg-white">
             <div className="text-center">
               <p className="text-[1.0625rem] text-gray-500">Garava Admin v2.0</p>
               <div className="flex items-center justify-center gap-1 mt-1">
@@ -371,17 +400,18 @@ const Dashboard = () => {
       {/* Clean Main Content */}
       <main className="lg:ml-64 pt-16">
         <div className="min-h-[calc(100vh-4rem)]">
-          {/* Content Header */}
-          <div className="bg-white border-b border-gray-200 px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-semibold text-gray-900">
-                  {tabs.find(t => t.id === activeTab)?.label}
-                </h1>
-                <p className="text-[1.0625rem] text-gray-600 mt-1">
-                  Manage your {tabs.find(t => t.id === activeTab)?.label.toLowerCase()}
-                </p>
-              </div>
+          {/* Content Header - Hidden for tabs with their own headers */}
+          {!['customers', 'products', 'orders'].includes(activeTab) && (
+            <div className="bg-white border-b border-gray-200 px-6 py-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-3xl font-semibold text-gray-900">
+                    {tabs.find(t => t.id === activeTab)?.label}
+                  </h1>
+                  <p className="text-[1.0625rem] text-gray-600 mt-1">
+                    Manage your {tabs.find(t => t.id === activeTab)?.label.toLowerCase()}
+                  </p>
+                </div>
               
               {/* <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 ">
@@ -394,10 +424,11 @@ const Dashboard = () => {
               </div> */}
             </div>
           </div>
+          )}
 
           {/* Content Area */}
-          <div className="bg-gray-50 p-6">
-            <div className="bg-white rounded-lg border border-gray-200">
+          <div className={`${!['customers', 'products', 'orders'].includes(activeTab) ? 'bg-gray-50 p-6' : 'h-full'}`}>
+            <div className={`${!['customers', 'products', 'orders'].includes(activeTab) ? 'bg-white rounded-lg border border-gray-200' : 'h-full'}`}>
               {renderContent()}
             </div>
           </div>

@@ -41,6 +41,7 @@ import newseventsAdminRouter from "./modules/newsevents/admin/newsevents.admin.r
 import contactRouter from "./modules/contact/contact.router.js";
 import testimonialRouter from "./modules/testimonial/testimonial.router.js";
 import instagramRouter from "./modules/instagram/instagram.router.js";
+import customerAdminRouter from "./modules/user/admin/user.admin.router.js";
 
   // routers
   const app = express();
@@ -218,6 +219,7 @@ import instagramRouter from "./modules/instagram/instagram.router.js";
   app.use("/api/contact", contactRouter);
   app.use("/api/testimonials", testimonialRouter);
   app.use("/api/instagram", instagramRouter);
+  app.use("/api/admin/customers", customerAdminRouter);
 
   // Catch all handler: send back React's index.html file for client-side routing
   // Only for non-API routes
