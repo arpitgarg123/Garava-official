@@ -291,7 +291,7 @@ const toast = useToastContext();
       </section>
 
       {/* Responsive Back Button */}
-      <div className="absolute top-3 sm:top-4 md:top-6 lg:top-8 left-2 sm:left-3 md:left-4 lg:left-6 z-30">
+      <div className="absolute top-20 z-10 mb-3 max-md:top-10">
         <BackButton className="text-white drop-shadow-lg hover:bg-white/10 transition-all duration-200 rounded-lg p-1 sm:p-2"/>
       </div>
 

@@ -149,7 +149,7 @@ import {
 
   return (
     <div className="mt-32 max-md:mt-0 ">
-      <div className="sticky top-48 z-10 mb-3 max-md:top-7">
+      <div className="sticky top-58 z-10 mb-3 max-md:top-7">
         <BackButton />
       </div>
       <section className="relative overflow-hidden ">
